@@ -21,13 +21,20 @@ gulp.task("typescript", ["clean-scripts"], function() {
         .pipe(sourcemaps.write("./")).pipe(gulp.dest("./dist"));
 });
 
+// base for generation. Not accurate, so not used
 gulp.task("dts-generator", ["clean-scripts"], function(cb) {
     dtsGenerator.generate({
         name: p.name,
         main: p.name + "/main",
         baseDir: './src',
         files: ['main.ts', '../node_modules/typescript/lib/typescript.d.ts'],
-        excludes: ["node_modules/**/*.d.ts", "utils/type-guards.ts"],
+        excludes: [
+		    "node_modules/**/*.d.ts", 
+		    "utils/type-guards.ts", 
+			"utils/decorators.ts",
+			"utils/type-checker.ts",
+			"utils.ts"
+		],
         out: "./dist/" + p.name + ".d.ts"
     });
     cb();
@@ -47,4 +54,4 @@ gulp.task("clean-scripts", function(cb) {
     return del(["./dist/**/*"], cb);
 });
 
-gulp.task("default", ["tslint", "typescript", "dts-generator", "watch"]);
+gulp.task("default", ["tslint", "typescript", "watch"]);
