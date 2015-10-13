@@ -1,0 +1,32 @@
+{
+  "name": "type-info-ts",
+  "version": "1.0.0",
+  "description": "0.0.1",
+  "main": "dist/src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsherret/type-info-ts.git"
+  },
+  "keywords": [
+    "decorators",
+    "typescript",
+    "routes"
+  ],
+  "author": "David Sherret",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dsherret/type-info-ts/issues"
+  },
+  "homepage": "https://github.com/dsherret/type-info-ts#readme",
+  "dependencies": {
+    "typescript": "^1.6.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "tslint": "^2.5.1"
+  }
+}

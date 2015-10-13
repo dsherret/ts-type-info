@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": true,
+        "noImplicitAny":  true,
+        "removeComments": true,
+        "experimentalDecorators": true,
+        "outDir": "dist",
+        "sourceMap": true
+    },
+    "files": [
+        "node_modules/typescript/lib/typescript.d.ts",
+        "typings/tsd.d.ts",
+        "src/definitions/file-definition.ts",
+        "src/main.ts",
+        "tests/basic-test.ts"
+    ]
+}
