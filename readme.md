@@ -11,9 +11,8 @@ Major refactoring of the code will take place at a later time.
 
 ### Input
 
-**V:/TestFile.ts**
-
 ```typescript
+// V:/TestFile.ts
 @myDecorator("My decorator value")
 export class MyClass {
     myMethod(myParameter: string) {
@@ -21,7 +20,7 @@ export class MyClass {
 }
 ```
 
-Get the file:
+Get the file info:
 
 ```typescript
 import * as TypeInfoTS from "type-info-ts";
