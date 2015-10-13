@@ -1,6 +1,6 @@
 import * as ts from "typescript";
-import {NamedDefinition, ParameterDefinition, ArgumentDefinition} from "./../definitions";
-import {TypeChecker, TypeGuards, Serializable} from "./../utils";
+import {ArgumentDefinition} from "./../definitions";
+import {TypeGuards, Serializable} from "./../utils";
 
 export class DecoratorDefinition {
     private _name: string;

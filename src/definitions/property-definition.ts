@@ -8,6 +8,6 @@ export class PropertyDefinition extends TypedDefinition {
     }
 
     static isProperty(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Property) != 0;
+        return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0;
     }
 }

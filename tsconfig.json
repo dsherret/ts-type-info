@@ -2,18 +2,32 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-        "declaration": true,
+        "declaration": false,
+        "sourceMap": false,
         "noImplicitAny":  true,
         "removeComments": true,
         "experimentalDecorators": true,
-        "outDir": "dist",
-        "sourceMap": true
+        "outDir": "dist"
     },
     "files": [
-        "node_modules/typescript/lib/typescript.d.ts",
         "typings/tsd.d.ts",
-        "src/definitions/file-definition.ts",
+        "node_modules/typescript/lib/typescript.d.ts",
         "src/main.ts",
-        "tests/basic-test.ts"
+        "src/definitions.ts",
+        "src/types.ts",
+        "src/utils.ts",
+        "src/definitions/argument-definition.ts",
+        "src/definitions/class-definition.ts",
+        "src/definitions/decorator-definition.ts",
+        "src/definitions/file-definition.ts",
+        "src/definitions/method-definition.ts",
+        "src/definitions/named-definition.ts",
+        "src/definitions/parameter-definition.ts",
+        "src/definitions/property-definition.ts",
+        "src/definitions/typed-definition.ts",
+        "src/types/type.ts",
+        "src/utils/decorators.ts",
+        "src/utils/type-checker.ts",
+        "src/utils/type-guards.ts"
     ]
 }

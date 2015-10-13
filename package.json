@@ -2,7 +2,7 @@
   "name": "type-info-ts",
   "version": "1.0.0",
   "description": "0.0.1",
-  "main": "dist/src/main.js",
+  "main": "dist/type-info-ts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -26,6 +26,14 @@
     "typescript": "^1.6.2"
   },
   "devDependencies": {
+    "del": "^2.0.2",
+    "dts-generator": "^1.5.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tslint": "^3.3.1",
+    "gulp-typescript": "^2.9.2",
     "mocha": "^2.3.3",
     "tslint": "^2.5.1"
   }

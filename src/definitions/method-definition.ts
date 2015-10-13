@@ -3,7 +3,7 @@ import {NamedDefinition, ParameterDefinition} from "./../definitions";
 import {TypeChecker, Serializable} from "./../utils";
 
 export class MethodDefinition extends NamedDefinition {
-    private _parameters: ParameterDefinition[] = []; 
+    private _parameters: ParameterDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(symbol);
@@ -20,6 +20,6 @@ export class MethodDefinition extends NamedDefinition {
     }
 
     static isClassMethod(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Method) != 0;
+        return (symbol.getFlags() & ts.SymbolFlags.Method) !== 0;
     }
 }

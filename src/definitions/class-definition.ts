@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {NamedDefinition, MethodDefinition, PropertyDefinition, DecoratorDefinition} from "./../definitions";
+import {NamedDefinition, MethodDefinition, PropertyDefinition} from "./../definitions";
 import {TypeChecker, Serializable} from "./../utils";
 
 export class ClassDefinition extends NamedDefinition {
@@ -40,6 +40,6 @@ export class ClassDefinition extends NamedDefinition {
     }
 
     static isClassDefinition(symbol: ts.Symbol) {
-        return (symbol.flags & ts.SymbolFlags.Class) != 0;
-    } 
+        return (symbol.flags & ts.SymbolFlags.Class) !== 0;
+    }
 }

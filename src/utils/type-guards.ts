@@ -6,6 +6,6 @@ export class TypeGuards {
     }
 
     static isLiteralExpression(expression: ts.Expression): expression is ts.LiteralExpression {
-        return expression != null && (expression as ts.LiteralExpression).text != null; 
+        return expression != null && (expression as ts.LiteralExpression).text != null;
     }
 }

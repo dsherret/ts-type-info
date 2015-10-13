@@ -11,15 +11,15 @@ export class FileDefinition {
 
         const fileSymbol = typeChecker.getSymbolAtLocation(file);
 
-        for (const exportName in fileSymbol.exports) {
-            const currentExport = fileSymbol.exports[exportName]; 
+        Object.keys(fileSymbol.exports).forEach((exportName) => {
+            const currentExport = fileSymbol.exports[exportName];
             if (ClassDefinition.isClassDefinition(currentExport)) {
                 this._classes.push(new ClassDefinition(typeChecker, currentExport));
             }
             else {
-                throw "Currently only class exports are supported."
+                throw "Currently only class exports are supported.";
             }
-        }
+        });
 
         this.checkAnyClassExports();
     }

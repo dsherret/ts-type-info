@@ -13,7 +13,7 @@ export class ArgumentDefinition {
     get text() {
         return this._text;
     }
-    
+
     private fillName(arg: ts.Expression) {
         this._text = (arg as any).text;
     }
