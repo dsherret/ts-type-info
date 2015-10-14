@@ -6,10 +6,15 @@ export class ClassDefinition extends NamedDefinition {
     private _methods: MethodDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
         super(symbol);
 
         this.createMembers(typeChecker, symbol);
+    }
+
+    @Serializable
+    get baseClasses() {
+        return this._baseClasses;
     }
 
     @Serializable

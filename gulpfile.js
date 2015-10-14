@@ -4,8 +4,6 @@ var dtsGenerator = require("dts-generator");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
 var sourcemaps = require("gulp-sourcemaps");
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
 var p = require("./package.json");
 
 gulp.task("typescript", ["clean-scripts"], function() {
@@ -16,9 +14,8 @@ gulp.task("typescript", ["clean-scripts"], function() {
     return gulp.src(["./typings/**/*.d.ts", "./src/**/*.ts"])
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
-        .pipe(babel())
-        .pipe(concat(p.name + ".js"))
-        .pipe(sourcemaps.write("./")).pipe(gulp.dest("./dist"));
+        .pipe(sourcemaps.write("./"))
+        .pipe(gulp.dest("./dist"));
 });
 
 // base for generation. Not accurate, so not used
@@ -47,11 +44,11 @@ gulp.task("tslint", function() {
 });
 
 gulp.task("watch", function() {
-    gulp.watch("./src/**/*.ts", ["scripts"]);
+    gulp.watch("./src/**/*.ts", ["tslint", "typescript"]);
 });
 
 gulp.task("clean-scripts", function(cb) {
-    return del(["./dist/**/*"], cb);
+    return del(["./dist/**/*{.js,.js.map}"], cb);
 });
 
 gulp.task("default", ["tslint", "typescript", "watch"]);

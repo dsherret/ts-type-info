@@ -1,27 +1,20 @@
 import * as ts from "typescript";
-import {TypeChecker, Serializable} from "./../utils";
+import {TypeChecker, Serializable, DefinitionCache} from "./../utils";
 import {ClassDefinition} from "./../definitions";
 
 export class FileDefinition {
     private _name: string;
     private _classes: ClassDefinition[] = [];
 
-    constructor(typeChecker: TypeChecker, file: ts.SourceFile) {
+    constructor(private typeChecker: TypeChecker, private definitionCache: DefinitionCache, private file: ts.SourceFile) {
         this._name = file.fileName;
+        this.fillClasses();
+    }
 
-        const fileSymbol = typeChecker.getSymbolAtLocation(file);
-
-        Object.keys(fileSymbol.exports).forEach((exportName) => {
-            const currentExport = fileSymbol.exports[exportName];
-            if (ClassDefinition.isClassDefinition(currentExport)) {
-                this._classes.push(new ClassDefinition(typeChecker, currentExport));
-            }
-            else {
-                throw "Currently only class exports are supported.";
-            }
+    fillClasses() {
+        this.typeChecker.getSymbolsInScope(this.file, ts.SymbolFlags.Class).forEach((classSymbol) => {
+            this._classes.push(this.definitionCache.getClassDefinition(classSymbol));
         });
-
-        this.checkAnyClassExports();
     }
 
     @Serializable
@@ -32,11 +25,5 @@ export class FileDefinition {
     @Serializable
     get classes() {
         return this._classes;
-    }
-
-    private checkAnyClassExports() {
-        if (this.classes.length === 0) {
-            console.warn(`${this.name}: No class exports. Please provide a file that contains class exports`);
-        }
     }
 }

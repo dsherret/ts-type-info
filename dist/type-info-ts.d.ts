@@ -20,8 +20,10 @@ declare module 'type-info-ts' {
 	class ClassDefinition extends NamedDefinition {
 	    private _methods;
 	    private _properties;
+		private _baseClasses;
 	    methods: MethodDefinition[];
 	    properties: PropertyDefinition[];
+		baseClasses: ClassDefinition[];
 	}
 
 	class MethodDefinition extends NamedDefinition {

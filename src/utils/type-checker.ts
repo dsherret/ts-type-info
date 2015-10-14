@@ -12,4 +12,18 @@ export class TypeChecker {
     getTypeOfSymbol(symbol: ts.Symbol) {
         return new Type(this.typeChecker, this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node), this.node);
     }
+
+    getSymbolsInScope(node: ts.Node, flags: ts.SymbolFlags) {
+        return this.typeChecker.getSymbolsInScope(node, flags);
+    }
+
+    getFullyQualifiedName(symbol: ts.Symbol) {
+        return this.typeChecker.getFullyQualifiedName(symbol);
+    }
+
+    getBaseTypeSymbols(classSymbol: ts.Symbol) {
+        return this.typeChecker.getBaseTypes(this.getTypeOfSymbol(classSymbol).tsType as any).map((baseTypes) => {
+            return baseTypes.symbol;
+        });
+    }
 }
