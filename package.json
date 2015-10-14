@@ -22,6 +22,9 @@
     "url": "https://github.com/dsherret/type-info-ts/issues"
   },
   "homepage": "https://github.com/dsherret/type-info-ts#readme",
+  "typescript": {
+    "definition": "dist/type-info-ts.d.ts"
+  },
   "dependencies": {
     "typescript": "^1.6.2"
   },

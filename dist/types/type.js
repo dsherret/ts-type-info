@@ -9,13 +9,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var ts = require("typescript");
 var decorators_1 = require("./../utils/decorators");
 var Type = (function () {
-    function Type(typeChecker, tsType, node) {
-        this.tsType = tsType;
-        this._name = typeChecker.typeToString(tsType, node, 0);
+    function Type(typeChecker, _tsType, node) {
+        this._tsType = _tsType;
+        this._name = typeChecker.typeToString(_tsType, node, 0);
     }
     Object.defineProperty(Type.prototype, "name", {
         get: function () {
             return this._name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Type.prototype, "tsType", {
+        get: function () {
+            return this._tsType;
         },
         enumerable: true,
         configurable: true

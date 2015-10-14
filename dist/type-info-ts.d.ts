@@ -12,7 +12,7 @@ declare module 'type-info-ts' {
 	    name: string;
 	}
     
-    class TypedDefinition {
+    class TypedDefinition extends NamedDefinition {
 	    private _type;
 	    type: Type;
 	}
