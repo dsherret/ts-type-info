@@ -33,5 +33,3 @@ var TypedDefinition = (function (_super) {
     return TypedDefinition;
 })(definitions_1.NamedDefinition);
 exports.TypedDefinition = TypedDefinition;
-
-//# sourceMappingURL=typed-definition.js.map

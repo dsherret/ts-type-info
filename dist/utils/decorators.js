@@ -11,5 +11,3 @@ function Serializable(target, propertyName, descriptor) {
     };
 }
 exports.Serializable = Serializable;
-
-//# sourceMappingURL=decorators.js.map

@@ -5,8 +5,6 @@ Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/
 
 This is a very experimental library. Currently you can only get basic type information out of files that export a class.
 
-Major refactoring of the code will take place at a later time.
-
 ## Example
 
 ### Input
@@ -16,6 +14,7 @@ Major refactoring of the code will take place at a later time.
 @myDecorator("My decorator value")
 export class MyClass {
     myMethod(myParameter: string) {
+        return `Test: ${myParameter}`; 
     }
 }
 ```
@@ -46,7 +45,10 @@ console.log(JSON.stringify(TypeInfoTS.getFileInfo("V:/TestFile.ts")));
                 "name": "myParameter",
                 "decorators": [],
                 "type": { "name":"string" }
-            }]
+            }],
+            "returnType": {
+                "name": "string"
+            }
         }],
         "properties": []
     }]

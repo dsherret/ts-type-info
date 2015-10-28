@@ -59,5 +59,3 @@ var DecoratorDefinition = (function () {
     return DecoratorDefinition;
 })();
 exports.DecoratorDefinition = DecoratorDefinition;
-
-//# sourceMappingURL=decorator-definition.js.map

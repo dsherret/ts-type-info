@@ -20,5 +20,3 @@ function getFileInfo() {
     });
 }
 exports.getFileInfo = getFileInfo;
-
-//# sourceMappingURL=main.js.map

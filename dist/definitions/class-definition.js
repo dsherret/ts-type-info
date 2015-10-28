@@ -78,5 +78,3 @@ var ClassDefinition = (function (_super) {
     return ClassDefinition;
 })(definitions_1.NamedDefinition);
 exports.ClassDefinition = ClassDefinition;
-
-//# sourceMappingURL=class-definition.js.map

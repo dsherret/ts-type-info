@@ -16,5 +16,3 @@ var PropertyDefinition = (function (_super) {
     return PropertyDefinition;
 })(definitions_1.TypedDefinition);
 exports.PropertyDefinition = PropertyDefinition;
-
-//# sourceMappingURL=property-definition.js.map

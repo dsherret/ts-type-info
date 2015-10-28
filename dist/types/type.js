@@ -34,5 +34,3 @@ var Type = (function () {
     return Type;
 })();
 exports.Type = Type;
-
-//# sourceMappingURL=type.js.map

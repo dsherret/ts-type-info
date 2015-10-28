@@ -12,5 +12,3 @@ var ParameterDefinition = (function (_super) {
     return ParameterDefinition;
 })(definitions_1.TypedDefinition);
 exports.ParameterDefinition = ParameterDefinition;
-
-//# sourceMappingURL=parameter-definition.js.map

@@ -10,5 +10,3 @@ __export(require("./definitions/property-definition"));
 __export(require("./definitions/file-definition"));
 __export(require("./definitions/decorator-definition"));
 __export(require("./definitions/argument-definition"));
-
-//# sourceMappingURL=definitions.js.map

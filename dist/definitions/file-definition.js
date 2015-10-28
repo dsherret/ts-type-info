@@ -48,5 +48,3 @@ var FileDefinition = (function () {
     return FileDefinition;
 })();
 exports.FileDefinition = FileDefinition;
-
-//# sourceMappingURL=file-definition.js.map

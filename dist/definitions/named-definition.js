@@ -47,5 +47,3 @@ var NamedDefinition = (function () {
     return NamedDefinition;
 })();
 exports.NamedDefinition = NamedDefinition;
-
-//# sourceMappingURL=named-definition.js.map

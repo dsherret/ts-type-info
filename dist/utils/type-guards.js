@@ -10,5 +10,3 @@ var TypeGuards = (function () {
     return TypeGuards;
 })();
 exports.TypeGuards = TypeGuards;
-
-//# sourceMappingURL=type-guards.js.map

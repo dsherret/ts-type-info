@@ -19,6 +19,7 @@ var MethodDefinition = (function (_super) {
     function MethodDefinition(typeChecker, symbol) {
         _super.call(this, symbol);
         this._parameters = [];
+        this._returnType = typeChecker.getReturnTypeFromSymbol(symbol);
         for (var _i = 0, _a = symbol.valueDeclaration.parameters; _i < _a.length; _i++) {
             var param = _a[_i];
             var parameterSymbol = typeChecker.getSymbolAtLocation(param);
@@ -32,6 +33,13 @@ var MethodDefinition = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(MethodDefinition.prototype, "returnType", {
+        get: function () {
+            return this._returnType;
+        },
+        enumerable: true,
+        configurable: true
+    });
     MethodDefinition.isClassMethod = function (symbol) {
         return (symbol.getFlags() & 8192) !== 0;
     };
@@ -39,8 +47,10 @@ var MethodDefinition = (function (_super) {
         __decorate([
             utils_1.Serializable
         ], MethodDefinition.prototype, "parameters", Object.getOwnPropertyDescriptor(MethodDefinition.prototype, "parameters")));
+    Object.defineProperty(MethodDefinition.prototype, "returnType",
+        __decorate([
+            utils_1.Serializable
+        ], MethodDefinition.prototype, "returnType", Object.getOwnPropertyDescriptor(MethodDefinition.prototype, "returnType")));
     return MethodDefinition;
 })(definitions_1.NamedDefinition);
 exports.MethodDefinition = MethodDefinition;
-
-//# sourceMappingURL=method-definition.js.map
