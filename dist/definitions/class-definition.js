@@ -44,20 +44,37 @@ var ClassDefinition = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ClassDefinition.prototype, "typeParameter", {
+        get: function () {
+            return this._typeParameter;
+        },
+        enumerable: true,
+        configurable: true
+    });
     ClassDefinition.prototype.createMembers = function (typeChecker, symbol) {
-        for (var memberName in symbol.members) {
-            if (definitions_1.MethodDefinition.isClassMethod(symbol.members[memberName])) {
-                this._methods.push(new definitions_1.MethodDefinition(typeChecker, symbol.members[memberName]));
+        var _this = this;
+        Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
+            if (definitions_1.MethodDefinition.isClassMethod(member)) {
+                _this._methods.push(new definitions_1.MethodDefinition(typeChecker, member));
             }
-            else if (definitions_1.PropertyDefinition.isProperty(symbol.members[memberName])) {
-                this._properties.push(new definitions_1.PropertyDefinition(typeChecker, symbol.members[memberName]));
+            else if (definitions_1.PropertyDefinition.isProperty(member)) {
+                _this._properties.push(new definitions_1.PropertyDefinition(typeChecker, member));
             }
-            else if (memberName === "__constructor") {
-                throw "Constructors are currently not supported. Class: " + this.name;
+            else if ((member.getFlags() & 16384) != 0) {
+                throw "Constructors are currently not supported. Class: " + _this.name;
+            }
+            else if (definitions_1.TypeParameterDefinition.isTypeParameter(member)) {
+                _this.verifyTypeParameterNotSet();
+                _this._typeParameter = new definitions_1.TypeParameterDefinition(typeChecker, member);
             }
             else {
-                throw "Not implemented '" + memberName + "'";
+                throw "Not implemented '" + member.getName() + "'";
             }
+        });
+    };
+    ClassDefinition.prototype.verifyTypeParameterNotSet = function () {
+        if (this._typeParameter != null) {
+            throw "Unknown error: Duplicate type parameter.";
         }
     };
     ClassDefinition.isClassDefinition = function (symbol) {
@@ -75,6 +92,10 @@ var ClassDefinition = (function (_super) {
         __decorate([
             utils_1.Serializable
         ], ClassDefinition.prototype, "properties", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "properties")));
+    Object.defineProperty(ClassDefinition.prototype, "typeParameter",
+        __decorate([
+            utils_1.Serializable
+        ], ClassDefinition.prototype, "typeParameter", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "typeParameter")));
     return ClassDefinition;
 })(definitions_1.NamedDefinition);
 exports.ClassDefinition = ClassDefinition;

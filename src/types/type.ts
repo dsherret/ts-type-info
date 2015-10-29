@@ -1,11 +1,11 @@
 import * as ts from "typescript";
-import {Serializable} from "./../utils/decorators";
+import {TypeChecker, Serializable} from "./../utils";
 
 export class Type {
     private _name: string;
 
-    constructor(typeChecker: ts.TypeChecker, private _tsType: ts.Type, node: ts.Node) {
-        this._name = typeChecker.typeToString(_tsType, node, ts.TypeFormatFlags.None);
+    constructor(typeChecker: TypeChecker, private _tsType: ts.Type, node: ts.Node) {
+        this._name = typeChecker.typeToString(_tsType);
     }
 
     @Serializable

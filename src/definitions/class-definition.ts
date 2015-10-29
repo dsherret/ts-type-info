@@ -1,10 +1,11 @@
 import * as ts from "typescript";
-import {NamedDefinition, MethodDefinition, PropertyDefinition} from "./../definitions";
+import {NamedDefinition, MethodDefinition, PropertyDefinition, TypeParameterDefinition} from "./../definitions";
 import {TypeChecker, Serializable} from "./../utils";
 
 export class ClassDefinition extends NamedDefinition {
     private _methods: MethodDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
+    private _typeParameter: TypeParameterDefinition;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
         super(symbol);
@@ -27,20 +28,35 @@ export class ClassDefinition extends NamedDefinition {
         return this._properties;
     }
 
+    @Serializable
+    get typeParameter() {
+        return this._typeParameter;
+    }
+
     private createMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        for (let memberName in symbol.members) {
-            if (MethodDefinition.isClassMethod(symbol.members[memberName])) {
-                this._methods.push(new MethodDefinition(typeChecker, symbol.members[memberName]));
+        Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
+            if (MethodDefinition.isClassMethod(member)) {
+                this._methods.push(new MethodDefinition(typeChecker, member));
             }
-            else if (PropertyDefinition.isProperty(symbol.members[memberName])) {
-                this._properties.push(new PropertyDefinition(typeChecker, symbol.members[memberName]));
+            else if (PropertyDefinition.isProperty(member)) {
+                this._properties.push(new PropertyDefinition(typeChecker, member));
             }
-            else if (memberName === "__constructor") {
+            else if ((member.getFlags() & ts.SymbolFlags.Constructor) != 0) {
                 throw `Constructors are currently not supported. Class: ${this.name}`;
             }
-            else {
-                throw `Not implemented '${memberName}'`;
+            else if (TypeParameterDefinition.isTypeParameter(member)) {
+                this.verifyTypeParameterNotSet();
+                this._typeParameter = new TypeParameterDefinition(typeChecker, member);
             }
+            else {
+                throw `Not implemented '${member.getName()}'`;
+            }
+        });
+    }
+
+    private verifyTypeParameterNotSet() {
+        if (this._typeParameter != null) {
+            throw "Unknown error: Duplicate type parameter.";
         }
     }
 

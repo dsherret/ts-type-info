@@ -3,10 +3,11 @@ function __export(m) {
 }
 __export(require("./definitions/named-definition"));
 __export(require("./definitions/typed-definition"));
-__export(require("./definitions/class-definition"));
-__export(require("./definitions/method-definition"));
+__export(require("./definitions/decorator-definition"));
 __export(require("./definitions/parameter-definition"));
 __export(require("./definitions/property-definition"));
-__export(require("./definitions/file-definition"));
-__export(require("./definitions/decorator-definition"));
 __export(require("./definitions/argument-definition"));
+__export(require("./definitions/method-definition"));
+__export(require("./definitions/type-parameter-definition"));
+__export(require("./definitions/class-definition"));
+__export(require("./definitions/file-definition"));

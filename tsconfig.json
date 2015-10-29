@@ -12,22 +12,28 @@
     "files": [
         "typings/tsd.d.ts",
         "node_modules/typescript/lib/typescript.d.ts",
-        "src/main.ts",
-        "src/definitions.ts",
-        "src/types.ts",
-        "src/utils.ts",
         "src/definitions/argument-definition.ts",
         "src/definitions/class-definition.ts",
+        "src/definitions/constructor-definition.ts",
         "src/definitions/decorator-definition.ts",
+        "src/definitions/decoratable-definition.ts",
         "src/definitions/file-definition.ts",
         "src/definitions/method-definition.ts",
         "src/definitions/named-definition.ts",
         "src/definitions/parameter-definition.ts",
         "src/definitions/property-definition.ts",
         "src/definitions/typed-definition.ts",
+        "src/definitions/type-parameter-definition.ts",
+        "src/tests/type-parameter/type-parameter-extends.ts",
+        "src/tests/type-parameter/type-parameter-name.ts",
         "src/types/type.ts",
+        "src/utils/apply-mixins.ts",
         "src/utils/decorators.ts",
         "src/utils/type-checker.ts",
-        "src/utils/type-guards.ts"
+        "src/utils/type-guards.ts",
+        "src/main.ts",
+        "src/definitions.ts",
+        "src/types.ts",
+        "src/utils.ts"
     ]
 }

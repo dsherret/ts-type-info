@@ -1,6 +1,8 @@
 var ts = require("typescript");
 var definitions_1 = require("./definitions");
 var path = require("path");
+var tmp = require("tmp");
+var fs = require("fs");
 var utils_1 = require("./utils");
 function getFileInfo() {
     var fileNames = [];
@@ -20,3 +22,23 @@ function getFileInfo() {
     });
 }
 exports.getFileInfo = getFileInfo;
+function getStringInfo(code) {
+    var tmpFile = tmp.fileSync({ postfix: ".ts" });
+    var fileDefinition;
+    try {
+        code = addNewLineToCodeIfNecessary(code);
+        fs.writeFileSync(tmpFile.name, code + "\n");
+        fileDefinition = getFileInfo(tmpFile.name)[0];
+    }
+    finally {
+        tmpFile.removeCallback();
+    }
+    return fileDefinition;
+}
+exports.getStringInfo = getStringInfo;
+function addNewLineToCodeIfNecessary(code) {
+    if (typeof code === "string" && code.length > 0 && code[code.length - 1] != "\n") {
+        code += "\n";
+    }
+    return code;
+}

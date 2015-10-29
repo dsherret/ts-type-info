@@ -6,12 +6,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-var ts = require("typescript");
-var decorators_1 = require("./../utils/decorators");
+var utils_1 = require("./../utils");
 var Type = (function () {
     function Type(typeChecker, _tsType, node) {
         this._tsType = _tsType;
-        this._name = typeChecker.typeToString(_tsType, node, 0);
+        this._name = typeChecker.typeToString(_tsType);
     }
     Object.defineProperty(Type.prototype, "name", {
         get: function () {
@@ -29,7 +28,7 @@ var Type = (function () {
     });
     Object.defineProperty(Type.prototype, "name",
         __decorate([
-            decorators_1.Serializable
+            utils_1.Serializable
         ], Type.prototype, "name", Object.getOwnPropertyDescriptor(Type.prototype, "name")));
     return Type;
 })();

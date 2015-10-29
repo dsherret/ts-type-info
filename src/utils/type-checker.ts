@@ -21,7 +21,7 @@ export class TypeChecker {
         const signature = this.typeChecker.getSignatureFromDeclaration(symbol.valueDeclaration as any);
         const tsType = this.typeChecker.getReturnTypeOfSignature(signature);
 
-        return new Type(this.typeChecker, tsType, this.node);
+        return new Type(this, tsType, this.node);
     }
 
     getSymbolAtLocation(node: ts.Node): ts.Symbol {
@@ -32,12 +32,20 @@ export class TypeChecker {
         return this.typeChecker.getSymbolsInScope(node, flags);
     }
 
+    getTypeAtLocation(node: ts.Node) {
+        return new Type(this, this.typeChecker.getTypeAtLocation(node), this.node);
+    }
+
     getTypeOfSymbol(symbol: ts.Symbol) {
-        return new Type(this.typeChecker, this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node), this.node);
+        return new Type(this, this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node), this.node);
     }
 
     getTypeCheckerForTesting() {
         // get the type checker for testing purposes
         return this.typeChecker;
+    }
+
+    typeToString(tsType: ts.Type) {
+        return this.typeChecker.typeToString(tsType, this.node, ts.TypeFormatFlags.None);
     }
 }

@@ -4,7 +4,7 @@
   "description": "0.0.1",
   "main": "dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive dist/tests",
     "build": "tsc"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "definition": "dist/type-info-ts.d.ts"
   },
   "dependencies": {
+    "tmp": "0.0.28",
     "typescript": "^1.6.2"
   },
   "devDependencies": {
