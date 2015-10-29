@@ -1,4 +1,4 @@
-import {getStringInfo} from "../../main";
+import {getStringInfo} from "./../../main";
 import * as assert from "assert";
 
 describe("type parameter with extends", () => {
