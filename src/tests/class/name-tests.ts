@@ -4,7 +4,6 @@ import * as assert from "assert";
 describe("class tests", () => {
     const code = `
 class MyClass {
-    str: string;
 }`;
 
     const def = getStringInfo(code);

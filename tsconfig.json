@@ -12,6 +12,7 @@
     "files": [
         "typings/tsd.d.ts",
         "node_modules/typescript/lib/typescript.d.ts",
+        "src/definitions/base/scope-definition.ts",
         "src/definitions/argument-definition.ts",
         "src/definitions/class-definition.ts",
         "src/definitions/constructor-definition.ts",
@@ -27,6 +28,7 @@
         "src/tests/type-parameter/extends-tests.ts",
         "src/tests/type-parameter/name-tests.ts",
         "src/tests/class/name-tests.ts",
+        "src/tests/class/property-tests.ts",
         "src/types/type.ts",
         "src/utils/apply-mixins.ts",
         "src/utils/decorators.ts",
@@ -34,6 +36,7 @@
         "src/utils/type-guards.ts",
         "src/main.ts",
         "src/definitions.ts",
+        "src/scope.ts",
         "src/types.ts",
         "src/utils.ts"
     ]
