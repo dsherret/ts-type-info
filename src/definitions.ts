@@ -1,5 +1,3 @@
-export * from "./definitions/named-definition";
-export * from "./definitions/typed-definition";
 export * from "./definitions/decorator-definition";
 export * from "./definitions/parameter-definition";
 export * from "./definitions/property-definition";

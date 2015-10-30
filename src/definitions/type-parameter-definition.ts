@@ -1,18 +1,18 @@
 import * as ts from "typescript";
-import {NamedDefinition} from "./../definitions";
 import {Type} from "./../types";
-import {TypeChecker, Serializable} from "./../utils";
+import {applyMixins, TypeChecker, Serializable} from "./../utils";
+import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 
-export class TypeParameterDefinition extends NamedDefinition {
+export class TypeParameterDefinition implements INamedDefinition {
     constraint: Type;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(symbol);
+        this.fillName(symbol);
 
-        this.setConstraint(typeChecker, symbol);
+        this.fillConstraint(typeChecker, symbol);
     }
 
-    private setConstraint(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    private fillConstraint(typeChecker: TypeChecker, symbol: ts.Symbol) {
         const declaration = this.getTypeDeclaration(typeChecker, symbol);
 
         if (declaration.constraint != null) {
@@ -24,7 +24,13 @@ export class TypeParameterDefinition extends NamedDefinition {
         return symbol.getDeclarations()[0] as ts.TypeParameterDeclaration;
     }
 
+    // NameDefinition
+    fillName: (symbol: ts.Symbol) => void;
+    name: string;
+
     static isTypeParameter(symbol: ts.Symbol) {
         return (symbol.getFlags() & ts.SymbolFlags.TypeParameter) !== 0;
     }
 }
+
+applyMixins(TypeParameterDefinition, [NamedDefinition]);

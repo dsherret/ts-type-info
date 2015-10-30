@@ -1,17 +1,12 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var ts = require("typescript");
-var definitions_1 = require("./../definitions");
-var TypeParameterDefinition = (function (_super) {
-    __extends(TypeParameterDefinition, _super);
+var utils_1 = require("./../utils");
+var named_definition_1 = require("./base/named-definition");
+var TypeParameterDefinition = (function () {
     function TypeParameterDefinition(typeChecker, symbol) {
-        _super.call(this, symbol);
-        this.setConstraint(typeChecker, symbol);
+        this.fillName(symbol);
+        this.fillConstraint(typeChecker, symbol);
     }
-    TypeParameterDefinition.prototype.setConstraint = function (typeChecker, symbol) {
+    TypeParameterDefinition.prototype.fillConstraint = function (typeChecker, symbol) {
         var declaration = this.getTypeDeclaration(typeChecker, symbol);
         if (declaration.constraint != null) {
             this.constraint = typeChecker.getTypeAtLocation(declaration.constraint);
@@ -24,5 +19,6 @@ var TypeParameterDefinition = (function (_super) {
         return (symbol.getFlags() & 262144) !== 0;
     };
     return TypeParameterDefinition;
-})(definitions_1.NamedDefinition);
+})();
 exports.TypeParameterDefinition = TypeParameterDefinition;
+utils_1.applyMixins(TypeParameterDefinition, [named_definition_1.NamedDefinition]);

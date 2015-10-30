@@ -1,16 +1,14 @@
 import * as ts from "typescript";
-import {DecoratorDefinition} from "./../definitions";
-import {Serializable} from "./../utils";
+import {DecoratorDefinition} from "./../../definitions";
+import {Serializable} from "./../../utils";
 
-export abstract class NamedDefinition {
-    private _name: string;
+export interface IDecoratableDefinition {
+    fillDecorators(symbol: ts.Symbol): void;
+    decorators: DecoratorDefinition[];
+}
+
+export abstract class DecoratableDefinition implements IDecoratableDefinition {
     private _decorators: DecoratorDefinition[] = [];
-
-    constructor(symbol: ts.Symbol) {
-        this._name = symbol.getName();
-
-        this.fillDecorators(symbol);
-    }
 
     fillDecorators(symbol: ts.Symbol) {
         if (symbol.valueDeclaration != null && symbol.valueDeclaration.decorators != null) {
@@ -18,11 +16,6 @@ export abstract class NamedDefinition {
                 this._decorators.push(new DecoratorDefinition(decorator));
             }
         }
-    }
-
-    @Serializable
-    get name() {
-        return this._name;
     }
 
     @Serializable

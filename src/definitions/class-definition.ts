@@ -1,16 +1,19 @@
 import * as ts from "typescript";
-import {NamedDefinition, MethodDefinition, PropertyDefinition, TypeParameterDefinition} from "./../definitions";
-import {TypeChecker, Serializable} from "./../utils";
+import {MethodDefinition, PropertyDefinition, TypeParameterDefinition, DecoratorDefinition} from "./../definitions";
+import {applyMixins, TypeChecker, Serializable} from "./../utils";
+import {INamedDefinition, NamedDefinition} from "./base/named-definition";
+import {IDecoratableDefinition, DecoratableDefinition} from "./base/decorated-definition";
 
-export class ClassDefinition extends NamedDefinition {
+export class ClassDefinition implements INamedDefinition, IDecoratableDefinition {
     private _methods: MethodDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
     private _typeParameter: TypeParameterDefinition;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
-        super(symbol);
-
         this.createMembers(typeChecker, symbol);
+
+        this.fillName(symbol);
+        this.fillDecorators(symbol);
     }
 
     @Serializable
@@ -60,7 +63,16 @@ export class ClassDefinition extends NamedDefinition {
         }
     }
 
+    // NameDefinition
+    fillName: (symbol: ts.Symbol) => void;
+    name: string;
+    // DecoratableDefinition
+    fillDecorators: (symbol: ts.Symbol) => void;
+    decorators: DecoratorDefinition[];
+
     static isClassDefinition(symbol: ts.Symbol) {
         return (symbol.flags & ts.SymbolFlags.Class) !== 0;
     }
 }
+
+applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition]);

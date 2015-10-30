@@ -1,4 +1,4 @@
-import {NamedDefinition, ClassDefinition} from "./../definitions";
+import {ClassDefinition} from "./../definitions";
 import {TypeChecker} from "./../utils";
 import * as ts from "typescript";
 
@@ -24,12 +24,12 @@ export class DefinitionCache {
     }
 }
 
-interface CacheItem<T extends NamedDefinition> {
+interface CacheItem<T> {
     symbol: ts.Symbol;
     definition: T;
 }
 
-class CacheContainer<T extends NamedDefinition> {
+class CacheContainer<T> {
     private cacheItems: CacheItem<T>[] = [];
 
     get(symbol: ts.Symbol) {

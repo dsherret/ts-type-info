@@ -1,8 +1,3 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
     switch (arguments.length) {
@@ -14,17 +9,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var ts = require("typescript");
 var definitions_1 = require("./../definitions");
 var utils_1 = require("./../utils");
-var MethodDefinition = (function (_super) {
-    __extends(MethodDefinition, _super);
+var named_definition_1 = require("./base/named-definition");
+var decorated_definition_1 = require("./base/decorated-definition");
+var scoped_definition_1 = require("./base/scoped-definition");
+var MethodDefinition = (function () {
     function MethodDefinition(typeChecker, symbol) {
-        _super.call(this, symbol);
         this._parameters = [];
-        this._returnType = typeChecker.getReturnTypeFromSymbol(symbol);
-        for (var _i = 0, _a = symbol.valueDeclaration.parameters; _i < _a.length; _i++) {
-            var param = _a[_i];
-            var parameterSymbol = typeChecker.getSymbolAtLocation(param);
-            this._parameters.push(new definitions_1.ParameterDefinition(typeChecker, parameterSymbol));
-        }
+        this.fillName(symbol);
+        this.fillDecorators(symbol);
+        this.fillScope(symbol);
+        this.fillReturnType(typeChecker, symbol);
+        this.fillParameters(typeChecker, symbol);
     }
     Object.defineProperty(MethodDefinition.prototype, "parameters", {
         get: function () {
@@ -40,6 +35,16 @@ var MethodDefinition = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    MethodDefinition.prototype.fillReturnType = function (typeChecker, symbol) {
+        this._returnType = typeChecker.getReturnTypeFromSymbol(symbol);
+    };
+    MethodDefinition.prototype.fillParameters = function (typeChecker, symbol) {
+        for (var _i = 0, _a = symbol.valueDeclaration.parameters; _i < _a.length; _i++) {
+            var param = _a[_i];
+            var parameterSymbol = typeChecker.getSymbolAtLocation(param);
+            this._parameters.push(new definitions_1.ParameterDefinition(typeChecker, parameterSymbol));
+        }
+    };
     MethodDefinition.isClassMethod = function (symbol) {
         return (symbol.getFlags() & 8192) !== 0;
     };
@@ -52,5 +57,6 @@ var MethodDefinition = (function (_super) {
             utils_1.Serializable
         ], MethodDefinition.prototype, "returnType", Object.getOwnPropertyDescriptor(MethodDefinition.prototype, "returnType")));
     return MethodDefinition;
-})(definitions_1.NamedDefinition);
+})();
 exports.MethodDefinition = MethodDefinition;
+utils_1.applyMixins(MethodDefinition, [named_definition_1.NamedDefinition, scoped_definition_1.ScopeDefinition, decorated_definition_1.DecoratableDefinition]);

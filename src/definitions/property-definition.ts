@@ -1,23 +1,37 @@
 import * as ts from "typescript";
-import {TypedDefinition} from "./typed-definition";
-import {IScopeDefinition, ScopeDefinition} from "./base/scope-definition";
 import {Scope} from "./../scope";
-import {TypeChecker, applyMixins} from "./../utils";
+import {DecoratorDefinition} from "./../definitions";
+import {applyMixins, TypeChecker} from "./../utils";
+import {Type} from "./../types";
+import {INamedDefinition, NamedDefinition} from "./base/named-definition";
+import {IDecoratableDefinition, DecoratableDefinition} from "./base/decorated-definition";
+import {IScopeDefinition, ScopeDefinition} from "./base/scoped-definition";
+import {ITypedDefinition, TypedDefinition} from "./base/typed-definition";
 
-export class PropertyDefinition extends TypedDefinition implements IScopeDefinition {
+export class PropertyDefinition implements ITypedDefinition, INamedDefinition, IDecoratableDefinition, IScopeDefinition {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        this.fillName(symbol);
+        this.fillDecorators(symbol);
+        this.fillScope(symbol);
+        this.fillType(typeChecker, symbol);
+    }
+
+    // NameDefinition
+    fillName: (symbol: ts.Symbol) => void;
+    name: string;
+    // DecoratableDefinition
+    fillDecorators: (symbol: ts.Symbol) => void;
+    decorators: DecoratorDefinition[];
     // ScopeDefinition
     scope: Scope;
-    initializeScopeDefinition: (symbol: ts.Symbol) => void;
-
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(typeChecker, symbol);
-
-        this.initializeScopeDefinition(symbol);
-    }
+    fillScope: (symbol: ts.Symbol) => void;
+    // TypedDefinition
+    fillType: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    type: Type;
 
     static isProperty(symbol: ts.Symbol) {
         return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0;
     }
 }
 
-applyMixins(PropertyDefinition, [ScopeDefinition]);
+applyMixins(PropertyDefinition, [NamedDefinition, DecoratableDefinition, ScopeDefinition, TypedDefinition]);

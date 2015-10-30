@@ -1,19 +1,21 @@
 import * as ts from "typescript";
 import {Scope} from "./../../scope";
+import {Serializable} from "./../../utils";
 
 export interface IScopeDefinition {
     scope: Scope;
-    initializeScopeDefinition(symbol: ts.Symbol): void;
+    fillScope(symbol: ts.Symbol): void;
 }
 
-export class ScopeDefinition {
+export abstract class ScopeDefinition implements IScopeDefinition {
     private _scope: Scope;
 
+    @Serializable
     get scope() {
         return this._scope;
     }
 
-    initializeScopeDefinition(symbol: ts.Symbol) {
+    fillScope(symbol: ts.Symbol) {
         if ((symbol.valueDeclaration.flags & ts.NodeFlags.Private) != 0) {
             this._scope = Scope.private;
         }
