@@ -2,12 +2,12 @@ import * as ts from "typescript";
 import {Scope} from "./../../scope";
 import {Serializable} from "./../../utils";
 
-export interface IScopeDefinition {
+export interface IScopedDefinition {
     scope: Scope;
     fillScope(symbol: ts.Symbol): void;
 }
 
-export abstract class ScopeDefinition implements IScopeDefinition {
+export abstract class ScopedDefinition implements IScopedDefinition {
     private _scope: Scope;
 
     @Serializable

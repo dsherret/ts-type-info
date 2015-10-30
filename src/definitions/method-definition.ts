@@ -4,10 +4,10 @@ import {Scope} from "./../scope";
 import {Type} from "./../types";
 import {applyMixins, TypeChecker, Serializable} from "./../utils";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
-import {IDecoratableDefinition, DecoratableDefinition} from "./base/decorated-definition";
-import {IScopeDefinition, ScopeDefinition} from "./base/scoped-definition";
+import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
+import {IScopedDefinition, ScopedDefinition} from "./base/scoped-definition";
 
-export class MethodDefinition implements INamedDefinition, IDecoratableDefinition, IScopeDefinition {
+export class MethodDefinition implements INamedDefinition, IDecoratedDefinition, IScopedDefinition {
     private _parameters: ParameterDefinition[] = [];
     private _returnType: Type;
 
@@ -56,4 +56,4 @@ export class MethodDefinition implements INamedDefinition, IDecoratableDefinitio
     }
 }
 
-applyMixins(MethodDefinition, [NamedDefinition, ScopeDefinition, DecoratableDefinition]);
+applyMixins(MethodDefinition, [NamedDefinition, ScopedDefinition, DecoratedDefinition]);

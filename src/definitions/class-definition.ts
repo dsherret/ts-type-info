@@ -2,9 +2,9 @@ import * as ts from "typescript";
 import {MethodDefinition, PropertyDefinition, TypeParameterDefinition, DecoratorDefinition} from "./../definitions";
 import {applyMixins, TypeChecker, Serializable} from "./../utils";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
-import {IDecoratableDefinition, DecoratableDefinition} from "./base/decorated-definition";
+import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
 
-export class ClassDefinition implements INamedDefinition, IDecoratableDefinition {
+export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private _methods: MethodDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
     private _typeParameter: TypeParameterDefinition;
@@ -75,4 +75,4 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     }
 }
 
-applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition]);
+applyMixins(ClassDefinition, [NamedDefinition, DecoratedDefinition]);

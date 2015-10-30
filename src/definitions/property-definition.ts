@@ -4,11 +4,11 @@ import {DecoratorDefinition} from "./../definitions";
 import {applyMixins, TypeChecker} from "./../utils";
 import {Type} from "./../types";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
-import {IDecoratableDefinition, DecoratableDefinition} from "./base/decorated-definition";
-import {IScopeDefinition, ScopeDefinition} from "./base/scoped-definition";
+import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
+import {IScopedDefinition, ScopedDefinition} from "./base/scoped-definition";
 import {ITypedDefinition, TypedDefinition} from "./base/typed-definition";
 
-export class PropertyDefinition implements ITypedDefinition, INamedDefinition, IDecoratableDefinition, IScopeDefinition {
+export class PropertyDefinition implements ITypedDefinition, INamedDefinition, IDecoratedDefinition, IScopedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillDecorators(symbol);
@@ -34,4 +34,4 @@ export class PropertyDefinition implements ITypedDefinition, INamedDefinition, I
     }
 }
 
-applyMixins(PropertyDefinition, [NamedDefinition, DecoratableDefinition, ScopeDefinition, TypedDefinition]);
+applyMixins(PropertyDefinition, [NamedDefinition, DecoratedDefinition, ScopedDefinition, TypedDefinition]);

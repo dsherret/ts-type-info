@@ -3,14 +3,14 @@ import {DecoratorDefinition} from "./../definitions";
 import {applyMixins, TypeChecker} from "./../utils";
 import {Type} from "./../types";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
-import {IDecoratableDefinition, DecoratableDefinition} from "./base/decorated-definition";
+import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
 import {ITypedDefinition, TypedDefinition} from "./base/typed-definition";
 
 // todo: add isOptional parameter
 // todo: check decorators work
 // todo: public/private/protected for constructors?
 
-export class ParameterDefinition implements ITypedDefinition, INamedDefinition, IDecoratableDefinition {
+export class ParameterDefinition implements ITypedDefinition, INamedDefinition, IDecoratedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillDecorators(symbol);
@@ -28,4 +28,4 @@ export class ParameterDefinition implements ITypedDefinition, INamedDefinition, 
     type: Type;
 }
 
-applyMixins(ParameterDefinition, [NamedDefinition, DecoratableDefinition, TypedDefinition]);
+applyMixins(ParameterDefinition, [NamedDefinition, DecoratedDefinition, TypedDefinition]);
