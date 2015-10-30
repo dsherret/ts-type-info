@@ -1,7 +1,10 @@
 function applyMixins(derivedCtor, baseCtors) {
     baseCtors.forEach(function (baseCtor) {
         Object.getOwnPropertyNames(baseCtor.prototype).forEach(function (name) {
-            derivedCtor.prototype[name] = baseCtor.prototype[name];
+            if (name !== "constructor") {
+                var descriptor = Object.getOwnPropertyDescriptor(baseCtor.prototype, name);
+                Object.defineProperty(derivedCtor.prototype, name, descriptor);
+            }
         });
     });
 }

@@ -24,8 +24,8 @@ export class TypeChecker {
         return new Type(this, tsType, this.node);
     }
 
-    getSymbolAtLocation(node: ts.Node): ts.Symbol {
-        return (node as any).symbol;
+    getSymbolAtLocation(node: ts.Node) {
+        return (node as any).symbol as ts.Symbol;
     }
 
     getSymbolsInScope(node: ts.Node, flags: ts.SymbolFlags) {

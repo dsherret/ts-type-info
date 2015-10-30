@@ -1,42 +1,58 @@
 var main_1 = require("./../../main");
+var scope_1 = require("./../../scope");
 var assert = require("assert");
 describe("class property tests", function () {
-    var code = "\nclass MyClass {\n    myString: string;\n    myImplicit = 4;\n    myAny;\n\n    private myPrivate;\n}";
+    var code = "\nclass MyClass {\n    myString: string;\n    myImplicit = 4;\n    myAny;\n\n    public myExplicitPublic;\n    protected myProtected;\n    private myPrivate;\n}";
     var def = main_1.getStringInfo(code);
+    function nameTest(prop, name) {
+        it("should have name " + name, function () {
+            assert.equal(prop.name, name);
+        });
+    }
+    function typeTest(prop, type) {
+        it("should have type " + type, function () {
+            assert.equal(prop.type.name, type);
+        });
+    }
+    function scopeTest(prop, scope) {
+        it("should have scope " + scope_1.Scope[scope], function () {
+            assert.equal(prop.scope, scope);
+        });
+    }
     describe("property myString", function () {
         var prop = def.classes[0].properties[0];
-        it("should have name myString", function () {
-            assert.equal(prop.name, "myString");
-        });
-        it("should have type string", function () {
-            assert.equal(prop.type.name, "string");
-        });
+        nameTest(prop, "myString");
+        typeTest(prop, "string");
+        scopeTest(prop, scope_1.Scope.public);
     });
     describe("property myImplicit", function () {
         var prop = def.classes[0].properties[1];
-        it("should have name myImplicit", function () {
-            assert.equal(prop.name, "myImplicit");
-        });
-        it("should have type number", function () {
-            assert.equal(prop.type.name, "number");
-        });
+        nameTest(prop, "myImplicit");
+        typeTest(prop, "number");
+        scopeTest(prop, scope_1.Scope.public);
     });
     describe("property myAny", function () {
         var prop = def.classes[0].properties[2];
-        it("should have name myAny", function () {
-            assert.equal(prop.name, "myAny");
-        });
-        it("should have type any", function () {
-            assert.equal(prop.type.name, "any");
-        });
+        nameTest(prop, "myAny");
+        typeTest(prop, "any");
+        scopeTest(prop, scope_1.Scope.public);
+    });
+    describe("property myExplicitPublic", function () {
+        var prop = def.classes[0].properties[3];
+        nameTest(prop, "myExplicitPublic");
+        typeTest(prop, "any");
+        scopeTest(prop, scope_1.Scope.public);
+    });
+    describe("property myProtected", function () {
+        var prop = def.classes[0].properties[4];
+        nameTest(prop, "myProtected");
+        typeTest(prop, "any");
+        scopeTest(prop, scope_1.Scope.protected);
     });
     describe("property myPrivate", function () {
-        var prop = def.classes[0].properties[3];
-        it("should have name myPrivate", function () {
-            assert.equal(prop.name, "myPrivate");
-        });
-        it("should be private", function () {
-            assert.equal(prop.type.name, "any");
-        });
+        var prop = def.classes[0].properties[5];
+        nameTest(prop, "myPrivate");
+        typeTest(prop, "any");
+        scopeTest(prop, scope_1.Scope.private);
     });
 });
