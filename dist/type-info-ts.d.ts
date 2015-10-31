@@ -5,7 +5,6 @@ declare module 'type-info-ts' {
     }
 
     class NamedDefinition {
-        decorators: DecoratorDefinition[];
         name: string;
     }
 
@@ -28,6 +27,7 @@ declare module 'type-info-ts' {
 
         name: string;
         decorators: DecoratorDefinition[];
+        typeParameter: TypeParameterDefinition;
     }
 
     class MethodDefinition implements NamedDefinition, DecoratedDefinition, ScopedDefinition {
@@ -35,6 +35,7 @@ declare module 'type-info-ts' {
 
         name: string;
         decorators: DecoratorDefinition[];
+        returnType: Type;
         scope: Scope;
     }
     
@@ -63,6 +64,11 @@ declare module 'type-info-ts' {
 
     class ArgumentDefinition {
         text: string;
+    }
+
+    class TypeParameterDefinition implements NamedDefinition {
+        constraint: Type;
+        name: string;
     }
 
     export enum Scope {
