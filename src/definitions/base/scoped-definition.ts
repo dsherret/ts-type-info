@@ -10,11 +10,6 @@ export interface IScopedDefinition {
 export abstract class ScopedDefinition implements IScopedDefinition {
     private _scope: Scope;
 
-    @Serializable
-    get scope() {
-        return this._scope;
-    }
-
     fillScope(symbol: ts.Symbol) {
         if ((symbol.valueDeclaration.flags & ts.NodeFlags.Private) != 0) {
             this._scope = Scope.private;
@@ -25,5 +20,10 @@ export abstract class ScopedDefinition implements IScopedDefinition {
         else {
             this._scope = Scope.public;
         }
+    }
+
+    @Serializable
+    get scope() {
+        return this._scope;
     }
 }

@@ -8,9 +8,10 @@ export interface IDecoratedDefinition {
 }
 
 export abstract class DecoratedDefinition implements IDecoratedDefinition {
-    private _decorators: DecoratorDefinition[] = [];
+    private _decorators: DecoratorDefinition[];
 
     fillDecorators(symbol: ts.Symbol) {
+        this._decorators = [];
         if (symbol.valueDeclaration != null && symbol.valueDeclaration.decorators != null) {
             for (let decorator of symbol.valueDeclaration.decorators) {
                 this._decorators.push(new DecoratorDefinition(decorator));
