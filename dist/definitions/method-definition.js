@@ -59,4 +59,4 @@ var MethodDefinition = (function () {
     return MethodDefinition;
 })();
 exports.MethodDefinition = MethodDefinition;
-utils_1.applyMixins(MethodDefinition, [named_definition_1.NamedDefinition, scoped_definition_1.ScopeDefinition, decorated_definition_1.DecoratableDefinition]);
+utils_1.applyMixins(MethodDefinition, [named_definition_1.NamedDefinition, scoped_definition_1.ScopedDefinition, decorated_definition_1.DecoratedDefinition]);

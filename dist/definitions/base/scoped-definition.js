@@ -9,17 +9,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var ts = require("typescript");
 var scope_1 = require("./../../scope");
 var utils_1 = require("./../../utils");
-var ScopeDefinition = (function () {
-    function ScopeDefinition() {
+var ScopedDefinition = (function () {
+    function ScopedDefinition() {
     }
-    Object.defineProperty(ScopeDefinition.prototype, "scope", {
-        get: function () {
-            return this._scope;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    ScopeDefinition.prototype.fillScope = function (symbol) {
+    ScopedDefinition.prototype.fillScope = function (symbol) {
         if ((symbol.valueDeclaration.flags & 32) != 0) {
             this._scope = scope_1.Scope.private;
         }
@@ -30,10 +23,17 @@ var ScopeDefinition = (function () {
             this._scope = scope_1.Scope.public;
         }
     };
-    Object.defineProperty(ScopeDefinition.prototype, "scope",
+    Object.defineProperty(ScopedDefinition.prototype, "scope", {
+        get: function () {
+            return this._scope;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScopedDefinition.prototype, "scope",
         __decorate([
             utils_1.Serializable
-        ], ScopeDefinition.prototype, "scope", Object.getOwnPropertyDescriptor(ScopeDefinition.prototype, "scope")));
-    return ScopeDefinition;
+        ], ScopedDefinition.prototype, "scope", Object.getOwnPropertyDescriptor(ScopedDefinition.prototype, "scope")));
+    return ScopedDefinition;
 })();
-exports.ScopeDefinition = ScopeDefinition;
+exports.ScopedDefinition = ScopedDefinition;

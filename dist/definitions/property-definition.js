@@ -17,4 +17,4 @@ var PropertyDefinition = (function () {
     return PropertyDefinition;
 })();
 exports.PropertyDefinition = PropertyDefinition;
-utils_1.applyMixins(PropertyDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratableDefinition, scoped_definition_1.ScopeDefinition, typed_definition_1.TypedDefinition]);
+utils_1.applyMixins(PropertyDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratedDefinition, scoped_definition_1.ScopedDefinition, typed_definition_1.TypedDefinition]);

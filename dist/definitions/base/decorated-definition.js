@@ -8,11 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var definitions_1 = require("./../../definitions");
 var utils_1 = require("./../../utils");
-var DecoratableDefinition = (function () {
-    function DecoratableDefinition() {
-        this._decorators = [];
+var DecoratedDefinition = (function () {
+    function DecoratedDefinition() {
     }
-    DecoratableDefinition.prototype.fillDecorators = function (symbol) {
+    DecoratedDefinition.prototype.fillDecorators = function (symbol) {
+        this._decorators = [];
         if (symbol.valueDeclaration != null && symbol.valueDeclaration.decorators != null) {
             for (var _i = 0, _a = symbol.valueDeclaration.decorators; _i < _a.length; _i++) {
                 var decorator = _a[_i];
@@ -20,17 +20,17 @@ var DecoratableDefinition = (function () {
             }
         }
     };
-    Object.defineProperty(DecoratableDefinition.prototype, "decorators", {
+    Object.defineProperty(DecoratedDefinition.prototype, "decorators", {
         get: function () {
             return this._decorators;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DecoratableDefinition.prototype, "decorators",
+    Object.defineProperty(DecoratedDefinition.prototype, "decorators",
         __decorate([
             utils_1.Serializable
-        ], DecoratableDefinition.prototype, "decorators", Object.getOwnPropertyDescriptor(DecoratableDefinition.prototype, "decorators")));
-    return DecoratableDefinition;
+        ], DecoratedDefinition.prototype, "decorators", Object.getOwnPropertyDescriptor(DecoratedDefinition.prototype, "decorators")));
+    return DecoratedDefinition;
 })();
-exports.DecoratableDefinition = DecoratableDefinition;
+exports.DecoratedDefinition = DecoratedDefinition;

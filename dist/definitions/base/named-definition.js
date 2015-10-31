@@ -10,6 +10,9 @@ var utils_1 = require("./../../utils");
 var NamedDefinition = (function () {
     function NamedDefinition() {
     }
+    NamedDefinition.prototype.fillName = function (symbol) {
+        this._name = symbol.getName();
+    };
     Object.defineProperty(NamedDefinition.prototype, "name", {
         get: function () {
             return this._name;
@@ -17,9 +20,6 @@ var NamedDefinition = (function () {
         enumerable: true,
         configurable: true
     });
-    NamedDefinition.prototype.fillName = function (symbol) {
-        this._name = symbol.getName();
-    };
     Object.defineProperty(NamedDefinition.prototype, "name",
         __decorate([
             utils_1.Serializable

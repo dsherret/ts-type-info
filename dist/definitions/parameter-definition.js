@@ -11,4 +11,4 @@ var ParameterDefinition = (function () {
     return ParameterDefinition;
 })();
 exports.ParameterDefinition = ParameterDefinition;
-utils_1.applyMixins(ParameterDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratableDefinition, typed_definition_1.TypedDefinition]);
+utils_1.applyMixins(ParameterDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratedDefinition, typed_definition_1.TypedDefinition]);

@@ -96,4 +96,4 @@ var ClassDefinition = (function () {
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;
-utils_1.applyMixins(ClassDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratableDefinition]);
+utils_1.applyMixins(ClassDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratedDefinition]);
