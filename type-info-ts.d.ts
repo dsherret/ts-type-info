@@ -2,6 +2,7 @@
 declare module "type-info-ts" {
     class Type {
         name: string;
+        properties: PropertyDefinition[];
     }
 
     class NamedDefinition {
@@ -30,7 +31,7 @@ declare module "type-info-ts" {
 
     class ClassDefinition implements NamedDefinition, DecoratedDefinition {
         methods: MethodDefinition[];
-        properties: PropertyDefinition[];
+        properties: ClassPropertyDefinition[];
         baseClasses: ClassDefinition[];
 
         name: string;
@@ -56,10 +57,13 @@ declare module "type-info-ts" {
         type: Type;
     }
 
-    class PropertyDefinition implements TypedDefinition, NamedDefinition, DecoratedDefinition, ScopedDefinition {
-        name: string;
+    class ClassPropertyDefinition extends PropertyDefinition implements DecoratedDefinition, ScopedDefinition {
         decorators: DecoratorDefinition[];
         scope: Scope;
+    }
+
+    class PropertyDefinition implements TypedDefinition, NamedDefinition {
+        name: string;
         type: Type;
     }
 

@@ -16,7 +16,7 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getReturnTypeFromSymbol = function (symbol) {
         var signature = this.typeChecker.getSignatureFromDeclaration(symbol.valueDeclaration);
         var tsType = this.typeChecker.getReturnTypeOfSignature(signature);
-        return new types_1.Type(this, tsType, this.node);
+        return new types_1.Type(this, tsType);
     };
     TypeChecker.prototype.getSymbolAtLocation = function (node) {
         return node.symbol;
@@ -25,10 +25,10 @@ var TypeChecker = (function () {
         return this.typeChecker.getSymbolsInScope(node, flags);
     };
     TypeChecker.prototype.getTypeAtLocation = function (node) {
-        return new types_1.Type(this, this.typeChecker.getTypeAtLocation(node), this.node);
+        return new types_1.Type(this, this.typeChecker.getTypeAtLocation(node));
     };
     TypeChecker.prototype.getTypeOfSymbol = function (symbol) {
-        return new types_1.Type(this, this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node), this.node);
+        return new types_1.Type(this, this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
     };
     TypeChecker.prototype.getTypeCheckerForTesting = function () {
         return this.typeChecker;

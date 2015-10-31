@@ -1,12 +1,12 @@
 import * as ts from "typescript";
-import {ConstructorDefinition, DecoratorDefinition, MethodDefinition, PropertyDefinition, TypeParameterDefinition} from "./../definitions";
+import {ConstructorDefinition, DecoratorDefinition, MethodDefinition, ClassPropertyDefinition, TypeParameterDefinition} from "./../definitions";
 import {applyMixins, TypeChecker, Serializable} from "./../utils";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
 
 export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private _methods: MethodDefinition[] = [];
-    private _properties: PropertyDefinition[] = [];
+    private _properties: ClassPropertyDefinition[] = [];
     private _typeParameter: TypeParameterDefinition;
     private _constructor: ConstructorDefinition;
 
@@ -47,8 +47,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
             if (MethodDefinition.isClassMethod(member)) {
                 this._methods.push(new MethodDefinition(typeChecker, member));
             }
-            else if (PropertyDefinition.isProperty(member)) {
-                this._properties.push(new PropertyDefinition(typeChecker, member));
+            else if (ClassPropertyDefinition.isProperty(member)) {
+                this._properties.push(new ClassPropertyDefinition(typeChecker, member));
             }
             else if ((member.getFlags() & ts.SymbolFlags.Constructor) != 0) {
                 this.verifyConstructorNotSet();

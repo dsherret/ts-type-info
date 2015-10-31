@@ -1,6 +1,6 @@
 import {getStringInfo} from "./../../main";
 import {Scope} from "./../../scope";
-import {PropertyDefinition} from "./../../definitions";
+import {ClassPropertyDefinition} from "./../../definitions";
 import * as assert from "assert";
 
 describe("class property tests", () => {
@@ -17,19 +17,19 @@ class MyClass {
 
     const def = getStringInfo(code);
 
-    function nameTest(prop: PropertyDefinition, name: string) {
+    function nameTest(prop: ClassPropertyDefinition, name: string) {
         it(`should have name ${name}`, () => {
             assert.equal(prop.name, name);
         });
     }
 
-    function typeTest(prop: PropertyDefinition, type: string) {
+    function typeTest(prop: ClassPropertyDefinition, type: string) {
         it(`should have type ${type}`, () => {
             assert.equal(prop.type.name, type);
         });
     }
 
-    function scopeTest(prop: PropertyDefinition, scope: Scope) {
+    function scopeTest(prop: ClassPropertyDefinition, scope: Scope) {
         it(`should have scope ${Scope[scope]}`, () => {
             assert.equal(prop.scope, scope);
         });

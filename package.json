@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/dsherret/type-info-ts#readme",
   "typescript": {
-    "definition": "dist/type-info-ts.d.ts"
+    "definition": "type-info-ts.d.ts"
   },
   "dependencies": {
     "tmp": "0.0.28",

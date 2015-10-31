@@ -11,7 +11,7 @@ class MyClass {
 
         it("should not have a constructor", () => {
             assert.equal(def.classes[0].constructor, null);
-        })
+        });
     });
 
     describe("constructor with no parameters", () => {
@@ -29,7 +29,7 @@ class MyClass {
 
         it("should have no parameters", () => {
             assert.equal(def.classes[0].constructor.parameters.length, 0);
-        })
+        });
     });
 
     describe("constructor with parameters", () => {
@@ -43,6 +43,6 @@ class MyClass {
 
         it("should have two parameters", () => {
             assert.equal(def.classes[0].constructor.parameters.length, 2);
-        })
+        });
     });
 });
