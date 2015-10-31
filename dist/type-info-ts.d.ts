@@ -1,5 +1,5 @@
 // This file was manually created because I couldn't find a good solution to automatically create it :(
-declare module 'type-info-ts' {
+declare module "type-info-ts" {
     class Type {
         name: string;
     }
@@ -16,6 +16,14 @@ declare module 'type-info-ts' {
         decorators: DecoratorDefinition[];
     }
 
+    class ParameteredDefinition {
+        parameters: ParameterDefinition[];
+    }
+
+    class ReturnTypedDefinition {
+        returnType: Type;
+    }
+
     class ScopedDefinition {
         scope: Scope;
     }
@@ -30,11 +38,14 @@ declare module 'type-info-ts' {
         typeParameter: TypeParameterDefinition;
     }
 
-    class MethodDefinition implements NamedDefinition, DecoratedDefinition, ScopedDefinition {
+    class ConstructorDefinition implements ParameteredDefinition {
         parameters: ParameterDefinition[];
+    }
 
+    class MethodDefinition implements NamedDefinition, DecoratedDefinition, ParameteredDefinition, ReturnTypedDefinition, ScopedDefinition {
         name: string;
         decorators: DecoratorDefinition[];
+        parameters: ParameterDefinition[];
         returnType: Type;
         scope: Scope;
     }

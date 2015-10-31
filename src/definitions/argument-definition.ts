@@ -5,8 +5,8 @@ export class ArgumentDefinition {
     private _text: string;
 
     constructor(arg: ts.Expression) {
-        this.isSupported(arg);
         this.fillName(arg);
+        this.isSupported(arg);
     }
 
     @Serializable

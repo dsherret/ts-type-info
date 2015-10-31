@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {MethodDefinition, PropertyDefinition, TypeParameterDefinition, DecoratorDefinition} from "./../definitions";
+import {ConstructorDefinition, DecoratorDefinition, MethodDefinition, PropertyDefinition, TypeParameterDefinition} from "./../definitions";
 import {applyMixins, TypeChecker, Serializable} from "./../utils";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
@@ -8,17 +8,23 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private _methods: MethodDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
     private _typeParameter: TypeParameterDefinition;
+    private _constructor: ConstructorDefinition;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
-        this.createMembers(typeChecker, symbol);
-
         this.fillName(symbol);
         this.fillDecorators(symbol);
+
+        this.createMembers(typeChecker, symbol);
     }
 
     @Serializable
     get baseClasses() {
         return this._baseClasses;
+    }
+
+    @Serializable
+    get constructor() {
+        return this._constructor;
     }
 
     @Serializable
@@ -45,7 +51,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
                 this._properties.push(new PropertyDefinition(typeChecker, member));
             }
             else if ((member.getFlags() & ts.SymbolFlags.Constructor) != 0) {
-                throw `Constructors are currently not supported. Class: ${this.name}`;
+                this.verifyConstructorNotSet();
+                this._constructor = new ConstructorDefinition(typeChecker, member);
             }
             else if (TypeParameterDefinition.isTypeParameter(member)) {
                 this.verifyTypeParameterNotSet();
@@ -57,9 +64,15 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
         });
     }
 
+    private verifyConstructorNotSet() {
+        if (this._constructor != null) {
+            throw `Unknown error: Duplicate constructors on ${this.name}.`;
+        }
+    }
+
     private verifyTypeParameterNotSet() {
         if (this._typeParameter != null) {
-            throw "Unknown error: Duplicate type parameter.";
+            throw `Unknown error: Duplicate type parameter on ${this.name}`;
         }
     }
 

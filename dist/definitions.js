@@ -7,5 +7,6 @@ __export(require("./definitions/property-definition"));
 __export(require("./definitions/argument-definition"));
 __export(require("./definitions/method-definition"));
 __export(require("./definitions/type-parameter-definition"));
+__export(require("./definitions/constructor-definition"));
 __export(require("./definitions/class-definition"));
 __export(require("./definitions/file-definition"));

@@ -9,8 +9,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var utils_1 = require("./../utils");
 var ArgumentDefinition = (function () {
     function ArgumentDefinition(arg) {
-        this.isSupported(arg);
         this.fillName(arg);
+        this.isSupported(arg);
     }
     Object.defineProperty(ArgumentDefinition.prototype, "text", {
         get: function () {

@@ -1,7 +1,7 @@
 import {getStringInfo} from "./../../main";
 import * as assert from "assert";
 
-describe("class tests", () => {
+describe("class name tests", () => {
     const code = `
 class MyClass {
 }`;

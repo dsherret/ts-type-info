@@ -16,13 +16,20 @@ var ClassDefinition = (function () {
         this._baseClasses = _baseClasses;
         this._methods = [];
         this._properties = [];
-        this.createMembers(typeChecker, symbol);
         this.fillName(symbol);
         this.fillDecorators(symbol);
+        this.createMembers(typeChecker, symbol);
     }
     Object.defineProperty(ClassDefinition.prototype, "baseClasses", {
         get: function () {
             return this._baseClasses;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ClassDefinition.prototype, "constructor", {
+        get: function () {
+            return this._constructor;
         },
         enumerable: true,
         configurable: true
@@ -58,7 +65,8 @@ var ClassDefinition = (function () {
                 _this._properties.push(new definitions_1.PropertyDefinition(typeChecker, member));
             }
             else if ((member.getFlags() & 16384) != 0) {
-                throw "Constructors are currently not supported. Class: " + _this.name;
+                _this.verifyConstructorNotSet();
+                _this._constructor = new definitions_1.ConstructorDefinition(typeChecker, member);
             }
             else if (definitions_1.TypeParameterDefinition.isTypeParameter(member)) {
                 _this.verifyTypeParameterNotSet();
@@ -69,9 +77,14 @@ var ClassDefinition = (function () {
             }
         });
     };
+    ClassDefinition.prototype.verifyConstructorNotSet = function () {
+        if (this._constructor != null) {
+            throw "Unknown error: Duplicate constructors on " + this.name + ".";
+        }
+    };
     ClassDefinition.prototype.verifyTypeParameterNotSet = function () {
         if (this._typeParameter != null) {
-            throw "Unknown error: Duplicate type parameter.";
+            throw "Unknown error: Duplicate type parameter on " + this.name;
         }
     };
     ClassDefinition.isClassDefinition = function (symbol) {
@@ -81,6 +94,10 @@ var ClassDefinition = (function () {
         __decorate([
             utils_1.Serializable
         ], ClassDefinition.prototype, "baseClasses", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "baseClasses")));
+    Object.defineProperty(ClassDefinition.prototype, "constructor",
+        __decorate([
+            utils_1.Serializable
+        ], ClassDefinition.prototype, "constructor", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "constructor")));
     Object.defineProperty(ClassDefinition.prototype, "methods",
         __decorate([
             utils_1.Serializable
