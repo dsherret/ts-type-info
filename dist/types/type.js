@@ -17,6 +17,10 @@ var Type = (function () {
             this.fillCallSignatures(typeChecker);
             this.fillProperties(typeChecker);
         }
+        else {
+            this._properties = [];
+            this._callSignatures = [];
+        }
     }
     Object.defineProperty(Type.prototype, "name", {
         get: function () {
@@ -50,14 +54,15 @@ var Type = (function () {
         return (this._tsType.flags & (1024 |
             2048 |
             80896 |
-            131072)) != 0;
+            131072)) !== 0;
     };
     Type.prototype.fillProperties = function (typeChecker) {
         var properties = this._tsType.getProperties();
         this._properties = properties.map(function (property) { return new definitions_1.PropertyDefinition(typeChecker, property); });
     };
     Type.prototype.fillCallSignatures = function (typeChecker) {
-        this._callSignatures = this._tsType.getCallSignatures().map(function (callSignature) { return new definitions_1.CallSignatureDefinition(typeChecker, callSignature); });
+        this._callSignatures = this._tsType.getCallSignatures()
+            .map(function (callSignature) { return new definitions_1.CallSignatureDefinition(typeChecker, callSignature); });
     };
     Object.defineProperty(Type.prototype, "name",
         __decorate([

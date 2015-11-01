@@ -14,6 +14,10 @@ export class Type {
             this.fillCallSignatures(typeChecker);
             this.fillProperties(typeChecker);
         }
+        else {
+            this._properties = [];
+            this._callSignatures = [];
+        }
     }
 
     @Serializable
@@ -36,13 +40,13 @@ export class Type {
     }
 
     private shouldGetAllInfo(typeChecker: TypeChecker) {
-        // only get specific info for specific types
+        // only get properties and call signature info for specific types
         return (this._tsType.flags & (
             ts.TypeFlags.Class |
             ts.TypeFlags.Interface |
             ts.TypeFlags.ObjectType |
             ts.TypeFlags.Instantiated
-        )) != 0;
+        )) !== 0;
     }
 
     private fillProperties(typeChecker: TypeChecker) {
@@ -52,6 +56,7 @@ export class Type {
     }
 
     private fillCallSignatures(typeChecker: TypeChecker) {
-        this._callSignatures = this._tsType.getCallSignatures().map(callSignature => new CallSignatureDefinition(typeChecker, callSignature));
+        this._callSignatures = this._tsType.getCallSignatures()
+                                           .map(callSignature => new CallSignatureDefinition(typeChecker, callSignature));
     }
 }

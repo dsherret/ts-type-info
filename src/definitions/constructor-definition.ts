@@ -1,7 +1,5 @@
 import * as ts from "typescript";
 import {ParameterDefinition} from "./../definitions";
-import {Scope} from "./../scope";
-import {Type} from "./../types";
 import {applyMixins, TypeChecker} from "./../utils";
 import {IParameteredDefinition, ParameteredDefinition} from "./base/parametered-definition";
 
@@ -16,7 +14,7 @@ export class ConstructorDefinition implements IParameteredDefinition {
     parameters: ParameterDefinition[];
 
     static isConstructor(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Constructor) != 0
+        return (symbol.getFlags() & ts.SymbolFlags.Constructor) !== 0;
     }
 }
 

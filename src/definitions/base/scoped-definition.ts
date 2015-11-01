@@ -11,10 +11,10 @@ export abstract class ScopedDefinition implements IScopedDefinition {
     private _scope: Scope;
 
     fillScope(symbol: ts.Symbol) {
-        if ((symbol.valueDeclaration.flags & ts.NodeFlags.Private) != 0) {
+        if ((symbol.valueDeclaration.flags & ts.NodeFlags.Private) !== 0) {
             this._scope = Scope.private;
         }
-        else if ((symbol.valueDeclaration.flags & ts.NodeFlags.Protected) != 0) {
+        else if ((symbol.valueDeclaration.flags & ts.NodeFlags.Protected) !== 0) {
             this._scope = Scope.protected;
         }
         else {

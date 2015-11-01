@@ -10,8 +10,7 @@
         "class-name": true,
         "comment-format": [
             true,
-            "check-space",
-            "check-lowercase"
+            "check-space"
         ],
         "curly": true,
         "eofline": true,
@@ -23,7 +22,7 @@
         "label-undefined": true,
         "max-line-length": [ true, 140 ],
         "member-ordering": [
-            true,
+            false,
             "variables-before-functions"
         ],
         "no-any": false,

@@ -7,7 +7,6 @@ var return_typed_definition_1 = require("./base/return-typed-definition");
 var scoped_definition_1 = require("./base/scoped-definition");
 var MethodDefinition = (function () {
     function MethodDefinition(typeChecker, symbol) {
-        this._parameters = [];
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillScope(symbol);

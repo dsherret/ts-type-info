@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import {Scope} from "./../scope";
 import {ParameterDefinition, TypeParameterDefinition} from "./../definitions";
 import {IReturnTypedDefinition, ReturnTypedDefinition} from "./base/return-typed-definition";
 import {IParameteredDefinition, ParameteredDefinition} from "./base/parametered-definition";

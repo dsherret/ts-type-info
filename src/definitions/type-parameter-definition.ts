@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {Type} from "./../types";
-import {applyMixins, TypeChecker, Serializable} from "./../utils";
+import {applyMixins, TypeChecker} from "./../utils";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 
 export class TypeParameterDefinition implements INamedDefinition {

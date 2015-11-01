@@ -5,7 +5,8 @@ var KeyValueCache = (function () {
     KeyValueCache.prototype.get = function (key) {
         for (var _i = 0, _a = this.cacheItems; _i < _a.length; _i++) {
             var cacheItem = _a[_i];
-            if (cacheItem.key == key) {
+            if (cacheItem.key === key) {
+                console.log('FOUND');
                 return cacheItem.value;
             }
         }

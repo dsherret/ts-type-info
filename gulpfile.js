@@ -11,7 +11,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
         typescript: require("typescript")
     });
 
-    return gulp.src(["./typings/**/*.d.ts", "./src/**/*.ts"])
+    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts"])
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
         .pipe(sourcemaps.write("./"))

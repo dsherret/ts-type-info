@@ -8,7 +8,7 @@ export class KeyValueCache<T, U> {
 
     get(key: T) {
         for (let cacheItem of this.cacheItems) {
-            if (cacheItem.key == key) {
+            if (cacheItem.key === key) {
                 return cacheItem.value;
             }
         }

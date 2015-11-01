@@ -39,7 +39,7 @@ export abstract class ParameteredDefinition implements IParameteredDefinition {
             // methods
             return symbol.valueDeclaration as ts.SignatureDeclaration;
         }
-        else if (symbol.getDeclarations().length == 1) {
+        else if (symbol.getDeclarations().length === 1) {
             // constructors
             return symbol.getDeclarations()[0] as ts.SignatureDeclaration;
         }

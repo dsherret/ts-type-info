@@ -1,6 +1,4 @@
 import * as ts from "typescript";
-import {Scope} from "./../scope";
-import {DecoratorDefinition} from "./../definitions";
 import {applyMixins, TypeChecker} from "./../utils";
 import {Type} from "./../types";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";

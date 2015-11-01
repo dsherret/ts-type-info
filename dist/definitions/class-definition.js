@@ -66,7 +66,7 @@ var ClassDefinition = (function () {
             else if (definitions_1.ClassPropertyDefinition.isProperty(member)) {
                 _this._properties.push(new definitions_1.ClassPropertyDefinition(typeChecker, member));
             }
-            else if ((member.getFlags() & 16384) != 0) {
+            else if (definitions_1.ConstructorDefinition.isConstructor(member)) {
                 _this.verifyConstructorNotSet();
                 _this._constructor = new definitions_1.ConstructorDefinition(typeChecker, member);
             }

@@ -37,7 +37,7 @@ function getStringInfo(code) {
 }
 exports.getStringInfo = getStringInfo;
 function addNewLineToCodeIfNecessary(code) {
-    if (typeof code === "string" && code.length > 0 && code[code.length - 1] != "\n") {
+    if (typeof code === "string" && code.length > 0 && code[code.length - 1] !== "\n") {
         code += "\n";
     }
     return code;

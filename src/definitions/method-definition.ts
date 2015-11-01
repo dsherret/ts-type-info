@@ -2,17 +2,15 @@ import * as ts from "typescript";
 import {DecoratorDefinition, ParameterDefinition} from "./../definitions";
 import {Scope} from "./../scope";
 import {Type} from "./../types";
-import {applyMixins, TypeChecker, Serializable} from "./../utils";
+import {applyMixins, TypeChecker} from "./../utils";
 import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 import {IParameteredDefinition, ParameteredDefinition} from "./base/parametered-definition";
 import {IReturnTypedDefinition, ReturnTypedDefinition} from "./base/return-typed-definition";
 import {IScopedDefinition, ScopedDefinition} from "./base/scoped-definition";
 
-export class MethodDefinition implements INamedDefinition, IDecoratedDefinition, IParameteredDefinition, IReturnTypedDefinition, IScopedDefinition {
-    private _parameters: ParameterDefinition[] = [];
-    private _returnType: Type;
-
+export class MethodDefinition implements INamedDefinition, IDecoratedDefinition, IParameteredDefinition,
+    IReturnTypedDefinition, IScopedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillDecorators(symbol);

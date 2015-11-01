@@ -25,8 +25,7 @@ export function getStringInfo(code: string): FileDefinition {
     const tmpFile = tmp.fileSync({ postfix: ".ts" });
     let fileDefinition: FileDefinition;
 
-    try
-    {
+    try {
         code = addNewLineToCodeIfNecessary(code);
         fs.writeFileSync(tmpFile.name, code + "\n");
         fileDefinition = getFileInfo(tmpFile.name)[0];
@@ -39,7 +38,7 @@ export function getStringInfo(code: string): FileDefinition {
 }
 
 function addNewLineToCodeIfNecessary(code: string) {
-    if (typeof code === "string" && code.length > 0 && code[code.length - 1] != "\n") {
+    if (typeof code === "string" && code.length > 0 && code[code.length - 1] !== "\n") {
         code += "\n";
     }
 
