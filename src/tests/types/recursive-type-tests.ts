@@ -25,6 +25,6 @@ class Note {
 
         it("should have type Note", () => {
             assert.equal(prop.type.name, "Note");
-        })
+        });
     });
 });
