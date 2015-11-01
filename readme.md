@@ -3,7 +3,7 @@ TypeInfoTS
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get the type and structure information of TypeScript code in an easily usable format.
 
-This is a very experimental library. Currently you can only get basic type information out of files that export a class.
+This is a very experimental library. Currently you can only get basic type information from classes.
 
 ## Example
 

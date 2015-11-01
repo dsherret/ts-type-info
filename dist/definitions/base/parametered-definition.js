@@ -38,7 +38,7 @@ var ParameteredDefinition = (function () {
         if (symbol.valueDeclaration != null) {
             return symbol.valueDeclaration;
         }
-        else if (symbol.getDeclarations().length == 1) {
+        else if (symbol.getDeclarations().length === 1) {
             return symbol.getDeclarations()[0];
         }
         else {
