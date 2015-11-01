@@ -6,13 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
+var ts = require("typescript");
 var definitions_1 = require("./../definitions");
 var utils_1 = require("./../utils");
 var Type = (function () {
     function Type(typeChecker, _tsType) {
         this._tsType = _tsType;
         this._name = typeChecker.typeToString(_tsType);
-        this.fillProperties(typeChecker);
+        if (this.shouldGetAllInfo(typeChecker)) {
+            this.fillCallSignatures(typeChecker);
+            this.fillProperties(typeChecker);
+        }
     }
     Object.defineProperty(Type.prototype, "name", {
         get: function () {
@@ -28,6 +32,13 @@ var Type = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Type.prototype, "callSignatures", {
+        get: function () {
+            return this._callSignatures;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Type.prototype, "tsType", {
         get: function () {
             return this._tsType;
@@ -35,9 +46,18 @@ var Type = (function () {
         enumerable: true,
         configurable: true
     });
+    Type.prototype.shouldGetAllInfo = function (typeChecker) {
+        return (this._tsType.flags & (1024 |
+            2048 |
+            80896 |
+            131072)) != 0;
+    };
     Type.prototype.fillProperties = function (typeChecker) {
         var properties = this._tsType.getProperties();
         this._properties = properties.map(function (property) { return new definitions_1.PropertyDefinition(typeChecker, property); });
+    };
+    Type.prototype.fillCallSignatures = function (typeChecker) {
+        this._callSignatures = this._tsType.getCallSignatures().map(function (callSignature) { return new definitions_1.CallSignatureDefinition(typeChecker, callSignature); });
     };
     Object.defineProperty(Type.prototype, "name",
         __decorate([
@@ -47,6 +67,10 @@ var Type = (function () {
         __decorate([
             utils_1.Serializable
         ], Type.prototype, "properties", Object.getOwnPropertyDescriptor(Type.prototype, "properties")));
+    Object.defineProperty(Type.prototype, "callSignatures",
+        __decorate([
+            utils_1.Serializable
+        ], Type.prototype, "callSignatures", Object.getOwnPropertyDescriptor(Type.prototype, "callSignatures")));
     return Type;
 })();
 exports.Type = Type;

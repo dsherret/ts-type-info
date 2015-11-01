@@ -17,7 +17,7 @@ function getFileInfo() {
         .filter(function (file) { return path.basename(file.fileName) !== "lib.d.ts"; })
         .map(function (file) {
         var typeChecker = new utils_1.TypeChecker(tsTypeChecker, file);
-        var definitionCache = new utils_1.DefinitionCache(typeChecker);
+        var definitionCache = new utils_1.ClassDefinitionCache(typeChecker);
         return new definitions_1.FileDefinition(typeChecker, definitionCache, file);
     });
 }

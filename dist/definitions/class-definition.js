@@ -16,6 +16,7 @@ var ClassDefinition = (function () {
         this._baseClasses = _baseClasses;
         this._methods = [];
         this._properties = [];
+        this._typeParameters = [];
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.createMembers(typeChecker, symbol);
@@ -48,15 +49,16 @@ var ClassDefinition = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ClassDefinition.prototype, "typeParameter", {
+    Object.defineProperty(ClassDefinition.prototype, "typeParameters", {
         get: function () {
-            return this._typeParameter;
+            return this._typeParameters;
         },
         enumerable: true,
         configurable: true
     });
     ClassDefinition.prototype.createMembers = function (typeChecker, symbol) {
         var _this = this;
+        this._typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             if (definitions_1.MethodDefinition.isClassMethod(member)) {
                 _this._methods.push(new definitions_1.MethodDefinition(typeChecker, member));
@@ -69,8 +71,7 @@ var ClassDefinition = (function () {
                 _this._constructor = new definitions_1.ConstructorDefinition(typeChecker, member);
             }
             else if (definitions_1.TypeParameterDefinition.isTypeParameter(member)) {
-                _this.verifyTypeParameterNotSet();
-                _this._typeParameter = new definitions_1.TypeParameterDefinition(typeChecker, member);
+                _this._typeParameters.push(new definitions_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
                 throw "Not implemented '" + member.getName() + "'";
@@ -80,11 +81,6 @@ var ClassDefinition = (function () {
     ClassDefinition.prototype.verifyConstructorNotSet = function () {
         if (this._constructor != null) {
             throw "Unknown error: Duplicate constructors on " + this.name + ".";
-        }
-    };
-    ClassDefinition.prototype.verifyTypeParameterNotSet = function () {
-        if (this._typeParameter != null) {
-            throw "Unknown error: Duplicate type parameter on " + this.name;
         }
     };
     ClassDefinition.isClassDefinition = function (symbol) {
@@ -106,10 +102,10 @@ var ClassDefinition = (function () {
         __decorate([
             utils_1.Serializable
         ], ClassDefinition.prototype, "properties", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "properties")));
-    Object.defineProperty(ClassDefinition.prototype, "typeParameter",
+    Object.defineProperty(ClassDefinition.prototype, "typeParameters",
         __decorate([
             utils_1.Serializable
-        ], ClassDefinition.prototype, "typeParameter", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "typeParameter")));
+        ], ClassDefinition.prototype, "typeParameters", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "typeParameters")));
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;

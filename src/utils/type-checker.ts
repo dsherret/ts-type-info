@@ -1,9 +1,12 @@
 import * as ts from "typescript";
 import {Type} from "./../types";
+import {KeyValueCache} from "./../utils";
 
 // this is just what I've found works. There are some hacky solutions in here.
 
 export class TypeChecker {
+    private typeCache = new KeyValueCache<ts.Type, Type>();
+
     constructor(private typeChecker: ts.TypeChecker, private node: ts.Node) {
     }
 
@@ -19,9 +22,13 @@ export class TypeChecker {
 
     getReturnTypeFromSymbol(symbol: ts.Symbol) {
         const signature = this.typeChecker.getSignatureFromDeclaration(symbol.valueDeclaration as any);
+        return this.getReturnTypeFromSignature(signature);
+    }
+
+    getReturnTypeFromSignature(signature: ts.Signature) {
         const tsType = this.typeChecker.getReturnTypeOfSignature(signature);
 
-        return new Type(this, tsType);
+        return this.getTypeFromTsType(tsType);
     }
 
     getSymbolAtLocation(node: ts.Node) {
@@ -33,11 +40,11 @@ export class TypeChecker {
     }
 
     getTypeAtLocation(node: ts.Node) {
-        return new Type(this, this.typeChecker.getTypeAtLocation(node));
+        return this.getTypeFromTsType(this.typeChecker.getTypeAtLocation(node));
     }
 
     getTypeOfSymbol(symbol: ts.Symbol) {
-        return new Type(this, this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
+        return this.getTypeFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
     }
 
     getTypeCheckerForTesting() {
@@ -47,5 +54,20 @@ export class TypeChecker {
 
     typeToString(tsType: ts.Type) {
         return this.typeChecker.typeToString(tsType, this.node, ts.TypeFormatFlags.None);
+    }
+
+    getMinArgumentCount(signature: ts.Signature) {
+        return (signature as any)["minArgumentCount"];
+    }
+
+    getTypeFromTsType(tsType: ts.Type) {
+        let type = this.typeCache.get(tsType);
+
+        if (type == null) {
+            type = new Type(this, tsType);
+            this.typeCache.add(tsType, type);
+        }
+
+        return type;
     }
 }

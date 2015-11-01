@@ -3,7 +3,7 @@ import {FileDefinition} from "./definitions";
 import * as path from "path";
 import * as tmp from "tmp";
 import * as fs from "fs";
-import {TypeChecker, DefinitionCache} from "./utils";
+import {TypeChecker, ClassDefinitionCache} from "./utils";
 
 export function getFileInfo(...fileNames: string[]): FileDefinition[] {
     const options: ts.CompilerOptions = { noLib: false, experimentalDecorators: true };
@@ -15,7 +15,7 @@ export function getFileInfo(...fileNames: string[]): FileDefinition[] {
         .filter(file => path.basename(file.fileName) !== "lib.d.ts")
         .map(file => {
             const typeChecker = new TypeChecker(tsTypeChecker, file);
-            const definitionCache = new DefinitionCache(typeChecker);
+            const definitionCache = new ClassDefinitionCache(typeChecker);
 
             return new FileDefinition(typeChecker, definitionCache, file);
         });

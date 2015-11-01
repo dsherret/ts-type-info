@@ -3,6 +3,7 @@ declare module "type-info-ts" {
     class Type {
         name: string;
         properties: PropertyDefinition[];
+        callSignatures: CallSignatureDefinition[];
     }
 
     class NamedDefinition {
@@ -33,10 +34,10 @@ declare module "type-info-ts" {
         methods: MethodDefinition[];
         properties: ClassPropertyDefinition[];
         baseClasses: ClassDefinition[];
+        typeParameters: TypeParameterDefinition[];
 
         name: string;
         decorators: DecoratorDefinition[];
-        typeParameter: TypeParameterDefinition;
     }
 
     class ConstructorDefinition implements ParameteredDefinition {
@@ -84,6 +85,13 @@ declare module "type-info-ts" {
     class TypeParameterDefinition implements NamedDefinition {
         constraint: Type;
         name: string;
+    }
+
+    class CallSignatureDefinition implements ReturnTypedDefinition, ParameteredDefinition {
+        minArgumentCount: number;
+        returnType: Type;
+        typeParameters: TypeParameterDefinition[];
+        parameters: ParameterDefinition[];
     }
 
     export enum Scope {

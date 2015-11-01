@@ -11,8 +11,8 @@ var MethodDefinition = (function () {
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillScope(symbol);
-        this.fillParameters(typeChecker, symbol);
-        this.fillReturnType(typeChecker, symbol);
+        this.fillParametersBySymbol(typeChecker, symbol);
+        this.fillReturnTypeBySymbol(typeChecker, symbol);
     }
     MethodDefinition.isClassMethod = function (symbol) {
         return (symbol.getFlags() & 8192) !== 0;

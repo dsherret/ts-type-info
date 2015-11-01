@@ -4,19 +4,28 @@ import {ParameterDefinition} from "./../../definitions";
 import {TypeChecker} from "./../../utils";
 
 export interface IParameteredDefinition {
-    fillParameters(typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    fillParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    fillParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature): void;
     parameters: ParameterDefinition[];
 }
 
 export abstract class ParameteredDefinition implements IParameteredDefinition {
     private _parameters: ParameterDefinition[] = [];
 
-    fillParameters(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    fillParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this._parameters = [];
 
         for (var param of this.getDeclaration(symbol).parameters) {
             let parameterSymbol = typeChecker.getSymbolAtLocation(param);
             this._parameters.push(new ParameterDefinition(typeChecker, parameterSymbol));
+        }
+    }
+
+    fillParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature) {
+        this._parameters = [];
+
+        for (var param of signature.parameters) {
+            this._parameters.push(new ParameterDefinition(typeChecker, param));
         }
     }
 

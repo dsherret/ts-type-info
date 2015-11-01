@@ -7,7 +7,7 @@ import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-defini
 export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private _methods: MethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
-    private _typeParameter: TypeParameterDefinition;
+    private _typeParameters: TypeParameterDefinition[] = [];
     private _constructor: ConstructorDefinition;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
@@ -38,11 +38,13 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     }
 
     @Serializable
-    get typeParameter() {
-        return this._typeParameter;
+    get typeParameters() {
+        return this._typeParameters;
     }
 
     private createMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        this._typeParameters = [];
+
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             if (MethodDefinition.isClassMethod(member)) {
                 this._methods.push(new MethodDefinition(typeChecker, member));
@@ -55,8 +57,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
                 this._constructor = new ConstructorDefinition(typeChecker, member);
             }
             else if (TypeParameterDefinition.isTypeParameter(member)) {
-                this.verifyTypeParameterNotSet();
-                this._typeParameter = new TypeParameterDefinition(typeChecker, member);
+                // todo: figure out better way of getting type parameters, like how it works in call signature definition?
+                this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
             }
             else {
                 throw `Not implemented '${member.getName()}'`;
@@ -67,12 +69,6 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private verifyConstructorNotSet() {
         if (this._constructor != null) {
             throw `Unknown error: Duplicate constructors on ${this.name}.`;
-        }
-    }
-
-    private verifyTypeParameterNotSet() {
-        if (this._typeParameter != null) {
-            throw `Unknown error: Duplicate type parameter on ${this.name}`;
         }
     }
 

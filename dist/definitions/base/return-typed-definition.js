@@ -10,8 +10,11 @@ var utils_1 = require("./../../utils");
 var ReturnTypedDefinition = (function () {
     function ReturnTypedDefinition() {
     }
-    ReturnTypedDefinition.prototype.fillReturnType = function (typeChecker, symbol) {
+    ReturnTypedDefinition.prototype.fillReturnTypeBySymbol = function (typeChecker, symbol) {
         this._returnType = typeChecker.getReturnTypeFromSymbol(symbol);
+    };
+    ReturnTypedDefinition.prototype.fillReturnTypeBySignature = function (typeChecker, signature) {
+        this._returnType = typeChecker.getReturnTypeFromSignature(signature);
     };
     Object.defineProperty(ReturnTypedDefinition.prototype, "returnType", {
         get: function () {

@@ -12,12 +12,19 @@ var ParameteredDefinition = (function () {
     function ParameteredDefinition() {
         this._parameters = [];
     }
-    ParameteredDefinition.prototype.fillParameters = function (typeChecker, symbol) {
+    ParameteredDefinition.prototype.fillParametersBySymbol = function (typeChecker, symbol) {
         this._parameters = [];
         for (var _i = 0, _a = this.getDeclaration(symbol).parameters; _i < _a.length; _i++) {
             var param = _a[_i];
             var parameterSymbol = typeChecker.getSymbolAtLocation(param);
             this._parameters.push(new definitions_1.ParameterDefinition(typeChecker, parameterSymbol));
+        }
+    };
+    ParameteredDefinition.prototype.fillParametersBySignature = function (typeChecker, signature) {
+        this._parameters = [];
+        for (var _i = 0, _a = signature.parameters; _i < _a.length; _i++) {
+            var param = _a[_i];
+            this._parameters.push(new definitions_1.ParameterDefinition(typeChecker, param));
         }
     };
     Object.defineProperty(ParameteredDefinition.prototype, "parameters", {

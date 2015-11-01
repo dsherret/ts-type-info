@@ -1,12 +1,12 @@
 import * as ts from "typescript";
-import {TypeChecker, Serializable, DefinitionCache} from "./../utils";
+import {TypeChecker, Serializable, ClassDefinitionCache} from "./../utils";
 import {ClassDefinition} from "./../definitions";
 
 export class FileDefinition {
     private _name: string;
     private _classes: ClassDefinition[] = [];
 
-    constructor(private typeChecker: TypeChecker, private definitionCache: DefinitionCache, private file: ts.SourceFile) {
+    constructor(private typeChecker: TypeChecker, private definitionCache: ClassDefinitionCache, private file: ts.SourceFile) {
         this._name = file.fileName;
         this.fillClasses();
     }

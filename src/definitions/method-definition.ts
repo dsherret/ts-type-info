@@ -17,8 +17,8 @@ export class MethodDefinition implements INamedDefinition, IDecoratedDefinition,
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillScope(symbol);
-        this.fillParameters(typeChecker, symbol);
-        this.fillReturnType(typeChecker, symbol);
+        this.fillParametersBySymbol(typeChecker, symbol);
+        this.fillReturnTypeBySymbol(typeChecker, symbol);
     }
 
     // NameDefinition
@@ -28,10 +28,12 @@ export class MethodDefinition implements INamedDefinition, IDecoratedDefinition,
     fillDecorators: (symbol: ts.Symbol) => void;
     decorators: DecoratorDefinition[];
     // ParameteredDefinition
-    fillParameters: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     parameters: ParameterDefinition[];
     // ReturnTyped
-    fillReturnType: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillReturnTypeBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillReturnTypeBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     returnType: Type;
     // ScopeDefinition
     scope: Scope;

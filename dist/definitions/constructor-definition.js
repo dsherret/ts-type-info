@@ -3,7 +3,7 @@ var utils_1 = require("./../utils");
 var parametered_definition_1 = require("./base/parametered-definition");
 var ConstructorDefinition = (function () {
     function ConstructorDefinition(typeChecker, symbol) {
-        this.fillParameters(typeChecker, symbol);
+        this.fillParametersBySymbol(typeChecker, symbol);
     }
     ConstructorDefinition.isConstructor = function (symbol) {
         return (symbol.getFlags() & 16384) != 0;

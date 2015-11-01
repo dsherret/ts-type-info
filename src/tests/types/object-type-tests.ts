@@ -13,22 +13,26 @@ class Note {
     const def = getStringInfo(code);
 
     describe("myStringParam", () => {
+        const prop = def.classes[0].methods[0].parameters[0].type.properties[0];
+
         it("should exist", () => {
-            assert.equal(def.classes[0].methods[0].parameters[0].type.properties[0].name, "myStringParam");
+            assert.equal(prop.name, "myStringParam");
         });
 
         it("should have type string", () => {
-            assert.equal(def.classes[0].methods[0].parameters[0].type.properties[0].type.name, "string");
+            assert.equal(prop.type.name, "string");
         });
     });
 
     describe("myOtherType", () => {
+        const prop = def.classes[0].methods[0].parameters[0].type.properties[1];
+
         it("should exist", () => {
-            assert.equal(def.classes[0].methods[0].parameters[0].type.properties[1].name, "myOtherType");
+            assert.equal(prop.name, "myOtherType");
         });
 
         it("should have type Note", () => {
-            assert.equal(def.classes[0].methods[0].parameters[0].type.properties[1].type.name, "Note");
+            assert.equal(prop.type.name, "Note");
         });
     });
 });

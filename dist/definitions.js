@@ -5,6 +5,7 @@ __export(require("./definitions/decorator-definition"));
 __export(require("./definitions/parameter-definition"));
 __export(require("./definitions/property-definition"));
 __export(require("./definitions/class-property-definition"));
+__export(require("./definitions/call-signature-definition"));
 __export(require("./definitions/argument-definition"));
 __export(require("./definitions/method-definition"));
 __export(require("./definitions/type-parameter-definition"));

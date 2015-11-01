@@ -10,6 +10,6 @@ class MyClass<T extends string> {
     const def = getStringInfo(code);
 
     it("it should extend a type string", () => {
-        assert.equal(def.classes[0].typeParameter.constraint.name, "string");
+        assert.equal(def.classes[0].typeParameters[0].constraint.name, "string");
     });
 });

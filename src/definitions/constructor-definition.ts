@@ -7,11 +7,12 @@ import {IParameteredDefinition, ParameteredDefinition} from "./base/parametered-
 
 export class ConstructorDefinition implements IParameteredDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.fillParameters(typeChecker, symbol);
+        this.fillParametersBySymbol(typeChecker, symbol);
     }
 
     // ParameteredDefinition
-    fillParameters: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     parameters: ParameterDefinition[];
 
     static isConstructor(symbol: ts.Symbol) {
