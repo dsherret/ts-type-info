@@ -13,6 +13,8 @@ var Type = (function () {
     function Type(typeChecker, _tsType) {
         this._tsType = _tsType;
         this._name = typeChecker.typeToString(_tsType);
+    }
+    Type.prototype.fillTypeInformation = function (typeChecker) {
         if (this.shouldGetAllInfo(typeChecker)) {
             this.fillCallSignatures(typeChecker);
             this.fillProperties(typeChecker);
@@ -21,7 +23,7 @@ var Type = (function () {
             this._properties = [];
             this._callSignatures = [];
         }
-    }
+    };
     Object.defineProperty(Type.prototype, "name", {
         get: function () {
             return this._name;

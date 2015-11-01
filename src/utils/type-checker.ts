@@ -1,11 +1,10 @@
 import * as ts from "typescript";
-import {Type} from "./../types";
-import {KeyValueCache} from "./../utils";
+import {TypeCreator} from "./../utils";
 
 // this is just what I've found works. There are some hacky solutions in here.
 
 export class TypeChecker {
-    private typeCache = new KeyValueCache<ts.Type, Type>();
+    private typeCreator = new TypeCreator(this);
 
     constructor(private typeChecker: ts.TypeChecker, private node: ts.Node) {
     }
@@ -61,13 +60,6 @@ export class TypeChecker {
     }
 
     getTypeFromTsType(tsType: ts.Type) {
-        let type = this.typeCache.get(tsType);
-
-        if (type == null) {
-            type = new Type(this, tsType);
-            this.typeCache.add(tsType, type);
-        }
-
-        return type;
+        return this.typeCreator.get(tsType);
     }
 }

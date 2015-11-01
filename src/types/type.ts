@@ -9,7 +9,9 @@ export class Type {
 
     constructor(typeChecker: TypeChecker, private _tsType: ts.Type) {
         this._name = typeChecker.typeToString(_tsType);
+    }
 
+    fillTypeInformation(typeChecker: TypeChecker) {
         if (this.shouldGetAllInfo(typeChecker)) {
             this.fillCallSignatures(typeChecker);
             this.fillProperties(typeChecker);

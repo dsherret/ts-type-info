@@ -1,11 +1,10 @@
 var ts = require("typescript");
-var types_1 = require("./../types");
 var utils_1 = require("./../utils");
 var TypeChecker = (function () {
     function TypeChecker(typeChecker, node) {
         this.typeChecker = typeChecker;
         this.node = node;
-        this.typeCache = new utils_1.KeyValueCache();
+        this.typeCreator = new utils_1.TypeCreator(this);
     }
     TypeChecker.prototype.getBaseTypeSymbols = function (classSymbol) {
         return this.typeChecker.getBaseTypes(this.getTypeOfSymbol(classSymbol).tsType).map(function (baseTypes) {
@@ -45,12 +44,7 @@ var TypeChecker = (function () {
         return signature["minArgumentCount"];
     };
     TypeChecker.prototype.getTypeFromTsType = function (tsType) {
-        var type = this.typeCache.get(tsType);
-        if (type == null) {
-            type = new types_1.Type(this, tsType);
-            this.typeCache.add(tsType, type);
-        }
-        return type;
+        return this.typeCreator.get(tsType);
     };
     return TypeChecker;
 })();
