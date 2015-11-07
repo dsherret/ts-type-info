@@ -1,5 +1,5 @@
 // This file was manually created because I couldn't find a good solution to automatically create it :(
-declare module "type-info-ts" {
+declare module "ts-type-info" {
     class Type {
         name: string;
         properties: PropertyDefinition[];

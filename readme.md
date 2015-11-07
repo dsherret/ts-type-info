@@ -1,4 +1,4 @@
-TypeInfoTS
+TSTypeInfo
 ==========
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get the type and structure information of TypeScript code in an easily usable format.
@@ -22,9 +22,9 @@ export class MyClass {
 Get the file info:
 
 ```typescript
-import * as TypeInfoTS from "type-info-ts";
+import * as TsTypeInfo from "ts-type-info";
 
-console.log(JSON.stringify(TypeInfoTS.getFileInfo("V:/TestFile.ts")));
+console.log(JSON.stringify(TsTypeInfo.getFileInfo("V:/TestFile.ts")));
 ```
 
 ### Output
