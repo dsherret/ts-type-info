@@ -1,4 +1,4 @@
-var main_1 = require("./../../main");
+var main_1 = require("./../../../main");
 var assert = require("assert");
 describe("object type tests", function () {
     var code = "\nclass MyClass {\n    myMethod(obj: { myStringParam: string; myOtherType: Note; }) {\n    }\n}\nclass Note {\n}";

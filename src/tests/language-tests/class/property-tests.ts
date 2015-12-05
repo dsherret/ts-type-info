@@ -1,6 +1,6 @@
-import {getStringInfo} from "./../../main";
-import {Scope} from "./../../scope";
-import {ClassPropertyDefinition} from "./../../definitions";
+import {getStringInfo} from "./../../../main";
+import {Scope} from "./../../../scope";
+import {ClassPropertyDefinition} from "./../../../definitions";
 import * as assert from "assert";
 
 describe("class property tests", () => {

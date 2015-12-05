@@ -1,5 +1,5 @@
-var main_1 = require("./../../main");
-var scope_1 = require("./../../scope");
+var main_1 = require("./../../../main");
+var scope_1 = require("./../../../scope");
 var assert = require("assert");
 describe("class property tests", function () {
     var code = "\nclass MyClass {\n    myString: string;\n    myImplicit = 4;\n    myAny;\n\n    public myExplicitPublic;\n    protected myProtected;\n    private myPrivate;\n}";

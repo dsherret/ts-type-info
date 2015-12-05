@@ -1,4 +1,4 @@
-var main_1 = require("./../../main");
+var main_1 = require("./../../../main");
 var assert = require("assert");
 describe("function type tests", function () {
     var code = "\nclass MyClass {\n    myMethod(func: (str: string) => void)) {\n    }\n}";

@@ -1,4 +1,4 @@
-var main_1 = require("./../../main");
+var main_1 = require("./../../../main");
 var assert = require("assert");
 describe("type parameters - multiple", function () {
     var code = "\nclass MyClass<T, U> {\n    str: T;\n}";

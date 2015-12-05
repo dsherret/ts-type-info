@@ -1,7 +1,7 @@
 var utils_1 = require("./../../utils");
 var assert = require("assert");
-describe("#StringUtils", function () {
-    describe("ensureEndsWithNewline", function () {
+describe("StringUtils", function () {
+    describe("#ensureEndsWithNewline()", function () {
         it("should return null for a null string", function () {
             assert.equal(utils_1.StringUtils.ensureEndsWithNewline(null), null);
         });

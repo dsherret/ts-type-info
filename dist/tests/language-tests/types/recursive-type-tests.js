@@ -1,4 +1,4 @@
-var main_1 = require("./../../main");
+var main_1 = require("./../../../main");
 var assert = require("assert");
 describe("recursive type tests", function () {
     var code = "\nclass Note {\n    name: string;\n    note: Note;\n\n    myMethod(note: Note) {\n        let notes: Note[];\n        return notes;\n    }\n}\n";

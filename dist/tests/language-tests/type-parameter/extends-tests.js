@@ -1,4 +1,4 @@
-var main_1 = require("./../../main");
+var main_1 = require("./../../../main");
 var assert = require("assert");
 describe("type parameter with extends", function () {
     var code = "\nclass MyClass<T extends string> {\n    str: T;\n}";
