@@ -12,3 +12,5 @@ var ConstructorDefinition = (function () {
 })();
 exports.ConstructorDefinition = ConstructorDefinition;
 utils_1.applyMixins(ConstructorDefinition, [parametered_definition_1.ParameteredDefinition]);
+
+//# sourceMappingURL=constructor-definition.js.map

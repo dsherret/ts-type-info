@@ -52,3 +52,5 @@ var ParameteredDefinition = (function () {
     return ParameteredDefinition;
 })();
 exports.ParameteredDefinition = ParameteredDefinition;
+
+//# sourceMappingURL=parametered-definition.js.map

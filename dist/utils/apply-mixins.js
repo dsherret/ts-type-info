@@ -9,3 +9,5 @@ function applyMixins(derivedCtor, baseCtors) {
     });
 }
 exports.applyMixins = applyMixins;
+
+//# sourceMappingURL=apply-mixins.js.map

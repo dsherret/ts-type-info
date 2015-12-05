@@ -14,3 +14,5 @@ var PropertyDefinition = (function () {
 })();
 exports.PropertyDefinition = PropertyDefinition;
 utils_1.applyMixins(PropertyDefinition, [named_definition_1.NamedDefinition, typed_definition_1.TypedDefinition]);
+
+//# sourceMappingURL=property-definition.js.map

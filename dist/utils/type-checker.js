@@ -49,3 +49,5 @@ var TypeChecker = (function () {
     return TypeChecker;
 })();
 exports.TypeChecker = TypeChecker;
+
+//# sourceMappingURL=type-checker.js.map

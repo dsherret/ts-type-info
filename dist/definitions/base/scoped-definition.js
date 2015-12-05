@@ -37,3 +37,5 @@ var ScopedDefinition = (function () {
     return ScopedDefinition;
 })();
 exports.ScopedDefinition = ScopedDefinition;
+
+//# sourceMappingURL=scoped-definition.js.map

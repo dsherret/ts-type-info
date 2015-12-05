@@ -22,3 +22,5 @@ var TypeParameterDefinition = (function () {
 })();
 exports.TypeParameterDefinition = TypeParameterDefinition;
 utils_1.applyMixins(TypeParameterDefinition, [named_definition_1.NamedDefinition]);
+
+//# sourceMappingURL=type-parameter-definition.js.map

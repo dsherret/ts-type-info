@@ -22,3 +22,5 @@ describe("object type tests", function () {
         });
     });
 });
+
+//# sourceMappingURL=object-type-tests.js.map

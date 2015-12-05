@@ -12,3 +12,5 @@ __export(require("./definitions/type-parameter-definition"));
 __export(require("./definitions/constructor-definition"));
 __export(require("./definitions/class-definition"));
 __export(require("./definitions/file-definition"));
+
+//# sourceMappingURL=definitions.js.map

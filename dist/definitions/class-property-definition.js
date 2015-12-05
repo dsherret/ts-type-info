@@ -18,3 +18,5 @@ var ClassPropertyDefinition = (function (_super) {
 })(definitions_1.PropertyDefinition);
 exports.ClassPropertyDefinition = ClassPropertyDefinition;
 utils_1.applyMixins(ClassPropertyDefinition, [decorated_definition_1.DecoratedDefinition, scoped_definition_1.ScopedDefinition]);
+
+//# sourceMappingURL=class-property-definition.js.map

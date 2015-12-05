@@ -27,3 +27,5 @@ var TypedDefinition = (function () {
     return TypedDefinition;
 })();
 exports.TypedDefinition = TypedDefinition;
+
+//# sourceMappingURL=typed-definition.js.map

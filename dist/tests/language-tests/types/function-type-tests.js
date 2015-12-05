@@ -14,3 +14,5 @@ describe("function type tests", function () {
         assert.equal(param.type.callSignatures[0].parameters[0].type.name, "string");
     });
 });
+
+//# sourceMappingURL=function-type-tests.js.map

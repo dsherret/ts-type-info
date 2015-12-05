@@ -4,7 +4,7 @@
   "description": "Experimental library to get the structure of TypeScript code.",
   "main": "dist/main.js",
   "scripts": {
-    "test": "mocha --recursive dist/tests",
+    "test": "gulp test",
     "build": "tsc"
   },
   "repository": {
@@ -33,6 +33,7 @@
     "del": "^2.0.2",
     "dts-generator": "^1.5.0",
     "gulp": "^3.9.0",
+    "gulp-mocha": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^3.3.1",
     "gulp-typescript": "^2.9.2",

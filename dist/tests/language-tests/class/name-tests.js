@@ -7,3 +7,5 @@ describe("class name tests", function () {
         assert.equal(def.classes[0].name, "MyClass");
     });
 });
+
+//# sourceMappingURL=name-tests.js.map

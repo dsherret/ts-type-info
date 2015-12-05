@@ -7,3 +7,5 @@ describe("type parameter with extends", function () {
         assert.equal(def.classes[0].typeParameters[0].constraint.name, "string");
     });
 });
+
+//# sourceMappingURL=extends-tests.js.map

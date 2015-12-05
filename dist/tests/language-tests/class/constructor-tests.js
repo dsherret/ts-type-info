@@ -26,3 +26,5 @@ describe("class constructor tests", function () {
         });
     });
 });
+
+//# sourceMappingURL=constructor-tests.js.map

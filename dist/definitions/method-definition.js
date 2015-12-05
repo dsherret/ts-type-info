@@ -20,3 +20,5 @@ var MethodDefinition = (function () {
 })();
 exports.MethodDefinition = MethodDefinition;
 utils_1.applyMixins(MethodDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratedDefinition, parametered_definition_1.ParameteredDefinition, return_typed_definition_1.ReturnTypedDefinition, scoped_definition_1.ScopedDefinition]);
+
+//# sourceMappingURL=method-definition.js.map

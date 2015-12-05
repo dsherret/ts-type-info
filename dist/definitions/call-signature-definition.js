@@ -52,3 +52,5 @@ var CallSignatureDefinition = (function () {
 })();
 exports.CallSignatureDefinition = CallSignatureDefinition;
 utils_1.applyMixins(CallSignatureDefinition, [return_typed_definition_1.ReturnTypedDefinition, parametered_definition_1.ParameteredDefinition]);
+
+//# sourceMappingURL=call-signature-definition.js.map

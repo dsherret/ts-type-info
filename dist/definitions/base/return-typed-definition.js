@@ -30,3 +30,5 @@ var ReturnTypedDefinition = (function () {
     return ReturnTypedDefinition;
 })();
 exports.ReturnTypedDefinition = ReturnTypedDefinition;
+
+//# sourceMappingURL=return-typed-definition.js.map

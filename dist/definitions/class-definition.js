@@ -110,3 +110,5 @@ var ClassDefinition = (function () {
 })();
 exports.ClassDefinition = ClassDefinition;
 utils_1.applyMixins(ClassDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratedDefinition]);
+
+//# sourceMappingURL=class-definition.js.map

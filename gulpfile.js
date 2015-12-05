@@ -1,6 +1,7 @@
 var gulp = require("gulp");
 var del = require("del");
 var dtsGenerator = require("dts-generator");
+var mocha = require("gulp-mocha");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
 var sourcemaps = require("gulp-sourcemaps");
@@ -26,15 +27,20 @@ gulp.task("dts-generator", ["clean-scripts"], function(cb) {
         baseDir: './src',
         files: ['main.ts', '../node_modules/typescript/lib/typescript.d.ts'],
         excludes: [
-		    "node_modules/**/*.d.ts", 
-		    "utils/type-guards.ts", 
-			"utils/decorators.ts",
-			"utils/type-checker.ts",
-			"utils.ts"
-		],
+           "node_modules/**/*.d.ts", 
+            "utils/type-guards.ts", 
+            "utils/decorators.ts",
+            "utils/type-checker.ts",
+            "utils.ts"
+        ],
         out: "./dist/" + p.name + ".d.ts"
     });
     cb();
+});
+
+gulp.task("test", ["typescript"], function() {
+    return gulp.src("dist/tests/**/*.js")
+        .pipe(mocha());
 });
 
 gulp.task("tslint", function() {

@@ -56,3 +56,5 @@ describe("class property tests", function () {
         scopeTest(prop, scope_1.Scope.private);
     });
 });
+
+//# sourceMappingURL=property-tests.js.map

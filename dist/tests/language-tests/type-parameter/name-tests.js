@@ -7,3 +7,5 @@ describe("type parameter", function () {
         assert.equal(def.classes[0].typeParameters[0].name, "T");
     });
 });
+
+//# sourceMappingURL=name-tests.js.map

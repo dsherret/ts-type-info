@@ -4,3 +4,5 @@
     Scope[Scope["private"] = 2] = "private";
 })(exports.Scope || (exports.Scope = {}));
 var Scope = exports.Scope;
+
+//# sourceMappingURL=scope.js.map

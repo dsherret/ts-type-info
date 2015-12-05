@@ -34,3 +34,5 @@ var DecoratedDefinition = (function () {
     return DecoratedDefinition;
 })();
 exports.DecoratedDefinition = DecoratedDefinition;
+
+//# sourceMappingURL=decorated-definition.js.map

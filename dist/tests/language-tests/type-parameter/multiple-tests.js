@@ -10,3 +10,5 @@ describe("type parameters - multiple", function () {
         assert.equal(def.classes[0].typeParameters[1].name, "U");
     });
 });
+
+//# sourceMappingURL=multiple-tests.js.map
