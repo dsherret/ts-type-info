@@ -1,4 +1,3 @@
-import * as assert from "assert";
 import {IReturnTypedDefinition} from "./../../definitions/base/return-typed-definition";
 import {runTypeTests} from "./run-type-tests";
 

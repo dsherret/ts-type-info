@@ -1,4 +1,3 @@
-import * as assert from "assert";
 import {Method} from "./structures";
 import {MethodDefinition} from "./../../definitions/method-definition";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";

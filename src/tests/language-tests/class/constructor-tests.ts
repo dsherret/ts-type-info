@@ -1,9 +1,8 @@
-import * as assert from "assert";
 import {getStringInfo} from "./../../../main";
 import {runConstructorDefinitionTests} from "./../../test-helpers";
 
 describe("class constructor tests", () => {
-            const code = `
+    const code = `
 class MyClass1 {
 }
 class MyClass2 {

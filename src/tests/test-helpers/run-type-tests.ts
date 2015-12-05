@@ -5,7 +5,7 @@ export function runTypeTests(type: Type, name: string) {
     if (type == null) {
         throw "Type should not be null.";
     }
-    
+
     it(`should have a type of ${name}`, () => {
         assert.equal(type.name, name);
     });

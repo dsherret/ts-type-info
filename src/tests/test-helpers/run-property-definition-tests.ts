@@ -1,4 +1,3 @@
-import * as assert from "assert";
 import {Property} from "./structures";
 import {PropertyDefinition} from "./../../definitions/property-definition";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";

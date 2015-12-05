@@ -1,4 +1,3 @@
-import * as assert from "assert";
 import {getStringInfo} from "./../../../main";
 import {Scope} from "./../../../scope";
 import {runMethodDefinitionTests} from "./../../test-helpers";

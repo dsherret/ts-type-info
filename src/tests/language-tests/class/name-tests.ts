@@ -1,5 +1,4 @@
 import {getStringInfo} from "./../../../main";
-import * as assert from "assert";
 import {runNamedDefinitionTests} from "./../../test-helpers";
 
 describe("class name tests", () => {
