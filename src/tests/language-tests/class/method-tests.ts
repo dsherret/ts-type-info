@@ -6,7 +6,7 @@ describe("class method", () => {
     const code = `
 class MyClass {
     // parameters
-    myParameterMethod(myParameter: string, myDefaultParameter = 15, myOptionalParameter?: string) {
+    myParameterMethod(myParameter: string, myDefaultParameter = 15, myOptionalParameter?: string, ...myRestParameter: number[]) {
         return "";
     }
 
@@ -38,8 +38,7 @@ class MyClass {
         returnType: "string",
         parameters: [{
             name: "myParameter",
-            type: "string",
-            isRequired: true
+            type: "string"
         }, {
             name: "myDefaultParameter",
             type: "number",
@@ -48,6 +47,11 @@ class MyClass {
             name: "myOptionalParameter",
             type: "string",
             isRequired: false
+        }, {
+            name: "myRestParameter",
+            type: "number[]",
+            isRequired: false,
+            isRestParameter: true
         }]
     });
 

@@ -14,7 +14,11 @@ export function runParameterDefinitionTests(definition: ParameterDefinition, par
         runTypedDefinitionTests(definition, param.type);
 
         it(`should be ${!param.isRequired ? "required" : "not required"}`, () => {
-            assert.equal(definition.isRequired, param.isRequired);
+            assert.equal(definition.isRequired, typeof param.isRequired === "boolean" ? param.isRequired : true);
+        });
+
+        it(`should ${param.isRestParameter ? "be" : "not be"} a rest parameter`, () => {
+            assert.equal(definition.isRestParameter, typeof param.isRestParameter === "boolean" ? param.isRestParameter : false);
         });
     });
 }

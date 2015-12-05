@@ -9,7 +9,10 @@ function runParameterDefinitionTests(definition, param) {
         run_named_definition_tests_1.runNamedDefinitionTests(definition, param.name);
         run_typed_definition_tests_1.runTypedDefinitionTests(definition, param.type);
         it("should be " + (!param.isRequired ? "required" : "not required"), function () {
-            assert.equal(definition.isRequired, param.isRequired);
+            assert.equal(definition.isRequired, typeof param.isRequired === "boolean" ? param.isRequired : true);
+        });
+        it("should " + (param.isRestParameter ? "be" : "not be") + " a rest parameter", function () {
+            assert.equal(definition.isRestParameter, typeof param.isRestParameter === "boolean" ? param.isRestParameter : false);
         });
     });
 }

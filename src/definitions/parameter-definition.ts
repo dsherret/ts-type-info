@@ -10,22 +10,28 @@ import {ITypedDefinition, TypedDefinition} from "./base/typed-definition";
 
 export class ParameterDefinition implements ITypedDefinition, INamedDefinition, IDecoratedDefinition {
     private _isRequired: boolean;
+    private _isRestParameter: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillType(typeChecker, symbol);
-        this.fillIsRequired(symbol);
+        this.fillParameterDetails(symbol);
     }
 
     get isRequired() {
         return this._isRequired;
     }
 
-    private fillIsRequired(symbol: ts.Symbol) {
+    get isRestParameter() {
+        return this._isRestParameter;
+    }
+
+    private fillParameterDetails(symbol: ts.Symbol) {
         let declaration = symbol.valueDeclaration as ts.ParameterDeclaration;
 
-        this._isRequired = declaration.questionToken == null && declaration.initializer == null;
+        this._isRequired = declaration.questionToken == null && declaration.initializer == null && declaration.dotDotDotToken == null;
+        this._isRestParameter = declaration.dotDotDotToken != null;
     }
 
     // NameDefinition

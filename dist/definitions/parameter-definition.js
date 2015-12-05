@@ -7,7 +7,7 @@ var ParameterDefinition = (function () {
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillType(typeChecker, symbol);
-        this.fillIsRequired(symbol);
+        this.fillParameterDetails(symbol);
     }
     Object.defineProperty(ParameterDefinition.prototype, "isRequired", {
         get: function () {
@@ -16,9 +16,17 @@ var ParameterDefinition = (function () {
         enumerable: true,
         configurable: true
     });
-    ParameterDefinition.prototype.fillIsRequired = function (symbol) {
+    Object.defineProperty(ParameterDefinition.prototype, "isRestParameter", {
+        get: function () {
+            return this._isRestParameter;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ParameterDefinition.prototype.fillParameterDetails = function (symbol) {
         var declaration = symbol.valueDeclaration;
-        this._isRequired = declaration.questionToken == null && declaration.initializer == null;
+        this._isRequired = declaration.questionToken == null && declaration.initializer == null && declaration.dotDotDotToken == null;
+        this._isRestParameter = declaration.dotDotDotToken != null;
     };
     return ParameterDefinition;
 })();

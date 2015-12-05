@@ -15,8 +15,7 @@ describe("class constructor tests", function () {
         test_helpers_1.runConstructorDefinitionTests(def.classes[2].constructor, {
             parameters: [{
                     name: "parameter1",
-                    type: "string",
-                    isRequired: true
+                    type: "string"
                 }]
         });
     });
