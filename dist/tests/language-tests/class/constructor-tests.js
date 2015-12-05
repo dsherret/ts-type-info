@@ -1,28 +1,22 @@
 var main_1 = require("./../../../main");
-var assert = require("assert");
+var test_helpers_1 = require("./../../test-helpers");
 describe("class constructor tests", function () {
+    var code = "\nclass MyClass1 {\n}\nclass MyClass2 {\n    constructor() {\n    }\n}\nclass MyClass3 {\n    constructor(parameter1: string) {\n    }\n}";
+    var def = main_1.getStringInfo(code);
     describe("class with no constructor", function () {
-        var code = "\nclass MyClass {\n}";
-        var def = main_1.getStringInfo(code);
-        it("should not have a constructor", function () {
-            assert.equal(def.classes[0].constructor, null);
-        });
+        test_helpers_1.runConstructorDefinitionTests(def.classes[0].constructor, null);
     });
     describe("constructor with no parameters", function () {
-        var code = "\nclass MyClass {\n    constructor() {\n    }\n}";
-        var def = main_1.getStringInfo(code);
-        it("should have a constructor", function () {
-            assert.notEqual(def.classes[0].constructor, null);
-        });
-        it("should have no parameters", function () {
-            assert.equal(def.classes[0].constructor.parameters.length, 0);
+        test_helpers_1.runConstructorDefinitionTests(def.classes[1].constructor, {
+            parameters: []
         });
     });
     describe("constructor with parameters", function () {
-        var code = "\nclass MyClass {\n    constructor(parameter1: string, parameter2: number) {\n    }\n}";
-        var def = main_1.getStringInfo(code);
-        it("should have two parameters", function () {
-            assert.equal(def.classes[0].constructor.parameters.length, 2);
+        test_helpers_1.runConstructorDefinitionTests(def.classes[2].constructor, {
+            parameters: [{
+                    name: "parameter1",
+                    type: "string"
+                }]
         });
     });
 });

@@ -1,48 +1,38 @@
-import {getStringInfo} from "./../../../main";
 import * as assert from "assert";
+import {getStringInfo} from "./../../../main";
+import {runConstructorDefinitionTests} from "./../../test-helpers";
 
 describe("class constructor tests", () => {
-    describe("class with no constructor", () => {
-        const code = `
-class MyClass {
-}`;
-
-        const def = getStringInfo(code);
-
-        it("should not have a constructor", () => {
-            assert.equal(def.classes[0].constructor, null);
-        });
-    });
-
-    describe("constructor with no parameters", () => {
-        const code = `
-class MyClass {
+            const code = `
+class MyClass1 {
+}
+class MyClass2 {
     constructor() {
+    }
+}
+class MyClass3 {
+    constructor(parameter1: string) {
     }
 }`;
 
-        const def = getStringInfo(code);
+    const def = getStringInfo(code);
 
-        it("should have a constructor", () => {
-            assert.notEqual(def.classes[0].constructor, null);
-        });
+    describe("class with no constructor", () => {
+        runConstructorDefinitionTests(def.classes[0].constructor, null);
+    });
 
-        it("should have no parameters", () => {
-            assert.equal(def.classes[0].constructor.parameters.length, 0);
+    describe("constructor with no parameters", () => {
+        runConstructorDefinitionTests(def.classes[1].constructor, {
+            parameters: []
         });
     });
 
     describe("constructor with parameters", () => {
-        const code = `
-class MyClass {
-    constructor(parameter1: string, parameter2: number) {
-    }
-}`;
-
-        const def = getStringInfo(code);
-
-        it("should have two parameters", () => {
-            assert.equal(def.classes[0].constructor.parameters.length, 2);
+        runConstructorDefinitionTests(def.classes[2].constructor, {
+            parameters: [{
+                name: "parameter1",
+                type: "string"
+            }]
         });
     });
 });

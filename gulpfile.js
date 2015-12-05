@@ -40,7 +40,7 @@ gulp.task("dts-generator", ["clean-scripts"], function(cb) {
 
 gulp.task("test", ["typescript"], function() {
     return gulp.src("dist/tests/**/*.js")
-        .pipe(mocha());
+        .pipe(mocha({ reporter: "progress" }));
 });
 
 gulp.task("tslint", function() {

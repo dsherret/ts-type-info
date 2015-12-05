@@ -8,7 +8,6 @@ import {ITypedDefinition, TypedDefinition} from "./base/typed-definition";
 
 // todo: add isOptional parameter
 // todo: check decorators work
-// todo: public/private/protected for constructors?
 
 export class ParameterDefinition implements ITypedDefinition, INamedDefinition, IDecoratedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
