@@ -1,8 +1,7 @@
 import * as assert from "assert";
 import {Parameter} from "./structures";
 import {IParameteredDefinition} from "./../../definitions/base/parametered-definition";
-import {runNamedDefinitionTests} from "./run-named-definition-tests";
-import {runTypedDefinitionTests} from "./run-typed-definition-tests";
+import {runParameterDefinitionTests} from "./run-parameter-definition-tests";
 
 export function runParameteredDefinitionTests(definition: IParameteredDefinition, params: Parameter[]) {
     if (definition == null) {
@@ -14,9 +13,6 @@ export function runParameteredDefinitionTests(definition: IParameteredDefinition
     });
 
     definition.parameters.forEach((param, i) => {
-        describe(`parameter ${params[i].name}`, () => {
-            runNamedDefinitionTests(param, params[i].name);
-            runTypedDefinitionTests(param, params[i].type);
-        });
+        runParameterDefinitionTests(param, params[i]);
     });
 }

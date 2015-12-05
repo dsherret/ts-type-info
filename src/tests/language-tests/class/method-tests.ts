@@ -6,7 +6,7 @@ describe("class method", () => {
     const code = `
 class MyClass {
     // parameters
-    myParameterMethod(myParameter: string) {
+    myParameterMethod(myParameter: string, myDefaultParameter = 15, myOptionalParameter?: string) {
         return "";
     }
 
@@ -38,7 +38,16 @@ class MyClass {
         returnType: "string",
         parameters: [{
             name: "myParameter",
-            type: "string"
+            type: "string",
+            isRequired: true
+        }, {
+            name: "myDefaultParameter",
+            type: "number",
+            isRequired: false
+        }, {
+            name: "myOptionalParameter",
+            type: "string",
+            isRequired: false
         }]
     });
 

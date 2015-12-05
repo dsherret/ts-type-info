@@ -1,6 +1,5 @@
 var assert = require("assert");
-var run_named_definition_tests_1 = require("./run-named-definition-tests");
-var run_typed_definition_tests_1 = require("./run-typed-definition-tests");
+var run_parameter_definition_tests_1 = require("./run-parameter-definition-tests");
 function runParameteredDefinitionTests(definition, params) {
     if (definition == null) {
         throw "Definition should not be null.";
@@ -9,10 +8,7 @@ function runParameteredDefinitionTests(definition, params) {
         assert.equal(definition.parameters.length, params.length);
     });
     definition.parameters.forEach(function (param, i) {
-        describe("parameter " + params[i].name, function () {
-            run_named_definition_tests_1.runNamedDefinitionTests(param, params[i].name);
-            run_typed_definition_tests_1.runTypedDefinitionTests(param, params[i].type);
-        });
+        run_parameter_definition_tests_1.runParameterDefinitionTests(param, params[i]);
     });
 }
 exports.runParameteredDefinitionTests = runParameteredDefinitionTests;

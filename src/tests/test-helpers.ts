@@ -2,6 +2,7 @@ export * from "./test-helpers/run-class-property-definition-tests";
 export * from "./test-helpers/run-constructor-definition-tests";
 export * from "./test-helpers/run-method-definition-tests";
 export * from "./test-helpers/run-named-definition-tests";
+export * from "./test-helpers/run-parameter-definition-tests";
 export * from "./test-helpers/run-parametered-definition-tests";
 export * from "./test-helpers/run-property-definition-tests";
 export * from "./test-helpers/run-scoped-definition-tests";

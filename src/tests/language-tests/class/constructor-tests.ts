@@ -30,7 +30,8 @@ class MyClass3 {
         runConstructorDefinitionTests(def.classes[2].constructor, {
             parameters: [{
                 name: "parameter1",
-                type: "string"
+                type: "string",
+                isRequired: true
             }]
         });
     });

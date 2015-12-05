@@ -5,6 +5,7 @@ __export(require("./test-helpers/run-class-property-definition-tests"));
 __export(require("./test-helpers/run-constructor-definition-tests"));
 __export(require("./test-helpers/run-method-definition-tests"));
 __export(require("./test-helpers/run-named-definition-tests"));
+__export(require("./test-helpers/run-parameter-definition-tests"));
 __export(require("./test-helpers/run-parametered-definition-tests"));
 __export(require("./test-helpers/run-property-definition-tests"));
 __export(require("./test-helpers/run-scoped-definition-tests"));

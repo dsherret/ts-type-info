@@ -7,7 +7,19 @@ var ParameterDefinition = (function () {
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillType(typeChecker, symbol);
+        this.fillIsRequired(symbol);
     }
+    Object.defineProperty(ParameterDefinition.prototype, "isRequired", {
+        get: function () {
+            return this._isRequired;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ParameterDefinition.prototype.fillIsRequired = function (symbol) {
+        var declaration = symbol.valueDeclaration;
+        this._isRequired = declaration.questionToken == null && declaration.initializer == null;
+    };
     return ParameterDefinition;
 })();
 exports.ParameterDefinition = ParameterDefinition;

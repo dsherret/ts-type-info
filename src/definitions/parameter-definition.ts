@@ -6,14 +6,26 @@ import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
 import {ITypedDefinition, TypedDefinition} from "./base/typed-definition";
 
-// todo: add isOptional parameter
 // todo: check decorators work
 
 export class ParameterDefinition implements ITypedDefinition, INamedDefinition, IDecoratedDefinition {
+    private _isRequired: boolean;
+
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillType(typeChecker, symbol);
+        this.fillIsRequired(symbol);
+    }
+
+    get isRequired() {
+        return this._isRequired;
+    }
+
+    private fillIsRequired(symbol: ts.Symbol) {
+        let declaration = symbol.valueDeclaration as ts.ParameterDeclaration;
+
+        this._isRequired = declaration.questionToken == null && declaration.initializer == null;
     }
 
     // NameDefinition

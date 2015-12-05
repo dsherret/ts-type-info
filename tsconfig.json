@@ -49,6 +49,8 @@
         "src/tests/test-helpers/run-constructor-definition-test.ts",
         "src/tests/test-helpers/run-method-definition-test.ts",
         "src/tests/test-helpers/run-named-definition-test.ts",
+        "src/tests/test-helpers/run-parameter-definition-test.ts",
+        "src/tests/test-helpers/run-parametered-definition-test.ts",
         "src/tests/test-helpers/run-property-definition-test.ts",
         "src/tests/test-helpers/run-scoped-definition-test.ts",
         "src/tests/test-helpers/run-typed-definition-test.ts",
