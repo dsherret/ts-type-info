@@ -1,5 +1,6 @@
-import {getStringInfo} from "./../../../main";
 import * as assert from "assert";
+import {getStringInfo} from "./../../../main";
+import {runNamedDefinitionTests} from "./../../test-helpers";
 
 describe("object type tests", () => {
     const code = `
@@ -15,9 +16,7 @@ class Note {
     describe("myStringParam", () => {
         const prop = def.classes[0].methods[0].parameters[0].type.properties[0];
 
-        it("should exist", () => {
-            assert.equal(prop.name, "myStringParam");
-        });
+        runNamedDefinitionTests(prop, "myStringParam");
 
         it("should have type string", () => {
             assert.equal(prop.type.name, "string");
@@ -27,9 +26,7 @@ class Note {
     describe("myOtherType", () => {
         const prop = def.classes[0].methods[0].parameters[0].type.properties[1];
 
-        it("should exist", () => {
-            assert.equal(prop.name, "myOtherType");
-        });
+        runNamedDefinitionTests(prop, "myOtherType");
 
         it("should have type Note", () => {
             assert.equal(prop.type.name, "Note");

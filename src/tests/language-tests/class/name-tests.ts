@@ -1,5 +1,6 @@
 import {getStringInfo} from "./../../../main";
 import * as assert from "assert";
+import {runNamedDefinitionTests} from "./../../test-helpers";
 
 describe("class name tests", () => {
     const code = `
@@ -8,7 +9,5 @@ class MyClass {
 
     const def = getStringInfo(code);
 
-    it("should have a name of MyClass", () => {
-        assert.equal(def.classes[0].name, "MyClass");
-    });
+    runNamedDefinitionTests(def.classes[0], "MyClass");
 });
