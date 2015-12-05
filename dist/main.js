@@ -26,8 +26,8 @@ function getStringInfo(code) {
     var tmpFile = tmp.fileSync({ postfix: ".ts" });
     var fileDefinition;
     try {
-        code = addNewLineToCodeIfNecessary(code);
-        fs.writeFileSync(tmpFile.name, code + "\n");
+        code = utils_1.StringUtils.ensureEndsWithNewline(code);
+        fs.writeFileSync(tmpFile.name, code);
         fileDefinition = getFileInfo(tmpFile.name)[0];
     }
     finally {
@@ -36,9 +36,3 @@ function getStringInfo(code) {
     return fileDefinition;
 }
 exports.getStringInfo = getStringInfo;
-function addNewLineToCodeIfNecessary(code) {
-    if (typeof code === "string" && code.length > 0 && code[code.length - 1] !== "\n") {
-        code += "\n";
-    }
-    return code;
-}

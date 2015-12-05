@@ -4,6 +4,7 @@ function __export(m) {
 __export(require("./utils/apply-mixins"));
 __export(require("./utils/class-definition-cache"));
 __export(require("./utils/decorators"));
+__export(require("./utils/string-utils"));
 __export(require("./utils/key-value-cache"));
 __export(require("./utils/type-checker"));
 __export(require("./utils/type-creator"));
