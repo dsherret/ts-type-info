@@ -1,6 +1,8 @@
 TSTypeInfo
 ==========
 
+[![Build Status](https://travis-ci.org/dsherret/ts-type-info.svg)](https://travis-ci.org/dsherret/ts-type-info)
+
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get the type and structure information of TypeScript code in an easily usable format.
 
 This is a very experimental library. Currently you can only get basic type information from classes.
@@ -14,7 +16,7 @@ This is a very experimental library. Currently you can only get basic type infor
 @myDecorator("My decorator value")
 export class MyClass {
     myMethod(myParameter: string) {
-        return `Test: ${myParameter}`; 
+        return `Test: ${myParameter}`;
     }
 }
 ```
