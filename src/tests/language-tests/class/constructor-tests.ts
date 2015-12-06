@@ -17,17 +17,17 @@ class MyClass3 {
     const def = getStringInfo(code);
 
     describe("class with no constructor", () => {
-        runConstructorDefinitionTests(def.classes[0].constructor, null);
+        runConstructorDefinitionTests(def.classes[0].constructorDef, null);
     });
 
     describe("constructor with no parameters", () => {
-        runConstructorDefinitionTests(def.classes[1].constructor, {
+        runConstructorDefinitionTests(def.classes[1].constructorDef, {
             parameters: []
         });
     });
 
     describe("constructor with parameters", () => {
-        runConstructorDefinitionTests(def.classes[2].constructor, {
+        runConstructorDefinitionTests(def.classes[2].constructorDef, {
             parameters: [{
                 name: "parameter1",
                 type: "string"

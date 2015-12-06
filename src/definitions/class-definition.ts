@@ -12,7 +12,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private _staticMethods: StaticMethodDefinition[] = [];
     private _staticProperties: StaticPropertyDefinition[] = [];
     private _typeParameters: TypeParameterDefinition[] = [];
-    private _constructor: ConstructorDefinition;
+    private _constructorDef: ConstructorDefinition;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
         this.fillName(symbol);
@@ -26,8 +26,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     }
 
     @Serializable
-    get constructor() {
-        return this._constructor;
+    get constructorDef() {
+        return this._constructorDef;
     }
 
     @Serializable
@@ -67,7 +67,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
             }
             else if (ConstructorDefinition.isConstructor(member)) {
                 this.verifyConstructorNotSet();
-                this._constructor = new ConstructorDefinition(typeChecker, member);
+                this._constructorDef = new ConstructorDefinition(typeChecker, member);
             }
             else if (TypeParameterDefinition.isTypeParameter(member)) {
                 // todo: figure out better way of getting type parameters, like how it works in call signature definition?
@@ -95,7 +95,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     }
 
     private verifyConstructorNotSet() {
-        if (this._constructor != null) {
+        if (this._constructorDef != null) {
             throw `Unknown error: Duplicate constructors on ${this.name}.`;
         }
     }

@@ -30,9 +30,9 @@ var ClassDefinition = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ClassDefinition.prototype, "constructor", {
+    Object.defineProperty(ClassDefinition.prototype, "constructorDef", {
         get: function () {
-            return this._constructor;
+            return this._constructorDef;
         },
         enumerable: true,
         configurable: true
@@ -84,7 +84,7 @@ var ClassDefinition = (function () {
             }
             else if (definitions_1.ConstructorDefinition.isConstructor(member)) {
                 _this.verifyConstructorNotSet();
-                _this._constructor = new definitions_1.ConstructorDefinition(typeChecker, member);
+                _this._constructorDef = new definitions_1.ConstructorDefinition(typeChecker, member);
             }
             else if (definitions_1.TypeParameterDefinition.isTypeParameter(member)) {
                 _this._typeParameters.push(new definitions_1.TypeParameterDefinition(typeChecker, member));
@@ -108,7 +108,7 @@ var ClassDefinition = (function () {
         });
     };
     ClassDefinition.prototype.verifyConstructorNotSet = function () {
-        if (this._constructor != null) {
+        if (this._constructorDef != null) {
             throw "Unknown error: Duplicate constructors on " + this.name + ".";
         }
     };
@@ -119,10 +119,10 @@ var ClassDefinition = (function () {
         __decorate([
             utils_1.Serializable
         ], ClassDefinition.prototype, "baseClasses", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "baseClasses")));
-    Object.defineProperty(ClassDefinition.prototype, "constructor",
+    Object.defineProperty(ClassDefinition.prototype, "constructorDef",
         __decorate([
             utils_1.Serializable
-        ], ClassDefinition.prototype, "constructor", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "constructor")));
+        ], ClassDefinition.prototype, "constructorDef", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "constructorDef")));
     Object.defineProperty(ClassDefinition.prototype, "methods",
         __decorate([
             utils_1.Serializable
