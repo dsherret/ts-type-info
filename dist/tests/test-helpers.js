@@ -9,6 +9,7 @@ __export(require("./test-helpers/run-parameter-definition-tests"));
 __export(require("./test-helpers/run-parametered-definition-tests"));
 __export(require("./test-helpers/run-property-definition-tests"));
 __export(require("./test-helpers/run-scoped-definition-tests"));
+__export(require("./test-helpers/run-static-method-definition-tests"));
 __export(require("./test-helpers/run-typed-definition-tests"));
 __export(require("./test-helpers/run-return-typed-definition-tests"));
 

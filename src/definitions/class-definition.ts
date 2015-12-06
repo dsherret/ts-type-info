@@ -1,12 +1,13 @@
 import * as ts from "typescript";
 import { ConstructorDefinition, DecoratorDefinition, MethodDefinition,
-    ClassPropertyDefinition, TypeParameterDefinition} from "./../definitions";
+    ClassPropertyDefinition, TypeParameterDefinition, StaticMethodDefinition} from "./../definitions";
 import {applyMixins, TypeChecker, Serializable} from "./../utils";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
 
 export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private _methods: MethodDefinition[] = [];
+    private _staticMethods: StaticMethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
     private _typeParameters: TypeParameterDefinition[] = [];
     private _constructor: ConstructorDefinition;
@@ -14,7 +15,6 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
         this.fillName(symbol);
         this.fillDecorators(symbol);
-
         this.createMembers(typeChecker, symbol);
     }
 
@@ -36,6 +36,11 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     @Serializable
     get properties() {
         return this._properties;
+    }
+
+    @Serializable
+    get staticMethods() {
+        return this._staticMethods;
     }
 
     @Serializable
@@ -62,7 +67,19 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
                 this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
             }
             else {
-                throw `Not implemented '${member.getName()}'`;
+                console.warn(`Not implemented '${member.getName()}'`);
+            }
+        });
+
+        Object.keys(symbol.exports).map(memberName => symbol.exports[memberName]).forEach(staticMember => {
+            if (staticMember.getName() === "prototype") {
+                // ignore
+            }
+            else if (StaticMethodDefinition.isStaticMethod(staticMember)) {
+                this._staticMethods.push(new StaticMethodDefinition(typeChecker, staticMember));
+            }
+            else {
+                console.warn(`Not implemented '${staticMember.getName()}'`);
             }
         });
     }

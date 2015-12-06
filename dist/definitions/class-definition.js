@@ -15,6 +15,7 @@ var ClassDefinition = (function () {
     function ClassDefinition(typeChecker, symbol, _baseClasses) {
         this._baseClasses = _baseClasses;
         this._methods = [];
+        this._staticMethods = [];
         this._properties = [];
         this._typeParameters = [];
         this.fillName(symbol);
@@ -49,6 +50,13 @@ var ClassDefinition = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ClassDefinition.prototype, "staticMethods", {
+        get: function () {
+            return this._staticMethods;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ClassDefinition.prototype, "typeParameters", {
         get: function () {
             return this._typeParameters;
@@ -74,7 +82,17 @@ var ClassDefinition = (function () {
                 _this._typeParameters.push(new definitions_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
-                throw "Not implemented '" + member.getName() + "'";
+                console.warn("Not implemented '" + member.getName() + "'");
+            }
+        });
+        Object.keys(symbol.exports).map(function (memberName) { return symbol.exports[memberName]; }).forEach(function (staticMember) {
+            if (staticMember.getName() === "prototype") {
+            }
+            else if (definitions_1.StaticMethodDefinition.isStaticMethod(staticMember)) {
+                _this._staticMethods.push(new definitions_1.StaticMethodDefinition(typeChecker, staticMember));
+            }
+            else {
+                console.log("Not implemented '" + staticMember.getName() + "'");
             }
         });
     };
@@ -102,6 +120,10 @@ var ClassDefinition = (function () {
         __decorate([
             utils_1.Serializable
         ], ClassDefinition.prototype, "properties", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "properties")));
+    Object.defineProperty(ClassDefinition.prototype, "staticMethods",
+        __decorate([
+            utils_1.Serializable
+        ], ClassDefinition.prototype, "staticMethods", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "staticMethods")));
     Object.defineProperty(ClassDefinition.prototype, "typeParameters",
         __decorate([
             utils_1.Serializable
