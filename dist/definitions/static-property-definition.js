@@ -5,16 +5,16 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require("typescript");
 var base_class_property_definition_1 = require("./base/base-class-property-definition");
-var ClassPropertyDefinition = (function (_super) {
-    __extends(ClassPropertyDefinition, _super);
-    function ClassPropertyDefinition() {
+var StaticPropertyDefinition = (function (_super) {
+    __extends(StaticPropertyDefinition, _super);
+    function StaticPropertyDefinition() {
         _super.apply(this, arguments);
     }
-    ClassPropertyDefinition.isProperty = function (symbol) {
+    StaticPropertyDefinition.isStaticProperty = function (symbol) {
         return (symbol.getFlags() & 4) !== 0;
     };
-    return ClassPropertyDefinition;
+    return StaticPropertyDefinition;
 })(base_class_property_definition_1.BaseClassPropertyDefinition);
-exports.ClassPropertyDefinition = ClassPropertyDefinition;
+exports.StaticPropertyDefinition = StaticPropertyDefinition;
 
-//# sourceMappingURL=class-property-definition.js.map
+//# sourceMappingURL=static-property-definition.js.map

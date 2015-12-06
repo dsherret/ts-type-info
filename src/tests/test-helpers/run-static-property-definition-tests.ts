@@ -3,7 +3,7 @@ import {ClassPropertyDefinition} from "./../../definitions/class-property-defini
 import {runBasePropertyDefinitionTests} from "./run-base-property-definition-tests";
 import {runScopedDefinitionTests} from "./run-scoped-definition-tests";
 
-export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, property: ClassProperty) {
+export function runStaticPropertyDefinitionTests(definition: ClassPropertyDefinition, property: ClassProperty) {
     if (definition == null) {
         throw "Definition should not be null.";
     }

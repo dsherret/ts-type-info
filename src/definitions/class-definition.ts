@@ -1,14 +1,16 @@
 import * as ts from "typescript";
 import { ConstructorDefinition, DecoratorDefinition, MethodDefinition,
-    ClassPropertyDefinition, TypeParameterDefinition, StaticMethodDefinition} from "./../definitions";
+    ClassPropertyDefinition, TypeParameterDefinition, StaticMethodDefinition,
+    StaticPropertyDefinition} from "./../definitions";
 import {applyMixins, TypeChecker, Serializable} from "./../utils";
 import {INamedDefinition, NamedDefinition} from "./base/named-definition";
 import {IDecoratedDefinition, DecoratedDefinition} from "./base/decorated-definition";
 
 export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     private _methods: MethodDefinition[] = [];
-    private _staticMethods: StaticMethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
+    private _staticMethods: StaticMethodDefinition[] = [];
+    private _staticProperties: StaticPropertyDefinition[] = [];
     private _typeParameters: TypeParameterDefinition[] = [];
     private _constructor: ConstructorDefinition;
 
@@ -41,6 +43,11 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     @Serializable
     get staticMethods() {
         return this._staticMethods;
+    }
+
+    @Serializable
+    get staticProperties() {
+        return this._staticProperties;
     }
 
     @Serializable
@@ -77,6 +84,9 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
             }
             else if (StaticMethodDefinition.isStaticMethod(staticMember)) {
                 this._staticMethods.push(new StaticMethodDefinition(typeChecker, staticMember));
+            }
+            else if (StaticPropertyDefinition.isStaticProperty(staticMember)) {
+                this._staticProperties.push(new StaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
                 console.warn(`Not implemented '${staticMember.getName()}'`);

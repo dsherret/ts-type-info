@@ -1,18 +1,16 @@
-var ts = require("typescript");
-var utils_1 = require("./../utils");
-var named_definition_1 = require("./base/named-definition");
-var typed_definition_1 = require("./base/typed-definition");
-var PropertyDefinition = (function () {
-    function PropertyDefinition(typeChecker, symbol) {
-        this.fillName(symbol);
-        this.fillType(typeChecker, symbol);
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var base_property_definition_1 = require("./base/base-property-definition");
+var PropertyDefinition = (function (_super) {
+    __extends(PropertyDefinition, _super);
+    function PropertyDefinition() {
+        _super.apply(this, arguments);
     }
-    PropertyDefinition.isProperty = function (symbol) {
-        return (symbol.getFlags() & 4) !== 0;
-    };
     return PropertyDefinition;
-})();
+})(base_property_definition_1.BasePropertyDefinition);
 exports.PropertyDefinition = PropertyDefinition;
-utils_1.applyMixins(PropertyDefinition, [named_definition_1.NamedDefinition, typed_definition_1.TypedDefinition]);
 
 //# sourceMappingURL=property-definition.js.map

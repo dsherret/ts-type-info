@@ -1,9 +1,9 @@
 import {Property} from "./structures";
-import {PropertyDefinition} from "./../../definitions/property-definition";
+import {BasePropertyDefinition} from "./../../definitions/base/base-property-definition";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runTypedDefinitionTests} from "./run-typed-definition-tests";
 
-export function runPropertyDefinitionTests(definition: PropertyDefinition, property: Property) {
+export function runBasePropertyDefinitionTests(definition: BasePropertyDefinition, property: Property) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
