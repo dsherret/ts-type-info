@@ -12,6 +12,16 @@ class MyClass {
     public myExplicitPublic;
     protected myProtected;
     private myPrivate;
+
+    get myGetAccessor() {
+        return "";
+    }
+
+    get myGetAndSetAccessor() {
+        return "";
+    }
+    set myGetAndSetAccessor(val: string) {
+    }
 }`;
 
     const def = getStringInfo(code);
@@ -50,5 +60,21 @@ class MyClass {
         name: "myPrivate",
         type: "any",
         scope: Scope.private
+    });
+
+    runClassPropertyDefinitionTests(def.classes[0].properties[6], {
+        name: "myGetAccessor",
+        type: "string",
+        scope: Scope.public,
+        isAccessor: true,
+        isReadonly: true
+    });
+
+    runClassPropertyDefinitionTests(def.classes[0].properties[7], {
+        name: "myGetAndSetAccessor",
+        type: "string",
+        scope: Scope.public,
+        isAccessor: true,
+        isReadonly: false
     });
 });

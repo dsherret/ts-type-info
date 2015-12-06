@@ -5,7 +5,7 @@ import * as tmp from "tmp";
 import * as fs from "fs";
 import {TypeChecker, ClassDefinitionCache, StringUtils} from "./utils";
 
-export function getFileInfo(...fileNames: string[]): FileDefinition[] {
+export function getFileInfo(fileNames: string[]): FileDefinition[] {
     const options: ts.CompilerOptions = { noLib: false, experimentalDecorators: true };
     const host = ts.createCompilerHost(options);
     const program = ts.createProgram(fileNames, options, host);
@@ -28,7 +28,7 @@ export function getStringInfo(code: string): FileDefinition {
     try {
         code = StringUtils.ensureEndsWithNewline(code);
         fs.writeFileSync(tmpFile.name, code);
-        fileDefinition = getFileInfo(tmpFile.name)[0];
+        fileDefinition = getFileInfo([tmpFile.name])[0];
     }
     finally {
         tmpFile.removeCallback();

@@ -4,11 +4,7 @@ var path = require("path");
 var tmp = require("tmp");
 var fs = require("fs");
 var utils_1 = require("./utils");
-function getFileInfo() {
-    var fileNames = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        fileNames[_i - 0] = arguments[_i];
-    }
+function getFileInfo(fileNames) {
     var options = { noLib: false, experimentalDecorators: true };
     var host = ts.createCompilerHost(options);
     var program = ts.createProgram(fileNames, options, host);
@@ -28,7 +24,7 @@ function getStringInfo(code) {
     try {
         code = utils_1.StringUtils.ensureEndsWithNewline(code);
         fs.writeFileSync(tmpFile.name, code);
-        fileDefinition = getFileInfo(tmpFile.name)[0];
+        fileDefinition = getFileInfo([tmpFile.name])[0];
     }
     finally {
         tmpFile.removeCallback();
