@@ -1,10 +1,8 @@
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-    switch (arguments.length) {
-        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-    }
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var ts = require("typescript");
 var definitions_1 = require("./../definitions");
@@ -66,18 +64,15 @@ var Type = (function () {
         this._callSignatures = this._tsType.getCallSignatures()
             .map(function (callSignature) { return new definitions_1.CallSignatureDefinition(typeChecker, callSignature); });
     };
-    Object.defineProperty(Type.prototype, "name",
-        __decorate([
-            utils_1.Serializable
-        ], Type.prototype, "name", Object.getOwnPropertyDescriptor(Type.prototype, "name")));
-    Object.defineProperty(Type.prototype, "properties",
-        __decorate([
-            utils_1.Serializable
-        ], Type.prototype, "properties", Object.getOwnPropertyDescriptor(Type.prototype, "properties")));
-    Object.defineProperty(Type.prototype, "callSignatures",
-        __decorate([
-            utils_1.Serializable
-        ], Type.prototype, "callSignatures", Object.getOwnPropertyDescriptor(Type.prototype, "callSignatures")));
+    __decorate([
+        utils_1.Serializable
+    ], Type.prototype, "name", null);
+    __decorate([
+        utils_1.Serializable
+    ], Type.prototype, "properties", null);
+    __decorate([
+        utils_1.Serializable
+    ], Type.prototype, "callSignatures", null);
     return Type;
 })();
 exports.Type = Type;

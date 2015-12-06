@@ -1,6 +1,6 @@
 {
   "name": "ts-type-info",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Experimental library to get the structure of TypeScript code.",
   "main": "dist/main.js",
   "scripts": {
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "tmp": "0.0.28",
-    "typescript": "^1.6.2"
+    "typescript": "^1.7.3"
   },
   "devDependencies": {
     "code-block-writer": "^1.0.0",
@@ -36,9 +36,9 @@
     "gulp": "^3.9.0",
     "gulp-mocha": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-tslint": "^3.3.1",
+    "gulp-tslint": "^4.1.1",
     "gulp-typescript": "^2.9.2",
     "mocha": "^2.3.3",
-    "tslint": "^2.5.1"
+    "tslint": "^3.1.1"
   }
 }

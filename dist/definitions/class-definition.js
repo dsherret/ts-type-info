@@ -1,10 +1,8 @@
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-    switch (arguments.length) {
-        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-    }
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var ts = require("typescript");
 var definitions_1 = require("./../definitions");
@@ -115,34 +113,27 @@ var ClassDefinition = (function () {
     ClassDefinition.isClassDefinition = function (symbol) {
         return (symbol.flags & 32) !== 0;
     };
-    Object.defineProperty(ClassDefinition.prototype, "baseClasses",
-        __decorate([
-            utils_1.Serializable
-        ], ClassDefinition.prototype, "baseClasses", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "baseClasses")));
-    Object.defineProperty(ClassDefinition.prototype, "constructorDef",
-        __decorate([
-            utils_1.Serializable
-        ], ClassDefinition.prototype, "constructorDef", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "constructorDef")));
-    Object.defineProperty(ClassDefinition.prototype, "methods",
-        __decorate([
-            utils_1.Serializable
-        ], ClassDefinition.prototype, "methods", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "methods")));
-    Object.defineProperty(ClassDefinition.prototype, "properties",
-        __decorate([
-            utils_1.Serializable
-        ], ClassDefinition.prototype, "properties", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "properties")));
-    Object.defineProperty(ClassDefinition.prototype, "staticMethods",
-        __decorate([
-            utils_1.Serializable
-        ], ClassDefinition.prototype, "staticMethods", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "staticMethods")));
-    Object.defineProperty(ClassDefinition.prototype, "staticProperties",
-        __decorate([
-            utils_1.Serializable
-        ], ClassDefinition.prototype, "staticProperties", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "staticProperties")));
-    Object.defineProperty(ClassDefinition.prototype, "typeParameters",
-        __decorate([
-            utils_1.Serializable
-        ], ClassDefinition.prototype, "typeParameters", Object.getOwnPropertyDescriptor(ClassDefinition.prototype, "typeParameters")));
+    __decorate([
+        utils_1.Serializable
+    ], ClassDefinition.prototype, "baseClasses", null);
+    __decorate([
+        utils_1.Serializable
+    ], ClassDefinition.prototype, "constructorDef", null);
+    __decorate([
+        utils_1.Serializable
+    ], ClassDefinition.prototype, "methods", null);
+    __decorate([
+        utils_1.Serializable
+    ], ClassDefinition.prototype, "properties", null);
+    __decorate([
+        utils_1.Serializable
+    ], ClassDefinition.prototype, "staticMethods", null);
+    __decorate([
+        utils_1.Serializable
+    ], ClassDefinition.prototype, "staticProperties", null);
+    __decorate([
+        utils_1.Serializable
+    ], ClassDefinition.prototype, "typeParameters", null);
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;

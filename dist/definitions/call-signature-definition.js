@@ -1,10 +1,8 @@
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-    switch (arguments.length) {
-        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-    }
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var definitions_1 = require("./../definitions");
 var return_typed_definition_1 = require("./base/return-typed-definition");
@@ -40,14 +38,12 @@ var CallSignatureDefinition = (function () {
             }
         }
     };
-    Object.defineProperty(CallSignatureDefinition.prototype, "minArgumentCount",
-        __decorate([
-            utils_1.Serializable
-        ], CallSignatureDefinition.prototype, "minArgumentCount", Object.getOwnPropertyDescriptor(CallSignatureDefinition.prototype, "minArgumentCount")));
-    Object.defineProperty(CallSignatureDefinition.prototype, "typeParameters",
-        __decorate([
-            utils_1.Serializable
-        ], CallSignatureDefinition.prototype, "typeParameters", Object.getOwnPropertyDescriptor(CallSignatureDefinition.prototype, "typeParameters")));
+    __decorate([
+        utils_1.Serializable
+    ], CallSignatureDefinition.prototype, "minArgumentCount", null);
+    __decorate([
+        utils_1.Serializable
+    ], CallSignatureDefinition.prototype, "typeParameters", null);
     return CallSignatureDefinition;
 })();
 exports.CallSignatureDefinition = CallSignatureDefinition;
