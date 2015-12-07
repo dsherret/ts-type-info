@@ -9,7 +9,7 @@ declare class MyClass {
 }
 
 declare module MyClass {
-	function myFunction(str: string): string;
+    function myFunction(str: string): string;
 }`;
 
     const def = getStringInfo(code);
