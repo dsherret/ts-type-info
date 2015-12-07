@@ -11,7 +11,9 @@ var StaticMethodDefinition = (function (_super) {
         _super.apply(this, arguments);
     }
     StaticMethodDefinition.isStaticMethod = function (symbol) {
-        return (symbol.getFlags() & 8192) !== 0;
+        var flags = symbol.getFlags();
+        return (flags & 8192) !== 0 ||
+            (flags & 16);
     };
     return StaticMethodDefinition;
 })(base_method_definition_1.BaseMethodDefinition);
