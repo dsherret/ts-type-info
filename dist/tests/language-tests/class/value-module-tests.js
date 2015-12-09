@@ -2,7 +2,7 @@ var main_1 = require("./../../../main");
 var scope_1 = require("./../../../scope");
 var test_helpers_1 = require("./../../test-helpers");
 describe("value module", function () {
-    var code = "\ndeclare class MyClass {\n    myMethod(num: number): string;\n}\n\ndeclare module MyClass {\n\tfunction myFunction(str: string): string;\n}";
+    var code = "\ndeclare class MyClass {\n    myMethod(num: number): string;\n}\n\ndeclare module MyClass {\n    function myFunction(str: string): string;\n}";
     var def = main_1.getStringInfo(code);
     test_helpers_1.runMethodDefinitionTests(def.classes[0].methods[0], {
         name: "myMethod",

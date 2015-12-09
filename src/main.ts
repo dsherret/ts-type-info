@@ -6,6 +6,8 @@ import * as fs from "fs";
 import {TypeChecker, ClassDefinitionCache, StringUtils} from "./utils";
 
 export function getFileInfo(fileNames: string[]): FileDefinition[] {
+    verifyArray(fileNames);
+
     const options: ts.CompilerOptions = { noLib: false, experimentalDecorators: true };
     const host = ts.createCompilerHost(options);
     const program = ts.createProgram(fileNames, options, host);
@@ -22,6 +24,8 @@ export function getFileInfo(fileNames: string[]): FileDefinition[] {
 }
 
 export function getStringInfo(code: string): FileDefinition {
+    verifyString(code);
+
     const tmpFile = tmp.fileSync({ postfix: ".ts" });
     let fileDefinition: FileDefinition;
 
@@ -37,3 +41,14 @@ export function getStringInfo(code: string): FileDefinition {
     return fileDefinition;
 }
 
+function verifyArray(fileNames: string[]) {
+    if (!(fileNames instanceof Array)) {
+        throw new Error("Please provide an array of file names to getFileInfo.");
+    }
+}
+
+function verifyString(code: string) {
+    if (typeof code !== "string") {
+        throw new Error("Please provide a string to getStringInfo");
+    }
+}

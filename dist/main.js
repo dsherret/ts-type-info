@@ -5,6 +5,7 @@ var tmp = require("tmp");
 var fs = require("fs");
 var utils_1 = require("./utils");
 function getFileInfo(fileNames) {
+    verifyArray(fileNames);
     var options = { noLib: false, experimentalDecorators: true };
     var host = ts.createCompilerHost(options);
     var program = ts.createProgram(fileNames, options, host);
@@ -19,6 +20,7 @@ function getFileInfo(fileNames) {
 }
 exports.getFileInfo = getFileInfo;
 function getStringInfo(code) {
+    verifyString(code);
     var tmpFile = tmp.fileSync({ postfix: ".ts" });
     var fileDefinition;
     try {
@@ -32,5 +34,15 @@ function getStringInfo(code) {
     return fileDefinition;
 }
 exports.getStringInfo = getStringInfo;
+function verifyArray(fileNames) {
+    if (!(fileNames instanceof Array)) {
+        throw new Error("Please provide an array of file names to getFileInfo.");
+    }
+}
+function verifyString(code) {
+    if (typeof code !== "string") {
+        throw new Error("Please provide a string to getStringInfo");
+    }
+}
 
 //# sourceMappingURL=main.js.map

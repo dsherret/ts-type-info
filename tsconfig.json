@@ -64,6 +64,7 @@
         "src/tests/test-helpers/run-typed-definition-test.ts",
         "src/tests/test-helpers/run-return-typed-definition-test.ts",
         "src/tests/utils/string-utils-tests.ts",
+        "src/tests/main-tests.ts",
         "src/tests/test-helpers.ts",
         "src/types/type.ts",
         "src/utils/apply-mixins.ts",
