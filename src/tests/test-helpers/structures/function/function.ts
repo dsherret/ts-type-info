@@ -1,9 +1,7 @@
 import {Parameter} from "./parameter";
-import {Scope} from "./../../../scope";
 
-export interface Method {
+export interface Function {
     name: string;
     returnType: string;
-    scope: Scope;
     parameters: Parameter[];
 }

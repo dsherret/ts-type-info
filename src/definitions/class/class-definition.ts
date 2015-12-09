@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { ConstructorDefinition, DecoratorDefinition, MethodDefinition,
+import { ConstructorDefinition, DecoratorDefinition, ClassMethodDefinition,
     ClassPropertyDefinition, TypeParameterDefinition, StaticMethodDefinition,
     StaticPropertyDefinition} from "./../../definitions";
 import {applyMixins, TypeChecker, Serializable} from "./../../utils";
@@ -7,7 +7,7 @@ import {INamedDefinition, NamedDefinition} from "./../base/named-definition";
 import {IDecoratedDefinition, DecoratedDefinition} from "./../base/decorated-definition";
 
 export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
-    private _methods: MethodDefinition[] = [];
+    private _methods: ClassMethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
     private _staticMethods: StaticMethodDefinition[] = [];
     private _staticProperties: StaticPropertyDefinition[] = [];
@@ -59,8 +59,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
         this._typeParameters = [];
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
-            if (MethodDefinition.isClassMethod(member)) {
-                this._methods.push(new MethodDefinition(typeChecker, member));
+            if (ClassMethodDefinition.isClassMethod(member)) {
+                this._methods.push(new ClassMethodDefinition(typeChecker, member));
             }
             else if (ClassPropertyDefinition.isProperty(member)) {
                 this._properties.push(new ClassPropertyDefinition(typeChecker, member));

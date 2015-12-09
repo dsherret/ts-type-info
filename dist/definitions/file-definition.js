@@ -8,17 +8,20 @@ var ts = require("typescript");
 var utils_1 = require("./../utils");
 var FileDefinition = (function () {
     function FileDefinition(typeChecker, definitionCache, file) {
-        this.typeChecker = typeChecker;
-        this.definitionCache = definitionCache;
-        this.file = file;
         this._classes = [];
+        this._functions = [];
         this._name = file.fileName;
-        this.fillClasses();
+        this.fillClasses(typeChecker, definitionCache, file);
     }
-    FileDefinition.prototype.fillClasses = function () {
+    FileDefinition.prototype.fillClasses = function (typeChecker, definitionCache, file) {
         var _this = this;
-        this.typeChecker.getSymbolsInScope(this.file, 32).forEach(function (classSymbol) {
-            _this._classes.push(_this.definitionCache.getClassDefinition(classSymbol));
+        typeChecker.getSymbolsInScope(file, 32).forEach(function (classSymbol) {
+            _this._classes.push(definitionCache.getClassDefinition(classSymbol));
+        });
+        typeChecker.getSymbolsInScope(file, 16).forEach(function (functionSymbol) {
+            if (_this.symbolIsInFile(functionSymbol, file)) {
+                _this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
+            }
         });
     };
     Object.defineProperty(FileDefinition.prototype, "name", {
@@ -35,12 +38,25 @@ var FileDefinition = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(FileDefinition.prototype, "functions", {
+        get: function () {
+            return this._functions;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    FileDefinition.prototype.symbolIsInFile = function (symbol, file) {
+        return symbol.valueDeclaration.parent.fileName === file.fileName;
+    };
     __decorate([
         utils_1.Serializable
     ], FileDefinition.prototype, "name", null);
     __decorate([
         utils_1.Serializable
     ], FileDefinition.prototype, "classes", null);
+    __decorate([
+        utils_1.Serializable
+    ], FileDefinition.prototype, "functions", null);
     return FileDefinition;
 })();
 exports.FileDefinition = FileDefinition;

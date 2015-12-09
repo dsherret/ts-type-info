@@ -1,5 +1,5 @@
 var assert = require("assert");
-var scope_1 = require("./../../scope");
+var scope_1 = require("./../../../scope");
 function runScopedDefinitionTests(definition, scope) {
     if (definition == null) {
         throw "Definition should not be null.";

@@ -5,18 +5,16 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require("typescript");
 var base_class_method_definition_1 = require("./base/base-class-method-definition");
-var StaticMethodDefinition = (function (_super) {
-    __extends(StaticMethodDefinition, _super);
-    function StaticMethodDefinition() {
+var ClassMethodDefinition = (function (_super) {
+    __extends(ClassMethodDefinition, _super);
+    function ClassMethodDefinition() {
         _super.apply(this, arguments);
     }
-    StaticMethodDefinition.isStaticMethod = function (symbol) {
-        var flags = symbol.getFlags();
-        return (flags & 8192) !== 0 ||
-            (flags & 16);
+    ClassMethodDefinition.isClassMethod = function (symbol) {
+        return (symbol.getFlags() & 8192) !== 0;
     };
-    return StaticMethodDefinition;
+    return ClassMethodDefinition;
 })(base_class_method_definition_1.BaseMethodDefinition);
-exports.StaticMethodDefinition = StaticMethodDefinition;
+exports.ClassMethodDefinition = ClassMethodDefinition;
 
-//# sourceMappingURL=static-method-definition.js.map
+//# sourceMappingURL=class-method-definition.js.map

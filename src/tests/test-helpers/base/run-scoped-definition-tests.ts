@@ -1,6 +1,6 @@
 import * as assert from "assert";
-import {IScopedDefinition} from "./../../definitions/base/scoped-definition";
-import {Scope} from "./../../scope";
+import {IScopedDefinition} from "./../../../definitions/base/scoped-definition";
+import {Scope} from "./../../../scope";
 
 export function runScopedDefinitionTests(definition: IScopedDefinition, scope: Scope) {
     if (definition == null) {

@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {BaseMethodDefinition} from "./base/base-method-definition";
+import {BaseMethodDefinition} from "./base/base-class-method-definition";
 
 export class StaticMethodDefinition extends BaseMethodDefinition {
     static isStaticMethod(symbol: ts.Symbol) {

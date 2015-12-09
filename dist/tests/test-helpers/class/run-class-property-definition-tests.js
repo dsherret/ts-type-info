@@ -1,6 +1,6 @@
 var assert = require("assert");
-var run_base_property_definition_tests_1 = require("./../run-base-property-definition-tests");
-var run_scoped_definition_tests_1 = require("./../run-scoped-definition-tests");
+var run_base_property_definition_tests_1 = require("./../base/run-base-property-definition-tests");
+var run_scoped_definition_tests_1 = require("./../base/run-scoped-definition-tests");
 function runClassPropertyDefinitionTests(definition, property) {
     if (definition == null) {
         throw "Definition should not be null.";

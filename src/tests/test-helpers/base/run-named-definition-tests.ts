@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {INamedDefinition} from "./../../definitions/base/named-definition";
+import {INamedDefinition} from "./../../../definitions/base/named-definition";
 
 export function runNamedDefinitionTests(definition: INamedDefinition, name: string) {
     if (definition == null) {

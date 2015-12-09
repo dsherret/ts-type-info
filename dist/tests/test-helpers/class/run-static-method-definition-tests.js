@@ -1,4 +1,4 @@
-var run_named_definition_tests_1 = require("./../run-named-definition-tests");
+var run_named_definition_tests_1 = require("./../base/run-named-definition-tests");
 var run_return_typed_definition_tests_1 = require("./../function/run-return-typed-definition-tests");
 var run_parametered_definition_tests_1 = require("./../function/run-parametered-definition-tests");
 function runStaticMethodDefinitionTests(definition, method) {

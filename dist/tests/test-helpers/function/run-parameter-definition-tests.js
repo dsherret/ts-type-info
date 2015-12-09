@@ -1,6 +1,6 @@
 var assert = require("assert");
-var run_named_definition_tests_1 = require("./../run-named-definition-tests");
-var run_typed_definition_tests_1 = require("./../run-typed-definition-tests");
+var run_named_definition_tests_1 = require("./../base/run-named-definition-tests");
+var run_typed_definition_tests_1 = require("./../base/run-typed-definition-tests");
 function runParameterDefinitionTests(definition, param) {
     if (definition == null) {
         throw "Definition should not be null.";

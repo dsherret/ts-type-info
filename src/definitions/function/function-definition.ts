@@ -1,7 +1,7 @@
 import * as ts from "typescript";
-import {BaseMethodDefinition} from "./base/base-method-definition";
+import {BaseFunctionDefinition} from "./base/base-function-definition";
 
-export class MethodDefinition extends BaseMethodDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition {
     static isClassMethod(symbol: ts.Symbol) {
         return (symbol.getFlags() & ts.SymbolFlags.Method) !== 0;
     }

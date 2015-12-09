@@ -1,5 +1,5 @@
 export * from "./utils/apply-mixins";
-export * from "./utils/class-definition-cache";
+export * from "./utils/definition-cache";
 export * from "./utils/decorators";
 export * from "./utils/string-utils";
 export * from "./utils/key-value-cache";

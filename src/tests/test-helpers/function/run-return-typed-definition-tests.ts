@@ -1,5 +1,5 @@
 import {IReturnTypedDefinition} from "./../../../definitions/function/base/return-typed-definition";
-import {runTypeTests} from "./../run-type-tests";
+import {runTypeTests} from "./../base/run-type-tests";
 
 export function runReturnTypedDefinitionTests(definition: IReturnTypedDefinition, name: string) {
     if (definition == null) {

@@ -1,4 +1,4 @@
-var run_type_tests_1 = require("./../run-type-tests");
+var run_type_tests_1 = require("./../base/run-type-tests");
 function runReturnTypedDefinitionTests(definition, name) {
     if (definition == null) {
         throw "Definition should not be null.";

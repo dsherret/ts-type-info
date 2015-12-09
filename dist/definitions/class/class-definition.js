@@ -74,8 +74,8 @@ var ClassDefinition = (function () {
         var _this = this;
         this._typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
-            if (definitions_1.MethodDefinition.isClassMethod(member)) {
-                _this._methods.push(new definitions_1.MethodDefinition(typeChecker, member));
+            if (definitions_1.ClassMethodDefinition.isClassMethod(member)) {
+                _this._methods.push(new definitions_1.ClassMethodDefinition(typeChecker, member));
             }
             else if (definitions_1.ClassPropertyDefinition.isProperty(member)) {
                 _this._properties.push(new definitions_1.ClassPropertyDefinition(typeChecker, member));

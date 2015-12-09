@@ -1,6 +1,6 @@
 import {getStringInfo} from "./../../../main";
 import {Scope} from "./../../../scope";
-import {runMethodDefinitionTests, runStaticMethodDefinitionTests} from "./../../test-helpers";
+import {runClassMethodDefinitionTests, runStaticMethodDefinitionTests} from "./../../test-helpers";
 
 describe("value module", () => {
     const code = `
@@ -14,7 +14,7 @@ declare module MyClass {
 
     const def = getStringInfo(code);
 
-    runMethodDefinitionTests(def.classes[0].methods[0], {
+    runClassMethodDefinitionTests(def.classes[0].methods[0], {
         name: "myMethod",
         scope: Scope.public,
         returnType: "string",

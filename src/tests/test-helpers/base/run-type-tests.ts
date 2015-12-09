@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {Type} from "./../../types";
+import {Type} from "./../../../types";
 
 export function runTypeTests(type: Type, name: string) {
     if (type == null) {

@@ -1,8 +1,8 @@
 import * as assert from "assert";
 import {ClassProperty} from "./../structures";
 import {ClassPropertyDefinition} from "./../../../definitions/class/class-property-definition";
-import {runBasePropertyDefinitionTests} from "./../run-base-property-definition-tests";
-import {runScopedDefinitionTests} from "./../run-scoped-definition-tests";
+import {runBasePropertyDefinitionTests} from "./../base/run-base-property-definition-tests";
+import {runScopedDefinitionTests} from "./../base/run-scoped-definition-tests";
 
 export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, property: ClassProperty) {
     if (definition == null) {

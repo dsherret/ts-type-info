@@ -1,8 +1,8 @@
 import * as assert from "assert";
 import {Parameter} from "./../structures";
 import {ParameterDefinition} from "./../../../definitions";
-import {runNamedDefinitionTests} from "./../run-named-definition-tests";
-import {runTypedDefinitionTests} from "./../run-typed-definition-tests";
+import {runNamedDefinitionTests} from "./../base/run-named-definition-tests";
+import {runTypedDefinitionTests} from "./../base/run-typed-definition-tests";
 
 export function runParameterDefinitionTests(definition: ParameterDefinition, param: Parameter) {
     if (definition == null) {

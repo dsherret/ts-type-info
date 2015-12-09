@@ -1,10 +1,10 @@
-import {Method} from "./../structures";
-import {MethodDefinition} from "./../../../definitions/class/method-definition";
-import {runNamedDefinitionTests} from "./../run-named-definition-tests";
+import {ClassMethod} from "./../structures";
+import {ClassMethodDefinition} from "./../../../definitions/class/class-method-definition";
+import {runNamedDefinitionTests} from "./../base/run-named-definition-tests";
 import {runReturnTypedDefinitionTests} from "./../function/run-return-typed-definition-tests";
 import {runParameteredDefinitionTests} from "./../function/run-parametered-definition-tests";
 
-export function runStaticMethodDefinitionTests(definition: MethodDefinition, method: Method) {
+export function runStaticMethodDefinitionTests(definition: ClassMethodDefinition, method: ClassMethod) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
