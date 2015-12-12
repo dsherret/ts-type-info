@@ -1,5 +1,5 @@
 var assert = require("assert");
-var run_parametered_definition_tests_1 = require("./../function/run-parametered-definition-tests");
+var function_1 = require("./../function");
 function runConstructorDefinitionTests(definition, constructor) {
     if (constructor == null) {
         it("should not have a constructor", function () {
@@ -10,7 +10,7 @@ function runConstructorDefinitionTests(definition, constructor) {
         it("should have a constructor", function () {
             assert.notEqual(definition, null);
         });
-        run_parametered_definition_tests_1.runParameteredDefinitionTests(definition, constructor.parameters);
+        function_1.runParameteredDefinitionTests(definition, constructor.parameters);
     }
 }
 exports.runConstructorDefinitionTests = runConstructorDefinitionTests;

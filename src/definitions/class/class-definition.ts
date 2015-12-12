@@ -3,10 +3,9 @@ import { ConstructorDefinition, DecoratorDefinition, ClassMethodDefinition,
     ClassPropertyDefinition, TypeParameterDefinition, StaticMethodDefinition,
     StaticPropertyDefinition} from "./../../definitions";
 import {applyMixins, TypeChecker, Serializable} from "./../../utils";
-import {INamedDefinition, NamedDefinition} from "./../base/named-definition";
-import {IDecoratedDefinition, DecoratedDefinition} from "./../base/decorated-definition";
+import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition} from "./../base";
 
-export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
+export class ClassDefinition implements INamedDefinition, IDecoratableDefinition {
     private _methods: ClassMethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
     private _staticMethods: StaticMethodDefinition[] = [];
@@ -112,4 +111,4 @@ export class ClassDefinition implements INamedDefinition, IDecoratedDefinition {
     }
 }
 
-applyMixins(ClassDefinition, [NamedDefinition, DecoratedDefinition]);
+applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition]);

@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import {Constructor} from "./../structures";
-import {ConstructorDefinition} from "./../../../definitions/class/constructor-definition";
-import {runParameteredDefinitionTests} from "./../function/run-parametered-definition-tests";
+import {ConstructorDefinition} from "./../../../definitions";
+import {runParameteredDefinitionTests} from "./../function";
 
 export function runConstructorDefinitionTests(definition: ConstructorDefinition, constructor: Constructor) {
     if (constructor == null) {

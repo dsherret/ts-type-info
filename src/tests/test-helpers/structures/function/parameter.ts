@@ -1,6 +1,4 @@
-export interface Parameter {
-    name: string;
-    type: string;
-    isRequired?: boolean;
-    isRestParameter?: boolean;
+import {BaseParameter} from "./base";
+
+export interface Parameter extends BaseParameter {
 }

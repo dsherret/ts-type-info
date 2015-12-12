@@ -1,15 +1,15 @@
 import * as ts from "typescript";
-import {ParameterDefinition} from "./../../../definitions";
 import {Type} from "./../../../types";
 import {applyMixins, TypeChecker} from "./../../../utils";
-import {INamedDefinition, NamedDefinition} from "./../../base/named-definition";
-import {IParameteredDefinition, ParameteredDefinition} from "./../../function/base/parametered-definition";
-import {IReturnTypedDefinition, ReturnTypedDefinition} from "./../../function/base/return-typed-definition";
+import {INamedDefinition, NamedDefinition} from "./../../base";
+import {BaseParameterDefinition, BaseParameterDefinitionConstructor} from "./base-parameter-definition";
+import {IParameteredDefinition, ParameteredDefinition} from "./parametered-definition";
+import {IReturnTypedDefinition, ReturnTypedDefinition} from "./return-typed-definition";
 
-export class BaseFunctionDefinition implements INamedDefinition, IParameteredDefinition, IReturnTypedDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+export class BaseFunctionDefinition<T extends BaseParameterDefinition> implements INamedDefinition, IParameteredDefinition<T>, IReturnTypedDefinition {
+    constructor(parameterDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
-        this.fillParametersBySymbol(typeChecker, symbol);
+        this.fillParametersBySymbol(parameterDefinition, typeChecker, symbol);
         this.fillReturnTypeBySymbol(typeChecker, symbol);
     }
 
@@ -17,9 +17,9 @@ export class BaseFunctionDefinition implements INamedDefinition, IParameteredDef
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // ParameteredDefinition
-    fillParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    parameters: ParameterDefinition[];
+    fillParametersBySymbol: (parameterDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillParametersBySignature: (parameterDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, signature: ts.Signature) => void;
+    parameters: T[];
     // ReturnTyped
     fillReturnTypeBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillReturnTypeBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;

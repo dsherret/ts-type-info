@@ -1,8 +1,7 @@
 import {Function} from "./../structures";
-import {FunctionDefinition} from "./../../../definitions/function/function-definition";
+import {FunctionDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests} from "./../base/run-named-definition-tests";
-import {runReturnTypedDefinitionTests} from "./../function/run-return-typed-definition-tests";
-import {runParameteredDefinitionTests} from "./../function/run-parametered-definition-tests";
+import {runReturnTypedDefinitionTests, runParameteredDefinitionTests} from "./base";
 
 export function runFunctionDefinitionTests(definition: FunctionDefinition, func: Function) {
     if (definition == null) {

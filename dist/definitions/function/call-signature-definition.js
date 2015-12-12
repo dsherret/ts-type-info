@@ -5,13 +5,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var definitions_1 = require("./../../definitions");
-var return_typed_definition_1 = require("./base/return-typed-definition");
-var parametered_definition_1 = require("./base/parametered-definition");
+var base_1 = require("./base");
 var utils_1 = require("./../../utils");
 var CallSignatureDefinition = (function () {
     function CallSignatureDefinition(typeChecker, signature) {
         this.fillReturnTypeBySignature(typeChecker, signature);
-        this.fillParametersBySignature(typeChecker, signature);
+        this.fillParametersBySignature(definitions_1.ParameterDefinition, typeChecker, signature);
         this.fillTypeParameters(typeChecker, signature);
         this._minArgumentCount = typeChecker.getMinArgumentCount(signature);
     }
@@ -47,6 +46,6 @@ var CallSignatureDefinition = (function () {
     return CallSignatureDefinition;
 })();
 exports.CallSignatureDefinition = CallSignatureDefinition;
-utils_1.applyMixins(CallSignatureDefinition, [return_typed_definition_1.ReturnTypedDefinition, parametered_definition_1.ParameteredDefinition]);
+utils_1.applyMixins(CallSignatureDefinition, [base_1.ReturnTypedDefinition, base_1.ParameteredDefinition]);
 
 //# sourceMappingURL=call-signature-definition.js.map

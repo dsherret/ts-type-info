@@ -1,9 +1,13 @@
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 var ts = require("typescript");
 var definitions_1 = require("./definitions");
 var path = require("path");
 var tmp = require("tmp");
 var fs = require("fs");
 var utils_1 = require("./utils");
+__export(require("./definitions"));
 function getFileInfo(fileNames) {
     verifyArray(fileNames);
     var options = { noLib: false, experimentalDecorators: true };

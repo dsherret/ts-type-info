@@ -1,10 +1,10 @@
 import {Function} from "./../../structures";
-import {BaseFunctionDefinition} from "./../../../../definitions/function/base/base-function-definition";
-import {runNamedDefinitionTests} from "./../../base/run-named-definition-tests";
-import {runReturnTypedDefinitionTests} from "./../run-return-typed-definition-tests";
-import {runParameteredDefinitionTests} from "./../run-parametered-definition-tests";
+import {BaseFunctionDefinition, BaseParameterDefinition} from "./../../../../definitions";
+import {runNamedDefinitionTests} from "./../../base";
+import {runReturnTypedDefinitionTests} from "./run-return-typed-definition-tests";
+import {runParameteredDefinitionTests} from "./run-parametered-definition-tests";
 
-export function runBaseFunctionDefinitionTests(definition: BaseFunctionDefinition, func: Function) {
+export function runBaseFunctionDefinitionTests<T extends BaseParameterDefinition>(definition: BaseFunctionDefinition<T>, func: Function) {
     if (definition == null) {
         throw "Definition should not be null.";
     }

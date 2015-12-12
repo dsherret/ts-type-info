@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ts = require("typescript");
-var base_class_method_definition_1 = require("./base/base-class-method-definition");
+var base_1 = require("./base");
 var ClassMethodDefinition = (function (_super) {
     __extends(ClassMethodDefinition, _super);
     function ClassMethodDefinition() {
@@ -14,7 +14,7 @@ var ClassMethodDefinition = (function (_super) {
         return (symbol.getFlags() & 8192) !== 0;
     };
     return ClassMethodDefinition;
-})(base_class_method_definition_1.BaseMethodDefinition);
+})(base_1.BaseClassMethodDefinition);
 exports.ClassMethodDefinition = ClassMethodDefinition;
 
 //# sourceMappingURL=class-method-definition.js.map

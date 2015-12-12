@@ -1,7 +1,6 @@
 import {ClassMethod} from "./../structures";
-import {ClassMethodDefinition} from "./../../../definitions/class/class-method-definition";
-import {runBaseFunctionDefinitionTests} from "./../function/base/run-base-function-definition-tests";
-import {runScopedDefinitionTests} from "./../base/run-scoped-definition-tests";
+import {ClassMethodDefinition} from "./../../../definitions";
+import {runBaseClassMethodDefinitionTests} from "./base";
 
 export function runClassMethodDefinitionTests(definition: ClassMethodDefinition, method: ClassMethod) {
     if (definition == null) {
@@ -9,7 +8,6 @@ export function runClassMethodDefinitionTests(definition: ClassMethodDefinition,
     }
 
     describe(`method ${method.name}`, () => {
-        runBaseFunctionDefinitionTests(definition, method);
-        runScopedDefinitionTests(definition, method.scope);
+        runBaseClassMethodDefinitionTests(definition, method);
     });
 }

@@ -1,8 +1,9 @@
 import * as ts from "typescript";
+import {IBaseNamedDefinition} from "./base";
 import {ArgumentDefinition} from "./../definitions";
 import {TypeGuards, Serializable} from "./../utils";
 
-export class DecoratorDefinition {
+export class DecoratorDefinition implements IBaseNamedDefinition {
     private _name: string;
     private _arguments: ArgumentDefinition[] = [];
 

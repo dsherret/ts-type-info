@@ -1,12 +1,10 @@
-var run_base_function_definition_tests_1 = require("./../function/base/run-base-function-definition-tests");
-var run_scoped_definition_tests_1 = require("./../base/run-scoped-definition-tests");
+var base_1 = require("./base");
 function runClassMethodDefinitionTests(definition, method) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
     describe("method " + method.name, function () {
-        run_base_function_definition_tests_1.runBaseFunctionDefinitionTests(definition, method);
-        run_scoped_definition_tests_1.runScopedDefinitionTests(definition, method.scope);
+        base_1.runBaseClassMethodDefinitionTests(definition, method);
     });
 }
 exports.runClassMethodDefinitionTests = runClassMethodDefinitionTests;

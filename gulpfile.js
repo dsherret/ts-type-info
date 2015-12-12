@@ -1,6 +1,5 @@
 var gulp = require("gulp");
 var del = require("del");
-var dtsGenerator = require("dts-generator");
 var mocha = require("gulp-mocha");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
@@ -20,25 +19,6 @@ gulp.task("typescript", ["clean-scripts"], function() {
         .pipe(ts(tsProject))
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("./dist"));
-});
-
-// base for generation. Not accurate, so not used
-gulp.task("dts-generator", ["clean-scripts"], function(cb) {
-    dtsGenerator.generate({
-        name: p.name,
-        main: p.name + "/main",
-        baseDir: './src',
-        files: ['main.ts', '../node_modules/typescript/lib/typescript.d.ts'],
-        excludes: [
-           "node_modules/**/*.d.ts",
-            "utils/type-guards.ts",
-            "utils/decorators.ts",
-            "utils/type-checker.ts",
-            "utils.ts"
-        ],
-        out: "./dist/" + p.name + ".d.ts"
-    });
-    cb();
 });
 
 gulp.task("generate-definition-file", ["typescript"], function(cb) {
@@ -107,6 +87,34 @@ gulp.task("tslint", function() {
         .pipe(tslint())
         .pipe(tslint.report("verbose"));
 });
+
+gulp.task("ensure-dir-structures-match", function() {
+    var FileUtils = require("./dist/utils/file-utils").FileUtils;
+    var definitionDir = __dirname + "/src/definitions";
+    var definitionFileNames = FileUtils.getAllFileNamesFromFolder(definitionDir).map(function(f) {
+        return f.replace(definitionDir, "");
+    });
+    var testHelperDir = __dirname + "/src/tests/test-helpers";
+    var testHelperFileNames = FileUtils.getAllFileNamesFromFolder(testHelperDir).map(function(f) {
+        return f.replace(testHelperDir, "").replace("run-", "").replace("-tests", "");
+    });
+
+    var onlyInDefinitionFileNames = definitionFileNames.filter(function(f) {
+        return testHelperFileNames.indexOf(f) === -1;
+    });
+    var onlyInTestHelperFileNames = testHelperFileNames.filter(function(f) {
+        return definitionFileNames.indexOf(f) === -1;
+    });
+
+    if (onlyInDefinitionFileNames.length > 0) {
+        console.log("Add these to test helpers (with run- prefix and -tests suffix):");
+        console.log(onlyInDefinitionFileNames);
+    }
+    if (onlyInTestHelperFileNames.length > 0) {
+        console.log("Add these to definitions or fix test-helpers:");
+        console.log(onlyInTestHelperFileNames);
+    }
+})
 
 gulp.task("watch", function() {
     gulp.watch("./src/**/*.ts", ["tslint", "typescript"]);

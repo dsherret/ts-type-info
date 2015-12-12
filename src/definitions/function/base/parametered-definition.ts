@@ -1,31 +1,31 @@
 import * as ts from "typescript";
 import {Serializable} from "./../../../utils";
-import {ParameterDefinition} from "./../../../definitions";
+import {ParameterDefinition, BaseParameterDefinitionConstructor} from "./../../../definitions";
 import {TypeChecker} from "./../../../utils";
 
-export interface IParameteredDefinition {
-    fillParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol): void;
-    fillParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature): void;
-    parameters: ParameterDefinition[];
+export interface IParameteredDefinition<T extends ParameterDefinition> {
+    fillParametersBySymbol(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    fillParametersBySignature(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, signature: ts.Signature): void;
+    parameters: T[];
 }
 
-export abstract class ParameteredDefinition implements IParameteredDefinition {
-    private _parameters: ParameterDefinition[] = [];
+export abstract class ParameteredDefinition<T extends ParameterDefinition> implements IParameteredDefinition<T> {
+    private _parameters: T[] = [];
 
-    fillParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    fillParametersBySymbol(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) {
         this._parameters = [];
 
         for (var param of this.getDeclaration(symbol).parameters) {
             let parameterSymbol = typeChecker.getSymbolAtLocation(param);
-            this._parameters.push(new ParameterDefinition(typeChecker, parameterSymbol));
+            this._parameters.push(new paramDefinition(typeChecker, parameterSymbol));
         }
     }
 
-    fillParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature) {
+    fillParametersBySignature(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, signature: ts.Signature) {
         this._parameters = [];
 
         for (var param of signature.parameters) {
-            this._parameters.push(new ParameterDefinition(typeChecker, param));
+            this._parameters.push(new paramDefinition(typeChecker, param));
         }
     }
 

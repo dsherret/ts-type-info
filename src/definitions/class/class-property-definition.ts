@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {BaseClassPropertyDefinition} from "./base/base-class-property-definition";
+import {BaseClassPropertyDefinition} from "./base";
 import {TypeChecker} from "./../../utils";
 
 export class ClassPropertyDefinition extends BaseClassPropertyDefinition {

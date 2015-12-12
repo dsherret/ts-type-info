@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var ts = require("typescript");
 var definitions_1 = require("./../../definitions");
 var utils_1 = require("./../../utils");
-var named_definition_1 = require("./../base/named-definition");
-var decorated_definition_1 = require("./../base/decorated-definition");
+var base_1 = require("./../base");
 var ClassDefinition = (function () {
     function ClassDefinition(typeChecker, symbol, _baseClasses) {
         this._baseClasses = _baseClasses;
@@ -137,6 +136,6 @@ var ClassDefinition = (function () {
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;
-utils_1.applyMixins(ClassDefinition, [named_definition_1.NamedDefinition, decorated_definition_1.DecoratedDefinition]);
+utils_1.applyMixins(ClassDefinition, [base_1.NamedDefinition, base_1.DecoratableDefinition]);
 
 //# sourceMappingURL=class-definition.js.map

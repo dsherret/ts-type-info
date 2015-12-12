@@ -2,11 +2,9 @@ import * as ts from "typescript";
 import {Scope} from "./../../../scope";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {DecoratorDefinition} from "./../../../definitions";
-import {BasePropertyDefinition} from "./../../base/base-property-definition";
-import {IDecoratedDefinition, DecoratedDefinition} from "./../../base/decorated-definition";
-import {IScopedDefinition, ScopedDefinition} from "./../../base/scoped-definition";
+import {BasePropertyDefinition, IScopedDefinition, ScopedDefinition, IDecoratableDefinition, DecoratableDefinition} from "./../../base";
 
-export class BaseClassPropertyDefinition extends BasePropertyDefinition implements IDecoratedDefinition, IScopedDefinition {
+export class BaseClassPropertyDefinition extends BasePropertyDefinition implements IDecoratableDefinition, IScopedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol);
 
@@ -22,4 +20,4 @@ export class BaseClassPropertyDefinition extends BasePropertyDefinition implemen
     fillScope: (symbol: ts.Symbol) => void;
 }
 
-applyMixins(BaseClassPropertyDefinition, [DecoratedDefinition, ScopedDefinition]);
+applyMixins(BaseClassPropertyDefinition, [DecoratableDefinition, ScopedDefinition]);

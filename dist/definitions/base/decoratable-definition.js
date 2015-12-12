@@ -6,10 +6,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var definitions_1 = require("./../../definitions");
 var utils_1 = require("./../../utils");
-var DecoratedDefinition = (function () {
-    function DecoratedDefinition() {
+var DecoratableDefinition = (function () {
+    function DecoratableDefinition() {
     }
-    DecoratedDefinition.prototype.fillDecorators = function (symbol) {
+    DecoratableDefinition.prototype.fillDecorators = function (symbol) {
         this._decorators = [];
         if (symbol.valueDeclaration != null && symbol.valueDeclaration.decorators != null) {
             for (var _i = 0, _a = symbol.valueDeclaration.decorators; _i < _a.length; _i++) {
@@ -18,7 +18,7 @@ var DecoratedDefinition = (function () {
             }
         }
     };
-    Object.defineProperty(DecoratedDefinition.prototype, "decorators", {
+    Object.defineProperty(DecoratableDefinition.prototype, "decorators", {
         get: function () {
             return this._decorators;
         },
@@ -27,9 +27,9 @@ var DecoratedDefinition = (function () {
     });
     __decorate([
         utils_1.Serializable
-    ], DecoratedDefinition.prototype, "decorators", null);
-    return DecoratedDefinition;
+    ], DecoratableDefinition.prototype, "decorators", null);
+    return DecoratableDefinition;
 })();
-exports.DecoratedDefinition = DecoratedDefinition;
+exports.DecoratableDefinition = DecoratableDefinition;
 
-//# sourceMappingURL=decorated-definition.js.map
+//# sourceMappingURL=decoratable-definition.js.map

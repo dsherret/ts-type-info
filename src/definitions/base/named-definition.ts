@@ -1,9 +1,12 @@
 import * as ts from "typescript";
 import {Serializable} from "./../../utils";
 
-export interface INamedDefinition {
-    fillName(symbol: ts.Symbol): void;
+export interface IBaseNamedDefinition {
     name: string;
+}
+
+export interface INamedDefinition extends IBaseNamedDefinition {
+    fillName(symbol: ts.Symbol): void;
 }
 
 export abstract class NamedDefinition {

@@ -1,6 +1,6 @@
-import {Property} from "./../property";
-import {Scope} from "./../../../../scope";
+import {BaseClassProperty} from "./base";
 
-export interface ClassProperty extends Property {
-    scope: Scope;
+export interface ClassProperty extends BaseClassProperty {
+    isAccessor?: boolean;
+    isReadonly?: boolean;
 }

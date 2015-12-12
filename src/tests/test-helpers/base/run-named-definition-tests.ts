@@ -1,7 +1,7 @@
 import * as assert from "assert";
-import {INamedDefinition} from "./../../../definitions/base/named-definition";
+import {IBaseNamedDefinition} from "./../../../definitions/base";
 
-export function runNamedDefinitionTests(definition: INamedDefinition, name: string) {
+export function runNamedDefinitionTests(definition: IBaseNamedDefinition, name: string) {
     if (definition == null) {
         throw "Definition should not be null.";
     }

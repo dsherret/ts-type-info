@@ -32,7 +32,6 @@
   "devDependencies": {
     "code-block-writer": "^1.0.0",
     "del": "^2.0.2",
-    "dts-generator": "^1.5.0",
     "gulp": "^3.9.0",
     "gulp-mocha": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",

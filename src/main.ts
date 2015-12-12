@@ -5,6 +5,8 @@ import * as tmp from "tmp";
 import * as fs from "fs";
 import {TypeChecker, DefinitionCache, StringUtils} from "./utils";
 
+export * from "./definitions";
+
 export function getFileInfo(fileNames: string[]): FileDefinition[] {
     verifyArray(fileNames);
 

@@ -1,6 +1,4 @@
-import {Function} from "./../function/function";
-import {Scope} from "./../../../../scope";
+import {BaseClassMethod} from "./base";
 
-export interface ClassMethod extends Function {
-    scope: Scope;
+export interface ClassMethod extends BaseClassMethod {
 }

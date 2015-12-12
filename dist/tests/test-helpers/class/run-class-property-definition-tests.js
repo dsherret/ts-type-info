@@ -1,13 +1,11 @@
 var assert = require("assert");
-var run_base_property_definition_tests_1 = require("./../base/run-base-property-definition-tests");
-var run_scoped_definition_tests_1 = require("./../base/run-scoped-definition-tests");
+var base_1 = require("./../base");
 function runClassPropertyDefinitionTests(definition, property) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
     describe("property " + property.name, function () {
-        run_base_property_definition_tests_1.runBasePropertyDefinitionTests(definition, property);
-        run_scoped_definition_tests_1.runScopedDefinitionTests(definition, property.scope);
+        base_1.runBasePropertyDefinitionTests(definition, property);
         it("should be " + (property.isAccessor ? "an accessor" : "not an accessor"), function () {
             assert.equal(definition.isAccessor, property.isAccessor || false);
         });

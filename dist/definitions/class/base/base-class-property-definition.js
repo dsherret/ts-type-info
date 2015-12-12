@@ -4,9 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var utils_1 = require("./../../../utils");
-var base_property_definition_1 = require("./../../base/base-property-definition");
-var decorated_definition_1 = require("./../../base/decorated-definition");
-var scoped_definition_1 = require("./../../base/scoped-definition");
+var base_1 = require("./../../base");
 var BaseClassPropertyDefinition = (function (_super) {
     __extends(BaseClassPropertyDefinition, _super);
     function BaseClassPropertyDefinition(typeChecker, symbol) {
@@ -15,8 +13,8 @@ var BaseClassPropertyDefinition = (function (_super) {
         this.fillScope(symbol);
     }
     return BaseClassPropertyDefinition;
-})(base_property_definition_1.BasePropertyDefinition);
+})(base_1.BasePropertyDefinition);
 exports.BaseClassPropertyDefinition = BaseClassPropertyDefinition;
-utils_1.applyMixins(BaseClassPropertyDefinition, [decorated_definition_1.DecoratedDefinition, scoped_definition_1.ScopedDefinition]);
+utils_1.applyMixins(BaseClassPropertyDefinition, [base_1.DecoratableDefinition, base_1.ScopedDefinition]);
 
 //# sourceMappingURL=base-class-property-definition.js.map
