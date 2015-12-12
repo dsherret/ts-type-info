@@ -1,5 +1,5 @@
 ﻿import * as ts from "typescript";
-import {Serializable, TypeChecker} from "./../../utils";
+import {TypeChecker} from "./../../utils";
 
 export interface IExportableDefinition {
     fillIsExported(typeChecker: TypeChecker, symbol: ts.Symbol): void;
@@ -13,7 +13,6 @@ export abstract class ExportableDefinition implements IExportableDefinition {
         this._isExported = typeChecker.isSymbolExportOfFile(symbol, typeChecker.getSourceFileOfSymbol(symbol));
     }
 
-    @Serializable
     get isExported() {
         return this._isExported;
     }

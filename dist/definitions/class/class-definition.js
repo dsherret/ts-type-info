@@ -1,9 +1,3 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var ts = require("typescript");
 var constructor_definition_1 = require("./constructor-definition");
 var class_method_definition_1 = require("./class-method-definition");
@@ -118,27 +112,6 @@ var ClassDefinition = (function () {
     ClassDefinition.isClassDefinition = function (symbol) {
         return (symbol.flags & 32) !== 0;
     };
-    __decorate([
-        utils_1.Serializable
-    ], ClassDefinition.prototype, "baseClasses", null);
-    __decorate([
-        utils_1.Serializable
-    ], ClassDefinition.prototype, "constructorDef", null);
-    __decorate([
-        utils_1.Serializable
-    ], ClassDefinition.prototype, "methods", null);
-    __decorate([
-        utils_1.Serializable
-    ], ClassDefinition.prototype, "properties", null);
-    __decorate([
-        utils_1.Serializable
-    ], ClassDefinition.prototype, "staticMethods", null);
-    __decorate([
-        utils_1.Serializable
-    ], ClassDefinition.prototype, "staticProperties", null);
-    __decorate([
-        utils_1.Serializable
-    ], ClassDefinition.prototype, "typeParameters", null);
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;

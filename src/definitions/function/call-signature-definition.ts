@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import {ParameterDefinition, TypeParameterDefinition} from "./../../definitions";
 import {IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./base";
-import {applyMixins, TypeChecker, Serializable} from "./../../utils";
+import {applyMixins, TypeChecker} from "./../../utils";
 import {Type} from "./../../types";
 
 export class CallSignatureDefinition implements IReturnTypedDefinition, IParameteredDefinition<ParameterDefinition> {
@@ -16,12 +16,10 @@ export class CallSignatureDefinition implements IReturnTypedDefinition, IParamet
         this._minArgumentCount = typeChecker.getMinArgumentCount(signature);
     }
 
-    @Serializable
     get minArgumentCount() {
         return this._minArgumentCount;
     }
 
-    @Serializable
     get typeParameters() {
         return this._typeParameters;
     }

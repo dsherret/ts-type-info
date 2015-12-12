@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import {IBaseNamedDefinition} from "./base";
 import {ArgumentDefinition} from "./../definitions";
-import {TypeGuards, Serializable} from "./../utils";
+import {TypeGuards} from "./../utils";
 
 export class DecoratorDefinition implements IBaseNamedDefinition {
     private _name: string;
@@ -17,12 +17,10 @@ export class DecoratorDefinition implements IBaseNamedDefinition {
         }
     }
 
-    @Serializable
     get name() {
         return this._name;
     }
 
-    @Serializable
     get arguments() {
         return this._arguments;
     }

@@ -6,7 +6,7 @@ import {StaticMethodDefinition} from "./static-method-definition";
 import {StaticPropertyDefinition} from "./static-property-definition";
 import {DecoratorDefinition} from "./../decorator-definition";
 import {TypeParameterDefinition} from "./../type-parameter-definition";
-import {applyMixins, TypeChecker, Serializable} from "./../../utils";
+import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition,
         IDecoratableDefinition, DecoratableDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
@@ -26,37 +26,30 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         this.fillIsExported(typeChecker, symbol);
     }
 
-    @Serializable
     get baseClasses() {
         return this._baseClasses;
     }
 
-    @Serializable
     get constructorDef() {
         return this._constructorDef;
     }
 
-    @Serializable
     get methods() {
         return this._methods;
     }
 
-    @Serializable
     get properties() {
         return this._properties;
     }
 
-    @Serializable
     get staticMethods() {
         return this._staticMethods;
     }
 
-    @Serializable
     get staticProperties() {
         return this._staticProperties;
     }
 
-    @Serializable
     get typeParameters() {
         return this._typeParameters;
     }

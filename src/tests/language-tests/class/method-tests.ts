@@ -31,7 +31,6 @@ class MyClass {
 }`;
 
     const def = getStringInfo(code);
-
     runClassMethodDefinitionTests(def.classes[0].methods[0], {
         name: "myParameterMethod",
         scope: Scope.public,

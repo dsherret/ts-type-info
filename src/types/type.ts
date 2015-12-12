@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {CallSignatureDefinition, PropertyDefinition} from "./../definitions";
-import {TypeChecker, Serializable} from "./../utils";
+import {TypeChecker} from "./../utils";
 
 export class Type {
     private _name: string;
@@ -22,17 +22,14 @@ export class Type {
         }
     }
 
-    @Serializable
     get name() {
         return this._name;
     }
 
-    @Serializable
     get properties() {
         return this._properties;
     }
 
-    @Serializable
     get callSignatures() {
         return this._callSignatures;
     }

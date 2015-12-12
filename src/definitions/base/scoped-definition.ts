@@ -1,6 +1,5 @@
 import * as ts from "typescript";
 import {Scope} from "./../../scope";
-import {Serializable} from "./../../utils";
 
 export interface IScopedDefinition {
     scope: Scope;
@@ -22,7 +21,6 @@ export abstract class ScopedDefinition implements IScopedDefinition {
         }
     }
 
-    @Serializable
     get scope() {
         return this._scope;
     }

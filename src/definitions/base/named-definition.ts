@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import {Serializable} from "./../../utils";
 
 export interface IBaseNamedDefinition {
     name: string;
@@ -16,7 +15,6 @@ export abstract class NamedDefinition {
         this._name = symbol.getName();
     }
 
-    @Serializable
     get name() {
         return this._name;
     }

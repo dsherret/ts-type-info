@@ -1,6 +1,5 @@
 import * as ts from "typescript";
 import {DecoratorDefinition} from "./../decorator-definition";
-import {Serializable} from "./../../utils";
 
 export interface IDecoratableDefinition {
     fillDecorators(symbol: ts.Symbol): void;
@@ -19,7 +18,6 @@ export abstract class DecoratableDefinition implements IDecoratableDefinition {
         }
     }
 
-    @Serializable
     get decorators() {
         return this._decorators;
     }

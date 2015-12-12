@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {TypeChecker, Serializable, DefinitionCache} from "./../utils";
+import {TypeChecker, DefinitionCache} from "./../utils";
 import {ClassDefinition, FunctionDefinition} from "./../definitions";
 
 export class FileDefinition {
@@ -24,17 +24,14 @@ export class FileDefinition {
         });
     }
 
-    @Serializable
     get name() {
         return this._name;
     }
 
-    @Serializable
     get classes() {
         return this._classes;
     }
 
-    @Serializable
     get functions() {
         return this._functions;
     }

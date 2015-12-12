@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {Type} from "./../../types";
-import {TypeChecker, Serializable} from "./../../utils";
+import {TypeChecker} from "./../../utils";
 
 export interface ITypedDefinition {
     fillType(typeChecker: TypeChecker, symbol: ts.Symbol): void;
@@ -14,7 +14,6 @@ export abstract class TypedDefinition {
         this._type = typeChecker.getTypeOfSymbol(symbol);
     }
 
-    @Serializable
     get type() {
         return this._type;
     }

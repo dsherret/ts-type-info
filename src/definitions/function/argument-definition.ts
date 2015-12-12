@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import {Serializable} from "./../../utils";
 
 export class ArgumentDefinition {
     private _text: string;
@@ -9,7 +8,6 @@ export class ArgumentDefinition {
         this.isSupported(arg);
     }
 
-    @Serializable
     get text() {
         return this._text;
     }

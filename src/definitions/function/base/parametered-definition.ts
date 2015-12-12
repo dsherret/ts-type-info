@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import {Serializable} from "./../../../utils";
 import {ParameterDefinition, BaseParameterDefinitionConstructor} from "./../../../definitions";
 import {TypeChecker} from "./../../../utils";
 
@@ -29,7 +28,6 @@ export abstract class ParameteredDefinition<T extends ParameterDefinition> imple
         }
     }
 
-    @Serializable
     get parameters() {
         return this._parameters;
     }

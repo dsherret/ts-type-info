@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import {Serializable} from "./../../../utils";
 import {Type} from "./../../../types";
 import {TypeChecker} from "./../../../utils";
 
@@ -20,7 +19,6 @@ export abstract class ReturnTypedDefinition implements IReturnTypedDefinition {
         this._returnType = typeChecker.getReturnTypeFromSignature(signature);
     }
 
-    @Serializable
     get returnType() {
         return this._returnType;
     }
