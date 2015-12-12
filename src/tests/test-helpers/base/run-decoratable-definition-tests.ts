@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {IDecoratableDefinition} from "./../../../definitions/base/decoratable-definition";
+import {IDecoratableDefinition} from "./../../../definitions";
 import {runDecoratorDefinitionTests} from "./../run-decorator-definition-tests";
 import {Decorator} from "./../structures";
 

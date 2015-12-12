@@ -1,6 +1,6 @@
 import {Function} from "./../structures";
 import {FunctionDefinition} from "./../../../definitions";
-import {runNamedDefinitionTests} from "./../base/run-named-definition-tests";
+import {runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
 import {runReturnTypedDefinitionTests, runParameteredDefinitionTests} from "./base";
 
 export function runFunctionDefinitionTests(definition: FunctionDefinition, func: Function) {
@@ -10,6 +10,7 @@ export function runFunctionDefinitionTests(definition: FunctionDefinition, func:
 
     describe(`method ${func.name}`, () => {
         runNamedDefinitionTests(definition, func.name);
+        runExportableDefinitionTests(definition, func.isExported);
         runReturnTypedDefinitionTests(definition, func.returnType);
         runParameteredDefinitionTests(definition, func.parameters);
     });

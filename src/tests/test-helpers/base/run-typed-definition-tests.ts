@@ -1,4 +1,4 @@
-import {ITypedDefinition} from "./../../../definitions/base/typed-definition";
+import {ITypedDefinition} from "./../../../definitions";
 import {runTypeTests} from "./run-type-tests";
 
 export function runTypedDefinitionTests(definition: ITypedDefinition, name: string) {

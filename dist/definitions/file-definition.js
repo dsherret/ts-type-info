@@ -19,7 +19,7 @@ var FileDefinition = (function () {
             _this._classes.push(definitionCache.getClassDefinition(classSymbol));
         });
         typeChecker.getSymbolsInScope(file, 16).forEach(function (functionSymbol) {
-            if (_this.symbolIsInFile(functionSymbol, file)) {
+            if (typeChecker.isSymbolInFile(functionSymbol, file)) {
                 _this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
         });
@@ -45,9 +45,6 @@ var FileDefinition = (function () {
         enumerable: true,
         configurable: true
     });
-    FileDefinition.prototype.symbolIsInFile = function (symbol, file) {
-        return symbol.valueDeclaration.parent.fileName === file.fileName;
-    };
     __decorate([
         utils_1.Serializable
     ], FileDefinition.prototype, "name", null);

@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {IBaseNamedDefinition} from "./../../../definitions/base";
+import {IBaseNamedDefinition} from "./../../../definitions";
 
 export function runNamedDefinitionTests(definition: IBaseNamedDefinition, name: string) {
     if (definition == null) {

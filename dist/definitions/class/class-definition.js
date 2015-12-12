@@ -5,7 +5,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var ts = require("typescript");
-var definitions_1 = require("./../../definitions");
+var constructor_definition_1 = require("./constructor-definition");
+var class_method_definition_1 = require("./class-method-definition");
+var class_property_definition_1 = require("./class-property-definition");
+var static_method_definition_1 = require("./static-method-definition");
+var static_property_definition_1 = require("./static-property-definition");
+var type_parameter_definition_1 = require("./../type-parameter-definition");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var ClassDefinition = (function () {
@@ -18,7 +23,8 @@ var ClassDefinition = (function () {
         this._typeParameters = [];
         this.fillName(symbol);
         this.fillDecorators(symbol);
-        this.createMembers(typeChecker, symbol);
+        this.fillMembers(typeChecker, symbol);
+        this.fillIsExported(typeChecker, symbol);
     }
     Object.defineProperty(ClassDefinition.prototype, "baseClasses", {
         get: function () {
@@ -69,22 +75,22 @@ var ClassDefinition = (function () {
         enumerable: true,
         configurable: true
     });
-    ClassDefinition.prototype.createMembers = function (typeChecker, symbol) {
+    ClassDefinition.prototype.fillMembers = function (typeChecker, symbol) {
         var _this = this;
         this._typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
-            if (definitions_1.ClassMethodDefinition.isClassMethod(member)) {
-                _this._methods.push(new definitions_1.ClassMethodDefinition(typeChecker, member));
+            if (class_method_definition_1.ClassMethodDefinition.isClassMethod(member)) {
+                _this._methods.push(new class_method_definition_1.ClassMethodDefinition(typeChecker, member));
             }
-            else if (definitions_1.ClassPropertyDefinition.isProperty(member)) {
-                _this._properties.push(new definitions_1.ClassPropertyDefinition(typeChecker, member));
+            else if (class_property_definition_1.ClassPropertyDefinition.isProperty(member)) {
+                _this._properties.push(new class_property_definition_1.ClassPropertyDefinition(typeChecker, member));
             }
-            else if (definitions_1.ConstructorDefinition.isConstructor(member)) {
+            else if (constructor_definition_1.ConstructorDefinition.isConstructor(member)) {
                 _this.verifyConstructorNotSet();
-                _this._constructorDef = new definitions_1.ConstructorDefinition(typeChecker, member);
+                _this._constructorDef = new constructor_definition_1.ConstructorDefinition(typeChecker, member);
             }
-            else if (definitions_1.TypeParameterDefinition.isTypeParameter(member)) {
-                _this._typeParameters.push(new definitions_1.TypeParameterDefinition(typeChecker, member));
+            else if (type_parameter_definition_1.TypeParameterDefinition.isTypeParameter(member)) {
+                _this._typeParameters.push(new type_parameter_definition_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
                 console.warn("Not implemented '" + member.getName() + "'");
@@ -93,11 +99,11 @@ var ClassDefinition = (function () {
         Object.keys(symbol.exports).map(function (memberName) { return symbol.exports[memberName]; }).forEach(function (staticMember) {
             if (staticMember.getName() === "prototype") {
             }
-            else if (definitions_1.StaticMethodDefinition.isStaticMethod(staticMember)) {
-                _this._staticMethods.push(new definitions_1.StaticMethodDefinition(typeChecker, staticMember));
+            else if (static_method_definition_1.StaticMethodDefinition.isStaticMethod(staticMember)) {
+                _this._staticMethods.push(new static_method_definition_1.StaticMethodDefinition(typeChecker, staticMember));
             }
-            else if (definitions_1.StaticPropertyDefinition.isStaticProperty(staticMember)) {
-                _this._staticProperties.push(new definitions_1.StaticPropertyDefinition(typeChecker, staticMember));
+            else if (static_property_definition_1.StaticPropertyDefinition.isStaticProperty(staticMember)) {
+                _this._staticProperties.push(new static_property_definition_1.StaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
                 console.warn("Not implemented '" + staticMember.getName() + "'");
@@ -136,6 +142,6 @@ var ClassDefinition = (function () {
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;
-utils_1.applyMixins(ClassDefinition, [base_1.NamedDefinition, base_1.DecoratableDefinition]);
+utils_1.applyMixins(ClassDefinition, [base_1.NamedDefinition, base_1.DecoratableDefinition, base_1.ExportableDefinition]);
 
 //# sourceMappingURL=class-definition.js.map

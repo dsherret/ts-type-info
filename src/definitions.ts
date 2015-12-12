@@ -1,4 +1,5 @@
 // order by dependency and not name
+export * from "./definitions/base";
 export * from "./definitions/function";
 export * from "./definitions/class";
 export * from "./definitions/decorator-definition";

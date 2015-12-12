@@ -1,5 +1,5 @@
 import {Property} from "./../structures";
-import {BasePropertyDefinition} from "./../../../definitions/base/base-property-definition";
+import {BasePropertyDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runTypedDefinitionTests} from "./run-typed-definition-tests";
 

@@ -18,7 +18,7 @@ export class FileDefinition {
         });
 
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Function).forEach((functionSymbol) => {
-            if (this.symbolIsInFile(functionSymbol, file)) {
+            if (typeChecker.isSymbolInFile(functionSymbol, file)) {
                 this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
         });
@@ -37,9 +37,5 @@ export class FileDefinition {
     @Serializable
     get functions() {
         return this._functions;
-    }
-
-    private symbolIsInFile(symbol: ts.Symbol, file: ts.SourceFile) {
-        return (symbol.valueDeclaration.parent as ts.SourceFile).fileName === file.fileName;
     }
 }

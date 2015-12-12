@@ -1,11 +1,17 @@
 import * as ts from "typescript";
-import { ConstructorDefinition, DecoratorDefinition, ClassMethodDefinition,
-    ClassPropertyDefinition, TypeParameterDefinition, StaticMethodDefinition,
-    StaticPropertyDefinition} from "./../../definitions";
+import {ConstructorDefinition} from "./constructor-definition";
+import {ClassMethodDefinition} from "./class-method-definition";
+import {ClassPropertyDefinition} from "./class-property-definition";
+import {StaticMethodDefinition} from "./static-method-definition";
+import {StaticPropertyDefinition} from "./static-property-definition";
+import {DecoratorDefinition} from "./../decorator-definition";
+import {TypeParameterDefinition} from "./../type-parameter-definition";
 import {applyMixins, TypeChecker, Serializable} from "./../../utils";
-import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition} from "./../base";
+import {INamedDefinition, NamedDefinition,
+        IDecoratableDefinition, DecoratableDefinition,
+        IExportableDefinition, ExportableDefinition} from "./../base";
 
-export class ClassDefinition implements INamedDefinition, IDecoratableDefinition {
+export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition {
     private _methods: ClassMethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
     private _staticMethods: StaticMethodDefinition[] = [];
@@ -16,7 +22,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
         this.fillName(symbol);
         this.fillDecorators(symbol);
-        this.createMembers(typeChecker, symbol);
+        this.fillMembers(typeChecker, symbol);
+        this.fillIsExported(typeChecker, symbol);
     }
 
     @Serializable
@@ -54,7 +61,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         return this._typeParameters;
     }
 
-    private createMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this._typeParameters = [];
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
@@ -105,10 +112,13 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     // DecoratableDefinition
     fillDecorators: (symbol: ts.Symbol) => void;
     decorators: DecoratorDefinition[];
+    // ExportableDefinition
+    fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    isExported: boolean;
 
     static isClassDefinition(symbol: ts.Symbol) {
         return (symbol.flags & ts.SymbolFlags.Class) !== 0;
     }
 }
 
-applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition]);
+applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition]);
