@@ -4,7 +4,7 @@ var ParameteredDefinition = (function () {
     }
     ParameteredDefinition.prototype.fillParametersBySymbol = function (paramDefinition, typeChecker, symbol) {
         this._parameters = [];
-        for (var _i = 0, _a = this.getDeclaration(symbol).parameters; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.getDeclaration(symbol).parameters.filter(function (p) { return p != null; }); _i < _a.length; _i++) {
             var param = _a[_i];
             var parameterSymbol = typeChecker.getSymbolAtLocation(param);
             this._parameters.push(new paramDefinition(typeChecker, parameterSymbol));
@@ -32,7 +32,8 @@ var ParameteredDefinition = (function () {
             return symbol.getDeclarations()[0];
         }
         else {
-            throw "Could not get declaration when getting parameters.";
+            console.warn("Could not get declaration when getting parameters.");
+            return null;
         }
     };
     return ParameteredDefinition;

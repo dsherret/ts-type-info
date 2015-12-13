@@ -15,6 +15,10 @@ export class TypeChecker {
         });
     }
 
+    getConstantValue(symbol: ts.Symbol) {
+        return this.typeChecker.getConstantValue(symbol.valueDeclaration as any);
+    }
+
     getFullyQualifiedName(symbol: ts.Symbol) {
         return this.typeChecker.getFullyQualifiedName(symbol);
     }

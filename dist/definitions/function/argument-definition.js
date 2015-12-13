@@ -1,7 +1,7 @@
 var ArgumentDefinition = (function () {
     function ArgumentDefinition(arg) {
         this.fillName(arg);
-        this.isSupported(arg);
+        this.verifyIsSupported(arg);
     }
     Object.defineProperty(ArgumentDefinition.prototype, "text", {
         get: function () {
@@ -13,9 +13,9 @@ var ArgumentDefinition = (function () {
     ArgumentDefinition.prototype.fillName = function (arg) {
         this._text = arg.text;
     };
-    ArgumentDefinition.prototype.isSupported = function (arg) {
+    ArgumentDefinition.prototype.verifyIsSupported = function (arg) {
         if (arg["expression"] != null) {
-            throw "Only string arguments are currently supported.";
+            console.warn("Only string arguments are currently supported.");
         }
     };
     return ArgumentDefinition;

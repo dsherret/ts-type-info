@@ -1,9 +1,10 @@
-import {ClassDefinition, FunctionDefinition} from "./../definitions";
+import {ClassDefinition, EnumDefinition, FunctionDefinition} from "./../definitions";
 import {TypeChecker, KeyValueCache} from "./../utils";
 import * as ts from "typescript";
 
 export class DefinitionCache {
     private classes = new KeyValueCache<ts.Symbol, ClassDefinition>();
+    private enums = new KeyValueCache<ts.Symbol, EnumDefinition>();
     private functions = new KeyValueCache<ts.Symbol, FunctionDefinition>();
 
     constructor(private typeChecker: TypeChecker) {
@@ -24,14 +25,22 @@ export class DefinitionCache {
         return classDefinition;
     }
 
+    getEnumDefinition(symbol: ts.Symbol) {
+        let enumDefinition = this.enums.get(symbol);
+
+        if (enumDefinition == null) {
+            enumDefinition = new EnumDefinition(this.typeChecker, symbol);
+            this.enums.add(symbol, enumDefinition);
+        }
+
+        return enumDefinition;
+    }
+
     getFunctionDefinition(symbol: ts.Symbol) {
         let functionDefinition = this.functions.get(symbol);
 
         if (functionDefinition == null) {
-            functionDefinition = new FunctionDefinition(
-                this.typeChecker,
-                symbol);
-
+            functionDefinition = new FunctionDefinition(this.typeChecker, symbol);
             this.functions.add(symbol, functionDefinition);
         }
 

@@ -5,7 +5,7 @@ export class ArgumentDefinition {
 
     constructor(arg: ts.Expression) {
         this.fillName(arg);
-        this.isSupported(arg);
+        this.verifyIsSupported(arg);
     }
 
     get text() {
@@ -16,9 +16,9 @@ export class ArgumentDefinition {
         this._text = (arg as any).text;
     }
 
-    private isSupported(arg: ts.Expression) {
+    private verifyIsSupported(arg: ts.Expression) {
         if ((arg as any)["expression"] != null) {
-            throw "Only string arguments are currently supported.";
+            console.warn("Only string arguments are currently supported.");
         }
     }
 }

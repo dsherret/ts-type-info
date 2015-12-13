@@ -11,6 +11,9 @@ var TypeChecker = (function () {
             return baseTypes.symbol;
         });
     };
+    TypeChecker.prototype.getConstantValue = function (symbol) {
+        return this.typeChecker.getConstantValue(symbol.valueDeclaration);
+    };
     TypeChecker.prototype.getFullyQualifiedName = function (symbol) {
         return this.typeChecker.getFullyQualifiedName(symbol);
     };

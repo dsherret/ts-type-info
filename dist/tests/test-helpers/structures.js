@@ -3,6 +3,7 @@ function __export(m) {
 }
 __export(require("./structures/base"));
 __export(require("./structures/class"));
+__export(require("./structures/enum"));
 __export(require("./structures/function"));
 __export(require("./structures/property"));
 

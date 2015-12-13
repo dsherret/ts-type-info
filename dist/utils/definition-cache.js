@@ -4,6 +4,7 @@ var DefinitionCache = (function () {
     function DefinitionCache(typeChecker) {
         this.typeChecker = typeChecker;
         this.classes = new utils_1.KeyValueCache();
+        this.enums = new utils_1.KeyValueCache();
         this.functions = new utils_1.KeyValueCache();
     }
     DefinitionCache.prototype.getClassDefinition = function (symbol) {
@@ -14,6 +15,14 @@ var DefinitionCache = (function () {
             this.classes.add(symbol, classDefinition);
         }
         return classDefinition;
+    };
+    DefinitionCache.prototype.getEnumDefinition = function (symbol) {
+        var enumDefinition = this.enums.get(symbol);
+        if (enumDefinition == null) {
+            enumDefinition = new definitions_1.EnumDefinition(this.typeChecker, symbol);
+            this.enums.add(symbol, enumDefinition);
+        }
+        return enumDefinition;
     };
     DefinitionCache.prototype.getFunctionDefinition = function (symbol) {
         var functionDefinition = this.functions.get(symbol);

@@ -14,7 +14,7 @@ export abstract class ParameteredDefinition<T extends ParameterDefinition> imple
     fillParametersBySymbol(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) {
         this._parameters = [];
 
-        for (var param of this.getDeclaration(symbol).parameters) {
+        for (var param of this.getDeclaration(symbol).parameters.filter(p => p != null)) {
             let parameterSymbol = typeChecker.getSymbolAtLocation(param);
             this._parameters.push(new paramDefinition(typeChecker, parameterSymbol));
         }
@@ -42,7 +42,8 @@ export abstract class ParameteredDefinition<T extends ParameterDefinition> imple
             return symbol.getDeclarations()[0] as ts.SignatureDeclaration;
         }
         else {
-            throw "Could not get declaration when getting parameters.";
+            console.warn("Could not get declaration when getting parameters.");
+            return null;
         }
     }
 }

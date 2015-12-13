@@ -55,6 +55,7 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
         "isExported": true,
         "properties": []
     }],
+    enums: [],
     functions: []
 }]
 ```
