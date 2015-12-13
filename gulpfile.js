@@ -124,4 +124,6 @@ gulp.task("clean-scripts", function(cb) {
     return del(["./dist/**/*{.js,.js.map}"], cb);
 });
 
-gulp.task("default", ["tslint", "typescript", "generate-definition-file"]);
+gulp.task("release", ["tslint", "typescript", "generate-definition-file"]);
+
+gulp.task("default", ["tslint", "typescript"]);

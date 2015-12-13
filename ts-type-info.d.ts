@@ -6,28 +6,11 @@ declare module "ts-type-info" {
        callSignatures: CallSignatureDefinition[];
    }
 
-   class DecoratorDefinition {
-       name: string;
-       arguments: ArgumentDefinition[];
-   }
-
    class NamedDefinition {
        name: string;
    }
 
-   class DecoratedDefinition {
-       decorators: DecoratorDefinition[];
-   }
-
    class TypedDefinition {
-       type: Type;
-   }
-
-   class ParameterDefinition {
-       isRequired: boolean;
-       isRestParameter: boolean;
-       name: string;
-       decorators: DecoratorDefinition[];
        type: Type;
    }
 
@@ -36,26 +19,46 @@ declare module "ts-type-info" {
        type: Type;
    }
 
+   class DecoratorDefinition {
+       name: string;
+       arguments: ArgumentDefinition[];
+   }
+
+   class DecoratableDefinition {
+       decorators: DecoratorDefinition[];
+   }
+
+   class ExportableDefinition {
+       isExported: boolean;
+   }
+
    class ScopedDefinition {
        scope: Scope;
    }
 
-   class BaseClassPropertyDefinition extends BasePropertyDefinition {
-       decorators: DecoratorDefinition[];
-       scope: Scope;
+   class ArgumentDefinition {
+       text: string;
    }
 
-   class ClassPropertyDefinition extends BaseClassPropertyDefinition {
-       isAccessor: boolean;
-       isReadonly: boolean;
+   class BaseParameterDefinition {
+       isRequired: boolean;
+       isRestParameter: boolean;
+       name: string;
+       type: Type;
+   }
+
+   class ParameteredDefinition {
+       parameters: T[];
    }
 
    class ReturnTypedDefinition {
        returnType: Type;
    }
 
-   class ParameteredDefinition {
-       parameters: ParameterDefinition[];
+   class BaseFunctionDefinition {
+       name: string;
+       parameters: T[];
+       returnType: Type;
    }
 
    class CallSignatureDefinition {
@@ -65,25 +68,40 @@ declare module "ts-type-info" {
        returnType: Type;
    }
 
-   class ArgumentDefinition {
-       text: string;
+   class ParameterDefinition extends BaseParameterDefinition {
    }
 
-   class BaseMethodDefinition {
-       name: string;
+   class FunctionDefinition extends BaseFunctionDefinition {
+       isExported: boolean;
+   }
+
+   class ClassMethodParameterDefinition extends BaseParameterDefinition {
        decorators: DecoratorDefinition[];
-       parameters: ParameterDefinition[];
-       returnType: Type;
+   }
+
+   class BaseClassMethodDefinition extends BaseFunctionDefinition {
+       decorators: DecoratorDefinition[];
        scope: Scope;
    }
 
-   class MethodDefinition extends BaseMethodDefinition {
+   class BaseClassPropertyDefinition extends BasePropertyDefinition {
+       decorators: DecoratorDefinition[];
+       scope: Scope;
    }
 
-   class PropertyDefinition extends BasePropertyDefinition {
+   class ConstructorDefinition {
+       parameters: ClassMethodParameterDefinition[];
    }
 
-   class StaticMethodDefinition extends BaseMethodDefinition {
+   class ClassMethodDefinition extends BaseClassMethodDefinition {
+   }
+
+   class ClassPropertyDefinition extends BaseClassPropertyDefinition {
+       isAccessor: boolean;
+       isReadonly: boolean;
+   }
+
+   class StaticMethodDefinition extends BaseClassMethodDefinition {
    }
 
    class StaticPropertyDefinition extends BaseClassPropertyDefinition {
@@ -94,25 +112,38 @@ declare module "ts-type-info" {
        name: string;
    }
 
-   class ConstructorDefinition {
-       parameters: ParameterDefinition[];
-   }
-
    class ClassDefinition {
        baseClasses: ClassDefinition[];
        constructorDef: ConstructorDefinition;
-       methods: MethodDefinition[];
+       methods: ClassMethodDefinition[];
        properties: ClassPropertyDefinition[];
        staticMethods: StaticMethodDefinition[];
        staticProperties: StaticPropertyDefinition[];
        typeParameters: TypeParameterDefinition[];
        name: string;
        decorators: DecoratorDefinition[];
+       isExported: boolean;
+   }
+
+   class EnumMemberDefinition {
+       value: number;
+       name: string;
+   }
+
+   class EnumDefinition {
+       members: EnumMemberDefinition[];
+       name: string;
+       isExported: boolean;
+   }
+
+   class PropertyDefinition extends BasePropertyDefinition {
    }
 
    class FileDefinition {
        name: string;
        classes: ClassDefinition[];
+       enums: EnumDefinition[];
+       functions: FunctionDefinition[];
    }
 
    export enum Scope {
