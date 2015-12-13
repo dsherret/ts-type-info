@@ -31,7 +31,7 @@ var DecoratorDefinition = (function () {
             this.fillName(decoratorExpression["expression"]);
         }
         else {
-            throw "Unhandled: The decorator expression was null";
+            console.warn("Unhandled: The decorator expression was null");
         }
     };
     DecoratorDefinition.prototype.fillArguments = function (args) {

@@ -33,7 +33,7 @@ export class DecoratorDefinition implements IBaseNamedDefinition {
             this.fillName((decoratorExpression as any)["expression"] as ts.LiteralExpression);
         }
         else {
-            throw "Unhandled: The decorator expression was null";
+            console.warn("Unhandled: The decorator expression was null");
         }
     }
 
