@@ -1,12 +1,26 @@
 var ts = require("typescript");
+var re_export_definition_1 = require("./re-export-definition");
 var FileDefinition = (function () {
     function FileDefinition(typeChecker, definitionCache, file) {
         this._classes = [];
         this._enums = [];
         this._functions = [];
-        this._name = file.fileName;
+        this._reExports = [];
+        this._fileName = file.fileName;
         this.fillMembers(typeChecker, definitionCache, file);
     }
+    FileDefinition.prototype.fillReExports = function (typeChecker, definitionCache, file) {
+        for (var _i = 0, _a = typeChecker.getFileReExportSymbols(file); _i < _a.length; _i++) {
+            var fileReExportSymbol = _a[_i];
+            var exportDefinition = definitionCache.getDefinition(fileReExportSymbol);
+            if (exportDefinition != null) {
+                this._reExports.push(new re_export_definition_1.ReExportDefinition(definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileReExportSymbol)), exportDefinition));
+            }
+            else {
+                console.warn("Not implemented re-export symbol: " + fileReExportSymbol.name);
+            }
+        }
+    };
     FileDefinition.prototype.fillMembers = function (typeChecker, definitionCache, file) {
         var _this = this;
         typeChecker.getSymbolsInScope(file, 32).forEach(function (classSymbol) {
@@ -23,9 +37,9 @@ var FileDefinition = (function () {
             }
         });
     };
-    Object.defineProperty(FileDefinition.prototype, "name", {
+    Object.defineProperty(FileDefinition.prototype, "fileName", {
         get: function () {
-            return this._name;
+            return this._fileName;
         },
         enumerable: true,
         configurable: true
@@ -47,6 +61,13 @@ var FileDefinition = (function () {
     Object.defineProperty(FileDefinition.prototype, "functions", {
         get: function () {
             return this._functions;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileDefinition.prototype, "reExports", {
+        get: function () {
+            return this._reExports;
         },
         enumerable: true,
         configurable: true

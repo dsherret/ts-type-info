@@ -33,7 +33,7 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 
 ```text
 [{
-    "name": "V:/TestFile.ts",
+    "fileName": "V:/TestFile.ts",
     "classes": [{
         "name": "MyClass",
         "decorators": [{
@@ -56,6 +56,7 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
         "properties": []
     }],
     enums: [],
-    functions: []
+    functions: [],
+    reExports: []
 }]
 ```

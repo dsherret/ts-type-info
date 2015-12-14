@@ -81,6 +81,22 @@ export class TypeChecker {
         return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
     }
 
+    getFileReExportSymbols(file: ts.SourceFile) {
+        const fileSymbol = this.getSymbolAtLocation(file);
+        const fileReExports: ts.Symbol[] = [];
+
+        // when a file doesn't have exports the symbol will be null
+        if (fileSymbol != null) {
+            for (const exportSymbol of this.typeChecker.getExportsOfModule(fileSymbol)) {
+                if (!this.isSymbolExportOfFile(exportSymbol, file)) {
+                    fileReExports.push(exportSymbol);
+                }
+            }
+        }
+
+        return fileReExports;
+    }
+
     isSymbolExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
         const fileSymbol = this.getSymbolAtLocation(file);
 

@@ -2,12 +2,13 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 var ts = require("typescript");
-var definitions_1 = require("./definitions");
 var path = require("path");
 var tmp = require("tmp");
 var fs = require("fs");
 var utils_1 = require("./utils");
 __export(require("./definitions"));
+__export(require("./types"));
+__export(require("./scope"));
 function getFileInfo(fileNames) {
     verifyArray(fileNames);
     var options = { noLib: false, experimentalDecorators: true };
@@ -19,7 +20,7 @@ function getFileInfo(fileNames) {
         .map(function (file) {
         var typeChecker = new utils_1.TypeChecker(tsTypeChecker, file);
         var definitionCache = new utils_1.DefinitionCache(typeChecker);
-        return new definitions_1.FileDefinition(typeChecker, definitionCache, file);
+        return definitionCache.getFileDefinition(file);
     });
 }
 exports.getFileInfo = getFileInfo;

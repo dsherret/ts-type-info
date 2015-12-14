@@ -59,6 +59,19 @@ var TypeChecker = (function () {
     TypeChecker.prototype.isSymbolInFile = function (symbol, file) {
         return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
     };
+    TypeChecker.prototype.getFileReExportSymbols = function (file) {
+        var fileSymbol = this.getSymbolAtLocation(file);
+        var fileReExports = [];
+        if (fileSymbol != null) {
+            for (var _i = 0, _a = this.typeChecker.getExportsOfModule(fileSymbol); _i < _a.length; _i++) {
+                var exportSymbol = _a[_i];
+                if (!this.isSymbolExportOfFile(exportSymbol, file)) {
+                    fileReExports.push(exportSymbol);
+                }
+            }
+        }
+        return fileReExports;
+    };
     TypeChecker.prototype.isSymbolExportOfFile = function (symbol, file) {
         var fileSymbol = this.getSymbolAtLocation(file);
         return fileSymbol != null && fileSymbol.exports[symbol.name] != null;

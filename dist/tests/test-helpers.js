@@ -4,6 +4,7 @@ function __export(m) {
 __export(require("./test-helpers/base"));
 __export(require("./test-helpers/class"));
 __export(require("./test-helpers/enum"));
+__export(require("./test-helpers/file"));
 __export(require("./test-helpers/function"));
 __export(require("./test-helpers/run-decorator-definition-tests"));
 

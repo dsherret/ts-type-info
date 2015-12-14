@@ -6,6 +6,8 @@ import * as fs from "fs";
 import {TypeChecker, DefinitionCache, StringUtils} from "./utils";
 
 export * from "./definitions";
+export * from "./types";
+export * from "./scope";
 
 export function getFileInfo(fileNames: string[]): FileDefinition[] {
     verifyArray(fileNames);
@@ -21,7 +23,7 @@ export function getFileInfo(fileNames: string[]): FileDefinition[] {
             const typeChecker = new TypeChecker(tsTypeChecker, file);
             const definitionCache = new DefinitionCache(typeChecker);
 
-            return new FileDefinition(typeChecker, definitionCache, file);
+            return definitionCache.getFileDefinition(file);
         });
 }
 

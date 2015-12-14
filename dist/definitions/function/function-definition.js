@@ -14,8 +14,8 @@ var FunctionDefinition = (function (_super) {
         _super.call(this, parameter_definition_1.ParameterDefinition, typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
     }
-    FunctionDefinition.isClassMethod = function (symbol) {
-        return (symbol.getFlags() & 8192) !== 0;
+    FunctionDefinition.isFunctionDefinition = function (symbol) {
+        return (symbol.getFlags() & 16) !== 0;
     };
     return FunctionDefinition;
 })(base_1.BaseFunctionDefinition);

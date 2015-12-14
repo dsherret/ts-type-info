@@ -14,8 +14,8 @@ export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefiniti
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
 
-    static isClassMethod(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Method) !== 0;
+    static isFunctionDefinition(symbol: ts.Symbol) {
+        return (symbol.getFlags() & ts.SymbolFlags.Function) !== 0;
     }
 }
 
