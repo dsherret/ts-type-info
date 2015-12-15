@@ -29,7 +29,7 @@ var TypeChecker = (function () {
         return this.getTypeFromTsType(tsType);
     };
     TypeChecker.prototype.getSourceFileOfSymbol = function (symbol) {
-        var currentNode = symbol.valueDeclaration.parent;
+        var currentNode = (symbol.valueDeclaration || symbol.getDeclarations()[0]).parent;
         while (currentNode != null && typeof currentNode.fileName !== "string") {
             currentNode = currentNode.parent;
         }

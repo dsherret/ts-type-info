@@ -39,7 +39,7 @@ export class TypeChecker {
     }
 
     getSourceFileOfSymbol(symbol: ts.Symbol) {
-        let currentNode: ts.Node = symbol.valueDeclaration.parent;
+        let currentNode: ts.Node = (symbol.valueDeclaration || symbol.getDeclarations()[0]).parent;
 
         while (currentNode != null && typeof (currentNode as ts.SourceFile).fileName !== "string") {
             currentNode = currentNode.parent;

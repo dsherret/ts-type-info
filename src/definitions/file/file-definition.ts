@@ -3,6 +3,7 @@ import {TypeChecker, DefinitionCache} from "./../../utils";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
+import {InterfaceDefinition} from "./../interface";
 import {ReExportDefinition} from "./re-export-definition";
 
 export class FileDefinition {
@@ -10,6 +11,7 @@ export class FileDefinition {
     private _classes: ClassDefinition[] = [];
     private _enums: EnumDefinition[] = [];
     private _functions: FunctionDefinition[] = [];
+    private _interfaces: InterfaceDefinition[] = [];
     private _reExports: ReExportDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
@@ -54,6 +56,13 @@ export class FileDefinition {
                 this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
         });
+
+        // interfaces
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Interface).forEach((interfaceSymbol) => {
+            if (typeChecker.isSymbolInFile(interfaceSymbol, file)) {
+                this._interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
+            }
+        });
     }
 
     get fileName() {
@@ -70,6 +79,10 @@ export class FileDefinition {
 
     get functions() {
         return this._functions;
+    }
+
+    get interfaces() {
+        return this._interfaces;
     }
 
     get reExports() {

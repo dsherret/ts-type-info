@@ -4,7 +4,7 @@ function runStaticPropertyDefinitionTests(definition, property) {
         throw "Definition should not be null.";
     }
     describe("property " + property.name, function () {
-        base_1.runBasePropertyDefinitionTests(definition, property);
+        base_1.runPropertyDefinitionTests(definition, property);
     });
 }
 exports.runStaticPropertyDefinitionTests = runStaticPropertyDefinitionTests;

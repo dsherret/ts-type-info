@@ -1,6 +1,6 @@
 import {StaticProperty} from "./../structures";
 import {StaticPropertyDefinition} from "./../../../definitions";
-import {runBasePropertyDefinitionTests} from "./../base";
+import {runPropertyDefinitionTests} from "./../base";
 
 export function runStaticPropertyDefinitionTests(definition: StaticPropertyDefinition, property: StaticProperty) {
     if (definition == null) {
@@ -8,6 +8,6 @@ export function runStaticPropertyDefinitionTests(definition: StaticPropertyDefin
     }
 
     describe(`property ${property.name}`, () => {
-        runBasePropertyDefinitionTests(definition, property);
+        runPropertyDefinitionTests(definition, property);
     });
 }

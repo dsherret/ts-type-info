@@ -13,7 +13,7 @@ var BaseClassPropertyDefinition = (function (_super) {
         this.fillScope(symbol);
     }
     return BaseClassPropertyDefinition;
-})(base_1.BasePropertyDefinition);
+})(base_1.PropertyDefinition);
 exports.BaseClassPropertyDefinition = BaseClassPropertyDefinition;
 utils_1.applyMixins(BaseClassPropertyDefinition, [base_1.DecoratableDefinition, base_1.ScopedDefinition]);
 

@@ -5,7 +5,7 @@ function runClassPropertyDefinitionTests(definition, property) {
         throw "Definition should not be null.";
     }
     describe("property " + property.name, function () {
-        base_1.runBasePropertyDefinitionTests(definition, property);
+        base_1.runPropertyDefinitionTests(definition, property);
         it("should be " + (property.isAccessor ? "an accessor" : "not an accessor"), function () {
             assert.equal(definition.isAccessor, property.isAccessor || false);
         });

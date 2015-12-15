@@ -1,4 +1,4 @@
-﻿export * from "./base/run-base-property-definition-tests";
+﻿export * from "./base/run-property-definition-tests";
 export * from "./base/run-decoratable-definition-tests";
 export * from "./base/run-exportable-definition-tests";
 export * from "./base/run-named-definition-tests";

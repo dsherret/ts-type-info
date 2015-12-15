@@ -58,11 +58,11 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         this._typeParameters = [];
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
-            if (ClassMethodDefinition.isClassMethod(member)) {
-                this._methods.push(new ClassMethodDefinition(typeChecker, member));
-            }
-            else if (ClassPropertyDefinition.isProperty(member)) {
+            if (ClassPropertyDefinition.isProperty(member)) {
                 this._properties.push(new ClassPropertyDefinition(typeChecker, member));
+            }
+            else if (ClassMethodDefinition.isClassMethod(member)) {
+                this._methods.push(new ClassMethodDefinition(typeChecker, member));
             }
             else if (ConstructorDefinition.isConstructor(member)) {
                 this.verifyConstructorNotSet();

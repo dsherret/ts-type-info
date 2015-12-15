@@ -7,6 +7,7 @@ var DefinitionCache = (function () {
         this.enums = new utils_1.KeyValueCache();
         this.files = new utils_1.KeyValueCache();
         this.functions = new utils_1.KeyValueCache();
+        this.interfaces = new utils_1.KeyValueCache();
     }
     DefinitionCache.prototype.getFileDefinition = function (sourceFile) {
         var fileDefinition = this.files.get(sourceFile);
@@ -51,9 +52,21 @@ var DefinitionCache = (function () {
         }
         return functionDefinition;
     };
+    DefinitionCache.prototype.getInterfaceDefinition = function (symbol) {
+        var interfaceDefinition;
+        if (definitions_1.InterfaceDefinition.isInterfaceDefinition(symbol)) {
+            interfaceDefinition = this.interfaces.get(symbol);
+            if (interfaceDefinition == null) {
+                interfaceDefinition = new definitions_1.InterfaceDefinition(this.typeChecker, symbol, []);
+                this.interfaces.add(symbol, interfaceDefinition);
+            }
+        }
+        return interfaceDefinition;
+    };
     DefinitionCache.prototype.getDefinition = function (symbol) {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||
+            this.getInterfaceDefinition(symbol) ||
             this.getEnumDefinition(symbol);
     };
     return DefinitionCache;

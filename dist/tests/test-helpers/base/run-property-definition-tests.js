@@ -1,6 +1,6 @@
 var run_named_definition_tests_1 = require("./run-named-definition-tests");
 var run_typed_definition_tests_1 = require("./run-typed-definition-tests");
-function runBasePropertyDefinitionTests(definition, property) {
+function runPropertyDefinitionTests(definition, property) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
@@ -9,6 +9,6 @@ function runBasePropertyDefinitionTests(definition, property) {
         run_typed_definition_tests_1.runTypedDefinitionTests(definition, property.type);
     });
 }
-exports.runBasePropertyDefinitionTests = runBasePropertyDefinitionTests;
+exports.runPropertyDefinitionTests = runPropertyDefinitionTests;
 
-//# sourceMappingURL=run-base-property-definition-tests.js.map
+//# sourceMappingURL=run-property-definition-tests.js.map

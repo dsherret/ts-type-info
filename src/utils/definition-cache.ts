@@ -1,4 +1,5 @@
-import {ClassDefinition, EnumDefinition, FileDefinition, FunctionDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../definitions";
+import {ClassDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
+        InterfaceDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../definitions";
 import {TypeChecker, KeyValueCache} from "./../utils";
 import * as ts from "typescript";
 
@@ -7,6 +8,7 @@ export class DefinitionCache {
     private enums = new KeyValueCache<ts.Symbol, EnumDefinition>();
     private files = new KeyValueCache<ts.SourceFile, FileDefinition>();
     private functions = new KeyValueCache<ts.Symbol, FunctionDefinition>();
+    private interfaces = new KeyValueCache<ts.Symbol, InterfaceDefinition>();
 
     constructor(private typeChecker: TypeChecker) {
     }
@@ -77,9 +79,28 @@ export class DefinitionCache {
         return functionDefinition;
     }
 
+    getInterfaceDefinition(symbol: ts.Symbol) {
+        let interfaceDefinition: InterfaceDefinition;
+
+        if (InterfaceDefinition.isInterfaceDefinition(symbol)) {
+            interfaceDefinition = this.interfaces.get(symbol);
+
+            if (interfaceDefinition == null) {
+                interfaceDefinition = new InterfaceDefinition(
+                    this.typeChecker,
+                    symbol,
+                    []);
+                this.interfaces.add(symbol, interfaceDefinition);
+            }
+        }
+
+        return interfaceDefinition;
+    }
+
     getDefinition(symbol: ts.Symbol): IBaseNamedDefinition & IExportableDefinition {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||
+            this.getInterfaceDefinition(symbol) ||
             this.getEnumDefinition(symbol);
     }
 }

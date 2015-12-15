@@ -4,7 +4,7 @@ import {Type} from "./../../types";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {ITypedDefinition, TypedDefinition} from "./typed-definition";
 
-export class BasePropertyDefinition implements ITypedDefinition, INamedDefinition {
+export class PropertyDefinition implements ITypedDefinition, INamedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillType(typeChecker, symbol);
@@ -22,4 +22,4 @@ export class BasePropertyDefinition implements ITypedDefinition, INamedDefinitio
     }
 }
 
-applyMixins(BasePropertyDefinition, [NamedDefinition, TypedDefinition]);
+applyMixins(PropertyDefinition, [NamedDefinition, TypedDefinition]);

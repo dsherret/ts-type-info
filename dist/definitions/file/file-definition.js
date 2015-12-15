@@ -5,6 +5,7 @@ var FileDefinition = (function () {
         this._classes = [];
         this._enums = [];
         this._functions = [];
+        this._interfaces = [];
         this._reExports = [];
         this._fileName = file.fileName;
         this.fillMembers(typeChecker, definitionCache, file);
@@ -36,6 +37,11 @@ var FileDefinition = (function () {
                 _this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
         });
+        typeChecker.getSymbolsInScope(file, 64).forEach(function (interfaceSymbol) {
+            if (typeChecker.isSymbolInFile(interfaceSymbol, file)) {
+                _this._interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
+            }
+        });
     };
     Object.defineProperty(FileDefinition.prototype, "fileName", {
         get: function () {
@@ -61,6 +67,13 @@ var FileDefinition = (function () {
     Object.defineProperty(FileDefinition.prototype, "functions", {
         get: function () {
             return this._functions;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileDefinition.prototype, "interfaces", {
+        get: function () {
+            return this._interfaces;
         },
         enumerable: true,
         configurable: true
