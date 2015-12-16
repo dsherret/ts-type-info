@@ -1,7 +1,7 @@
 import {Function} from "./../structures";
 import {FunctionDefinition} from "./../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
-import {runReturnTypedDefinitionTests, runParameteredDefinitionTests} from "./base";
+import {runExportableDefinitionTests} from "./../base";
+import {runBaseFunctionDefinitionTests} from "./base";
 
 export function runFunctionDefinitionTests(definition: FunctionDefinition, func: Function) {
     if (definition == null) {
@@ -9,9 +9,7 @@ export function runFunctionDefinitionTests(definition: FunctionDefinition, func:
     }
 
     describe(`method ${func.name}`, () => {
-        runNamedDefinitionTests(definition, func.name);
+        runBaseFunctionDefinitionTests(definition, func);
         runExportableDefinitionTests(definition, func.isExported);
-        runReturnTypedDefinitionTests(definition, func.returnType);
-        runParameteredDefinitionTests(definition, func.parameters);
     });
 }

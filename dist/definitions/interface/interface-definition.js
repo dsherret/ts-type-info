@@ -1,9 +1,11 @@
 var ts = require("typescript");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
+var interface_method_definition_1 = require("./interface-method-definition");
 var InterfaceDefinition = (function () {
     function InterfaceDefinition(typeChecker, symbol, _baseInterfaces) {
         this._baseInterfaces = _baseInterfaces;
+        this._methods = [];
         this._properties = [];
         this._typeParameters = [];
         this.fillName(symbol);
@@ -13,6 +15,13 @@ var InterfaceDefinition = (function () {
     Object.defineProperty(InterfaceDefinition.prototype, "baseInterfaces", {
         get: function () {
             return this._baseInterfaces;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InterfaceDefinition.prototype, "methods", {
+        get: function () {
+            return this._methods;
         },
         enumerable: true,
         configurable: true
@@ -37,6 +46,9 @@ var InterfaceDefinition = (function () {
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             if (base_1.PropertyDefinition.isProperty(member)) {
                 _this._properties.push(new base_1.PropertyDefinition(typeChecker, member));
+            }
+            else if (interface_method_definition_1.InterfaceMethodDefinition.isMethod(member)) {
+                _this._methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));
             }
             else {
                 console.warn("Not implemented '" + member.getName() + "'");

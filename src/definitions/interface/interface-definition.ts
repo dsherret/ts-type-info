@@ -3,9 +3,10 @@ import {TypeParameterDefinition} from "./../type-parameter-definition";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {PropertyDefinition, INamedDefinition, NamedDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
+import {InterfaceMethodDefinition} from "./interface-method-definition";
 
 export class InterfaceDefinition implements INamedDefinition, IExportableDefinition {
-    // private _methods: ClassMethodDefinition[] = [];
+    private _methods: InterfaceMethodDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
     private _typeParameters: TypeParameterDefinition[] = [];
 
@@ -19,9 +20,9 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
         return this._baseInterfaces;
     }
 
-    // get methods() {
-    //    return this._methods;
-    // }
+    get methods() {
+        return this._methods;
+    }
 
     get properties() {
         return this._properties;
@@ -38,9 +39,9 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
             if (PropertyDefinition.isProperty(member)) {
                 this._properties.push(new PropertyDefinition(typeChecker, member));
             }
-            // else if (ClassMethodDefinition.isClassMethod(member)) {
-            //    this._methods.push(new ClassMethodDefinition(typeChecker, member));
-            // }
+            else if (InterfaceMethodDefinition.isMethod(member)) {
+                this._methods.push(new InterfaceMethodDefinition(typeChecker, member));
+            }
             // else if (TypeParameterDefinition.isTypeParameter(member)) {
                 // todo: figure out better way of getting type parameters, like how it works in call signature definition?
             //    this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));

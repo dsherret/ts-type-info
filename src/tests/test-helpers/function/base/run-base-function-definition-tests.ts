@@ -9,9 +9,7 @@ export function runBaseFunctionDefinitionTests<T extends BaseParameterDefinition
         throw "Definition should not be null.";
     }
 
-    describe(`method ${func.name}`, () => {
-        runNamedDefinitionTests(definition, func.name);
-        runReturnTypedDefinitionTests(definition, func.returnType);
-        runParameteredDefinitionTests(definition, func.parameters);
-    });
+    runNamedDefinitionTests(definition, func.name);
+    runReturnTypedDefinitionTests(definition, func.returnType);
+    runParameteredDefinitionTests(definition, func.parameters);
 }

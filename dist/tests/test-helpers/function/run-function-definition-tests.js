@@ -5,10 +5,8 @@ function runFunctionDefinitionTests(definition, func) {
         throw "Definition should not be null.";
     }
     describe("method " + func.name, function () {
-        base_1.runNamedDefinitionTests(definition, func.name);
+        base_2.runBaseFunctionDefinitionTests(definition, func);
         base_1.runExportableDefinitionTests(definition, func.isExported);
-        base_2.runReturnTypedDefinitionTests(definition, func.returnType);
-        base_2.runParameteredDefinitionTests(definition, func.parameters);
     });
 }
 exports.runFunctionDefinitionTests = runFunctionDefinitionTests;
