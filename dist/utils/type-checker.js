@@ -18,6 +18,11 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getConstantValue = function (symbol) {
         return this.typeChecker.getConstantValue(symbol.valueDeclaration);
     };
+    TypeChecker.prototype.getFunctionTypeParameterSymbols = function (symbol) {
+        var _this = this;
+        var declaration = symbol.valueDeclaration;
+        return (declaration.typeParameters || []).map(function (p) { return _this.getSymbolAtLocation(p); });
+    };
     TypeChecker.prototype.getFullyQualifiedName = function (symbol) {
         return this.typeChecker.getFullyQualifiedName(symbol);
     };

@@ -25,6 +25,12 @@ export class TypeChecker {
         return this.typeChecker.getConstantValue(symbol.valueDeclaration as any);
     }
 
+    getFunctionTypeParameterSymbols(symbol: ts.Symbol) {
+        const declaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;
+
+        return (declaration.typeParameters || []).map(p => this.getSymbolAtLocation(p));
+    }
+
     getFullyQualifiedName(symbol: ts.Symbol) {
         return this.typeChecker.getFullyQualifiedName(symbol);
     }

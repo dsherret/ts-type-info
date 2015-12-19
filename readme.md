@@ -52,7 +52,8 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
             }],
             returnType: {
                 name: "string"
-            }
+            },
+            typeParameters: []
         }],
         isExported: true,
         properties: []

@@ -2,12 +2,25 @@ var utils_1 = require("./../../../utils");
 var base_1 = require("./../../base");
 var parametered_definition_1 = require("./parametered-definition");
 var return_typed_definition_1 = require("./return-typed-definition");
+var type_parameter_definition_1 = require("./../../type-parameter-definition");
 var BaseFunctionDefinition = (function () {
     function BaseFunctionDefinition(parameterDefinition, typeChecker, symbol) {
+        this._typeParameters = [];
         this.fillName(symbol);
         this.fillParametersBySymbol(parameterDefinition, typeChecker, symbol);
         this.fillReturnTypeBySymbol(typeChecker, symbol);
+        this.fillTypeParameters(typeChecker, symbol);
     }
+    Object.defineProperty(BaseFunctionDefinition.prototype, "typeParameters", {
+        get: function () {
+            return this._typeParameters;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    BaseFunctionDefinition.prototype.fillTypeParameters = function (typeChecker, symbol) {
+        this._typeParameters = typeChecker.getFunctionTypeParameterSymbols(symbol).map(function (s) { return new type_parameter_definition_1.TypeParameterDefinition(typeChecker, s); });
+    };
     return BaseFunctionDefinition;
 })();
 exports.BaseFunctionDefinition = BaseFunctionDefinition;

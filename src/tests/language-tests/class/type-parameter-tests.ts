@@ -1,10 +1,11 @@
 import {getStringInfo} from "./../../../main";
 import * as assert from "assert";
 
-describe("type parameters - multiple", () => {
+describe("class type parameters", () => {
     const code = `
-class MyClass<T, U> {
-    str: T;
+class MyClass<T, U extends string> {
+    tProp: T;
+    uProp: U;
 }`;
 
     const def = getStringInfo(code);
@@ -15,5 +16,9 @@ class MyClass<T, U> {
 
     it("should have a second type parameter name of U", () => {
         assert.equal(def.classes[0].typeParameters[1].name, "U");
+    });
+
+    it("it should extend a type string", () => {
+        assert.equal(def.classes[0].typeParameters[1].constraint.name, "string");
     });
 });
