@@ -60,9 +60,6 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getTypeFromTsType = function (tsType) {
         return this.typeCreator.get(tsType);
     };
-    TypeChecker.prototype.isSymbolInFile = function (symbol, file) {
-        return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
-    };
     TypeChecker.prototype.getFileReExportSymbols = function (file) {
         var fileSymbol = this.getSymbolAtLocation(file);
         var fileReExports = [];
@@ -75,6 +72,12 @@ var TypeChecker = (function () {
             }
         }
         return fileReExports;
+    };
+    TypeChecker.prototype.isOptionalProperty = function (symbol) {
+        return symbol.valueDeclaration.questionToken != null;
+    };
+    TypeChecker.prototype.isSymbolInFile = function (symbol, file) {
+        return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
     };
     TypeChecker.prototype.isSymbolExportOfFile = function (symbol, file) {
         var fileSymbol = this.getSymbolAtLocation(file);

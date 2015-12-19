@@ -12,7 +12,7 @@ describe("interface method", function () {
             }, {
                 name: "myOptionalParameter",
                 type: "number",
-                isRequired: false
+                isOptional: true
             }]
     });
     test_helpers_1.runInterfaceMethodDefinitionTests(def.interfaces[0].methods[1], {

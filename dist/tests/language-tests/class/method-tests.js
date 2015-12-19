@@ -14,15 +14,15 @@ describe("class method", function () {
             }, {
                 name: "myDefaultParameter",
                 type: "number",
-                isRequired: false
+                isOptional: true
             }, {
                 name: "myOptionalParameter",
                 type: "string",
-                isRequired: false
+                isOptional: true
             }, {
                 name: "myRestParameter",
                 type: "number[]",
-                isRequired: false,
+                isOptional: true,
                 isRestParameter: true
             }]
     });

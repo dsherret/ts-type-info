@@ -8,6 +8,7 @@ class MyClass {
     myString: string;
     myImplicit = 4;
     myAny;
+    myOptional?: string;
 
     public myExplicitPublic;
     protected myProtected;
@@ -28,41 +29,43 @@ class MyClass {
 
     runClassPropertyDefinitionTests(def.classes[0].properties[0], {
         name: "myString",
-        type: "string",
-        scope: Scope.public
+        type: "string"
     });
 
     runClassPropertyDefinitionTests(def.classes[0].properties[1], {
         name: "myImplicit",
-        type: "number",
-        scope: Scope.public
+        type: "number"
     });
 
     runClassPropertyDefinitionTests(def.classes[0].properties[2], {
         name: "myAny",
-        type: "any",
-        scope: Scope.public
+        type: "any"
     });
 
     runClassPropertyDefinitionTests(def.classes[0].properties[3], {
-        name: "myExplicitPublic",
-        type: "any",
-        scope: Scope.public
+        name: "myOptional",
+        type: "string",
+        isOptional: true
     });
 
     runClassPropertyDefinitionTests(def.classes[0].properties[4], {
+        name: "myExplicitPublic",
+        type: "any"
+    });
+
+    runClassPropertyDefinitionTests(def.classes[0].properties[5], {
         name: "myProtected",
         type: "any",
         scope: Scope.protected
     });
 
-    runClassPropertyDefinitionTests(def.classes[0].properties[5], {
+    runClassPropertyDefinitionTests(def.classes[0].properties[6], {
         name: "myPrivate",
         type: "any",
         scope: Scope.private
     });
 
-    runClassPropertyDefinitionTests(def.classes[0].properties[6], {
+    runClassPropertyDefinitionTests(def.classes[0].properties[7], {
         name: "myGetAccessor",
         type: "string",
         scope: Scope.public,
@@ -70,7 +73,7 @@ class MyClass {
         isReadonly: true
     });
 
-    runClassPropertyDefinitionTests(def.classes[0].properties[7], {
+    runClassPropertyDefinitionTests(def.classes[0].properties[8], {
         name: "myGetAndSetAccessor",
         type: "string",
         scope: Scope.public,

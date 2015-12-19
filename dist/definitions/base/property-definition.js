@@ -6,7 +6,15 @@ var PropertyDefinition = (function () {
     function PropertyDefinition(typeChecker, symbol) {
         this.fillName(symbol);
         this.fillType(typeChecker, symbol);
+        this._isOptional = typeChecker.isOptionalProperty(symbol);
     }
+    Object.defineProperty(PropertyDefinition.prototype, "isOptional", {
+        get: function () {
+            return this._isOptional;
+        },
+        enumerable: true,
+        configurable: true
+    });
     PropertyDefinition.isProperty = function (symbol) {
         return (symbol.getFlags() & 4) !== 0;
     };

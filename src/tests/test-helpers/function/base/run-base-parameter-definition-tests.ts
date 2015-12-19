@@ -13,8 +13,8 @@ export function runBaseParameterDefinitionTests(definition: BaseParameterDefinit
         runNamedDefinitionTests(definition, param.name);
         runTypedDefinitionTests(definition, param.type);
 
-        it(`should be ${!param.isRequired ? "required" : "not required"}`, () => {
-            assert.equal(definition.isRequired, typeof param.isRequired === "boolean" ? param.isRequired : true);
+        it(`should be ${param.isOptional ? "optional" : "not optional"}`, () => {
+            assert.equal(definition.isOptional, typeof param.isOptional === "boolean" ? param.isOptional : false);
         });
 
         it(`should ${param.isRestParameter ? "be" : "not be"} a rest parameter`, () => {

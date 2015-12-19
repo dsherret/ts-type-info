@@ -6,9 +6,9 @@ var BaseParameterDefinition = (function () {
         this.fillType(typeChecker, symbol);
         this.fillParameterDetails(symbol);
     }
-    Object.defineProperty(BaseParameterDefinition.prototype, "isRequired", {
+    Object.defineProperty(BaseParameterDefinition.prototype, "isOptional", {
         get: function () {
-            return this._isRequired;
+            return this._isOptional;
         },
         enumerable: true,
         configurable: true
@@ -22,7 +22,7 @@ var BaseParameterDefinition = (function () {
     });
     BaseParameterDefinition.prototype.fillParameterDetails = function (symbol) {
         var declaration = symbol.valueDeclaration;
-        this._isRequired = declaration.questionToken == null && declaration.initializer == null && declaration.dotDotDotToken == null;
+        this._isOptional = declaration.questionToken != null || declaration.initializer != null || declaration.dotDotDotToken != null;
         this._isRestParameter = declaration.dotDotDotToken != null;
     };
     return BaseParameterDefinition;

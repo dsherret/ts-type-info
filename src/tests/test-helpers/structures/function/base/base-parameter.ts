@@ -1,6 +1,6 @@
 export interface BaseParameter {
     name: string;
     type: string;
-    isRequired?: boolean;
+    isOptional?: boolean;
     isRestParameter?: boolean;
 }

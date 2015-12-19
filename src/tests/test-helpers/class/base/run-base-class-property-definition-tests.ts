@@ -1,3 +1,4 @@
+import {Scope} from "./../../../../scope";
 import {ClassProperty} from "./../../structures";
 import {BaseClassPropertyDefinition} from "./../../../../definitions/class/base/base-class-property-definition";
 import {runPropertyDefinitionTests} from "./../../base/run-property-definition-tests";
@@ -9,5 +10,5 @@ export function runBaseClassPropertyDefinitionTests(definition: BaseClassPropert
     }
 
     runPropertyDefinitionTests(definition, property);
-    runScopedDefinitionTests(definition, property.scope);
+    runScopedDefinitionTests(definition, typeof property.scope === "number" ? property.scope : Scope.public);
 }

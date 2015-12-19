@@ -3,9 +3,10 @@ import {runPropertyDefinitionTests} from "./../../test-helpers";
 
 describe("interface property tests", () => {
     const code = `
-interface MyInterface {
+interface MyPropertyInterface {
     myString: string;
     myAny;
+    myOptional?: string;
 }`;
 
     const def = getStringInfo(code);
@@ -18,5 +19,11 @@ interface MyInterface {
     runPropertyDefinitionTests(def.interfaces[0].properties[1], {
         name: "myAny",
         type: "any"
+    });
+
+    runPropertyDefinitionTests(def.interfaces[0].properties[2], {
+        name: "myOptional",
+        type: "string",
+        isOptional: true
     });
 });

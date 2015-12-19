@@ -83,10 +83,6 @@ export class TypeChecker {
         return this.typeCreator.get(tsType);
     }
 
-    isSymbolInFile(symbol: ts.Symbol, file: ts.SourceFile) {
-        return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
-    }
-
     getFileReExportSymbols(file: ts.SourceFile) {
         const fileSymbol = this.getSymbolAtLocation(file);
         const fileReExports: ts.Symbol[] = [];
@@ -101,6 +97,14 @@ export class TypeChecker {
         }
 
         return fileReExports;
+    }
+
+    isOptionalProperty(symbol: ts.Symbol) {
+        return (symbol.valueDeclaration as ts.ParameterDeclaration).questionToken != null;
+    }
+
+    isSymbolInFile(symbol: ts.Symbol, file: ts.SourceFile) {
+        return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
     }
 
     isSymbolExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {

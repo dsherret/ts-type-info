@@ -21,7 +21,7 @@ interface MyInterface {
         }, {
             name: "myOptionalParameter",
             type: "number",
-            isRequired: false
+            isOptional: true
         }]
     });
 

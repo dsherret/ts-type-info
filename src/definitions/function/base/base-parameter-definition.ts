@@ -8,7 +8,7 @@ export interface BaseParameterDefinitionConstructor<T extends BaseParameterDefin
 }
 
 export class BaseParameterDefinition implements ITypedDefinition, INamedDefinition {
-    private _isRequired: boolean;
+    private _isOptional: boolean;
     private _isRestParameter: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -17,8 +17,8 @@ export class BaseParameterDefinition implements ITypedDefinition, INamedDefiniti
         this.fillParameterDetails(symbol);
     }
 
-    get isRequired() {
-        return this._isRequired;
+    get isOptional() {
+        return this._isOptional;
     }
 
     get isRestParameter() {
@@ -28,7 +28,7 @@ export class BaseParameterDefinition implements ITypedDefinition, INamedDefiniti
     private fillParameterDetails(symbol: ts.Symbol) {
         let declaration = symbol.valueDeclaration as ts.ParameterDeclaration;
 
-        this._isRequired = declaration.questionToken == null && declaration.initializer == null && declaration.dotDotDotToken == null;
+        this._isOptional = declaration.questionToken != null || declaration.initializer != null || declaration.dotDotDotToken != null;
         this._isRestParameter = declaration.dotDotDotToken != null;
     }
 
