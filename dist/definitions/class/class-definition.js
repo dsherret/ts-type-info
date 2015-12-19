@@ -8,8 +8,9 @@ var type_parameter_definition_1 = require("./../type-parameter-definition");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var ClassDefinition = (function () {
-    function ClassDefinition(typeChecker, symbol, _baseClasses) {
-        this._baseClasses = _baseClasses;
+    function ClassDefinition(typeChecker, symbol, _extends, _implements) {
+        this._extends = _extends;
+        this._implements = _implements;
         this._methods = [];
         this._properties = [];
         this._staticMethods = [];
@@ -20,9 +21,16 @@ var ClassDefinition = (function () {
         this.fillMembers(typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
     }
-    Object.defineProperty(ClassDefinition.prototype, "baseClasses", {
+    Object.defineProperty(ClassDefinition.prototype, "extends", {
         get: function () {
-            return this._baseClasses;
+            return this._extends;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ClassDefinition.prototype, "implements", {
+        get: function () {
+            return this._implements;
         },
         enumerable: true,
         configurable: true

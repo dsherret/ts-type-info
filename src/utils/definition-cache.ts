@@ -40,13 +40,32 @@ export class DefinitionCache {
                 classDefinition = new ClassDefinition(
                     this.typeChecker,
                     symbol,
-                    this.typeChecker.getBaseTypeSymbols(symbol).map((base) => this.getClassDefinition(base)));
+                    this.typeChecker.getExtendsSymbols(symbol).map(base => this.getClassDefinition(base)),
+                    this.typeChecker.getImplementsSymbols(symbol).map(base => this.getClassOrInterfaceDefinition(base)));
 
                 this.classes.add(symbol, classDefinition);
             }
         }
 
         return classDefinition;
+    }
+
+    getInterfaceDefinition(symbol: ts.Symbol) {
+        let interfaceDefinition: InterfaceDefinition;
+
+        if (InterfaceDefinition.isInterfaceDefinition(symbol)) {
+            interfaceDefinition = this.interfaces.get(symbol);
+
+            if (interfaceDefinition == null) {
+                interfaceDefinition = new InterfaceDefinition(
+                    this.typeChecker,
+                    symbol,
+                    this.typeChecker.getExtendsSymbols(symbol).map((base) => this.getClassOrInterfaceDefinition(base)));
+                this.interfaces.add(symbol, interfaceDefinition);
+            }
+        }
+
+        return interfaceDefinition;
     }
 
     getEnumDefinition(symbol: ts.Symbol) {
@@ -79,22 +98,8 @@ export class DefinitionCache {
         return functionDefinition;
     }
 
-    getInterfaceDefinition(symbol: ts.Symbol) {
-        let interfaceDefinition: InterfaceDefinition;
-
-        if (InterfaceDefinition.isInterfaceDefinition(symbol)) {
-            interfaceDefinition = this.interfaces.get(symbol);
-
-            if (interfaceDefinition == null) {
-                interfaceDefinition = new InterfaceDefinition(
-                    this.typeChecker,
-                    symbol,
-                    []);
-                this.interfaces.add(symbol, interfaceDefinition);
-            }
-        }
-
-        return interfaceDefinition;
+    getClassOrInterfaceDefinition(symbol: ts.Symbol): ClassDefinition | InterfaceDefinition {
+        return this.getClassDefinition(symbol) || this.getInterfaceDefinition(symbol);
     }
 
     getDefinition(symbol: ts.Symbol): IBaseNamedDefinition & IExportableDefinition {

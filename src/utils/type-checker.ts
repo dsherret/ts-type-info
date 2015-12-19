@@ -9,10 +9,16 @@ export class TypeChecker {
     constructor(private typeChecker: ts.TypeChecker, private node: ts.Node) {
     }
 
-    getBaseTypeSymbols(classSymbol: ts.Symbol) {
-        return this.typeChecker.getBaseTypes(this.getTypeOfSymbol(classSymbol).tsType as any).map((baseTypes) => {
-            return baseTypes.symbol;
+    getExtendsSymbols(symbol: ts.Symbol) {
+        const symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
+
+        return symbolType.getBaseTypes().map((baseType) => {
+            return baseType.symbol;
         });
+    }
+
+    getImplementsSymbols(symbol: ts.Symbol) {
+        return [] as ts.Symbol[]; // not implemented
     }
 
     getConstantValue(symbol: ts.Symbol) {

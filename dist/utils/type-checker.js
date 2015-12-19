@@ -6,10 +6,14 @@ var TypeChecker = (function () {
         this.node = node;
         this.typeCreator = new utils_1.TypeCreator(this);
     }
-    TypeChecker.prototype.getBaseTypeSymbols = function (classSymbol) {
-        return this.typeChecker.getBaseTypes(this.getTypeOfSymbol(classSymbol).tsType).map(function (baseTypes) {
-            return baseTypes.symbol;
+    TypeChecker.prototype.getExtendsSymbols = function (symbol) {
+        var symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
+        return symbolType.getBaseTypes().map(function (baseType) {
+            return baseType.symbol;
         });
+    };
+    TypeChecker.prototype.getImplementsSymbols = function (symbol) {
+        return [];
     };
     TypeChecker.prototype.getConstantValue = function (symbol) {
         return this.typeChecker.getConstantValue(symbol.valueDeclaration);

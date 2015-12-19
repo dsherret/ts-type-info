@@ -3,6 +3,7 @@ import {TypeParameterDefinition} from "./../type-parameter-definition";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {PropertyDefinition, INamedDefinition, NamedDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
+import {ClassDefinition} from "./../class";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 
 export class InterfaceDefinition implements INamedDefinition, IExportableDefinition {
@@ -10,14 +11,14 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     private _properties: PropertyDefinition[] = [];
     private _typeParameters: TypeParameterDefinition[] = [];
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseInterfaces: InterfaceDefinition[]) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _extends: (InterfaceDefinition | ClassDefinition)[]) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
 
-    get baseInterfaces() {
-        return this._baseInterfaces;
+    get extends() {
+        return this._extends;
     }
 
     get methods() {

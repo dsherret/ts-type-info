@@ -33,30 +33,33 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 
 ```text
 [{
-    "fileName": "V:/TestFile.ts",
-    "classes": [{
-        "name": "MyClass",
-        "decorators": [{
-            "name": "myDecorator",
-            "arguments": [{ "text": "My decorator value" }]
+    fileName: "V:/TestFile.ts",
+    classes: [{
+        name: "MyClass",
+        decorators: [{
+            name: "myDecorator",
+            arguments: [{ "text": "My decorator value" }]
         }],
-        "methods": [{
-            "name": "myMethod",
-            "decorators": [],
-            "parameters": [{
-                "name": "myParameter",
-                "decorators": [],
-                "type": { "name":"string" }
+        extends: [],
+        implements: [],
+        methods: [{
+            name: "myMethod",
+            decorators: [],
+            parameters: [{
+                name: "myParameter",
+                decorators: [],
+                type: { "name":"string" }
             }],
-            "returnType": {
-                "name": "string"
+            returnType: {
+                name: "string"
             }
         }],
-        "isExported": true,
-        "properties": []
+        isExported: true,
+        properties: []
     }],
     enums: [],
     functions: [],
+    interfaces: [],
     reExports: []
 }]
 ```

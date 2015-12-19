@@ -24,11 +24,23 @@ var DefinitionCache = (function () {
         if (definitions_1.ClassDefinition.isClassDefinition(symbol)) {
             classDefinition = this.classes.get(symbol);
             if (classDefinition == null) {
-                classDefinition = new definitions_1.ClassDefinition(this.typeChecker, symbol, this.typeChecker.getBaseTypeSymbols(symbol).map(function (base) { return _this.getClassDefinition(base); }));
+                classDefinition = new definitions_1.ClassDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsSymbols(symbol).map(function (base) { return _this.getClassDefinition(base); }), this.typeChecker.getImplementsSymbols(symbol).map(function (base) { return _this.getClassOrInterfaceDefinition(base); }));
                 this.classes.add(symbol, classDefinition);
             }
         }
         return classDefinition;
+    };
+    DefinitionCache.prototype.getInterfaceDefinition = function (symbol) {
+        var _this = this;
+        var interfaceDefinition;
+        if (definitions_1.InterfaceDefinition.isInterfaceDefinition(symbol)) {
+            interfaceDefinition = this.interfaces.get(symbol);
+            if (interfaceDefinition == null) {
+                interfaceDefinition = new definitions_1.InterfaceDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsSymbols(symbol).map(function (base) { return _this.getClassOrInterfaceDefinition(base); }));
+                this.interfaces.add(symbol, interfaceDefinition);
+            }
+        }
+        return interfaceDefinition;
     };
     DefinitionCache.prototype.getEnumDefinition = function (symbol) {
         var enumDefinition;
@@ -52,16 +64,8 @@ var DefinitionCache = (function () {
         }
         return functionDefinition;
     };
-    DefinitionCache.prototype.getInterfaceDefinition = function (symbol) {
-        var interfaceDefinition;
-        if (definitions_1.InterfaceDefinition.isInterfaceDefinition(symbol)) {
-            interfaceDefinition = this.interfaces.get(symbol);
-            if (interfaceDefinition == null) {
-                interfaceDefinition = new definitions_1.InterfaceDefinition(this.typeChecker, symbol, []);
-                this.interfaces.add(symbol, interfaceDefinition);
-            }
-        }
-        return interfaceDefinition;
+    DefinitionCache.prototype.getClassOrInterfaceDefinition = function (symbol) {
+        return this.getClassDefinition(symbol) || this.getInterfaceDefinition(symbol);
     };
     DefinitionCache.prototype.getDefinition = function (symbol) {
         return this.getClassDefinition(symbol) ||

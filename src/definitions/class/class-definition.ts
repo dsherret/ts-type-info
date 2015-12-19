@@ -4,6 +4,7 @@ import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
 import {StaticMethodDefinition} from "./static-method-definition";
 import {StaticPropertyDefinition} from "./static-property-definition";
+import {InterfaceDefinition} from "./../interface";
 import {DecoratorDefinition} from "./../decorator-definition";
 import {TypeParameterDefinition} from "./../type-parameter-definition";
 import {applyMixins, TypeChecker} from "./../../utils";
@@ -19,15 +20,24 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     private _typeParameters: TypeParameterDefinition[] = [];
     private _constructorDef: ConstructorDefinition;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _baseClasses: ClassDefinition[]) {
+    constructor(
+        typeChecker: TypeChecker,
+        symbol: ts.Symbol,
+        private _extends: ClassDefinition[],
+        private _implements: (ClassDefinition | InterfaceDefinition)[]) {
+
         this.fillName(symbol);
         this.fillDecorators(symbol);
         this.fillMembers(typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
     }
 
-    get baseClasses() {
-        return this._baseClasses;
+    get extends() {
+        return this._extends;
+    }
+
+    get implements() {
+        return this._implements;
     }
 
     get constructorDef() {

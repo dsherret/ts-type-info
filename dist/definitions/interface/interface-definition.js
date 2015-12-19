@@ -3,8 +3,8 @@ var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var interface_method_definition_1 = require("./interface-method-definition");
 var InterfaceDefinition = (function () {
-    function InterfaceDefinition(typeChecker, symbol, _baseInterfaces) {
-        this._baseInterfaces = _baseInterfaces;
+    function InterfaceDefinition(typeChecker, symbol, _extends) {
+        this._extends = _extends;
         this._methods = [];
         this._properties = [];
         this._typeParameters = [];
@@ -12,9 +12,9 @@ var InterfaceDefinition = (function () {
         this.fillIsExported(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
-    Object.defineProperty(InterfaceDefinition.prototype, "baseInterfaces", {
+    Object.defineProperty(InterfaceDefinition.prototype, "extends", {
         get: function () {
-            return this._baseInterfaces;
+            return this._extends;
         },
         enumerable: true,
         configurable: true
