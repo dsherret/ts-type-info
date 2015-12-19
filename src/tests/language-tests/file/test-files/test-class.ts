@@ -1,4 +1,4 @@
-// this is a test file used re-export-tests
+// this is a test file
 export class TestClass {
     name: string;
 }

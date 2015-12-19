@@ -5,6 +5,7 @@ import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
 import {InterfaceDefinition} from "./../interface";
 import {ReExportDefinition} from "./re-export-definition";
+import {ImportDefinition} from "./import-definition";
 
 export class FileDefinition {
     private _fileName: string;
@@ -13,10 +14,29 @@ export class FileDefinition {
     private _functions: FunctionDefinition[] = [];
     private _interfaces: InterfaceDefinition[] = [];
     private _reExports: ReExportDefinition[] = [];
+    private _imports: ImportDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this._fileName = file.fileName;
         this.fillMembers(typeChecker, definitionCache, file);
+    }
+
+    fillImports(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
+        for (const fileImportSymbol of typeChecker.getFileImportSymbols(file)) {
+            const importDefinition = definitionCache.getDefinition(fileImportSymbol);
+
+            if (importDefinition != null) {
+                this._imports.push(
+                    new ImportDefinition(
+                        definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)),
+                        importDefinition
+                    )
+                );
+            }
+            else {
+                console.warn(`Not implemented import symbol: ${fileImportSymbol.name}`);
+            }
+        }
     }
 
     fillReExports(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
@@ -83,6 +103,10 @@ export class FileDefinition {
 
     get interfaces() {
         return this._interfaces;
+    }
+
+    get imports() {
+        return this._imports;
     }
 
     get reExports() {

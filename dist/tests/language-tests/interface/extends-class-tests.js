@@ -8,4 +8,4 @@ describe("base interface tests", function () {
     test_helpers_1.runNamedDefinitionTests(def.interfaces[0].extends[0], "MyBaseClass");
 });
 
-//# sourceMappingURL=base-class-tests.js.map
+//# sourceMappingURL=extends-class-tests.js.map

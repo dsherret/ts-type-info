@@ -1,5 +1,6 @@
 var ts = require("typescript");
 var re_export_definition_1 = require("./re-export-definition");
+var import_definition_1 = require("./import-definition");
 var FileDefinition = (function () {
     function FileDefinition(typeChecker, definitionCache, file) {
         this._classes = [];
@@ -7,9 +8,22 @@ var FileDefinition = (function () {
         this._functions = [];
         this._interfaces = [];
         this._reExports = [];
+        this._imports = [];
         this._fileName = file.fileName;
         this.fillMembers(typeChecker, definitionCache, file);
     }
+    FileDefinition.prototype.fillImports = function (typeChecker, definitionCache, file) {
+        for (var _i = 0, _a = typeChecker.getFileImportSymbols(file); _i < _a.length; _i++) {
+            var fileImportSymbol = _a[_i];
+            var importDefinition = definitionCache.getDefinition(fileImportSymbol);
+            if (importDefinition != null) {
+                this._imports.push(new import_definition_1.ImportDefinition(definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)), importDefinition));
+            }
+            else {
+                console.warn("Not implemented import symbol: " + fileImportSymbol.name);
+            }
+        }
+    };
     FileDefinition.prototype.fillReExports = function (typeChecker, definitionCache, file) {
         for (var _i = 0, _a = typeChecker.getFileReExportSymbols(file); _i < _a.length; _i++) {
             var fileReExportSymbol = _a[_i];
@@ -74,6 +88,13 @@ var FileDefinition = (function () {
     Object.defineProperty(FileDefinition.prototype, "interfaces", {
         get: function () {
             return this._interfaces;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileDefinition.prototype, "imports", {
+        get: function () {
+            return this._imports;
         },
         enumerable: true,
         configurable: true

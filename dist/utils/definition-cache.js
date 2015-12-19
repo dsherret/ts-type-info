@@ -14,6 +14,7 @@ var DefinitionCache = (function () {
         if (fileDefinition == null) {
             fileDefinition = new definitions_1.FileDefinition(this.typeChecker, this, sourceFile);
             this.files.add(sourceFile, fileDefinition);
+            fileDefinition.fillImports(this.typeChecker, this, sourceFile);
             fileDefinition.fillReExports(this.typeChecker, this, sourceFile);
         }
         return fileDefinition;

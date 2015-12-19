@@ -60,6 +60,35 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getTypeFromTsType = function (tsType) {
         return this.typeCreator.get(tsType);
     };
+    TypeChecker.prototype.getFileImportSymbols = function (file) {
+        var _this = this;
+        var importDeclarations = file["imports"];
+        var importClauses = importDeclarations.map(function (d) { return d.parent.importClause; });
+        var fileImports = [];
+        importClauses.filter(function (c) { return c != null; }).forEach(function (c) {
+            if (c.namedBindings != null) {
+                var namedBindings = c.namedBindings;
+                if (namedBindings.elements != null) {
+                    namedBindings.elements.forEach(function (e) {
+                        fileImports.push(_this.typeChecker.getTypeAtLocation(e).symbol);
+                    });
+                }
+                else if (namedBindings.name != null) {
+                    for (var _i = 0, _a = _this.typeChecker.getExportsOfModule(_this.typeChecker.getTypeAtLocation(namedBindings.name).symbol); _i < _a.length; _i++) {
+                        var exportSymbol = _a[_i];
+                        fileImports.push(exportSymbol);
+                    }
+                }
+            }
+            else if (c.name != null) {
+                fileImports.push(_this.typeChecker.getTypeAtLocation(c).symbol);
+            }
+            else {
+                console.warn("Unknown import clause in " + file.fileName);
+            }
+        });
+        return fileImports;
+    };
     TypeChecker.prototype.getFileReExportSymbols = function (file) {
         var fileSymbol = this.getSymbolAtLocation(file);
         var fileReExports = [];

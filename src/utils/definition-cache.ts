@@ -24,6 +24,7 @@ export class DefinitionCache {
 
             this.files.add(sourceFile, fileDefinition);
 
+            fileDefinition.fillImports(this.typeChecker, this, sourceFile);
             fileDefinition.fillReExports(this.typeChecker, this, sourceFile);
         }
 

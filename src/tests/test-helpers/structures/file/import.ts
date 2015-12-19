@@ -1,6 +1,6 @@
-﻿import {IBaseNamedDefinition} from "./../../../definitions";
+﻿import {IBaseNamedDefinition} from "./../../../../definitions";
 
-export interface ReExport {
+export interface Import {
     fileName: string;
     definitionName: string;
     definitionType: { new(...args: any[]): IBaseNamedDefinition };

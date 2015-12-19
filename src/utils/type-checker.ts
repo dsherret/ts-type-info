@@ -83,6 +83,40 @@ export class TypeChecker {
         return this.typeCreator.get(tsType);
     }
 
+    getFileImportSymbols(file: ts.SourceFile) {
+        const importDeclarations = (file as any)["imports"] as ts.Node[];
+        const importClauses = importDeclarations.map(d => (d.parent as ts.ImportDeclaration).importClause);
+        const fileImports: ts.Symbol[] = [];
+
+        importClauses.filter(c => c != null).forEach(c => {
+            if (c.namedBindings != null) {
+                const namedBindings = (c.namedBindings as (ts.NamedImportsOrExports & ts.NamespaceImport));
+
+                if (namedBindings.elements != null) {
+                    // named exports
+                    namedBindings.elements.forEach(e => {
+                        fileImports.push(this.typeChecker.getTypeAtLocation(e).symbol);
+                    });
+                }
+                else if (namedBindings.name != null) {
+                    // * as exports
+                    for (const exportSymbol of this.typeChecker.getExportsOfModule(this.typeChecker.getTypeAtLocation(namedBindings.name).symbol)) {
+                        fileImports.push(exportSymbol);
+                    }
+                }
+            }
+            else if (c.name != null) {
+                // default exports
+                fileImports.push(this.typeChecker.getTypeAtLocation(c).symbol);
+            }
+            else {
+                console.warn(`Unknown import clause in ${file.fileName}`);
+            }
+        });
+
+        return fileImports;
+    }
+
     getFileReExportSymbols(file: ts.SourceFile) {
         const fileSymbol = this.getSymbolAtLocation(file);
         const fileReExports: ts.Symbol[] = [];
