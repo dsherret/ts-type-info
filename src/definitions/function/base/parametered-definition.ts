@@ -14,7 +14,7 @@ export abstract class ParameteredDefinition<T extends ParameterDefinition> imple
     fillParametersBySymbol(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) {
         this._parameters = [];
 
-        for (var param of this.getDeclaration(symbol).parameters.filter(p => p != null)) {
+        for (let param of this.getDeclaration(symbol).parameters.filter(p => p != null)) {
             let parameterSymbol = typeChecker.getSymbolAtLocation(param);
             this._parameters.push(new paramDefinition(typeChecker, parameterSymbol));
         }
@@ -23,7 +23,7 @@ export abstract class ParameteredDefinition<T extends ParameterDefinition> imple
     fillParametersBySignature(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, signature: ts.Signature) {
         this._parameters = [];
 
-        for (var param of signature.parameters) {
+        for (let param of signature.parameters) {
             this._parameters.push(new paramDefinition(typeChecker, param));
         }
     }
