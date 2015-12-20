@@ -50,6 +50,10 @@ export class TypeChecker {
         return this.getTypeFromTsType(tsType);
     }
 
+    getSignatureFromDeclaration(declaration: ts.SignatureDeclaration) {
+        return this.typeChecker.getSignatureFromDeclaration(declaration);
+    }
+
     getSourceFileOfSymbol(symbol: ts.Symbol) {
         let currentNode: ts.Node = (symbol.valueDeclaration || symbol.getDeclarations()[0]).parent;
 
@@ -101,13 +105,27 @@ export class TypeChecker {
                 if (namedBindings.elements != null) {
                     // named exports
                     namedBindings.elements.forEach(e => {
-                        fileImports.push(this.typeChecker.getTypeAtLocation(e).symbol);
+                        const symbol = this.typeChecker.getTypeAtLocation(e).symbol;
+
+                        if (symbol == null) {
+                            console.warn(`Unknown symbol: ${e.name.text}`);
+                        }
+                        else {
+                            fileImports.push(symbol);
+                        }
                     });
                 }
                 else if (namedBindings.name != null) {
                     // * as exports
-                    for (const exportSymbol of this.typeChecker.getExportsOfModule(this.typeChecker.getTypeAtLocation(namedBindings.name).symbol)) {
-                        fileImports.push(exportSymbol);
+                    const starSymbol = this.typeChecker.getTypeAtLocation(namedBindings.name).symbol;
+
+                    if (starSymbol == null) {
+                        console.warn(`Namespaces are not implemented: ${namedBindings.name.text}`);
+                    }
+                    else {
+                        for (const exportSymbol of this.typeChecker.getExportsOfModule(this.typeChecker.getTypeAtLocation(namedBindings.name).symbol)) {
+                            fileImports.push(exportSymbol);
+                        }
                     }
                 }
             }
@@ -140,7 +158,7 @@ export class TypeChecker {
     }
 
     isOptionalProperty(symbol: ts.Symbol) {
-        return (symbol.valueDeclaration as ts.ParameterDeclaration).questionToken != null;
+        return symbol.valueDeclaration != null && (symbol.valueDeclaration as ts.ParameterDeclaration).questionToken != null;
     }
 
     isSymbolInFile(symbol: ts.Symbol, file: ts.SourceFile) {

@@ -1,11 +1,14 @@
 var ts = require("typescript");
+var type_parameter_definition_1 = require("./../type-parameter-definition");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var interface_method_definition_1 = require("./interface-method-definition");
+var interface_new_signature_definition_1 = require("./interface-new-signature-definition");
 var InterfaceDefinition = (function () {
     function InterfaceDefinition(typeChecker, symbol, _extends) {
         this._extends = _extends;
         this._methods = [];
+        this._newSignatures = [];
         this._properties = [];
         this._typeParameters = [];
         this.fillName(symbol);
@@ -22,6 +25,13 @@ var InterfaceDefinition = (function () {
     Object.defineProperty(InterfaceDefinition.prototype, "methods", {
         get: function () {
             return this._methods;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InterfaceDefinition.prototype, "newSignatures", {
+        get: function () {
+            return this._newSignatures;
         },
         enumerable: true,
         configurable: true
@@ -50,8 +60,17 @@ var InterfaceDefinition = (function () {
             else if (interface_method_definition_1.InterfaceMethodDefinition.isMethod(member)) {
                 _this._methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));
             }
+            else if (type_parameter_definition_1.TypeParameterDefinition.isTypeParameter(member)) {
+                _this._typeParameters.push(new type_parameter_definition_1.TypeParameterDefinition(typeChecker, member));
+            }
+            else if (interface_new_signature_definition_1.InterfaceNewSignatureDefinition.isNewSignature(member)) {
+                member.getDeclarations().forEach(function (d) {
+                    _this._newSignatures.push(new interface_new_signature_definition_1.InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d)));
+                });
+            }
             else {
-                console.warn("Not implemented '" + member.getName() + "'");
+                console.log(member);
+                console.warn("Not implemented interface member: " + member.getName());
             }
         });
     };

@@ -5,9 +5,11 @@ import {PropertyDefinition, INamedDefinition, NamedDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
+import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 
 export class InterfaceDefinition implements INamedDefinition, IExportableDefinition {
     private _methods: InterfaceMethodDefinition[] = [];
+    private _newSignatures: InterfaceNewSignatureDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
     private _typeParameters: TypeParameterDefinition[] = [];
 
@@ -23,6 +25,10 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
 
     get methods() {
         return this._methods;
+    }
+
+    get newSignatures() {
+        return this._newSignatures;
     }
 
     get properties() {
@@ -43,12 +49,17 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
             else if (InterfaceMethodDefinition.isMethod(member)) {
                 this._methods.push(new InterfaceMethodDefinition(typeChecker, member));
             }
-            // else if (TypeParameterDefinition.isTypeParameter(member)) {
-                // todo: figure out better way of getting type parameters, like how it works in call signature definition?
-            //    this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
-            // }
+            else if (TypeParameterDefinition.isTypeParameter(member)) {
+                this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
+            }
+            else if (InterfaceNewSignatureDefinition.isNewSignature(member)) {
+                member.getDeclarations().forEach(d => {
+                    this._newSignatures.push(new InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d as ts.SignatureDeclaration)));
+                });
+            }
             else {
-                console.warn(`Not implemented '${member.getName()}'`);
+                console.log(member);
+                console.warn(`Not implemented interface member: ${member.getName()}`);
             }
         });
     }

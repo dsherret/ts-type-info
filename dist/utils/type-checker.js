@@ -37,6 +37,9 @@ var TypeChecker = (function () {
         var tsType = this.typeChecker.getReturnTypeOfSignature(signature);
         return this.getTypeFromTsType(tsType);
     };
+    TypeChecker.prototype.getSignatureFromDeclaration = function (declaration) {
+        return this.typeChecker.getSignatureFromDeclaration(declaration);
+    };
     TypeChecker.prototype.getSourceFileOfSymbol = function (symbol) {
         var currentNode = (symbol.valueDeclaration || symbol.getDeclarations()[0]).parent;
         while (currentNode != null && typeof currentNode.fileName !== "string") {
@@ -75,13 +78,27 @@ var TypeChecker = (function () {
                 var namedBindings = c.namedBindings;
                 if (namedBindings.elements != null) {
                     namedBindings.elements.forEach(function (e) {
-                        fileImports.push(_this.typeChecker.getTypeAtLocation(e).symbol);
+                        var symbol = _this.typeChecker.getTypeAtLocation(e).symbol;
+                        if (symbol == null) {
+                            console.warn("Unknown symbol: " + e.name.text);
+                            console.log(_this.typeChecker.getTypeAtLocation(e));
+                            console.log(file.fileName);
+                        }
+                        else {
+                            fileImports.push(symbol);
+                        }
                     });
                 }
                 else if (namedBindings.name != null) {
-                    for (var _i = 0, _a = _this.typeChecker.getExportsOfModule(_this.typeChecker.getTypeAtLocation(namedBindings.name).symbol); _i < _a.length; _i++) {
-                        var exportSymbol = _a[_i];
-                        fileImports.push(exportSymbol);
+                    var starSymbol = _this.typeChecker.getTypeAtLocation(namedBindings.name).symbol;
+                    if (starSymbol == null) {
+                        console.warn("Namespaces are not implemented: " + namedBindings.name.text);
+                    }
+                    else {
+                        for (var _i = 0, _a = _this.typeChecker.getExportsOfModule(_this.typeChecker.getTypeAtLocation(namedBindings.name).symbol); _i < _a.length; _i++) {
+                            var exportSymbol = _a[_i];
+                            fileImports.push(exportSymbol);
+                        }
                     }
                 }
             }
@@ -108,7 +125,7 @@ var TypeChecker = (function () {
         return fileReExports;
     };
     TypeChecker.prototype.isOptionalProperty = function (symbol) {
-        return symbol.valueDeclaration.questionToken != null;
+        return symbol.valueDeclaration != null && symbol.valueDeclaration.questionToken != null;
     };
     TypeChecker.prototype.isSymbolInFile = function (symbol, file) {
         return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;

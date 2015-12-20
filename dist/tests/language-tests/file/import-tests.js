@@ -6,7 +6,7 @@ var definitions_1 = require("./../../../definitions");
 describe("file import tests", function () {
     var fileName = path.join(__dirname, "../../../../src/tests/language-tests/file/test-files/import.ts");
     var fileDef = main_1.getFileInfo([fileName]).filter(function (def) { return /import/.test(def.fileName); })[0];
-    var NUM_IMPORTS = 5;
+    var NUM_IMPORTS = 8;
     it("should have " + NUM_IMPORTS + " imports", function () {
         assert.equal(fileDef.imports.length, NUM_IMPORTS);
     });
@@ -34,6 +34,21 @@ describe("file import tests", function () {
         definitionName: "default",
         definitionType: definitions_1.ClassDefinition,
         fileName: "test-default-class.ts"
+    });
+    test_helpers_1.runImportDefinitionTests(fileDef.imports[5], {
+        definitionName: "Test",
+        definitionType: definitions_1.InterfaceDefinition,
+        fileName: "definition.d.ts"
+    });
+    test_helpers_1.runImportDefinitionTests(fileDef.imports[6], {
+        definitionName: "TestClass",
+        definitionType: definitions_1.ClassDefinition,
+        fileName: "test-class.ts"
+    });
+    test_helpers_1.runImportDefinitionTests(fileDef.imports[7], {
+        definitionName: "TestEnum",
+        definitionType: definitions_1.EnumDefinition,
+        fileName: "test-enum.ts"
     });
 });
 

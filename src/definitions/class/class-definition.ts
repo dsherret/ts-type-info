@@ -83,7 +83,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
                 this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
             }
             else {
-                console.warn(`Not implemented '${member.getName()}'`);
+                console.warn(`Not implemented member: ${member.getName()}`);
             }
         });
 
@@ -98,7 +98,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
                 this._staticProperties.push(new StaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
-                console.warn(`Not implemented '${staticMember.getName()}'`);
+                console.warn(`Not implemented static member: ${staticMember.getName()}`);
             }
         });
     }

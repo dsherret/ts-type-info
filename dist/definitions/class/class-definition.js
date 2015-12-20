@@ -95,7 +95,7 @@ var ClassDefinition = (function () {
                 _this._typeParameters.push(new type_parameter_definition_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
-                console.warn("Not implemented '" + member.getName() + "'");
+                console.warn("Not implemented member: " + member.getName());
             }
         });
         Object.keys(symbol.exports).map(function (memberName) { return symbol.exports[memberName]; }).forEach(function (staticMember) {
@@ -108,7 +108,7 @@ var ClassDefinition = (function () {
                 _this._staticProperties.push(new static_property_definition_1.StaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
-                console.warn("Not implemented '" + staticMember.getName() + "'");
+                console.warn("Not implemented static member: " + staticMember.getName());
             }
         });
     };

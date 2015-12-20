@@ -3,5 +3,6 @@ function __export(m) {
 }
 __export(require("./interface/interface-definition"));
 __export(require("./interface/interface-method-definition"));
+__export(require("./interface/interface-new-signature-definition"));
 
 //# sourceMappingURL=interface.js.map
