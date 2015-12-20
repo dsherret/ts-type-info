@@ -81,8 +81,6 @@ var TypeChecker = (function () {
                         var symbol = _this.typeChecker.getTypeAtLocation(e).symbol;
                         if (symbol == null) {
                             console.warn("Unknown symbol: " + e.name.text);
-                            console.log(_this.typeChecker.getTypeAtLocation(e));
-                            console.log(file.fileName);
                         }
                         else {
                             fileImports.push(symbol);
