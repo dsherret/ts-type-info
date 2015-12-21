@@ -5,8 +5,9 @@ import {TestEnum} from "./test-enum";
 import {Class1, Class2} from "./test-multiple-classes";
 import TestDefaultClass from "./test-default-class";
 import * as definition from "definition";
-import * as definition2 from "./definition2";
 import * as reexports from "./re-export";
+import {MyInterface} from "./test-interface";
+import * as definitionNamespace from "./definition-namespace";
 
 // removes linting errors
 function dummyFunction(t: any) {
@@ -23,5 +24,7 @@ dummyFunction(reexports.TestEnum);
 
 let myVar: definition.Test;
 dummyFunction(myVar);
-let myVar2: definition2.Test;
+let myVar2: definitionNamespace.Test;
 dummyFunction(myVar2);
+let myInterface: MyInterface;
+dummyFunction(myInterface);

@@ -7,7 +7,7 @@ import {ClassDefinition, EnumDefinition, InterfaceDefinition} from "./../../../d
 describe("file import tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/language-tests/file/test-files/import.ts");
     const fileDef = getFileInfo([fileName]).filter(def => /import/.test(def.fileName))[0];
-    const NUM_IMPORTS = 8;
+    const NUM_IMPORTS = 10;
 
     it(`should have ${NUM_IMPORTS} imports`, () => {
         assert.equal(fileDef.imports.length, NUM_IMPORTS);
@@ -59,5 +59,17 @@ describe("file import tests", () => {
         definitionName: "TestEnum",
         definitionType: EnumDefinition,
         fileName: "test-enum.ts"
+    });
+
+    runImportDefinitionTests(fileDef.imports[8], {
+        definitionName: "MyInterface",
+        definitionType: InterfaceDefinition,
+        fileName: "test-interface.ts"
+    });
+
+    runImportDefinitionTests(fileDef.imports[9], {
+        definitionName: "Test",
+        definitionType: InterfaceDefinition,
+        fileName: "definition-namespace.d.ts"
     });
 });

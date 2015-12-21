@@ -17,5 +17,7 @@ var myVar;
 dummyFunction(myVar);
 var myVar2;
 dummyFunction(myVar2);
+var myInterface;
+dummyFunction(myInterface);
 
 //# sourceMappingURL=import.js.map

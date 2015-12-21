@@ -78,7 +78,7 @@ var TypeChecker = (function () {
                 var namedBindings = c.namedBindings;
                 if (namedBindings.elements != null) {
                     namedBindings.elements.forEach(function (e) {
-                        var symbol = _this.typeChecker.getTypeAtLocation(e).symbol;
+                        var symbol = _this.typeChecker.getAliasedSymbol(_this.getSymbolAtLocation(e));
                         if (symbol == null) {
                             console.warn("Unknown symbol: " + e.name.text);
                         }
@@ -88,12 +88,12 @@ var TypeChecker = (function () {
                     });
                 }
                 else if (namedBindings.name != null) {
-                    var starSymbol = _this.typeChecker.getTypeAtLocation(namedBindings.name).symbol;
+                    var starSymbol = _this.typeChecker.getAliasedSymbol(_this.typeChecker.getSymbolAtLocation(namedBindings.name));
                     if (starSymbol == null) {
-                        console.warn("Namespaces are not implemented: " + namedBindings.name.text);
+                        console.warn("Unknown symbol: " + namedBindings.name.text);
                     }
                     else {
-                        for (var _i = 0, _a = _this.typeChecker.getExportsOfModule(_this.typeChecker.getTypeAtLocation(namedBindings.name).symbol); _i < _a.length; _i++) {
+                        for (var _i = 0, _a = _this.typeChecker.getExportsOfModule(starSymbol); _i < _a.length; _i++) {
                             var exportSymbol = _a[_i];
                             fileImports.push(exportSymbol);
                         }

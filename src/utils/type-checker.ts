@@ -105,7 +105,7 @@ export class TypeChecker {
                 if (namedBindings.elements != null) {
                     // named exports
                     namedBindings.elements.forEach(e => {
-                        const symbol = this.typeChecker.getTypeAtLocation(e).symbol;
+                        const symbol = this.typeChecker.getAliasedSymbol(this.getSymbolAtLocation(e));
 
                         if (symbol == null) {
                             console.warn(`Unknown symbol: ${e.name.text}`);
@@ -117,13 +117,13 @@ export class TypeChecker {
                 }
                 else if (namedBindings.name != null) {
                     // * as exports
-                    const starSymbol = this.typeChecker.getTypeAtLocation(namedBindings.name).symbol;
+                    const starSymbol = this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(namedBindings.name));
 
                     if (starSymbol == null) {
-                        console.warn(`Namespaces are not implemented: ${namedBindings.name.text}`);
+                        console.warn(`Unknown symbol: ${namedBindings.name.text}`);
                     }
                     else {
-                        for (const exportSymbol of this.typeChecker.getExportsOfModule(this.typeChecker.getTypeAtLocation(namedBindings.name).symbol)) {
+                        for (const exportSymbol of this.typeChecker.getExportsOfModule(starSymbol)) {
                             fileImports.push(exportSymbol);
                         }
                     }
