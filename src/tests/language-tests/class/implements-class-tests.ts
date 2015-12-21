@@ -1,5 +1,4 @@
-﻿/*
-import {getStringInfo} from "./../../../main";
+﻿import {getStringInfo} from "./../../../main";
 import {runNamedDefinitionTests} from "./../../test-helpers";
 
 describe("base class tests", () => {
@@ -20,4 +19,3 @@ class MyClassImplementsClass implements MyBaseClass {
     runNamedDefinitionTests(def.classes[1], "MyClassImplementsClass");
     runNamedDefinitionTests(def.classes[1].implements[0], "MyBaseClass");
 });
-*/
