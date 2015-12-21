@@ -13,6 +13,15 @@ var TypeChecker = (function () {
         });
     };
     TypeChecker.prototype.getImplementsSymbols = function (symbol) {
+        var _this = this;
+        if (symbol.valueDeclaration != null) {
+            var valueDeclaration = symbol.valueDeclaration;
+            if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > 0) {
+                if (valueDeclaration.heritageClauses[0].types != null && valueDeclaration.heritageClauses[0].types.length > 0) {
+                    return valueDeclaration.heritageClauses[0].types.map(function (t) { return _this.typeChecker.getSymbolAtLocation(t.expression); });
+                }
+            }
+        }
         return [];
     };
     TypeChecker.prototype.getConstantValue = function (symbol) {

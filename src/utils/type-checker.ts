@@ -17,8 +17,18 @@ export class TypeChecker {
         });
     }
 
-    getImplementsSymbols(symbol: ts.Symbol) {
-        return [] as ts.Symbol[]; // not implemented
+    getImplementsSymbols(symbol: ts.Symbol): ts.Symbol[] {
+        if (symbol.valueDeclaration != null) {
+            const valueDeclaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;
+
+            if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > 0) {
+                if (valueDeclaration.heritageClauses[0].types != null && valueDeclaration.heritageClauses[0].types.length > 0) {
+                    return valueDeclaration.heritageClauses[0].types.map(t => this.typeChecker.getSymbolAtLocation(t.expression));
+                }
+            }
+        }
+
+        return [];
     }
 
     getConstantValue(symbol: ts.Symbol) {

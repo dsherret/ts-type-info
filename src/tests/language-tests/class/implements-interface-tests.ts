@@ -1,5 +1,4 @@
-﻿/*
-import {getStringInfo} from "./../../../main";
+﻿import {getStringInfo} from "./../../../main";
 import {runNamedDefinitionTests} from "./../../test-helpers";
 
 describe("base class tests", () => {
@@ -8,8 +7,13 @@ interface MyInterface {
     name: string;
 }
 
-class MyClassImplementsInterface implements MyInterface {
+interface MyTest {
+    name2: string;
+}
+
+class MyClassImplementsInterface implements MyInterface, MyTest {
     name: string;
+    name2: string;
 }
 `;
 
@@ -18,4 +22,3 @@ class MyClassImplementsInterface implements MyInterface {
     runNamedDefinitionTests(def.classes[0], "MyClassImplementsInterface");
     runNamedDefinitionTests(def.classes[0].implements[0], "MyInterface");
 });
-*/
