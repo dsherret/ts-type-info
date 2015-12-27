@@ -12,9 +12,8 @@
     "url": "git+https://github.com/dsherret/ts-type-info.git"
   },
   "keywords": [
-    "decorators",
     "typescript",
-    "routes"
+    "code"
   ],
   "author": "David Sherret",
   "license": "MIT",
