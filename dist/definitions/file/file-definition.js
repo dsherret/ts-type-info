@@ -19,6 +19,8 @@ var FileDefinition = (function () {
             if (importDefinition != null) {
                 this._imports.push(new import_definition_1.ImportDefinition(definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)), importDefinition));
             }
+            else if ((fileImportSymbol.flags & 2) !== 0) {
+            }
             else {
                 console.warn("Not implemented import symbol: " + fileImportSymbol.name);
             }

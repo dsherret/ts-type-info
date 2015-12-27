@@ -33,6 +33,9 @@ export class FileDefinition {
                     )
                 );
             }
+            else if ((fileImportSymbol.flags & ts.SymbolFlags.BlockScopedVariable) !== 0) {
+                // silently ignore
+            }
             else {
                 console.warn(`Not implemented import symbol: ${fileImportSymbol.name}`);
             }
