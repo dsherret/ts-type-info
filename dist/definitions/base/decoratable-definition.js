@@ -4,10 +4,13 @@ var DecoratableDefinition = (function () {
     }
     DecoratableDefinition.prototype.fillDecorators = function (symbol) {
         this._decorators = [];
-        if (symbol.valueDeclaration != null && symbol.valueDeclaration.decorators != null) {
-            for (var _i = 0, _a = symbol.valueDeclaration.decorators; _i < _a.length; _i++) {
-                var decorator = _a[_i];
-                this._decorators.push(new decorator_definition_1.DecoratorDefinition(decorator));
+        for (var _i = 0, _a = symbol.getDeclarations(); _i < _a.length; _i++) {
+            var declaration = _a[_i];
+            if (declaration.decorators != null) {
+                for (var _b = 0, _c = declaration.decorators; _b < _c.length; _b++) {
+                    var decorator = _c[_b];
+                    this._decorators.push(new decorator_definition_1.DecoratorDefinition(decorator));
+                }
             }
         }
     };

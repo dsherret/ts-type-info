@@ -11,9 +11,11 @@ export abstract class DecoratableDefinition implements IDecoratableDefinition {
 
     fillDecorators(symbol: ts.Symbol) {
         this._decorators = [];
-        if (symbol.valueDeclaration != null && symbol.valueDeclaration.decorators != null) {
-            for (let decorator of symbol.valueDeclaration.decorators) {
-                this._decorators.push(new DecoratorDefinition(decorator));
+        for (let declaration of symbol.getDeclarations()) {
+            if (declaration.decorators != null) {
+                for (let decorator of declaration.decorators) {
+                    this._decorators.push(new DecoratorDefinition(decorator));
+                }
             }
         }
     }
