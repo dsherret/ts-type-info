@@ -19,6 +19,6 @@ interface MyInterface<T, U extends string> {
     });
 
     it("it should extend a type string", () => {
-        assert.equal(def.interfaces[0].typeParameters[1].constraint.name, "string");
+        assert.equal(def.interfaces[0].typeParameters[1].constraint.text, "string");
     });
 });

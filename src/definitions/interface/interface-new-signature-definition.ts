@@ -1,12 +1,12 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {IParameteredDefinition, ParameteredDefinition, ParameterDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../function";
-import {Type} from "./../../types";
+import {TypeExpression} from "./../../types";
 
 export class InterfaceNewSignatureDefinition implements IParameteredDefinition<ParameterDefinition>, IReturnTypedDefinition {
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {
         this.fillParametersBySignature(ParameterDefinition, typeChecker, signature);
-        this.fillReturnTypeBySignature(typeChecker, signature);
+        this.fillReturnTypeExpressionBySignature(typeChecker, signature);
     }
 
     // ParameteredDefinition
@@ -20,9 +20,9 @@ export class InterfaceNewSignatureDefinition implements IParameteredDefinition<P
         signature: ts.Signature) => void;
     parameters: ParameterDefinition[];
     // ReturnTyped
-    fillReturnTypeBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillReturnTypeBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    returnType: Type;
+    fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    returnTypeExpression: TypeExpression;
 
     static isNewSignature(symbol: ts.Symbol) {
         return (symbol.getFlags() & ts.SymbolFlags.Signature) !== 0;

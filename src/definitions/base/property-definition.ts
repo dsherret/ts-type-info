@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {Type} from "./../../types";
+import {TypeExpression} from "./../../types";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {ITypedDefinition, TypedDefinition} from "./typed-definition";
 
@@ -9,7 +9,7 @@ export class PropertyDefinition implements ITypedDefinition, INamedDefinition {
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
-        this.fillType(typeChecker, symbol);
+        this.fillTypeExpression(typeChecker, symbol);
 
         this._isOptional = typeChecker.isOptionalProperty(symbol);
     }
@@ -22,8 +22,8 @@ export class PropertyDefinition implements ITypedDefinition, INamedDefinition {
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // TypedDefinition
-    fillType: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    type: Type;
+    fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    typeExpression: TypeExpression;
 
     static isProperty(symbol: ts.Symbol) {
         return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0;

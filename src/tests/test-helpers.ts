@@ -4,4 +4,5 @@ export * from "./test-helpers/enum";
 export * from "./test-helpers/file";
 export * from "./test-helpers/function";
 export * from "./test-helpers/interface";
-export * from "./test-helpers/run-decorator-definition-tests";
+export * from "./test-helpers/misc";
+export * from "./test-helpers/types";

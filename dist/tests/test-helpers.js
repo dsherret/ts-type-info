@@ -7,6 +7,7 @@ __export(require("./test-helpers/enum"));
 __export(require("./test-helpers/file"));
 __export(require("./test-helpers/function"));
 __export(require("./test-helpers/interface"));
-__export(require("./test-helpers/run-decorator-definition-tests"));
+__export(require("./test-helpers/misc"));
+__export(require("./test-helpers/types"));
 
 //# sourceMappingURL=test-helpers.js.map

@@ -4,9 +4,8 @@ import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
 import {StaticMethodDefinition} from "./static-method-definition";
 import {StaticPropertyDefinition} from "./static-property-definition";
-import {InterfaceDefinition} from "./../interface";
-import {DecoratorDefinition} from "./../decorator-definition";
-import {TypeParameterDefinition} from "./../type-parameter-definition";
+import {DecoratorDefinition, TypeParameterDefinition} from "./../misc";
+import {TypeExpression} from "./../../types";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition,
         IDecoratableDefinition, DecoratableDefinition,
@@ -23,8 +22,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     constructor(
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
-        private _extends: ClassDefinition[],
-        private _implements: (ClassDefinition | InterfaceDefinition)[]) {
+        private _extends: TypeExpression[],
+        private _implements: TypeExpression[]) {
 
         this.fillName(symbol);
         this.fillDecorators(symbol);

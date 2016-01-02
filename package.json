@@ -29,7 +29,7 @@
     "typescript": "^1.7.3"
   },
   "devDependencies": {
-    "code-block-writer": "^1.0.0",
+    "code-block-writer": "^1.1.0",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-mocha": "^2.2.0",

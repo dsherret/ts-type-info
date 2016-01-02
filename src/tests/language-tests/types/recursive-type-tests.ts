@@ -23,7 +23,7 @@ class Note {
         runNamedDefinitionTests(prop, "note");
 
         it("should have type Note", () => {
-            assert.equal(prop.type.name, "Note");
+            assert.equal(prop.typeExpression.text, "Note");
         });
     });
 });

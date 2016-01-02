@@ -4,7 +4,7 @@ var class_method_definition_1 = require("./class-method-definition");
 var class_property_definition_1 = require("./class-property-definition");
 var static_method_definition_1 = require("./static-method-definition");
 var static_property_definition_1 = require("./static-property-definition");
-var type_parameter_definition_1 = require("./../type-parameter-definition");
+var misc_1 = require("./../misc");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var ClassDefinition = (function () {
@@ -91,8 +91,8 @@ var ClassDefinition = (function () {
                 _this.verifyConstructorNotSet();
                 _this._constructorDef = new constructor_definition_1.ConstructorDefinition(typeChecker, member);
             }
-            else if (type_parameter_definition_1.TypeParameterDefinition.isTypeParameter(member)) {
-                _this._typeParameters.push(new type_parameter_definition_1.TypeParameterDefinition(typeChecker, member));
+            else if (misc_1.TypeParameterDefinition.isTypeParameter(member)) {
+                _this._typeParameters.push(new misc_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
                 console.warn("Not implemented member: " + member.getName());

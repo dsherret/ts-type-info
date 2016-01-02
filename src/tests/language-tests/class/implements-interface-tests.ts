@@ -1,7 +1,7 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests} from "./../../test-helpers";
+import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
 
-describe("base class tests", () => {
+describe("class implements interface tests", () => {
     const code = `
 interface MyInterface {
     name: string;
@@ -20,5 +20,9 @@ class MyClassImplementsInterface implements MyInterface, MyTest {
     const def = getStringInfo(code);
 
     runNamedDefinitionTests(def.classes[0], "MyClassImplementsInterface");
-    runNamedDefinitionTests(def.classes[0].implements[0], "MyInterface");
+
+    describe("implements clause", () => {
+        runTypeExpressionTests(def.classes[0].implements[0], "MyInterface");
+        runTypeExpressionTests(def.classes[0].implements[1], "MyTest");
+    });
 });

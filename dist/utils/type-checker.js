@@ -1,24 +1,28 @@
 var ts = require("typescript");
-var utils_1 = require("./../utils");
 var TypeChecker = (function () {
-    function TypeChecker(typeChecker, node) {
+    function TypeChecker(typeChecker) {
         this.typeChecker = typeChecker;
-        this.node = node;
-        this.typeCreator = new utils_1.TypeCreator(this);
     }
-    TypeChecker.prototype.getExtendsSymbols = function (symbol) {
-        var symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
-        return symbolType.getBaseTypes().map(function (baseType) {
-            return baseType.symbol;
-        });
+    TypeChecker.prototype.setTypeCache = function (typeCreator) {
+        this.typeCreator = typeCreator;
     };
-    TypeChecker.prototype.getImplementsSymbols = function (symbol) {
+    TypeChecker.prototype.setCurrentNode = function (node) {
+        this.node = node;
+    };
+    TypeChecker.prototype.getExtendsTypes = function (symbol) {
+        var _this = this;
+        var symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
+        return symbolType.getBaseTypes().map(function (t) { return _this.getTypeExpressionFromTsType(t); });
+    };
+    TypeChecker.prototype.getImplementsTypes = function (symbol) {
         var _this = this;
         if (symbol.valueDeclaration != null) {
             var valueDeclaration = symbol.valueDeclaration;
             if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > 0) {
                 if (valueDeclaration.heritageClauses[0].types != null && valueDeclaration.heritageClauses[0].types.length > 0) {
-                    return valueDeclaration.heritageClauses[0].types.map(function (t) { return _this.typeChecker.getSymbolAtLocation(t.expression); });
+                    return valueDeclaration.heritageClauses[0].types
+                        .map(function (t) { return _this.typeChecker.getTypeAtLocation(t); })
+                        .map(function (t) { return _this.getTypeExpressionFromTsType(t); });
                 }
             }
         }
@@ -44,7 +48,7 @@ var TypeChecker = (function () {
     };
     TypeChecker.prototype.getReturnTypeFromSignature = function (signature) {
         var tsType = this.typeChecker.getReturnTypeOfSignature(signature);
-        return this.getTypeFromTsType(tsType);
+        return this.getTypeExpressionFromTsType(tsType);
     };
     TypeChecker.prototype.getSignatureFromDeclaration = function (declaration) {
         return this.typeChecker.getSignatureFromDeclaration(declaration);
@@ -62,19 +66,31 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getSymbolAtLocation = function (node) {
         return node.symbol;
     };
+    TypeChecker.prototype.getSymbolsFromType = function (type) {
+        var typeArray = type.types;
+        if (typeArray != null) {
+            return typeArray.map(function (t) { return t.symbol; }).filter(function (s) { return s != null; });
+        }
+        else if (type.symbol != null) {
+            return [type.symbol];
+        }
+        else {
+            return [];
+        }
+    };
     TypeChecker.prototype.getSymbolsInScope = function (node, flags) {
         return this.typeChecker.getSymbolsInScope(node, flags);
     };
     TypeChecker.prototype.getTypeAtLocation = function (node) {
-        return this.getTypeFromTsType(this.typeChecker.getTypeAtLocation(node));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     };
     TypeChecker.prototype.getTypeOfSymbol = function (symbol) {
-        return this.getTypeFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
     };
     TypeChecker.prototype.getTypeCheckerForTesting = function () {
         return this.typeChecker;
     };
-    TypeChecker.prototype.getTypeFromTsType = function (tsType) {
+    TypeChecker.prototype.getTypeExpressionFromTsType = function (tsType) {
         return this.typeCreator.get(tsType);
     };
     TypeChecker.prototype.getFileImportSymbols = function (file) {

@@ -1,9 +1,9 @@
-var base_1 = require("./../../base");
+var types_1 = require("./../../types");
 function runReturnTypedDefinitionTests(definition, name) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
-    base_1.runTypeTests(definition.returnType, name);
+    types_1.runTypeExpressionTests(definition.returnTypeExpression, name);
 }
 exports.runReturnTypedDefinitionTests = runReturnTypedDefinitionTests;
 

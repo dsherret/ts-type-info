@@ -1,29 +1,38 @@
 import * as ts from "typescript";
-import {TypeCreator} from "./../utils";
+import {TypeExpressionCache} from "./../utils";
 
 // this is just what I've found works. There are some hacky solutions in here.
 
 export class TypeChecker {
-    private typeCreator = new TypeCreator(this);
+    private typeCreator: TypeExpressionCache;
+    private node: ts.Node;
 
-    constructor(private typeChecker: ts.TypeChecker, private node: ts.Node) {
+    constructor(private typeChecker: ts.TypeChecker) {
     }
 
-    getExtendsSymbols(symbol: ts.Symbol) {
+    setTypeCache(typeCreator: TypeExpressionCache) {
+        this.typeCreator = typeCreator;
+    }
+
+    setCurrentNode(node: ts.Node) {
+        this.node = node;
+    }
+
+    getExtendsTypes(symbol: ts.Symbol) {
         const symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
 
-        return symbolType.getBaseTypes().map((baseType) => {
-            return baseType.symbol;
-        });
+        return symbolType.getBaseTypes().map(t => this.getTypeExpressionFromTsType(t));
     }
 
-    getImplementsSymbols(symbol: ts.Symbol): ts.Symbol[] {
+    getImplementsTypes(symbol: ts.Symbol) {
         if (symbol.valueDeclaration != null) {
             const valueDeclaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;
 
             if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > 0) {
                 if (valueDeclaration.heritageClauses[0].types != null && valueDeclaration.heritageClauses[0].types.length > 0) {
-                    return valueDeclaration.heritageClauses[0].types.map(t => this.typeChecker.getSymbolAtLocation(t.expression));
+                    return valueDeclaration.heritageClauses[0].types
+                        .map(t => this.typeChecker.getTypeAtLocation(t))
+                        .map(t => this.getTypeExpressionFromTsType(t));
                 }
             }
         }
@@ -57,7 +66,7 @@ export class TypeChecker {
     getReturnTypeFromSignature(signature: ts.Signature) {
         const tsType = this.typeChecker.getReturnTypeOfSignature(signature);
 
-        return this.getTypeFromTsType(tsType);
+        return this.getTypeExpressionFromTsType(tsType);
     }
 
     getSignatureFromDeclaration(declaration: ts.SignatureDeclaration) {
@@ -82,16 +91,30 @@ export class TypeChecker {
         return (node as any).symbol as ts.Symbol;
     }
 
+    getSymbolsFromType(type: ts.Type) {
+        const typeArray = (type as ts.UnionOrIntersectionType).types;
+
+        if (typeArray != null) {
+            return typeArray.map(t => t.symbol).filter(s => s != null);
+        }
+        else if (type.symbol != null) {
+            return [type.symbol];
+        }
+        else {
+            return [];
+        }
+    }
+
     getSymbolsInScope(node: ts.Node, flags: ts.SymbolFlags) {
         return this.typeChecker.getSymbolsInScope(node, flags);
     }
 
     getTypeAtLocation(node: ts.Node) {
-        return this.getTypeFromTsType(this.typeChecker.getTypeAtLocation(node));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     }
 
     getTypeOfSymbol(symbol: ts.Symbol) {
-        return this.getTypeFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
     }
 
     getTypeCheckerForTesting() {
@@ -99,7 +122,7 @@ export class TypeChecker {
         return this.typeChecker;
     }
 
-    getTypeFromTsType(tsType: ts.Type) {
+    getTypeExpressionFromTsType(tsType: ts.Type) {
         return this.typeCreator.get(tsType);
     }
 

@@ -3,7 +3,7 @@ var base_1 = require("./../../base");
 var BaseParameterDefinition = (function () {
     function BaseParameterDefinition(typeChecker, symbol) {
         this.fillName(symbol);
-        this.fillType(typeChecker, symbol);
+        this.fillTypeExpression(typeChecker, symbol);
         this.fillParameterDetails(symbol);
     }
     Object.defineProperty(BaseParameterDefinition.prototype, "isOptional", {

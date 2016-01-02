@@ -3,7 +3,7 @@ import {FileDefinition} from "./definitions";
 import * as path from "path";
 import * as tmp from "tmp";
 import * as fs from "fs";
-import {TypeChecker, DefinitionCache, StringUtils} from "./utils";
+import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils} from "./utils";
 
 export * from "./definitions";
 export * from "./types";
@@ -16,15 +16,23 @@ export function getFileInfo(fileNames: string[]): FileDefinition[] {
     const host = ts.createCompilerHost(options);
     const program = ts.createProgram(fileNames, options, host);
     const tsTypeChecker = program.getTypeChecker();
+    const typeChecker = new TypeChecker(tsTypeChecker);
+    const typeCache = new TypeExpressionCache(typeChecker);
+    const definitionCache = new DefinitionCache(typeChecker);
 
-    return program.getSourceFiles()
+    typeChecker.setTypeCache(typeCache);
+
+    const sourceFiles = program.getSourceFiles()
         .filter(file => path.basename(file.fileName) !== "lib.d.ts")
         .map(file => {
-            const typeChecker = new TypeChecker(tsTypeChecker, file);
-            const definitionCache = new DefinitionCache(typeChecker);
+            typeChecker.setCurrentNode(file);
 
             return definitionCache.getFileDefinition(file);
         });
+
+    typeCache.fillAllCachedTypesWithDefinitions(definitionCache);
+
+    return sourceFiles;
 }
 
 export function getStringInfo(code: string): FileDefinition {

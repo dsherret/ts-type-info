@@ -1,7 +1,7 @@
 import * as ts from "typescript";
-import {IBaseNamedDefinition} from "./base";
-import {ArgumentDefinition} from "./../definitions";
-import {TypeGuards} from "./../utils";
+import {IBaseNamedDefinition} from "./../base";
+import {ArgumentDefinition} from "./../function";
+import {TypeGuards} from "./../../utils";
 
 export class DecoratorDefinition implements IBaseNamedDefinition {
     private _name: string;

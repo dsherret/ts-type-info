@@ -1,10 +1,10 @@
 import {IReturnTypedDefinition} from "./../../../../definitions";
-import {runTypeTests} from "./../../base";
+import {runTypeExpressionTests} from "./../../types";
 
 export function runReturnTypedDefinitionTests(definition: IReturnTypedDefinition, name: string) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
 
-    runTypeTests(definition.returnType, name);
+    runTypeExpressionTests(definition.returnTypeExpression, name);
 }

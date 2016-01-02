@@ -8,7 +8,7 @@ describe("recursive type tests", function () {
         var prop = def.classes[0].properties[1];
         test_helpers_1.runNamedDefinitionTests(prop, "note");
         it("should have type Note", function () {
-            assert.equal(prop.type.name, "Note");
+            assert.equal(prop.typeExpression.text, "Note");
         });
     });
 });

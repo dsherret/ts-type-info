@@ -1,4 +1,4 @@
-var decorator_definition_1 = require("./../decorator-definition");
+var misc_1 = require("./../misc");
 var DecoratableDefinition = (function () {
     function DecoratableDefinition() {
     }
@@ -9,7 +9,7 @@ var DecoratableDefinition = (function () {
             if (declaration.decorators != null) {
                 for (var _b = 0, _c = declaration.decorators; _b < _c.length; _b++) {
                     var decorator = _c[_b];
-                    this._decorators.push(new decorator_definition_1.DecoratorDefinition(decorator));
+                    this._decorators.push(new misc_1.DecoratorDefinition(decorator));
                 }
             }
         }

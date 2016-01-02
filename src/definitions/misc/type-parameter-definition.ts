@@ -1,10 +1,10 @@
 import * as ts from "typescript";
-import {Type} from "./../types";
-import {applyMixins, TypeChecker} from "./../utils";
-import {INamedDefinition, NamedDefinition} from "./base/named-definition";
+import {TypeExpression} from "./../../types";
+import {applyMixins, TypeChecker} from "./../../utils";
+import {INamedDefinition, NamedDefinition} from "./../base";
 
 export class TypeParameterDefinition implements INamedDefinition {
-    constraint: Type;
+    constraint: TypeExpression;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);

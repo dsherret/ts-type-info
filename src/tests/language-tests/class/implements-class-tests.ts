@@ -1,7 +1,7 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests} from "./../../test-helpers";
+import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
 
-describe("base class tests", () => {
+describe("class implements class tests", () => {
     const code = `
 class MyBaseClass {
     name: string;
@@ -17,5 +17,8 @@ class MyClassImplementsClass implements MyBaseClass {
 
     runNamedDefinitionTests(def.classes[0], "MyBaseClass");
     runNamedDefinitionTests(def.classes[1], "MyClassImplementsClass");
-    runNamedDefinitionTests(def.classes[1].implements[0], "MyBaseClass");
+
+    describe("implements clause", () => {
+        runTypeExpressionTests(def.classes[1].implements[0], "MyBaseClass");
+    });
 });

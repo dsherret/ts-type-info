@@ -1,12 +1,12 @@
 var TypedDefinition = (function () {
     function TypedDefinition() {
     }
-    TypedDefinition.prototype.fillType = function (typeChecker, symbol) {
-        this._type = typeChecker.getTypeOfSymbol(symbol);
+    TypedDefinition.prototype.fillTypeExpression = function (typeChecker, symbol) {
+        this._typeExpression = typeChecker.getTypeOfSymbol(symbol);
     };
-    Object.defineProperty(TypedDefinition.prototype, "type", {
+    Object.defineProperty(TypedDefinition.prototype, "typeExpression", {
         get: function () {
-            return this._type;
+            return this._typeExpression;
         },
         enumerable: true,
         configurable: true

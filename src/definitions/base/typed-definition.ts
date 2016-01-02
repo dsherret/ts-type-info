@@ -1,20 +1,20 @@
 import * as ts from "typescript";
-import {Type} from "./../../types";
+import {TypeExpression} from "./../../types";
 import {TypeChecker} from "./../../utils";
 
 export interface ITypedDefinition {
-    fillType(typeChecker: TypeChecker, symbol: ts.Symbol): void;
-    type: Type;
+    fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    typeExpression: TypeExpression;
 }
 
-export abstract class TypedDefinition {
-    private _type: Type;
+export abstract class TypedDefinition implements ITypedDefinition {
+    private _typeExpression: TypeExpression;
 
-    fillType(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._type = typeChecker.getTypeOfSymbol(symbol);
+    fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        this._typeExpression = typeChecker.getTypeOfSymbol(symbol);
     }
 
-    get type() {
-        return this._type;
+    get typeExpression() {
+        return this._typeExpression;
     }
 }

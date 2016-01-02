@@ -4,7 +4,7 @@ var function_1 = require("./../function");
 var InterfaceNewSignatureDefinition = (function () {
     function InterfaceNewSignatureDefinition(typeChecker, signature) {
         this.fillParametersBySignature(function_1.ParameterDefinition, typeChecker, signature);
-        this.fillReturnTypeBySignature(typeChecker, signature);
+        this.fillReturnTypeExpressionBySignature(typeChecker, signature);
     }
     InterfaceNewSignatureDefinition.isNewSignature = function (symbol) {
         return (symbol.getFlags() & 131072) !== 0;

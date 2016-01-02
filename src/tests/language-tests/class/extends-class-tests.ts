@@ -1,7 +1,7 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests} from "./../../test-helpers";
+import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
 
-describe("base class tests", () => {
+describe("class extends tests", () => {
     const code = `
 class MyBaseClass {
     name1: string;
@@ -14,7 +14,15 @@ class MyChildClass extends MyBaseClass {
 
     const def = getStringInfo(code);
 
-    runNamedDefinitionTests(def.classes[0], "MyBaseClass");
-    runNamedDefinitionTests(def.classes[1], "MyChildClass");
-    runNamedDefinitionTests(def.classes[1].extends[0], "MyBaseClass");
+    describe("MyBaseClass", () => {
+        runNamedDefinitionTests(def.classes[0], "MyBaseClass");
+    });
+
+    describe("MyChildClass", () => {
+        runNamedDefinitionTests(def.classes[1], "MyChildClass");
+
+        describe("extends clause", () => {
+            runTypeExpressionTests(def.classes[1].extends[0], "MyBaseClass");
+        });
+    });
 });

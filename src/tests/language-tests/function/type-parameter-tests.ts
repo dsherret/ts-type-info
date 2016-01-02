@@ -19,6 +19,6 @@ function myTypeParameterFunction<T, U extends string>(param1: T, param2: U) {
     });
 
     it("it should extend a type string", () => {
-        assert.equal(def.functions[0].typeParameters[1].constraint.name, "string");
+        assert.equal(def.functions[0].typeParameters[1].constraint.text, "string");
     });
 });

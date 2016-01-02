@@ -1,11 +1,10 @@
 var ts = require("typescript");
 var definitions_1 = require("./../definitions");
 var Type = (function () {
-    function Type(typeChecker, _tsType) {
+    function Type(_tsType) {
         this._tsType = _tsType;
-        this._name = typeChecker.typeToString(_tsType);
     }
-    Type.prototype.fillTypeInformation = function (typeChecker) {
+    Type.prototype.fillTypeInformation = function (typeChecker, typeExpressionCache) {
         if (this.shouldGetAllInfo(typeChecker)) {
             this.fillCallSignatures(typeChecker);
             this.fillProperties(typeChecker);
@@ -14,14 +13,11 @@ var Type = (function () {
             this._properties = [];
             this._callSignatures = [];
         }
+        this.fillTypeArguments(typeChecker, typeExpressionCache);
     };
-    Object.defineProperty(Type.prototype, "name", {
-        get: function () {
-            return this._name;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    Type.prototype.fillDefinition = function (definition) {
+        this._definition = definition;
+    };
     Object.defineProperty(Type.prototype, "properties", {
         get: function () {
             return this._properties;
@@ -32,6 +28,20 @@ var Type = (function () {
     Object.defineProperty(Type.prototype, "callSignatures", {
         get: function () {
             return this._callSignatures;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Type.prototype, "definition", {
+        get: function () {
+            return this._definition;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Type.prototype, "typeArguments", {
+        get: function () {
+            return this._typeArguments;
         },
         enumerable: true,
         configurable: true
@@ -56,6 +66,16 @@ var Type = (function () {
     Type.prototype.fillCallSignatures = function (typeChecker) {
         this._callSignatures = this._tsType.getCallSignatures()
             .map(function (callSignature) { return new definitions_1.CallSignatureDefinition(typeChecker, callSignature); });
+    };
+    Type.prototype.fillTypeArguments = function (typeChecker, typeCache) {
+        var tsTypeArguments = this._tsType.typeArguments;
+        var args = [];
+        if (tsTypeArguments != null) {
+            tsTypeArguments.forEach(function (arg) {
+                args.push(typeCache.get(arg));
+            });
+        }
+        this._typeArguments = args;
     };
     return Type;
 })();

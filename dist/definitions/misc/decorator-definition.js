@@ -1,5 +1,5 @@
-var definitions_1 = require("./../definitions");
-var utils_1 = require("./../utils");
+var function_1 = require("./../function");
+var utils_1 = require("./../../utils");
 var DecoratorDefinition = (function () {
     function DecoratorDefinition(decorator) {
         this._arguments = [];
@@ -37,7 +37,7 @@ var DecoratorDefinition = (function () {
     DecoratorDefinition.prototype.fillArguments = function (args) {
         for (var _i = 0; _i < args.length; _i++) {
             var arg = args[_i];
-            this._arguments.push(new definitions_1.ArgumentDefinition(arg));
+            this._arguments.push(new function_1.ArgumentDefinition(arg));
         }
     };
     return DecoratorDefinition;

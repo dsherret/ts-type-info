@@ -1,6 +1,6 @@
 var ts = require("typescript");
-var utils_1 = require("./../utils");
-var named_definition_1 = require("./base/named-definition");
+var utils_1 = require("./../../utils");
+var base_1 = require("./../base");
 var TypeParameterDefinition = (function () {
     function TypeParameterDefinition(typeChecker, symbol) {
         this.fillName(symbol);
@@ -21,6 +21,6 @@ var TypeParameterDefinition = (function () {
     return TypeParameterDefinition;
 })();
 exports.TypeParameterDefinition = TypeParameterDefinition;
-utils_1.applyMixins(TypeParameterDefinition, [named_definition_1.NamedDefinition]);
+utils_1.applyMixins(TypeParameterDefinition, [base_1.NamedDefinition]);
 
 //# sourceMappingURL=type-parameter-definition.js.map

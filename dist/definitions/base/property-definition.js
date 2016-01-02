@@ -5,7 +5,7 @@ var typed_definition_1 = require("./typed-definition");
 var PropertyDefinition = (function () {
     function PropertyDefinition(typeChecker, symbol) {
         this.fillName(symbol);
-        this.fillType(typeChecker, symbol);
+        this.fillTypeExpression(typeChecker, symbol);
         this._isOptional = typeChecker.isOptionalProperty(symbol);
     }
     Object.defineProperty(PropertyDefinition.prototype, "isOptional", {

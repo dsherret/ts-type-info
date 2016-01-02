@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {DecoratorDefinition} from "./../decorator-definition";
+import {DecoratorDefinition} from "./../misc";
 
 export interface IDecoratableDefinition {
     fillDecorators(symbol: ts.Symbol): void;

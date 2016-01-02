@@ -5,3 +5,4 @@ export * from "./structures/file";
 export * from "./structures/function";
 export * from "./structures/interface";
 export * from "./structures/property";
+export * from "./structures/types";

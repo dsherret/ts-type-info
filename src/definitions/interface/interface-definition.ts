@@ -1,9 +1,9 @@
 ﻿import * as ts from "typescript";
-import {TypeParameterDefinition} from "./../type-parameter-definition";
+import {TypeParameterDefinition} from "./../misc";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {PropertyDefinition, INamedDefinition, NamedDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
-import {ClassDefinition} from "./../class";
+import {TypeExpression} from "./../../types";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 
@@ -13,7 +13,7 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     private _properties: PropertyDefinition[] = [];
     private _typeParameters: TypeParameterDefinition[] = [];
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _extends: (InterfaceDefinition | ClassDefinition)[]) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, private _extends: TypeExpression[]) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);

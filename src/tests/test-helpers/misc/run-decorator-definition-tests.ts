@@ -1,7 +1,7 @@
 import * as assert from "assert";
-import {Decorator} from "./structures";
-import {DecoratorDefinition} from "./../../definitions";
-import {runNamedDefinitionTests} from "./base/run-named-definition-tests";
+import {Decorator} from "./../structures";
+import {DecoratorDefinition} from "./../../../definitions";
+import {runNamedDefinitionTests} from "./../base";
 
 export function runDecoratorDefinitionTests(definition: DecoratorDefinition, decorator: Decorator) {
     if (definition == null) {

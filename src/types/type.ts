@@ -1,17 +1,18 @@
-import * as ts from "typescript";
-import {CallSignatureDefinition, PropertyDefinition} from "./../definitions";
-import {TypeChecker} from "./../utils";
+﻿import * as ts from "typescript";
+import {CallSignatureDefinition, PropertyDefinition, IBaseNamedDefinition} from "./../definitions";
+import {TypeExpression} from "./type-expression";
+import {TypeChecker, TypeExpressionCache} from "./../utils";
 
 export class Type {
-    private _name: string;
+    private _definition: IBaseNamedDefinition;
     private _properties: PropertyDefinition[];
     private _callSignatures: CallSignatureDefinition[];
+    private _typeArguments: TypeExpression[];
 
-    constructor(typeChecker: TypeChecker, private _tsType: ts.Type) {
-        this._name = typeChecker.typeToString(_tsType);
+    constructor(private _tsType: ts.Type) {
     }
 
-    fillTypeInformation(typeChecker: TypeChecker) {
+    fillTypeInformation(typeChecker: TypeChecker, typeExpressionCache: TypeExpressionCache) {
         if (this.shouldGetAllInfo(typeChecker)) {
             this.fillCallSignatures(typeChecker);
             this.fillProperties(typeChecker);
@@ -20,10 +21,12 @@ export class Type {
             this._properties = [];
             this._callSignatures = [];
         }
+
+        this.fillTypeArguments(typeChecker, typeExpressionCache);
     }
 
-    get name() {
-        return this._name;
+    fillDefinition(definition: IBaseNamedDefinition) {
+        this._definition = definition;
     }
 
     get properties() {
@@ -32,6 +35,14 @@ export class Type {
 
     get callSignatures() {
         return this._callSignatures;
+    }
+
+    get definition() {
+        return this._definition;
+    }
+
+    get typeArguments() {
+        return this._typeArguments;
     }
 
     get tsType() {
@@ -57,5 +68,18 @@ export class Type {
     private fillCallSignatures(typeChecker: TypeChecker) {
         this._callSignatures = this._tsType.getCallSignatures()
                                            .map(callSignature => new CallSignatureDefinition(typeChecker, callSignature));
+    }
+
+    private fillTypeArguments(typeChecker: TypeChecker, typeCache: TypeExpressionCache) {
+        const tsTypeArguments = (this._tsType as ts.TypeReference).typeArguments;
+        const args: TypeExpression[] = [];
+
+        if (tsTypeArguments != null) {
+            tsTypeArguments.forEach(arg => {
+                args.push(typeCache.get(arg));
+            });
+        }
+
+        this._typeArguments = args;
     }
 }

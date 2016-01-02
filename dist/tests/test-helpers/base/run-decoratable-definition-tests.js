@@ -1,5 +1,5 @@
 var assert = require("assert");
-var run_decorator_definition_tests_1 = require("./../run-decorator-definition-tests");
+var misc_1 = require("./../misc");
 function runDecoratableDefinitionTests(definition, decorators) {
     if (definition == null) {
         throw "Definition should not be null.";
@@ -8,7 +8,7 @@ function runDecoratableDefinitionTests(definition, decorators) {
         assert.equal(definition.decorators.length, decorators.length);
     });
     definition.decorators.forEach(function (decorator, i) {
-        run_decorator_definition_tests_1.runDecoratorDefinitionTests(decorator, decorators[i]);
+        misc_1.runDecoratorDefinitionTests(decorator, decorators[i]);
     });
 }
 exports.runDecoratableDefinitionTests = runDecoratableDefinitionTests;

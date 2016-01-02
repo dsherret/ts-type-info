@@ -3,7 +3,7 @@ var base_1 = require("./base");
 var utils_1 = require("./../../utils");
 var CallSignatureDefinition = (function () {
     function CallSignatureDefinition(typeChecker, signature) {
-        this.fillReturnTypeBySignature(typeChecker, signature);
+        this.fillReturnTypeExpressionBySignature(typeChecker, signature);
         this.fillParametersBySignature(definitions_1.ParameterDefinition, typeChecker, signature);
         this.fillTypeParameters(typeChecker, signature);
         this._minArgumentCount = typeChecker.getMinArgumentCount(signature);

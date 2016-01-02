@@ -5,17 +5,17 @@ describe("object type tests", function () {
     var code = "\nclass MyClass {\n    myMethod(obj: { myStringParam: string; myOtherType: Note; }) {\n    }\n}\nclass Note {\n}";
     var def = main_1.getStringInfo(code);
     describe("myStringParam", function () {
-        var prop = def.classes[0].methods[0].parameters[0].type.properties[0];
+        var prop = def.classes[0].methods[0].parameters[0].typeExpression.types[0].properties[0];
         test_helpers_1.runNamedDefinitionTests(prop, "myStringParam");
         it("should have type string", function () {
-            assert.equal(prop.type.name, "string");
+            assert.equal(prop.typeExpression.text, "string");
         });
     });
     describe("myOtherType", function () {
-        var prop = def.classes[0].methods[0].parameters[0].type.properties[1];
+        var prop = def.classes[0].methods[0].parameters[0].typeExpression.types[0].properties[1];
         test_helpers_1.runNamedDefinitionTests(prop, "myOtherType");
         it("should have type Note", function () {
-            assert.equal(prop.type.name, "Note");
+            assert.equal(prop.typeExpression.text, "Note");
         });
     });
 });

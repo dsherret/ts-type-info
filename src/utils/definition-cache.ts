@@ -41,8 +41,8 @@ export class DefinitionCache {
                 classDefinition = new ClassDefinition(
                     this.typeChecker,
                     symbol,
-                    this.typeChecker.getExtendsSymbols(symbol).map(base => this.getClassDefinition(base)),
-                    this.typeChecker.getImplementsSymbols(symbol).map(base => this.getClassOrInterfaceDefinition(base)));
+                    this.typeChecker.getExtendsTypes(symbol),
+                    this.typeChecker.getImplementsTypes(symbol));
 
                 this.classes.add(symbol, classDefinition);
             }
@@ -61,7 +61,7 @@ export class DefinitionCache {
                 interfaceDefinition = new InterfaceDefinition(
                     this.typeChecker,
                     symbol,
-                    this.typeChecker.getExtendsSymbols(symbol).map((base) => this.getClassOrInterfaceDefinition(base)));
+                    this.typeChecker.getExtendsTypes(symbol));
                 this.interfaces.add(symbol, interfaceDefinition);
             }
         }
@@ -103,6 +103,7 @@ export class DefinitionCache {
         return this.getClassDefinition(symbol) || this.getInterfaceDefinition(symbol);
     }
 
+    // todo: removed IExportableDefinition?
     getDefinition(symbol: ts.Symbol): IBaseNamedDefinition & IExportableDefinition {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||

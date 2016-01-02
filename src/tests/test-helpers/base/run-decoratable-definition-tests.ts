@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import {IDecoratableDefinition} from "./../../../definitions";
-import {runDecoratorDefinitionTests} from "./../run-decorator-definition-tests";
+import {runDecoratorDefinitionTests} from "./../misc";
 import {Decorator} from "./../structures";
 
 export function runDecoratableDefinitionTests(definition: IDecoratableDefinition, decorators: Decorator[]) {

@@ -1,5 +1,5 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests} from "./../../test-helpers";
+import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
 
 describe("base interface tests", () => {
     const code = `
@@ -14,7 +14,15 @@ interface MyChildInterface extends MyBaseClass {
 
     const def = getStringInfo(code);
 
-    runNamedDefinitionTests(def.classes[0], "MyBaseClass");
-    runNamedDefinitionTests(def.interfaces[0], "MyChildInterface");
-    runNamedDefinitionTests(def.interfaces[0].extends[0], "MyBaseClass");
+    describe("MyBaseClass", () => {
+        runNamedDefinitionTests(def.classes[0], "MyBaseClass");
+    });
+
+    describe("MyChildInterface", () => {
+        runNamedDefinitionTests(def.interfaces[0], "MyChildInterface");
+
+        describe("extends clause", () => {
+            runTypeExpressionTests(def.interfaces[0].extends[0], "MyBaseClass");
+        });
+    });
 });

@@ -2,14 +2,14 @@ import * as ts from "typescript";
 import {ParameterDefinition, TypeParameterDefinition} from "./../../definitions";
 import {IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./base";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {Type} from "./../../types";
+import {TypeExpression} from "./../../types";
 
 export class CallSignatureDefinition implements IReturnTypedDefinition, IParameteredDefinition<ParameterDefinition> {
     private _minArgumentCount: number;
     private _typeParameters: TypeParameterDefinition[];
 
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {
-        this.fillReturnTypeBySignature(typeChecker, signature);
+        this.fillReturnTypeExpressionBySignature(typeChecker, signature);
         this.fillParametersBySignature(ParameterDefinition, typeChecker, signature);
 
         this.fillTypeParameters(typeChecker, signature);
@@ -39,9 +39,9 @@ export class CallSignatureDefinition implements IReturnTypedDefinition, IParamet
     fillParametersBySignature: (parameterDefinition: typeof ParameterDefinition, typeChecker: TypeChecker, signature: ts.Signature) => void;
     parameters: ParameterDefinition[];
     // ReturnTyped
-    fillReturnTypeBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillReturnTypeBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    returnType: Type;
+    fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    returnTypeExpression: TypeExpression;
 }
 
 applyMixins(CallSignatureDefinition, [ReturnTypedDefinition, ParameteredDefinition]);

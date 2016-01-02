@@ -1,9 +1,9 @@
-var run_type_tests_1 = require("./run-type-tests");
+var types_1 = require("./../types");
 function runTypedDefinitionTests(definition, name) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
-    run_type_tests_1.runTypeTests(definition.type, name);
+    types_1.runTypeExpressionTests(definition.typeExpression, name);
 }
 exports.runTypedDefinitionTests = runTypedDefinitionTests;
 

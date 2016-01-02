@@ -10,7 +10,7 @@ describe("function type parameters", function () {
         assert.equal(def.functions[0].typeParameters[1].name, "U");
     });
     it("it should extend a type string", function () {
-        assert.equal(def.functions[0].typeParameters[1].constraint.name, "string");
+        assert.equal(def.functions[0].typeParameters[1].constraint.text, "string");
     });
 });
 

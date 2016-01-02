@@ -1,15 +1,15 @@
 var ReturnTypedDefinition = (function () {
     function ReturnTypedDefinition() {
     }
-    ReturnTypedDefinition.prototype.fillReturnTypeBySymbol = function (typeChecker, symbol) {
-        this._returnType = typeChecker.getReturnTypeFromSymbol(symbol);
+    ReturnTypedDefinition.prototype.fillReturnTypeExpressionBySymbol = function (typeChecker, symbol) {
+        this._returnTypeExpression = typeChecker.getReturnTypeFromSymbol(symbol);
     };
-    ReturnTypedDefinition.prototype.fillReturnTypeBySignature = function (typeChecker, signature) {
-        this._returnType = typeChecker.getReturnTypeFromSignature(signature);
+    ReturnTypedDefinition.prototype.fillReturnTypeExpressionBySignature = function (typeChecker, signature) {
+        this._returnTypeExpression = typeChecker.getReturnTypeFromSignature(signature);
     };
-    Object.defineProperty(ReturnTypedDefinition.prototype, "returnType", {
+    Object.defineProperty(ReturnTypedDefinition.prototype, "returnTypeExpression", {
         get: function () {
-            return this._returnType;
+            return this._returnTypeExpression;
         },
         enumerable: true,
         configurable: true

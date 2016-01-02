@@ -14,22 +14,22 @@ class Note {
     const def = getStringInfo(code);
 
     describe("myStringParam", () => {
-        const prop = def.classes[0].methods[0].parameters[0].type.properties[0];
+        const prop = def.classes[0].methods[0].parameters[0].typeExpression.types[0].properties[0];
 
         runNamedDefinitionTests(prop, "myStringParam");
 
         it("should have type string", () => {
-            assert.equal(prop.type.name, "string");
+            assert.equal(prop.typeExpression.text, "string");
         });
     });
 
     describe("myOtherType", () => {
-        const prop = def.classes[0].methods[0].parameters[0].type.properties[1];
+        const prop = def.classes[0].methods[0].parameters[0].typeExpression.types[0].properties[1];
 
         runNamedDefinitionTests(prop, "myOtherType");
 
         it("should have type Note", () => {
-            assert.equal(prop.type.name, "Note");
+            assert.equal(prop.typeExpression.text, "Note");
         });
     });
 });

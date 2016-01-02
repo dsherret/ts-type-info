@@ -15,13 +15,18 @@ function getFileInfo(fileNames) {
     var host = ts.createCompilerHost(options);
     var program = ts.createProgram(fileNames, options, host);
     var tsTypeChecker = program.getTypeChecker();
-    return program.getSourceFiles()
+    var typeChecker = new utils_1.TypeChecker(tsTypeChecker);
+    var typeCache = new utils_1.TypeExpressionCache(typeChecker);
+    var definitionCache = new utils_1.DefinitionCache(typeChecker);
+    typeChecker.setTypeCache(typeCache);
+    var sourceFiles = program.getSourceFiles()
         .filter(function (file) { return path.basename(file.fileName) !== "lib.d.ts"; })
         .map(function (file) {
-        var typeChecker = new utils_1.TypeChecker(tsTypeChecker, file);
-        var definitionCache = new utils_1.DefinitionCache(typeChecker);
+        typeChecker.setCurrentNode(file);
         return definitionCache.getFileDefinition(file);
     });
+    typeCache.fillAllCachedTypesWithDefinitions(definitionCache);
+    return sourceFiles;
 }
 exports.getFileInfo = getFileInfo;
 function getStringInfo(code) {

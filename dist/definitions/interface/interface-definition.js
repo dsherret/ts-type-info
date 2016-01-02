@@ -1,5 +1,5 @@
 var ts = require("typescript");
-var type_parameter_definition_1 = require("./../type-parameter-definition");
+var misc_1 = require("./../misc");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var interface_method_definition_1 = require("./interface-method-definition");
@@ -60,8 +60,8 @@ var InterfaceDefinition = (function () {
             else if (interface_method_definition_1.InterfaceMethodDefinition.isMethod(member)) {
                 _this._methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));
             }
-            else if (type_parameter_definition_1.TypeParameterDefinition.isTypeParameter(member)) {
-                _this._typeParameters.push(new type_parameter_definition_1.TypeParameterDefinition(typeChecker, member));
+            else if (misc_1.TypeParameterDefinition.isTypeParameter(member)) {
+                _this._typeParameters.push(new misc_1.TypeParameterDefinition(typeChecker, member));
             }
             else if (interface_new_signature_definition_1.InterfaceNewSignatureDefinition.isNewSignature(member)) {
                 member.getDeclarations().forEach(function (d) {

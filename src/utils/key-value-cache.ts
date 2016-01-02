@@ -16,6 +16,10 @@ export class KeyValueCache<T, U> {
         return null;
     }
 
+    getAll() {
+        return this.cacheItems.map(c => c.value);
+    }
+
     add(key: T, value: U) {
         this.cacheItems.push({ key: key, value: value });
     }

@@ -1,11 +1,11 @@
 import * as ts from "typescript";
-import {Type} from "./../../../types";
+import {TypeExpression} from "./../../../types";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {INamedDefinition, NamedDefinition} from "./../../base";
 import {BaseParameterDefinition, BaseParameterDefinitionConstructor} from "./base-parameter-definition";
 import {IParameteredDefinition, ParameteredDefinition} from "./parametered-definition";
 import {IReturnTypedDefinition, ReturnTypedDefinition} from "./return-typed-definition";
-import {TypeParameterDefinition} from "./../../type-parameter-definition";
+import {TypeParameterDefinition} from "./../../misc";
 
 export class BaseFunctionDefinition<T extends BaseParameterDefinition> implements INamedDefinition, IParameteredDefinition<T>, IReturnTypedDefinition {
     private _typeParameters: TypeParameterDefinition[] = [];
@@ -13,7 +13,7 @@ export class BaseFunctionDefinition<T extends BaseParameterDefinition> implement
     constructor(parameterDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillParametersBySymbol(parameterDefinition, typeChecker, symbol);
-        this.fillReturnTypeBySymbol(typeChecker, symbol);
+        this.fillReturnTypeExpressionBySymbol(typeChecker, symbol);
         this.fillTypeParameters(typeChecker, symbol);
     }
 
@@ -33,9 +33,9 @@ export class BaseFunctionDefinition<T extends BaseParameterDefinition> implement
     fillParametersBySignature: (parameterDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, signature: ts.Signature) => void;
     parameters: T[];
     // ReturnTyped
-    fillReturnTypeBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillReturnTypeBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    returnType: Type;
+    fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    returnTypeExpression: TypeExpression;
 }
 
 applyMixins(BaseFunctionDefinition, [NamedDefinition, ParameteredDefinition, ReturnTypedDefinition]);

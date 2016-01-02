@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../../utils";
-import {Type} from "./../../../types";
+import {TypeExpression} from "./../../../types";
 import {INamedDefinition, NamedDefinition, ITypedDefinition, TypedDefinition} from "./../../base";
 
 export interface BaseParameterDefinitionConstructor<T extends BaseParameterDefinition> {
@@ -13,7 +13,7 @@ export class BaseParameterDefinition implements ITypedDefinition, INamedDefiniti
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
-        this.fillType(typeChecker, symbol);
+        this.fillTypeExpression(typeChecker, symbol);
         this.fillParameterDetails(symbol);
     }
 
@@ -36,8 +36,8 @@ export class BaseParameterDefinition implements ITypedDefinition, INamedDefiniti
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // TypedDefinition
-    fillType: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    type: Type;
+    fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    typeExpression: TypeExpression;
 }
 
 applyMixins(BaseParameterDefinition, [NamedDefinition, TypedDefinition]);

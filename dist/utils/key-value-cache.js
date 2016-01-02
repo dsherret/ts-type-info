@@ -11,6 +11,9 @@ var KeyValueCache = (function () {
         }
         return null;
     };
+    KeyValueCache.prototype.getAll = function () {
+        return this.cacheItems.map(function (c) { return c.value; });
+    };
     KeyValueCache.prototype.add = function (key, value) {
         this.cacheItems.push({ key: key, value: value });
     };
