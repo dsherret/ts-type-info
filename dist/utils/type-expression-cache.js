@@ -38,7 +38,7 @@ var TypeExpressionCache = (function () {
         var name = this.typeChecker.typeToString(tsType);
         var type = cache.get(name);
         if (type == null) {
-            type = new types_1.Type(tsType);
+            type = new types_1.Type(this.typeChecker, tsType);
             cache.add(name, type);
             type.fillTypeInformation(this.typeChecker, this);
         }
@@ -58,7 +58,12 @@ var CacheContainer = (function () {
         return fileName == null ? this.typeCache : this.getFileCache(fileName);
     };
     CacheContainer.prototype.getAllCacheItems = function () {
-        return this.typeCache.getAll();
+        var a = [];
+        a.push.apply(a, this.typeCache.getAll());
+        this.fileCache.getAll().forEach(function (c) {
+            a.push.apply(a, c.getAll());
+        });
+        return a;
     };
     CacheContainer.prototype.getFileCache = function (fileName) {
         var fileCache = this.fileCache.get(fileName);

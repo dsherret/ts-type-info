@@ -4,12 +4,14 @@ import {TypeExpression} from "./type-expression";
 import {TypeChecker, TypeExpressionCache} from "./../utils";
 
 export class Type {
+    private _callSignatures: CallSignatureDefinition[];
     private _definition: IBaseNamedDefinition;
     private _properties: PropertyDefinition[];
-    private _callSignatures: CallSignatureDefinition[];
     private _typeArguments: TypeExpression[];
+    private _text: string;
 
-    constructor(private _tsType: ts.Type) {
+    constructor(typeChecker: TypeChecker, private _tsType: ts.Type) {
+        this._text = typeChecker.typeToString(_tsType);
     }
 
     fillTypeInformation(typeChecker: TypeChecker, typeExpressionCache: TypeExpressionCache) {
@@ -27,6 +29,10 @@ export class Type {
 
     fillDefinition(definition: IBaseNamedDefinition) {
         this._definition = definition;
+    }
+
+    get text() {
+        return this._text;
     }
 
     get properties() {

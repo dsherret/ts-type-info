@@ -40,11 +40,9 @@ class MyImplementsClass implements MyClass<number, string> {
             assert.equal(c.extends[0].text, "MyClass<number, string>");
         });
 
-        /*
         it("should extend a definition MyClass", () => {
             assert.equal(c.extends[0].types[0].definition, def.classes[0]);
         });
-        */
 
         it("should extend a definition MyClass with a number type param", () => {
             runTypeExpressionTests(c.extends[0].types[0].typeArguments[0], "number");
@@ -61,11 +59,9 @@ class MyImplementsClass implements MyClass<number, string> {
             assert.equal(c.implements[0].text, "MyClass<number, string>");
         });
 
-        /*
         it("should implement a definition MyClass", () => {
             assert.equal(c.implements[0].types[0].definition, def.classes[0]);
         });
-        */
 
         it("should implement a definition MyClass with a number type param", () => {
             runTypeExpressionTests(c.implements[0].types[0].typeArguments[0], "number");

@@ -17,10 +17,10 @@ export function getFileInfo(fileNames: string[]): FileDefinition[] {
     const program = ts.createProgram(fileNames, options, host);
     const tsTypeChecker = program.getTypeChecker();
     const typeChecker = new TypeChecker(tsTypeChecker);
-    const typeCache = new TypeExpressionCache(typeChecker);
+    const typeExpressionCache = new TypeExpressionCache(typeChecker);
     const definitionCache = new DefinitionCache(typeChecker);
 
-    typeChecker.setTypeCache(typeCache);
+    typeChecker.setTypeCache(typeExpressionCache);
 
     const sourceFiles = program.getSourceFiles()
         .filter(file => path.basename(file.fileName) !== "lib.d.ts")
@@ -30,7 +30,7 @@ export function getFileInfo(fileNames: string[]): FileDefinition[] {
             return definitionCache.getFileDefinition(file);
         });
 
-    typeCache.fillAllCachedTypesWithDefinitions(definitionCache);
+    typeExpressionCache.fillAllCachedTypesWithDefinitions(definitionCache);
 
     return sourceFiles;
 }

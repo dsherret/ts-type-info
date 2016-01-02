@@ -20,6 +20,9 @@ describe("class type parameters", function () {
         it("should extend a type name of MyClass<number, string>", function () {
             assert.equal(c.extends[0].text, "MyClass<number, string>");
         });
+        it("should extend a definition MyClass", function () {
+            assert.equal(c.extends[0].types[0].definition, def.classes[0]);
+        });
         it("should extend a definition MyClass with a number type param", function () {
             test_helpers_1.runTypeExpressionTests(c.extends[0].types[0].typeArguments[0], "number");
         });
@@ -31,6 +34,9 @@ describe("class type parameters", function () {
         var c = def.classes[2];
         it("should implement a type name of MyClass<number, string>", function () {
             assert.equal(c.implements[0].text, "MyClass<number, string>");
+        });
+        it("should implement a definition MyClass", function () {
+            assert.equal(c.implements[0].types[0].definition, def.classes[0]);
         });
         it("should implement a definition MyClass with a number type param", function () {
             test_helpers_1.runTypeExpressionTests(c.implements[0].types[0].typeArguments[0], "number");

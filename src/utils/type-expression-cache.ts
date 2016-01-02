@@ -47,7 +47,7 @@ export class TypeExpressionCache {
         let type = cache.get(name);
 
         if (type == null) {
-            type = new Type(tsType);
+            type = new Type(this.typeChecker, tsType);
             cache.add(name, type);
             type.fillTypeInformation(this.typeChecker, this);
         }
@@ -70,7 +70,14 @@ class CacheContainer<T> {
     }
 
     getAllCacheItems() {
-        return this.typeCache.getAll();
+        const a: T[] = [];
+
+        a.push.apply(a, this.typeCache.getAll());
+        this.fileCache.getAll().forEach(c => {
+            a.push.apply(a, c.getAll());
+        });
+
+        return a;
     }
 
     private getFileCache(fileName: string) {

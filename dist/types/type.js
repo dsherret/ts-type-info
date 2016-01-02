@@ -1,8 +1,9 @@
 var ts = require("typescript");
 var definitions_1 = require("./../definitions");
 var Type = (function () {
-    function Type(_tsType) {
+    function Type(typeChecker, _tsType) {
         this._tsType = _tsType;
+        this._text = typeChecker.typeToString(_tsType);
     }
     Type.prototype.fillTypeInformation = function (typeChecker, typeExpressionCache) {
         if (this.shouldGetAllInfo(typeChecker)) {
@@ -18,6 +19,13 @@ var Type = (function () {
     Type.prototype.fillDefinition = function (definition) {
         this._definition = definition;
     };
+    Object.defineProperty(Type.prototype, "text", {
+        get: function () {
+            return this._text;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Type.prototype, "properties", {
         get: function () {
             return this._properties;
