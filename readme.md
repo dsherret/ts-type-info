@@ -1,4 +1,4 @@
-TSTypeInfo
+﻿TSTypeInfo
 ==========
 
 [![Build Status](https://travis-ci.org/dsherret/ts-type-info.svg)](https://travis-ci.org/dsherret/ts-type-info)
@@ -48,10 +48,10 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
             parameters: [{
                 name: "myParameter",
                 decorators: [],
-                type: { "name":"string" }
+                typeExpression: { text: "string" }
             }],
-            returnType: {
-                name: "string"
+            returnTypeExpression: {
+                text: "string"
             },
             typeParameters: []
         }],

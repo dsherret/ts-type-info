@@ -21,9 +21,20 @@ gulp.task("typescript", ["clean-scripts"], function() {
         .pipe(gulp.dest("./dist"));
 });
 
+gulp.task("test", ["typescript"], function() {
+    return gulp.src("dist/tests/**/*.js")
+        .pipe(mocha({ reporter: "progress" }));
+});
+
+gulp.task("tslint", function() {
+    return gulp.src(["./src/**/*.ts", "!./src/typings/**/*.d.ts"])
+        .pipe(tslint())
+        .pipe(tslint.report("verbose"));
+});
+
 gulp.task("generate-definition-file", function(cb) {
     // use this library to generate the definition file
-    var writer = new CodeBlockWriter();
+    var writer = new CodeBlockWriter({ newLine: "\r\n" });
     var tsTypeInfo = require("./dist/main");
     var Scope = tsTypeInfo.Scope;
     var fileInfo = tsTypeInfo.getFileInfo(["./src/main.ts"]).filter(function(f) { return /main\.ts$/.test(f.fileName); })[0];
@@ -48,10 +59,10 @@ gulp.task("generate-definition-file", function(cb) {
                         typeParameterClause += ", ";
                     }
 
-                    typeParameterClause += p.name
+                    typeParameterClause += p.name;
 
-                    if (p.type != null) {
-                        typeParameterClause += " extends " + p.type.name;
+                    if (p.typeExpression != null) {
+                        typeParameterClause += " extends " + p.typeExpression.text;
                     }
                 });
 
@@ -65,10 +76,10 @@ gulp.task("generate-definition-file", function(cb) {
                         extendsClause += ", ";
                     }
 
-                    extendsClause += b.name;
+                    extendsClause += b.text;
 
-                    if (b.typeParameters.length > 0) {
-                        extendsClause += "<" + b.typeParameters[0].constraint.name + ">";
+                    if (b.types[0].definition.typeParameters.length > 0) {
+                        extendsClause += "<" + b.types[0].definition.typeParameters[0].constraint.text + ">";
                     }
                 });
             }
@@ -76,7 +87,7 @@ gulp.task("generate-definition-file", function(cb) {
             writer.write("export interface " + c.name + typeParameterClause + extendsClause).block(function() {
                 c.properties.forEach(function(p) {
                     if (p.name.indexOf("fill") !== 0 && p.name !== "tsType") {
-                        writer.writeLine(p.name + ": " + p.type.name + ";");
+                        writer.writeLine(p.name + ": " + p.typeExpression.text + ";");
                     }
                 });
             }).newLine();
@@ -94,10 +105,10 @@ gulp.task("generate-definition-file", function(cb) {
                         typeParameterClause += ", ";
                     }
 
-                    typeParameterClause += p.name
+                    typeParameterClause += p.name;
 
-                    if (p.type != null) {
-                        typeParameterClause += " extends " + p.type.name;
+                    if (p.typeExpression != null) {
+                        typeParameterClause += " extends " + p.typeExpression.text;
                     }
                 });
 
@@ -111,18 +122,14 @@ gulp.task("generate-definition-file", function(cb) {
                         extendsClause += ", ";
                     }
 
-                    extendsClause += b.name;
-
-                    if (b.typeParameters.length > 0) {
-                        extendsClause += "<" + b.typeParameters[0].constraint.name + ">";
-                    }
+                    extendsClause += b.text;
                 });
             }
 
             writer.write("export class " + c.name + typeParameterClause + extendsClause).block(function() {
                 c.properties.forEach(function(p) {
                     if (p.scope === Scope.public && p.name.indexOf("fill") !== 0 && p.name !== "tsType") {
-                        writer.writeLine(p.name + ": " + p.type.name + ";");
+                        writer.writeLine(p.name + ": " + p.typeExpression.text + ";");
                     }
                 });
             }).newLine();
@@ -147,9 +154,9 @@ gulp.task("generate-definition-file", function(cb) {
                     writer.write(", ");
                 }
 
-                writer.write(p.name + ": " + p.type.name);
+                writer.write(p.name + ": " + p.typeExpression.text);
             });
-            writer.write("): " + func.returnType.name + ";").newLine();
+            writer.write("): " + func.returnTypeExpression.text + ";").newLine();
         });
     });
 
@@ -159,15 +166,25 @@ gulp.task("generate-definition-file", function(cb) {
     });
 });
 
-gulp.task("test", ["typescript"], function() {
-    return gulp.src("dist/tests/**/*.js")
-        .pipe(mocha({ reporter: "progress" }));
-});
+function pad(width, string, padding) {
+    return (width <= string.length) ? string : pad(width, string + padding, padding)
+}
 
-gulp.task("tslint", function() {
-    return gulp.src(["./src/**/*.ts", "!./src/typings/**/*.d.ts"])
-        .pipe(tslint())
-        .pipe(tslint.report("verbose"));
+gulp.task("generate-readme", function(cb) {
+    // use this library to generate the readme.md file
+    var readmeCode = fs.readFileSync(path.join(__dirname, "resources/readme-code.ts"), "utf8");
+    var readmeText = fs.readFileSync(path.join(__dirname, "resources/readme.txt"), "utf8");
+    var tsTypeInfo = require("./dist/main");
+    var readmeInfo = tsTypeInfo.getStringInfo(readmeText);
+
+    readmeText = readmeText
+        .replace("{{Code}}", readmeCode)
+        .replace("{{CodeOutput}}", JSON.stringify(readmeInfo));
+
+    fs.writeFile(path.join(__dirname, "readme.md"), readmeText, function(err) {
+        if (err) throw err;
+        cb();
+    });
 });
 
 gulp.task("ensure-dir-structures-match", function() {

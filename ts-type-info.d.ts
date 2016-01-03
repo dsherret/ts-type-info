@@ -20,7 +20,7 @@ declare module "ts-type-info" {
    }
 
    export interface ITypedDefinition {
-       type: Type;
+       typeExpression: TypeExpression;
    }
 
    export interface BaseParameterDefinitionConstructor<T>  {
@@ -31,7 +31,17 @@ declare module "ts-type-info" {
    }
 
    export interface IReturnTypedDefinition {
-       returnType: Type;
+       returnTypeExpression: TypeExpression;
+   }
+
+   export class DecoratorDefinition {
+       name: string;
+       arguments: ArgumentDefinition[];
+   }
+
+   export class TypeParameterDefinition {
+       constraint: TypeExpression;
+       name: string;
    }
 
    export class DecoratableDefinition {
@@ -49,7 +59,7 @@ declare module "ts-type-info" {
    export class PropertyDefinition {
        isOptional: boolean;
        name: string;
-       type: Type;
+       typeExpression: TypeExpression;
    }
 
    export class ScopedDefinition {
@@ -57,7 +67,7 @@ declare module "ts-type-info" {
    }
 
    export class TypedDefinition {
-       type: Type;
+       typeExpression: TypeExpression;
    }
 
    export class ArgumentDefinition {
@@ -68,14 +78,14 @@ declare module "ts-type-info" {
        typeParameters: TypeParameterDefinition[];
        name: string;
        parameters: T[];
-       returnType: Type;
+       returnTypeExpression: TypeExpression;
    }
 
    export class BaseParameterDefinition {
        isOptional: boolean;
        isRestParameter: boolean;
        name: string;
-       type: Type;
+       typeExpression: TypeExpression;
    }
 
    export class ParameteredDefinition<T>  {
@@ -83,24 +93,24 @@ declare module "ts-type-info" {
    }
 
    export class ReturnTypedDefinition {
-       returnType: Type;
+       returnTypeExpression: TypeExpression;
    }
 
    export class CallSignatureDefinition {
        minArgumentCount: number;
        typeParameters: TypeParameterDefinition[];
        parameters: ParameterDefinition[];
-       returnType: Type;
+       returnTypeExpression: TypeExpression;
    }
 
-   export class FunctionDefinition extends BaseFunctionDefinition<BaseParameterDefinition> {
+   export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefinition> {
        isExported: boolean;
    }
 
    export class ParameterDefinition extends BaseParameterDefinition {
    }
 
-   export class BaseClassMethodDefinition extends BaseFunctionDefinition<BaseParameterDefinition> {
+   export class BaseClassMethodDefinition extends BaseFunctionDefinition<ClassMethodParameterDefinition> {
        decorators: DecoratorDefinition[];
        scope: Scope;
    }
@@ -111,8 +121,8 @@ declare module "ts-type-info" {
    }
 
    export class ClassDefinition {
-       extends: ClassDefinition[];
-       implements: (ClassDefinition | InterfaceDefinition)[];
+       extends: TypeExpression[];
+       implements: TypeExpression[];
        constructorDef: ConstructorDefinition;
        methods: ClassMethodDefinition[];
        properties: ClassPropertyDefinition[];
@@ -146,11 +156,6 @@ declare module "ts-type-info" {
    export class StaticPropertyDefinition extends BaseClassPropertyDefinition {
    }
 
-   export class DecoratorDefinition {
-       name: string;
-       arguments: ArgumentDefinition[];
-   }
-
    export class EnumDefinition {
        members: EnumMemberDefinition[];
        name: string;
@@ -163,7 +168,7 @@ declare module "ts-type-info" {
    }
 
    export class InterfaceDefinition {
-       extends: (InterfaceDefinition | ClassDefinition)[];
+       extends: TypeExpression[];
        methods: InterfaceMethodDefinition[];
        newSignatures: InterfaceNewSignatureDefinition[];
        properties: PropertyDefinition[];
@@ -172,12 +177,12 @@ declare module "ts-type-info" {
        isExported: boolean;
    }
 
-   export class InterfaceMethodDefinition extends BaseFunctionDefinition<BaseParameterDefinition> {
+   export class InterfaceMethodDefinition extends BaseFunctionDefinition<ParameterDefinition> {
    }
 
    export class InterfaceNewSignatureDefinition {
        parameters: ParameterDefinition[];
-       returnType: Type;
+       returnTypeExpression: TypeExpression;
    }
 
    export class FileDefinition {
@@ -200,15 +205,17 @@ declare module "ts-type-info" {
        definition: IBaseNamedDefinition & IExportableDefinition;
    }
 
-   export class TypeParameterDefinition {
-       constraint: Type;
-       name: string;
-   }
-
    export class Type {
-       name: string;
+       text: string;
        properties: PropertyDefinition[];
        callSignatures: CallSignatureDefinition[];
+       definition: IBaseNamedDefinition;
+       typeArguments: TypeExpression[];
+   }
+
+   export class TypeExpression {
+       text: string;
+       types: Type[];
    }
 
    export enum Scope {
