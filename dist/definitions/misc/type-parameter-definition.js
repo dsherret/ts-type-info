@@ -9,7 +9,7 @@ var TypeParameterDefinition = (function () {
     TypeParameterDefinition.prototype.fillConstraint = function (typeChecker, symbol) {
         var declaration = this.getTypeDeclaration(typeChecker, symbol);
         if (declaration.constraint != null) {
-            this.constraint = typeChecker.getTypeAtLocation(declaration.constraint);
+            this.constraint = typeChecker.getTypeExpressionAtLocation(declaration.constraint);
         }
     };
     TypeParameterDefinition.prototype.getTypeDeclaration = function (typeChecker, symbol) {

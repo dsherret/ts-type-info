@@ -16,7 +16,7 @@ export class TypeParameterDefinition implements INamedDefinition {
         const declaration = this.getTypeDeclaration(typeChecker, symbol);
 
         if (declaration.constraint != null) {
-            this.constraint = typeChecker.getTypeAtLocation(declaration.constraint);
+            this.constraint = typeChecker.getTypeExpressionAtLocation(declaration.constraint);
         }
     }
 

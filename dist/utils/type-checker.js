@@ -81,17 +81,17 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getSymbolsInScope = function (node, flags) {
         return this.typeChecker.getSymbolsInScope(node, flags);
     };
-    TypeChecker.prototype.getTypeAtLocation = function (node) {
+    TypeChecker.prototype.getTypeExpressionAtLocation = function (node) {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     };
-    TypeChecker.prototype.getTypeOfSymbol = function (symbol) {
+    TypeChecker.prototype.getTypeExpressionOfSymbol = function (symbol) {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
-    };
-    TypeChecker.prototype.getTypeCheckerForTesting = function () {
-        return this.typeChecker;
     };
     TypeChecker.prototype.getTypeExpressionFromTsType = function (tsType) {
         return this.typeCreator.get(tsType);
+    };
+    TypeChecker.prototype.getTypeCheckerForTesting = function () {
+        return this.typeChecker;
     };
     TypeChecker.prototype.getFileImportSymbols = function (file) {
         var _this = this;

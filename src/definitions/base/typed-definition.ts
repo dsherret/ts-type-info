@@ -11,7 +11,7 @@ export abstract class TypedDefinition implements ITypedDefinition {
     private _typeExpression: TypeExpression;
 
     fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._typeExpression = typeChecker.getTypeOfSymbol(symbol);
+        this._typeExpression = typeChecker.getTypeExpressionOfSymbol(symbol);
     }
 
     get typeExpression() {

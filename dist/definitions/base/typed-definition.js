@@ -2,7 +2,7 @@ var TypedDefinition = (function () {
     function TypedDefinition() {
     }
     TypedDefinition.prototype.fillTypeExpression = function (typeChecker, symbol) {
-        this._typeExpression = typeChecker.getTypeOfSymbol(symbol);
+        this._typeExpression = typeChecker.getTypeExpressionOfSymbol(symbol);
     };
     Object.defineProperty(TypedDefinition.prototype, "typeExpression", {
         get: function () {

@@ -109,21 +109,21 @@ export class TypeChecker {
         return this.typeChecker.getSymbolsInScope(node, flags);
     }
 
-    getTypeAtLocation(node: ts.Node) {
+    getTypeExpressionAtLocation(node: ts.Node) {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     }
 
-    getTypeOfSymbol(symbol: ts.Symbol) {
+    getTypeExpressionOfSymbol(symbol: ts.Symbol) {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
+    }
+
+    getTypeExpressionFromTsType(tsType: ts.Type) {
+        return this.typeCreator.get(tsType);
     }
 
     getTypeCheckerForTesting() {
         // get the type checker for testing purposes
         return this.typeChecker;
-    }
-
-    getTypeExpressionFromTsType(tsType: ts.Type) {
-        return this.typeCreator.get(tsType);
     }
 
     getFileImportSymbols(file: ts.SourceFile) {
