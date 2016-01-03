@@ -18,10 +18,12 @@ var TypeChecker = (function () {
         var _this = this;
         if (symbol.valueDeclaration != null) {
             var valueDeclaration = symbol.valueDeclaration;
-            if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > 0) {
-                if (valueDeclaration.heritageClauses[0].types != null && valueDeclaration.heritageClauses[0].types.length > 0) {
-                    return valueDeclaration.heritageClauses[0].types
-                        .map(function (t) { return _this.typeChecker.getTypeAtLocation(t); })
+            var symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
+            var implementsIndex = symbolType.getBaseTypes().length > 0 ? 1 : 0;
+            if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > implementsIndex) {
+                var types = valueDeclaration.heritageClauses[implementsIndex].types;
+                if (types != null && types.length > 0) {
+                    return types.map(function (t) { return _this.typeChecker.getTypeAtLocation(t); })
                         .map(function (t) { return _this.getTypeExpressionFromTsType(t); });
                 }
             }

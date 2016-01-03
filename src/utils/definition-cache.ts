@@ -103,7 +103,7 @@ export class DefinitionCache {
         return this.getClassDefinition(symbol) || this.getInterfaceDefinition(symbol);
     }
 
-    // todo: removed IExportableDefinition?
+    // todo: remove IExportableDefinition?
     getDefinition(symbol: ts.Symbol): IBaseNamedDefinition & IExportableDefinition {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||

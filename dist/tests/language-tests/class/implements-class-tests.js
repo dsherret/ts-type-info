@@ -1,3 +1,4 @@
+var assert = require("assert");
 var main_1 = require("./../../../main");
 var test_helpers_1 = require("./../../test-helpers");
 describe("class implements class tests", function () {
@@ -7,6 +8,9 @@ describe("class implements class tests", function () {
     test_helpers_1.runNamedDefinitionTests(def.classes[1], "MyClassImplementsClass");
     describe("implements clause", function () {
         test_helpers_1.runTypeExpressionTests(def.classes[1].implements[0], "MyBaseClass");
+    });
+    it("should have nothing in the extends clause", function () {
+        assert.equal(def.classes[1].extends.length, 0);
     });
 });
 

@@ -1,4 +1,5 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import * as assert from "assert";
+import {getStringInfo} from "./../../../main";
 import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
 
 describe("class extends tests", () => {
@@ -23,6 +24,10 @@ class MyChildClass extends MyBaseClass {
 
         describe("extends clause", () => {
             runTypeExpressionTests(def.classes[1].extends[0], "MyBaseClass");
+        });
+
+        it("should have nothing in the implements clause", () => {
+            assert.equal(def.classes[1].implements.length, 0);
         });
     });
 });

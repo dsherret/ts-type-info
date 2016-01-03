@@ -1,3 +1,4 @@
+var assert = require("assert");
 var main_1 = require("./../../../main");
 var test_helpers_1 = require("./../../test-helpers");
 describe("class extends tests", function () {
@@ -11,7 +12,10 @@ describe("class extends tests", function () {
         describe("extends clause", function () {
             test_helpers_1.runTypeExpressionTests(def.classes[1].extends[0], "MyBaseClass");
         });
+        it("should have nothing in the implements clause", function () {
+            assert.equal(def.classes[1].implements.length, 0);
+        });
     });
 });
 
-//# sourceMappingURL=extends-class-tests.js.map
+//# sourceMappingURL=extends-tests.js.map

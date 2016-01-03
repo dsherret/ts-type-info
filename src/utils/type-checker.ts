@@ -27,11 +27,14 @@ export class TypeChecker {
     getImplementsTypes(symbol: ts.Symbol) {
         if (symbol.valueDeclaration != null) {
             const valueDeclaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;
+            const symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
+            const implementsIndex = symbolType.getBaseTypes().length > 0 ? 1 : 0;
 
-            if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > 0) {
-                if (valueDeclaration.heritageClauses[0].types != null && valueDeclaration.heritageClauses[0].types.length > 0) {
-                    return valueDeclaration.heritageClauses[0].types
-                        .map(t => this.typeChecker.getTypeAtLocation(t))
+            if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > implementsIndex) {
+                const types = valueDeclaration.heritageClauses[implementsIndex].types;
+
+                if (types != null && types.length > 0) {
+                    return types.map(t => this.typeChecker.getTypeAtLocation(t))
                         .map(t => this.getTypeExpressionFromTsType(t));
                 }
             }
