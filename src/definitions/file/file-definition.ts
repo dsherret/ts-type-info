@@ -25,6 +25,7 @@ export class FileDefinition {
         for (const fileImportSymbol of typeChecker.getFileImportSymbols(file)) {
             const importDefinition = definitionCache.getDefinition(fileImportSymbol);
 
+            /* istanbul ignore else */
             if (importDefinition != null) {
                 this._imports.push(
                     new ImportDefinition(
@@ -46,6 +47,7 @@ export class FileDefinition {
         for (const fileReExportSymbol of typeChecker.getFileReExportSymbols(file)) {
             const exportDefinition = definitionCache.getDefinition(fileReExportSymbol);
 
+            /* istanbul ignore else */
             if (exportDefinition != null) {
                 this._reExports.push(
                     new ReExportDefinition(
@@ -63,7 +65,9 @@ export class FileDefinition {
     private fillMembers(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         // classes
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Class).forEach((classSymbol) => {
-            this._classes.push(definitionCache.getClassDefinition(classSymbol));
+            if (typeChecker.isSymbolInFile(classSymbol, file)) {
+                this._classes.push(definitionCache.getClassDefinition(classSymbol));
+            }
         });
 
         // enums

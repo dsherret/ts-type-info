@@ -25,6 +25,7 @@ export class TypeChecker {
     }
 
     getImplementsTypes(symbol: ts.Symbol) {
+        /* istanbul ignore else */
         if (symbol.valueDeclaration != null) {
             const valueDeclaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;
             const symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
@@ -33,6 +34,7 @@ export class TypeChecker {
             if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > implementsIndex) {
                 const types = valueDeclaration.heritageClauses[implementsIndex].types;
 
+                /* istanbul ignore else */
                 if (types != null && types.length > 0) {
                     return types.map(t => this.typeChecker.getTypeAtLocation(t))
                         .map(t => this.getTypeExpressionFromTsType(t));
@@ -51,10 +53,6 @@ export class TypeChecker {
         const declaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;
 
         return (declaration.typeParameters || []).map(p => this.getSymbolAtLocation(p));
-    }
-
-    getFullyQualifiedName(symbol: ts.Symbol) {
-        return this.typeChecker.getFullyQualifiedName(symbol);
     }
 
     getMinArgumentCount(signature: ts.Signature) {
@@ -83,8 +81,9 @@ export class TypeChecker {
             currentNode = currentNode.parent;
         }
 
+        /* istanbul ignore if */
         if (currentNode == null) {
-            throw new Error("Error getting source file of symbol.");
+            throw new Error("Cound not get source file of symbol.");
         }
 
         return currentNode as ts.SourceFile;
@@ -124,6 +123,7 @@ export class TypeChecker {
         return this.typeCreator.get(tsType);
     }
 
+    /* istanbul ignore next */
     getTypeCheckerForTesting() {
         // get the type checker for testing purposes
         return this.typeChecker;
@@ -135,19 +135,22 @@ export class TypeChecker {
         const fileImports: ts.Symbol[] = [];
 
         importClauses.filter(c => c != null).forEach(c => {
+            /* istanbul ignore else */
             if (c.namedBindings != null) {
                 const namedBindings = (c.namedBindings as (ts.NamedImportsOrExports & ts.NamespaceImport));
 
+                /* istanbul ignore else */
                 if (namedBindings.elements != null) {
                     // named exports
                     namedBindings.elements.forEach(e => {
                         const symbol = this.typeChecker.getAliasedSymbol(this.getSymbolAtLocation(e));
 
-                        if (symbol == null) {
-                            console.warn(`Unknown symbol: ${e.name.text}`);
+                        /* istanbul ignore else */
+                        if (symbol != null) {
+                            fileImports.push(symbol);
                         }
                         else {
-                            fileImports.push(symbol);
+                            console.warn(`Unknown symbol: ${e.name.text}`);
                         }
                     });
                 }
@@ -155,14 +158,18 @@ export class TypeChecker {
                     // * as exports
                     const starSymbol = this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(namedBindings.name));
 
-                    if (starSymbol == null) {
-                        console.warn(`Unknown symbol: ${namedBindings.name.text}`);
-                    }
-                    else {
+                    /* istanbul ignore else */
+                    if (starSymbol != null) {
                         for (const exportSymbol of this.typeChecker.getExportsOfModule(starSymbol)) {
                             fileImports.push(exportSymbol);
                         }
                     }
+                    else {
+                        console.warn(`Unknown symbol: ${namedBindings.name.text}`);
+                    }
+                }
+                else {
+                    console.warn(`Unknown scenario with import clause: ${c.name}`);
                 }
             }
             else if (c.name != null) {

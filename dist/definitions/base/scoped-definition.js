@@ -4,10 +4,10 @@ var ScopedDefinition = (function () {
     function ScopedDefinition() {
     }
     ScopedDefinition.prototype.fillScope = function (symbol) {
-        if ((symbol.valueDeclaration.flags & 32) !== 0) {
+        if ((symbol.valueDeclaration.flags & 32 /* Private */) !== 0) {
             this._scope = scope_1.Scope.private;
         }
-        else if ((symbol.valueDeclaration.flags & 64) !== 0) {
+        else if ((symbol.valueDeclaration.flags & 64 /* Protected */) !== 0) {
             this._scope = scope_1.Scope.protected;
         }
         else {

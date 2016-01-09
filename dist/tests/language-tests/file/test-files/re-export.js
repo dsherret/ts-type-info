@@ -1,6 +1,7 @@
 function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    for (var p in m) /* istanbul ignore else */ if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+// this is a test file used in re-export-tests
 __export(require("./test-class"));
 __export(require("./test-enum"));
 

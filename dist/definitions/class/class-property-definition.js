@@ -1,4 +1,4 @@
-var __extends = (this && this.__extends) || function (d, b) {
+var __extends = (this && this.__extends)/* istanbul ignore next */ || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27,13 +27,13 @@ var ClassPropertyDefinition = (function (_super) {
     });
     ClassPropertyDefinition.prototype.fillAccessorInformation = function (symbol) {
         var flags = symbol.getFlags();
-        this._isAccessor = (flags & 32768) !== 0;
-        this._isReadonly = this._isAccessor && (flags & 65536) === 0;
+        this._isAccessor = (flags & 32768 /* GetAccessor */) !== 0;
+        this._isReadonly = this._isAccessor && (flags & 65536 /* SetAccessor */) === 0;
     };
     ClassPropertyDefinition.isProperty = function (symbol) {
         var flags = symbol.getFlags();
-        return (flags & 4) !== 0 ||
-            (flags & 32768) !== 0;
+        return (flags & 4 /* Property */) !== 0 ||
+            (flags & 32768 /* GetAccessor */) !== 0;
     };
     return ClassPropertyDefinition;
 })(base_1.BaseClassPropertyDefinition);

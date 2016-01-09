@@ -13,6 +13,9 @@
     },
     "mocha/mocha.d.ts": {
       "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "typescript/typescript.d.ts": {
+      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
     }
   }
 }

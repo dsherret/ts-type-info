@@ -7,7 +7,7 @@ var ConstructorDefinition = (function () {
         this.fillParametersBySymbol(class_method_parameter_definition_1.ClassMethodParameterDefinition, typeChecker, symbol);
     }
     ConstructorDefinition.isConstructor = function (symbol) {
-        return (symbol.getFlags() & 16384) !== 0;
+        return (symbol.getFlags() & 16384 /* Constructor */) !== 0;
     };
     return ConstructorDefinition;
 })();

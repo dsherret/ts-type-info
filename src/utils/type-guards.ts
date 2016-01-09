@@ -1,11 +1,11 @@
 import * as ts from "typescript";
 
-export class TypeGuards {
-    static isCallExpression(expression: ts.Expression): expression is ts.CallExpression {
+export module TypeGuards {
+    export function isCallExpression(expression: ts.Expression): expression is ts.CallExpression {
         return expression != null && (expression as ts.CallExpression).arguments != null;
     }
 
-    static isLiteralExpression(expression: ts.Expression): expression is ts.LiteralExpression {
+    export function isLiteralExpression(expression: ts.Expression): expression is ts.LiteralExpression {
         return expression != null && (expression as ts.LiteralExpression).text != null;
     }
 }

@@ -1,4 +1,4 @@
-var __extends = (this && this.__extends) || function (d, b) {
+var __extends = (this && this.__extends)/* istanbul ignore next */ || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -12,8 +12,9 @@ var StaticMethodDefinition = (function (_super) {
     }
     StaticMethodDefinition.isStaticMethod = function (symbol) {
         var flags = symbol.getFlags();
-        return (flags & 8192) !== 0 ||
-            (flags & 16);
+        // could be a function for value modules (see value-module-tests.ts)
+        return (flags & 8192 /* Method */) !== 0 ||
+            (flags & 16 /* Function */);
     };
     return StaticMethodDefinition;
 })(base_1.BaseClassMethodDefinition);

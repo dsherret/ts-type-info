@@ -1,8 +1,7 @@
 var fs = require("fs");
-var FileUtils = (function () {
-    function FileUtils() {
-    }
-    FileUtils.getAllFileNamesFromFolder = function (dir) {
+var FileUtils;
+(function (FileUtils) {
+    function getAllFileNamesFromFolder(dir) {
         var fileNames = [];
         fs.readdirSync(dir).forEach(function (file) {
             file = dir + "/" + file;
@@ -15,9 +14,8 @@ var FileUtils = (function () {
             }
         });
         return fileNames;
-    };
-    return FileUtils;
-})();
-exports.FileUtils = FileUtils;
+    }
+    FileUtils.getAllFileNamesFromFolder = getAllFileNamesFromFolder;
+})(/* istanbul ignore next */FileUtils = exports.FileUtils || (exports.FileUtils = {}));
 
 //# sourceMappingURL=file-utils.js.map

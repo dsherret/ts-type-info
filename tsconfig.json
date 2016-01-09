@@ -5,7 +5,7 @@
         "declaration": false,
         "sourceMap": false,
         "noImplicitAny":  true,
-        "removeComments": true,
+        "removeComments": false,
         "experimentalDecorators": true,
         "outDir": "dist"
     }

@@ -24,6 +24,7 @@ var DecoratorDefinition = (function () {
         configurable: true
     });
     DecoratorDefinition.prototype.fillName = function (decoratorExpression) {
+        /* istanbul ignore else */
         if (utils_1.TypeGuards.isLiteralExpression(decoratorExpression)) {
             this._name = decoratorExpression.text;
         }

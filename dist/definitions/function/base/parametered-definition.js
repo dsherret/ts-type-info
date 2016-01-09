@@ -25,10 +25,13 @@ var ParameteredDefinition = (function () {
         configurable: true
     });
     ParameteredDefinition.prototype.getDeclaration = function (symbol) {
+        /* istanbul ignore else */
         if (symbol.valueDeclaration != null) {
+            // methods
             return symbol.valueDeclaration;
         }
         else if (symbol.getDeclarations().length === 1) {
+            // constructors
             return symbol.getDeclarations()[0];
         }
         else {

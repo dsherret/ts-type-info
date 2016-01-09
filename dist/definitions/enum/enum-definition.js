@@ -17,20 +17,20 @@ var EnumDefinition = (function () {
         configurable: true
     });
     EnumDefinition.prototype.fillMembers = function (typeChecker, symbol) {
-        for (var memberName in symbol.exports) {
-            if (symbol.exports.hasOwnProperty(memberName)) {
-                var member = symbol.exports[memberName];
-                if (enum_member_definition_1.EnumMemberDefinition.isEnumMemberDefinition(member)) {
-                    this._members.push(new enum_member_definition_1.EnumMemberDefinition(typeChecker, member));
-                }
-                else {
-                    console.warn("Unknown enum member: " + symbol.name);
-                }
+        var _this = this;
+        Object.keys(symbol.exports).forEach(function (memberName) {
+            var member = symbol.exports[memberName];
+            /* istanbul ignore else */
+            if (enum_member_definition_1.EnumMemberDefinition.isEnumMemberDefinition(member)) {
+                _this._members.push(new enum_member_definition_1.EnumMemberDefinition(typeChecker, member));
             }
-        }
+            else {
+                console.warn("Unknown enum member: " + symbol.name);
+            }
+        });
     };
     EnumDefinition.isEnumDefinition = function (symbol) {
-        return (symbol.flags & 384) !== 0;
+        return (symbol.flags & 384 /* Enum */) !== 0;
     };
     return EnumDefinition;
 })();

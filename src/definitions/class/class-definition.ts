@@ -67,6 +67,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         this._typeParameters = [];
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
+            /* istanbul ignore else */
             if (ClassPropertyDefinition.isProperty(member)) {
                 this._properties.push(new ClassPropertyDefinition(typeChecker, member));
             }
@@ -87,6 +88,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         });
 
         Object.keys(symbol.exports).map(memberName => symbol.exports[memberName]).forEach(staticMember => {
+            /* istanbul ignore else */
             if (staticMember.getName() === "prototype") {
                 // ignore
             }
@@ -103,6 +105,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     }
 
     private verifyConstructorNotSet() {
+        /* istanbul ignore if */
         if (this._constructorDef != null) {
             throw `Unknown error: Duplicate constructors on ${this.name}.`;
         }
