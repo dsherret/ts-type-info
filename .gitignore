@@ -10,5 +10,3 @@
 *.sln
 /coverage
 /.vs
-/output.txt
-/run.bat
