@@ -1,5 +1,4 @@
-﻿import * as assert from "assert";
-import {getStringInfo} from "./../../../main";
+﻿import {getStringInfo} from "./../../../main";
 import {runDecoratorDefinitionTests} from "./../../test-helpers";
 
 describe("class decorator tests", () => {
