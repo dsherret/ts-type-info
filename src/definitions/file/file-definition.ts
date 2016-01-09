@@ -65,12 +65,13 @@ export class FileDefinition {
     private fillMembers(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         // classes
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Class).forEach((classSymbol) => {
-            this._classes.push(definitionCache.getClassDefinition(classSymbol));
+            if (typeChecker.isSymbolInFile(classSymbol, file)) {
+                this._classes.push(definitionCache.getClassDefinition(classSymbol));
+            }
         });
 
         // enums
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Enum).forEach((enumSymbol) => {
-            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(enumSymbol, file)) {
                 this._enums.push(definitionCache.getEnumDefinition(enumSymbol));
             }
@@ -78,7 +79,6 @@ export class FileDefinition {
 
         // functions
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Function).forEach((functionSymbol) => {
-            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(functionSymbol, file)) {
                 this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
@@ -86,7 +86,6 @@ export class FileDefinition {
 
         // interfaces
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Interface).forEach((interfaceSymbol) => {
-            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(interfaceSymbol, file)) {
                 this._interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
             }

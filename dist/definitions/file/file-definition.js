@@ -44,25 +44,24 @@ var FileDefinition = (function () {
         var _this = this;
         // classes
         typeChecker.getSymbolsInScope(file, 32 /* Class */).forEach(function (classSymbol) {
-            _this._classes.push(definitionCache.getClassDefinition(classSymbol));
+            if (typeChecker.isSymbolInFile(classSymbol, file)) {
+                _this._classes.push(definitionCache.getClassDefinition(classSymbol));
+            }
         });
         // enums
         typeChecker.getSymbolsInScope(file, 384 /* Enum */).forEach(function (enumSymbol) {
-            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(enumSymbol, file)) {
                 _this._enums.push(definitionCache.getEnumDefinition(enumSymbol));
             }
         });
         // functions
         typeChecker.getSymbolsInScope(file, 16 /* Function */).forEach(function (functionSymbol) {
-            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(functionSymbol, file)) {
                 _this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
         });
         // interfaces
         typeChecker.getSymbolsInScope(file, 64 /* Interface */).forEach(function (interfaceSymbol) {
-            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(interfaceSymbol, file)) {
                 _this._interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
             }
