@@ -26,6 +26,7 @@ export class DecoratorDefinition implements IBaseNamedDefinition {
     }
 
     private fillName(decoratorExpression: ts.LeftHandSideExpression) {
+        /* istanbul ignore else */
         if (TypeGuards.isLiteralExpression(decoratorExpression)) {
             this._name = decoratorExpression.text;
         }

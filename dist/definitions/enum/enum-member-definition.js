@@ -14,7 +14,7 @@ var EnumMemberDefinition = (function () {
         configurable: true
     });
     EnumMemberDefinition.isEnumMemberDefinition = function (symbol) {
-        return (symbol.flags & 8) !== 0;
+        return (symbol.flags & 8 /* EnumMember */) !== 0;
     };
     return EnumMemberDefinition;
 })();

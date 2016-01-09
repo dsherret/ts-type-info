@@ -62,10 +62,11 @@ var Type = (function () {
         configurable: true
     });
     Type.prototype.shouldGetAllInfo = function (typeChecker) {
-        return (this._tsType.flags & (1024 |
-            2048 |
-            80896 |
-            131072)) !== 0;
+        // only get properties and call signature info for specific types
+        return (this._tsType.flags & (1024 /* Class */ |
+            2048 /* Interface */ |
+            80896 /* ObjectType */ |
+            131072 /* Instantiated */)) !== 0;
     };
     Type.prototype.fillProperties = function (typeChecker) {
         var properties = this._tsType.getProperties();

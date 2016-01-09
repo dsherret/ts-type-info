@@ -54,6 +54,7 @@ var InterfaceDefinition = (function () {
         var _this = this;
         this._typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
+            /* istanbul ignore else */
             if (base_1.PropertyDefinition.isProperty(member)) {
                 _this._properties.push(new base_1.PropertyDefinition(typeChecker, member));
             }
@@ -75,7 +76,7 @@ var InterfaceDefinition = (function () {
         });
     };
     InterfaceDefinition.isInterfaceDefinition = function (symbol) {
-        return (symbol.flags & 64) !== 0;
+        return (symbol.flags & 64 /* Interface */) !== 0;
     };
     return InterfaceDefinition;
 })();

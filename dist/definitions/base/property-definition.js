@@ -16,7 +16,7 @@ var PropertyDefinition = (function () {
         configurable: true
     });
     PropertyDefinition.isProperty = function (symbol) {
-        return (symbol.getFlags() & 4) !== 0;
+        return (symbol.getFlags() & 4 /* Property */) !== 0;
     };
     return PropertyDefinition;
 })();

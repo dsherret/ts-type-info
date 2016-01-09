@@ -81,6 +81,7 @@ var ClassDefinition = (function () {
         var _this = this;
         this._typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
+            /* istanbul ignore else */
             if (class_property_definition_1.ClassPropertyDefinition.isProperty(member)) {
                 _this._properties.push(new class_property_definition_1.ClassPropertyDefinition(typeChecker, member));
             }
@@ -92,6 +93,7 @@ var ClassDefinition = (function () {
                 _this._constructorDef = new constructor_definition_1.ConstructorDefinition(typeChecker, member);
             }
             else if (misc_1.TypeParameterDefinition.isTypeParameter(member)) {
+                // todo: figure out better way of getting type parameters, like how it works in call signature definition?
                 _this._typeParameters.push(new misc_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
@@ -99,6 +101,7 @@ var ClassDefinition = (function () {
             }
         });
         Object.keys(symbol.exports).map(function (memberName) { return symbol.exports[memberName]; }).forEach(function (staticMember) {
+            /* istanbul ignore else */
             if (staticMember.getName() === "prototype") {
             }
             else if (static_method_definition_1.StaticMethodDefinition.isStaticMethod(staticMember)) {
@@ -113,12 +116,13 @@ var ClassDefinition = (function () {
         });
     };
     ClassDefinition.prototype.verifyConstructorNotSet = function () {
+        /* istanbul ignore if */
         if (this._constructorDef != null) {
             throw "Unknown error: Duplicate constructors on " + this.name + ".";
         }
     };
     ClassDefinition.isClassDefinition = function (symbol) {
-        return (symbol.flags & 32) !== 0;
+        return (symbol.flags & 32 /* Class */) !== 0;
     };
     return ClassDefinition;
 })();

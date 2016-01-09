@@ -25,6 +25,7 @@ var TypeExpressionCache = (function () {
         var _this = this;
         this.typeCacheContainer.getAllCacheItems().forEach(function (type) {
             var symbols = _this.typeChecker.getSymbolsFromType(type.tsType);
+            /* istanbul ignore else */
             if (symbols.length === 1) {
                 type.fillDefinition(definitionCache.getDefinition(symbols[0]));
             }
@@ -78,8 +79,12 @@ var CacheContainer = (function () {
         var symbol = tsType.getSymbol();
         if (symbol != null && symbol.valueDeclaration != null) {
             var sourceFile = symbol.valueDeclaration.getSourceFile();
+            /* istanbul ignore else */
             if (sourceFile != null) {
                 fileName = sourceFile.fileName;
+            }
+            else {
+                console.warn("Could not get source file.");
             }
         }
         return fileName;

@@ -1,10 +1,10 @@
 import * as fs from "fs";
 
-export class FileUtils {
-    static getAllFileNamesFromFolder(dir: string) {
+export module FileUtils {
+    export function getAllFileNamesFromFolder(dir: string) {
         const fileNames: string[] = [];
 
-        fs.readdirSync(dir).forEach(function(file) {
+        fs.readdirSync(dir).forEach(function (file) {
             file = dir + "/" + file;
             const stat = fs.statSync(file);
 

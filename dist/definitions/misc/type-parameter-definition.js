@@ -16,7 +16,7 @@ var TypeParameterDefinition = (function () {
         return symbol.getDeclarations()[0];
     };
     TypeParameterDefinition.isTypeParameter = function (symbol) {
-        return (symbol.getFlags() & 262144) !== 0;
+        return (symbol.getFlags() & 262144 /* TypeParameter */) !== 0;
     };
     return TypeParameterDefinition;
 })();

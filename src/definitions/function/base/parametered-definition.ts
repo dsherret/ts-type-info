@@ -33,6 +33,7 @@ export abstract class ParameteredDefinition<T extends ParameterDefinition> imple
     }
 
     private getDeclaration(symbol: ts.Symbol) {
+        /* istanbul ignore else */
         if (symbol.valueDeclaration != null) {
             // methods
             return symbol.valueDeclaration as ts.SignatureDeclaration;

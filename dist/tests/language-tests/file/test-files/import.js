@@ -1,8 +1,12 @@
+// this is a test file used in import-tests
+/// <reference path="definition.d.ts" />
+/* tslint:disable */
 var TestClassModule = require("./test-class");
 var test_enum_1 = require("./test-enum");
 var test_multiple_classes_1 = require("./test-multiple-classes");
 var test_default_class_1 = require("./test-default-class");
 var reexports = require("./re-export");
+// removes linting errors
 function dummyFunction(t) {
     return t;
 }

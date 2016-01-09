@@ -25,6 +25,7 @@ export class FileDefinition {
         for (const fileImportSymbol of typeChecker.getFileImportSymbols(file)) {
             const importDefinition = definitionCache.getDefinition(fileImportSymbol);
 
+            /* istanbul ignore else */
             if (importDefinition != null) {
                 this._imports.push(
                     new ImportDefinition(
@@ -46,6 +47,7 @@ export class FileDefinition {
         for (const fileReExportSymbol of typeChecker.getFileReExportSymbols(file)) {
             const exportDefinition = definitionCache.getDefinition(fileReExportSymbol);
 
+            /* istanbul ignore else */
             if (exportDefinition != null) {
                 this._reExports.push(
                     new ReExportDefinition(
@@ -68,6 +70,7 @@ export class FileDefinition {
 
         // enums
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Enum).forEach((enumSymbol) => {
+            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(enumSymbol, file)) {
                 this._enums.push(definitionCache.getEnumDefinition(enumSymbol));
             }
@@ -75,6 +78,7 @@ export class FileDefinition {
 
         // functions
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Function).forEach((functionSymbol) => {
+            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(functionSymbol, file)) {
                 this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
@@ -82,6 +86,7 @@ export class FileDefinition {
 
         // interfaces
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Interface).forEach((interfaceSymbol) => {
+            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(interfaceSymbol, file)) {
                 this._interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
             }

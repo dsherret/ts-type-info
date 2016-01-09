@@ -16,10 +16,11 @@ var FileDefinition = (function () {
         for (var _i = 0, _a = typeChecker.getFileImportSymbols(file); _i < _a.length; _i++) {
             var fileImportSymbol = _a[_i];
             var importDefinition = definitionCache.getDefinition(fileImportSymbol);
+            /* istanbul ignore else */
             if (importDefinition != null) {
                 this._imports.push(new import_definition_1.ImportDefinition(definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)), importDefinition));
             }
-            else if ((fileImportSymbol.flags & 2) !== 0) {
+            else if ((fileImportSymbol.flags & 2 /* BlockScopedVariable */) !== 0) {
             }
             else {
                 console.warn("Not implemented import symbol: " + fileImportSymbol.name);
@@ -30,6 +31,7 @@ var FileDefinition = (function () {
         for (var _i = 0, _a = typeChecker.getFileReExportSymbols(file); _i < _a.length; _i++) {
             var fileReExportSymbol = _a[_i];
             var exportDefinition = definitionCache.getDefinition(fileReExportSymbol);
+            /* istanbul ignore else */
             if (exportDefinition != null) {
                 this._reExports.push(new re_export_definition_1.ReExportDefinition(definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileReExportSymbol)), exportDefinition));
             }
@@ -40,20 +42,27 @@ var FileDefinition = (function () {
     };
     FileDefinition.prototype.fillMembers = function (typeChecker, definitionCache, file) {
         var _this = this;
-        typeChecker.getSymbolsInScope(file, 32).forEach(function (classSymbol) {
+        // classes
+        typeChecker.getSymbolsInScope(file, 32 /* Class */).forEach(function (classSymbol) {
             _this._classes.push(definitionCache.getClassDefinition(classSymbol));
         });
-        typeChecker.getSymbolsInScope(file, 384).forEach(function (enumSymbol) {
+        // enums
+        typeChecker.getSymbolsInScope(file, 384 /* Enum */).forEach(function (enumSymbol) {
+            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(enumSymbol, file)) {
                 _this._enums.push(definitionCache.getEnumDefinition(enumSymbol));
             }
         });
-        typeChecker.getSymbolsInScope(file, 16).forEach(function (functionSymbol) {
+        // functions
+        typeChecker.getSymbolsInScope(file, 16 /* Function */).forEach(function (functionSymbol) {
+            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(functionSymbol, file)) {
                 _this._functions.push(definitionCache.getFunctionDefinition(functionSymbol));
             }
         });
-        typeChecker.getSymbolsInScope(file, 64).forEach(function (interfaceSymbol) {
+        // interfaces
+        typeChecker.getSymbolsInScope(file, 64 /* Interface */).forEach(function (interfaceSymbol) {
+            /* istanbul ignore else */
             if (typeChecker.isSymbolInFile(interfaceSymbol, file)) {
                 _this._interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
             }

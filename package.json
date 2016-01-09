@@ -4,7 +4,7 @@
   "description": "Experimental library to get the structure of TypeScript code.",
   "main": "dist/main.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "gulp test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "gulp typescript"
   },
   "repository": {
@@ -30,9 +30,12 @@
   },
   "devDependencies": {
     "code-block-writer": "^1.2.0",
+    "coveralls": "^2.11.6",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
+    "gulp-istanbul": "^0.10.3",
     "gulp-mocha": "^2.2.0",
+    "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^4.1.1",
     "gulp-typescript": "^2.9.2",

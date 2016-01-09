@@ -18,18 +18,17 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition {
     }
 
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        for (const memberName in symbol.exports) {
-            if (symbol.exports.hasOwnProperty(memberName)) {
-                const member = symbol.exports[memberName];
+        Object.keys(symbol.exports).forEach(memberName => {
+            const member = symbol.exports[memberName];
 
-                if (EnumMemberDefinition.isEnumMemberDefinition(member)) {
-                    this._members.push(new EnumMemberDefinition(typeChecker, member));
-                }
-                else {
-                    console.warn(`Unknown enum member: ${symbol.name}`);
-                }
+            /* istanbul ignore else */
+            if (EnumMemberDefinition.isEnumMemberDefinition(member)) {
+                this._members.push(new EnumMemberDefinition(typeChecker, member));
             }
-        }
+            else {
+                console.warn(`Unknown enum member: ${symbol.name}`);
+            }
+        });
     }
 
     // NameDefinition

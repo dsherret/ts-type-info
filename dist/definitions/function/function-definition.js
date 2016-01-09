@@ -1,4 +1,4 @@
-var __extends = (this && this.__extends) || function (d, b) {
+var __extends = (this && this.__extends)/* istanbul ignore next */ || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -15,7 +15,7 @@ var FunctionDefinition = (function (_super) {
         this.fillIsExported(typeChecker, symbol);
     }
     FunctionDefinition.isFunctionDefinition = function (symbol) {
-        return (symbol.getFlags() & 16) !== 0;
+        return (symbol.getFlags() & 16 /* Function */) !== 0;
     };
     return FunctionDefinition;
 })(base_1.BaseFunctionDefinition);

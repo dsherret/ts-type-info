@@ -1,3 +1,4 @@
+// this is a test file
 var TestClass = (function () {
     function TestClass() {
     }

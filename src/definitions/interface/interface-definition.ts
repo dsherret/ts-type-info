@@ -43,6 +43,7 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
         this._typeParameters = [];
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
+            /* istanbul ignore else */
             if (PropertyDefinition.isProperty(member)) {
                 this._properties.push(new PropertyDefinition(typeChecker, member));
             }

@@ -1,14 +1,12 @@
-var StringUtils = (function () {
-    function StringUtils() {
-    }
-    StringUtils.ensureEndsWithNewline = function (code) {
+var StringUtils;
+(function (StringUtils) {
+    function ensureEndsWithNewline(code) {
         if (typeof code === "string" && code[code.length - 1] !== "\n") {
             code += "\n";
         }
         return code;
-    };
-    return StringUtils;
-})();
-exports.StringUtils = StringUtils;
+    }
+    StringUtils.ensureEndsWithNewline = ensureEndsWithNewline;
+})(/* istanbul ignore next */StringUtils = exports.StringUtils || (exports.StringUtils = {}));
 
 //# sourceMappingURL=string-utils.js.map

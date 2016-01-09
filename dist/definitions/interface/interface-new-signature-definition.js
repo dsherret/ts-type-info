@@ -7,7 +7,7 @@ var InterfaceNewSignatureDefinition = (function () {
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
     }
     InterfaceNewSignatureDefinition.isNewSignature = function (symbol) {
-        return (symbol.getFlags() & 131072) !== 0;
+        return (symbol.getFlags() & 131072 /* Signature */) !== 0;
     };
     return InterfaceNewSignatureDefinition;
 })();
