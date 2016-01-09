@@ -48,6 +48,8 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
             parameters: [{
                 name: "myParameter",
                 decorators: [],
+                isRestParameter: false,
+                isOptional: false,
                 typeExpression: { text: "string" }
             }],
             returnTypeExpression: {
