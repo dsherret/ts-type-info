@@ -7,8 +7,6 @@ Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/
 
 This is a very experimental library.
 
-## Install
-
 ```
 npm install ts-type-info --save-dev
 tsd link
