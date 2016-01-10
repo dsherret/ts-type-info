@@ -9,12 +9,16 @@ describe("Main", () => {
         });
 
         it("should not handle a non ts file when specifying not to allow them", () => {
-            const result = tsTypeInfo.getFileInfo([path.join(__dirname, "../../src/tests/test-files/non-ts-file.txt")], { allowNonTsExtensions: false });
+            const result = tsTypeInfo.getFileInfo([path.join(__dirname, "../../src/tests/test-files/non-ts-file.txt")], {
+                compilerOptions: { allowNonTsExtensions: false }
+            });
             assert.equal(result.length, 0);
         });
 
         it("should get the class definition when specifying the compiler option to allow non ts extensions", () => {
-            const result = tsTypeInfo.getFileInfo([path.join(__dirname, "../../src/tests/test-files/non-ts-file.txt")], { allowNonTsExtensions: true });
+            const result = tsTypeInfo.getFileInfo([path.join(__dirname, "../../src/tests/test-files/non-ts-file.txt")], {
+                compilerOptions: { allowNonTsExtensions: true }
+            });
             assert.equal(result[0].classes[0].name, "MyClass");
         });
     });

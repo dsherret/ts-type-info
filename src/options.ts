@@ -1,4 +1,8 @@
-﻿export interface CompilerOptions {
+﻿export interface Options {
+    compilerOptions?: CompilerOptions;
+}
+
+export interface CompilerOptions {
     allowNonTsExtensions?: boolean;
     charset?: string;
     locale?: string;

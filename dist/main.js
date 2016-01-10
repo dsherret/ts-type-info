@@ -6,16 +6,16 @@ var path = require("path");
 var tmp = require("tmp");
 var fs = require("fs");
 var utils_1 = require("./utils");
-__export(require("./compiler-options"));
+__export(require("./options"));
 __export(require("./definitions"));
 __export(require("./expressions"));
 __export(require("./scope"));
-function getFileInfo(fileNames, compilerOptions) {
-    if (compilerOptions === void 0) { compilerOptions = {}; }
+function getFileInfo(fileNames, options) {
     verifyArray(fileNames);
-    var options = getCompilerOptions(compilerOptions);
-    var host = ts.createCompilerHost(options);
-    var program = ts.createProgram(fileNames, options, host);
+    options = options || {};
+    var compilerOptions = getTsCompilerOptions(options.compilerOptions);
+    var host = ts.createCompilerHost(compilerOptions);
+    var program = ts.createProgram(fileNames, compilerOptions, host);
     var tsTypeChecker = program.getTypeChecker();
     var typeChecker = new utils_1.TypeChecker(tsTypeChecker);
     var typeExpressionCache = new utils_1.TypeExpressionCache(typeChecker);
@@ -34,15 +34,14 @@ function getFileInfo(fileNames, compilerOptions) {
     return sourceFiles;
 }
 exports.getFileInfo = getFileInfo;
-function getStringInfo(code, compilerOptions) {
-    if (compilerOptions === void 0) { compilerOptions = {}; }
+function getStringInfo(code, options) {
     verifyString(code);
     var tmpFile = tmp.fileSync({ postfix: ".ts" });
     var fileDefinition;
     try {
         code = utils_1.StringUtils.ensureEndsWithNewline(code);
         fs.writeFileSync(tmpFile.name, code);
-        fileDefinition = getFileInfo([tmpFile.name], compilerOptions)[0];
+        fileDefinition = getFileInfo([tmpFile.name], options)[0];
     }
     finally {
         tmpFile.removeCallback();
@@ -60,11 +59,11 @@ function verifyString(code) {
         throw new Error("Please provide a string to getStringInfo");
     }
 }
-function getCompilerOptions(compilerOptions) {
+function getTsCompilerOptions(compilerOptions) {
     function getValue(currentValue, newValue) {
         return (currentValue == null) ? newValue : currentValue;
     }
-    var combinedOptions = compilerOptions;
+    var combinedOptions = (compilerOptions || {});
     combinedOptions.allowNonTsExtensions = getValue(combinedOptions.allowNonTsExtensions, true);
     combinedOptions.noLib = getValue(combinedOptions.noLib, false);
     combinedOptions.experimentalDecorators = getValue(combinedOptions.experimentalDecorators, true);
