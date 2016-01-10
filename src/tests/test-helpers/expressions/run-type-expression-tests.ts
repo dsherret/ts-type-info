@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {TypeExpression} from "./../../../types";
+import {TypeExpression} from "./../../../expressions";
 
 export function runTypeExpressionTests(typeExpression: TypeExpression, name: string) {
     if (typeExpression == null) {

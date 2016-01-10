@@ -1,19 +1,19 @@
 import * as ts from "typescript";
 import {IBaseNamedDefinition} from "./../base";
-import {ArgumentDefinition} from "./../function";
-import {TypeGuards} from "./../../utils";
+import {Expression} from "./../../expressions";
+import {TypeChecker, TypeGuards} from "./../../utils";
 
 export class DecoratorDefinition implements IBaseNamedDefinition {
     private _name: string;
-    private _arguments: ArgumentDefinition[] = [];
+    private _arguments: Expression[] = [];
 
-    constructor(decorator: ts.Decorator) {
+    constructor(typeChecker: TypeChecker, decorator: ts.Decorator) {
         let decoratorExpression = decorator.expression;
 
         this.fillName(decoratorExpression);
 
         if (TypeGuards.isCallExpression(decoratorExpression)) {
-            this.fillArguments(decoratorExpression.arguments);
+            this.fillArguments(typeChecker, decoratorExpression.arguments);
         }
     }
 
@@ -38,9 +38,9 @@ export class DecoratorDefinition implements IBaseNamedDefinition {
         }
     }
 
-    private fillArguments(args: ts.NodeArray<ts.Expression>) {
+    private fillArguments(typeChecker: TypeChecker, args: ts.NodeArray<ts.Expression>) {
         for (let arg of args) {
-            this._arguments.push(new ArgumentDefinition(arg));
+            this._arguments.push(new Expression(typeChecker, arg));
         }
     }
 }

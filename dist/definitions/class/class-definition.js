@@ -17,7 +17,7 @@ var ClassDefinition = (function () {
         this._staticProperties = [];
         this._typeParameters = [];
         this.fillName(symbol);
-        this.fillDecorators(symbol);
+        this.fillDecorators(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
     }

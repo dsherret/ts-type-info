@@ -20,5 +20,16 @@ export function runBaseParameterDefinitionTests(definition: BaseParameterDefinit
         it(`should ${param.isRestParameter ? "be" : "not be"} a rest parameter`, () => {
             assert.equal(definition.isRestParameter, typeof param.isRestParameter === "boolean" ? param.isRestParameter : false);
         });
+
+        if (param.defaultExpressionText != null) {
+            it(`should have the default expression with text '${param.defaultExpressionText}'.`, () => {
+                assert.equal(definition.defaultExpression.text, param.defaultExpressionText);
+            });
+        }
+        else {
+            it(`should not have a default expression.`, () => {
+                assert.equal(definition.defaultExpression, null);
+            });
+        }
     });
 }

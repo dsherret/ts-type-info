@@ -1,12 +1,12 @@
-var function_1 = require("./../function");
+var expressions_1 = require("./../../expressions");
 var utils_1 = require("./../../utils");
 var DecoratorDefinition = (function () {
-    function DecoratorDefinition(decorator) {
+    function DecoratorDefinition(typeChecker, decorator) {
         this._arguments = [];
         var decoratorExpression = decorator.expression;
         this.fillName(decoratorExpression);
         if (utils_1.TypeGuards.isCallExpression(decoratorExpression)) {
-            this.fillArguments(decoratorExpression.arguments);
+            this.fillArguments(typeChecker, decoratorExpression.arguments);
         }
     }
     Object.defineProperty(DecoratorDefinition.prototype, "name", {
@@ -35,10 +35,10 @@ var DecoratorDefinition = (function () {
             console.warn("Unhandled: The decorator expression was null");
         }
     };
-    DecoratorDefinition.prototype.fillArguments = function (args) {
+    DecoratorDefinition.prototype.fillArguments = function (typeChecker, args) {
         for (var _i = 0; _i < args.length; _i++) {
             var arg = args[_i];
-            this._arguments.push(new function_1.ArgumentDefinition(arg));
+            this._arguments.push(new expressions_1.Expression(typeChecker, arg));
         }
     };
     return DecoratorDefinition;

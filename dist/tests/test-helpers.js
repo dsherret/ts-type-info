@@ -8,6 +8,6 @@ __export(require("./test-helpers/file"));
 __export(require("./test-helpers/function"));
 __export(require("./test-helpers/interface"));
 __export(require("./test-helpers/misc"));
-__export(require("./test-helpers/types"));
+__export(require("./test-helpers/expressions"));
 
 //# sourceMappingURL=test-helpers.js.map

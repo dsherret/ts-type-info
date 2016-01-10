@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../../utils";
-import {TypeExpression} from "./../../../types";
+import {Expression, TypeExpression} from "./../../../expressions";
 import {INamedDefinition, NamedDefinition, ITypedDefinition, TypedDefinition} from "./../../base";
 
 export interface BaseParameterDefinitionConstructor<T extends BaseParameterDefinition> {
@@ -10,11 +10,12 @@ export interface BaseParameterDefinitionConstructor<T extends BaseParameterDefin
 export class BaseParameterDefinition implements ITypedDefinition, INamedDefinition {
     private _isOptional: boolean;
     private _isRestParameter: boolean;
+    private _defaultExpression: Expression;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillTypeExpression(typeChecker, symbol);
-        this.fillParameterDetails(symbol);
+        this.fillParameterDetails(typeChecker, symbol);
     }
 
     get isOptional() {
@@ -25,11 +26,16 @@ export class BaseParameterDefinition implements ITypedDefinition, INamedDefiniti
         return this._isRestParameter;
     }
 
-    private fillParameterDetails(symbol: ts.Symbol) {
+    get defaultExpression() {
+        return this._defaultExpression;
+    }
+
+    private fillParameterDetails(typeChecker: TypeChecker, symbol: ts.Symbol) {
         let declaration = symbol.valueDeclaration as ts.ParameterDeclaration;
 
         this._isOptional = declaration.questionToken != null || declaration.initializer != null || declaration.dotDotDotToken != null;
         this._isRestParameter = declaration.dotDotDotToken != null;
+        this._defaultExpression = declaration.initializer != null ? new Expression(typeChecker, declaration.initializer) : null;
     }
 
     // NameDefinition

@@ -14,7 +14,8 @@ describe("class method", function () {
             }, {
                 name: "myDefaultParameter",
                 type: "number",
-                isOptional: true
+                isOptional: true,
+                defaultExpressionText: "15"
             }, {
                 name: "myOptionalParameter",
                 type: "string",

@@ -22,7 +22,7 @@ tsd link
 // V:/TestFile.ts
 @myDecorator("My decorator value")
 export class MyClass {
-    myMethod(myParameter: string) {
+    myMethod(myParam: string, myDefaultParam = 15) {
         return `Test: ${myParameter}`;
     }
 }
@@ -53,11 +53,19 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
             name: "myMethod",
             decorators: [],
             parameters: [{
-                name: "myParameter",
+                name: "myParam",
                 decorators: [],
                 isRestParameter: false,
                 isOptional: false,
+                defaultExpression: undefined,
                 typeExpression: { text: "string" }
+            }, {
+                name: "myDefaultParam",
+                decorators: [],
+                isRestParameter: false,
+                isOptional: true,
+                defaultExpression: { text: "15" },
+                typeExpression: { text: "number" }
             }],
             returnTypeExpression: {
                 text: "string"

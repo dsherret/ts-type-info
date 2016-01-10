@@ -3,4 +3,5 @@ export interface BaseParameter {
     type: string;
     isOptional?: boolean;
     isRestParameter?: boolean;
+    defaultExpressionText?: string;
 }

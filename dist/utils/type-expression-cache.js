@@ -1,5 +1,5 @@
 var utils_1 = require("./../utils");
-var types_1 = require("./../types");
+var expressions_1 = require("./../expressions");
 var TypeExpressionCache = (function () {
     function TypeExpressionCache(typeChecker) {
         this.typeChecker = typeChecker;
@@ -13,7 +13,7 @@ var TypeExpressionCache = (function () {
         var typeExpression = cache.get(name);
         if (typeExpression == null) {
             var types = tsType.types || [tsType];
-            typeExpression = new types_1.TypeExpression(this.typeChecker, tsType);
+            typeExpression = new expressions_1.TypeExpression(this.typeChecker, tsType);
             cache.add(typeExpression.text, typeExpression);
             types.forEach(function (t) {
                 typeExpression.addType(_this.getType(t));
@@ -39,7 +39,7 @@ var TypeExpressionCache = (function () {
         var name = this.typeChecker.typeToString(tsType);
         var type = cache.get(name);
         if (type == null) {
-            type = new types_1.Type(this.typeChecker, tsType);
+            type = new expressions_1.Type(this.typeChecker, tsType);
             cache.add(name, type);
             type.fillTypeInformation(this.typeChecker, this);
         }

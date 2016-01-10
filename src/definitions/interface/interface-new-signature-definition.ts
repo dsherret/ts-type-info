@@ -1,7 +1,7 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {IParameteredDefinition, ParameteredDefinition, ParameterDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../function";
-import {TypeExpression} from "./../../types";
+import {TypeExpression} from "./../../expressions";
 
 export class InterfaceNewSignatureDefinition implements IParameteredDefinition<ParameterDefinition>, IReturnTypedDefinition {
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {

@@ -3,7 +3,7 @@ import {TypeParameterDefinition} from "./../misc";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {PropertyDefinition, INamedDefinition, NamedDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
-import {TypeExpression} from "./../../types";
+import {TypeExpression} from "./../../expressions";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 

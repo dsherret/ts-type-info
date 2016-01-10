@@ -6,7 +6,7 @@ import * as fs from "fs";
 import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils} from "./utils";
 
 export * from "./definitions";
-export * from "./types";
+export * from "./expressions";
 export * from "./scope";
 
 export function getFileInfo(fileNames: string[]): FileDefinition[] {

@@ -8,7 +8,7 @@ export function runFunctionDefinitionTests(definition: FunctionDefinition, func:
         throw "Definition should not be null.";
     }
 
-    describe(`method ${func.name}`, () => {
+    describe(`function ${func.name}`, () => {
         runBaseFunctionDefinitionTests(definition, func);
         runExportableDefinitionTests(definition, func.isExported);
     });
