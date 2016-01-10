@@ -7,7 +7,7 @@ describe("class decorator tests", function () {
         test_helpers_1.runDecoratorDefinitionTests(c.decorators[0], {
             name: "MyClassDecorator",
             arguments: [{
-                    text: "MyString"
+                    text: "\"MyString\""
                 }]
         });
     });

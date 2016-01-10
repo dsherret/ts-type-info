@@ -4,7 +4,7 @@ function runFunctionDefinitionTests(definition, func) {
     if (definition == null) {
         throw "Definition should not be null.";
     }
-    describe("method " + func.name, function () {
+    describe("function " + func.name, function () {
         base_2.runBaseFunctionDefinitionTests(definition, func);
         base_1.runExportableDefinitionTests(definition, func.isExported);
     });

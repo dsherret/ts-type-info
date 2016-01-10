@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {KeyValueCache, TypeChecker, DefinitionCache} from "./../utils";
-import {TypeExpression, Type} from "./../types";
+import {TypeExpression, Type} from "./../expressions";
 
 export class TypeExpressionCache {
     private expressionCacheContainer = new CacheContainer<TypeExpression>(this.typeChecker);

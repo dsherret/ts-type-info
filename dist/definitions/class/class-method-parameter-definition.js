@@ -10,7 +10,7 @@ var ClassMethodParameterDefinition = (function (_super) {
     __extends(ClassMethodParameterDefinition, _super);
     function ClassMethodParameterDefinition(typeChecker, symbol) {
         _super.call(this, typeChecker, symbol);
-        this.fillDecorators(symbol);
+        this.fillDecorators(typeChecker, symbol);
     }
     return ClassMethodParameterDefinition;
 })(function_1.BaseParameterDefinition);

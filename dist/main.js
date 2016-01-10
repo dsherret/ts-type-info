@@ -7,7 +7,7 @@ var tmp = require("tmp");
 var fs = require("fs");
 var utils_1 = require("./utils");
 __export(require("./definitions"));
-__export(require("./types"));
+__export(require("./expressions"));
 __export(require("./scope"));
 function getFileInfo(fileNames) {
     verifyArray(fileNames);

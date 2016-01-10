@@ -20,7 +20,7 @@ class MyClass {
         runDecoratorDefinitionTests(c.decorators[0], {
             name: "MyClassDecorator",
             arguments: [{
-                text: "MyString"
+                text: `"MyString"`
             }]
         });
     });

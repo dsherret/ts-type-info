@@ -8,7 +8,10 @@ var TypeChecker = (function () {
         this.typeCreator = typeCreator;
     };
     TypeChecker.prototype.setCurrentNode = function (node) {
-        this.node = node;
+        this.currentNode = node;
+    };
+    TypeChecker.prototype.getExpressionFullText = function (expression) {
+        return (expression.getFullText(this.currentNode) || "").trim();
     };
     TypeChecker.prototype.getExtendsTypes = function (symbol) {
         var _this = this;
@@ -88,7 +91,7 @@ var TypeChecker = (function () {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     };
     TypeChecker.prototype.getTypeExpressionOfSymbol = function (symbol) {
-        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentNode));
     };
     TypeChecker.prototype.getTypeExpressionFromTsType = function (tsType) {
         return this.typeCreator.get(tsType);
@@ -175,7 +178,7 @@ var TypeChecker = (function () {
         return fileSymbol != null && fileSymbol.exports[symbol.name] != null;
     };
     TypeChecker.prototype.typeToString = function (tsType) {
-        return this.typeChecker.typeToString(tsType, this.node, 0 /* None */);
+        return this.typeChecker.typeToString(tsType, this.currentNode, 0 /* None */);
     };
     return TypeChecker;
 })();

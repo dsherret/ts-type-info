@@ -3,3 +3,5 @@
 
 var c: MyReferenceClass;
 var i: MyReferenceInterface;
+var f = MyReferenceFunction;
+var e: MyReferenceEnum;

@@ -2,7 +2,7 @@ var main_1 = require("./../../../main");
 var scope_1 = require("./../../../scope");
 var test_helpers_1 = require("./../../test-helpers");
 describe("class static method", function () {
-    var code = "\nclass MyClassWithStaticMethods {\n    // parameters\n    static myParameterMethod(myParameter: string, myDefaultParameter = 15, myOptionalParameter?: string, ...myRestParameter: number[]) {\n        return \"\";\n    }\n\n    // return types\n    static myExplicitReturnTypeMethod(): string {\n        return null;\n    }\n\n    static myImplicitReturnTypeMethod() {\n        return \"\";\n    }\n\n    // scope\n    public static myPublicMethod() {\n    }\n\n    protected static myProtectedMethod() {\n    }\n\n    private static myPrivateMethod() {\n    }\n}";
+    var code = "\nclass MyClassWithStaticMethods {\n    // parameters\n    static myParameterMethod(myParameter: string, myDefaultParameter = \"some string\", myOptionalParameter?: string, ...myRestParameter: number[]) {\n        return \"\";\n    }\n\n    // return types\n    static myExplicitReturnTypeMethod(): string {\n        return null;\n    }\n\n    static myImplicitReturnTypeMethod() {\n        return \"\";\n    }\n\n    // scope\n    public static myPublicMethod() {\n    }\n\n    protected static myProtectedMethod() {\n    }\n\n    private static myPrivateMethod() {\n    }\n}";
     var def = main_1.getStringInfo(code);
     test_helpers_1.runStaticMethodDefinitionTests(def.classes[0].staticMethods[0], {
         name: "myParameterMethod",
@@ -13,8 +13,9 @@ describe("class static method", function () {
                 type: "string"
             }, {
                 name: "myDefaultParameter",
-                type: "number",
-                isOptional: true
+                type: "string",
+                isOptional: true,
+                defaultExpressionText: "\"some string\""
             }, {
                 name: "myOptionalParameter",
                 type: "string",

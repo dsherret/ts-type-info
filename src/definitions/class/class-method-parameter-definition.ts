@@ -7,11 +7,11 @@ import {BaseParameterDefinition} from "./../function";
 export class ClassMethodParameterDefinition extends BaseParameterDefinition implements IDecoratableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol);
-        this.fillDecorators(symbol);
+        this.fillDecorators(typeChecker, symbol);
     }
 
     // DecoratableDefinition
-    fillDecorators: (symbol: ts.Symbol) => void;
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     decorators: DecoratorDefinition[];
 }
 

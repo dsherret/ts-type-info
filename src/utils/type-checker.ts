@@ -5,7 +5,7 @@ import {TypeExpressionCache} from "./../utils";
 
 export class TypeChecker {
     private typeCreator: TypeExpressionCache;
-    private node: ts.Node;
+    private currentNode: ts.SourceFile;
 
     constructor(private typeChecker: ts.TypeChecker) {
     }
@@ -14,8 +14,12 @@ export class TypeChecker {
         this.typeCreator = typeCreator;
     }
 
-    setCurrentNode(node: ts.Node) {
-        this.node = node;
+    setCurrentNode(node: ts.SourceFile) {
+        this.currentNode = node;
+    }
+
+    getExpressionFullText(expression: ts.Expression) {
+        return (expression.getFullText(this.currentNode) || "").trim();
     }
 
     getExtendsTypes(symbol: ts.Symbol) {
@@ -116,7 +120,7 @@ export class TypeChecker {
     }
 
     getTypeExpressionOfSymbol(symbol: ts.Symbol) {
-        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.node));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentNode));
     }
 
     getTypeExpressionFromTsType(tsType: ts.Type) {
@@ -216,6 +220,6 @@ export class TypeChecker {
     }
 
     typeToString(tsType: ts.Type) {
-        return this.typeChecker.typeToString(tsType, this.node, ts.TypeFormatFlags.None);
+        return this.typeChecker.typeToString(tsType, this.currentNode, ts.TypeFormatFlags.None);
     }
 }

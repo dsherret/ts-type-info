@@ -11,7 +11,7 @@ var BaseClassMethodDefinition = (function (_super) {
     __extends(BaseClassMethodDefinition, _super);
     function BaseClassMethodDefinition(typeChecker, symbol) {
         _super.call(this, class_method_parameter_definition_1.ClassMethodParameterDefinition, typeChecker, symbol);
-        this.fillDecorators(symbol);
+        this.fillDecorators(typeChecker, symbol);
         this.fillScope(symbol);
     }
     return BaseClassMethodDefinition;

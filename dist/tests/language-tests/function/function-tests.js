@@ -1,7 +1,7 @@
 var main_1 = require("./../../../main");
 var test_helpers_1 = require("./../../test-helpers");
 describe("function name tests", function () {
-    var code = "\nfunction myFunction() {\n}\nfunction myFunctionWithParameters(str: string, num: number) {\n    return new Date();\n}";
+    var code = "\nfunction myFunction() {\n}\nfunction myFunctionWithParameters(str: string, num: number, optionalParam?: string, defaultParam = new Date(), ...restParam: string[]) {\n    return new Date();\n}";
     var def = main_1.getStringInfo(code);
     test_helpers_1.runFunctionDefinitionTests(def.functions[0], {
         name: "myFunction",
@@ -17,6 +17,20 @@ describe("function name tests", function () {
             }, {
                 name: "num",
                 type: "number"
+            }, {
+                name: "optionalParam",
+                type: "string",
+                isOptional: true
+            }, {
+                name: "defaultParam",
+                type: "Date",
+                isOptional: true,
+                defaultExpressionText: "new Date()"
+            }, {
+                name: "restParam",
+                type: "string[]",
+                isRestParameter: true,
+                isOptional: true
             }]
     });
 });

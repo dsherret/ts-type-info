@@ -1,5 +1,5 @@
 import {ITypedDefinition} from "./../../../definitions";
-import {runTypeExpressionTests} from "./../types";
+import {runTypeExpressionTests} from "./../expressions";
 
 export function runTypedDefinitionTests(definition: ITypedDefinition, name: string) {
     if (definition == null) {

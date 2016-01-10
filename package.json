@@ -1,6 +1,6 @@
 {
   "name": "ts-type-info",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Experimental library to get the structure of TypeScript code.",
   "main": "dist/main.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "typescript": "^1.7.3"
   },
   "devDependencies": {
-    "code-block-writer": "^1.2.0",
+    "code-block-writer": "^1.5.2",
     "coveralls": "^2.11.6",
     "del": "^2.0.2",
     "gulp": "^3.9.0",

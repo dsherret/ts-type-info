@@ -9,7 +9,7 @@ var BaseClassPropertyDefinition = (function (_super) {
     __extends(BaseClassPropertyDefinition, _super);
     function BaseClassPropertyDefinition(typeChecker, symbol) {
         _super.call(this, typeChecker, symbol);
-        this.fillDecorators(symbol);
+        this.fillDecorators(typeChecker, symbol);
         this.fillScope(symbol);
     }
     return BaseClassPropertyDefinition;

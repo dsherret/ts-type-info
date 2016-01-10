@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {TypeExpression} from "./../../types";
+import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition} from "./../base";
 

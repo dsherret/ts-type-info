@@ -6,7 +6,7 @@ describe("class static method", () => {
     const code = `
 class MyClassWithStaticMethods {
     // parameters
-    static myParameterMethod(myParameter: string, myDefaultParameter = 15, myOptionalParameter?: string, ...myRestParameter: number[]) {
+    static myParameterMethod(myParameter: string, myDefaultParameter = "some string", myOptionalParameter?: string, ...myRestParameter: number[]) {
         return "";
     }
 
@@ -41,8 +41,9 @@ class MyClassWithStaticMethods {
             type: "string"
         }, {
             name: "myDefaultParameter",
-            type: "number",
-            isOptional: true
+            type: "string",
+            isOptional: true,
+            defaultExpressionText: `"some string"`
         }, {
             name: "myOptionalParameter",
             type: "string",

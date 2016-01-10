@@ -5,7 +5,7 @@ import {ClassPropertyDefinition} from "./class-property-definition";
 import {StaticMethodDefinition} from "./static-method-definition";
 import {StaticPropertyDefinition} from "./static-property-definition";
 import {DecoratorDefinition, TypeParameterDefinition} from "./../misc";
-import {TypeExpression} from "./../../types";
+import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition,
         IDecoratableDefinition, DecoratableDefinition,
@@ -26,7 +26,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         private _implements: TypeExpression[]) {
 
         this.fillName(symbol);
-        this.fillDecorators(symbol);
+        this.fillDecorators(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
     }
@@ -115,7 +115,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // DecoratableDefinition
-    fillDecorators: (symbol: ts.Symbol) => void;
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     decorators: DecoratorDefinition[];
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;

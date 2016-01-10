@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import {ParameterDefinition, TypeParameterDefinition} from "./../../definitions";
 import {IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./base";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {TypeExpression} from "./../../types";
+import {TypeExpression} from "./../../expressions";
 
 export class CallSignatureDefinition implements IReturnTypedDefinition, IParameteredDefinition<ParameterDefinition> {
     private _minArgumentCount: number;

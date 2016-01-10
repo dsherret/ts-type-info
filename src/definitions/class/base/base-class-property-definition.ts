@@ -8,12 +8,12 @@ export class BaseClassPropertyDefinition extends PropertyDefinition implements I
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol);
 
-        this.fillDecorators(symbol);
+        this.fillDecorators(typeChecker, symbol);
         this.fillScope(symbol);
     }
 
     // DecoratableDefinition
-    fillDecorators: (symbol: ts.Symbol) => void;
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     decorators: DecoratorDefinition[];
     // ScopeDefinition
     scope: Scope;
