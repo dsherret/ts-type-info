@@ -16,7 +16,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
         typescript: require("typescript")
     });
 
-    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "!./src/tests/language-tests/file/test-files/**/*.ts"])
+    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "!./src/tests/**/test-files/**/*.ts"])
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
         .pipe(replace(/(}\)\()(.*\|\|.*;)/g, '$1/* istanbul ignore next */$2'))

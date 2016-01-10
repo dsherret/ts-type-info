@@ -4,15 +4,17 @@ import * as path from "path";
 import * as tmp from "tmp";
 import * as fs from "fs";
 import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils} from "./utils";
+import {CompilerOptions} from "./compiler-options";
 
+export * from "./compiler-options";
 export * from "./definitions";
 export * from "./expressions";
 export * from "./scope";
 
-export function getFileInfo(fileNames: string[]): FileDefinition[] {
+export function getFileInfo(fileNames: string[], compilerOptions: CompilerOptions = {}): FileDefinition[] {
     verifyArray(fileNames);
 
-    const options: ts.CompilerOptions = { noLib: false, experimentalDecorators: true };
+    const options = getCompilerOptions(compilerOptions);
     const host = ts.createCompilerHost(options);
     const program = ts.createProgram(fileNames, options, host);
     const tsTypeChecker = program.getTypeChecker();
@@ -23,7 +25,11 @@ export function getFileInfo(fileNames: string[]): FileDefinition[] {
     typeChecker.setTypeCache(typeExpressionCache);
 
     const sourceFiles = program.getSourceFiles()
-        .filter(file => path.basename(file.fileName) !== "lib.d.ts")
+        .filter(file => {
+            const baseName = path.basename(file.fileName);
+
+            return baseName !== "lib.d.ts" && baseName !== "lib.es6.d.ts";
+        })
         .map(file => {
             typeChecker.setCurrentNode(file);
 
@@ -35,7 +41,7 @@ export function getFileInfo(fileNames: string[]): FileDefinition[] {
     return sourceFiles;
 }
 
-export function getStringInfo(code: string): FileDefinition {
+export function getStringInfo(code: string, compilerOptions: CompilerOptions = {}): FileDefinition {
     verifyString(code);
 
     const tmpFile = tmp.fileSync({ postfix: ".ts" });
@@ -44,7 +50,7 @@ export function getStringInfo(code: string): FileDefinition {
     try {
         code = StringUtils.ensureEndsWithNewline(code);
         fs.writeFileSync(tmpFile.name, code);
-        fileDefinition = getFileInfo([tmpFile.name])[0];
+        fileDefinition = getFileInfo([tmpFile.name], compilerOptions)[0];
     }
     finally {
         tmpFile.removeCallback();
@@ -63,4 +69,23 @@ function verifyString(code: string) {
     if (typeof code !== "string") {
         throw new Error("Please provide a string to getStringInfo");
     }
+}
+
+function getCompilerOptions(compilerOptions: CompilerOptions) {
+    function getValue<T>(currentValue: T, newValue: T) {
+        return (currentValue == null) ? newValue : currentValue;
+    }
+
+    let combinedOptions = compilerOptions as any as ts.CompilerOptions;
+
+    combinedOptions.allowNonTsExtensions = getValue(combinedOptions.allowNonTsExtensions, true);
+    combinedOptions.noLib = getValue(combinedOptions.noLib, false);
+    combinedOptions.experimentalDecorators = getValue(combinedOptions.experimentalDecorators, true);
+    combinedOptions.experimentalDecorators = getValue(combinedOptions.experimentalDecorators, true);
+    combinedOptions.experimentalAsyncFunctions = getValue(combinedOptions.experimentalAsyncFunctions, true);
+    combinedOptions.suppressExcessPropertyErrors = getValue(combinedOptions.suppressExcessPropertyErrors, true);
+    combinedOptions.suppressImplicitAnyIndexErrors = getValue(combinedOptions.suppressImplicitAnyIndexErrors, true);
+    combinedOptions.noImplicitAny = getValue(combinedOptions.noImplicitAny, false);
+
+    return combinedOptions;
 }
