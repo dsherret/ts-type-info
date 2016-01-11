@@ -2,7 +2,7 @@ var ExportableDefinition = (function () {
     function ExportableDefinition() {
     }
     ExportableDefinition.prototype.fillIsExported = function (typeChecker, symbol) {
-        this._isExported = typeChecker.isSymbolExportOfFile(symbol, typeChecker.getSourceFileOfSymbol(symbol));
+        this._isExported = typeChecker.isSymbolExportOfParent(symbol);
     };
     Object.defineProperty(ExportableDefinition.prototype, "isExported", {
         get: function () {

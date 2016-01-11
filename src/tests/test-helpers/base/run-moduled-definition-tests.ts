@@ -1,6 +1,7 @@
 ﻿import * as assert from "assert";
-import {IModuledDefinition, INamedDefinition} from "./../../../definitions";
+import {IModuledDefinition, INamedDefinition, IExportableDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
+import {runExportableDefinitionTests} from "./run-exportable-definition-tests";
 import {runNamespaceDefinitionTests} from "./../namespace";
 import {Moduled} from "./../structures";
 
@@ -9,10 +10,21 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
         throw "Moduled definition should not be null.";
     }
 
-    runNameArrayTests(definition.classes, expected.classNames);
-    runNameArrayTests(definition.interfaces, expected.interfaceNames);
-    runNameArrayTests(definition.functions, expected.functionNames);
-    runNameArrayTests(definition.enums, expected.enumNames);
+    describe("classes", () => {
+        runNameArrayTests(definition.classes, expected.classes);
+    });
+
+    describe("interfaces", () => {
+        runNameArrayTests(definition.interfaces, expected.interfaces);
+    });
+
+    describe("functions", () => {
+        runNameArrayTests(definition.functions, expected.functions);
+    });
+
+    describe("enums", () => {
+        runNameArrayTests(definition.enums, expected.enums);
+    });
 
     it("should have the expected number of namespaces", () => {
         assert.equal(definition.namespaces.length, (expected.namespaces || []).length);
@@ -25,14 +37,17 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
     });
 }
 
-function runNameArrayTests(definitions: INamedDefinition[], expectedNames: string[]) {
-    expectedNames = expectedNames || [];
+function runNameArrayTests(definitions: (INamedDefinition & IExportableDefinition)[], expected: { name: string; isExported?: boolean }[]) {
+    expected = expected || [];
 
     it("should have the expected number of definitions", () => {
-        assert.equal(definitions.length, expectedNames.length);
+        assert.equal(definitions.length, expected.length);
     });
 
-    expectedNames.forEach((name, i) => {
-        runNamedDefinitionTests(definitions[i], name);
+    expected.forEach((item, i) => {
+        describe(item.name, () => {
+            runNamedDefinitionTests(definitions[i], item.name);
+            runExportableDefinitionTests(definitions[i], item.isExported);
+        });
     });
 }

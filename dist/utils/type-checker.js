@@ -87,7 +87,7 @@ var TypeChecker = (function () {
         return this.typeChecker.getSignatureFromDeclaration(declaration);
     };
     TypeChecker.prototype.getSourceFileOfSymbol = function (symbol) {
-        var currentNode = (symbol.valueDeclaration || symbol.getDeclarations()[0]).parent;
+        var currentNode = this.getDeclarationFromSymbol(symbol).parent;
         while (currentNode != null && typeof currentNode.fileName !== "string") {
             currentNode = currentNode.parent;
         }
@@ -114,6 +114,9 @@ var TypeChecker = (function () {
     };
     TypeChecker.prototype.getSymbolsInScope = function (node, flags) {
         return this.typeChecker.getSymbolsInScope(node, flags);
+    };
+    TypeChecker.prototype.getSymbolParent = function (symbol) {
+        return symbol == null ? null : symbol.parent;
     };
     TypeChecker.prototype.getTypeExpressionAtLocation = function (node) {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
@@ -199,6 +202,10 @@ var TypeChecker = (function () {
     };
     TypeChecker.prototype.isSymbolInFile = function (symbol, file) {
         return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
+    };
+    TypeChecker.prototype.isSymbolExportOfParent = function (symbol) {
+        var parentSymbol = this.getSymbolParent(symbol);
+        return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[symbol.name] != null;
     };
     TypeChecker.prototype.isSymbolExportOfFile = function (symbol, file) {
         var fileSymbol = this.getSymbolAtLocation(file);

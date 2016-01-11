@@ -10,7 +10,7 @@ export abstract class ExportableDefinition implements IExportableDefinition {
     private _isExported: boolean;
 
     fillIsExported(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._isExported = typeChecker.isSymbolExportOfFile(symbol, typeChecker.getSourceFileOfSymbol(symbol));
+        this._isExported = typeChecker.isSymbolExportOfParent(symbol);
     }
 
     get isExported() {

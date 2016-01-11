@@ -113,7 +113,7 @@ export class TypeChecker {
     }
 
     getSourceFileOfSymbol(symbol: ts.Symbol) {
-        let currentNode: ts.Node = (symbol.valueDeclaration || symbol.getDeclarations()[0]).parent;
+        let currentNode = this.getDeclarationFromSymbol(symbol).parent;
 
         while (currentNode != null && typeof (currentNode as ts.SourceFile).fileName !== "string") {
             currentNode = currentNode.parent;
@@ -147,6 +147,10 @@ export class TypeChecker {
 
     getSymbolsInScope(node: ts.Node, flags: ts.SymbolFlags) {
         return this.typeChecker.getSymbolsInScope(node, flags);
+    }
+
+    getSymbolParent(symbol: ts.Symbol) {
+        return symbol == null ? null : (symbol as any).parent as ts.Symbol;
     }
 
     getTypeExpressionAtLocation(node: ts.Node) {
@@ -244,6 +248,12 @@ export class TypeChecker {
 
     isSymbolInFile(symbol: ts.Symbol, file: ts.SourceFile) {
         return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
+    }
+
+    isSymbolExportOfParent(symbol: ts.Symbol) {
+        let parentSymbol = this.getSymbolParent(symbol);
+
+        return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[symbol.name] != null;
     }
 
     isSymbolExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {

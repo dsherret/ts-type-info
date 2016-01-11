@@ -2,4 +2,5 @@
 
 export interface Namespace extends Moduled {
     name: string;
+    isExported?: boolean;
 }

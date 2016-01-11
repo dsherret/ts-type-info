@@ -1,9 +1,9 @@
 ﻿import {Namespace} from "./../namespace";
 
 export interface Moduled {
-    classNames?: string[];
-    interfaceNames?: string[];
-    functionNames?: string[];
-    enumNames?: string[];
+    classes?: { name: string; isExported?: boolean }[];
+    interfaces?: { name: string; isExported?: boolean }[];
+    functions?: { name: string; isExported?: boolean }[];
+    enums?: { name: string; isExported?: boolean }[];
     namespaces?: Namespace[];
 }
