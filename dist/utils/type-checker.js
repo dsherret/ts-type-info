@@ -88,7 +88,7 @@ var TypeChecker = (function () {
     };
     TypeChecker.prototype.getSourceFileOfSymbol = function (symbol) {
         var currentNode = this.getDeclarationFromSymbol(symbol).parent;
-        while (currentNode != null && typeof currentNode.fileName !== "string") {
+        while (currentNode != null && !this.isNodeSourceFile(currentNode)) {
             currentNode = currentNode.parent;
         }
         /* istanbul ignore if */
@@ -196,6 +196,9 @@ var TypeChecker = (function () {
             }
         }
         return fileReExports;
+    };
+    TypeChecker.prototype.isNodeSourceFile = function (node) {
+        return typeof node.fileName === "string";
     };
     TypeChecker.prototype.isOptionalProperty = function (symbol) {
         return symbol.valueDeclaration != null && symbol.valueDeclaration.questionToken != null;

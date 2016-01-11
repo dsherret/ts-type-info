@@ -115,7 +115,7 @@ export class TypeChecker {
     getSourceFileOfSymbol(symbol: ts.Symbol) {
         let currentNode = this.getDeclarationFromSymbol(symbol).parent;
 
-        while (currentNode != null && typeof (currentNode as ts.SourceFile).fileName !== "string") {
+        while (currentNode != null && !this.isNodeSourceFile(currentNode)) {
             currentNode = currentNode.parent;
         }
 
@@ -240,6 +240,10 @@ export class TypeChecker {
         }
 
         return fileReExports;
+    }
+
+    isNodeSourceFile(node: ts.Node) {
+        return typeof (node as ts.SourceFile).fileName === "string";
     }
 
     isOptionalProperty(symbol: ts.Symbol) {
