@@ -3,7 +3,7 @@ import {IBaseNamedDefinition} from "./../../../definitions";
 
 export function runNamedDefinitionTests(definition: IBaseNamedDefinition, name: string) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw `Named definition should not be null: ${name}`;
     }
 
     it(`should have a name ${name}`, () => {

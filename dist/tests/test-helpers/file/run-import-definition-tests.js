@@ -3,7 +3,7 @@ var path = require("path");
 var base_1 = require("./../base");
 function runImportDefinitionTests(definition, importStructure) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Import definition should not be null.";
     }
     describe("import " + importStructure.definitionName, function () {
         base_1.runNamedDefinitionTests(definition.definition, importStructure.definitionName);

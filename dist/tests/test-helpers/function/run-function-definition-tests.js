@@ -2,7 +2,7 @@ var base_1 = require("./../base");
 var base_2 = require("./base");
 function runFunctionDefinitionTests(definition, func) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Function definition should not be null.";
     }
     describe("function " + func.name, function () {
         base_2.runBaseFunctionDefinitionTests(definition, func);

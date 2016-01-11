@@ -4,7 +4,7 @@ import {runBaseClassMethodDefinitionTests} from "./base";
 
 export function runStaticMethodDefinitionTests(definition: StaticMethodDefinition, method: StaticMethod) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Static method definition should not be null.";
     }
 
     describe(`static method ${method.name}`, () => {

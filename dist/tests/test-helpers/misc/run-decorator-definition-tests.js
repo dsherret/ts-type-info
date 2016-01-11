@@ -2,7 +2,7 @@ var assert = require("assert");
 var base_1 = require("./../base");
 function runDecoratorDefinitionTests(definition, decorator) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Decorator definition should not be null.";
     }
     describe("decorator " + decorator.name, function () {
         base_1.runNamedDefinitionTests(definition, decorator.name);

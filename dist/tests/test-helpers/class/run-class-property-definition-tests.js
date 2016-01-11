@@ -2,7 +2,7 @@ var assert = require("assert");
 var base_1 = require("./../base");
 function runClassPropertyDefinitionTests(definition, property) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Class property definition should not be null.";
     }
     describe("property " + property.name, function () {
         base_1.runPropertyDefinitionTests(definition, property);

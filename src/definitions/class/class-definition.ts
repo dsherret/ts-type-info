@@ -120,10 +120,6 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
-
-    static isClassDefinition(symbol: ts.Symbol) {
-        return (symbol.flags & ts.SymbolFlags.Class) !== 0;
-    }
 }
 
 applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition]);

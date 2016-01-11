@@ -1,7 +1,7 @@
 var function_1 = require("./../function");
 function runInterfaceMethodDefinitionTests(definition, func) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Interface definition should not be null.";
     }
     describe("method " + func.name, function () {
         function_1.runBaseFunctionDefinitionTests(definition, func);

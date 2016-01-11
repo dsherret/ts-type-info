@@ -4,7 +4,7 @@ import {runBaseParameterDefinitionTests} from "./base";
 
 export function runParameterDefinitionTests(definition: ParameterDefinition, param: Parameter) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Parameter definition should not be null.";
     }
 
     describe(`parameter ${param.name}`, () => {

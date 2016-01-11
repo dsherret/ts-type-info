@@ -18,6 +18,40 @@ export class TypeChecker {
         this.currentNode = node;
     }
 
+    getDeclarationFromSymbol(symbol: ts.Symbol) {
+        if (symbol.valueDeclaration != null) {
+            return symbol.valueDeclaration;
+        }
+        else {
+            const declarations = symbol.getDeclarations();
+
+            if (declarations.length > 1) {
+                console.warn(`Not implemented. Symbol has more than one declaration: ${symbol.name}`);
+            }
+            else if (declarations.length === 0) {
+                throw new Error(`Declaration length should not be 0 for symbol: ${symbol.name}`);
+            }
+
+            return declarations[0];
+        }
+    }
+
+    getLocalSymbolsFromDeclaration(declaration: ts.Declaration) {
+        const locals = (declaration as any).locals as { [name: string]: ts.Symbol };
+
+        if (locals == null) {
+            return [] as ts.Symbol[];
+        }
+        else {
+            return Object.keys(locals).map(key => {
+                const symbol = locals[key];
+                const exportSymbol = (symbol as any).exportSymbol as ts.Symbol;
+
+                return exportSymbol || symbol;
+            });
+        }
+    }
+
     getExpressionFullText(expression: ts.Expression) {
         return (expression.getFullText(this.currentNode) || "").trim();
     }
@@ -219,7 +253,31 @@ export class TypeChecker {
         return fileSymbol != null && fileSymbol.exports[symbol.name] != null;
     }
 
+    isSymbolClass(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Class);
+    }
+
+    isSymbolEnum(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Enum);
+    }
+
+    isSymbolFunction(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Function);
+    }
+
+    isSymbolInterface(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Interface);
+    }
+
+    isSymbolNamespace(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Namespace);
+    }
+
     typeToString(tsType: ts.Type) {
         return this.typeChecker.typeToString(tsType, this.currentNode, ts.TypeFormatFlags.None);
+    }
+
+    private symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {
+        return (symbol.getFlags() & flag) !== 0;
     }
 }

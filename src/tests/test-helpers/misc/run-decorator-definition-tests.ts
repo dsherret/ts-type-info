@@ -5,7 +5,7 @@ import {runNamedDefinitionTests} from "./../base";
 
 export function runDecoratorDefinitionTests(definition: DecoratorDefinition, decorator: Decorator) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Decorator definition should not be null.";
     }
 
     describe(`decorator ${decorator.name}`, () => {

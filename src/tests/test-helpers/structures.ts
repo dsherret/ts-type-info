@@ -4,5 +4,6 @@ export * from "./structures/enum";
 export * from "./structures/file";
 export * from "./structures/function";
 export * from "./structures/interface";
+export * from "./structures/namespace";
 export * from "./structures/property";
 export * from "./structures/expressions";

@@ -7,6 +7,7 @@ __export(require("./structures/enum"));
 __export(require("./structures/file"));
 __export(require("./structures/function"));
 __export(require("./structures/interface"));
+__export(require("./structures/namespace"));
 __export(require("./structures/property"));
 __export(require("./structures/expressions"));
 

@@ -4,7 +4,7 @@ import {runPropertyDefinitionTests} from "./../base";
 
 export function runStaticPropertyDefinitionTests(definition: StaticPropertyDefinition, property: StaticProperty) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Static property definition should not be null.";
     }
 
     describe(`property ${property.name}`, () => {

@@ -13,10 +13,6 @@ export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefiniti
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
-
-    static isFunctionDefinition(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Function) !== 0;
-    }
 }
 
 applyMixins(FunctionDefinition, [ExportableDefinition]);

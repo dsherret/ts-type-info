@@ -3,7 +3,6 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
 var base_1 = require("./base");
 var parameter_definition_1 = require("./parameter-definition");
 var base_2 = require("./../base");
@@ -14,9 +13,6 @@ var FunctionDefinition = (function (_super) {
         _super.call(this, parameter_definition_1.ParameterDefinition, typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
     }
-    FunctionDefinition.isFunctionDefinition = function (symbol) {
-        return (symbol.getFlags() & 16 /* Function */) !== 0;
-    };
     return FunctionDefinition;
 })(base_1.BaseFunctionDefinition);
 exports.FunctionDefinition = FunctionDefinition;

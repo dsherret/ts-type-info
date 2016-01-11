@@ -4,7 +4,7 @@ import {runBaseFunctionDefinitionTests} from "./../function";
 
 export function runInterfaceMethodDefinitionTests(definition: InterfaceMethodDefinition, func: InterfaceMethod) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Interface definition should not be null.";
     }
 
     describe(`method ${func.name}`, () => {

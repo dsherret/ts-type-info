@@ -6,7 +6,7 @@ import {runTypedDefinitionTests} from "./run-typed-definition-tests";
 
 export function runPropertyDefinitionTests(definition: PropertyDefinition, property: Property) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Property definition should not be null.";
     }
 
     describe(`property ${property.name}`, () => {

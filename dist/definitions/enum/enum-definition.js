@@ -1,4 +1,3 @@
-var ts = require("typescript");
 var utils_1 = require("./../../utils");
 var enum_member_definition_1 = require("./enum-member-definition");
 var base_1 = require("./../base");
@@ -28,9 +27,6 @@ var EnumDefinition = (function () {
                 console.warn("Unknown enum member: " + symbol.name);
             }
         });
-    };
-    EnumDefinition.isEnumDefinition = function (symbol) {
-        return (symbol.flags & 384 /* Enum */) !== 0;
     };
     return EnumDefinition;
 })();

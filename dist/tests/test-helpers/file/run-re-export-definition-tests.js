@@ -3,7 +3,7 @@ var path = require("path");
 var base_1 = require("./../base");
 function runReExportDefinitionTests(definition, reExport) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Re-export definition should not be null.";
     }
     describe("re-export " + reExport.definitionName, function () {
         base_1.runNamedDefinitionTests(definition.definition, reExport.definitionName);

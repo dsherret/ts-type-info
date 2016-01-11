@@ -1,4 +1,3 @@
-var ts = require("typescript");
 var constructor_definition_1 = require("./constructor-definition");
 var class_method_definition_1 = require("./class-method-definition");
 var class_property_definition_1 = require("./class-property-definition");
@@ -120,9 +119,6 @@ var ClassDefinition = (function () {
         if (this._constructorDef != null) {
             throw "Unknown error: Duplicate constructors on " + this.name + ".";
         }
-    };
-    ClassDefinition.isClassDefinition = function (symbol) {
-        return (symbol.flags & 32 /* Class */) !== 0;
     };
     return ClassDefinition;
 })();

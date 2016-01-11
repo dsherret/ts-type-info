@@ -5,10 +5,6 @@ import {runPropertyDefinitionTests} from "./../../base/run-property-definition-t
 import {runScopedDefinitionTests} from "./../../base/run-scoped-definition-tests";
 
 export function runBaseClassPropertyDefinitionTests(definition: BaseClassPropertyDefinition, property: ClassProperty) {
-    if (definition == null) {
-        throw "Definition should not be null.";
-    }
-
     runPropertyDefinitionTests(definition, property);
     runScopedDefinitionTests(definition, typeof property.scope === "number" ? property.scope : Scope.public);
 }

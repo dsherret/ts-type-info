@@ -1,9 +1,10 @@
-import {ClassDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
+import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
         InterfaceDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../definitions";
 import {TypeChecker, KeyValueCache} from "./../utils";
 import * as ts from "typescript";
 
 export class DefinitionCache {
+    private namespaces = new KeyValueCache<ts.Symbol, NamespaceDefinition>();
     private classes = new KeyValueCache<ts.Symbol, ClassDefinition>();
     private enums = new KeyValueCache<ts.Symbol, EnumDefinition>();
     private files = new KeyValueCache<ts.SourceFile, FileDefinition>();
@@ -31,10 +32,28 @@ export class DefinitionCache {
         return fileDefinition;
     }
 
+    getNamespaceDefinition(symbol: ts.Symbol) {
+        let namespaceDefinition: NamespaceDefinition;
+
+        if (this.typeChecker.isSymbolNamespace(symbol)) {
+            namespaceDefinition = this.namespaces.get(symbol);
+
+            if (namespaceDefinition == null) {
+                namespaceDefinition = new NamespaceDefinition(this.typeChecker, symbol);
+
+                this.namespaces.add(symbol, namespaceDefinition);
+
+                namespaceDefinition.fillMembersBySymbol(this.typeChecker, this, symbol);
+            }
+        }
+
+        return namespaceDefinition;
+    }
+
     getClassDefinition(symbol: ts.Symbol) {
         let classDefinition: ClassDefinition;
 
-        if (ClassDefinition.isClassDefinition(symbol)) {
+        if (this.typeChecker.isSymbolClass(symbol)) {
             classDefinition = this.classes.get(symbol);
 
             if (classDefinition == null) {
@@ -54,7 +73,7 @@ export class DefinitionCache {
     getInterfaceDefinition(symbol: ts.Symbol) {
         let interfaceDefinition: InterfaceDefinition;
 
-        if (InterfaceDefinition.isInterfaceDefinition(symbol)) {
+        if (this.typeChecker.isSymbolInterface(symbol)) {
             interfaceDefinition = this.interfaces.get(symbol);
 
             if (interfaceDefinition == null) {
@@ -72,7 +91,7 @@ export class DefinitionCache {
     getEnumDefinition(symbol: ts.Symbol) {
         let enumDefinition: EnumDefinition;
 
-        if (EnumDefinition.isEnumDefinition(symbol)) {
+        if (this.typeChecker.isSymbolEnum(symbol)) {
             enumDefinition = this.enums.get(symbol);
 
             if (enumDefinition == null) {
@@ -87,7 +106,7 @@ export class DefinitionCache {
     getFunctionDefinition(symbol: ts.Symbol) {
         let functionDefinition: FunctionDefinition;
 
-        if (FunctionDefinition.isFunctionDefinition(symbol)) {
+        if (this.typeChecker.isSymbolFunction(symbol)) {
             functionDefinition = this.functions.get(symbol);
 
             if (functionDefinition == null) {
@@ -104,6 +123,7 @@ export class DefinitionCache {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||
             this.getInterfaceDefinition(symbol) ||
-            this.getEnumDefinition(symbol);
+            this.getEnumDefinition(symbol) ||
+            this.getNamespaceDefinition(symbol);
     }
 }

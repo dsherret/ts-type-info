@@ -3,7 +3,7 @@ import {IExportableDefinition} from "./../../../definitions";
 
 export function runExportableDefinitionTests(definition: IExportableDefinition, isExported: boolean) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Exportable definition should not be null.";
     }
 
     it(`should ${isExported ? "be exported." : "not be exported."}`, () => {

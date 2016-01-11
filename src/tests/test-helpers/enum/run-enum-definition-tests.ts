@@ -6,7 +6,7 @@ import {runEnumMemberDefinitionTests} from "./run-enum-member-definition-tests";
 
 export function runEnumDefinitionTests(definition: EnumDefinition, enumDef: Enum) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Enum definition should not be null.";
     }
 
     describe(`enum ${enumDef.name}`, () => {

@@ -4,10 +4,6 @@ import {runBaseFunctionDefinitionTests} from "./../../function/base/run-base-fun
 import {runScopedDefinitionTests} from "./../../base";
 
 export function runBaseClassMethodDefinitionTests(definition: BaseClassMethodDefinition, method: ClassMethod) {
-    if (definition == null) {
-        throw "Definition should not be null.";
-    }
-
     runBaseFunctionDefinitionTests(definition, method);
     runScopedDefinitionTests(definition, method.scope);
 }

@@ -1,7 +1,7 @@
 var expressions_1 = require("./../expressions");
 function runTypedDefinitionTests(definition, name) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Typed definition should not be null.";
     }
     expressions_1.runTypeExpressionTests(definition.typeExpression, name);
 }

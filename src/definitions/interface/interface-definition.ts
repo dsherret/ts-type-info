@@ -71,10 +71,6 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
-
-    static isInterfaceDefinition(symbol: ts.Symbol) {
-        return (symbol.flags & ts.SymbolFlags.Interface) !== 0;
-    }
 }
 
 applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition]);

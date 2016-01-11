@@ -6,7 +6,7 @@ import {runNamedDefinitionTests} from "./../base";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, reExport: ReExport) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Re-export definition should not be null.";
     }
 
     describe(`re-export ${reExport.definitionName}`, () => {

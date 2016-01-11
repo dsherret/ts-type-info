@@ -8,7 +8,7 @@ export interface INamedDefinition extends IBaseNamedDefinition {
     fillName(symbol: ts.Symbol): void;
 }
 
-export abstract class NamedDefinition {
+export abstract class NamedDefinition implements INamedDefinition {
     private _name: string;
 
     fillName(symbol: ts.Symbol) {

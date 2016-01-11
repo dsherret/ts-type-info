@@ -3,6 +3,7 @@ var utils_1 = require("./../utils");
 var DefinitionCache = (function () {
     function DefinitionCache(typeChecker) {
         this.typeChecker = typeChecker;
+        this.namespaces = new utils_1.KeyValueCache();
         this.classes = new utils_1.KeyValueCache();
         this.enums = new utils_1.KeyValueCache();
         this.files = new utils_1.KeyValueCache();
@@ -19,9 +20,21 @@ var DefinitionCache = (function () {
         }
         return fileDefinition;
     };
+    DefinitionCache.prototype.getNamespaceDefinition = function (symbol) {
+        var namespaceDefinition;
+        if (this.typeChecker.isSymbolNamespace(symbol)) {
+            namespaceDefinition = this.namespaces.get(symbol);
+            if (namespaceDefinition == null) {
+                namespaceDefinition = new definitions_1.NamespaceDefinition(this.typeChecker, symbol);
+                this.namespaces.add(symbol, namespaceDefinition);
+                namespaceDefinition.fillMembersBySymbol(this.typeChecker, this, symbol);
+            }
+        }
+        return namespaceDefinition;
+    };
     DefinitionCache.prototype.getClassDefinition = function (symbol) {
         var classDefinition;
-        if (definitions_1.ClassDefinition.isClassDefinition(symbol)) {
+        if (this.typeChecker.isSymbolClass(symbol)) {
             classDefinition = this.classes.get(symbol);
             if (classDefinition == null) {
                 classDefinition = new definitions_1.ClassDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypes(symbol), this.typeChecker.getImplementsTypes(symbol));
@@ -32,7 +45,7 @@ var DefinitionCache = (function () {
     };
     DefinitionCache.prototype.getInterfaceDefinition = function (symbol) {
         var interfaceDefinition;
-        if (definitions_1.InterfaceDefinition.isInterfaceDefinition(symbol)) {
+        if (this.typeChecker.isSymbolInterface(symbol)) {
             interfaceDefinition = this.interfaces.get(symbol);
             if (interfaceDefinition == null) {
                 interfaceDefinition = new definitions_1.InterfaceDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypes(symbol));
@@ -43,7 +56,7 @@ var DefinitionCache = (function () {
     };
     DefinitionCache.prototype.getEnumDefinition = function (symbol) {
         var enumDefinition;
-        if (definitions_1.EnumDefinition.isEnumDefinition(symbol)) {
+        if (this.typeChecker.isSymbolEnum(symbol)) {
             enumDefinition = this.enums.get(symbol);
             if (enumDefinition == null) {
                 enumDefinition = new definitions_1.EnumDefinition(this.typeChecker, symbol);
@@ -54,7 +67,7 @@ var DefinitionCache = (function () {
     };
     DefinitionCache.prototype.getFunctionDefinition = function (symbol) {
         var functionDefinition;
-        if (definitions_1.FunctionDefinition.isFunctionDefinition(symbol)) {
+        if (this.typeChecker.isSymbolFunction(symbol)) {
             functionDefinition = this.functions.get(symbol);
             if (functionDefinition == null) {
                 functionDefinition = new definitions_1.FunctionDefinition(this.typeChecker, symbol);
@@ -68,7 +81,8 @@ var DefinitionCache = (function () {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||
             this.getInterfaceDefinition(symbol) ||
-            this.getEnumDefinition(symbol);
+            this.getEnumDefinition(symbol) ||
+            this.getNamespaceDefinition(symbol);
     };
     return DefinitionCache;
 })();

@@ -6,7 +6,7 @@ import {runNamedDefinitionTests} from "./../base";
 
 export function runImportDefinitionTests(definition: ImportDefinition, importStructure: Import) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Import definition should not be null.";
     }
 
     describe(`import ${importStructure.definitionName}`, () => {

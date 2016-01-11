@@ -1,4 +1,3 @@
-var ts = require("typescript");
 var misc_1 = require("./../misc");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
@@ -74,9 +73,6 @@ var InterfaceDefinition = (function () {
                 console.warn("Not implemented interface member: " + member.getName());
             }
         });
-    };
-    InterfaceDefinition.isInterfaceDefinition = function (symbol) {
-        return (symbol.flags & 64 /* Interface */) !== 0;
     };
     return InterfaceDefinition;
 })();

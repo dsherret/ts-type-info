@@ -2,7 +2,7 @@ var assert = require("assert");
 var base_1 = require("./../base");
 function runEnumMemberDefinitionTests(definition, enumMember) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Enum member definition should not be null.";
     }
     describe("enum member " + enumMember.name, function () {
         base_1.runNamedDefinitionTests(definition, enumMember.name);

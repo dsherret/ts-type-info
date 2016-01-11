@@ -37,10 +37,6 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition {
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
-
-    static isEnumDefinition(symbol: ts.Symbol) {
-        return (symbol.flags & ts.SymbolFlags.Enum) !== 0;
-    }
 }
 
 applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition]);

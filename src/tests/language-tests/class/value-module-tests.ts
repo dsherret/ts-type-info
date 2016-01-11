@@ -4,6 +4,7 @@ import {runClassMethodDefinitionTests, runStaticMethodDefinitionTests} from "./.
 
 describe("value module", () => {
     const code = `
+// declaration merging
 declare class MyClass {
     myMethod(num: number): string;
 }

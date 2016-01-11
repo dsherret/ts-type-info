@@ -5,7 +5,7 @@ import {runPropertyDefinitionTests} from "./../base";
 
 export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, property: ClassProperty) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Class property definition should not be null.";
     }
 
     describe(`property ${property.name}`, () => {

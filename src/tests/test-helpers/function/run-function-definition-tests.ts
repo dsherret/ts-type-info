@@ -5,7 +5,7 @@ import {runBaseFunctionDefinitionTests} from "./base";
 
 export function runFunctionDefinitionTests(definition: FunctionDefinition, func: Function) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Function definition should not be null.";
     }
 
     describe(`function ${func.name}`, () => {

@@ -10,6 +10,34 @@ var TypeChecker = (function () {
     TypeChecker.prototype.setCurrentNode = function (node) {
         this.currentNode = node;
     };
+    TypeChecker.prototype.getDeclarationFromSymbol = function (symbol) {
+        if (symbol.valueDeclaration != null) {
+            return symbol.valueDeclaration;
+        }
+        else {
+            var declarations = symbol.getDeclarations();
+            if (declarations.length > 1) {
+                console.warn("Not implemented. Symbol has more than one declaration: " + symbol.name);
+            }
+            else if (declarations.length === 0) {
+                throw new Error("Declaration length should not be 0 for symbol: " + symbol.name);
+            }
+            return declarations[0];
+        }
+    };
+    TypeChecker.prototype.getLocalSymbolsFromDeclaration = function (declaration) {
+        var locals = declaration.locals;
+        if (locals == null) {
+            return [];
+        }
+        else {
+            return Object.keys(locals).map(function (key) {
+                var symbol = locals[key];
+                var exportSymbol = symbol.exportSymbol;
+                return exportSymbol || symbol;
+            });
+        }
+    };
     TypeChecker.prototype.getExpressionFullText = function (expression) {
         return (expression.getFullText(this.currentNode) || "").trim();
     };
@@ -177,8 +205,26 @@ var TypeChecker = (function () {
         // when a file doesn't have exports the symbol will be null
         return fileSymbol != null && fileSymbol.exports[symbol.name] != null;
     };
+    TypeChecker.prototype.isSymbolClass = function (symbol) {
+        return this.symbolHasFlag(symbol, 32 /* Class */);
+    };
+    TypeChecker.prototype.isSymbolEnum = function (symbol) {
+        return this.symbolHasFlag(symbol, 384 /* Enum */);
+    };
+    TypeChecker.prototype.isSymbolFunction = function (symbol) {
+        return this.symbolHasFlag(symbol, 16 /* Function */);
+    };
+    TypeChecker.prototype.isSymbolInterface = function (symbol) {
+        return this.symbolHasFlag(symbol, 64 /* Interface */);
+    };
+    TypeChecker.prototype.isSymbolNamespace = function (symbol) {
+        return this.symbolHasFlag(symbol, 1536 /* Namespace */);
+    };
     TypeChecker.prototype.typeToString = function (tsType) {
         return this.typeChecker.typeToString(tsType, this.currentNode, 0 /* None */);
+    };
+    TypeChecker.prototype.symbolHasFlag = function (symbol, flag) {
+        return (symbol.getFlags() & flag) !== 0;
     };
     return TypeChecker;
 })();

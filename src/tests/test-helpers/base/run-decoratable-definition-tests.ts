@@ -5,7 +5,7 @@ import {Decorator} from "./../structures";
 
 export function runDecoratableDefinitionTests(definition: IDecoratableDefinition, decorators: Decorator[]) {
     if (definition == null) {
-        throw "Definition should not be null.";
+        throw "Decoratable definition should not be null.";
     }
 
     it(`should have ${decorators.length} parameters`, () => {
