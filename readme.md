@@ -81,6 +81,7 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
     enums: [],
     functions: [],
     interfaces: [],
+    namespaces: [],
     imports: [],
     reExports: []
 }]
