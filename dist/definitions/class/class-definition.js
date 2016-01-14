@@ -1,8 +1,8 @@
 var constructor_definition_1 = require("./constructor-definition");
 var class_method_definition_1 = require("./class-method-definition");
 var class_property_definition_1 = require("./class-property-definition");
-var static_method_definition_1 = require("./static-method-definition");
-var static_property_definition_1 = require("./static-property-definition");
+var class_static_method_definition_1 = require("./class-static-method-definition");
+var class_static_property_definition_1 = require("./class-static-property-definition");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var ClassDefinition = (function () {
@@ -103,10 +103,10 @@ var ClassDefinition = (function () {
             if (staticMember.getName() === "prototype") {
             }
             else if (typeChecker.isSymbolStaticMethod(staticMember)) {
-                _this._staticMethods.push(new static_method_definition_1.StaticMethodDefinition(typeChecker, staticMember));
+                _this._staticMethods.push(new class_static_method_definition_1.ClassStaticMethodDefinition(typeChecker, staticMember));
             }
             else if (typeChecker.isSymbolStaticProperty(staticMember)) {
-                _this._staticProperties.push(new static_property_definition_1.StaticPropertyDefinition(typeChecker, staticMember));
+                _this._staticProperties.push(new class_static_property_definition_1.ClassStaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
                 console.warn("Not implemented static member: " + staticMember.getName());

@@ -2,8 +2,8 @@ var assert = require("assert");
 var base_1 = require("./../base");
 var run_class_property_definition_tests_1 = require("./run-class-property-definition-tests");
 var run_class_method_definition_tests_1 = require("./run-class-method-definition-tests");
-var run_static_property_definition_tests_1 = require("./run-static-property-definition-tests");
-var run_static_method_definition_tests_1 = require("./run-static-method-definition-tests");
+var run_class_static_property_definition_tests_1 = require("./run-class-static-property-definition-tests");
+var run_class_static_method_definition_tests_1 = require("./run-class-static-method-definition-tests");
 var run_constructor_definition_tests_1 = require("./run-constructor-definition-tests");
 var expressions_1 = require("./../../expressions");
 function runClassDefinitionTests(definition, structure) {
@@ -39,7 +39,7 @@ function runClassDefinitionTests(definition, structure) {
             assert.equal(definition.staticMethods.length, structure.staticMethods.length);
         });
         structure.staticMethods.forEach(function (methodStructure, i) {
-            run_static_method_definition_tests_1.runStaticMethodDefinitionTests(definition.staticMethods[i], methodStructure);
+            run_class_static_method_definition_tests_1.runClassStaticMethodDefinitionTests(definition.staticMethods[i], methodStructure);
         });
     });
     describe("staticProperties", function () {
@@ -47,7 +47,7 @@ function runClassDefinitionTests(definition, structure) {
             assert.equal(definition.staticProperties.length, structure.staticProperties.length);
         });
         structure.staticProperties.forEach(function (propertyStructure, i) {
-            run_static_property_definition_tests_1.runStaticPropertyDefinitionTests(definition.staticProperties[i], propertyStructure);
+            run_class_static_property_definition_tests_1.runClassStaticPropertyDefinitionTests(definition.staticProperties[i], propertyStructure);
         });
     });
     describe("extends", function () {

@@ -37,4 +37,4 @@ describe("class static property tests", function () {
     });
 });
 
-//# sourceMappingURL=static-property-tests.js.map
+//# sourceMappingURL=class-static-property-tests.js.map

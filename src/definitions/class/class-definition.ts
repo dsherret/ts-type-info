@@ -2,8 +2,8 @@ import * as ts from "typescript";
 import {ConstructorDefinition} from "./constructor-definition";
 import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
-import {StaticMethodDefinition} from "./static-method-definition";
-import {StaticPropertyDefinition} from "./static-property-definition";
+import {ClassStaticMethodDefinition} from "./class-static-method-definition";
+import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition,
@@ -15,8 +15,8 @@ import {INamedDefinition, NamedDefinition,
 export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition {
     private _methods: ClassMethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
-    private _staticMethods: StaticMethodDefinition[] = [];
-    private _staticProperties: StaticPropertyDefinition[] = [];
+    private _staticMethods: ClassStaticMethodDefinition[] = [];
+    private _staticProperties: ClassStaticPropertyDefinition[] = [];
     private _constructorDef: ConstructorDefinition;
     private _typeParameters: TypeParameterDefinition[] = [];
 
@@ -94,10 +94,10 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
                 // ignore
             }
             else if (typeChecker.isSymbolStaticMethod(staticMember)) {
-                this._staticMethods.push(new StaticMethodDefinition(typeChecker, staticMember));
+                this._staticMethods.push(new ClassStaticMethodDefinition(typeChecker, staticMember));
             }
             else if (typeChecker.isSymbolStaticProperty(staticMember)) {
-                this._staticProperties.push(new StaticPropertyDefinition(typeChecker, staticMember));
+                this._staticProperties.push(new ClassStaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
                 console.warn(`Not implemented static member: ${staticMember.getName()}`);

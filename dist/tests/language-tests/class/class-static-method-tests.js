@@ -48,4 +48,4 @@ describe("class static method", function () {
     });
 });
 
-//# sourceMappingURL=static-method-tests.js.map
+//# sourceMappingURL=class-static-method-tests.js.map

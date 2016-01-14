@@ -4,13 +4,13 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var base_1 = require("./base");
-var StaticMethodDefinition = (function (_super) {
-    __extends(StaticMethodDefinition, _super);
-    function StaticMethodDefinition() {
+var ClassStaticMethodDefinition = (function (_super) {
+    __extends(ClassStaticMethodDefinition, _super);
+    function ClassStaticMethodDefinition() {
         _super.apply(this, arguments);
     }
-    return StaticMethodDefinition;
+    return ClassStaticMethodDefinition;
 })(base_1.BaseClassMethodDefinition);
-exports.StaticMethodDefinition = StaticMethodDefinition;
+exports.ClassStaticMethodDefinition = ClassStaticMethodDefinition;
 
-//# sourceMappingURL=static-method-definition.js.map
+//# sourceMappingURL=class-static-method-definition.js.map

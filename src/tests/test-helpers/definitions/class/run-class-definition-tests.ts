@@ -4,8 +4,8 @@ import {ClassDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests} from "./../base";
 import {runClassPropertyDefinitionTests} from "./run-class-property-definition-tests";
 import {runClassMethodDefinitionTests} from "./run-class-method-definition-tests";
-import {runStaticPropertyDefinitionTests} from "./run-static-property-definition-tests";
-import {runStaticMethodDefinitionTests} from "./run-static-method-definition-tests";
+import {runClassStaticPropertyDefinitionTests} from "./run-class-static-property-definition-tests";
+import {runClassStaticMethodDefinitionTests} from "./run-class-static-method-definition-tests";
 import {runConstructorDefinitionTests} from "./run-constructor-definition-tests";
 import {runTypeExpressionTests} from "./../../expressions";
 
@@ -49,7 +49,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
         });
 
         structure.staticMethods.forEach((methodStructure, i) => {
-            runStaticMethodDefinitionTests(definition.staticMethods[i], methodStructure);
+            runClassStaticMethodDefinitionTests(definition.staticMethods[i], methodStructure);
         });
     });
 
@@ -59,7 +59,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
         });
 
         structure.staticProperties.forEach((propertyStructure, i) => {
-            runStaticPropertyDefinitionTests(definition.staticProperties[i], propertyStructure);
+            runClassStaticPropertyDefinitionTests(definition.staticProperties[i], propertyStructure);
         });
     });
 
