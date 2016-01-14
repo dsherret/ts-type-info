@@ -7,15 +7,8 @@ var CallSignatureDefinition = (function () {
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
         this.fillParametersBySignature(parameter_definition_1.ParameterDefinition, typeChecker, signature);
         this.fillTypeParametersBySignature(typeChecker, signature);
-        this._minArgumentCount = typeChecker.getMinArgumentCount(signature);
+        this.minArgumentCount = typeChecker.getMinArgumentCount(signature);
     }
-    Object.defineProperty(CallSignatureDefinition.prototype, "minArgumentCount", {
-        get: function () {
-            return this._minArgumentCount;
-        },
-        enumerable: true,
-        configurable: true
-    });
     return CallSignatureDefinition;
 })();
 exports.CallSignatureDefinition = CallSignatureDefinition;

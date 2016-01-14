@@ -3,8 +3,8 @@ import {BaseClassPropertyDefinition} from "./base";
 import {TypeChecker} from "./../../utils";
 
 export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
-    private _isAccessor: boolean;
-    private _isReadonly: boolean;
+    isAccessor: boolean;
+    isReadonly: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol);
@@ -12,17 +12,9 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
         this.fillAccessorInformation(symbol);
     }
 
-    get isAccessor() {
-        return this._isAccessor;
-    }
-
-    get isReadonly() {
-        return this._isReadonly;
-    }
-
     private fillAccessorInformation(symbol: ts.Symbol) {
         const flags = symbol.getFlags();
-        this._isAccessor = (flags & ts.SymbolFlags.GetAccessor) !== 0;
-        this._isReadonly = this._isAccessor && (flags & ts.SymbolFlags.SetAccessor) === 0;
+        this.isAccessor = (flags & ts.SymbolFlags.GetAccessor) !== 0;
+        this.isReadonly = this.isAccessor && (flags & ts.SymbolFlags.SetAccessor) === 0;
     }
 }

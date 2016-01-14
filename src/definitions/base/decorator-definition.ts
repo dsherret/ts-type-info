@@ -4,8 +4,8 @@ import {Expression} from "./../../expressions";
 import {TypeChecker, TypeGuards} from "./../../utils";
 
 export class DecoratorDefinition implements IBaseNamedDefinition {
-    private _name: string;
-    private _arguments: Expression[] = [];
+    name: string;
+    arguments: Expression[] = [];
 
     constructor(typeChecker: TypeChecker, decorator: ts.Decorator) {
         let decoratorExpression = decorator.expression;
@@ -17,18 +17,10 @@ export class DecoratorDefinition implements IBaseNamedDefinition {
         }
     }
 
-    get name() {
-        return this._name;
-    }
-
-    get arguments() {
-        return this._arguments;
-    }
-
     private fillName(decoratorExpression: ts.LeftHandSideExpression) {
         /* istanbul ignore else */
         if (TypeGuards.isLiteralExpression(decoratorExpression)) {
-            this._name = decoratorExpression.text;
+            this.name = decoratorExpression.text;
         }
         else if (decoratorExpression != null) {
             this.fillName((decoratorExpression as any)["expression"] as ts.LiteralExpression);
@@ -40,7 +32,7 @@ export class DecoratorDefinition implements IBaseNamedDefinition {
 
     private fillArguments(typeChecker: TypeChecker, args: ts.NodeArray<ts.Expression>) {
         for (let arg of args) {
-            this._arguments.push(new Expression(typeChecker, arg));
+            this.arguments.push(new Expression(typeChecker, arg));
         }
     }
 }

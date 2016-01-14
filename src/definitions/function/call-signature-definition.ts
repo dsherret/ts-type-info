@@ -6,18 +6,14 @@ import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
 
 export class CallSignatureDefinition implements ITypeParameteredDefinition, IParameteredDefinition<ParameterDefinition>, IReturnTypedDefinition {
-    private _minArgumentCount: number;
+    minArgumentCount: number;
 
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
         this.fillParametersBySignature(ParameterDefinition, typeChecker, signature);
         this.fillTypeParametersBySignature(typeChecker, signature);
 
-        this._minArgumentCount = typeChecker.getMinArgumentCount(signature);
-    }
-
-    get minArgumentCount() {
-        return this._minArgumentCount;
+        this.minArgumentCount = typeChecker.getMinArgumentCount(signature);
     }
 
     // ParameteredDefinition

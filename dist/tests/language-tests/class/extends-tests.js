@@ -14,7 +14,7 @@ describe("class extends tests", function () {
                     }]
             }, {
                 name: "MyChildClass",
-                extends: [{ text: "MyBaseClass" }],
+                extendsTypeExpressions: [{ text: "MyBaseClass" }],
                 properties: [{
                         name: "name2",
                         typeExpression: {

@@ -10,12 +10,12 @@ import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
 
 export class FileDefinition implements IModuledDefinition {
-    private _fileName: string;
-    private _imports: ImportDefinition[] = [];
-    private _reExports: ReExportDefinition[] = [];
+    fileName: string;
+    imports: ImportDefinition[] = [];
+    reExports: ReExportDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
-        this._fileName = file.fileName;
+        this.fileName = file.fileName;
         this.fillMembersBySourceFile(typeChecker, definitionCache, file);
     }
 
@@ -25,7 +25,7 @@ export class FileDefinition implements IModuledDefinition {
 
             /* istanbul ignore else */
             if (importDefinition != null) {
-                this._imports.push(
+                this.imports.push(
                     new ImportDefinition(
                         definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)),
                         importDefinition
@@ -44,7 +44,7 @@ export class FileDefinition implements IModuledDefinition {
 
             /* istanbul ignore else */
             if (exportDefinition != null) {
-                this._reExports.push(
+                this.reExports.push(
                     new ReExportDefinition(
                         definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileReExportSymbol)),
                         exportDefinition
@@ -55,18 +55,6 @@ export class FileDefinition implements IModuledDefinition {
                 console.warn(`Not implemented re-export symbol: ${fileReExportSymbol.name}`);
             }
         }
-    }
-
-    get fileName() {
-        return this._fileName;
-    }
-
-    get imports() {
-        return this._imports;
-    }
-
-    get reExports() {
-        return this._reExports;
     }
 
     // NamedDefinition

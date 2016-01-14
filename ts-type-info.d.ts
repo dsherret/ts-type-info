@@ -19,7 +19,7 @@ declare module "ts-type-info" {
     export interface INamedDefinition extends IBaseNamedDefinition {
     }
 
-    export interface ITypedDefinition {
+    export interface ITypeExpressionedDefinition {
         typeExpression: TypeExpression;
     }
 
@@ -43,6 +43,10 @@ declare module "ts-type-info" {
         namespaces: NamespaceDefinition[];
     }
 
+    export interface ITypeParameteredDefinition {
+        typeParameters: TypeParameterDefinition[];
+    }
+
     export interface BaseParameterDefinitionConstructor<T> {
     }
 
@@ -58,7 +62,7 @@ declare module "ts-type-info" {
         name: string;
     }
 
-    export class TypedDefinition {
+    export class TypeExpressionedDefinition {
         typeExpression: TypeExpression;
     }
 
@@ -88,21 +92,25 @@ declare module "ts-type-info" {
         typeExpression: TypeExpression;
     }
 
+    export class TypeParameterDefinition {
+        constraintTypeExpression: TypeExpression;
+        name: string;
+    }
+
+    export class TypeParameteredDefinition {
+        typeParameters: TypeParameterDefinition[];
+    }
+
     export class DecoratorDefinition {
         name: string;
         arguments: Expression[];
     }
 
-    export class TypeParameterDefinition {
-        constraint: TypeExpression;
-        name: string;
-    }
-
     export class BaseFunctionDefinition<T> {
-        typeParameters: TypeParameterDefinition[];
         name: string;
         parameters: T[];
         returnTypeExpression: TypeExpression;
+        typeParameters: TypeParameterDefinition[];
     }
 
     export class BaseParameterDefinition {
@@ -123,9 +131,9 @@ declare module "ts-type-info" {
 
     export class CallSignatureDefinition {
         minArgumentCount: number;
-        typeParameters: TypeParameterDefinition[];
         parameters: ParameterDefinition[];
         returnTypeExpression: TypeExpression;
+        typeParameters: TypeParameterDefinition[];
     }
 
     export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefinition> {
@@ -146,14 +154,14 @@ declare module "ts-type-info" {
     }
 
     export class ClassDefinition {
-        extends: TypeExpression[];
-        implements: TypeExpression[];
-        constructorDef: ConstructorDefinition;
         methods: ClassMethodDefinition[];
         properties: ClassPropertyDefinition[];
-        staticMethods: StaticMethodDefinition[];
-        staticProperties: StaticPropertyDefinition[];
+        staticMethods: ClassStaticMethodDefinition[];
+        staticProperties: ClassStaticPropertyDefinition[];
+        constructorDef: ConstructorDefinition;
         typeParameters: TypeParameterDefinition[];
+        extendsTypeExpressions: TypeExpression[];
+        implementsTypeExpressions: TypeExpression[];
         name: string;
         decorators: DecoratorDefinition[];
         isExported: boolean;
@@ -175,18 +183,18 @@ declare module "ts-type-info" {
         parameters: ClassMethodParameterDefinition[];
     }
 
-    export class StaticMethodDefinition extends BaseClassMethodDefinition {
+    export class ClassStaticMethodDefinition extends BaseClassMethodDefinition {
     }
 
-    export class StaticPropertyDefinition extends BaseClassPropertyDefinition {
+    export class ClassStaticPropertyDefinition extends BaseClassPropertyDefinition {
     }
 
     export class InterfaceDefinition {
-        extends: TypeExpression[];
         methods: InterfaceMethodDefinition[];
         newSignatures: InterfaceNewSignatureDefinition[];
         properties: PropertyDefinition[];
         typeParameters: TypeParameterDefinition[];
+        extendsTypeExpressions: TypeExpression[];
         name: string;
         isExported: boolean;
     }

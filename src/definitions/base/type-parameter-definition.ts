@@ -4,22 +4,18 @@ import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition} from "./../base";
 
 export class TypeParameterDefinition implements INamedDefinition {
-    private _constraintTypeExpression: TypeExpression;
+    constraintTypeExpression: TypeExpression;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillConstraint(typeChecker, symbol);
     }
 
-    get constraintTypeExpression() {
-        return this._constraintTypeExpression;
-    }
-
     private fillConstraint(typeChecker: TypeChecker, symbol: ts.Symbol) {
         const declaration = this.getTypeDeclaration(typeChecker, symbol);
 
         if (declaration.constraint != null) {
-            this._constraintTypeExpression = typeChecker.getTypeExpressionAtLocation(declaration.constraint);
+            this.constraintTypeExpression = typeChecker.getTypeExpressionAtLocation(declaration.constraint);
         }
     }
 

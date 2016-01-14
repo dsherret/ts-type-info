@@ -5,22 +5,15 @@ var ScopedDefinition = (function () {
     }
     ScopedDefinition.prototype.fillScope = function (symbol) {
         if ((symbol.valueDeclaration.flags & 32 /* Private */) !== 0) {
-            this._scope = scope_1.Scope.private;
+            this.scope = scope_1.Scope.private;
         }
         else if ((symbol.valueDeclaration.flags & 64 /* Protected */) !== 0) {
-            this._scope = scope_1.Scope.protected;
+            this.scope = scope_1.Scope.protected;
         }
         else {
-            this._scope = scope_1.Scope.public;
+            this.scope = scope_1.Scope.public;
         }
     };
-    Object.defineProperty(ScopedDefinition.prototype, "scope", {
-        get: function () {
-            return this._scope;
-        },
-        enumerable: true,
-        configurable: true
-    });
     return ScopedDefinition;
 })();
 exports.ScopedDefinition = ScopedDefinition;

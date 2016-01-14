@@ -5,17 +5,13 @@ import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-expressioned-definition";
 
 export class PropertyDefinition implements ITypeExpressionedDefinition, INamedDefinition {
-    private _isOptional: boolean;
+    isOptional: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillTypeExpression(typeChecker, symbol);
 
-        this._isOptional = typeChecker.isOptionalProperty(symbol);
-    }
-
-    get isOptional() {
-        return this._isOptional;
+        this.isOptional = typeChecker.isOptionalProperty(symbol);
     }
 
     // NamedDefinition

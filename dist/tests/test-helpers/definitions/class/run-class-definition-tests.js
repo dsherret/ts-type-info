@@ -11,8 +11,8 @@ function runClassDefinitionTests(definition, structure) {
     structure.properties = structure.properties || [];
     structure.staticMethods = structure.staticMethods || [];
     structure.staticProperties = structure.staticProperties || [];
-    structure.extends = structure.extends || [];
-    structure.implements = structure.implements || [];
+    structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
+    structure.implementsTypeExpressions = structure.implementsTypeExpressions || [];
     base_1.runNamedDefinitionTests(definition, structure);
     base_1.runExportableDefinitionTests(definition, structure);
     base_1.runDecoratableDefinitionTests(definition, structure);
@@ -52,18 +52,18 @@ function runClassDefinitionTests(definition, structure) {
     });
     describe("extends", function () {
         it("should have the expected number of extends", function () {
-            assert.equal(definition.extends.length, structure.extends.length);
+            assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
         });
-        structure.extends.forEach(function (extendStructure, i) {
-            expressions_1.runTypeExpressionTests(definition.extends[i], extendStructure);
+        structure.extendsTypeExpressions.forEach(function (extendStructure, i) {
+            expressions_1.runTypeExpressionTests(definition.extendsTypeExpressions[i], extendStructure);
         });
     });
     describe("implements", function () {
         it("should have the expected number of implements", function () {
-            assert.equal(definition.implements.length, structure.implements.length);
+            assert.equal(definition.implementsTypeExpressions.length, structure.implementsTypeExpressions.length);
         });
-        structure.implements.forEach(function (implementStructure, i) {
-            expressions_1.runTypeExpressionTests(definition.implements[i], implementStructure);
+        structure.implementsTypeExpressions.forEach(function (implementStructure, i) {
+            expressions_1.runTypeExpressionTests(definition.implementsTypeExpressions[i], implementStructure);
         });
     });
 }

@@ -10,21 +10,17 @@ export interface IParameteredDefinition<T extends ParameterDefinition> {
 }
 
 export abstract class ParameteredDefinition<T extends ParameterDefinition> implements IParameteredDefinition<T> {
-    private _parameters: T[] = [];
+    parameters: T[] = [];
 
     fillParametersBySymbol(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._parameters = typeChecker.getSymbolParametersFromSymbol(symbol).map(parameterSymbol => new paramDefinition(typeChecker, parameterSymbol));
+        this.parameters = typeChecker.getSymbolParametersFromSymbol(symbol).map(parameterSymbol => new paramDefinition(typeChecker, parameterSymbol));
     }
 
     fillParametersBySignature(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, signature: ts.Signature) {
-        this._parameters = [];
+        this.parameters = [];
 
         for (const param of signature.parameters) {
-            this._parameters.push(new paramDefinition(typeChecker, param));
+            this.parameters.push(new paramDefinition(typeChecker, param));
         }
-    }
-
-    get parameters() {
-        return this._parameters;
     }
 }

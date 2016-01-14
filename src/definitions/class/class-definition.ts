@@ -13,18 +13,18 @@ import {INamedDefinition, NamedDefinition,
         TypeParameterDefinition} from "./../base";
 
 export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition {
-    private _methods: ClassMethodDefinition[] = [];
-    private _properties: ClassPropertyDefinition[] = [];
-    private _staticMethods: ClassStaticMethodDefinition[] = [];
-    private _staticProperties: ClassStaticPropertyDefinition[] = [];
-    private _constructorDef: ConstructorDefinition;
-    private _typeParameters: TypeParameterDefinition[] = [];
+    methods: ClassMethodDefinition[] = [];
+    properties: ClassPropertyDefinition[] = [];
+    staticMethods: ClassStaticMethodDefinition[] = [];
+    staticProperties: ClassStaticPropertyDefinition[] = [];
+    constructorDef: ConstructorDefinition;
+    typeParameters: TypeParameterDefinition[] = [];
 
     constructor(
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
-        private _extends: TypeExpression[],
-        private _implements: TypeExpression[]) {
+        public extendsTypeExpressions: TypeExpression[],
+        public implementsTypeExpressions: TypeExpression[]) {
 
         this.fillName(symbol);
         this.fillDecorators(typeChecker, symbol);
@@ -32,56 +32,24 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         this.fillIsExported(typeChecker, symbol);
     }
 
-    get extends() {
-        return this._extends;
-    }
-
-    get implements() {
-        return this._implements;
-    }
-
-    get constructorDef() {
-        return this._constructorDef;
-    }
-
-    get methods() {
-        return this._methods;
-    }
-
-    get properties() {
-        return this._properties;
-    }
-
-    get staticMethods() {
-        return this._staticMethods;
-    }
-
-    get staticProperties() {
-        return this._staticProperties;
-    }
-
-    get typeParameters() {
-        return this._typeParameters;
-    }
-
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._typeParameters = [];
+        this.typeParameters = [];
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             /* istanbul ignore else */
             if (typeChecker.isSymbolClassProperty(member)) {
-                this._properties.push(new ClassPropertyDefinition(typeChecker, member));
+                this.properties.push(new ClassPropertyDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolClassMethod(member)) {
-                this._methods.push(new ClassMethodDefinition(typeChecker, member));
+                this.methods.push(new ClassMethodDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolConstructor(member)) {
                 this.verifyConstructorNotSet();
-                this._constructorDef = new ConstructorDefinition(typeChecker, member);
+                this.constructorDef = new ConstructorDefinition(typeChecker, member);
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
                 // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
-                this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
+                this.typeParameters.push(new TypeParameterDefinition(typeChecker, member));
             }
             else {
                 console.warn(`Not implemented member: ${member.getName()}`);
@@ -94,10 +62,10 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
                 // ignore
             }
             else if (typeChecker.isSymbolStaticMethod(staticMember)) {
-                this._staticMethods.push(new ClassStaticMethodDefinition(typeChecker, staticMember));
+                this.staticMethods.push(new ClassStaticMethodDefinition(typeChecker, staticMember));
             }
             else if (typeChecker.isSymbolStaticProperty(staticMember)) {
-                this._staticProperties.push(new ClassStaticPropertyDefinition(typeChecker, staticMember));
+                this.staticProperties.push(new ClassStaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
                 console.warn(`Not implemented static member: ${staticMember.getName()}`);
@@ -107,7 +75,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
 
     private verifyConstructorNotSet() {
         /* istanbul ignore if */
-        if (this._constructorDef != null) {
+        if (this.constructorDef != null) {
             throw `Unknown error: Duplicate constructors on ${this.name}.`;
         }
     }

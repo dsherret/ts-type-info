@@ -12,6 +12,6 @@ export interface ClassStructure extends NamedStructure, DecoratableStructure, Ex
     staticMethods?: ClassStaticMethodStructure[];
     staticProperties?: ClassStaticPropertyStructure[];
     constructorDef?: ConstructorStructure;
-    extends?: TypeExpressionStructure[];
-    implements?: TypeExpressionStructure[];
+    extendsTypeExpressions?: TypeExpressionStructure[];
+    implementsTypeExpressions?: TypeExpressionStructure[];
 }

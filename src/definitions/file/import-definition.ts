@@ -2,14 +2,6 @@
 import {FileDefinition} from "./file-definition";
 
 export class ImportDefinition {
-    constructor(private _file: FileDefinition, private _definition: (IBaseNamedDefinition & IExportableDefinition)) {
-    }
-
-    get file() {
-        return this._file;
-    }
-
-    get definition() {
-        return this._definition;
+    constructor(public file: FileDefinition, public definition: (IBaseNamedDefinition & IExportableDefinition)) {
     }
 }

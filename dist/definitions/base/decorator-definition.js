@@ -2,31 +2,17 @@ var expressions_1 = require("./../../expressions");
 var utils_1 = require("./../../utils");
 var DecoratorDefinition = (function () {
     function DecoratorDefinition(typeChecker, decorator) {
-        this._arguments = [];
+        this.arguments = [];
         var decoratorExpression = decorator.expression;
         this.fillName(decoratorExpression);
         if (utils_1.TypeGuards.isCallExpression(decoratorExpression)) {
             this.fillArguments(typeChecker, decoratorExpression.arguments);
         }
     }
-    Object.defineProperty(DecoratorDefinition.prototype, "name", {
-        get: function () {
-            return this._name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DecoratorDefinition.prototype, "arguments", {
-        get: function () {
-            return this._arguments;
-        },
-        enumerable: true,
-        configurable: true
-    });
     DecoratorDefinition.prototype.fillName = function (decoratorExpression) {
         /* istanbul ignore else */
         if (utils_1.TypeGuards.isLiteralExpression(decoratorExpression)) {
-            this._name = decoratorExpression.text;
+            this.name = decoratorExpression.text;
         }
         else if (decoratorExpression != null) {
             this.fillName(decoratorExpression["expression"]);
@@ -38,7 +24,7 @@ var DecoratorDefinition = (function () {
     DecoratorDefinition.prototype.fillArguments = function (typeChecker, args) {
         for (var _i = 0; _i < args.length; _i++) {
             var arg = args[_i];
-            this._arguments.push(new expressions_1.Expression(typeChecker, arg));
+            this.arguments.push(new expressions_1.Expression(typeChecker, arg));
         }
     };
     return DecoratorDefinition;

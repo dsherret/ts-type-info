@@ -26,7 +26,7 @@ class MyClassImplementsClass implements MyBaseClass {
             }]
         }, {
             name: "MyClassImplementsClass",
-            implements: [{ text: "MyBaseClass" }],
+            implementsTypeExpressions: [{ text: "MyBaseClass" }],
             properties: [{
                 name: "name1",
                 typeExpression: {

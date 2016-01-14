@@ -5,16 +5,12 @@ import {INamedDefinition, NamedDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
 
 export class EnumDefinition implements INamedDefinition, IExportableDefinition {
-    private _members: EnumMemberDefinition[] = [];
+    members: EnumMemberDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
-    }
-
-    get members() {
-        return this._members;
     }
 
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -23,7 +19,7 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition {
 
             /* istanbul ignore else */
             if (EnumMemberDefinition.isEnumMemberDefinition(member)) {
-                this._members.push(new EnumMemberDefinition(typeChecker, member));
+                this.members.push(new EnumMemberDefinition(typeChecker, member));
             }
             else {
                 console.warn(`Unknown enum member: ${symbol.name}`);

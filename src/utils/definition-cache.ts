@@ -60,8 +60,8 @@ export class DefinitionCache {
                 classDefinition = new ClassDefinition(
                     this.typeChecker,
                     symbol,
-                    this.typeChecker.getExtendsTypes(symbol),
-                    this.typeChecker.getImplementsTypes(symbol));
+                    this.typeChecker.getExtendsTypeExpressions(symbol),
+                    this.typeChecker.getImplementsTypeExpressions(symbol));
 
                 this.classes.add(symbol, classDefinition);
             }
@@ -80,7 +80,7 @@ export class DefinitionCache {
                 interfaceDefinition = new InterfaceDefinition(
                     this.typeChecker,
                     symbol,
-                    this.typeChecker.getExtendsTypes(symbol));
+                    this.typeChecker.getExtendsTypeExpressions(symbol));
                 this.interfaces.add(symbol, interfaceDefinition);
             }
         }

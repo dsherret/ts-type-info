@@ -9,14 +9,9 @@ export interface INamedDefinition extends IBaseNamedDefinition {
 }
 
 export abstract class NamedDefinition implements INamedDefinition {
-    private _name: string;
+    name: string;
 
     fillName(symbol: ts.Symbol) {
-        this._name = symbol.getName();
+        this.name = symbol.getName();
     }
-
-    get name() {
-        return this._name;
-    }
-
 }

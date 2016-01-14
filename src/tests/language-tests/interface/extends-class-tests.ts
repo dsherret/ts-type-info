@@ -24,7 +24,7 @@ interface MyChildInterface extends MyBaseClass {
         }],
         interfaces: [{
             name: "MyChildInterface",
-            extends: [{
+            extendsTypeExpressions: [{
                 text: "MyBaseClass"
             }],
             properties: [{

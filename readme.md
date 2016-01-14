@@ -47,8 +47,8 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
             name: "myDecorator",
             arguments: [{ "text": "My decorator value" }]
         }],
-        extends: [],
-        implements: [],
+        extendsTypeExpressions: [],
+        implementsTypeExpressions: [],
         methods: [{
             name: "myMethod",
             decorators: [],

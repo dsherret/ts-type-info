@@ -9,23 +9,19 @@ export interface ITypeParameteredDefinition {
 }
 
 export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
-    private _typeParameters: TypeParameterDefinition[] = [];
+    typeParameters: TypeParameterDefinition[] = [];
 
     fillTypeParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._typeParameters = typeChecker.getFunctionTypeParameterSymbols(symbol).map(s => new TypeParameterDefinition(typeChecker, s));
+        this.typeParameters = typeChecker.getFunctionTypeParameterSymbols(symbol).map(s => new TypeParameterDefinition(typeChecker, s));
     }
 
     fillTypeParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature) {
-        this._typeParameters = [];
+        this.typeParameters = [];
 
         if (signature.typeParameters != null) {
             for (const typeParameter of signature.typeParameters) {
-                this._typeParameters.push(new TypeParameterDefinition(typeChecker, typeParameter.getSymbol()));
+                this.typeParameters.push(new TypeParameterDefinition(typeChecker, typeParameter.getSymbol()));
             }
         }
-    }
-
-    get typeParameters() {
-        return this._typeParameters;
     }
 }

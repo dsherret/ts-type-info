@@ -21,12 +21,12 @@ describe("class type parameters", function () {
                     }]
             }, {
                 name: "MyExtendsClass",
-                extends: [{
+                extendsTypeExpressions: [{
                         text: "MyClass<number, string>"
                     }]
             }, {
                 name: "MyImplementsClass",
-                implements: [{
+                implementsTypeExpressions: [{
                         text: "MyClass<number, string>"
                     }],
                 properties: [{

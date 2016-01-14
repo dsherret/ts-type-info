@@ -41,12 +41,12 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getExpressionFullText = function (expression) {
         return (expression.getFullText(this.currentNode) || "").trim();
     };
-    TypeChecker.prototype.getExtendsTypes = function (symbol) {
+    TypeChecker.prototype.getExtendsTypeExpressions = function (symbol) {
         var _this = this;
         var symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
         return symbolType.getBaseTypes().map(function (t) { return _this.getTypeExpressionFromTsType(t); });
     };
-    TypeChecker.prototype.getImplementsTypes = function (symbol) {
+    TypeChecker.prototype.getImplementsTypeExpressions = function (symbol) {
         var _this = this;
         /* istanbul ignore else */
         if (symbol.valueDeclaration != null) {

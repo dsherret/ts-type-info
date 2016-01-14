@@ -37,12 +37,12 @@ class MyImplementsClass implements MyClass<number, string> {
             }]
         }, {
             name: "MyExtendsClass",
-            extends: [{
+            extendsTypeExpressions: [{
                 text: "MyClass<number, string>"
             }]
         }, {
             name: "MyImplementsClass",
-            implements: [{
+            implementsTypeExpressions: [{
                 text: "MyClass<number, string>"
             }],
             properties: [{

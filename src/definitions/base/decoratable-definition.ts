@@ -8,20 +8,16 @@ export interface IDecoratableDefinition {
 }
 
 export abstract class DecoratableDefinition implements IDecoratableDefinition {
-    private _decorators: DecoratorDefinition[];
+    decorators: DecoratorDefinition[];
 
     fillDecorators(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._decorators = [];
+        this.decorators = [];
         for (let declaration of symbol.getDeclarations()) {
             if (declaration.decorators != null) {
                 for (let decorator of declaration.decorators) {
-                    this._decorators.push(new DecoratorDefinition(typeChecker, decorator));
+                    this.decorators.push(new DecoratorDefinition(typeChecker, decorator));
                 }
             }
         }
-    }
-
-    get decorators() {
-        return this._decorators;
     }
 }

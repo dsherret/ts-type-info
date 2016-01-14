@@ -7,13 +7,9 @@ export interface IExportableDefinition {
 }
 
 export abstract class ExportableDefinition implements IExportableDefinition {
-    private _isExported: boolean;
+    isExported: boolean;
 
     fillIsExported(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._isExported = typeChecker.isSymbolExportOfParent(symbol);
-    }
-
-    get isExported() {
-        return this._isExported;
+        this.isExported = typeChecker.isSymbolExportOfParent(symbol);
     }
 }

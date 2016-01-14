@@ -9,17 +9,13 @@ export interface IReturnTypedDefinition {
 }
 
 export abstract class ReturnTypedDefinition implements IReturnTypedDefinition {
-    private _returnTypeExpression: TypeExpression;
+    returnTypeExpression: TypeExpression;
 
     fillReturnTypeExpressionBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._returnTypeExpression = typeChecker.getReturnTypeFromSymbol(symbol);
+        this.returnTypeExpression = typeChecker.getReturnTypeFromSymbol(symbol);
     }
 
     fillReturnTypeExpressionBySignature(typeChecker: TypeChecker, signature: ts.Signature) {
-        this._returnTypeExpression = typeChecker.getReturnTypeFromSignature(signature);
-    }
-
-    get returnTypeExpression() {
-        return this._returnTypeExpression;
+        this.returnTypeExpression = typeChecker.getReturnTypeFromSignature(signature);
     }
 }

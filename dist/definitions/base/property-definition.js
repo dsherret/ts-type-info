@@ -5,15 +5,8 @@ var PropertyDefinition = (function () {
     function PropertyDefinition(typeChecker, symbol) {
         this.fillName(symbol);
         this.fillTypeExpression(typeChecker, symbol);
-        this._isOptional = typeChecker.isOptionalProperty(symbol);
+        this.isOptional = typeChecker.isOptionalProperty(symbol);
     }
-    Object.defineProperty(PropertyDefinition.prototype, "isOptional", {
-        get: function () {
-            return this._isOptional;
-        },
-        enumerable: true,
-        configurable: true
-    });
     return PropertyDefinition;
 })();
 exports.PropertyDefinition = PropertyDefinition;

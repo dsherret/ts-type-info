@@ -4,15 +4,8 @@ var base_1 = require("./../base");
 var EnumMemberDefinition = (function () {
     function EnumMemberDefinition(typeChecker, symbol) {
         this.fillName(symbol);
-        this._value = typeChecker.getConstantValue(symbol);
+        this.value = typeChecker.getConstantValue(symbol);
     }
-    Object.defineProperty(EnumMemberDefinition.prototype, "value", {
-        get: function () {
-            return this._value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     EnumMemberDefinition.isEnumMemberDefinition = function (symbol) {
         return (symbol.flags & 8 /* EnumMember */) !== 0;
     };

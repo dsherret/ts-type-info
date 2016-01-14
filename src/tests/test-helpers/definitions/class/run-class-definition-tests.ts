@@ -14,8 +14,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
     structure.properties = structure.properties || [];
     structure.staticMethods = structure.staticMethods || [];
     structure.staticProperties = structure.staticProperties || [];
-    structure.extends = structure.extends || [];
-    structure.implements = structure.implements || [];
+    structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
+    structure.implementsTypeExpressions = structure.implementsTypeExpressions || [];
 
     runNamedDefinitionTests(definition, structure);
     runExportableDefinitionTests(definition, structure);
@@ -65,21 +65,21 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
 
     describe("extends", () => {
         it("should have the expected number of extends", () => {
-            assert.equal(definition.extends.length, structure.extends.length);
+            assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
         });
 
-        structure.extends.forEach((extendStructure, i) => {
-            runTypeExpressionTests(definition.extends[i], extendStructure);
+        structure.extendsTypeExpressions.forEach((extendStructure, i) => {
+            runTypeExpressionTests(definition.extendsTypeExpressions[i], extendStructure);
         });
     });
 
     describe("implements", () => {
         it("should have the expected number of implements", () => {
-            assert.equal(definition.implements.length, structure.implements.length);
+            assert.equal(definition.implementsTypeExpressions.length, structure.implementsTypeExpressions.length);
         });
 
-        structure.implements.forEach((implementStructure, i) => {
-            runTypeExpressionTests(definition.implements[i], implementStructure);
+        structure.implementsTypeExpressions.forEach((implementStructure, i) => {
+            runTypeExpressionTests(definition.implementsTypeExpressions[i], implementStructure);
         });
     });
 }

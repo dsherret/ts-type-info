@@ -10,7 +10,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
     structure.methods = structure.methods || [];
     structure.newSignatures = structure.newSignatures || [];
     structure.properties = structure.properties || [];
-    structure.extends = structure.extends || [];
+    structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
 
     runNamedDefinitionTests(definition, structure);
     runExportableDefinitionTests(definition, structure);
@@ -48,11 +48,11 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
 
     describe("extends", () => {
         it("should have the expected number of extends", () => {
-            assert.equal(definition.extends.length, structure.extends.length);
+            assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
         });
 
-        structure.extends.forEach((extendStructure, i) => {
-            runTypeExpressionTests(definition.extends[i], extendStructure);
+        structure.extendsTypeExpressions.forEach((extendStructure, i) => {
+            runTypeExpressionTests(definition.extendsTypeExpressions[i], extendStructure);
         });
     });
 }

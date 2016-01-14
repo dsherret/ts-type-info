@@ -37,7 +37,7 @@ var DefinitionCache = (function () {
         if (this.typeChecker.isSymbolClass(symbol)) {
             classDefinition = this.classes.get(symbol);
             if (classDefinition == null) {
-                classDefinition = new definitions_1.ClassDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypes(symbol), this.typeChecker.getImplementsTypes(symbol));
+                classDefinition = new definitions_1.ClassDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypeExpressions(symbol), this.typeChecker.getImplementsTypeExpressions(symbol));
                 this.classes.add(symbol, classDefinition);
             }
         }
@@ -48,7 +48,7 @@ var DefinitionCache = (function () {
         if (this.typeChecker.isSymbolInterface(symbol)) {
             interfaceDefinition = this.interfaces.get(symbol);
             if (interfaceDefinition == null) {
-                interfaceDefinition = new definitions_1.InterfaceDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypes(symbol));
+                interfaceDefinition = new definitions_1.InterfaceDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypeExpressions(symbol));
                 this.interfaces.add(symbol, interfaceDefinition);
             }
         }

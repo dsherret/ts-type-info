@@ -13,7 +13,7 @@ describe("interface extends class tests", function () {
             }],
         interfaces: [{
                 name: "MyChildInterface",
-                extends: [{
+                extendsTypeExpressions: [{
                         text: "MyBaseClass"
                     }],
                 properties: [{

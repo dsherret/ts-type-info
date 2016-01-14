@@ -23,8 +23,8 @@ describe("class extends implements tests", function () {
                     }]
             }, {
                 name: "MyExtendsImplementsClass",
-                extends: [{ text: "MyBaseClass" }],
-                implements: [{ text: "MyInterface" }],
+                extendsTypeExpressions: [{ text: "MyBaseClass" }],
+                implementsTypeExpressions: [{ text: "MyInterface" }],
                 properties: [{
                         name: "name",
                         typeExpression: {

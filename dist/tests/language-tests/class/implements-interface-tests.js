@@ -23,7 +23,7 @@ describe("class implements interface tests", function () {
             }],
         classes: [{
                 name: "MyClassImplementsInterface",
-                implements: [{ text: "MyInterface" }, { text: "MyTest" }],
+                implementsTypeExpressions: [{ text: "MyInterface" }, { text: "MyTest" }],
                 properties: [{
                         name: "name",
                         typeExpression: {

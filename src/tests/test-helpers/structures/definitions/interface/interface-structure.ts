@@ -7,5 +7,5 @@ export interface InterfaceStructure extends NamedStructure, ExportableStructure,
     methods?: InterfaceMethodStructure[];
     newSignatures?: InterfaceNewSignatureStructure[];
     properties?: PropertyStructure[];
-    extends?: TypeExpressionStructure[];
+    extendsTypeExpressions?: TypeExpressionStructure[];
 }

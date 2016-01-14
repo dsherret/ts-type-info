@@ -56,13 +56,13 @@ export class TypeChecker {
         return (expression.getFullText(this.currentNode) || "").trim();
     }
 
-    getExtendsTypes(symbol: ts.Symbol) {
+    getExtendsTypeExpressions(symbol: ts.Symbol) {
         const symbolType = this.typeChecker.getDeclaredTypeOfSymbol(symbol);
 
         return symbolType.getBaseTypes().map(t => this.getTypeExpressionFromTsType(t));
     }
 
-    getImplementsTypes(symbol: ts.Symbol) {
+    getImplementsTypeExpressions(symbol: ts.Symbol) {
         /* istanbul ignore else */
         if (symbol.valueDeclaration != null) {
             const valueDeclaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;

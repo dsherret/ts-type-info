@@ -8,13 +8,9 @@ export interface ITypeExpressionedDefinition {
 }
 
 export abstract class TypeExpressionedDefinition implements ITypeExpressionedDefinition {
-    private _typeExpression: TypeExpression;
+    typeExpression: TypeExpression;
 
     fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this._typeExpression = typeChecker.getTypeExpressionOfSymbol(symbol);
-    }
-
-    get typeExpression() {
-        return this._typeExpression;
+        this.typeExpression = typeChecker.getTypeExpressionOfSymbol(symbol);
     }
 }

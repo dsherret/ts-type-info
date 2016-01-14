@@ -11,24 +11,10 @@ var ClassPropertyDefinition = (function (_super) {
         _super.call(this, typeChecker, symbol);
         this.fillAccessorInformation(symbol);
     }
-    Object.defineProperty(ClassPropertyDefinition.prototype, "isAccessor", {
-        get: function () {
-            return this._isAccessor;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ClassPropertyDefinition.prototype, "isReadonly", {
-        get: function () {
-            return this._isReadonly;
-        },
-        enumerable: true,
-        configurable: true
-    });
     ClassPropertyDefinition.prototype.fillAccessorInformation = function (symbol) {
         var flags = symbol.getFlags();
-        this._isAccessor = (flags & 32768 /* GetAccessor */) !== 0;
-        this._isReadonly = this._isAccessor && (flags & 65536 /* SetAccessor */) === 0;
+        this.isAccessor = (flags & 32768 /* GetAccessor */) !== 0;
+        this.isReadonly = this.isAccessor && (flags & 65536 /* SetAccessor */) === 0;
     };
     return ClassPropertyDefinition;
 })(base_1.BaseClassPropertyDefinition);

@@ -7,7 +7,7 @@ function runInterfaceDefinitionTests(definition, structure) {
     structure.methods = structure.methods || [];
     structure.newSignatures = structure.newSignatures || [];
     structure.properties = structure.properties || [];
-    structure.extends = structure.extends || [];
+    structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
     base_1.runNamedDefinitionTests(definition, structure);
     base_1.runExportableDefinitionTests(definition, structure);
     base_1.runTypeParameteredDefinitionTests(definition, structure);
@@ -37,10 +37,10 @@ function runInterfaceDefinitionTests(definition, structure) {
     });
     describe("extends", function () {
         it("should have the expected number of extends", function () {
-            assert.equal(definition.extends.length, structure.extends.length);
+            assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
         });
-        structure.extends.forEach(function (extendStructure, i) {
-            expressions_1.runTypeExpressionTests(definition.extends[i], extendStructure);
+        structure.extendsTypeExpressions.forEach(function (extendStructure, i) {
+            expressions_1.runTypeExpressionTests(definition.extendsTypeExpressions[i], extendStructure);
         });
     });
 }

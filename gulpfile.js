@@ -82,9 +82,9 @@ gulp.task("generate-definition-file", function(cb) {
                 typeParameterClause += "> ";
             }
 
-            if (c.extends.length > 0) {
+            if (c.extendsTypeExpressions.length > 0) {
                 extendsClause += " extends ";
-                c.extends.forEach(function(b, i) {
+                c.extendsTypeExpressions.forEach(function (b, i) {
                     if (i != 0) {
                         extendsClause += ", ";
                     }
@@ -128,9 +128,9 @@ gulp.task("generate-definition-file", function(cb) {
                 typeParameterClause += "> ";
             }
 
-            if (c.extends.length > 0) {
+            if (c.extendsTypeExpressions.length > 0) {
                 extendsClause += " extends ";
-                c.extends.forEach(function(b, i) {
+                c.extendsTypeExpressions.forEach(function (b, i) {
                     if (i != 0) {
                         extendsClause += ", ";
                     }

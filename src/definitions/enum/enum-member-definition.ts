@@ -3,15 +3,11 @@ import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition} from "./../base";
 
 export class EnumMemberDefinition implements INamedDefinition {
-    private _value: number;
+    value: number;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
-        this._value = typeChecker.getConstantValue(symbol);
-    }
-
-    get value() {
-        return this._value;
+        this.value = typeChecker.getConstantValue(symbol);
     }
 
     // NamedDefinition

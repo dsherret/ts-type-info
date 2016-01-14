@@ -38,8 +38,8 @@ class MyExtendsImplementsClass extends MyBaseClass implements MyInterface {
             }]
         }, {
             name: "MyExtendsImplementsClass",
-            extends: [{ text: "MyBaseClass" }],
-            implements: [{ text: "MyInterface" }],
+            extendsTypeExpressions: [{ text: "MyBaseClass" }],
+            implementsTypeExpressions: [{ text: "MyInterface" }],
             properties: [{
                 name: "name",
                 typeExpression: {

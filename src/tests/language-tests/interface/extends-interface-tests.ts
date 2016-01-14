@@ -23,7 +23,7 @@ interface MyChildInterface extends MyBaseInterface {
             }]
         }, {
             name: "MyChildInterface",
-            extends: [{
+            extendsTypeExpressions: [{
                 text: "MyBaseInterface"
             }],
             properties: [{

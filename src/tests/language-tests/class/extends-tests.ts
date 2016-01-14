@@ -25,7 +25,7 @@ class MyChildClass extends MyBaseClass {
             }]
         }, {
             name: "MyChildClass",
-            extends: [{ text: "MyBaseClass" }],
+            extendsTypeExpressions: [{ text: "MyBaseClass" }],
             properties: [{
                 name: "name2",
                 typeExpression: {

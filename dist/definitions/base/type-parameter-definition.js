@@ -5,17 +5,10 @@ var TypeParameterDefinition = (function () {
         this.fillName(symbol);
         this.fillConstraint(typeChecker, symbol);
     }
-    Object.defineProperty(TypeParameterDefinition.prototype, "constraintTypeExpression", {
-        get: function () {
-            return this._constraintTypeExpression;
-        },
-        enumerable: true,
-        configurable: true
-    });
     TypeParameterDefinition.prototype.fillConstraint = function (typeChecker, symbol) {
         var declaration = this.getTypeDeclaration(typeChecker, symbol);
         if (declaration.constraint != null) {
-            this._constraintTypeExpression = typeChecker.getTypeExpressionAtLocation(declaration.constraint);
+            this.constraintTypeExpression = typeChecker.getTypeExpressionAtLocation(declaration.constraint);
         }
     };
     TypeParameterDefinition.prototype.getTypeDeclaration = function (typeChecker, symbol) {

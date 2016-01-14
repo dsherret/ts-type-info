@@ -3,68 +3,33 @@ var base_1 = require("./../base");
 var interface_method_definition_1 = require("./interface-method-definition");
 var interface_new_signature_definition_1 = require("./interface-new-signature-definition");
 var InterfaceDefinition = (function () {
-    function InterfaceDefinition(typeChecker, symbol, _extends) {
-        this._extends = _extends;
-        this._methods = [];
-        this._newSignatures = [];
-        this._properties = [];
-        this._typeParameters = [];
+    function InterfaceDefinition(typeChecker, symbol, extendsTypeExpressions) {
+        this.extendsTypeExpressions = extendsTypeExpressions;
+        this.methods = [];
+        this.newSignatures = [];
+        this.properties = [];
+        this.typeParameters = [];
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
-    Object.defineProperty(InterfaceDefinition.prototype, "extends", {
-        get: function () {
-            return this._extends;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InterfaceDefinition.prototype, "methods", {
-        get: function () {
-            return this._methods;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InterfaceDefinition.prototype, "newSignatures", {
-        get: function () {
-            return this._newSignatures;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InterfaceDefinition.prototype, "properties", {
-        get: function () {
-            return this._properties;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(InterfaceDefinition.prototype, "typeParameters", {
-        get: function () {
-            return this._typeParameters;
-        },
-        enumerable: true,
-        configurable: true
-    });
     InterfaceDefinition.prototype.fillMembers = function (typeChecker, symbol) {
         var _this = this;
-        this._typeParameters = [];
+        this.typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             /* istanbul ignore else */
             if (typeChecker.isSymbolProperty(member)) {
-                _this._properties.push(new base_1.PropertyDefinition(typeChecker, member));
+                _this.properties.push(new base_1.PropertyDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolInterfaceMethod(member)) {
-                _this._methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));
+                _this.methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
-                _this._typeParameters.push(new base_1.TypeParameterDefinition(typeChecker, member));
+                _this.typeParameters.push(new base_1.TypeParameterDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolNewSignature(member)) {
                 member.getDeclarations().forEach(function (d) {
-                    _this._newSignatures.push(new interface_new_signature_definition_1.InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d)));
+                    _this.newSignatures.push(new interface_new_signature_definition_1.InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d)));
                 });
             }
             else {
