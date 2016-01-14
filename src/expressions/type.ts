@@ -10,9 +10,6 @@ export class Type {
     typeArguments: TypeExpression[];
     text: string;
 
-    constructor() {
-    }
-
     fillTypeInformation(typeChecker: TypeChecker, typeExpressionCache: TypeExpressionCache, tsType: ts.Type) {
         this.text = typeChecker.typeToString(tsType);
 
