@@ -2,7 +2,7 @@ var assert = require("assert");
 var base_1 = require("./../base");
 var run_interface_method_definition_tests_1 = require("./run-interface-method-definition-tests");
 var run_interface_new_signature_definition_tests_1 = require("./run-interface-new-signature-definition-tests");
-var expressions_1 = require("./../expressions");
+var expressions_1 = require("./../../expressions");
 function runInterfaceDefinitionTests(definition, structure) {
     structure.methods = structure.methods || [];
     structure.newSignatures = structure.newSignatures || [];

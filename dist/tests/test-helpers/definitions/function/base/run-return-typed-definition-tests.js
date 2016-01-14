@@ -1,4 +1,4 @@
-var expressions_1 = require("./../../expressions");
+var expressions_1 = require("./../../../expressions");
 function runReturnTypedDefinitionTests(definition, structure) {
     describe("return type", function () {
         structure.returnTypeExpression = structure.returnTypeExpression || { text: "void" };

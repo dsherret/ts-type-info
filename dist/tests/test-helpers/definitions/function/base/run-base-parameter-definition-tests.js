@@ -1,6 +1,6 @@
 var assert = require("assert");
 var base_1 = require("./../../base");
-var expressions_1 = require("./../../expressions");
+var expressions_1 = require("./../../../expressions");
 function runBaseParameterDefinitionTests(definition, structure) {
     base_1.runNamedDefinitionTests(definition, structure);
     base_1.runTypeExpressionedDefinitionTests(definition, structure);

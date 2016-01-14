@@ -1,6 +1,6 @@
 var assert = require("assert");
 var base_1 = require("./../base");
-var expressions_1 = require("./../expressions");
+var expressions_1 = require("./../../expressions");
 function runTypeParameterDefinitionTests(definition, structure) {
     describe("type parameter " + structure.name, function () {
         base_1.runNamedDefinitionTests(definition, structure);

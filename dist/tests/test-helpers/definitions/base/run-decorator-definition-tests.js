@@ -1,6 +1,6 @@
 var assert = require("assert");
 var run_named_definition_tests_1 = require("./run-named-definition-tests");
-var expressions_1 = require("./../expressions");
+var expressions_1 = require("./../../expressions");
 function runDecoratorDefinitionTests(definition, structure) {
     describe("decorator " + structure.name, function () {
         structure.arguments = structure.arguments || [];

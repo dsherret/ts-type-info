@@ -5,7 +5,7 @@ var run_class_method_definition_tests_1 = require("./run-class-method-definition
 var run_static_property_definition_tests_1 = require("./run-static-property-definition-tests");
 var run_static_method_definition_tests_1 = require("./run-static-method-definition-tests");
 var run_constructor_definition_tests_1 = require("./run-constructor-definition-tests");
-var expressions_1 = require("./../expressions");
+var expressions_1 = require("./../../expressions");
 function runClassDefinitionTests(definition, structure) {
     structure.methods = structure.methods || [];
     structure.properties = structure.properties || [];
