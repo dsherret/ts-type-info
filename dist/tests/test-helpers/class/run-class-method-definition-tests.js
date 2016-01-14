@@ -1,10 +1,7 @@
 var base_1 = require("./base");
-function runClassMethodDefinitionTests(definition, method) {
-    if (definition == null) {
-        throw "Class method definition should not be null.";
-    }
-    describe("method " + method.name, function () {
-        base_1.runBaseClassMethodDefinitionTests(definition, method);
+function runClassMethodDefinitionTests(definition, structure) {
+    describe("method " + structure.name, function () {
+        base_1.runBaseClassMethodDefinitionTests(definition, structure);
     });
 }
 exports.runClassMethodDefinitionTests = runClassMethodDefinitionTests;

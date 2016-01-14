@@ -3,12 +3,7 @@ var ParameteredDefinition = (function () {
         this._parameters = [];
     }
     ParameteredDefinition.prototype.fillParametersBySymbol = function (paramDefinition, typeChecker, symbol) {
-        this._parameters = [];
-        for (var _i = 0, _a = this.getDeclaration(symbol).parameters.filter(function (p) { return p != null; }); _i < _a.length; _i++) {
-            var param = _a[_i];
-            var parameterSymbol = typeChecker.getSymbolAtLocation(param);
-            this._parameters.push(new paramDefinition(typeChecker, parameterSymbol));
-        }
+        this._parameters = typeChecker.getSymbolParametersFromSymbol(symbol).map(function (parameterSymbol) { return new paramDefinition(typeChecker, parameterSymbol); });
     };
     ParameteredDefinition.prototype.fillParametersBySignature = function (paramDefinition, typeChecker, signature) {
         this._parameters = [];
@@ -24,21 +19,6 @@ var ParameteredDefinition = (function () {
         enumerable: true,
         configurable: true
     });
-    ParameteredDefinition.prototype.getDeclaration = function (symbol) {
-        /* istanbul ignore else */
-        if (symbol.valueDeclaration != null) {
-            // methods
-            return symbol.valueDeclaration;
-        }
-        else if (symbol.getDeclarations().length === 1) {
-            // constructors
-            return symbol.getDeclarations()[0];
-        }
-        else {
-            console.warn("Could not get declaration when getting parameters.");
-            return null;
-        }
-    };
     return ParameteredDefinition;
 })();
 exports.ParameteredDefinition = ParameteredDefinition;

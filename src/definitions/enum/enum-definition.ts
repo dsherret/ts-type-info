@@ -31,7 +31,7 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition {
         });
     }
 
-    // NameDefinition
+    // NamedDefinition
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // ExportableDefinition

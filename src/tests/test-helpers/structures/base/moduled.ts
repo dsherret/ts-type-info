@@ -1,9 +1,13 @@
 ﻿import {Namespace} from "./../namespace";
+import {Class} from "./../class";
+import {Interface} from "./../interface";
+import {Function} from "./../function";
+import {Enum} from "./../enum";
 
 export interface Moduled {
-    classes?: { name: string; isExported?: boolean }[];
-    interfaces?: { name: string; isExported?: boolean }[];
-    functions?: { name: string; isExported?: boolean }[];
-    enums?: { name: string; isExported?: boolean }[];
     namespaces?: Namespace[];
+    classes?: Class[];
+    interfaces?: Interface[];
+    functions?: Function[];
+    enums?: Enum[];
 }

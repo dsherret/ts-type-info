@@ -1,7 +1,5 @@
-﻿import * as assert from "assert";
-import {getStringInfo} from "./../../../main";
-import {ClassPropertyDefinition} from "./../../../definitions";
-import {runDecoratorDefinitionTests} from "./../../test-helpers";
+﻿import {getStringInfo} from "./../../../main";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class property decorator tests", () => {
     const code = `
@@ -15,25 +13,17 @@ function MyClassPropertyAccessorDecorator(target: Object, propertyKey: string, d
 class MyClass {
     @MyClassPropertyDecorator
     myProperty1: string;
-    myProperty2: string;
 
     @MyClassPropertyAccessorDecorator
-    get myProperty3() {
+    get myProperty2() {
         return "";
     }
 
+    @MyClassPropertyAccessorDecorator
     set myProperty3(val: string) {
     }
 
-    get myProperty4() {
-        return "";
-    }
-
-    @MyClassPropertyAccessorDecorator
-    set myProperty4(val: string) {
-    }
-
-    get myProperty5() {
+    get myProperty3() {
         return "";
     }
 }
@@ -41,53 +31,72 @@ class MyClass {
 
     const def = getStringInfo(code);
 
-    function runHasDecoratorTests(property: ClassPropertyDefinition, decoratorName: string) {
-        it("will have one decorator", () => {
-            assert.equal(property.decorators.length, 1);
-        });
-
-        if (property.decorators.length === 1) {
-            describe(decoratorName, () => {
-                runDecoratorDefinitionTests(property.decorators[0], {
-                    name: decoratorName,
-                    arguments: []
-                });
-            });
-        }
-    }
-
-    function runNotHasDecoratorTests(property: ClassPropertyDefinition) {
-        it("will have zero decorators", () => {
-            assert.equal(property.decorators.length, 0);
-        });
-    }
-
-    it("will have 5 properties", () => {
-        assert.equal(def.classes[0].properties.length, 5);
-    });
-
-    describe("myProperty1", () => {
-        const p = def.classes[0].properties[0];
-        runHasDecoratorTests(p, "MyClassPropertyDecorator");
-    });
-
-    describe("myProperty2", () => {
-        const p = def.classes[0].properties[1];
-        runNotHasDecoratorTests(p);
-    });
-
-    describe("myProperty3", () => {
-        const p = def.classes[0].properties[2];
-        runHasDecoratorTests(p, "MyClassPropertyAccessorDecorator");
-    });
-
-    describe("myProperty4", () => {
-        const p = def.classes[0].properties[3];
-        runHasDecoratorTests(p, "MyClassPropertyAccessorDecorator");
-    });
-
-    describe("myProperty5", () => {
-        const p = def.classes[0].properties[4];
-        runNotHasDecoratorTests(p);
+    runFileDefinitionTests(def, {
+        functions: [{
+            name: "MyClassPropertyDecorator",
+            parameters: [{
+                name: "target",
+                typeExpression: {
+                    text: "Object"
+                }
+            }, {
+                name: "propertyKey",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }, {
+            name: "MyClassPropertyAccessorDecorator",
+            parameters: [{
+                name: "target",
+                typeExpression: {
+                    text: "Object"
+                }
+            }, {
+                name: "propertyKey",
+                typeExpression: {
+                    text: "string"
+                }
+            }, {
+                name: "descriptor",
+                typeExpression: {
+                    text: "TypedPropertyDescriptor<any>"
+                }
+            }],
+            returnTypeExpression: {
+                text: "TypedPropertyDescriptor<any>"
+            }
+        }],
+        classes: [{
+            name: "MyClass",
+            properties: [{
+                name: "myProperty1",
+                typeExpression: {
+                    text: "string"
+                },
+                decorators: [{
+                    name: "MyClassPropertyDecorator"
+                }]
+            }, {
+                name: "myProperty2",
+                typeExpression: {
+                    text: "string"
+                },
+                decorators: [{
+                    name: "MyClassPropertyAccessorDecorator"
+                }],
+                isAccessor: true,
+                isReadonly: true
+            }, {
+                name: "myProperty3",
+                typeExpression: {
+                    text: "string"
+                },
+                decorators: [{
+                    name: "MyClassPropertyAccessorDecorator"
+                }],
+                isAccessor: true
+            }]
+        }]
     });
 });

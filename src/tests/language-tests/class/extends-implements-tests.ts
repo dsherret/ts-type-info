@@ -1,5 +1,5 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runTypeExpressionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class extends implements tests", () => {
     const code = `
@@ -18,13 +18,34 @@ class MyExtendsImplementsClass extends MyBaseClass implements MyInterface {
 
     const def = getStringInfo(code);
 
-    describe("MyExtendsImplementsClass", () => {
-        describe("extends clause", () => {
-            runTypeExpressionTests(def.classes[1].extends[0], "MyBaseClass");
-        });
-
-        describe("implements clause", () => {
-            runTypeExpressionTests(def.classes[1].implements[0], "MyInterface");
-        });
+    runFileDefinitionTests(def, {
+        interfaces: [{
+            name: "MyInterface",
+            properties: [{
+                name: "name",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }],
+        classes: [{
+            name: "MyBaseClass",
+            properties: [{
+                name: "prop",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }, {
+            name: "MyExtendsImplementsClass",
+            extends: [{ text: "MyBaseClass" }],
+            implements: [{ text: "MyInterface" }],
+            properties: [{
+                name: "name",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }]
     });
 });

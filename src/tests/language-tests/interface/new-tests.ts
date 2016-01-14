@@ -1,39 +1,37 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runInterfaceNewSignatureDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("interface name tests", () => {
     const code = `
-class MyClass {
-    name: string;
-}
-
 interface MyInterface {
-    new(): MyClass;
+    new(): MyInterface;
 }
 
 interface MyInterfaceWithMultipleNew {
-    new(): MyClass;
-    new(str: string): MyClass;
+    new(): MyInterface;
+    new(str: string): MyInterface;
 }
 `;
 
     const def = getStringInfo(code);
 
-    runInterfaceNewSignatureDefinitionTests(def.interfaces[0].newSignatures[0], {
-        parameters: [],
-        returnType: "MyClass"
-    });
-
-    runInterfaceNewSignatureDefinitionTests(def.interfaces[1].newSignatures[0], {
-        parameters: [],
-        returnType: "MyClass"
-    });
-
-    runInterfaceNewSignatureDefinitionTests(def.interfaces[1].newSignatures[1], {
-        parameters: [{
-            name: "str",
-            type: "string"
-        }],
-        returnType: "MyClass"
+    runFileDefinitionTests(def, {
+        interfaces: [{
+            name: "MyInterface",
+            newSignatures: [{
+                returnTypeExpression: { text: "MyInterface" }
+            }]
+        }, {
+            name: "MyInterfaceWithMultipleNew",
+            newSignatures: [{
+                returnTypeExpression: { text: "MyInterface" }
+            }, {
+                parameters: [{
+                    name: "str",
+                    typeExpression: { text: "string" }
+                }],
+                returnTypeExpression: { text: "MyInterface" }
+            }]
+        }]
     });
 });

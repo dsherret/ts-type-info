@@ -30,11 +30,6 @@ var ClassPropertyDefinition = (function (_super) {
         this._isAccessor = (flags & 32768 /* GetAccessor */) !== 0;
         this._isReadonly = this._isAccessor && (flags & 65536 /* SetAccessor */) === 0;
     };
-    ClassPropertyDefinition.isProperty = function (symbol) {
-        var flags = symbol.getFlags();
-        return (flags & 4 /* Property */) !== 0 ||
-            (flags & 32768 /* GetAccessor */) !== 0;
-    };
     return ClassPropertyDefinition;
 })(base_1.BaseClassPropertyDefinition);
 exports.ClassPropertyDefinition = ClassPropertyDefinition;

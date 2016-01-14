@@ -1,6 +1,6 @@
-import {Function} from "./../../function";
-import {Scope} from "./../../../../../scope";
+import {BaseFunction} from "./../../function";
+import {Decoratable, Scoped} from "./../../base";
+import {ClassMethodParameter} from "./../class-method-parameter";
 
-export interface BaseClassMethod extends Function {
-    scope: Scope;
+export interface BaseClassMethod extends BaseFunction<ClassMethodParameter>, Decoratable, Scoped {
 }

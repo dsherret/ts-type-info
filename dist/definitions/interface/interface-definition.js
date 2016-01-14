@@ -1,4 +1,3 @@
-var misc_1 = require("./../misc");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var interface_method_definition_1 = require("./interface-method-definition");
@@ -54,22 +53,21 @@ var InterfaceDefinition = (function () {
         this._typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             /* istanbul ignore else */
-            if (base_1.PropertyDefinition.isProperty(member)) {
+            if (typeChecker.isSymbolProperty(member)) {
                 _this._properties.push(new base_1.PropertyDefinition(typeChecker, member));
             }
-            else if (interface_method_definition_1.InterfaceMethodDefinition.isMethod(member)) {
+            else if (typeChecker.isSymbolInterfaceMethod(member)) {
                 _this._methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));
             }
-            else if (misc_1.TypeParameterDefinition.isTypeParameter(member)) {
-                _this._typeParameters.push(new misc_1.TypeParameterDefinition(typeChecker, member));
+            else if (typeChecker.isSymbolTypeParameter(member)) {
+                _this._typeParameters.push(new base_1.TypeParameterDefinition(typeChecker, member));
             }
-            else if (interface_new_signature_definition_1.InterfaceNewSignatureDefinition.isNewSignature(member)) {
+            else if (typeChecker.isSymbolNewSignature(member)) {
                 member.getDeclarations().forEach(function (d) {
                     _this._newSignatures.push(new interface_new_signature_definition_1.InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d)));
                 });
             }
             else {
-                console.log(member);
                 console.warn("Not implemented interface member: " + member.getName());
             }
         });
@@ -77,6 +75,6 @@ var InterfaceDefinition = (function () {
     return InterfaceDefinition;
 })();
 exports.InterfaceDefinition = InterfaceDefinition;
-utils_1.applyMixins(InterfaceDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition]);
+utils_1.applyMixins(InterfaceDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition, base_1.TypeParameteredDefinition]);
 
 //# sourceMappingURL=interface-definition.js.map

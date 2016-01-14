@@ -1,45 +1,42 @@
 import {getStringInfo} from "./../../../main";
-import {runFunctionDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("function name tests", () => {
     const code = `
 function myFunction() {
 }
-function myFunctionWithParameters(str: string, num: number, optionalParam?: string, defaultParam = new Date(), ...restParam: string[]) {
+function myFunctionWithParameters(str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: string[]) {
     return new Date();
 }`;
 
     const def = getStringInfo(code);
 
-    runFunctionDefinitionTests(def.functions[0], {
-        name: "myFunction",
-        returnType: "void",
-        parameters: []
-    });
-
-    runFunctionDefinitionTests(def.functions[1], {
-        name: "myFunctionWithParameters",
-        returnType: "Date",
-        parameters: [{
-            name: "str",
-            type: "string"
+    runFileDefinitionTests(def, {
+        functions: [{
+            name: "myFunction"
         }, {
-            name: "num",
-            type: "number"
-        }, {
-            name: "optionalParam",
-            type: "string",
-            isOptional: true
-        }, {
-            name: "defaultParam",
-            type: "Date",
-            isOptional: true,
-            defaultExpressionText: "new Date()"
-        }, {
-            name: "restParam",
-            type: "string[]",
-            isRestParameter: true,
-            isOptional: true
+            name: "myFunctionWithParameters",
+            parameters: [{
+                name: "str",
+                typeExpression: { text: "string" }
+            }, {
+                name: "optionalParam",
+                typeExpression: { text: "string" },
+                isOptional: true
+            }, {
+                name: "defaultParam",
+                typeExpression: { text: "Date" },
+                defaultExpression: { text: "new Date()" },
+                isOptional: true
+            }, {
+                name: "restParam",
+                typeExpression: { text: "string[]" },
+                isOptional: true,
+                isRestParameter: true
+            }],
+            returnTypeExpression: {
+                text: "Date"
+            }
         }]
     });
 });

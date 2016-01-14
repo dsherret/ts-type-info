@@ -1,27 +1,44 @@
-var main_1 = require("./../../../main");
-var scope_1 = require("./../../../scope");
-var test_helpers_1 = require("./../../test-helpers");
-describe("value module", function () {
-    var code = "\n// declaration merging\ndeclare class MyClass {\n    myMethod(num: number): string;\n}\n\ndeclare module MyClass {\n    function myFunction(str: string): string;\n}";
-    var def = main_1.getStringInfo(code);
-    test_helpers_1.runClassMethodDefinitionTests(def.classes[0].methods[0], {
-        name: "myMethod",
-        scope: scope_1.Scope.public,
-        returnType: "string",
-        parameters: [{
-                name: "num",
-                type: "number"
-            }]
-    });
-    test_helpers_1.runStaticMethodDefinitionTests(def.classes[0].staticMethods[0], {
+// todo: these tests
+/*
+import {getStringInfo} from "./../../../main";
+import {runFileDefinitionTests} from "./../../test-helpers";
+
+describe("value module", () => {
+    const code = `
+// declaration merging
+declare class MyClass {
+    myMethod(): void;
+}
+
+declare module MyClass {
+    function myFunction(str: string): string;
+}`;
+
+    const def = getStringInfo(code);
+    const func = {
         name: "myFunction",
-        scope: scope_1.Scope.public,
-        returnType: "string",
         parameters: [{
-                name: "str",
-                type: "string"
-            }]
+            name: "str",
+            typeExpression: { text: "string" }
+        }],
+        returnTypeExpression: { text: "string" }
+    };
+
+    // todo: hmmm... maybe this should work differently?
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClass",
+            methods: [{
+                name: "myMethod",
+            }],
+            staticMethods: [func]
+        }],
+        namespaces: [{
+            name: "MyClass",
+            functions: [func]
+        }]
     });
 });
+*/
 
 //# sourceMappingURL=value-module-tests.js.map

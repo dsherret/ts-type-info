@@ -1,6 +1,6 @@
 import {getStringInfo} from "./../../../main";
 import {Scope} from "./../../../scope";
-import {runStaticMethodDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class static method", () => {
     const code = `
@@ -32,62 +32,46 @@ class MyClassWithStaticMethods {
 
     const def = getStringInfo(code);
 
-    runStaticMethodDefinitionTests(def.classes[0].staticMethods[0], {
-        name: "myParameterMethod",
-        scope: Scope.public,
-        returnType: "string",
-        parameters: [{
-            name: "myParameter",
-            type: "string"
-        }, {
-            name: "myDefaultParameter",
-            type: "string",
-            isOptional: true,
-            defaultExpressionText: `"some string"`
-        }, {
-            name: "myOptionalParameter",
-            type: "string",
-            isOptional: true
-        }, {
-            name: "myRestParameter",
-            type: "number[]",
-            isOptional: true,
-            isRestParameter: true
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClassWithStaticMethods",
+            staticMethods: [{
+                name: "myParameterMethod",
+                parameters: [{
+                    name: "myParameter",
+                    typeExpression: { text: "string" }
+                }, {
+                    name: "myDefaultParameter",
+                    typeExpression: { text: "string" },
+                    isOptional: true,
+                    defaultExpression: { text: `some string` }
+                }, {
+                    name: "myOptionalParameter",
+                    typeExpression: { text: "string" },
+                    isOptional: true
+                }, {
+                    name: "myRestParameter",
+                    typeExpression: { text: "number[]" },
+                    isOptional: true,
+                    isRestParameter: true
+                }],
+                returnTypeExpression: { text: "string" }
+            }, {
+                name: "myExplicitReturnTypeMethod",
+                returnTypeExpression: { text: "string" }
+            }, {
+                name: "myImplicitReturnTypeMethod",
+                returnTypeExpression: { text: "string" }
+            }, {
+                name: "myPublicMethod",
+                scope: Scope.public
+            }, {
+                name: "myProtectedMethod",
+                scope: Scope.protected
+            }, {
+                name: "myPrivateMethod",
+                scope: Scope.private
+            }]
         }]
-    });
-
-    runStaticMethodDefinitionTests(def.classes[0].staticMethods[1], {
-        name: "myExplicitReturnTypeMethod",
-        scope: Scope.public,
-        returnType: "string",
-        parameters: []
-    });
-
-    runStaticMethodDefinitionTests(def.classes[0].staticMethods[2], {
-        name: "myImplicitReturnTypeMethod",
-        scope: Scope.public,
-        returnType: "string",
-        parameters: []
-    });
-
-    runStaticMethodDefinitionTests(def.classes[0].staticMethods[3], {
-        name: "myPublicMethod",
-        scope: Scope.public,
-        returnType: "void",
-        parameters: []
-    });
-
-    runStaticMethodDefinitionTests(def.classes[0].staticMethods[4], {
-        name: "myProtectedMethod",
-        scope: Scope.protected,
-        returnType: "void",
-        parameters: []
-    });
-
-    runStaticMethodDefinitionTests(def.classes[0].staticMethods[5], {
-        name: "myPrivateMethod",
-        scope: Scope.private,
-        returnType: "void",
-        parameters: []
     });
 });

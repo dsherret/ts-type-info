@@ -1,5 +1,5 @@
-import {Parameter} from "./../function";
+import {Parametered} from "./../function";
+import {ClassMethodParameter} from "./class-method-parameter";
 
-export interface Constructor {
-    parameters: Parameter[];
+export interface Constructor extends Parametered<ClassMethodParameter> {
 }

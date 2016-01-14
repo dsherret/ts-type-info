@@ -1,7 +1,8 @@
-export interface BaseParameter {
-    name: string;
-    type: string;
+import {Named, TypeExpressionedStructure} from "./../../base";
+import {ExpressionStructure} from "./../../expressions";
+
+export interface BaseParameter extends Named, TypeExpressionedStructure {
     isOptional?: boolean;
     isRestParameter?: boolean;
-    defaultExpressionText?: string;
+    defaultExpression?: ExpressionStructure;
 }

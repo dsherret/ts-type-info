@@ -1,18 +1,18 @@
 import * as assert from "assert";
 import {IDecoratableDefinition} from "./../../../definitions";
-import {runDecoratorDefinitionTests} from "./../misc";
-import {Decorator} from "./../structures";
+import {runDecoratorDefinitionTests} from "./run-decorator-definition-tests";
+import {Decoratable} from "./../structures";
 
-export function runDecoratableDefinitionTests(definition: IDecoratableDefinition, decorators: Decorator[]) {
-    if (definition == null) {
-        throw "Decoratable definition should not be null.";
-    }
+export function runDecoratableDefinitionTests(definition: IDecoratableDefinition, structure: Decoratable) {
+    describe("decorators", () => {
+        structure.decorators = structure.decorators || [];
 
-    it(`should have ${decorators.length} parameters`, () => {
-        assert.equal(definition.decorators.length, decorators.length);
-    });
+        it(`should have ${structure.decorators.length} parameters`, () => {
+            assert.equal(definition.decorators.length, structure.decorators.length);
+        });
 
-    definition.decorators.forEach((decorator, i) => {
-        runDecoratorDefinitionTests(decorator, decorators[i]);
+        structure.decorators.forEach((decoratorStructure, i) => {
+            runDecoratorDefinitionTests(definition.decorators[i], structure.decorators[i]);
+        });
     });
 }

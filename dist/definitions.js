@@ -3,7 +3,6 @@ function __export(m) {
 }
 // order by dependency and not name
 __export(require("./definitions/base"));
-__export(require("./definitions/misc"));
 __export(require("./definitions/function"));
 __export(require("./definitions/class"));
 __export(require("./definitions/interface"));

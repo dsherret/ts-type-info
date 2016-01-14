@@ -1,16 +1,25 @@
 var main_1 = require("./../../../main");
-var assert = require("assert");
+var test_helpers_1 = require("./../../test-helpers");
 describe("function type parameters", function () {
-    var code = "\nfunction myTypeParameterFunction<T, U extends string>(param1: T, param2: U) {\n    console.log(param1);\n    console.log(param2);\n}";
+    var code = "\nfunction myTypeParameterFunction<T, U extends string>(tParam: T, uParam: U) {\n    console.log(param1);\n    console.log(param2);\n}";
     var def = main_1.getStringInfo(code);
-    it("should have a type parameter name of T", function () {
-        assert.equal(def.functions[0].typeParameters[0].name, "T");
-    });
-    it("should have a second type parameter name of U", function () {
-        assert.equal(def.functions[0].typeParameters[1].name, "U");
-    });
-    it("it should extend a type string", function () {
-        assert.equal(def.functions[0].typeParameters[1].constraint.text, "string");
+    test_helpers_1.runFileDefinitionTests(def, {
+        functions: [{
+                name: "myTypeParameterFunction",
+                typeParameters: [{
+                        name: "T"
+                    }, {
+                        name: "U",
+                        constraintTypeExpression: { text: "string" }
+                    }],
+                parameters: [{
+                        name: "tParam",
+                        typeExpression: { text: "T" }
+                    }, {
+                        name: "uParam",
+                        typeExpression: { text: "U" }
+                    }]
+            }]
     });
 });
 

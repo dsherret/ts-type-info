@@ -1,6 +1,6 @@
 import {getStringInfo} from "./../../../main";
 import {Scope} from "./../../../scope";
-import {runStaticPropertyDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class static property tests", () => {
     const code = `
@@ -8,6 +8,7 @@ class MyClass {
     static myString: string;
     static myImplicit = 4;
     static myAny;
+    static myOptional?: string;
 
     public static myExplicitPublic;
     protected static myProtected;
@@ -16,39 +17,35 @@ class MyClass {
 
     const def = getStringInfo(code);
 
-    runStaticPropertyDefinitionTests(def.classes[0].staticProperties[0], {
-        name: "myString",
-        type: "string",
-        scope: Scope.public
-    });
-
-    runStaticPropertyDefinitionTests(def.classes[0].staticProperties[1], {
-        name: "myImplicit",
-        type: "number",
-        scope: Scope.public
-    });
-
-    runStaticPropertyDefinitionTests(def.classes[0].staticProperties[2], {
-        name: "myAny",
-        type: "any",
-        scope: Scope.public
-    });
-
-    runStaticPropertyDefinitionTests(def.classes[0].staticProperties[3], {
-        name: "myExplicitPublic",
-        type: "any",
-        scope: Scope.public
-    });
-
-    runStaticPropertyDefinitionTests(def.classes[0].staticProperties[4], {
-        name: "myProtected",
-        type: "any",
-        scope: Scope.protected
-    });
-
-    runStaticPropertyDefinitionTests(def.classes[0].staticProperties[5], {
-        name: "myPrivate",
-        type: "any",
-        scope: Scope.private
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClass",
+            staticProperties: [{
+                name: "myString",
+                typeExpression: { text: "string" }
+            }, {
+                name: "myImplicit",
+                typeExpression: { text: "number" }
+            }, {
+                name: "myAny",
+                typeExpression: { text: "any" }
+            }, {
+                name: "myOptional",
+                typeExpression: { text: "string" },
+                isOptional: true
+            }, {
+                name: "myExplicitPublic",
+                typeExpression: { text: "any" },
+                scope: Scope.public
+            }, {
+                name: "myProtected",
+                typeExpression: { text: "any" },
+                scope: Scope.protected
+            }, {
+                name: "myPrivate",
+                typeExpression: { text: "any" },
+                scope: Scope.private
+            }]
+        }]
     });
 });

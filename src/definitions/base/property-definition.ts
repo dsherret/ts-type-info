@@ -2,9 +2,9 @@ import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
-import {ITypedDefinition, TypedDefinition} from "./typed-definition";
+import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-expressioned-definition";
 
-export class PropertyDefinition implements ITypedDefinition, INamedDefinition {
+export class PropertyDefinition implements ITypeExpressionedDefinition, INamedDefinition {
     private _isOptional: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -18,16 +18,12 @@ export class PropertyDefinition implements ITypedDefinition, INamedDefinition {
         return this._isOptional;
     }
 
-    // NameDefinition
+    // NamedDefinition
     fillName: (symbol: ts.Symbol) => void;
     name: string;
-    // TypedDefinition
+    // TypeExpressionedDefinition
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     typeExpression: TypeExpression;
-
-    static isProperty(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0;
-    }
 }
 
-applyMixins(PropertyDefinition, [NamedDefinition, TypedDefinition]);
+applyMixins(PropertyDefinition, [NamedDefinition, TypeExpressionedDefinition]);

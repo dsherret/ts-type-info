@@ -4,20 +4,21 @@ import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
 import {StaticMethodDefinition} from "./static-method-definition";
 import {StaticPropertyDefinition} from "./static-property-definition";
-import {DecoratorDefinition, TypeParameterDefinition} from "./../misc";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition,
-        IDecoratableDefinition, DecoratableDefinition,
-        IExportableDefinition, ExportableDefinition} from "./../base";
+        IDecoratableDefinition, DecoratableDefinition, DecoratorDefinition,
+        IExportableDefinition, ExportableDefinition,
+        ITypeParameteredDefinition, TypeParameteredDefinition,
+        TypeParameterDefinition} from "./../base";
 
-export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition {
+export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition {
     private _methods: ClassMethodDefinition[] = [];
     private _properties: ClassPropertyDefinition[] = [];
     private _staticMethods: StaticMethodDefinition[] = [];
     private _staticProperties: StaticPropertyDefinition[] = [];
-    private _typeParameters: TypeParameterDefinition[] = [];
     private _constructorDef: ConstructorDefinition;
+    private _typeParameters: TypeParameterDefinition[] = [];
 
     constructor(
         typeChecker: TypeChecker,
@@ -68,18 +69,18 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             /* istanbul ignore else */
-            if (ClassPropertyDefinition.isProperty(member)) {
+            if (typeChecker.isSymbolClassProperty(member)) {
                 this._properties.push(new ClassPropertyDefinition(typeChecker, member));
             }
-            else if (ClassMethodDefinition.isClassMethod(member)) {
+            else if (typeChecker.isSymbolClassMethod(member)) {
                 this._methods.push(new ClassMethodDefinition(typeChecker, member));
             }
-            else if (ConstructorDefinition.isConstructor(member)) {
+            else if (typeChecker.isSymbolConstructor(member)) {
                 this.verifyConstructorNotSet();
                 this._constructorDef = new ConstructorDefinition(typeChecker, member);
             }
-            else if (TypeParameterDefinition.isTypeParameter(member)) {
-                // todo: figure out better way of getting type parameters, like how it works in call signature definition?
+            else if (typeChecker.isSymbolTypeParameter(member)) {
+                // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
                 this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
             }
             else {
@@ -92,10 +93,10 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
             if (staticMember.getName() === "prototype") {
                 // ignore
             }
-            else if (StaticMethodDefinition.isStaticMethod(staticMember)) {
+            else if (typeChecker.isSymbolStaticMethod(staticMember)) {
                 this._staticMethods.push(new StaticMethodDefinition(typeChecker, staticMember));
             }
-            else if (StaticPropertyDefinition.isStaticProperty(staticMember)) {
+            else if (typeChecker.isSymbolStaticProperty(staticMember)) {
                 this._staticProperties.push(new StaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
@@ -111,7 +112,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         }
     }
 
-    // NameDefinition
+    // NamedDefinition
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // DecoratableDefinition
@@ -120,6 +121,9 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    // TypeParameteredDefinition
+    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
 }
 
-applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition]);
+applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition]);

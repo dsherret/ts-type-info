@@ -5,3 +5,4 @@ export * from "./class/class-property";
 export * from "./class/constructor";
 export * from "./class/static-method";
 export * from "./class/static-property";
+export * from "./class/class";

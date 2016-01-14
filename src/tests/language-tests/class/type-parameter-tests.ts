@@ -1,6 +1,5 @@
 import {getStringInfo} from "./../../../main";
-import {runTypeExpressionTests} from "./../../test-helpers";
-import * as assert from "assert";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class type parameters", () => {
     const code = `
@@ -20,55 +19,39 @@ class MyImplementsClass implements MyClass<number, string> {
 
     const def = getStringInfo(code);
 
-    describe("MyClass", () => {
-        it("should have a type parameter name of T", () => {
-            assert.equal(def.classes[0].typeParameters[0].name, "T");
-        });
-
-        it("should have a second type parameter name of U", () => {
-            assert.equal(def.classes[0].typeParameters[1].name, "U");
-        });
-
-        it("should extend a type string", () => {
-            assert.equal(def.classes[0].typeParameters[1].constraint.text, "string");
-        });
-    });
-
-    describe("MyExtendsClass", () => {
-        const c = def.classes[1];
-        it("should extend a type name of MyClass<number, string>", () => {
-            assert.equal(c.extends[0].text, "MyClass<number, string>");
-        });
-
-        it("should extend a definition MyClass", () => {
-            assert.equal(c.extends[0].types[0].definition, def.classes[0]);
-        });
-
-        it("should extend a definition MyClass with a number type param", () => {
-            runTypeExpressionTests(c.extends[0].types[0].typeArguments[0], "number");
-        });
-
-        it("should extend a definition MyClass with a string type param", () => {
-            runTypeExpressionTests(c.extends[0].types[0].typeArguments[1], "string");
-        });
-    });
-
-    describe("MyImplementsClass", () => {
-        const c = def.classes[2];
-        it("should implement a type name of MyClass<number, string>", () => {
-            assert.equal(c.implements[0].text, "MyClass<number, string>");
-        });
-
-        it("should implement a definition MyClass", () => {
-            assert.equal(c.implements[0].types[0].definition, def.classes[0]);
-        });
-
-        it("should implement a definition MyClass with a number type param", () => {
-            runTypeExpressionTests(c.implements[0].types[0].typeArguments[0], "number");
-        });
-
-        it("should extend a definition MyClass with a string type param", () => {
-            runTypeExpressionTests(c.implements[0].types[0].typeArguments[1], "string");
-        });
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClass",
+            typeParameters: [{
+                name: "T"
+            }, {
+                name: "U",
+                constraintTypeExpression: { text: "string" }
+            }],
+            properties: [{
+                name: "tProp",
+                typeExpression: { text: "T" }
+            }, {
+                name: "uProp",
+                typeExpression: { text: "U" }
+            }]
+        }, {
+            name: "MyExtendsClass",
+            extends: [{
+                text: "MyClass<number, string>"
+            }]
+        }, {
+            name: "MyImplementsClass",
+            implements: [{
+                text: "MyClass<number, string>"
+            }],
+            properties: [{
+                name: "tProp",
+                typeExpression: { text: "number" }
+            }, {
+                name: "uProp",
+                typeExpression: { text: "string" }
+            }]
+        }]
     });
 });

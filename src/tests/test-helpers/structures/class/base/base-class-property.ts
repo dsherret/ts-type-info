@@ -1,6 +1,4 @@
-import {Property} from "./../../property";
-import {Scope} from "./../../../../../scope";
+import {Decoratable, Scoped, Property} from "./../../base";
 
-export interface BaseClassProperty extends Property {
-    scope?: Scope;
+export interface BaseClassProperty extends Property, Decoratable, Scoped {
 }

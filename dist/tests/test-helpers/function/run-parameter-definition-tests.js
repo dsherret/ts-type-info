@@ -1,10 +1,7 @@
 var base_1 = require("./base");
-function runParameterDefinitionTests(definition, param) {
-    if (definition == null) {
-        throw "Parameter definition should not be null.";
-    }
-    describe("parameter " + param.name, function () {
-        base_1.runBaseParameterDefinitionTests(definition, param);
+function runParameterDefinitionTests(definition, structure) {
+    describe("parameter " + structure.name, function () {
+        base_1.runBaseParameterDefinitionTests(definition, structure);
     });
 }
 exports.runParameterDefinitionTests = runParameterDefinitionTests;

@@ -1,13 +1,13 @@
 import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {Expression, TypeExpression} from "./../../../expressions";
-import {INamedDefinition, NamedDefinition, ITypedDefinition, TypedDefinition} from "./../../base";
+import {INamedDefinition, NamedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./../../base";
 
 export interface BaseParameterDefinitionConstructor<T extends BaseParameterDefinition> {
     new(typeChecker: TypeChecker, symbol: ts.Symbol): T;
 }
 
-export class BaseParameterDefinition implements ITypedDefinition, INamedDefinition {
+export class BaseParameterDefinition implements INamedDefinition, ITypeExpressionedDefinition {
     private _isOptional: boolean;
     private _isRestParameter: boolean;
     private _defaultExpression: Expression;
@@ -38,12 +38,12 @@ export class BaseParameterDefinition implements ITypedDefinition, INamedDefiniti
         this._defaultExpression = declaration.initializer != null ? new Expression(typeChecker, declaration.initializer) : null;
     }
 
-    // NameDefinition
+    // NamedDefinition
     fillName: (symbol: ts.Symbol) => void;
     name: string;
-    // TypedDefinition
+    // TypeExpressionedDefinition
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     typeExpression: TypeExpression;
 }
 
-applyMixins(BaseParameterDefinition, [NamedDefinition, TypedDefinition]);
+applyMixins(BaseParameterDefinition, [NamedDefinition, TypeExpressionedDefinition]);

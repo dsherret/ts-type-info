@@ -3,5 +3,6 @@ function __export(m) {
 }
 __export(require("./interface/interface-method"));
 __export(require("./interface/interface-new-signature"));
+__export(require("./interface/interface"));
 
 //# sourceMappingURL=interface.js.map

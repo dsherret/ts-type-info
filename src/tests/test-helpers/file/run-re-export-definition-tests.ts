@@ -2,15 +2,12 @@
 import * as path from "path";
 import {ReExport} from "./../structures";
 import {ReExportDefinition} from "./../../../definitions";
-import {runNamedDefinitionTests} from "./../base";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, reExport: ReExport) {
-    if (definition == null) {
-        throw "Re-export definition should not be null.";
-    }
-
     describe(`re-export ${reExport.definitionName}`, () => {
-        runNamedDefinitionTests(definition.definition, reExport.definitionName);
+        it(`should have the name ${reExport.definitionName}`, () => {
+            assert.equal(definition.definition.name, reExport.definitionName);
+        });
 
         it(`should have a matching type`, () => {
             assert.equal(definition.definition instanceof reExport.definitionType, true);

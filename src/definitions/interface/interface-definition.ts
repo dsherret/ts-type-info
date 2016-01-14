@@ -1,13 +1,12 @@
 ﻿import * as ts from "typescript";
-import {TypeParameterDefinition} from "./../misc";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {PropertyDefinition, INamedDefinition, NamedDefinition,
-        IExportableDefinition, ExportableDefinition} from "./../base";
+        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, TypeParameterDefinition} from "./../base";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 
-export class InterfaceDefinition implements INamedDefinition, IExportableDefinition {
+export class InterfaceDefinition implements INamedDefinition, IExportableDefinition, ITypeParameteredDefinition {
     private _methods: InterfaceMethodDefinition[] = [];
     private _newSignatures: InterfaceNewSignatureDefinition[] = [];
     private _properties: PropertyDefinition[] = [];
@@ -44,33 +43,35 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
 
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             /* istanbul ignore else */
-            if (PropertyDefinition.isProperty(member)) {
+            if (typeChecker.isSymbolProperty(member)) {
                 this._properties.push(new PropertyDefinition(typeChecker, member));
             }
-            else if (InterfaceMethodDefinition.isMethod(member)) {
+            else if (typeChecker.isSymbolInterfaceMethod(member)) {
                 this._methods.push(new InterfaceMethodDefinition(typeChecker, member));
             }
-            else if (TypeParameterDefinition.isTypeParameter(member)) {
+            else if (typeChecker.isSymbolTypeParameter(member)) {
                 this._typeParameters.push(new TypeParameterDefinition(typeChecker, member));
             }
-            else if (InterfaceNewSignatureDefinition.isNewSignature(member)) {
+            else if (typeChecker.isSymbolNewSignature(member)) {
                 member.getDeclarations().forEach(d => {
                     this._newSignatures.push(new InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d as ts.SignatureDeclaration)));
                 });
             }
             else {
-                console.log(member);
                 console.warn(`Not implemented interface member: ${member.getName()}`);
             }
         });
     }
 
-    // NameDefinition
+    // NamedDefinition
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    // TypeParameteredDefinition
+    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
 }
 
-applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition]);
+applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition]);

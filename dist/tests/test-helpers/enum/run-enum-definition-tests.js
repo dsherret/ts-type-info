@@ -1,18 +1,16 @@
 var assert = require("assert");
 var base_1 = require("./../base");
 var run_enum_member_definition_tests_1 = require("./run-enum-member-definition-tests");
-function runEnumDefinitionTests(definition, enumDef) {
-    if (definition == null) {
-        throw "Enum definition should not be null.";
-    }
-    describe("enum " + enumDef.name, function () {
-        base_1.runNamedDefinitionTests(definition, enumDef.name);
-        base_1.runExportableDefinitionTests(definition, enumDef.isExported);
-        it("should have " + enumDef.members.length + " member(s)", function () {
-            assert.equal(definition.members.length, enumDef.members.length);
+function runEnumDefinitionTests(definition, structure) {
+    describe("enum " + structure.name, function () {
+        structure.members = structure.members || [];
+        base_1.runNamedDefinitionTests(definition, structure);
+        base_1.runExportableDefinitionTests(definition, structure);
+        it("should have " + structure.members.length + " member(s)", function () {
+            assert.equal(definition.members.length, structure.members.length);
         });
-        definition.members.forEach(function (member, i) {
-            run_enum_member_definition_tests_1.runEnumMemberDefinitionTests(member, enumDef.members[i]);
+        structure.members.forEach(function (memberStructure, i) {
+            run_enum_member_definition_tests_1.runEnumMemberDefinitionTests(definition.members[i], memberStructure);
         });
     });
 }

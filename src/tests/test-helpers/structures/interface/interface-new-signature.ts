@@ -1,6 +1,4 @@
-﻿import {Parameter} from "./../function";
+﻿import {Parametered, Parameter, ReturnTyped} from "./../function";
 
-export interface InterfaceNewSignature {
-    parameters: Parameter[];
-    returnType: string;
+export interface InterfaceNewSignature extends Parametered<Parameter>, ReturnTyped {
 }

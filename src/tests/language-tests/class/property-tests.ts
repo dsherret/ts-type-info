@@ -1,6 +1,6 @@
 import {getStringInfo} from "./../../../main";
 import {Scope} from "./../../../scope";
-import {runClassPropertyDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class property tests", () => {
     const code = `
@@ -27,57 +27,44 @@ class MyClass {
 
     const def = getStringInfo(code);
 
-    runClassPropertyDefinitionTests(def.classes[0].properties[0], {
-        name: "myString",
-        type: "string"
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[1], {
-        name: "myImplicit",
-        type: "number"
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[2], {
-        name: "myAny",
-        type: "any"
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[3], {
-        name: "myOptional",
-        type: "string",
-        isOptional: true
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[4], {
-        name: "myExplicitPublic",
-        type: "any"
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[5], {
-        name: "myProtected",
-        type: "any",
-        scope: Scope.protected
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[6], {
-        name: "myPrivate",
-        type: "any",
-        scope: Scope.private
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[7], {
-        name: "myGetAccessor",
-        type: "string",
-        scope: Scope.public,
-        isAccessor: true,
-        isReadonly: true
-    });
-
-    runClassPropertyDefinitionTests(def.classes[0].properties[8], {
-        name: "myGetAndSetAccessor",
-        type: "string",
-        scope: Scope.public,
-        isAccessor: true,
-        isReadonly: false
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClass",
+            properties: [{
+                name: "myString",
+                typeExpression: { text: "string" }
+            }, {
+                name: "myImplicit",
+                typeExpression: { text: "number" }
+            }, {
+                name: "myAny",
+                typeExpression: { text: "any" }
+            }, {
+                name: "myOptional",
+                typeExpression: { text: "string" },
+                isOptional: true
+            }, {
+                name: "myExplicitPublic",
+                typeExpression: { text: "any" },
+                scope: Scope.public
+            }, {
+                name: "myProtected",
+                typeExpression: { text: "any" },
+                scope: Scope.protected
+            }, {
+                name: "myPrivate",
+                typeExpression: { text: "any" },
+                scope: Scope.private
+            }, {
+                name: "myGetAccessor",
+                typeExpression: { text: "string" },
+                isAccessor: true,
+                isReadonly: true
+            }, {
+                name: "myGetAndSetAccessor",
+                typeExpression: { text: "string" },
+                isAccessor: true
+            }]
+        }]
     });
 });

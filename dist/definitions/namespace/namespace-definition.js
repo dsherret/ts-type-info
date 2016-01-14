@@ -8,6 +8,6 @@ var NamespaceDefinition = (function () {
     return NamespaceDefinition;
 })();
 exports.NamespaceDefinition = NamespaceDefinition;
-utils_1.applyMixins(NamespaceDefinition, [base_1.NamedDefinition, base_1.ModuledDefinition, base_1.ExportableDefinition]);
+utils_1.applyMixins(NamespaceDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition, base_1.ModuledDefinition]);
 
 //# sourceMappingURL=namespace-definition.js.map

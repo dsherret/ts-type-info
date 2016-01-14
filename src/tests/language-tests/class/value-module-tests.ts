@@ -1,12 +1,13 @@
+// todo: these tests
+/*
 import {getStringInfo} from "./../../../main";
-import {Scope} from "./../../../scope";
-import {runClassMethodDefinitionTests, runStaticMethodDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("value module", () => {
     const code = `
 // declaration merging
 declare class MyClass {
-    myMethod(num: number): string;
+    myMethod(): void;
 }
 
 declare module MyClass {
@@ -14,24 +15,28 @@ declare module MyClass {
 }`;
 
     const def = getStringInfo(code);
-
-    runClassMethodDefinitionTests(def.classes[0].methods[0], {
-        name: "myMethod",
-        scope: Scope.public,
-        returnType: "string",
-        parameters: [{
-            name: "num",
-            type: "number"
-        }]
-    });
-
-    runStaticMethodDefinitionTests(def.classes[0].staticMethods[0], {
+    const func = {
         name: "myFunction",
-        scope: Scope.public,
-        returnType: "string",
         parameters: [{
             name: "str",
-            type: "string"
+            typeExpression: { text: "string" }
+        }],
+        returnTypeExpression: { text: "string" }
+    };
+
+    // todo: hmmm... maybe this should work differently?
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClass",
+            methods: [{
+                name: "myMethod",
+            }],
+            staticMethods: [func]
+        }],
+        namespaces: [{
+            name: "MyClass",
+            functions: [func]
         }]
     });
 });
+*/

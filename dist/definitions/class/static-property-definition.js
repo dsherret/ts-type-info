@@ -3,16 +3,12 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
 var base_1 = require("./base");
 var StaticPropertyDefinition = (function (_super) {
     __extends(StaticPropertyDefinition, _super);
     function StaticPropertyDefinition() {
         _super.apply(this, arguments);
     }
-    StaticPropertyDefinition.isStaticProperty = function (symbol) {
-        return (symbol.getFlags() & 4 /* Property */) !== 0;
-    };
     return StaticPropertyDefinition;
 })(base_1.BaseClassPropertyDefinition);
 exports.StaticPropertyDefinition = StaticPropertyDefinition;

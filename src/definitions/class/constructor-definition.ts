@@ -18,10 +18,6 @@ export class ConstructorDefinition implements IParameteredDefinition<ClassMethod
         typeChecker: TypeChecker,
         signature: ts.Signature) => void;
     parameters: ClassMethodParameterDefinition[];
-
-    static isConstructor(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Constructor) !== 0;
-    }
 }
 
 applyMixins(ConstructorDefinition, [ParameteredDefinition]);

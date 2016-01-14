@@ -1,10 +1,7 @@
-import {ITypedDefinition} from "./../../../definitions";
+import {ITypeExpressionedDefinition} from "./../../../definitions";
 import {runTypeExpressionTests} from "./../expressions";
+import {TypeExpressionedStructure} from "./../structures";
 
-export function runTypedDefinitionTests(definition: ITypedDefinition, name: string) {
-    if (definition == null) {
-        throw "Typed definition should not be null.";
-    }
-
-    runTypeExpressionTests(definition.typeExpression, name);
+export function runTypeExpressionedDefinitionTests(definition: ITypeExpressionedDefinition, structure: TypeExpressionedStructure) {
+    runTypeExpressionTests(definition.typeExpression, structure.typeExpression);
 }

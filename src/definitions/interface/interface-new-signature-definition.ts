@@ -23,10 +23,6 @@ export class InterfaceNewSignatureDefinition implements IParameteredDefinition<P
     fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     returnTypeExpression: TypeExpression;
-
-    static isNewSignature(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Signature) !== 0;
-    }
 }
 
 applyMixins(InterfaceNewSignatureDefinition, [ParameteredDefinition, ReturnTypedDefinition]);

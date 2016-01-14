@@ -1,12 +1,10 @@
 var assert = require("assert");
 var path = require("path");
-var base_1 = require("./../base");
 function runImportDefinitionTests(definition, importStructure) {
-    if (definition == null) {
-        throw "Import definition should not be null.";
-    }
     describe("import " + importStructure.definitionName, function () {
-        base_1.runNamedDefinitionTests(definition.definition, importStructure.definitionName);
+        it("should have the name " + importStructure.definitionName, function () {
+            assert.equal(definition.definition.name, importStructure.definitionName);
+        });
         it("should have a matching type", function () {
             assert.equal(definition.definition instanceof importStructure.definitionType, true);
         });

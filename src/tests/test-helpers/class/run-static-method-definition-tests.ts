@@ -2,12 +2,8 @@ import {StaticMethod} from "./../structures";
 import {StaticMethodDefinition} from "./../../../definitions";
 import {runBaseClassMethodDefinitionTests} from "./base";
 
-export function runStaticMethodDefinitionTests(definition: StaticMethodDefinition, method: StaticMethod) {
-    if (definition == null) {
-        throw "Static method definition should not be null.";
-    }
-
-    describe(`static method ${method.name}`, () => {
-        runBaseClassMethodDefinitionTests(definition, method);
+export function runStaticMethodDefinitionTests(definition: StaticMethodDefinition, structure: StaticMethod) {
+    describe(`static method ${structure.name}`, () => {
+        runBaseClassMethodDefinitionTests(definition, structure);
     });
 }

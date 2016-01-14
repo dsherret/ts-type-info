@@ -1,14 +1,14 @@
 var assert = require("assert");
-var misc_1 = require("./../misc");
-function runDecoratableDefinitionTests(definition, decorators) {
-    if (definition == null) {
-        throw "Decoratable definition should not be null.";
-    }
-    it("should have " + decorators.length + " parameters", function () {
-        assert.equal(definition.decorators.length, decorators.length);
-    });
-    definition.decorators.forEach(function (decorator, i) {
-        misc_1.runDecoratorDefinitionTests(decorator, decorators[i]);
+var run_decorator_definition_tests_1 = require("./run-decorator-definition-tests");
+function runDecoratableDefinitionTests(definition, structure) {
+    describe("decorators", function () {
+        structure.decorators = structure.decorators || [];
+        it("should have " + structure.decorators.length + " parameters", function () {
+            assert.equal(definition.decorators.length, structure.decorators.length);
+        });
+        structure.decorators.forEach(function (decoratorStructure, i) {
+            run_decorator_definition_tests_1.runDecoratorDefinitionTests(definition.decorators[i], structure.decorators[i]);
+        });
     });
 }
 exports.runDecoratableDefinitionTests = runDecoratableDefinitionTests;

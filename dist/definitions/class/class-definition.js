@@ -3,7 +3,6 @@ var class_method_definition_1 = require("./class-method-definition");
 var class_property_definition_1 = require("./class-property-definition");
 var static_method_definition_1 = require("./static-method-definition");
 var static_property_definition_1 = require("./static-property-definition");
-var misc_1 = require("./../misc");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var ClassDefinition = (function () {
@@ -81,19 +80,19 @@ var ClassDefinition = (function () {
         this._typeParameters = [];
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             /* istanbul ignore else */
-            if (class_property_definition_1.ClassPropertyDefinition.isProperty(member)) {
+            if (typeChecker.isSymbolClassProperty(member)) {
                 _this._properties.push(new class_property_definition_1.ClassPropertyDefinition(typeChecker, member));
             }
-            else if (class_method_definition_1.ClassMethodDefinition.isClassMethod(member)) {
+            else if (typeChecker.isSymbolClassMethod(member)) {
                 _this._methods.push(new class_method_definition_1.ClassMethodDefinition(typeChecker, member));
             }
-            else if (constructor_definition_1.ConstructorDefinition.isConstructor(member)) {
+            else if (typeChecker.isSymbolConstructor(member)) {
                 _this.verifyConstructorNotSet();
                 _this._constructorDef = new constructor_definition_1.ConstructorDefinition(typeChecker, member);
             }
-            else if (misc_1.TypeParameterDefinition.isTypeParameter(member)) {
-                // todo: figure out better way of getting type parameters, like how it works in call signature definition?
-                _this._typeParameters.push(new misc_1.TypeParameterDefinition(typeChecker, member));
+            else if (typeChecker.isSymbolTypeParameter(member)) {
+                // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
+                _this._typeParameters.push(new base_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
                 console.warn("Not implemented member: " + member.getName());
@@ -103,10 +102,10 @@ var ClassDefinition = (function () {
             /* istanbul ignore else */
             if (staticMember.getName() === "prototype") {
             }
-            else if (static_method_definition_1.StaticMethodDefinition.isStaticMethod(staticMember)) {
+            else if (typeChecker.isSymbolStaticMethod(staticMember)) {
                 _this._staticMethods.push(new static_method_definition_1.StaticMethodDefinition(typeChecker, staticMember));
             }
-            else if (static_property_definition_1.StaticPropertyDefinition.isStaticProperty(staticMember)) {
+            else if (typeChecker.isSymbolStaticProperty(staticMember)) {
                 _this._staticProperties.push(new static_property_definition_1.StaticPropertyDefinition(typeChecker, staticMember));
             }
             else {
@@ -123,6 +122,6 @@ var ClassDefinition = (function () {
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;
-utils_1.applyMixins(ClassDefinition, [base_1.NamedDefinition, base_1.DecoratableDefinition, base_1.ExportableDefinition]);
+utils_1.applyMixins(ClassDefinition, [base_1.NamedDefinition, base_1.DecoratableDefinition, base_1.ExportableDefinition, base_1.TypeParameteredDefinition]);
 
 //# sourceMappingURL=class-definition.js.map

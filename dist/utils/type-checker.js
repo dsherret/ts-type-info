@@ -118,6 +118,10 @@ var TypeChecker = (function () {
     TypeChecker.prototype.getSymbolParent = function (symbol) {
         return symbol == null ? null : symbol.parent;
     };
+    TypeChecker.prototype.getSymbolParametersFromSymbol = function (symbol) {
+        var _this = this;
+        return this.getDeclarationFromSymbol(symbol).parameters.filter(function (p) { return p != null; }).map(function (p) { return _this.getSymbolAtLocation(p); });
+    };
     TypeChecker.prototype.getTypeExpressionAtLocation = function (node) {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     };
@@ -218,6 +222,16 @@ var TypeChecker = (function () {
     TypeChecker.prototype.isSymbolClass = function (symbol) {
         return this.symbolHasFlag(symbol, 32 /* Class */);
     };
+    TypeChecker.prototype.isSymbolClassMethod = function (symbol) {
+        return this.symbolHasFlag(symbol, 8192 /* Method */);
+    };
+    TypeChecker.prototype.isSymbolClassProperty = function (symbol) {
+        return this.symbolHasFlag(symbol, 4 /* Property */) ||
+            this.symbolHasFlag(symbol, 32768 /* GetAccessor */);
+    };
+    TypeChecker.prototype.isSymbolConstructor = function (symbol) {
+        return this.symbolHasFlag(symbol, 16384 /* Constructor */);
+    };
     TypeChecker.prototype.isSymbolEnum = function (symbol) {
         return this.symbolHasFlag(symbol, 384 /* Enum */);
     };
@@ -227,8 +241,28 @@ var TypeChecker = (function () {
     TypeChecker.prototype.isSymbolInterface = function (symbol) {
         return this.symbolHasFlag(symbol, 64 /* Interface */);
     };
+    TypeChecker.prototype.isSymbolInterfaceMethod = function (symbol) {
+        return this.symbolHasFlag(symbol, 8192 /* Method */);
+    };
     TypeChecker.prototype.isSymbolNamespace = function (symbol) {
         return this.symbolHasFlag(symbol, 1536 /* Namespace */);
+    };
+    TypeChecker.prototype.isSymbolNewSignature = function (symbol) {
+        return this.symbolHasFlag(symbol, 131072 /* Signature */);
+    };
+    TypeChecker.prototype.isSymbolProperty = function (symbol) {
+        return this.symbolHasFlag(symbol, 4 /* Property */);
+    };
+    TypeChecker.prototype.isSymbolStaticMethod = function (symbol) {
+        // could be a function for value modules (see value-module-tests.ts)
+        return this.symbolHasFlag(symbol, 8192 /* Method */) ||
+            this.symbolHasFlag(symbol, 16 /* Function */);
+    };
+    TypeChecker.prototype.isSymbolStaticProperty = function (symbol) {
+        return this.symbolHasFlag(symbol, 4 /* Property */);
+    };
+    TypeChecker.prototype.isSymbolTypeParameter = function (symbol) {
+        return this.symbolHasFlag(symbol, 262144 /* TypeParameter */);
     };
     TypeChecker.prototype.typeToString = function (tsType) {
         return this.typeChecker.typeToString(tsType, this.currentNode, 0 /* None */);

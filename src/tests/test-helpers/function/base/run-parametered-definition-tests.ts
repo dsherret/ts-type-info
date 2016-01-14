@@ -1,14 +1,21 @@
 import * as assert from "assert";
-import {Parameter} from "./../../structures";
+import {Parameter, Parametered} from "./../../structures";
 import {IParameteredDefinition, BaseParameterDefinition} from "./../../../../definitions";
-import {runBaseParameterDefinitionTests} from "./run-base-parameter-definition-tests";
 
-export function runParameteredDefinitionTests<T extends BaseParameterDefinition>(definition: IParameteredDefinition<T>, params: Parameter[]) {
-    it(`should have ${params.length} parameters`, () => {
-        assert.equal(definition.parameters.length, params.length);
-    });
+export function runParameteredDefinitionTests<T extends BaseParameterDefinition, U extends Parameter>(
+    runParameterDefinitionTests: (definition: T, structure: U) => void,
+    definition: IParameteredDefinition<T>,
+    structure: Parametered<U>) {
 
-    definition.parameters.forEach((param, i) => {
-        runBaseParameterDefinitionTests(param, params[i]);
+    describe("parameters", () => {
+        structure.parameters = structure.parameters || [];
+
+        it(`should have ${structure.parameters.length} parameter(s)`, () => {
+            assert.equal(definition.parameters.length, structure.parameters.length);
+        });
+
+        structure.parameters.forEach((param, i) => {
+            runParameterDefinitionTests(definition.parameters[i], param);
+        });
     });
 }

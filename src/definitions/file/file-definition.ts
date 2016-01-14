@@ -11,8 +11,8 @@ import {ImportDefinition} from "./import-definition";
 
 export class FileDefinition implements IModuledDefinition {
     private _fileName: string;
-    private _reExports: ReExportDefinition[] = [];
     private _imports: ImportDefinition[] = [];
+    private _reExports: ReExportDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this._fileName = file.fileName;

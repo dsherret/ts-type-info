@@ -1,6 +1,4 @@
-﻿import {Moduled} from "./../base";
+﻿import {Named, Exportable, Moduled} from "./../base";
 
-export interface Namespace extends Moduled {
-    name: string;
-    isExported?: boolean;
+export interface Namespace extends Named, Exportable, Moduled {
 }

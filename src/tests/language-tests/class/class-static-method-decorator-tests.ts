@@ -1,6 +1,5 @@
-﻿import * as assert from "assert";
-import {getStringInfo} from "./../../../main";
-import {runDecoratorDefinitionTests} from "./../../test-helpers";
+﻿import {getStringInfo} from "./../../../main";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class static method decorator tests", () => {
     const code = `
@@ -10,36 +9,44 @@ function MyClassStaticMethodDecorator(target: Object, propertyKey: string, descr
 
 class MyClass {
     @MyClassStaticMethodDecorator
-    static myStaticMethod1() {
-    }
-
-    static myStaticMethod2() {
+    static myStaticMethod() {
     }
 }
 `;
 
     const def = getStringInfo(code);
 
-    describe("myStaticMethod1", () => {
-        const m = def.classes[0].staticMethods[0];
-
-        it("will have one decorator", () => {
-            assert.equal(m.decorators.length, 1);
-        });
-
-        describe("MyClassStaticMethodDecorator", () => {
-            runDecoratorDefinitionTests(m.decorators[0], {
-                name: "MyClassStaticMethodDecorator",
-                arguments: []
-            });
-        });
-    });
-
-    describe("myStaticMethod2", () => {
-        const m = def.classes[0].staticMethods[1];
-
-        it("will have zero decorators", () => {
-            assert.equal(m.decorators.length, 0);
-        });
+    runFileDefinitionTests(def, {
+        functions: [{
+            name: "MyClassStaticMethodDecorator",
+            parameters: [{
+                name: "target",
+                typeExpression: {
+                    text: "Object"
+                }
+            }, {
+                name: "propertyKey",
+                typeExpression: {
+                    text: "string"
+                }
+            }, {
+                name: "descriptor",
+                typeExpression: {
+                    text: "TypedPropertyDescriptor<any>"
+                }
+            }],
+            returnTypeExpression: {
+                text: "TypedPropertyDescriptor<any>"
+            }
+        }],
+        classes: [{
+            name: "MyClass",
+            staticMethods: [{
+                name: "myStaticMethod",
+                decorators: [{
+                    name: "MyClassStaticMethodDecorator"
+                }]
+            }]
+        }]
     });
 });

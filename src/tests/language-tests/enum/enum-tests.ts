@@ -1,7 +1,7 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runEnumDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
-describe("class name tests", () => {
+describe("enum tests", () => {
     const code = `
 enum MyEnum {
     MyImplicit,
@@ -13,20 +13,19 @@ export enum MyExportedEnum {
 
     const def = getStringInfo(code);
 
-    runEnumDefinitionTests(def.enums[0], {
-        name: "MyEnum",
-        members: [{
-            name: "MyImplicit",
-            value: 0
+    runFileDefinitionTests(def, {
+        enums: [{
+            name: "MyEnum",
+            members: [{
+                name: "MyImplicit",
+                value: 0
+            }, {
+                name: "MyExplicit",
+                value: 7
+            }]
         }, {
-            name: "MyExplicit",
-            value: 7
+            name: "MyExportedEnum",
+            isExported: true
         }]
-    });
-
-    runEnumDefinitionTests(def.enums[1], {
-        name: "MyExportedEnum",
-        members: [],
-        isExported: true
     });
 });

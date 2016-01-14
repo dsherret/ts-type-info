@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {DecoratorDefinition} from "./../misc";
+import {DecoratorDefinition} from "./decorator-definition";
 import {TypeChecker} from "./../../utils";
 
 export interface IDecoratableDefinition {

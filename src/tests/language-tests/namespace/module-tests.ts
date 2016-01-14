@@ -1,5 +1,5 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runNamespaceDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("module tests", () => {
     const code = `
@@ -12,8 +12,15 @@ module MyModule {
     export function myExportedModuleFunction() {}
     interface MyModuleInterface {}
     export interface MyExportedModuleInterface {}
-    export namespace MyInnerModule {
+    module MyInnerModule {
+    }
+    export module MyInnerExportedModule {
         export class MyInnerModuleClass {}
+    }
+    namespace MyInnerNamespace {
+    }
+    export namespace MyInnerExportedNamespace {
+        export class MyInnerNamespaceClass {}
     }
 }
 export module MyExportedModule {
@@ -21,35 +28,45 @@ export module MyExportedModule {
 
     const def = getStringInfo(code);
 
-    runNamespaceDefinitionTests(def.namespaces[0], {
-        name: "MyModule",
-        classes: [
-            { name: "MyModuleClass" },
-            { name: "MyExportedModuleClass", isExported: true }
-        ],
-        enums: [
-            { name: "MyModuleEnum" },
-            { name: "MyExportedModuleEnum", isExported: true }
-        ],
-        functions: [
-            { name: "myModuleFunction" },
-            { name: "myExportedModuleFunction", isExported: true }
-        ],
-        interfaces: [
-            { name: "MyModuleInterface" },
-            { name: "MyExportedModuleInterface", isExported: true }
-        ],
+    runFileDefinitionTests(def, {
         namespaces: [{
-            name: "MyInnerModule",
-            isExported: true,
+            name: "MyModule",
             classes: [
-                { name: "MyInnerModuleClass", isExported: true }
-            ]
+                { name: "MyModuleClass" },
+                { name: "MyExportedModuleClass", isExported: true }
+            ],
+            enums: [
+                { name: "MyModuleEnum" },
+                { name: "MyExportedModuleEnum", isExported: true }
+            ],
+            functions: [
+                { name: "myModuleFunction" },
+                { name: "myExportedModuleFunction", isExported: true }
+            ],
+            interfaces: [
+                { name: "MyModuleInterface" },
+                { name: "MyExportedModuleInterface", isExported: true }
+            ],
+            namespaces: [{
+                name: "MyInnerModule"
+            }, {
+                name: "MyInnerExportedModule",
+                isExported: true,
+                classes: [
+                    { name: "MyInnerModuleClass", isExported: true }
+                ]
+            }, {
+                name: "MyInnerNamespace"
+            }, {
+                name: "MyInnerExportedNamespace",
+                isExported: true,
+                classes: [
+                    { name: "MyInnerNamespaceClass", isExported: true }
+                ]
+            }]
+        }, {
+            name: "MyExportedModule",
+            isExported: true
         }]
-    });
-
-    runNamespaceDefinitionTests(def.namespaces[1], {
-        name: "MyExportedModule",
-        isExported: true
     });
 });

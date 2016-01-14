@@ -1,12 +1,9 @@
 import * as assert from "assert";
 import {TypeExpression} from "./../../../expressions";
+import {TypeExpressionStructure} from "./../structures";
 
-export function runTypeExpressionTests(typeExpression: TypeExpression, name: string) {
-    if (typeExpression == null) {
-        throw "Type should not be null.";
-    }
-
-    it(`should have a type of ${name}`, () => {
-        assert.equal(typeExpression.text, name);
+export function runTypeExpressionTests(typeExpression: TypeExpression, structure: TypeExpressionStructure) {
+    it(`should have a type of ${structure.text}`, () => {
+        assert.equal(typeExpression.text, structure.text);
     });
 }

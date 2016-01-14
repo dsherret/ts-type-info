@@ -1,5 +1,5 @@
 import {getStringInfo} from "./../../../main";
-import {runPropertyDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("interface property tests", () => {
     const code = `
@@ -11,19 +11,20 @@ interface MyPropertyInterface {
 
     const def = getStringInfo(code);
 
-    runPropertyDefinitionTests(def.interfaces[0].properties[0], {
-        name: "myString",
-        type: "string"
-    });
-
-    runPropertyDefinitionTests(def.interfaces[0].properties[1], {
-        name: "myAny",
-        type: "any"
-    });
-
-    runPropertyDefinitionTests(def.interfaces[0].properties[2], {
-        name: "myOptional",
-        type: "string",
-        isOptional: true
+    runFileDefinitionTests(def, {
+        interfaces: [{
+            name: "MyPropertyInterface",
+            properties: [{
+                name: "myString",
+                typeExpression: { text: "string" }
+            }, {
+                name: "myAny",
+                typeExpression: { text: "any" }
+            }, {
+                name: "myOptional",
+                typeExpression: { text: "string" },
+                isOptional: true
+            }]
+        }]
     });
 });

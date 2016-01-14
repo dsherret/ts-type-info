@@ -1,12 +1,12 @@
 var base_1 = require("./../base");
 var base_2 = require("./base");
-function runFunctionDefinitionTests(definition, func) {
-    if (definition == null) {
-        throw "Function definition should not be null.";
-    }
-    describe("function " + func.name, function () {
-        base_2.runBaseFunctionDefinitionTests(definition, func);
-        base_1.runExportableDefinitionTests(definition, func.isExported);
+var run_parameter_definition_tests_1 = require("./run-parameter-definition-tests");
+function runFunctionDefinitionTests(definition, structure) {
+    describe("function " + structure.name, function () {
+        base_1.ensureDefinitionNotNull(definition, function () {
+            base_2.runBaseFunctionDefinitionTests(run_parameter_definition_tests_1.runParameterDefinitionTests, definition, structure);
+            base_1.runExportableDefinitionTests(definition, structure);
+        });
     });
 }
 exports.runFunctionDefinitionTests = runFunctionDefinitionTests;

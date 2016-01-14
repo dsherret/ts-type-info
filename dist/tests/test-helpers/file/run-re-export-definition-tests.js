@@ -1,12 +1,10 @@
 var assert = require("assert");
 var path = require("path");
-var base_1 = require("./../base");
 function runReExportDefinitionTests(definition, reExport) {
-    if (definition == null) {
-        throw "Re-export definition should not be null.";
-    }
     describe("re-export " + reExport.definitionName, function () {
-        base_1.runNamedDefinitionTests(definition.definition, reExport.definitionName);
+        it("should have the name " + reExport.definitionName, function () {
+            assert.equal(definition.definition.name, reExport.definitionName);
+        });
         it("should have a matching type", function () {
             assert.equal(definition.definition instanceof reExport.definitionType, true);
         });

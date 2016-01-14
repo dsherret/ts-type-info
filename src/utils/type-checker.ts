@@ -153,6 +153,10 @@ export class TypeChecker {
         return symbol == null ? null : (symbol as any).parent as ts.Symbol;
     }
 
+    getSymbolParametersFromSymbol(symbol: ts.Symbol) {
+        return (this.getDeclarationFromSymbol(symbol) as ts.SignatureDeclaration).parameters.filter(p => p != null).map(p => this.getSymbolAtLocation(p));
+    }
+
     getTypeExpressionAtLocation(node: ts.Node) {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     }
@@ -271,6 +275,19 @@ export class TypeChecker {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Class);
     }
 
+    isSymbolClassMethod(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Method);
+    }
+
+    isSymbolClassProperty(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Property) ||
+            this.symbolHasFlag(symbol, ts.SymbolFlags.GetAccessor);
+    }
+
+    isSymbolConstructor(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Constructor);
+    }
+
     isSymbolEnum(symbol: ts.Symbol) {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Enum);
     }
@@ -283,8 +300,34 @@ export class TypeChecker {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Interface);
     }
 
+    isSymbolInterfaceMethod(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Method);
+    }
+
     isSymbolNamespace(symbol: ts.Symbol) {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Namespace);
+    }
+
+    isSymbolNewSignature(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Signature);
+    }
+
+    isSymbolProperty(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Property);
+    }
+
+    isSymbolStaticMethod(symbol: ts.Symbol) {
+        // could be a function for value modules (see value-module-tests.ts)
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Method) ||
+            this.symbolHasFlag(symbol, ts.SymbolFlags.Function);
+    }
+
+    isSymbolStaticProperty(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Property);
+    }
+
+    isSymbolTypeParameter(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.TypeParameter);
     }
 
     typeToString(tsType: ts.Type) {

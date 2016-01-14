@@ -1,10 +1,7 @@
-var base_1 = require("./../base");
-function runStaticPropertyDefinitionTests(definition, property) {
-    if (definition == null) {
-        throw "Static property definition should not be null.";
-    }
-    describe("property " + property.name, function () {
-        base_1.runPropertyDefinitionTests(definition, property);
+var base_1 = require("./base");
+function runStaticPropertyDefinitionTests(definition, structure) {
+    describe("property " + structure.name, function () {
+        base_1.runBaseClassPropertyDefinitionTests(definition, structure);
     });
 }
 exports.runStaticPropertyDefinitionTests = runStaticPropertyDefinitionTests;

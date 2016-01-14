@@ -8,7 +8,7 @@ import {EnumDefinition} from "./../enum";
 import {FunctionDefinition} from "./../function";
 import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 
-export class NamespaceDefinition implements INamedDefinition, IModuledDefinition, IExportableDefinition {
+export class NamespaceDefinition implements INamedDefinition, IExportableDefinition, IModuledDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
@@ -30,4 +30,4 @@ export class NamespaceDefinition implements INamedDefinition, IModuledDefinition
     isExported: boolean;
 }
 
-applyMixins(NamespaceDefinition, [NamedDefinition, ModuledDefinition, ExportableDefinition]);
+applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition]);

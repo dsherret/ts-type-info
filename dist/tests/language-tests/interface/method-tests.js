@@ -3,27 +3,28 @@ var test_helpers_1 = require("./../../test-helpers");
 describe("interface method", function () {
     var code = "\ninterface MyInterface {\n    // parameters\n    myParameterMethod(myParameter: string, myOptionalParameter?: number): number[];\n    myImplicitAnyReturnTypeMethod();\n    myExplicitReturnTypeMethod(): string;\n}";
     var def = main_1.getStringInfo(code);
-    test_helpers_1.runInterfaceMethodDefinitionTests(def.interfaces[0].methods[0], {
-        name: "myParameterMethod",
-        returnType: "number[]",
-        parameters: [{
-                name: "myParameter",
-                type: "string"
-            }, {
-                name: "myOptionalParameter",
-                type: "number",
-                isOptional: true
+    test_helpers_1.runFileDefinitionTests(def, {
+        interfaces: [{
+                name: "MyInterface",
+                methods: [{
+                        name: "myParameterMethod",
+                        returnTypeExpression: { text: "number[]" },
+                        parameters: [{
+                                name: "myParameter",
+                                typeExpression: { text: "string" }
+                            }, {
+                                name: "myOptionalParameter",
+                                typeExpression: { text: "number" },
+                                isOptional: true
+                            }]
+                    }, {
+                        name: "myImplicitAnyReturnTypeMethod",
+                        returnTypeExpression: { text: "any" }
+                    }, {
+                        name: "myExplicitReturnTypeMethod",
+                        returnTypeExpression: { text: "string" }
+                    }]
             }]
-    });
-    test_helpers_1.runInterfaceMethodDefinitionTests(def.interfaces[0].methods[1], {
-        name: "myImplicitAnyReturnTypeMethod",
-        returnType: "any",
-        parameters: []
-    });
-    test_helpers_1.runInterfaceMethodDefinitionTests(def.interfaces[0].methods[2], {
-        name: "myExplicitReturnTypeMethod",
-        returnType: "string",
-        parameters: []
     });
 });
 

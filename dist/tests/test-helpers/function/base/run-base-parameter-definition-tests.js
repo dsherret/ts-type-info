@@ -1,27 +1,25 @@
 var assert = require("assert");
-var run_named_definition_tests_1 = require("./../../base/run-named-definition-tests");
-var run_typed_definition_tests_1 = require("./../../base/run-typed-definition-tests");
-function runBaseParameterDefinitionTests(definition, param) {
-    describe("parameter " + param.name, function () {
-        run_named_definition_tests_1.runNamedDefinitionTests(definition, param.name);
-        run_typed_definition_tests_1.runTypedDefinitionTests(definition, param.type);
-        it("should be " + (param.isOptional ? "optional" : "not optional"), function () {
-            assert.equal(definition.isOptional, typeof param.isOptional === "boolean" ? param.isOptional : false);
-        });
-        it("should " + (param.isRestParameter ? "be" : "not be") + " a rest parameter", function () {
-            assert.equal(definition.isRestParameter, typeof param.isRestParameter === "boolean" ? param.isRestParameter : false);
-        });
-        if (param.defaultExpressionText != null) {
-            it("should have the default expression with text '" + param.defaultExpressionText + "'.", function () {
-                assert.equal(definition.defaultExpression.text, param.defaultExpressionText);
-            });
-        }
-        else {
-            it("should not have a default expression.", function () {
-                assert.equal(definition.defaultExpression, null);
-            });
-        }
+var base_1 = require("./../../base");
+var expressions_1 = require("./../../expressions");
+function runBaseParameterDefinitionTests(definition, structure) {
+    base_1.runNamedDefinitionTests(definition, structure);
+    base_1.runTypeExpressionedDefinitionTests(definition, structure);
+    it("should be " + (structure.isOptional ? "optional" : "not optional"), function () {
+        assert.equal(definition.isOptional, typeof structure.isOptional === "boolean" ? structure.isOptional : false);
     });
+    it("should " + (structure.isRestParameter ? "be" : "not be") + " a rest parameter", function () {
+        assert.equal(definition.isRestParameter, typeof structure.isRestParameter === "boolean" ? structure.isRestParameter : false);
+    });
+    if (structure.defaultExpression != null) {
+        it("should have the default expression", function () {
+            expressions_1.runExpressionTests(definition.defaultExpression, structure.defaultExpression);
+        });
+    }
+    else {
+        it("should not have a default expression.", function () {
+            assert.equal(definition.defaultExpression, null);
+        });
+    }
 }
 exports.runBaseParameterDefinitionTests = runBaseParameterDefinitionTests;
 

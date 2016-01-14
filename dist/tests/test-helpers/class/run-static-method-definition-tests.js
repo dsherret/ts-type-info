@@ -1,10 +1,7 @@
 var base_1 = require("./base");
-function runStaticMethodDefinitionTests(definition, method) {
-    if (definition == null) {
-        throw "Static method definition should not be null.";
-    }
-    describe("static method " + method.name, function () {
-        base_1.runBaseClassMethodDefinitionTests(definition, method);
+function runStaticMethodDefinitionTests(definition, structure) {
+    describe("static method " + structure.name, function () {
+        base_1.runBaseClassMethodDefinitionTests(definition, structure);
     });
 }
 exports.runStaticMethodDefinitionTests = runStaticMethodDefinitionTests;

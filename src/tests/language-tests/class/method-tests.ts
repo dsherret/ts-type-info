@@ -1,6 +1,6 @@
 import {getStringInfo} from "./../../../main";
 import {Scope} from "./../../../scope";
-import {runClassMethodDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class method", () => {
     const code = `
@@ -31,62 +31,47 @@ class MyClass {
 }`;
 
     const def = getStringInfo(code);
-    runClassMethodDefinitionTests(def.classes[0].methods[0], {
-        name: "myParameterMethod",
-        scope: Scope.public,
-        returnType: "string",
-        parameters: [{
-            name: "myParameter",
-            type: "string"
-        }, {
-            name: "myDefaultParameter",
-            type: "number",
-            isOptional: true,
-            defaultExpressionText: "15"
-        }, {
-            name: "myOptionalParameter",
-            type: "string",
-            isOptional: true
-        }, {
-            name: "myRestParameter",
-            type: "number[]",
-            isOptional: true,
-            isRestParameter: true
+
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClass",
+            methods: [{
+                name: "myParameterMethod",
+                parameters: [{
+                    name: "myParameter",
+                    typeExpression: { text: "string" }
+                }, {
+                    name: "myDefaultParameter",
+                    typeExpression: { text: "number" },
+                    isOptional: true,
+                    defaultExpression: { text: "15" }
+                }, {
+                    name: "myOptionalParameter",
+                    typeExpression: { text: "string" },
+                    isOptional: true
+                }, {
+                    name: "myRestParameter",
+                    typeExpression: { text: "number[]" },
+                    isOptional: true,
+                    isRestParameter: true
+                }],
+                returnTypeExpression: { text: "string" }
+            }, {
+                name: "myExplicitReturnTypeMethod",
+                returnTypeExpression: { text: "string" }
+            }, {
+                name: "myImplicitReturnTypeMethod",
+                returnTypeExpression: { text: "string" }
+            }, {
+                name: "myPublicMethod",
+                scope: Scope.public
+            }, {
+                name: "myProtectedMethod",
+                scope: Scope.protected
+            }, {
+                name: "myPrivateMethod",
+                scope: Scope.private
+            }]
         }]
-    });
-
-    runClassMethodDefinitionTests(def.classes[0].methods[1], {
-        name: "myExplicitReturnTypeMethod",
-        scope: Scope.public,
-        returnType: "string",
-        parameters: []
-    });
-
-    runClassMethodDefinitionTests(def.classes[0].methods[2], {
-        name: "myImplicitReturnTypeMethod",
-        scope: Scope.public,
-        returnType: "string",
-        parameters: []
-    });
-
-    runClassMethodDefinitionTests(def.classes[0].methods[3], {
-        name: "myPublicMethod",
-        scope: Scope.public,
-        returnType: "void",
-        parameters: []
-    });
-
-    runClassMethodDefinitionTests(def.classes[0].methods[4], {
-        name: "myProtectedMethod",
-        scope: Scope.protected,
-        returnType: "void",
-        parameters: []
-    });
-
-    runClassMethodDefinitionTests(def.classes[0].methods[5], {
-        name: "myPrivateMethod",
-        scope: Scope.private,
-        returnType: "void",
-        parameters: []
     });
 });

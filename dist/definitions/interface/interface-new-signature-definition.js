@@ -1,4 +1,3 @@
-var ts = require("typescript");
 var utils_1 = require("./../../utils");
 var function_1 = require("./../function");
 var InterfaceNewSignatureDefinition = (function () {
@@ -6,9 +5,6 @@ var InterfaceNewSignatureDefinition = (function () {
         this.fillParametersBySignature(function_1.ParameterDefinition, typeChecker, signature);
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
     }
-    InterfaceNewSignatureDefinition.isNewSignature = function (symbol) {
-        return (symbol.getFlags() & 131072 /* Signature */) !== 0;
-    };
     return InterfaceNewSignatureDefinition;
 })();
 exports.InterfaceNewSignatureDefinition = InterfaceNewSignatureDefinition;

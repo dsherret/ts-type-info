@@ -25,10 +25,4 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
         this._isAccessor = (flags & ts.SymbolFlags.GetAccessor) !== 0;
         this._isReadonly = this._isAccessor && (flags & ts.SymbolFlags.SetAccessor) === 0;
     }
-
-    static isProperty(symbol: ts.Symbol) {
-        const flags = symbol.getFlags();
-        return (flags & ts.SymbolFlags.Property) !== 0 ||
-            (flags & ts.SymbolFlags.GetAccessor) !== 0;
-    }
 }

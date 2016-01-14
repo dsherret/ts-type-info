@@ -1,10 +1,7 @@
 var assert = require("assert");
-function runTypeExpressionTests(typeExpression, name) {
-    if (typeExpression == null) {
-        throw "Type should not be null.";
-    }
-    it("should have a type of " + name, function () {
-        assert.equal(typeExpression.text, name);
+function runTypeExpressionTests(typeExpression, structure) {
+    it("should have a type of " + structure.text, function () {
+        assert.equal(typeExpression.text, structure.text);
     });
 }
 exports.runTypeExpressionTests = runTypeExpressionTests;

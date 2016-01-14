@@ -1,6 +1,5 @@
-﻿import * as assert from "assert";
-import {getStringInfo} from "./../../../main";
-import {runDecoratorDefinitionTests} from "./../../test-helpers";
+﻿import {getStringInfo} from "./../../../main";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class method decorator parameter tests", () => {
     const code = `
@@ -8,33 +7,47 @@ function MyClassMethodParameterDecorator(target: any, propertyKey: string | symb
 }
 
 class MyClass {
-    myMethod1(@MyClassMethodParameterDecorator param1: string, param2: string) {
+    myMethod1(@MyClassMethodParameterDecorator param1: string) {
     }
 }
 `;
 
     const def = getStringInfo(code);
 
-    describe("param1", () => {
-        const p = def.classes[0].methods[0].parameters[0];
-
-        it("will have one decorator", () => {
-            assert.equal(p.decorators.length, 1);
-        });
-
-        describe("MyClassMethodParameterDecorator", () => {
-            runDecoratorDefinitionTests(p.decorators[0], {
-                name: "MyClassMethodParameterDecorator",
-                arguments: []
-            });
-        });
-    });
-
-    describe("param2", () => {
-        const p = def.classes[0].methods[0].parameters[1];
-
-        it("will have zero decorators", () => {
-            assert.equal(p.decorators.length, 0);
-        });
+    runFileDefinitionTests(def, {
+        functions: [{
+            name: "MyClassMethodParameterDecorator",
+            parameters: [{
+                name: "target",
+                typeExpression: {
+                    text: "any"
+                }
+            }, {
+                name: "propertyKey",
+                typeExpression: {
+                    text: "string | symbol"
+                }
+            }, {
+                name: "parameterIndex",
+                typeExpression: {
+                    text: "number"
+                }
+            }]
+        }],
+        classes: [{
+            name: "MyClass",
+            methods: [{
+                name: "myMethod1",
+                parameters: [{
+                    name: "param1",
+                    typeExpression: {
+                        text: "string"
+                    },
+                    decorators: [{
+                        name: "MyClassMethodParameterDecorator"
+                    }]
+                }]
+            }]
+        }]
     });
 });

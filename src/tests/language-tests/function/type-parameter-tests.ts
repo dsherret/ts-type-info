@@ -1,24 +1,31 @@
 import {getStringInfo} from "./../../../main";
-import * as assert from "assert";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("function type parameters", () => {
     const code = `
-function myTypeParameterFunction<T, U extends string>(param1: T, param2: U) {
+function myTypeParameterFunction<T, U extends string>(tParam: T, uParam: U) {
     console.log(param1);
     console.log(param2);
 }`;
 
     const def = getStringInfo(code);
 
-    it("should have a type parameter name of T", () => {
-        assert.equal(def.functions[0].typeParameters[0].name, "T");
-    });
-
-    it("should have a second type parameter name of U", () => {
-        assert.equal(def.functions[0].typeParameters[1].name, "U");
-    });
-
-    it("it should extend a type string", () => {
-        assert.equal(def.functions[0].typeParameters[1].constraint.text, "string");
+    runFileDefinitionTests(def, {
+        functions: [{
+            name: "myTypeParameterFunction",
+            typeParameters: [{
+                name: "T"
+            }, {
+                name: "U",
+                constraintTypeExpression: { text: "string" }
+            }],
+            parameters: [{
+                name: "tParam",
+                typeExpression: { text: "T" }
+            }, {
+                name: "uParam",
+                typeExpression: { text: "U" }
+            }]
+        }]
     });
 });

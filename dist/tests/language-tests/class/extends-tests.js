@@ -1,20 +1,27 @@
-var assert = require("assert");
 var main_1 = require("./../../../main");
 var test_helpers_1 = require("./../../test-helpers");
 describe("class extends tests", function () {
     var code = "\nclass MyBaseClass {\n    name1: string;\n}\n\nclass MyChildClass extends MyBaseClass {\n    name2: string;\n}\n";
     var def = main_1.getStringInfo(code);
-    describe("MyBaseClass", function () {
-        test_helpers_1.runNamedDefinitionTests(def.classes[0], "MyBaseClass");
-    });
-    describe("MyChildClass", function () {
-        test_helpers_1.runNamedDefinitionTests(def.classes[1], "MyChildClass");
-        describe("extends clause", function () {
-            test_helpers_1.runTypeExpressionTests(def.classes[1].extends[0], "MyBaseClass");
-        });
-        it("should have nothing in the implements clause", function () {
-            assert.equal(def.classes[1].implements.length, 0);
-        });
+    test_helpers_1.runFileDefinitionTests(def, {
+        classes: [{
+                name: "MyBaseClass",
+                properties: [{
+                        name: "name1",
+                        typeExpression: {
+                            text: "string"
+                        }
+                    }]
+            }, {
+                name: "MyChildClass",
+                extends: [{ text: "MyBaseClass" }],
+                properties: [{
+                        name: "name2",
+                        typeExpression: {
+                            text: "string"
+                        }
+                    }]
+            }]
     });
 });
 

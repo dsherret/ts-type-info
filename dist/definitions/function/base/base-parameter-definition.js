@@ -37,6 +37,6 @@ var BaseParameterDefinition = (function () {
     return BaseParameterDefinition;
 })();
 exports.BaseParameterDefinition = BaseParameterDefinition;
-utils_1.applyMixins(BaseParameterDefinition, [base_1.NamedDefinition, base_1.TypedDefinition]);
+utils_1.applyMixins(BaseParameterDefinition, [base_1.NamedDefinition, base_1.TypeExpressionedDefinition]);
 
 //# sourceMappingURL=base-parameter-definition.js.map

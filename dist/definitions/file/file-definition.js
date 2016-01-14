@@ -4,8 +4,8 @@ var re_export_definition_1 = require("./re-export-definition");
 var import_definition_1 = require("./import-definition");
 var FileDefinition = (function () {
     function FileDefinition(typeChecker, definitionCache, file) {
-        this._reExports = [];
         this._imports = [];
+        this._reExports = [];
         this._fileName = file.fileName;
         this.fillMembersBySourceFile(typeChecker, definitionCache, file);
     }

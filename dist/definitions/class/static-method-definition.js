@@ -3,19 +3,12 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
 var base_1 = require("./base");
 var StaticMethodDefinition = (function (_super) {
     __extends(StaticMethodDefinition, _super);
     function StaticMethodDefinition() {
         _super.apply(this, arguments);
     }
-    StaticMethodDefinition.isStaticMethod = function (symbol) {
-        var flags = symbol.getFlags();
-        // could be a function for value modules (see value-module-tests.ts)
-        return (flags & 8192 /* Method */) !== 0 ||
-            (flags & 16 /* Function */);
-    };
     return StaticMethodDefinition;
 })(base_1.BaseClassMethodDefinition);
 exports.StaticMethodDefinition = StaticMethodDefinition;

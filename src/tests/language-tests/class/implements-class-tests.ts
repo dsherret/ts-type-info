@@ -1,29 +1,43 @@
-﻿import * as assert from "assert";
-import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
+﻿import {getStringInfo} from "./../../../main";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class implements class tests", () => {
     const code = `
 class MyBaseClass {
-    name: string;
+    name1: string;
 }
 
 class MyClassImplementsClass implements MyBaseClass {
-    name: string;
+    name1: string;
     name2: string;
 }
 `;
 
     const def = getStringInfo(code);
 
-    runNamedDefinitionTests(def.classes[0], "MyBaseClass");
-    runNamedDefinitionTests(def.classes[1], "MyClassImplementsClass");
-
-    describe("implements clause", () => {
-        runTypeExpressionTests(def.classes[1].implements[0], "MyBaseClass");
-    });
-
-    it("should have nothing in the extends clause", () => {
-        assert.equal(def.classes[1].extends.length, 0);
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyBaseClass",
+            properties: [{
+                name: "name1",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }, {
+            name: "MyClassImplementsClass",
+            implements: [{ text: "MyBaseClass" }],
+            properties: [{
+                name: "name1",
+                typeExpression: {
+                    text: "string"
+                }
+            }, {
+                name: "name2",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }]
     });
 });

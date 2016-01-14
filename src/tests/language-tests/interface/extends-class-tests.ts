@@ -1,7 +1,7 @@
 ﻿import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
-describe("base interface tests", () => {
+describe("interface extends class tests", () => {
     const code = `
 class MyBaseClass {
     name: string;
@@ -14,15 +14,23 @@ interface MyChildInterface extends MyBaseClass {
 
     const def = getStringInfo(code);
 
-    describe("MyBaseClass", () => {
-        runNamedDefinitionTests(def.classes[0], "MyBaseClass");
-    });
-
-    describe("MyChildInterface", () => {
-        runNamedDefinitionTests(def.interfaces[0], "MyChildInterface");
-
-        describe("extends clause", () => {
-            runTypeExpressionTests(def.interfaces[0].extends[0], "MyBaseClass");
-        });
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyBaseClass",
+            properties: [{
+                name: "name",
+                typeExpression: { text: "string" }
+            }]
+        }],
+        interfaces: [{
+            name: "MyChildInterface",
+            extends: [{
+                text: "MyBaseClass"
+            }],
+            properties: [{
+                name: "name2",
+                typeExpression: { text: "string" }
+            }]
+        }]
     });
 });

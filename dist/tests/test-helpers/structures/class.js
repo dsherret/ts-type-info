@@ -8,5 +8,6 @@ __export(require("./class/class-property"));
 __export(require("./class/constructor"));
 __export(require("./class/static-method"));
 __export(require("./class/static-property"));
+__export(require("./class/class"));
 
 //# sourceMappingURL=class.js.map

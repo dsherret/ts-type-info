@@ -4,21 +4,19 @@ import {EnumDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
 import {runEnumMemberDefinitionTests} from "./run-enum-member-definition-tests";
 
-export function runEnumDefinitionTests(definition: EnumDefinition, enumDef: Enum) {
-    if (definition == null) {
-        throw "Enum definition should not be null.";
-    }
+export function runEnumDefinitionTests(definition: EnumDefinition, structure: Enum) {
+    describe(`enum ${structure.name}`, () => {
+        structure.members = structure.members || [];
 
-    describe(`enum ${enumDef.name}`, () => {
-        runNamedDefinitionTests(definition, enumDef.name);
-        runExportableDefinitionTests(definition, enumDef.isExported);
+        runNamedDefinitionTests(definition, structure);
+        runExportableDefinitionTests(definition, structure);
 
-        it(`should have ${enumDef.members.length} member(s)`, () => {
-            assert.equal(definition.members.length, enumDef.members.length);
+        it(`should have ${structure.members.length} member(s)`, () => {
+            assert.equal(definition.members.length, structure.members.length);
         });
 
-        definition.members.forEach((member, i) => {
-            runEnumMemberDefinitionTests(member, enumDef.members[i]);
+        structure.members.forEach((memberStructure, i) => {
+            runEnumMemberDefinitionTests(definition.members[i], memberStructure);
         });
     });
 }

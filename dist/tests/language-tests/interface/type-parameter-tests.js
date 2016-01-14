@@ -1,16 +1,25 @@
 var main_1 = require("./../../../main");
-var assert = require("assert");
+var test_helpers_1 = require("./../../test-helpers");
 describe("interface type parameters", function () {
     var code = "\ninterface MyInterface<T, U extends string> {\n    tProp: T;\n    uProp: U;\n}";
     var def = main_1.getStringInfo(code);
-    it("should have a type parameter name of T", function () {
-        assert.equal(def.interfaces[0].typeParameters[0].name, "T");
-    });
-    it("should have a second type parameter name of U", function () {
-        assert.equal(def.interfaces[0].typeParameters[1].name, "U");
-    });
-    it("it should extend a type string", function () {
-        assert.equal(def.interfaces[0].typeParameters[1].constraint.text, "string");
+    test_helpers_1.runFileDefinitionTests(def, {
+        interfaces: [{
+                name: "MyInterface",
+                typeParameters: [{
+                        name: "T",
+                    }, {
+                        name: "U",
+                        constraintTypeExpression: { text: "string" }
+                    }],
+                properties: [{
+                        name: "tProp",
+                        typeExpression: { text: "T" }
+                    }, {
+                        name: "uProp",
+                        typeExpression: { text: "U" }
+                    }]
+            }]
     });
 });
 

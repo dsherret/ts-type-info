@@ -1,10 +1,7 @@
 var function_1 = require("./../function");
-function runClassMethodParameterDefinitionTests(definition, param) {
-    if (definition == null) {
-        throw "Class method parameter definition should not be null.";
-    }
-    describe("parameter " + param.name, function () {
-        function_1.runBaseParameterDefinitionTests(definition, param);
+function runClassMethodParameterDefinitionTests(definition, structure) {
+    describe("parameter " + structure.name, function () {
+        function_1.runBaseParameterDefinitionTests(definition, structure);
     });
 }
 exports.runClassMethodParameterDefinitionTests = runClassMethodParameterDefinitionTests;

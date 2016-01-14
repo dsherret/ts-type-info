@@ -1,7 +1,6 @@
-﻿import {EnumMember} from "./enum-member";
+﻿import {Named, Exportable} from "./../base";
+import {EnumMember} from "./enum-member";
 
-export interface Enum {
-    name: string;
-    isExported?: boolean;
-    members: EnumMember[];
+export interface Enum extends Named, Exportable {
+    members?: EnumMember[];
 }

@@ -1,44 +1,56 @@
 var assert = require("assert");
-var run_named_definition_tests_1 = require("./run-named-definition-tests");
-var run_exportable_definition_tests_1 = require("./run-exportable-definition-tests");
 var namespace_1 = require("./../namespace");
+var interface_1 = require("./../interface");
+var function_1 = require("./../function");
+var enum_1 = require("./../enum");
+var class_1 = require("./../class");
 function runModuledDefinitionTests(definition, expected) {
-    if (definition == null) {
-        throw "Moduled definition should not be null.";
-    }
+    expected.classes = expected.classes || [];
+    expected.enums = expected.enums || [];
+    expected.functions = expected.functions || [];
+    expected.interfaces = expected.interfaces || [];
+    expected.namespaces = expected.namespaces || [];
     describe("classes", function () {
-        runNameArrayTests(definition.classes, expected.classes);
+        it("should have the expected number of classes", function () {
+            assert.equal(definition.classes.length, expected.classes.length);
+        });
+        expected.classes.forEach(function (classStructure, i) {
+            class_1.runClassDefinitionTests(definition.classes[i], classStructure);
+        });
     });
     describe("interfaces", function () {
-        runNameArrayTests(definition.interfaces, expected.interfaces);
+        it("should have the expected number of interfaces", function () {
+            assert.equal(definition.interfaces.length, expected.interfaces.length);
+        });
+        expected.interfaces.forEach(function (interfaceStructure, i) {
+            interface_1.runInterfaceDefinitionTests(definition.interfaces[i], interfaceStructure);
+        });
     });
     describe("functions", function () {
-        runNameArrayTests(definition.functions, expected.functions);
+        it("should have the expected number of functions", function () {
+            assert.equal(definition.functions.length, expected.functions.length);
+        });
+        expected.functions.forEach(function (functionStructure, i) {
+            function_1.runFunctionDefinitionTests(definition.functions[i], functionStructure);
+        });
     });
     describe("enums", function () {
-        runNameArrayTests(definition.enums, expected.enums);
+        it("should have the expected number of enums", function () {
+            assert.equal(definition.enums.length, expected.enums.length);
+        });
+        expected.enums.forEach(function (enumStructure, i) {
+            enum_1.runEnumDefinitionTests(definition.enums[i], enumStructure);
+        });
     });
-    it("should have the expected number of namespaces", function () {
-        assert.equal(definition.namespaces.length, (expected.namespaces || []).length);
-    });
-    (expected.namespaces || []).forEach(function (namespace, i) {
-        describe(namespace.name, function () {
-            namespace_1.runNamespaceDefinitionTests(definition.namespaces[i], namespace);
+    describe("namespaces", function () {
+        it("should have the expected number of namespaces", function () {
+            assert.equal(definition.namespaces.length, expected.namespaces.length);
+        });
+        expected.namespaces.forEach(function (namespaceStructure, i) {
+            namespace_1.runNamespaceDefinitionTests(definition.namespaces[i], namespaceStructure);
         });
     });
 }
 exports.runModuledDefinitionTests = runModuledDefinitionTests;
-function runNameArrayTests(definitions, expected) {
-    expected = expected || [];
-    it("should have the expected number of definitions", function () {
-        assert.equal(definitions.length, expected.length);
-    });
-    expected.forEach(function (item, i) {
-        describe(item.name, function () {
-            run_named_definition_tests_1.runNamedDefinitionTests(definitions[i], item.name);
-            run_exportable_definition_tests_1.runExportableDefinitionTests(definitions[i], item.isExported);
-        });
-    });
-}
 
 //# sourceMappingURL=run-moduled-definition-tests.js.map

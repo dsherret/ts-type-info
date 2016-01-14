@@ -6,8 +6,4 @@ export class InterfaceMethodDefinition extends BaseFunctionDefinition<ParameterD
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(ParameterDefinition, typeChecker, symbol);
     }
-
-    static isMethod(symbol: ts.Symbol) {
-        return (symbol.getFlags() & ts.SymbolFlags.Method) !== 0;
-    }
 }

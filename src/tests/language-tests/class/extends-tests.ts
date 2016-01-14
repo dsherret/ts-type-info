@@ -1,6 +1,5 @@
-﻿import * as assert from "assert";
-import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests, runTypeExpressionTests} from "./../../test-helpers";
+﻿import {getStringInfo} from "./../../../main";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class extends tests", () => {
     const code = `
@@ -15,19 +14,24 @@ class MyChildClass extends MyBaseClass {
 
     const def = getStringInfo(code);
 
-    describe("MyBaseClass", () => {
-        runNamedDefinitionTests(def.classes[0], "MyBaseClass");
-    });
-
-    describe("MyChildClass", () => {
-        runNamedDefinitionTests(def.classes[1], "MyChildClass");
-
-        describe("extends clause", () => {
-            runTypeExpressionTests(def.classes[1].extends[0], "MyBaseClass");
-        });
-
-        it("should have nothing in the implements clause", () => {
-            assert.equal(def.classes[1].implements.length, 0);
-        });
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyBaseClass",
+            properties: [{
+                name: "name1",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }, {
+            name: "MyChildClass",
+            extends: [{ text: "MyBaseClass" }],
+            properties: [{
+                name: "name2",
+                typeExpression: {
+                    text: "string"
+                }
+            }]
+        }]
     });
 });

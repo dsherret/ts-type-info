@@ -1,5 +1,5 @@
 import {getStringInfo} from "./../../../main";
-import {runConstructorDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class constructor tests", () => {
     const code = `
@@ -16,22 +16,20 @@ class MyClass3 {
 
     const def = getStringInfo(code);
 
-    describe("class with no constructor", () => {
-        runConstructorDefinitionTests(def.classes[0].constructorDef, null);
-    });
-
-    describe("constructor with no parameters", () => {
-        runConstructorDefinitionTests(def.classes[1].constructorDef, {
-            parameters: []
-        });
-    });
-
-    describe("constructor with parameters", () => {
-        runConstructorDefinitionTests(def.classes[2].constructorDef, {
-            parameters: [{
-                name: "parameter1",
-                type: "string"
-            }]
-        });
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "MyClass1"
+        }, {
+            name: "MyClass2",
+            constructorDef: {}
+        }, {
+            name: "MyClass3",
+            constructorDef: {
+                parameters: [{
+                    name: "parameter1",
+                    typeExpression: { text: "string" }
+                }]
+            }
+        }]
     });
 });

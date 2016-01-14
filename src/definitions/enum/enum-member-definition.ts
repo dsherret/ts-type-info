@@ -14,7 +14,7 @@ export class EnumMemberDefinition implements INamedDefinition {
         return this._value;
     }
 
-    // NameDefinition
+    // NamedDefinition
     fillName: (symbol: ts.Symbol) => void;
     name: string;
 

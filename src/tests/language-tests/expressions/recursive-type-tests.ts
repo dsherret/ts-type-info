@@ -1,6 +1,5 @@
-import * as assert from "assert";
 import {getStringInfo} from "./../../../main";
-import {runNamedDefinitionTests} from "./../../test-helpers";
+import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("recursive type tests", () => {
     const code = `
@@ -17,13 +16,24 @@ class Note {
 
     const def = getStringInfo(code);
 
-    describe("note parameter", () => {
-        const prop = def.classes[0].properties[1];
-
-        runNamedDefinitionTests(prop, "note");
-
-        it("should have type Note", () => {
-            assert.equal(prop.typeExpression.text, "Note");
-        });
+    runFileDefinitionTests(def, {
+        classes: [{
+            name: "Note",
+            properties: [{
+                name: "name",
+                typeExpression: { text: "string" }
+            }, {
+                name: "note",
+                typeExpression: { text: "Note" }
+            }],
+            methods: [{
+                name: "myMethod",
+                parameters: [{
+                    name: "note",
+                    typeExpression: { text: "Note" }
+                }],
+                returnTypeExpression: { text: "Note[]" }
+            }]
+        }]
     });
 });
