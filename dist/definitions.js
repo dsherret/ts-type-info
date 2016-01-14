@@ -1,7 +1,6 @@
 function __export(m) {
     for (var p in m) /* istanbul ignore else */ if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-// order by dependency and not name
 __export(require("./definitions/base"));
 __export(require("./definitions/function"));
 __export(require("./definitions/class"));
