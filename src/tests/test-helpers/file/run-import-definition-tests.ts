@@ -1,9 +1,9 @@
 ﻿import * as assert from "assert";
 import * as path from "path";
-import {Import} from "./../structures";
+import {ImportStructure} from "./../structures";
 import {ImportDefinition} from "./../../../definitions";
 
-export function runImportDefinitionTests(definition: ImportDefinition, importStructure: Import) {
+export function runImportDefinitionTests(definition: ImportDefinition, importStructure: ImportStructure) {
     describe(`import ${importStructure.definitionName}`, () => {
         it(`should have the name ${importStructure.definitionName}`, () => {
             assert.equal(definition.definition.name, importStructure.definitionName);

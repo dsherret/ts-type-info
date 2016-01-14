@@ -1,3 +1,3 @@
-﻿export * from "./expressions/expression";
-export * from "./expressions/type-expression";
-export * from "./expressions/type";
+﻿export * from "./expressions/expression-structure";
+export * from "./expressions/type-expression-structure";
+export * from "./expressions/type-structure";

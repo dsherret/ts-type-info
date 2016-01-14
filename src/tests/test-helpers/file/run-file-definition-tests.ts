@@ -1,11 +1,11 @@
 ﻿import * as assert from "assert";
 import {FileDefinition} from "./../../../definitions";
-import {File} from "./../structures";
+import {FileStructure} from "./../structures";
 import {runImportDefinitionTests} from "./run-import-definition-tests";
 import {runReExportDefinitionTests} from "./run-re-export-definition-tests";
 import {runModuledDefinitionTests} from "./../base";
 
-export function runFileDefinitionTests(definition: FileDefinition, structure: File) {
+export function runFileDefinitionTests(definition: FileDefinition, structure: FileStructure) {
     structure.imports = structure.imports || [];
     structure.reExports = structure.reExports || [];
 

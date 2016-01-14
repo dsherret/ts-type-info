@@ -5,9 +5,9 @@ import {runInterfaceDefinitionTests} from "./../interface";
 import {runFunctionDefinitionTests} from "./../function";
 import {runEnumDefinitionTests} from "./../enum";
 import {runClassDefinitionTests} from "./../class";
-import {Moduled} from "./../structures";
+import {ModuledStructure} from "./../structures";
 
-export function runModuledDefinitionTests(definition: IModuledDefinition, expected: Moduled) {
+export function runModuledDefinitionTests(definition: IModuledDefinition, expected: ModuledStructure) {
     expected.classes = expected.classes || [];
     expected.enums = expected.enums || [];
     expected.functions = expected.functions || [];

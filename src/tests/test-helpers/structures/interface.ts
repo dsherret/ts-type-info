@@ -1,3 +1,3 @@
-﻿export * from "./interface/interface-method";
-export * from "./interface/interface-new-signature";
-export * from "./interface/interface";
+﻿export * from "./interface/interface-method-structure";
+export * from "./interface/interface-new-signature-structure";
+export * from "./interface/interface-structure";

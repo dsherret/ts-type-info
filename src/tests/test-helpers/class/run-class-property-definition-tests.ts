@@ -1,9 +1,9 @@
 import * as assert from "assert";
-import {ClassProperty} from "./../structures";
+import {ClassPropertyStructure} from "./../structures";
 import {ClassPropertyDefinition} from "./../../../definitions";
 import {runPropertyDefinitionTests} from "./../base";
 
-export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, structure: ClassProperty) {
+export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, structure: ClassPropertyStructure) {
     describe(`property ${structure.name}`, () => {
         runPropertyDefinitionTests(definition, structure);
 

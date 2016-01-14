@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {Class} from "./../structures";
+import {ClassStructure} from "./../structures";
 import {ClassDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests} from "./../base";
 import {runClassPropertyDefinitionTests} from "./run-class-property-definition-tests";
@@ -9,7 +9,7 @@ import {runStaticMethodDefinitionTests} from "./run-static-method-definition-tes
 import {runConstructorDefinitionTests} from "./run-constructor-definition-tests";
 import {runTypeExpressionTests} from "./../expressions";
 
-export function runClassDefinitionTests(definition: ClassDefinition, structure: Class) {
+export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassStructure) {
     structure.methods = structure.methods || [];
     structure.properties = structure.properties || [];
     structure.staticMethods = structure.staticMethods || [];

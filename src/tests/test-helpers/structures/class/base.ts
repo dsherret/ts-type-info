@@ -1,2 +1,2 @@
-﻿export * from "./base/base-class-method";
-export * from "./base/base-class-property";
+﻿export * from "./base/base-class-method-structure";
+export * from "./base/base-class-property-structure";

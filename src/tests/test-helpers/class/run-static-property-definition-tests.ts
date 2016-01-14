@@ -1,8 +1,8 @@
-import {StaticProperty} from "./../structures";
+import {StaticPropertyStructure} from "./../structures";
 import {StaticPropertyDefinition} from "./../../../definitions";
 import {runBaseClassPropertyDefinitionTests} from "./base";
 
-export function runStaticPropertyDefinitionTests(definition: StaticPropertyDefinition, structure: StaticProperty) {
+export function runStaticPropertyDefinitionTests(definition: StaticPropertyDefinition, structure: StaticPropertyStructure) {
     describe(`property ${structure.name}`, () => {
         runBaseClassPropertyDefinitionTests(definition, structure);
     });

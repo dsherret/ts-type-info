@@ -1,12 +1,12 @@
 ﻿import * as assert from "assert";
-import {Interface} from "./../structures";
+import {InterfaceStructure} from "./../structures";
 import {InterfaceDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runPropertyDefinitionTests} from "./../base";
 import {runInterfaceMethodDefinitionTests} from "./run-interface-method-definition-tests";
 import {runInterfaceNewSignatureDefinitionTests} from "./run-interface-new-signature-definition-tests";
 import {runTypeExpressionTests} from "./../expressions";
 
-export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: Interface) {
+export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: InterfaceStructure) {
     structure.methods = structure.methods || [];
     structure.newSignatures = structure.newSignatures || [];
     structure.properties = structure.properties || [];

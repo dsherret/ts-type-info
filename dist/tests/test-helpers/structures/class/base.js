@@ -1,7 +1,7 @@
 function __export(m) {
     for (var p in m) /* istanbul ignore else */ if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-__export(require("./base/base-class-method"));
-__export(require("./base/base-class-property"));
+__export(require("./base/base-class-method-structure"));
+__export(require("./base/base-class-property-structure"));
 
 //# sourceMappingURL=base.js.map

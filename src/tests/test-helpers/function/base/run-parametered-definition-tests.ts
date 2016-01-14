@@ -1,11 +1,11 @@
 import * as assert from "assert";
-import {Parameter, Parametered} from "./../../structures";
+import {ParameterStructure, ParameteredStructure} from "./../../structures";
 import {IParameteredDefinition, BaseParameterDefinition} from "./../../../../definitions";
 
-export function runParameteredDefinitionTests<T extends BaseParameterDefinition, U extends Parameter>(
+export function runParameteredDefinitionTests<T extends BaseParameterDefinition, U extends ParameterStructure>(
     runParameterDefinitionTests: (definition: T, structure: U) => void,
     definition: IParameteredDefinition<T>,
-    structure: Parametered<U>) {
+    structure: ParameteredStructure<U>) {
 
     describe("parameters", () => {
         structure.parameters = structure.parameters || [];

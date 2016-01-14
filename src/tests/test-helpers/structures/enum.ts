@@ -1,2 +1,2 @@
-﻿export * from "./enum/enum";
-export * from "./enum/enum-member";
+﻿export * from "./enum/enum-structure";
+export * from "./enum/enum-member-structure";

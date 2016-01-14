@@ -1,8 +1,8 @@
-﻿import {ReturnTyped} from "./../../structures";
+﻿import {ReturnTypedStructure} from "./../../structures";
 import {IReturnTypedDefinition} from "./../../../../definitions";
 import {runTypeExpressionTests} from "./../../expressions";
 
-export function runReturnTypedDefinitionTests(definition: IReturnTypedDefinition, structure: ReturnTyped) {
+export function runReturnTypedDefinitionTests(definition: IReturnTypedDefinition, structure: ReturnTypedStructure) {
     describe("return type", () => {
         structure.returnTypeExpression = structure.returnTypeExpression || { text: "void" };
 

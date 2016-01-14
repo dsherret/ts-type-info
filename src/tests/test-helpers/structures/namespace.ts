@@ -1,1 +1,1 @@
-﻿export * from "./namespace/namespace";
+﻿export * from "./namespace/namespace-structure";

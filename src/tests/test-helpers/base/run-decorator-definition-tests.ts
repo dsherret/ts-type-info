@@ -1,10 +1,10 @@
 import * as assert from "assert";
-import {Decorator} from "./../structures";
+import {DecoratorStructure} from "./../structures";
 import {DecoratorDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runExpressionTests} from "./../expressions";
 
-export function runDecoratorDefinitionTests(definition: DecoratorDefinition, structure: Decorator) {
+export function runDecoratorDefinitionTests(definition: DecoratorDefinition, structure: DecoratorStructure) {
     describe(`decorator ${structure.name}`, () => {
         structure.arguments = structure.arguments || [];
 

@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
-import {Enum} from "./../structures";
+import {EnumStructure} from "./../structures";
 import {EnumDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
 import {runEnumMemberDefinitionTests} from "./run-enum-member-definition-tests";
 
-export function runEnumDefinitionTests(definition: EnumDefinition, structure: Enum) {
+export function runEnumDefinitionTests(definition: EnumDefinition, structure: EnumStructure) {
     describe(`enum ${structure.name}`, () => {
         structure.members = structure.members || [];
 
