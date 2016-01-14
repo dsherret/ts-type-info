@@ -1,5 +1,5 @@
 ﻿import {PropertyStructure, NamedStructure, ExportableStructure, TypeParameteredStructure} from "./../base";
-import {TypeExpressionStructure} from "./../expressions";
+import {TypeExpressionStructure} from "./../../expressions";
 import {InterfaceMethodStructure} from "./interface-method-structure";
 import {InterfaceNewSignatureStructure} from "./interface-new-signature-structure";
 

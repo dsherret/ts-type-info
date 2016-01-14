@@ -1,4 +1,4 @@
-import {ExpressionStructure} from "./../expressions";
+import {ExpressionStructure} from "./../../expressions";
 import {NamedStructure} from "./named-structure";
 
 export interface DecoratorStructure extends NamedStructure {

@@ -1,5 +1,4 @@
-﻿import {NamedStructure, PropertyStructure} from "./../base";
-import {CallSignatureStructure} from "./../function";
+﻿import {NamedStructure, PropertyStructure, CallSignatureStructure} from "./../definitions";
 import {TypeExpressionStructure} from "./type-expression-structure";
 
 export interface TypeStructure {

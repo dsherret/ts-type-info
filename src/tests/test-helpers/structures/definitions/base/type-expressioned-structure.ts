@@ -1,4 +1,4 @@
-﻿import {TypeExpressionStructure} from "./../expressions";
+﻿import {TypeExpressionStructure} from "./../../expressions";
 
 export interface TypeExpressionedStructure {
     typeExpression?: TypeExpressionStructure;

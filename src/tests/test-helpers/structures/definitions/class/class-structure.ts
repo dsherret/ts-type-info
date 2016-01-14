@@ -4,7 +4,7 @@ import {ClassPropertyStructure} from "./class-property-structure";
 import {StaticMethodStructure} from "./static-method-structure";
 import {StaticPropertyStructure} from "./static-property-structure";
 import {ConstructorStructure} from "./constructor-structure";
-import {TypeExpressionStructure} from "./../expressions";
+import {TypeExpressionStructure} from "./../../expressions";
 
 export interface ClassStructure extends NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure {
     methods?: ClassMethodStructure[];
