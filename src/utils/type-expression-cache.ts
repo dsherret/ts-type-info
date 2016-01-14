@@ -5,6 +5,7 @@ import {TypeExpression, Type} from "./../expressions";
 export class TypeExpressionCache {
     private expressionCacheContainer = new CacheContainer<TypeExpression>(this.typeChecker);
     private typeCacheContainer = new CacheContainer<Type>(this.typeChecker);
+    private typeTsTypeCache = new KeyValueCache<Type, ts.Type>();
 
     constructor(private typeChecker: TypeChecker) {
     }
@@ -30,14 +31,15 @@ export class TypeExpressionCache {
 
     fillAllCachedTypesWithDefinitions(definitionCache: DefinitionCache) {
         this.typeCacheContainer.getAllCacheItems().forEach(type => {
-            const symbols = this.typeChecker.getSymbolsFromType(type.tsType);
+            const tsType = this.typeTsTypeCache.get(type);
+            const symbols = this.typeChecker.getSymbolsFromType(tsType);
 
             /* istanbul ignore else */
             if (symbols.length === 1) {
                 type.fillDefinition(definitionCache.getDefinition(symbols[0]));
             }
             else if (symbols.length > 1) {
-                console.warn(`Symbol length should not be greater than 1 for ${this.typeChecker.typeToString(type.tsType)}`);
+                console.warn(`Symbol length should not be greater than 1 for ${this.typeChecker.typeToString(tsType)}`);
             }
         });
     }
@@ -48,9 +50,10 @@ export class TypeExpressionCache {
         let type = cache.get(name);
 
         if (type == null) {
-            type = new Type(this.typeChecker, tsType);
+            type = new Type();
             cache.add(name, type);
-            type.fillTypeInformation(this.typeChecker, this);
+            type.fillTypeInformation(this.typeChecker, this, tsType);
+            this.typeTsTypeCache.add(type, tsType);
         }
 
         return type;

@@ -3,26 +3,14 @@ import {Type} from "./type";
 import {TypeChecker} from "./../utils";
 
 export class TypeExpression {
-    private _text: string;
-    private _types: Type[] = [];
+    text: string;
+    types: Type[] = [];
 
-    constructor(typeChecker: TypeChecker, private _tsType: ts.Type) {
-        this._text = typeChecker.typeToString(_tsType);
+    constructor(typeChecker: TypeChecker, tsType: ts.Type) {
+        this.text = typeChecker.typeToString(tsType);
     }
 
     addType(type: Type) {
-        this._types.push(type);
-    }
-
-    get text() {
-        return this._text;
-    }
-
-    get types() {
-        return this._types;
-    }
-
-    get tsType() {
-        return this._tsType;
+        this.types.push(type);
     }
 }

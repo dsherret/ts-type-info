@@ -20,12 +20,24 @@ tsd link
 
 ```typescript
 // V:/TestFile.ts
+﻿
+function myDecorator(str: string) {
+    return (target: typeof MyClass) => {
+        target.myStaticProperty = str;
+    };
+}
+
 @myDecorator("My decorator value")
 export class MyClass {
-    myMethod(myParam: string, myDefaultParam = 15) {
+    static myStaticProperty: string;
+
+    myMethod(myParameter: string) {
         return `Test: ${myParameter}`;
     }
+
+    myProperty = 253;
 }
+
 ```
 
 Get the file info:
@@ -39,50 +51,90 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 ### Output
 
 ```text
-[{
-    fileName: "V:/TestFile.ts",
-    classes: [{
-        name: "MyClass",
-        decorators: [{
-            name: "myDecorator",
-            arguments: [{ "text": "My decorator value" }]
-        }],
-        extendsTypeExpressions: [],
-        implementsTypeExpressions: [],
-        methods: [{
-            name: "myMethod",
-            decorators: [],
-            parameters: [{
-                name: "myParam",
-                decorators: [],
-                isRestParameter: false,
-                isOptional: false,
-                defaultExpression: undefined,
-                typeExpression: { text: "string" }
-            }, {
-                name: "myDefaultParam",
-                decorators: [],
-                isRestParameter: false,
-                isOptional: true,
-                defaultExpression: { text: "15" },
-                typeExpression: { text: "number" }
-            }],
-            returnTypeExpression: {
-                text: "string"
-            },
-            typeParameters: []
-        }],
-        staticMethods: [],
-        staticProperties: [],
-        typeParameters: [],
-        isExported: true,
-        properties: []
-    }],
-    enums: [],
-    functions: [],
-    interfaces: [],
-    namespaces: [],
-    imports: [],
-    reExports: []
-}]
+{
+	"fileName": "V:/TestFile.ts",
+	"imports": [],
+	"reExports": [],
+	"namespaces": [],
+	"functions": [{
+		"name": "myDecorator",
+		"isExported": false,
+		"typeParameters": [],
+		"parameters": [{
+			"name": "str",
+			"isOptional": false,
+			"isRestParameter": false,
+			"defaultExpression": null
+		}],
+		"returnTypeExpression": {
+			"types": [{
+				"text": "(target: typeof MyClass) => void",
+				"callSignatures": [{ /* omitted */ }],
+				"properties": [],
+				"typeArguments": [],
+				"definition": { /* omitted */ }
+			}],
+			"text": "(target: typeof MyClass) => void"
+		}
+	}],
+	"classes": [{
+		"name": "MyClass",
+		"isExported": true,
+		"typeParameters": [],
+		"extendsTypeExpressions": [],
+		"implementsTypeExpressions": [],
+		"decorators": [{
+			"arguments": [{ "text": "\"My decorator value\"" }],
+			"name": "myDecorator"
+		}],
+		"methods": [{
+			"name": "myMethod",
+			"parameters": [{
+				"name": "myParameter",
+				"typeExpression": {
+					"text": "string",
+					"types": [{
+						"text": "string",
+						"properties": [],
+						"callSignatures": [],
+						"typeArguments": []
+					}]
+				},
+				"isOptional": false,
+				"isRestParameter": false,
+				"defaultExpression": null,
+				"decorators": []
+			}],
+			"typeParameters": [],
+			"decorators": [],
+			"scope": 0
+		}],
+		"properties": [{
+			"name": "myProperty",
+			"typeExpression": {
+				"text": "number",
+				"types": [{
+					"text": "number",
+					"properties": [],
+					"callSignatures": [],
+					"typeArguments": []
+				}]
+			},
+			"isOptional": false,
+			"decorators": [],
+			"scope": 0,
+			"isAccessor": false,
+			"isReadonly": false
+		}],
+		"staticMethods": [],
+		"staticProperties": [{
+			"name": "myStaticProperty",
+			"isOptional": false,
+			"decorators": [],
+			"scope": 0
+		}]
+	}],
+	"enums": [],
+	"interfaces": []
+}
 ```

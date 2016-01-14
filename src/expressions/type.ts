@@ -4,60 +4,37 @@ import {TypeExpression} from "./type-expression";
 import {TypeChecker, TypeExpressionCache} from "./../utils";
 
 export class Type {
-    private _callSignatures: CallSignatureDefinition[];
-    private _definition: IBaseNamedDefinition;
-    private _properties: PropertyDefinition[];
-    private _typeArguments: TypeExpression[];
-    private _text: string;
+    callSignatures: CallSignatureDefinition[];
+    definition: IBaseNamedDefinition;
+    properties: PropertyDefinition[];
+    typeArguments: TypeExpression[];
+    text: string;
 
-    constructor(typeChecker: TypeChecker, private _tsType: ts.Type) {
-        this._text = typeChecker.typeToString(_tsType);
+    constructor() {
     }
 
-    fillTypeInformation(typeChecker: TypeChecker, typeExpressionCache: TypeExpressionCache) {
-        if (this.shouldGetAllInfo(typeChecker)) {
-            this.fillCallSignatures(typeChecker);
-            this.fillProperties(typeChecker);
+    fillTypeInformation(typeChecker: TypeChecker, typeExpressionCache: TypeExpressionCache, tsType: ts.Type) {
+        this.text = typeChecker.typeToString(tsType);
+
+        if (this.shouldGetAllInfo(typeChecker, tsType)) {
+            this.fillCallSignatures(typeChecker, tsType);
+            this.fillProperties(typeChecker, tsType);
         }
         else {
-            this._properties = [];
-            this._callSignatures = [];
+            this.properties = [];
+            this.callSignatures = [];
         }
 
-        this.fillTypeArguments(typeChecker, typeExpressionCache);
+        this.fillTypeArguments(typeChecker, typeExpressionCache, tsType);
     }
 
     fillDefinition(definition: IBaseNamedDefinition) {
-        this._definition = definition;
+        this.definition = definition;
     }
 
-    get text() {
-        return this._text;
-    }
-
-    get properties() {
-        return this._properties;
-    }
-
-    get callSignatures() {
-        return this._callSignatures;
-    }
-
-    get definition() {
-        return this._definition;
-    }
-
-    get typeArguments() {
-        return this._typeArguments;
-    }
-
-    get tsType() {
-        return this._tsType;
-    }
-
-    private shouldGetAllInfo(typeChecker: TypeChecker) {
+    private shouldGetAllInfo(typeChecker: TypeChecker, tsType: ts.Type) {
         // only get properties and call signature info for specific types
-        return (this._tsType.flags & (
+        return (tsType.flags & (
             ts.TypeFlags.Class |
             ts.TypeFlags.Interface |
             ts.TypeFlags.ObjectType |
@@ -65,19 +42,19 @@ export class Type {
         )) !== 0;
     }
 
-    private fillProperties(typeChecker: TypeChecker) {
-        const properties = this._tsType.getProperties();
+    private fillProperties(typeChecker: TypeChecker, tsType: ts.Type) {
+        const properties = tsType.getProperties();
 
-        this._properties = properties.map(property => new PropertyDefinition(typeChecker, property));
+        this.properties = properties.map(property => new PropertyDefinition(typeChecker, property));
     }
 
-    private fillCallSignatures(typeChecker: TypeChecker) {
-        this._callSignatures = this._tsType.getCallSignatures()
+    private fillCallSignatures(typeChecker: TypeChecker, tsType: ts.Type) {
+        this.callSignatures = tsType.getCallSignatures()
                                            .map(callSignature => new CallSignatureDefinition(typeChecker, callSignature));
     }
 
-    private fillTypeArguments(typeChecker: TypeChecker, typeCache: TypeExpressionCache) {
-        const tsTypeArguments = (this._tsType as ts.TypeReference).typeArguments;
+    private fillTypeArguments(typeChecker: TypeChecker, typeCache: TypeExpressionCache, tsType: ts.Type) {
+        const tsTypeArguments = (tsType as ts.TypeReference).typeArguments;
         const args: TypeExpression[] = [];
 
         if (tsTypeArguments != null) {
@@ -86,6 +63,6 @@ export class Type {
             });
         }
 
-        this._typeArguments = args;
+        this.typeArguments = args;
     }
 }

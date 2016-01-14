@@ -2,13 +2,9 @@
 import {TypeChecker} from "./../utils";
 
 export class Expression {
-    private _text: string;
+    text: string;
 
     constructor(typeChecker: TypeChecker, expression: ts.Expression) {
-        this._text = typeChecker.getExpressionFullText(expression);
-    }
-
-    get text() {
-        return this._text;
+        this.text = typeChecker.getExpressionFullText(expression);
     }
 }

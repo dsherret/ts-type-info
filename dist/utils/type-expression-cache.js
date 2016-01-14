@@ -5,6 +5,7 @@ var TypeExpressionCache = (function () {
         this.typeChecker = typeChecker;
         this.expressionCacheContainer = new CacheContainer(this.typeChecker);
         this.typeCacheContainer = new CacheContainer(this.typeChecker);
+        this.typeTsTypeCache = new utils_1.KeyValueCache();
     }
     TypeExpressionCache.prototype.get = function (tsType) {
         var _this = this;
@@ -24,13 +25,14 @@ var TypeExpressionCache = (function () {
     TypeExpressionCache.prototype.fillAllCachedTypesWithDefinitions = function (definitionCache) {
         var _this = this;
         this.typeCacheContainer.getAllCacheItems().forEach(function (type) {
-            var symbols = _this.typeChecker.getSymbolsFromType(type.tsType);
+            var tsType = _this.typeTsTypeCache.get(type);
+            var symbols = _this.typeChecker.getSymbolsFromType(tsType);
             /* istanbul ignore else */
             if (symbols.length === 1) {
                 type.fillDefinition(definitionCache.getDefinition(symbols[0]));
             }
             else if (symbols.length > 1) {
-                console.warn("Symbol length should not be greater than 1 for " + _this.typeChecker.typeToString(type.tsType));
+                console.warn("Symbol length should not be greater than 1 for " + _this.typeChecker.typeToString(tsType));
             }
         });
     };
@@ -39,9 +41,10 @@ var TypeExpressionCache = (function () {
         var name = this.typeChecker.typeToString(tsType);
         var type = cache.get(name);
         if (type == null) {
-            type = new expressions_1.Type(this.typeChecker, tsType);
+            type = new expressions_1.Type();
             cache.add(name, type);
-            type.fillTypeInformation(this.typeChecker, this);
+            type.fillTypeInformation(this.typeChecker, this, tsType);
+            this.typeTsTypeCache.add(type, tsType);
         }
         return type;
     };
