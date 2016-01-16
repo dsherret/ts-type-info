@@ -17,6 +17,7 @@ export class DefinitionCache {
     getFileDefinition(sourceFile: ts.SourceFile) {
         let fileDefinition = this.files.get(sourceFile);
 
+        /* istanbul ignore else */
         if (fileDefinition == null) {
             fileDefinition = new FileDefinition(
                 this.typeChecker,
@@ -38,6 +39,7 @@ export class DefinitionCache {
         if (this.typeChecker.isSymbolNamespace(symbol)) {
             namespaceDefinition = this.namespaces.get(symbol);
 
+            /* istanbul ignore else */
             if (namespaceDefinition == null) {
                 namespaceDefinition = new NamespaceDefinition(this.typeChecker, symbol);
 
@@ -56,6 +58,7 @@ export class DefinitionCache {
         if (this.typeChecker.isSymbolClass(symbol)) {
             classDefinition = this.classes.get(symbol);
 
+            /* istanbul ignore else */
             if (classDefinition == null) {
                 classDefinition = new ClassDefinition(
                     this.typeChecker,
@@ -76,6 +79,7 @@ export class DefinitionCache {
         if (this.typeChecker.isSymbolInterface(symbol)) {
             interfaceDefinition = this.interfaces.get(symbol);
 
+            /* istanbul ignore else */
             if (interfaceDefinition == null) {
                 interfaceDefinition = new InterfaceDefinition(
                     this.typeChecker,
@@ -94,6 +98,7 @@ export class DefinitionCache {
         if (this.typeChecker.isSymbolEnum(symbol)) {
             enumDefinition = this.enums.get(symbol);
 
+            /* istanbul ignore else */
             if (enumDefinition == null) {
                 enumDefinition = new EnumDefinition(this.typeChecker, symbol);
                 this.enums.add(symbol, enumDefinition);
@@ -109,6 +114,7 @@ export class DefinitionCache {
         if (this.typeChecker.isSymbolFunction(symbol)) {
             functionDefinition = this.functions.get(symbol);
 
+            /* istanbul ignore else */
             if (functionDefinition == null) {
                 functionDefinition = new FunctionDefinition(this.typeChecker, symbol);
                 this.functions.add(symbol, functionDefinition);

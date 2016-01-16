@@ -12,6 +12,7 @@ var DefinitionCache = (function () {
     }
     DefinitionCache.prototype.getFileDefinition = function (sourceFile) {
         var fileDefinition = this.files.get(sourceFile);
+        /* istanbul ignore else */
         if (fileDefinition == null) {
             fileDefinition = new definitions_1.FileDefinition(this.typeChecker, this, sourceFile);
             this.files.add(sourceFile, fileDefinition);
@@ -24,6 +25,7 @@ var DefinitionCache = (function () {
         var namespaceDefinition;
         if (this.typeChecker.isSymbolNamespace(symbol)) {
             namespaceDefinition = this.namespaces.get(symbol);
+            /* istanbul ignore else */
             if (namespaceDefinition == null) {
                 namespaceDefinition = new definitions_1.NamespaceDefinition(this.typeChecker, symbol);
                 this.namespaces.add(symbol, namespaceDefinition);
@@ -36,6 +38,7 @@ var DefinitionCache = (function () {
         var classDefinition;
         if (this.typeChecker.isSymbolClass(symbol)) {
             classDefinition = this.classes.get(symbol);
+            /* istanbul ignore else */
             if (classDefinition == null) {
                 classDefinition = new definitions_1.ClassDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypeExpressions(symbol), this.typeChecker.getImplementsTypeExpressions(symbol));
                 this.classes.add(symbol, classDefinition);
@@ -47,6 +50,7 @@ var DefinitionCache = (function () {
         var interfaceDefinition;
         if (this.typeChecker.isSymbolInterface(symbol)) {
             interfaceDefinition = this.interfaces.get(symbol);
+            /* istanbul ignore else */
             if (interfaceDefinition == null) {
                 interfaceDefinition = new definitions_1.InterfaceDefinition(this.typeChecker, symbol, this.typeChecker.getExtendsTypeExpressions(symbol));
                 this.interfaces.add(symbol, interfaceDefinition);
@@ -58,6 +62,7 @@ var DefinitionCache = (function () {
         var enumDefinition;
         if (this.typeChecker.isSymbolEnum(symbol)) {
             enumDefinition = this.enums.get(symbol);
+            /* istanbul ignore else */
             if (enumDefinition == null) {
                 enumDefinition = new definitions_1.EnumDefinition(this.typeChecker, symbol);
                 this.enums.add(symbol, enumDefinition);
@@ -69,6 +74,7 @@ var DefinitionCache = (function () {
         var functionDefinition;
         if (this.typeChecker.isSymbolFunction(symbol)) {
             functionDefinition = this.functions.get(symbol);
+            /* istanbul ignore else */
             if (functionDefinition == null) {
                 functionDefinition = new definitions_1.FunctionDefinition(this.typeChecker, symbol);
                 this.functions.add(symbol, functionDefinition);
