@@ -1,6 +1,5 @@
 var ParameteredDefinition = (function () {
-    function ParameteredDefinition() {
-        this.parameters = [];
+    /* istanbul ignore next */ function ParameteredDefinition() {
     }
     ParameteredDefinition.prototype.fillParametersBySymbol = function (paramDefinition, typeChecker, symbol) {
         this.parameters = typeChecker.getSymbolParametersFromSymbol(symbol).map(function (parameterSymbol) { return new paramDefinition(typeChecker, parameterSymbol); });

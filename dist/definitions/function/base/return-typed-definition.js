@@ -1,5 +1,5 @@
 var ReturnTypedDefinition = (function () {
-    function ReturnTypedDefinition() {
+    /* istanbul ignore next */ function ReturnTypedDefinition() {
     }
     ReturnTypedDefinition.prototype.fillReturnTypeExpressionBySymbol = function (typeChecker, symbol) {
         this.returnTypeExpression = typeChecker.getReturnTypeFromSymbol(symbol);

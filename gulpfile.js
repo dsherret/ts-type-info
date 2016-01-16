@@ -22,6 +22,8 @@ gulp.task("typescript", ["clean-scripts"], function() {
         .pipe(replace(/(}\)\()(.*\|\|.*;)/g, '$1/* istanbul ignore next */$2'))
         .pipe(replace(/(var __extends = \(this && this.__extends\))/g, '$1/* istanbul ignore next */'))
         .pipe(replace(/(if \(!exports.hasOwnProperty\(p\)\))/g, '/* istanbul ignore else */ $1'))
+        // ignore empty constructors (for mixins and static classes)
+        .pipe(replace(/(function [A-Za-z]+\(\) {[\s\n\t]+})/g, '/* istanbul ignore next */ $1'))
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("./dist"));
 });

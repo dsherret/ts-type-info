@@ -1,7 +1,7 @@
 var ts = require("typescript");
 var definitions_1 = require("./../definitions");
 var Type = (function () {
-    function Type() {
+    /* istanbul ignore next */ function Type() {
     }
     Type.prototype.fillTypeInformation = function (typeChecker, typeExpressionCache, tsType) {
         this.text = typeChecker.typeToString(tsType);

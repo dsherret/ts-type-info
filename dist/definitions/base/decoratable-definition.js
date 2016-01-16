@@ -1,6 +1,6 @@
 var decorator_definition_1 = require("./decorator-definition");
 var DecoratableDefinition = (function () {
-    function DecoratableDefinition() {
+    /* istanbul ignore next */ function DecoratableDefinition() {
     }
     DecoratableDefinition.prototype.fillDecorators = function (typeChecker, symbol) {
         this.decorators = [];

@@ -1,5 +1,5 @@
 var NamedDefinition = (function () {
-    function NamedDefinition() {
+    /* istanbul ignore next */ function NamedDefinition() {
     }
     NamedDefinition.prototype.fillName = function (symbol) {
         this.name = symbol.getName();

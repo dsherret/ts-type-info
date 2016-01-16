@@ -1,7 +1,7 @@
 var ts = require("typescript");
 var scope_1 = require("./../../scope");
 var ScopedDefinition = (function () {
-    function ScopedDefinition() {
+    /* istanbul ignore next */ function ScopedDefinition() {
     }
     ScopedDefinition.prototype.fillScope = function (symbol) {
         if ((symbol.valueDeclaration.flags & 32 /* Private */) !== 0) {

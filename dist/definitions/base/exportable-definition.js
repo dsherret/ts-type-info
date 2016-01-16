@@ -1,5 +1,5 @@
 var ExportableDefinition = (function () {
-    function ExportableDefinition() {
+    /* istanbul ignore next */ function ExportableDefinition() {
     }
     ExportableDefinition.prototype.fillIsExported = function (typeChecker, symbol) {
         this.isExported = typeChecker.isSymbolExportOfParent(symbol);

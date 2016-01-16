@@ -10,7 +10,7 @@ export interface IParameteredDefinition<T extends ParameterDefinition> {
 }
 
 export abstract class ParameteredDefinition<T extends ParameterDefinition> implements IParameteredDefinition<T> {
-    parameters: T[] = [];
+    parameters: T[];
 
     fillParametersBySymbol(paramDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.parameters = typeChecker.getSymbolParametersFromSymbol(symbol).map(parameterSymbol => new paramDefinition(typeChecker, parameterSymbol));

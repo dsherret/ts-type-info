@@ -1,6 +1,6 @@
 var ts = require("typescript");
 var ModuledDefinition = (function () {
-    function ModuledDefinition() {
+    /* istanbul ignore next */ function ModuledDefinition() {
     }
     ModuledDefinition.prototype.fillMembersBySourceFile = function (typeChecker, definitionCache, file) {
         var _this = this;

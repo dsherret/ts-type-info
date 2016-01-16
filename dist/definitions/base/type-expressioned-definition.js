@@ -1,5 +1,5 @@
 var TypeExpressionedDefinition = (function () {
-    function TypeExpressionedDefinition() {
+    /* istanbul ignore next */ function TypeExpressionedDefinition() {
     }
     TypeExpressionedDefinition.prototype.fillTypeExpression = function (typeChecker, symbol) {
         this.typeExpression = typeChecker.getTypeExpressionOfSymbol(symbol);

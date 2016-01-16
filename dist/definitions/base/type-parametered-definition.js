@@ -1,7 +1,6 @@
 var type_parameter_definition_1 = require("./type-parameter-definition");
 var TypeParameteredDefinition = (function () {
-    function TypeParameteredDefinition() {
-        this.typeParameters = [];
+    /* istanbul ignore next */ function TypeParameteredDefinition() {
     }
     TypeParameteredDefinition.prototype.fillTypeParametersBySymbol = function (typeChecker, symbol) {
         this.typeParameters = typeChecker.getFunctionTypeParameterSymbols(symbol).map(function (s) { return new type_parameter_definition_1.TypeParameterDefinition(typeChecker, s); });
