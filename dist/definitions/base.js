@@ -8,6 +8,7 @@ __export(require("./base/decoratable-definition"));
 __export(require("./base/exportable-definition"));
 __export(require("./base/moduled-definition"));
 __export(require("./base/base-property-definition"));
+__export(require("./base/object-property-definition"));
 __export(require("./base/type-parameter-definition"));
 __export(require("./base/type-parametered-definition"));
 __export(require("./base/decorator-definition"));

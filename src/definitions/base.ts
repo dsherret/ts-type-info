@@ -5,6 +5,7 @@ export * from "./base/decoratable-definition";
 export * from "./base/exportable-definition";
 export * from "./base/moduled-definition";
 export * from "./base/base-property-definition";
+export * from "./base/object-property-definition";
 export * from "./base/type-parameter-definition";
 export * from "./base/type-parametered-definition";
 export * from "./base/decorator-definition";

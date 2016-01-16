@@ -19,7 +19,7 @@ export class BaseParameterDefinition implements INamedDefinition, ITypeExpressio
     }
 
     private fillParameterDetails(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        let declaration = symbol.valueDeclaration as ts.ParameterDeclaration;
+        let declaration = typeChecker.getDeclarationFromSymbol(symbol) as ts.ParameterDeclaration;
 
         this.isOptional = declaration.questionToken != null || declaration.initializer != null || declaration.dotDotDotToken != null;
         this.isRestParameter = declaration.dotDotDotToken != null;

@@ -5,12 +5,10 @@ import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runTypeExpressionedDefinitionTests} from "./run-typed-definition-tests";
 
 export function runBasePropertyDefinitionTests(definition: BasePropertyDefinition, structure: BasePropertyStructure) {
-    describe(`property ${structure.name}`, () => {
-        runNamedDefinitionTests(definition, structure);
-        runTypeExpressionedDefinitionTests(definition, structure);
+    runNamedDefinitionTests(definition, structure);
+    runTypeExpressionedDefinitionTests(definition, structure);
 
-        it(`should be ${structure.isOptional ? "optional" : "not optional"}`, () => {
-            assert.equal(definition.isOptional, typeof structure.isOptional === "boolean" ? structure.isOptional : false);
-        });
+    it(`should be ${structure.isOptional ? "optional" : "not optional"}`, () => {
+        assert.equal(definition.isOptional, typeof structure.isOptional === "boolean" ? structure.isOptional : false);
     });
 }

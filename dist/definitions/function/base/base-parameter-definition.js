@@ -8,7 +8,7 @@ var BaseParameterDefinition = (function () {
         this.fillParameterDetails(typeChecker, symbol);
     }
     BaseParameterDefinition.prototype.fillParameterDetails = function (typeChecker, symbol) {
-        var declaration = symbol.valueDeclaration;
+        var declaration = typeChecker.getDeclarationFromSymbol(symbol);
         this.isOptional = declaration.questionToken != null || declaration.initializer != null || declaration.dotDotDotToken != null;
         this.isRestParameter = declaration.dotDotDotToken != null;
         this.defaultExpression = declaration.initializer != null ? new expressions_1.Expression(typeChecker, declaration.initializer) : null;

@@ -12,7 +12,8 @@ describe("class static property tests", function () {
                         typeExpression: { text: "string" }
                     }, {
                         name: "myImplicit",
-                        typeExpression: { text: "number" }
+                        typeExpression: { text: "number" },
+                        defaultExpression: { text: "4" }
                     }, {
                         name: "myAny",
                         typeExpression: { text: "any" }

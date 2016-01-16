@@ -253,7 +253,8 @@ export class TypeChecker {
     }
 
     isOptionalProperty(symbol: ts.Symbol) {
-        return symbol.valueDeclaration != null && (symbol.valueDeclaration as ts.ParameterDeclaration).questionToken != null;
+        const declaration = this.getDeclarationFromSymbol(symbol);
+        return declaration != null && (declaration as ts.PropertyDeclaration).questionToken != null;
     }
 
     isSymbolInFile(symbol: ts.Symbol, file: ts.SourceFile) {
