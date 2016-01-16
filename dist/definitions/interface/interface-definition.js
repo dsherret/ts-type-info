@@ -19,7 +19,7 @@ var InterfaceDefinition = (function () {
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             /* istanbul ignore else */
             if (typeChecker.isSymbolProperty(member)) {
-                _this.properties.push(new base_1.PropertyDefinition(typeChecker, member));
+                _this.properties.push(new base_1.BasePropertyDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolInterfaceMethod(member)) {
                 _this.methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));

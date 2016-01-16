@@ -1,9 +1,9 @@
 import * as ts from "typescript";
 import {Scope} from "./../../../scope";
 import {applyMixins, TypeChecker} from "./../../../utils";
-import {PropertyDefinition, IScopedDefinition, ScopedDefinition, IDecoratableDefinition, DecoratableDefinition, DecoratorDefinition} from "./../../base";
+import {BasePropertyDefinition, IScopedDefinition, ScopedDefinition, IDecoratableDefinition, DecoratableDefinition, DecoratorDefinition} from "./../../base";
 
-export class BaseClassPropertyDefinition extends PropertyDefinition implements IDecoratableDefinition, IScopedDefinition {
+export class BaseClassPropertyDefinition extends BasePropertyDefinition implements IDecoratableDefinition, IScopedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol);
 

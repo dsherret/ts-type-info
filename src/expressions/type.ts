@@ -1,12 +1,12 @@
 ﻿import * as ts from "typescript";
-import {CallSignatureDefinition, PropertyDefinition, IBaseNamedDefinition} from "./../definitions";
+import {CallSignatureDefinition, BasePropertyDefinition, IBaseNamedDefinition} from "./../definitions";
 import {TypeExpression} from "./type-expression";
 import {TypeChecker, TypeExpressionCache} from "./../utils";
 
 export class Type {
     callSignatures: CallSignatureDefinition[];
     definition: IBaseNamedDefinition;
-    properties: PropertyDefinition[];
+    properties: BasePropertyDefinition[];
     typeArguments: TypeExpression[];
     text: string;
 
@@ -44,7 +44,7 @@ export class Type {
     private fillProperties(typeChecker: TypeChecker, tsType: ts.Type) {
         const properties = tsType.getProperties();
 
-        this.properties = properties.map(property => new PropertyDefinition(typeChecker, property));
+        this.properties = properties.map(property => new BasePropertyDefinition(typeChecker, property));
     }
 
     private fillCallSignatures(typeChecker: TypeChecker, tsType: ts.Type) {

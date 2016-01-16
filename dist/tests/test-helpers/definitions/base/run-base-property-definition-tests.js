@@ -1,7 +1,7 @@
 var assert = require("assert");
 var run_named_definition_tests_1 = require("./run-named-definition-tests");
 var run_typed_definition_tests_1 = require("./run-typed-definition-tests");
-function runPropertyDefinitionTests(definition, structure) {
+function runBasePropertyDefinitionTests(definition, structure) {
     describe("property " + structure.name, function () {
         run_named_definition_tests_1.runNamedDefinitionTests(definition, structure);
         run_typed_definition_tests_1.runTypeExpressionedDefinitionTests(definition, structure);
@@ -10,6 +10,6 @@ function runPropertyDefinitionTests(definition, structure) {
         });
     });
 }
-exports.runPropertyDefinitionTests = runPropertyDefinitionTests;
+exports.runBasePropertyDefinitionTests = runBasePropertyDefinitionTests;
 
-//# sourceMappingURL=run-property-definition-tests.js.map
+//# sourceMappingURL=run-base-property-definition-tests.js.map

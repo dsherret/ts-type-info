@@ -1,11 +1,11 @@
 import * as assert from "assert";
 import {ClassPropertyStructure} from "./../../structures";
 import {ClassPropertyDefinition} from "./../../../../definitions";
-import {runPropertyDefinitionTests} from "./../base";
+import {runBasePropertyDefinitionTests} from "./../base";
 
 export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, structure: ClassPropertyStructure) {
     describe(`property ${structure.name}`, () => {
-        runPropertyDefinitionTests(definition, structure);
+        runBasePropertyDefinitionTests(definition, structure);
 
         it(`should be ${structure.isAccessor ? "an accessor" : "not an accessor"}`, () => {
             assert.equal(definition.isAccessor, structure.isAccessor || false);

@@ -4,7 +4,7 @@ import {TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-expressioned-definition";
 
-export class PropertyDefinition implements ITypeExpressionedDefinition, INamedDefinition {
+export class BasePropertyDefinition implements ITypeExpressionedDefinition, INamedDefinition {
     isOptional: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -22,4 +22,4 @@ export class PropertyDefinition implements ITypeExpressionedDefinition, INamedDe
     typeExpression: TypeExpression;
 }
 
-applyMixins(PropertyDefinition, [NamedDefinition, TypeExpressionedDefinition]);
+applyMixins(BasePropertyDefinition, [NamedDefinition, TypeExpressionedDefinition]);

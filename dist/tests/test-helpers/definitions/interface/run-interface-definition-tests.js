@@ -32,7 +32,7 @@ function runInterfaceDefinitionTests(definition, structure) {
             assert.equal(definition.properties.length, structure.properties.length);
         });
         structure.properties.forEach(function (propertyStructure, i) {
-            base_1.runPropertyDefinitionTests(definition.properties[i], propertyStructure);
+            base_1.runBasePropertyDefinitionTests(definition.properties[i], propertyStructure);
         });
     });
     describe("extends", function () {

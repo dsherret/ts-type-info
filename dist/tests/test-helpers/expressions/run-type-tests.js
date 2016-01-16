@@ -25,7 +25,7 @@ function runTypeTests(type, structure) {
             assert.equal(type.properties.length, structure.properties.length);
         });
         structure.properties.forEach(function (propertyStructure, i) {
-            definitions_1.runPropertyDefinitionTests(type.properties[i], propertyStructure);
+            definitions_1.runBasePropertyDefinitionTests(type.properties[i], propertyStructure);
         });
         if (structure.definition == null) {
             it("should not have a definition", function () {

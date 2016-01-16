@@ -27,7 +27,7 @@ var Type = (function () {
     };
     Type.prototype.fillProperties = function (typeChecker, tsType) {
         var properties = tsType.getProperties();
-        this.properties = properties.map(function (property) { return new definitions_1.PropertyDefinition(typeChecker, property); });
+        this.properties = properties.map(function (property) { return new definitions_1.BasePropertyDefinition(typeChecker, property); });
     };
     Type.prototype.fillCallSignatures = function (typeChecker, tsType) {
         this.callSignatures = tsType.getCallSignatures()

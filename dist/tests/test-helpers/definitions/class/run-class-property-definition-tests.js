@@ -2,7 +2,7 @@ var assert = require("assert");
 var base_1 = require("./../base");
 function runClassPropertyDefinitionTests(definition, structure) {
     describe("property " + structure.name, function () {
-        base_1.runPropertyDefinitionTests(definition, structure);
+        base_1.runBasePropertyDefinitionTests(definition, structure);
         it("should be " + (structure.isAccessor ? "an accessor" : "not an accessor"), function () {
             assert.equal(definition.isAccessor, structure.isAccessor || false);
         });

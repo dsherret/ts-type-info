@@ -1,8 +1,7 @@
-var run_property_definition_tests_1 = require("./../../base/run-property-definition-tests");
-var run_scoped_definition_tests_1 = require("./../../base/run-scoped-definition-tests");
+var base_1 = require("./../../base");
 function runBaseClassPropertyDefinitionTests(definition, structure) {
-    run_property_definition_tests_1.runPropertyDefinitionTests(definition, structure);
-    run_scoped_definition_tests_1.runScopedDefinitionTests(definition, structure);
+    base_1.runBasePropertyDefinitionTests(definition, structure);
+    base_1.runScopedDefinitionTests(definition, structure);
 }
 exports.runBaseClassPropertyDefinitionTests = runBaseClassPropertyDefinitionTests;
 

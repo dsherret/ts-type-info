@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {Type} from "./../../../expressions";
 import {TypeStructure} from "./../structures";
-import {runNamedDefinitionTests, runCallSignatureDefinitionTests, runPropertyDefinitionTests} from "./../definitions";
+import {runNamedDefinitionTests, runCallSignatureDefinitionTests, runBasePropertyDefinitionTests} from "./../definitions";
 import {runTypeExpressionTests} from "./run-type-expression-tests";
 
 export function runTypeTests(type: Type, structure: TypeStructure) {
@@ -35,7 +35,7 @@ export function runTypeTests(type: Type, structure: TypeStructure) {
         });
 
         structure.properties.forEach((propertyStructure, i) => {
-            runPropertyDefinitionTests(type.properties[i], propertyStructure);
+            runBasePropertyDefinitionTests(type.properties[i], propertyStructure);
         });
 
         if (structure.definition == null) {
