@@ -32,11 +32,13 @@ export class Type {
     private shouldGetAllInfo(typeChecker: TypeChecker, tsType: ts.Type) {
         // only get properties and call signature info for specific types
         return (tsType.flags & (
-            ts.TypeFlags.Class |
-            ts.TypeFlags.Interface |
             ts.TypeFlags.ObjectType |
             ts.TypeFlags.Instantiated
-        )) !== 0;
+        )) !== 0 &&
+        (tsType.flags & (
+            ts.TypeFlags.Class |
+            ts.TypeFlags.Interface
+        )) === 0;
     }
 
     private fillProperties(typeChecker: TypeChecker, tsType: ts.Type) {

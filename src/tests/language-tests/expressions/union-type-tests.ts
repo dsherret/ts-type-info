@@ -22,12 +22,18 @@ class MyOtherClass<T> {
                 typeExpression: {
                     text: "MyClass | MyOtherClass<string>",
                     types: [{
-                        text: "MyClass"
+                        text: "MyClass",
+                        definition: {
+                            name: "MyClass"
+                        }
                     }, {
                         text: "MyOtherClass<string>",
                         typeArguments: [{
                             text: "string"
-                        }]
+                        }],
+                        definition: {
+                            name: "MyOtherClass"
+                        }
                     }]
                 }
             }]

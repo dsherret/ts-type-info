@@ -20,10 +20,10 @@ var Type = (function () {
     };
     Type.prototype.shouldGetAllInfo = function (typeChecker, tsType) {
         // only get properties and call signature info for specific types
-        return (tsType.flags & (1024 /* Class */ |
-            2048 /* Interface */ |
-            80896 /* ObjectType */ |
-            131072 /* Instantiated */)) !== 0;
+        return (tsType.flags & (80896 /* ObjectType */ |
+            131072 /* Instantiated */)) !== 0 &&
+            (tsType.flags & (1024 /* Class */ |
+                2048 /* Interface */)) === 0;
     };
     Type.prototype.fillProperties = function (typeChecker, tsType) {
         var properties = tsType.getProperties();

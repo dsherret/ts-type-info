@@ -3,5 +3,6 @@ function __export(m) {
 }
 __export(require("./expressions/run-expression-tests"));
 __export(require("./expressions/run-type-expression-tests"));
+__export(require("./expressions/run-type-tests"));
 
 //# sourceMappingURL=expressions.js.map
