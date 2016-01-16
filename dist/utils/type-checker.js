@@ -16,6 +16,7 @@ var TypeChecker = (function () {
         }
         else {
             var declarations = symbol.getDeclarations();
+            /* istanbul ignore next */
             if (declarations.length > 1) {
                 console.warn("Not implemented. Symbol has more than one declaration: " + symbol.name);
             }
@@ -27,6 +28,7 @@ var TypeChecker = (function () {
     };
     TypeChecker.prototype.getLocalSymbolsFromDeclaration = function (declaration) {
         var locals = declaration.locals;
+        /* istanbul ignore if */
         if (locals == null) {
             return [];
         }

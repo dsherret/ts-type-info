@@ -25,6 +25,7 @@ export class TypeChecker {
         else {
             const declarations = symbol.getDeclarations();
 
+            /* istanbul ignore next */
             if (declarations.length > 1) {
                 console.warn(`Not implemented. Symbol has more than one declaration: ${symbol.name}`);
             }
@@ -39,6 +40,7 @@ export class TypeChecker {
     getLocalSymbolsFromDeclaration(declaration: ts.Declaration) {
         const locals = (declaration as any).locals as { [name: string]: ts.Symbol };
 
+        /* istanbul ignore if */
         if (locals == null) {
             return [] as ts.Symbol[];
         }
