@@ -1,4 +1,4 @@
-import {DecoratableStructure, ScopedStructure, PropertyStructure} from "./../../base";
+import {DecoratableStructure, ScopedStructure, BasePropertyStructure} from "./../../base";
 
-export interface BaseClassPropertyStructure extends PropertyStructure, DecoratableStructure, ScopedStructure {
+export interface BaseClassPropertyStructure extends BasePropertyStructure, DecoratableStructure, ScopedStructure {
 }

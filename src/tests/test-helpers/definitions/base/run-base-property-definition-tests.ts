@@ -1,10 +1,10 @@
 import * as assert from "assert";
-import {PropertyStructure} from "./../../structures";
+import {BasePropertyStructure} from "./../../structures";
 import {BasePropertyDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runTypeExpressionedDefinitionTests} from "./run-typed-definition-tests";
 
-export function runBasePropertyDefinitionTests(definition: BasePropertyDefinition, structure: PropertyStructure) {
+export function runBasePropertyDefinitionTests(definition: BasePropertyDefinition, structure: BasePropertyStructure) {
     describe(`property ${structure.name}`, () => {
         runNamedDefinitionTests(definition, structure);
         runTypeExpressionedDefinitionTests(definition, structure);
