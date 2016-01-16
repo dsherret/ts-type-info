@@ -3,6 +3,7 @@ function __export(m) {
 }
 __export(require("./interface/run-interface-method-definition-tests"));
 __export(require("./interface/run-interface-new-signature-definition-tests"));
+__export(require("./interface/run-interface-property-definition-tests"));
 __export(require("./interface/run-interface-definition-tests"));
 
 //# sourceMappingURL=interface.js.map

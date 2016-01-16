@@ -1,6 +1,7 @@
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
 var interface_method_definition_1 = require("./interface-method-definition");
+var interface_property_definition_1 = require("./interface-property-definition");
 var interface_new_signature_definition_1 = require("./interface-new-signature-definition");
 var InterfaceDefinition = (function () {
     function InterfaceDefinition(typeChecker, symbol, extendsTypeExpressions) {
@@ -19,7 +20,7 @@ var InterfaceDefinition = (function () {
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             /* istanbul ignore else */
             if (typeChecker.isSymbolProperty(member)) {
-                _this.properties.push(new base_1.BasePropertyDefinition(typeChecker, member));
+                _this.properties.push(new interface_property_definition_1.InterfacePropertyDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolInterfaceMethod(member)) {
                 _this.methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));

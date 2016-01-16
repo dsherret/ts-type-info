@@ -1,8 +1,9 @@
 ﻿import * as assert from "assert";
 import {InterfaceStructure} from "./../../structures";
 import {InterfaceDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runBasePropertyDefinitionTests} from "./../base";
+import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests} from "./../base";
 import {runInterfaceMethodDefinitionTests} from "./run-interface-method-definition-tests";
+import {runInterfacePropertyDefinitionTests} from "./run-interface-property-definition-tests";
 import {runInterfaceNewSignatureDefinitionTests} from "./run-interface-new-signature-definition-tests";
 import {runTypeExpressionTests} from "./../../expressions";
 
@@ -42,7 +43,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
         });
 
         structure.properties.forEach((propertyStructure, i) => {
-            runBasePropertyDefinitionTests(definition.properties[i], propertyStructure);
+            runInterfacePropertyDefinitionTests(definition.properties[i], propertyStructure);
         });
     });
 

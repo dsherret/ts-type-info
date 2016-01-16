@@ -1,6 +1,7 @@
 var assert = require("assert");
 var base_1 = require("./../base");
 var run_interface_method_definition_tests_1 = require("./run-interface-method-definition-tests");
+var run_interface_property_definition_tests_1 = require("./run-interface-property-definition-tests");
 var run_interface_new_signature_definition_tests_1 = require("./run-interface-new-signature-definition-tests");
 var expressions_1 = require("./../../expressions");
 function runInterfaceDefinitionTests(definition, structure) {
@@ -32,7 +33,7 @@ function runInterfaceDefinitionTests(definition, structure) {
             assert.equal(definition.properties.length, structure.properties.length);
         });
         structure.properties.forEach(function (propertyStructure, i) {
-            base_1.runBasePropertyDefinitionTests(definition.properties[i], propertyStructure);
+            run_interface_property_definition_tests_1.runInterfacePropertyDefinitionTests(definition.properties[i], propertyStructure);
         });
     });
     describe("extends", function () {

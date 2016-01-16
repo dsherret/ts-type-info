@@ -1,15 +1,16 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {BasePropertyDefinition, INamedDefinition, NamedDefinition,
-        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, TypeParameterDefinition} from "./../base";
+import {INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
+        ITypeParameteredDefinition, TypeParameteredDefinition, TypeParameterDefinition} from "./../base";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
+import {InterfacePropertyDefinition} from "./interface-property-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 
 export class InterfaceDefinition implements INamedDefinition, IExportableDefinition, ITypeParameteredDefinition {
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
-    properties: BasePropertyDefinition[] = [];
+    properties: InterfacePropertyDefinition[] = [];
     typeParameters: TypeParameterDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, public extendsTypeExpressions: TypeExpression[]) {
@@ -24,7 +25,7 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             /* istanbul ignore else */
             if (typeChecker.isSymbolProperty(member)) {
-                this.properties.push(new BasePropertyDefinition(typeChecker, member));
+                this.properties.push(new InterfacePropertyDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolInterfaceMethod(member)) {
                 this.methods.push(new InterfaceMethodDefinition(typeChecker, member));
