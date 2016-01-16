@@ -76,8 +76,10 @@ var DefinitionCache = (function () {
         }
         return functionDefinition;
     };
-    // todo: remove IExportableDefinition?
     DefinitionCache.prototype.getDefinition = function (symbol) {
+        return this.getImportDefinition(symbol);
+    };
+    DefinitionCache.prototype.getImportDefinition = function (symbol) {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||
             this.getInterfaceDefinition(symbol) ||

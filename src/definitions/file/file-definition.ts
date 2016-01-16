@@ -21,7 +21,7 @@ export class FileDefinition implements IModuledDefinition {
 
     fillImports(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         for (const fileImportSymbol of typeChecker.getFileImportSymbols(file)) {
-            const importDefinition = definitionCache.getDefinition(fileImportSymbol);
+            const importDefinition = definitionCache.getImportDefinition(fileImportSymbol);
 
             /* istanbul ignore else */
             if (importDefinition != null) {
@@ -40,7 +40,7 @@ export class FileDefinition implements IModuledDefinition {
 
     fillReExports(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         for (const fileReExportSymbol of typeChecker.getFileReExportSymbols(file)) {
-            const exportDefinition = definitionCache.getDefinition(fileReExportSymbol);
+            const exportDefinition = definitionCache.getImportDefinition(fileReExportSymbol);
 
             /* istanbul ignore else */
             if (exportDefinition != null) {

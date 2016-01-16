@@ -12,7 +12,7 @@ var FileDefinition = (function () {
     FileDefinition.prototype.fillImports = function (typeChecker, definitionCache, file) {
         for (var _i = 0, _a = typeChecker.getFileImportSymbols(file); _i < _a.length; _i++) {
             var fileImportSymbol = _a[_i];
-            var importDefinition = definitionCache.getDefinition(fileImportSymbol);
+            var importDefinition = definitionCache.getImportDefinition(fileImportSymbol);
             /* istanbul ignore else */
             if (importDefinition != null) {
                 this.imports.push(new import_definition_1.ImportDefinition(definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)), importDefinition));
@@ -25,7 +25,7 @@ var FileDefinition = (function () {
     FileDefinition.prototype.fillReExports = function (typeChecker, definitionCache, file) {
         for (var _i = 0, _a = typeChecker.getFileReExportSymbols(file); _i < _a.length; _i++) {
             var fileReExportSymbol = _a[_i];
-            var exportDefinition = definitionCache.getDefinition(fileReExportSymbol);
+            var exportDefinition = definitionCache.getImportDefinition(fileReExportSymbol);
             /* istanbul ignore else */
             if (exportDefinition != null) {
                 this.reExports.push(new re_export_definition_1.ReExportDefinition(definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileReExportSymbol)), exportDefinition));
