@@ -1,5 +1,5 @@
 ﻿import * as ts from "typescript";
-import {TypeParameterDefinition} from "./type-parameter-definition";
+import {TypeParameterDefinition} from "./../general";
 import {TypeChecker} from "./../../utils";
 
 export interface ITypeParameteredDefinition {

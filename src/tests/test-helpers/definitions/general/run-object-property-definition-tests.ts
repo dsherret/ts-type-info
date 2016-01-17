@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {ObjectPropertyStructure} from "./../../structures";
 import {ObjectPropertyDefinition} from "./../../../../definitions";
-import {runBasePropertyDefinitionTests} from "./run-base-property-definition-tests";
+import {runBasePropertyDefinitionTests} from "./../base";
 import {runExpressionTests} from "./../../expressions";
 
 export function runObjectPropertyDefinitionTests(definition: ObjectPropertyDefinition, structure: ObjectPropertyStructure) {

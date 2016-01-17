@@ -1,5 +1,5 @@
 var assert = require("assert");
-var run_type_parameter_definition_tests_1 = require("./run-type-parameter-definition-tests");
+var general_1 = require("./../general");
 function runTypeParameteredDefinitionTests(definition, structure) {
     describe("type parameters", function () {
         structure.typeParameters = structure.typeParameters || [];
@@ -7,7 +7,7 @@ function runTypeParameteredDefinitionTests(definition, structure) {
             assert.equal(definition.typeParameters.length, structure.typeParameters.length);
         });
         structure.typeParameters.forEach(function (param, i) {
-            run_type_parameter_definition_tests_1.runTypeParameterDefinitionTests(definition.typeParameters[i], param);
+            general_1.runTypeParameterDefinitionTests(definition.typeParameters[i], param);
         });
     });
 }

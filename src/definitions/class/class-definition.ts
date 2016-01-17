@@ -6,11 +6,9 @@ import {ClassStaticMethodDefinition} from "./class-static-method-definition";
 import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition,
-        IDecoratableDefinition, DecoratableDefinition, DecoratorDefinition,
-        IExportableDefinition, ExportableDefinition,
-        ITypeParameteredDefinition, TypeParameteredDefinition,
-        TypeParameterDefinition} from "./../base";
+import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition,
+        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 
 export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition {
     methods: ClassMethodDefinition[] = [];

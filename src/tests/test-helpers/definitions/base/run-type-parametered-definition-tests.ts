@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {TypeParameteredStructure} from "./../../structures";
 import {ITypeParameteredDefinition} from "./../../../../definitions";
-import {runTypeParameterDefinitionTests} from "./run-type-parameter-definition-tests";
+import {runTypeParameterDefinitionTests} from "./../general";
 
 export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDefinition, structure: TypeParameteredStructure) {
     describe("type parameters", () => {

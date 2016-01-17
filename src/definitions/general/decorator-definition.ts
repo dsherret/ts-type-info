@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {IBaseNamedDefinition} from "./named-definition";
+import {IBaseNamedDefinition} from "./../base";
 import {Expression} from "./../../expressions";
 import {TypeChecker, TypeGuards} from "./../../utils";
 

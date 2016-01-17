@@ -5,6 +5,7 @@ var class_static_method_definition_1 = require("./class-static-method-definition
 var class_static_property_definition_1 = require("./class-static-property-definition");
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
+var general_1 = require("./../general");
 var ClassDefinition = (function () {
     function ClassDefinition(typeChecker, symbol, extendsTypeExpressions, implementsTypeExpressions) {
         this.extendsTypeExpressions = extendsTypeExpressions;
@@ -36,7 +37,7 @@ var ClassDefinition = (function () {
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
                 // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
-                _this.typeParameters.push(new base_1.TypeParameterDefinition(typeChecker, member));
+                _this.typeParameters.push(new general_1.TypeParameterDefinition(typeChecker, member));
             }
             else {
                 console.warn("Not implemented member: " + member.getName());

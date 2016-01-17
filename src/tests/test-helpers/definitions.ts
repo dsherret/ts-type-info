@@ -1,4 +1,5 @@
 ﻿export * from "./definitions/base";
+export * from "./definitions/general";
 export * from "./definitions/class";
 export * from "./definitions/enum";
 export * from "./definitions/file";

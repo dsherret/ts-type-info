@@ -1,7 +1,8 @@
 import * as ts from "typescript";
 import {ParameterDefinition} from "./parameter-definition";
 import {IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./base";
-import {ITypeParameteredDefinition, TypeParameteredDefinition, TypeParameterDefinition} from "./../base";
+import {ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+import {TypeParameterDefinition} from "./../general";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
 

@@ -1,7 +1,5 @@
 ﻿import * as ts from "typescript";
-import {IModuledDefinition, ModuledDefinition,
-    INamedDefinition, NamedDefinition,
-    IExportableDefinition, ExportableDefinition} from "./../base";
+import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";

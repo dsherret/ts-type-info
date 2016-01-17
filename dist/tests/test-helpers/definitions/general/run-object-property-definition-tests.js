@@ -1,9 +1,9 @@
 var assert = require("assert");
-var run_base_property_definition_tests_1 = require("./run-base-property-definition-tests");
+var base_1 = require("./../base");
 var expressions_1 = require("./../../expressions");
 function runObjectPropertyDefinitionTests(definition, structure) {
     describe("property " + structure.name, function () {
-        run_base_property_definition_tests_1.runBasePropertyDefinitionTests(definition, structure);
+        base_1.runBasePropertyDefinitionTests(definition, structure);
         if (structure.defaultExpression != null) {
             it("should have the default expression", function () {
                 expressions_1.runExpressionTests(definition.defaultExpression, structure.defaultExpression);

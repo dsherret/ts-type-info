@@ -3,7 +3,8 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var base_property_definition_1 = require("./base-property-definition");
+// specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
+var base_property_definition_1 = require("./../base/base-property-definition");
 var expressions_1 = require("./../../expressions");
 var ObjectPropertyDefinition = (function (_super) {
     __extends(ObjectPropertyDefinition, _super);

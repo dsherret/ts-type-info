@@ -1,5 +1,5 @@
 var assert = require("assert");
-var run_decorator_definition_tests_1 = require("./run-decorator-definition-tests");
+var general_1 = require("./../general");
 function runDecoratableDefinitionTests(definition, structure) {
     describe("decorators", function () {
         structure.decorators = structure.decorators || [];
@@ -7,7 +7,7 @@ function runDecoratableDefinitionTests(definition, structure) {
             assert.equal(definition.decorators.length, structure.decorators.length);
         });
         structure.decorators.forEach(function (decoratorStructure, i) {
-            run_decorator_definition_tests_1.runDecoratorDefinitionTests(definition.decorators[i], structure.decorators[i]);
+            general_1.runDecoratorDefinitionTests(definition.decorators[i], structure.decorators[i]);
         });
     });
 }

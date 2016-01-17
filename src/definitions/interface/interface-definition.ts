@@ -1,7 +1,8 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
-        ITypeParameteredDefinition, TypeParameteredDefinition, TypeParameterDefinition} from "./../base";
+        ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfacePropertyDefinition} from "./interface-property-definition";

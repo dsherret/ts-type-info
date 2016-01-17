@@ -1,5 +1,6 @@
 var utils_1 = require("./../../utils");
 var base_1 = require("./../base");
+var general_1 = require("./../general");
 var interface_method_definition_1 = require("./interface-method-definition");
 var interface_property_definition_1 = require("./interface-property-definition");
 var interface_new_signature_definition_1 = require("./interface-new-signature-definition");
@@ -26,7 +27,7 @@ var InterfaceDefinition = (function () {
                 _this.methods.push(new interface_method_definition_1.InterfaceMethodDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
-                _this.typeParameters.push(new base_1.TypeParameterDefinition(typeChecker, member));
+                _this.typeParameters.push(new general_1.TypeParameterDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolNewSignature(member)) {
                 member.getDeclarations().forEach(function (d) {

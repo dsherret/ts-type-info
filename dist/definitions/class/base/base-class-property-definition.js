@@ -5,6 +5,7 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
 };
 var utils_1 = require("./../../../utils");
 var base_1 = require("./../../base");
+var general_1 = require("./../../general");
 var BaseClassPropertyDefinition = (function (_super) {
     __extends(BaseClassPropertyDefinition, _super);
     function BaseClassPropertyDefinition(typeChecker, symbol) {
@@ -13,7 +14,7 @@ var BaseClassPropertyDefinition = (function (_super) {
         this.fillScope(symbol);
     }
     return BaseClassPropertyDefinition;
-})(base_1.ObjectPropertyDefinition);
+})(general_1.ObjectPropertyDefinition);
 exports.BaseClassPropertyDefinition = BaseClassPropertyDefinition;
 utils_1.applyMixins(BaseClassPropertyDefinition, [base_1.DecoratableDefinition, base_1.ScopedDefinition]);
 

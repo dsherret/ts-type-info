@@ -1,4 +1,4 @@
-var decorator_definition_1 = require("./decorator-definition");
+var general_1 = require("./../general");
 var DecoratableDefinition = (function () {
     /* istanbul ignore next */ function DecoratableDefinition() {
     }
@@ -9,7 +9,7 @@ var DecoratableDefinition = (function () {
             if (declaration.decorators != null) {
                 for (var _b = 0, _c = declaration.decorators; _b < _c.length; _b++) {
                     var decorator = _c[_b];
-                    this.decorators.push(new decorator_definition_1.DecoratorDefinition(typeChecker, decorator));
+                    this.decorators.push(new general_1.DecoratorDefinition(typeChecker, decorator));
                 }
             }
         }

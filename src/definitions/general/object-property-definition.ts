@@ -1,6 +1,7 @@
 ﻿import * as ts from "typescript";
 import {TypeChecker} from "./../../utils";
-import {BasePropertyDefinition} from "./base-property-definition";
+// specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
+import {BasePropertyDefinition} from "./../base/base-property-definition";
 import {Expression} from "./../../expressions";
 
 export class ObjectPropertyDefinition extends BasePropertyDefinition {
