@@ -23,6 +23,10 @@ declare module "ts-type-info" {
         typeExpression: TypeExpression;
     }
 
+    export interface IDefaultExpressionedDefinition {
+        defaultExpression: Expression;
+    }
+
     export interface IScopedDefinition {
         scope: Scope;
     }
@@ -36,11 +40,12 @@ declare module "ts-type-info" {
     }
 
     export interface IModuledDefinition {
+        namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
         interfaces: InterfaceDefinition[];
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
-        namespaces: NamespaceDefinition[];
+        variables: VariableDefinition[];
     }
 
     export interface ITypeParameteredDefinition {
@@ -66,6 +71,10 @@ declare module "ts-type-info" {
         typeExpression: TypeExpression;
     }
 
+    export class DefaultExpressionedDefinition {
+        defaultExpression: Expression;
+    }
+
     export class ScopedDefinition {
         scope: Scope;
     }
@@ -81,15 +90,27 @@ declare module "ts-type-info" {
     export class ModuledDefinition {
         namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
+        interfaces: InterfaceDefinition[];
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
-        interfaces: InterfaceDefinition[];
+        variables: VariableDefinition[];
     }
 
-    export class PropertyDefinition {
+    export class BasePropertyDefinition {
         isOptional: boolean;
         name: string;
         typeExpression: TypeExpression;
+    }
+
+    export class TypeParameteredDefinition {
+        typeParameters: TypeParameterDefinition[];
+    }
+
+    export class VariableDefinition {
+        name: string;
+        isExported: boolean;
+        typeExpression: TypeExpression;
+        defaultExpression: Expression;
     }
 
     export class TypeParameterDefinition {
@@ -97,8 +118,8 @@ declare module "ts-type-info" {
         name: string;
     }
 
-    export class TypeParameteredDefinition {
-        typeParameters: TypeParameterDefinition[];
+    export class ObjectPropertyDefinition extends BasePropertyDefinition {
+        defaultExpression: Expression;
     }
 
     export class DecoratorDefinition {
@@ -116,9 +137,9 @@ declare module "ts-type-info" {
     export class BaseParameterDefinition {
         isOptional: boolean;
         isRestParameter: boolean;
-        defaultExpression: Expression;
         name: string;
         typeExpression: TypeExpression;
+        defaultExpression: Expression;
     }
 
     export class ParameteredDefinition<T> {
@@ -148,7 +169,7 @@ declare module "ts-type-info" {
         scope: Scope;
     }
 
-    export class BaseClassPropertyDefinition extends PropertyDefinition {
+    export class BaseClassPropertyDefinition extends ObjectPropertyDefinition {
         decorators: DecoratorDefinition[];
         scope: Scope;
     }
@@ -192,7 +213,7 @@ declare module "ts-type-info" {
     export class InterfaceDefinition {
         methods: InterfaceMethodDefinition[];
         newSignatures: InterfaceNewSignatureDefinition[];
-        properties: PropertyDefinition[];
+        properties: InterfacePropertyDefinition[];
         typeParameters: TypeParameterDefinition[];
         extendsTypeExpressions: TypeExpression[];
         name: string;
@@ -200,6 +221,9 @@ declare module "ts-type-info" {
     }
 
     export class InterfaceMethodDefinition extends BaseFunctionDefinition<ParameterDefinition> {
+    }
+
+    export class InterfacePropertyDefinition extends BasePropertyDefinition {
     }
 
     export class InterfaceNewSignatureDefinition {
@@ -220,11 +244,12 @@ declare module "ts-type-info" {
 
     export class NamespaceDefinition {
         name: string;
+        namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
         interfaces: InterfaceDefinition[];
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
-        namespaces: NamespaceDefinition[];
+        variables: VariableDefinition[];
         isExported: boolean;
     }
 
@@ -233,11 +258,12 @@ declare module "ts-type-info" {
         imports: ImportDefinition[];
         reExports: ReExportDefinition[];
         name: string;
+        namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
         interfaces: InterfaceDefinition[];
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
-        namespaces: NamespaceDefinition[];
+        variables: VariableDefinition[];
     }
 
     export class ImportDefinition {
@@ -255,11 +281,11 @@ declare module "ts-type-info" {
     }
 
     export class Type {
-        text: string;
-        properties: PropertyDefinition[];
         callSignatures: CallSignatureDefinition[];
         definition: IBaseNamedDefinition;
+        properties: BasePropertyDefinition[];
         typeArguments: TypeExpression[];
+        text: string;
     }
 
     export class TypeExpression {

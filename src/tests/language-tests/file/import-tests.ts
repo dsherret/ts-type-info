@@ -2,12 +2,12 @@
 import * as assert from "assert";
 import {getFileInfo} from "./../../../main";
 import {runImportDefinitionTests} from "./../../test-helpers";
-import {ClassDefinition, EnumDefinition, InterfaceDefinition} from "./../../../definitions";
+import {ClassDefinition, EnumDefinition, InterfaceDefinition, VariableDefinition} from "./../../../definitions";
 
 describe("file import tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/language-tests/file/test-files/import.ts");
     const fileDef = getFileInfo([fileName]).filter(def => /import/.test(def.fileName))[0];
-    const NUM_IMPORTS = 10;
+    const NUM_IMPORTS = 11;
 
     it(`should have ${NUM_IMPORTS} imports`, () => {
         assert.equal(fileDef.imports.length, NUM_IMPORTS);
@@ -71,5 +71,11 @@ describe("file import tests", () => {
         definitionName: "Test",
         definitionType: InterfaceDefinition,
         fileName: "definition-namespace.d.ts"
+    });
+
+    runImportDefinitionTests(fileDef.imports[10], {
+        definitionName: "METHODS",
+        definitionType: VariableDefinition,
+        fileName: "definition-var.d.ts"
     });
 });

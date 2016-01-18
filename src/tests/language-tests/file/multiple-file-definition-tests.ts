@@ -9,7 +9,22 @@ describe("multiple file definition tests", () => {
     const mainFileDef = fileDefs.filter(def => /main/.test(def.fileName))[0];
     const referenceFileDef = fileDefs.filter(def => /reference-structures/.test(def.fileName))[0];
 
-    runFileDefinitionTests(mainFileDef, {});
+    runFileDefinitionTests(mainFileDef, {
+        variables: [{
+            name: "c",
+            typeExpression: { text: "MyReferenceClass" }
+        }, {
+            name: "i",
+            typeExpression: { text: "MyReferenceInterface" }
+        }, {
+            name: "f",
+            typeExpression: { text: "typeof MyReferenceFunction" },
+            defaultExpression: { text: "MyReferenceFunction" }
+        }, {
+            name: "e",
+            typeExpression: { text: "MyReferenceEnum" }
+        }]
+    });
     runFileDefinitionTests(referenceFileDef, {
         classes: [{
             name: "MyReferenceClass"

@@ -4,12 +4,22 @@ var interface_1 = require("./../interface");
 var function_1 = require("./../function");
 var enum_1 = require("./../enum");
 var class_1 = require("./../class");
+var general_1 = require("./../general");
 function runModuledDefinitionTests(definition, expected) {
+    expected.namespaces = expected.namespaces || [];
     expected.classes = expected.classes || [];
     expected.enums = expected.enums || [];
     expected.functions = expected.functions || [];
     expected.interfaces = expected.interfaces || [];
-    expected.namespaces = expected.namespaces || [];
+    expected.variables = expected.variables || [];
+    describe("namespaces", function () {
+        it("should have the expected number of namespaces", function () {
+            assert.equal(definition.namespaces.length, expected.namespaces.length);
+        });
+        expected.namespaces.forEach(function (namespaceStructure, i) {
+            namespace_1.runNamespaceDefinitionTests(definition.namespaces[i], namespaceStructure);
+        });
+    });
     describe("classes", function () {
         it("should have the expected number of classes", function () {
             assert.equal(definition.classes.length, expected.classes.length);
@@ -42,12 +52,12 @@ function runModuledDefinitionTests(definition, expected) {
             enum_1.runEnumDefinitionTests(definition.enums[i], enumStructure);
         });
     });
-    describe("namespaces", function () {
-        it("should have the expected number of namespaces", function () {
-            assert.equal(definition.namespaces.length, expected.namespaces.length);
+    describe("variables", function () {
+        it("should have the expected number of variables", function () {
+            assert.equal(definition.variables.length, expected.variables.length);
         });
-        expected.namespaces.forEach(function (namespaceStructure, i) {
-            namespace_1.runNamespaceDefinitionTests(definition.namespaces[i], namespaceStructure);
+        expected.variables.forEach(function (variableStructure, i) {
+            general_1.runVariableDefinitionTests(definition.variables[i], variableStructure);
         });
     });
 }

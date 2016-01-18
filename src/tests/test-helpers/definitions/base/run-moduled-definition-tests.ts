@@ -5,14 +5,26 @@ import {runInterfaceDefinitionTests} from "./../interface";
 import {runFunctionDefinitionTests} from "./../function";
 import {runEnumDefinitionTests} from "./../enum";
 import {runClassDefinitionTests} from "./../class";
+import {runVariableDefinitionTests} from "./../general";
 import {ModuledStructure} from "./../../structures";
 
 export function runModuledDefinitionTests(definition: IModuledDefinition, expected: ModuledStructure) {
+    expected.namespaces = expected.namespaces || [];
     expected.classes = expected.classes || [];
     expected.enums = expected.enums || [];
     expected.functions = expected.functions || [];
     expected.interfaces = expected.interfaces || [];
-    expected.namespaces = expected.namespaces || [];
+    expected.variables = expected.variables || [];
+
+    describe("namespaces", () => {
+        it("should have the expected number of namespaces", () => {
+            assert.equal(definition.namespaces.length, expected.namespaces.length);
+        });
+
+        expected.namespaces.forEach((namespaceStructure, i) => {
+            runNamespaceDefinitionTests(definition.namespaces[i], namespaceStructure);
+        });
+    });
 
     describe("classes", () => {
         it("should have the expected number of classes", () => {
@@ -54,13 +66,13 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
         });
     });
 
-    describe("namespaces", () => {
-        it("should have the expected number of namespaces", () => {
-            assert.equal(definition.namespaces.length, expected.namespaces.length);
+    describe("variables", () => {
+        it("should have the expected number of variables", () => {
+            assert.equal(definition.variables.length, expected.variables.length);
         });
 
-        expected.namespaces.forEach((namespaceStructure, i) => {
-            runNamespaceDefinitionTests(definition.namespaces[i], namespaceStructure);
+        expected.variables.forEach((variableStructure, i) => {
+            runVariableDefinitionTests(definition.variables[i], variableStructure);
         });
     });
 }

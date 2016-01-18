@@ -44,7 +44,7 @@ export class Type {
     private fillProperties(typeChecker: TypeChecker, tsType: ts.Type) {
         const properties = tsType.getProperties();
 
-        this.properties = properties.map(property => new BasePropertyDefinition(typeChecker, property));
+        this.properties = properties.filter(p => p.name !== "prototype").map(property => new BasePropertyDefinition(typeChecker, property));
     }
 
     private fillCallSignatures(typeChecker: TypeChecker, tsType: ts.Type) {

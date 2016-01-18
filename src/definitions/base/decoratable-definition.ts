@@ -3,8 +3,8 @@ import {DecoratorDefinition} from "./../general";
 import {TypeChecker} from "./../../utils";
 
 export interface IDecoratableDefinition {
-    fillDecorators(typeChecker: TypeChecker, symbol: ts.Symbol): void;
     decorators: DecoratorDefinition[];
+    fillDecorators(typeChecker: TypeChecker, symbol: ts.Symbol): void;
 }
 
 export abstract class DecoratableDefinition implements IDecoratableDefinition {

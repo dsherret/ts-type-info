@@ -5,6 +5,12 @@ var ModuledDefinition = (function () {
     ModuledDefinition.prototype.fillMembersBySourceFile = function (typeChecker, definitionCache, file) {
         var _this = this;
         this.initializeMD();
+        // namespaces
+        typeChecker.getSymbolsInScope(file, 1536 /* Namespace */).forEach(function (namespaceSymbol) {
+            if (typeChecker.isSymbolInFile(namespaceSymbol, file)) {
+                _this.namespaces.push(definitionCache.getNamespaceDefinition(namespaceSymbol));
+            }
+        });
         // classes
         typeChecker.getSymbolsInScope(file, 32 /* Class */).forEach(function (classSymbol) {
             if (typeChecker.isSymbolInFile(classSymbol, file)) {
@@ -29,10 +35,10 @@ var ModuledDefinition = (function () {
                 _this.interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
             }
         });
-        // namespaces
-        typeChecker.getSymbolsInScope(file, 1536 /* Namespace */).forEach(function (namespaceSymbol) {
-            if (typeChecker.isSymbolInFile(namespaceSymbol, file)) {
-                _this.namespaces.push(definitionCache.getNamespaceDefinition(namespaceSymbol));
+        // variables
+        typeChecker.getSymbolsInScope(file, 2 /* BlockScopedVariable */ | 3 /* Variable */).forEach(function (variableSymbol) {
+            if (typeChecker.isSymbolInFile(variableSymbol, file)) {
+                _this.variables.push(definitionCache.getVariableDefinition(variableSymbol));
             }
         });
     };
@@ -57,6 +63,9 @@ var ModuledDefinition = (function () {
             else if (typeChecker.isSymbolEnum(localSymbol)) {
                 _this.enums.push(definitionCache.getEnumDefinition(localSymbol));
             }
+            else if (typeChecker.isSymbolVariable(localSymbol)) {
+                _this.variables.push(definitionCache.getVariableDefinition(localSymbol));
+            }
             else {
                 // console.log(symbol);
                 console.warn("Unhandled symbol when filling moduled definition items: " + localSymbol.name);
@@ -66,9 +75,10 @@ var ModuledDefinition = (function () {
     ModuledDefinition.prototype.initializeMD = function () {
         this.namespaces = [];
         this.classes = [];
+        this.interfaces = [];
         this.enums = [];
         this.functions = [];
-        this.interfaces = [];
+        this.variables = [];
     };
     return ModuledDefinition;
 })();

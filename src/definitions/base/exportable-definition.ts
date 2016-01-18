@@ -2,8 +2,8 @@
 import {TypeChecker} from "./../../utils";
 
 export interface IExportableDefinition {
-    fillIsExported(typeChecker: TypeChecker, symbol: ts.Symbol): void;
     isExported: boolean;
+    fillIsExported(typeChecker: TypeChecker, symbol: ts.Symbol): void;
 }
 
 export abstract class ExportableDefinition implements IExportableDefinition {

@@ -1,6 +1,5 @@
-﻿import {ExpressionStructure} from "./../../expressions";
-import {BasePropertyStructure} from "./../base";
+﻿import {BasePropertyStructure} from "./../base";
+import {DefaultExpressionedStructure} from "./../base";
 
-export interface ObjectPropertyStructure extends BasePropertyStructure {
-    defaultExpression?: ExpressionStructure;
+export interface ObjectPropertyStructure extends BasePropertyStructure, DefaultExpressionedStructure {
 }

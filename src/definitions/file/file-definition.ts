@@ -2,10 +2,11 @@ import * as ts from "typescript";
 import {TypeChecker, DefinitionCache, applyMixins} from "./../../utils";
 import {IModuledDefinition, ModuledDefinition} from "./../base";
 import {NamespaceDefinition} from "./../namespace";
-import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
-import {FunctionDefinition} from "./../function";
 import {InterfaceDefinition} from "./../interface";
+import {EnumDefinition} from "./../enum";
+import {FunctionDefinition} from "./../function";
+import {VariableDefinition} from "./../general";
 import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
 
@@ -63,11 +64,12 @@ export class FileDefinition implements IModuledDefinition {
     // ModuledDefinition
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
+    namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
     interfaces: InterfaceDefinition[];
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
-    namespaces: NamespaceDefinition[];
+    variables: VariableDefinition[];
 }
 
 applyMixins(FileDefinition, [ModuledDefinition]);

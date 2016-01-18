@@ -9,6 +9,7 @@ var DefinitionCache = (function () {
         this.files = new utils_1.KeyValueCache();
         this.functions = new utils_1.KeyValueCache();
         this.interfaces = new utils_1.KeyValueCache();
+        this.variables = new utils_1.KeyValueCache();
     }
     DefinitionCache.prototype.getFileDefinition = function (sourceFile) {
         var fileDefinition = this.files.get(sourceFile);
@@ -82,6 +83,18 @@ var DefinitionCache = (function () {
         }
         return functionDefinition;
     };
+    DefinitionCache.prototype.getVariableDefinition = function (symbol) {
+        var variableDefinition;
+        if (this.typeChecker.isSymbolVariable(symbol)) {
+            variableDefinition = this.variables.get(symbol);
+            /* istanbul ignore else */
+            if (variableDefinition == null) {
+                variableDefinition = new definitions_1.VariableDefinition(this.typeChecker, symbol);
+                this.variables.add(symbol, variableDefinition);
+            }
+        }
+        return variableDefinition;
+    };
     DefinitionCache.prototype.getDefinition = function (symbol) {
         return this.getImportDefinition(symbol);
     };
@@ -90,7 +103,8 @@ var DefinitionCache = (function () {
             this.getFunctionDefinition(symbol) ||
             this.getInterfaceDefinition(symbol) ||
             this.getEnumDefinition(symbol) ||
-            this.getNamespaceDefinition(symbol);
+            this.getNamespaceDefinition(symbol) ||
+            this.getVariableDefinition(symbol);
     };
     return DefinitionCache;
 })();

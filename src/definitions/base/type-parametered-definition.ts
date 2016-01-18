@@ -3,9 +3,9 @@ import {TypeParameterDefinition} from "./../general";
 import {TypeChecker} from "./../../utils";
 
 export interface ITypeParameteredDefinition {
+    typeParameters: TypeParameterDefinition[];
     fillTypeParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol): void;
     fillTypeParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature): void;
-    typeParameters: TypeParameterDefinition[];
 }
 
 export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {

@@ -3,8 +3,8 @@ import {TypeExpression} from "./../../expressions";
 import {TypeChecker} from "./../../utils";
 
 export interface ITypeExpressionedDefinition {
-    fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol): void;
     typeExpression: TypeExpression;
+    fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol): void;
 }
 
 export abstract class TypeExpressionedDefinition implements ITypeExpressionedDefinition {

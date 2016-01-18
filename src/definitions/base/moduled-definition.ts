@@ -5,26 +5,36 @@ import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
 import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
+import {VariableDefinition} from "./../general";
 
 export interface IModuledDefinition {
-    fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile): void;
-    fillMembersBySymbol(typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol): void;
+    namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
     interfaces: InterfaceDefinition[];
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
-    namespaces: NamespaceDefinition[];
+    variables: VariableDefinition[];
+    fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile): void;
+    fillMembersBySymbol(typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol): void;
 }
 
 export abstract class ModuledDefinition implements IModuledDefinition {
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
+    interfaces: InterfaceDefinition[];
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
-    interfaces: InterfaceDefinition[];
+    variables: VariableDefinition[];
 
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this.initializeMD();
+        // namespaces
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Namespace).forEach((namespaceSymbol) => {
+            if (typeChecker.isSymbolInFile(namespaceSymbol, file)) {
+                this.namespaces.push(definitionCache.getNamespaceDefinition(namespaceSymbol));
+            }
+        });
+
         // classes
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Class).forEach((classSymbol) => {
             if (typeChecker.isSymbolInFile(classSymbol, file)) {
@@ -53,10 +63,10 @@ export abstract class ModuledDefinition implements IModuledDefinition {
             }
         });
 
-        // namespaces
-        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Namespace).forEach((namespaceSymbol) => {
-            if (typeChecker.isSymbolInFile(namespaceSymbol, file)) {
-                this.namespaces.push(definitionCache.getNamespaceDefinition(namespaceSymbol));
+        // variables
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.BlockScopedVariable | ts.SymbolFlags.Variable).forEach((variableSymbol) => {
+            if (typeChecker.isSymbolInFile(variableSymbol, file)) {
+                this.variables.push(definitionCache.getVariableDefinition(variableSymbol));
             }
         });
     }
@@ -82,6 +92,9 @@ export abstract class ModuledDefinition implements IModuledDefinition {
             else if (typeChecker.isSymbolEnum(localSymbol)) {
                 this.enums.push(definitionCache.getEnumDefinition(localSymbol));
             }
+            else if (typeChecker.isSymbolVariable(localSymbol)) {
+                this.variables.push(definitionCache.getVariableDefinition(localSymbol));
+            }
             else {
                 // console.log(symbol);
                 console.warn(`Unhandled symbol when filling moduled definition items: ${localSymbol.name}`);
@@ -92,8 +105,9 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     private initializeMD() {
         this.namespaces = [];
         this.classes = [];
+        this.interfaces = [];
         this.enums = [];
         this.functions = [];
-        this.interfaces = [];
+        this.variables = [];
     }
 }

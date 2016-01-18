@@ -6,7 +6,7 @@ var definitions_1 = require("./../../../definitions");
 describe("file import tests", function () {
     var fileName = path.join(__dirname, "../../../../src/tests/language-tests/file/test-files/import.ts");
     var fileDef = main_1.getFileInfo([fileName]).filter(function (def) { return /import/.test(def.fileName); })[0];
-    var NUM_IMPORTS = 10;
+    var NUM_IMPORTS = 11;
     it("should have " + NUM_IMPORTS + " imports", function () {
         assert.equal(fileDef.imports.length, NUM_IMPORTS);
     });
@@ -59,6 +59,11 @@ describe("file import tests", function () {
         definitionName: "Test",
         definitionType: definitions_1.InterfaceDefinition,
         fileName: "definition-namespace.d.ts"
+    });
+    test_helpers_1.runImportDefinitionTests(fileDef.imports[10], {
+        definitionName: "METHODS",
+        definitionType: definitions_1.VariableDefinition,
+        fileName: "definition-var.d.ts"
     });
 });
 

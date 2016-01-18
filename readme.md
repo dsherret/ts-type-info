@@ -135,6 +135,7 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 		}]
 	}],
 	"enums": [],
-	"interfaces": []
+	"interfaces": [],
+	"variables": []
 }
 ```

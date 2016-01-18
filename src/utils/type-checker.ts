@@ -26,7 +26,10 @@ export class TypeChecker {
             const declarations = symbol.getDeclarations();
 
             /* istanbul ignore next */
-            if (declarations.length > 1) {
+            if (declarations == null) {
+                throw new Error(`Declaration should not be null for symbol: ${symbol.name}`);
+            }
+            else if (declarations.length > 1) {
                 console.warn(`Not implemented. Symbol has more than one declaration: ${symbol.name}`);
             }
             else if (declarations.length === 0) {
@@ -299,6 +302,11 @@ export class TypeChecker {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Function);
     }
 
+    isSymbolVariable(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.BlockScopedVariable) ||
+            this.symbolHasFlag(symbol, ts.SymbolFlags.Variable);
+    }
+
     isSymbolInterface(symbol: ts.Symbol) {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Interface);
     }
@@ -334,7 +342,7 @@ export class TypeChecker {
     }
 
     typeToString(tsType: ts.Type) {
-        return this.typeChecker.typeToString(tsType, this.currentNode, ts.TypeFormatFlags.None);
+        return this.typeChecker.typeToString(tsType, this.currentNode, ts.TypeFormatFlags.UseTypeOfFunction);
     }
 
     private symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {

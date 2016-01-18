@@ -1,21 +1,21 @@
 import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {Expression, TypeExpression} from "./../../../expressions";
-import {INamedDefinition, NamedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./../../base";
+import {INamedDefinition, NamedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition, IDefaultExpressionedDefinition, DefaultExpressionedDefinition} from "./../../base";
 
 export interface BaseParameterDefinitionConstructor<T extends BaseParameterDefinition> {
     new(typeChecker: TypeChecker, symbol: ts.Symbol): T;
 }
 
-export class BaseParameterDefinition implements INamedDefinition, ITypeExpressionedDefinition {
+export class BaseParameterDefinition implements INamedDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
-    defaultExpression: Expression;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillParameterDetails(typeChecker, symbol);
+        this.fillDefaultExpression(typeChecker, symbol);
     }
 
     private fillParameterDetails(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -23,7 +23,6 @@ export class BaseParameterDefinition implements INamedDefinition, ITypeExpressio
 
         this.isOptional = declaration.questionToken != null || declaration.initializer != null || declaration.dotDotDotToken != null;
         this.isRestParameter = declaration.dotDotDotToken != null;
-        this.defaultExpression = declaration.initializer != null ? new Expression(typeChecker, declaration.initializer) : null;
     }
 
     // NamedDefinition
@@ -32,6 +31,9 @@ export class BaseParameterDefinition implements INamedDefinition, ITypeExpressio
     // TypeExpressionedDefinition
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     typeExpression: TypeExpression;
+    // DefaultExpressionedDefinition
+    defaultExpression: Expression;
+    fillDefaultExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
-applyMixins(BaseParameterDefinition, [NamedDefinition, TypeExpressionedDefinition]);
+applyMixins(BaseParameterDefinition, [NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);

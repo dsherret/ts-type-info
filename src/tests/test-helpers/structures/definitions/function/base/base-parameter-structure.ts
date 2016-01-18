@@ -1,8 +1,6 @@
-import {NamedStructure, TypeExpressionedStructure} from "./../../base";
-import {ExpressionStructure} from "./../../../expressions";
+import {NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure} from "./../../base";
 
-export interface BaseParameterStructure extends NamedStructure, TypeExpressionedStructure {
+export interface BaseParameterStructure extends NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure {
     isOptional?: boolean;
     isRestParameter?: boolean;
-    defaultExpression?: ExpressionStructure;
 }

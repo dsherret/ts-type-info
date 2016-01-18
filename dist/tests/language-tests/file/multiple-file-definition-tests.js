@@ -7,7 +7,22 @@ describe("multiple file definition tests", function () {
     var fileDefs = main_1.getFileInfo([fileName]);
     var mainFileDef = fileDefs.filter(function (def) { return /main/.test(def.fileName); })[0];
     var referenceFileDef = fileDefs.filter(function (def) { return /reference-structures/.test(def.fileName); })[0];
-    test_helpers_1.runFileDefinitionTests(mainFileDef, {});
+    test_helpers_1.runFileDefinitionTests(mainFileDef, {
+        variables: [{
+                name: "c",
+                typeExpression: { text: "MyReferenceClass" }
+            }, {
+                name: "i",
+                typeExpression: { text: "MyReferenceInterface" }
+            }, {
+                name: "f",
+                typeExpression: { text: "typeof MyReferenceFunction" },
+                defaultExpression: { text: "MyReferenceFunction" }
+            }, {
+                name: "e",
+                typeExpression: { text: "MyReferenceEnum" }
+            }]
+    });
     test_helpers_1.runFileDefinitionTests(referenceFileDef, {
         classes: [{
                 name: "MyReferenceClass"

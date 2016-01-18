@@ -17,7 +17,10 @@ var TypeChecker = (function () {
         else {
             var declarations = symbol.getDeclarations();
             /* istanbul ignore next */
-            if (declarations.length > 1) {
+            if (declarations == null) {
+                throw new Error("Declaration should not be null for symbol: " + symbol.name);
+            }
+            else if (declarations.length > 1) {
                 console.warn("Not implemented. Symbol has more than one declaration: " + symbol.name);
             }
             else if (declarations.length === 0) {
@@ -241,6 +244,10 @@ var TypeChecker = (function () {
     TypeChecker.prototype.isSymbolFunction = function (symbol) {
         return this.symbolHasFlag(symbol, 16 /* Function */);
     };
+    TypeChecker.prototype.isSymbolVariable = function (symbol) {
+        return this.symbolHasFlag(symbol, 2 /* BlockScopedVariable */) ||
+            this.symbolHasFlag(symbol, 3 /* Variable */);
+    };
     TypeChecker.prototype.isSymbolInterface = function (symbol) {
         return this.symbolHasFlag(symbol, 64 /* Interface */);
     };
@@ -268,7 +275,7 @@ var TypeChecker = (function () {
         return this.symbolHasFlag(symbol, 262144 /* TypeParameter */);
     };
     TypeChecker.prototype.typeToString = function (tsType) {
-        return this.typeChecker.typeToString(tsType, this.currentNode, 0 /* None */);
+        return this.typeChecker.typeToString(tsType, this.currentNode, 2 /* UseTypeOfFunction */);
     };
     TypeChecker.prototype.symbolHasFlag = function (symbol, flag) {
         return (symbol.getFlags() & flag) !== 0;

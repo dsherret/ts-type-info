@@ -1,5 +1,5 @@
 import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
-        InterfaceDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../definitions";
+        InterfaceDefinition, VariableDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../definitions";
 import {TypeChecker, KeyValueCache} from "./../utils";
 import * as ts from "typescript";
 
@@ -10,6 +10,7 @@ export class DefinitionCache {
     private files = new KeyValueCache<ts.SourceFile, FileDefinition>();
     private functions = new KeyValueCache<ts.Symbol, FunctionDefinition>();
     private interfaces = new KeyValueCache<ts.Symbol, InterfaceDefinition>();
+    private variables = new KeyValueCache<ts.Symbol, VariableDefinition>();
 
     constructor(private typeChecker: TypeChecker) {
     }
@@ -124,6 +125,22 @@ export class DefinitionCache {
         return functionDefinition;
     }
 
+    getVariableDefinition(symbol: ts.Symbol) {
+        let variableDefinition: VariableDefinition;
+
+        if (this.typeChecker.isSymbolVariable(symbol)) {
+            variableDefinition = this.variables.get(symbol);
+
+            /* istanbul ignore else */
+            if (variableDefinition == null) {
+                variableDefinition = new VariableDefinition(this.typeChecker, symbol);
+                this.variables.add(symbol, variableDefinition);
+            }
+        }
+
+        return variableDefinition;
+    }
+
     getDefinition(symbol: ts.Symbol): IBaseNamedDefinition {
         return this.getImportDefinition(symbol);
     }
@@ -133,6 +150,7 @@ export class DefinitionCache {
             this.getFunctionDefinition(symbol) ||
             this.getInterfaceDefinition(symbol) ||
             this.getEnumDefinition(symbol) ||
-            this.getNamespaceDefinition(symbol);
+            this.getNamespaceDefinition(symbol) ||
+            this.getVariableDefinition(symbol);
     }
 }
