@@ -14,6 +14,12 @@ npm install ts-type-info --save-dev
 tsd link
 ```
 
+## Library Use Ideas
+
+* Writing the type information to files (https://github.com/dsherret/ts-type-info-writer)
+* JSON serialization to and from types (https://github.com/dsherret/ts-type-serialization)
+* Automatically generating client side code from server side code (https://github.com/dsherret/server-bridge)
+
 ## Example
 
 ### Input
