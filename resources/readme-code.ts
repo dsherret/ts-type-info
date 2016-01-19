@@ -7,7 +7,7 @@ function myDecorator(str: string) {
 
 @myDecorator("My decorator value")
 export class MyClass {
-    static myStaticProperty: string;
+    static myStaticProperty: string | number;
 
     myProperty = 253;
 

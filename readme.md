@@ -29,7 +29,7 @@ function myDecorator(str: string) {
 
 @myDecorator("My decorator value")
 export class MyClass {
-    static myStaticProperty: string;
+    static myStaticProperty: string | number;
     
     myProperty = 253;
 
@@ -64,7 +64,16 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 			"name": "str",
 			"isOptional": false,
 			"isRestParameter": false,
-			"defaultExpression": null
+			"defaultExpression": null,
+			"typeExpression": {
+				"text": "string",
+				"types": [{
+					"text": "string",
+					"properties": [],
+					"callSignatures": [],
+					"typeArguments": []
+				}]
+			}
 		}],
 		"returnTypeExpression": {
 			"types": [{
@@ -107,7 +116,16 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 			}],
 			"typeParameters": [],
 			"decorators": [],
-			"scope": 0
+			"scope": 0,
+			"returnTypeExpression": {
+				"text": "string",
+				"types": [{
+					"text": "string",
+					"properties": [],
+					"callSignatures": [],
+					"typeArguments": []
+				}]
+			}
 		}],
 		"properties": [{
 			"name": "myProperty",
@@ -124,14 +142,31 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 			"decorators": [],
 			"scope": 0,
 			"isAccessor": false,
-			"isReadonly": false
+			"isReadonly": false,
+			"defaultExpression": {
+				text: "253"
+			}
 		}],
 		"staticMethods": [],
 		"staticProperties": [{
 			"name": "myStaticProperty",
 			"isOptional": false,
 			"decorators": [],
-			"scope": 0
+			"scope": 0,
+			"typeExpression": {
+				"text": "string | number",
+				"types": [{
+					"text": "string",
+					"properties": [],
+					"callSignatures": [],
+					"typeArguments": []
+				}, {
+					"text": "number",
+					"properties": [],
+					"callSignatures": [],
+					"typeArguments": []
+				}]
+			}
 		}]
 	}],
 	"enums": [],

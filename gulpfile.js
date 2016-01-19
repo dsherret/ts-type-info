@@ -191,21 +191,12 @@ gulp.task("generate-readme", function(cb) {
     var readmeText = fs.readFileSync(path.join(__dirname, "resources/readme.txt"), "utf8");
     var tsTypeInfo = require("./dist/main");
     var readmeInfo = tsTypeInfo.getStringInfo(readmeCode);
-    var cache = [];
+
+    console.log(readmeInfo.classes[0].staticProperties);
 
     readmeText = readmeText
         .replace("{{Code}}", readmeCode)
-        .replace("{{CodeOutput}}", JSON.stringify(readmeInfo, function(key, value) {
-            if (typeof value === 'object' && value !== null) {
-                if (cache.indexOf(value) !== -1) {
-                    // Circular reference found, discard key
-                    return;
-                }
-                // Store value in our collection
-                cache.push(value);
-            }
-            return value;
-        }));
+        .replace("{{CodeOutput}}", JSON.stringify(readmeInfo));
 
     fs.writeFile(path.join(__dirname, "readme.md"), readmeText, function(err) {
         if (err) throw err;
