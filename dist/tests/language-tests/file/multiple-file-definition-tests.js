@@ -9,16 +9,20 @@ describe("multiple file definition tests", function () {
     var referenceFileDef = fileDefs.filter(function (def) { return /reference-structures/.test(def.fileName); })[0];
     test_helpers_1.runFileDefinitionTests(mainFileDef, {
         variables: [{
+                declarationType: "var",
                 name: "c",
                 typeExpression: { text: "MyReferenceClass" }
             }, {
+                declarationType: "var",
                 name: "i",
                 typeExpression: { text: "MyReferenceInterface" }
             }, {
+                declarationType: "var",
                 name: "f",
                 typeExpression: { text: "typeof MyReferenceFunction" },
                 defaultExpression: { text: "MyReferenceFunction" }
             }, {
+                declarationType: "var",
                 name: "e",
                 typeExpression: { text: "MyReferenceEnum" }
             }]

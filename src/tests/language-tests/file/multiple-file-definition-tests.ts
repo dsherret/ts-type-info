@@ -11,16 +11,20 @@ describe("multiple file definition tests", () => {
 
     runFileDefinitionTests(mainFileDef, {
         variables: [{
+            declarationType: "var",
             name: "c",
             typeExpression: { text: "MyReferenceClass" }
         }, {
+            declarationType: "var",
             name: "i",
             typeExpression: { text: "MyReferenceInterface" }
         }, {
+            declarationType: "var",
             name: "f",
             typeExpression: { text: "typeof MyReferenceFunction" },
             defaultExpression: { text: "MyReferenceFunction" }
         }, {
+            declarationType: "var",
             name: "e",
             typeExpression: { text: "MyReferenceEnum" }
         }]
