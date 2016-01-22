@@ -171,6 +171,6 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 	"variables": []
 }
 ```
-## Library Use Example
+### Real Life Example
 
 * [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code.
