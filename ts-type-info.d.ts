@@ -111,6 +111,7 @@ declare module "ts-type-info" {
         isExported: boolean;
         typeExpression: TypeExpression;
         defaultExpression: Expression;
+        declarationType: string;
     }
 
     export class TypeParameterDefinition {

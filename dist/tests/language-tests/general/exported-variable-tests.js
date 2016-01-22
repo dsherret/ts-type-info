@@ -7,6 +7,7 @@ describe("variable tests", function () {
         namespaces: [{
                 name: "\"definition-var\"",
                 variables: [{
+                        declarationType: "let",
                         name: "myVariable",
                         typeExpression: { text: "string[]" },
                         isExported: true

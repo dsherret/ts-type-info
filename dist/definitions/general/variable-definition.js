@@ -1,3 +1,4 @@
+var ts = require("typescript");
 var utils_1 = require("./../../utils");
 var named_definition_1 = require("./../base/named-definition");
 var type_expressioned_definition_1 = require("./../base/type-expressioned-definition");
@@ -9,7 +10,14 @@ var VariableDefinition = (function () {
         this.fillIsExported(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
+        this.fillDeclarationType(typeChecker, symbol);
     }
+    VariableDefinition.prototype.fillDeclarationType = function (typeChecker, symbol) {
+        var flags = typeChecker.getDeclarationFromSymbol(symbol).parent.flags;
+        this.declarationType = 'var';
+        this.declarationType = flags & 16384 /* Let */ ? 'let' : this.declarationType;
+        this.declarationType = flags & 32768 /* Const */ ? 'const' : this.declarationType;
+    };
     return VariableDefinition;
 })();
 exports.VariableDefinition = VariableDefinition;

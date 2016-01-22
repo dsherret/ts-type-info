@@ -14,6 +14,7 @@ declare module "definition-var" {
         namespaces: [{
             name: `"definition-var"`,
             variables: [{
+                declarationType: "let",
                 name: "myVariable",
                 typeExpression: { text: "string[]" },
                 isExported: true
