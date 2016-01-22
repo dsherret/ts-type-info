@@ -32,7 +32,7 @@ export function getFileInfo(fileNames: string[], options?: Options): FileDefinit
             return baseName !== "lib.d.ts" && baseName !== "lib.es6.d.ts";
         })
         .map(file => {
-            typeChecker.setCurrentNode(file);
+            typeChecker.setCurrentSourceFile(file);
 
             return definitionCache.getFileDefinition(file);
         });

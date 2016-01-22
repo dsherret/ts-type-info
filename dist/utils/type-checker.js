@@ -7,8 +7,12 @@ var TypeChecker = (function () {
     TypeChecker.prototype.setTypeCache = function (typeCreator) {
         this.typeCreator = typeCreator;
     };
-    TypeChecker.prototype.setCurrentNode = function (node) {
-        this.currentNode = node;
+    TypeChecker.prototype.setCurrentSourceFile = function (node) {
+        this.currentSourceFile = node;
+    };
+    /* istanbul ignore next */
+    TypeChecker.prototype.getCurrentSourceFileForTesting = function () {
+        return this.currentSourceFile;
     };
     TypeChecker.prototype.getDeclarationFromSymbol = function (symbol) {
         if (symbol.valueDeclaration != null) {
@@ -44,7 +48,7 @@ var TypeChecker = (function () {
         }
     };
     TypeChecker.prototype.getExpressionFullText = function (expression) {
-        return (expression.getFullText(this.currentNode) || "").trim();
+        return (expression.getFullText(this.currentSourceFile) || "").trim();
     };
     TypeChecker.prototype.getExtendsTypeExpressions = function (symbol) {
         var _this = this;
@@ -131,13 +135,13 @@ var TypeChecker = (function () {
         return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
     };
     TypeChecker.prototype.getTypeExpressionOfSymbol = function (symbol) {
-        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentNode));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentSourceFile));
     };
     TypeChecker.prototype.getTypeExpressionFromTsType = function (tsType) {
         return this.typeCreator.get(tsType);
     };
     /* istanbul ignore next */
-    TypeChecker.prototype.getTypeCheckerForTesting = function () {
+    TypeChecker.prototype.getTsTypeCheckerForTesting = function () {
         // get the type checker for testing purposes
         return this.typeChecker;
     };
@@ -275,7 +279,7 @@ var TypeChecker = (function () {
         return this.symbolHasFlag(symbol, 262144 /* TypeParameter */);
     };
     TypeChecker.prototype.typeToString = function (tsType) {
-        return this.typeChecker.typeToString(tsType, this.currentNode, 2 /* UseTypeOfFunction */);
+        return this.typeChecker.typeToString(tsType, this.currentSourceFile, 2 /* UseTypeOfFunction */);
     };
     TypeChecker.prototype.symbolHasFlag = function (symbol, flag) {
         return (symbol.getFlags() & flag) !== 0;

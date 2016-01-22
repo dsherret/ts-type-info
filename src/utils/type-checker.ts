@@ -5,7 +5,7 @@ import {TypeExpressionCache} from "./../utils";
 
 export class TypeChecker {
     private typeCreator: TypeExpressionCache;
-    private currentNode: ts.SourceFile;
+    private currentSourceFile: ts.SourceFile;
 
     constructor(private typeChecker: ts.TypeChecker) {
     }
@@ -14,8 +14,13 @@ export class TypeChecker {
         this.typeCreator = typeCreator;
     }
 
-    setCurrentNode(node: ts.SourceFile) {
-        this.currentNode = node;
+    setCurrentSourceFile(node: ts.SourceFile) {
+        this.currentSourceFile = node;
+    }
+
+    /* istanbul ignore next */
+    getCurrentSourceFileForTesting() {
+        return this.currentSourceFile;
     }
 
     getDeclarationFromSymbol(symbol: ts.Symbol) {
@@ -58,7 +63,7 @@ export class TypeChecker {
     }
 
     getExpressionFullText(expression: ts.Expression) {
-        return (expression.getFullText(this.currentNode) || "").trim();
+        return (expression.getFullText(this.currentSourceFile) || "").trim();
     }
 
     getExtendsTypeExpressions(symbol: ts.Symbol) {
@@ -167,7 +172,7 @@ export class TypeChecker {
     }
 
     getTypeExpressionOfSymbol(symbol: ts.Symbol) {
-        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentNode));
+        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentSourceFile));
     }
 
     getTypeExpressionFromTsType(tsType: ts.Type) {
@@ -175,7 +180,7 @@ export class TypeChecker {
     }
 
     /* istanbul ignore next */
-    getTypeCheckerForTesting() {
+    getTsTypeCheckerForTesting() {
         // get the type checker for testing purposes
         return this.typeChecker;
     }
@@ -342,7 +347,7 @@ export class TypeChecker {
     }
 
     typeToString(tsType: ts.Type) {
-        return this.typeChecker.typeToString(tsType, this.currentNode, ts.TypeFormatFlags.UseTypeOfFunction);
+        return this.typeChecker.typeToString(tsType, this.currentSourceFile, ts.TypeFormatFlags.UseTypeOfFunction);
     }
 
     private symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {

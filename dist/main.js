@@ -27,7 +27,7 @@ function getFileInfo(fileNames, options) {
         return baseName !== "lib.d.ts" && baseName !== "lib.es6.d.ts";
     })
         .map(function (file) {
-        typeChecker.setCurrentNode(file);
+        typeChecker.setCurrentSourceFile(file);
         return definitionCache.getFileDefinition(file);
     });
     typeExpressionCache.fillAllCachedTypesWithDefinitions(definitionCache);
