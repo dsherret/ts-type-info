@@ -11,10 +11,6 @@ npm install ts-type-info --save-dev
 tsd link
 ```
 
-## Library Use Example
-
-* Automatically generating client side code to communicate with the server from the server side code (https://github.com/dsherret/server-bridge)
-
 ## Example
 
 ### Input
@@ -175,3 +171,6 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 	"variables": []
 }
 ```
+## Library Use Example
+
+* [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code.
