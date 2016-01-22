@@ -6,7 +6,6 @@ import {TypeExpressionedDefinition} from "./../base/type-expressioned-definition
 import {ExportableDefinition} from "./../base/exportable-definition";
 import {DefaultExpressionedDefinition} from "./../base/default-expressioned-definition";
 import {Expression, TypeExpression} from "./../../expressions";
-import {type} from "os";
 
 export class VariableDefinition implements INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
