@@ -4,7 +4,6 @@ export * from "./base/run-default-expressioned-definition-tests";
 export * from "./base/run-exportable-definition-tests";
 export * from "./base/run-moduled-definition-tests";
 export * from "./base/run-named-definition-tests";
-export * from "./base/run-scoped-definition-tests";
 export * from "./base/run-type-expressioned-definition-tests";
 export * from "./base/run-type-parametered-definition-tests";
 export * from "./base/ensure-definition-not-null";

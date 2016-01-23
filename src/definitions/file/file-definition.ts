@@ -6,7 +6,7 @@ import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
 import {FunctionDefinition} from "./../function";
-import {VariableDefinition} from "./../general";
+import {VariableDefinition} from "./../variable";
 import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
 

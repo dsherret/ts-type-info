@@ -27,10 +27,6 @@ declare module "ts-type-info" {
         defaultExpression: Expression;
     }
 
-    export interface IScopedDefinition {
-        scope: Scope;
-    }
-
     export interface IDecoratableDefinition {
         decorators: DecoratorDefinition[];
     }
@@ -63,6 +59,10 @@ declare module "ts-type-info" {
         returnTypeExpression: TypeExpression;
     }
 
+    export interface IScopedDefinition {
+        scope: Scope;
+    }
+
     export class NamedDefinition {
         name: string;
     }
@@ -73,10 +73,6 @@ declare module "ts-type-info" {
 
     export class DefaultExpressionedDefinition {
         defaultExpression: Expression;
-    }
-
-    export class ScopedDefinition {
-        scope: Scope;
     }
 
     export class DecoratableDefinition {
@@ -104,14 +100,6 @@ declare module "ts-type-info" {
 
     export class TypeParameteredDefinition {
         typeParameters: TypeParameterDefinition[];
-    }
-
-    export class VariableDefinition {
-        name: string;
-        isExported: boolean;
-        typeExpression: TypeExpression;
-        defaultExpression: Expression;
-        declarationType: string;
     }
 
     export class TypeParameterDefinition {
@@ -172,6 +160,10 @@ declare module "ts-type-info" {
 
     export class BaseClassPropertyDefinition extends ObjectPropertyDefinition {
         decorators: DecoratorDefinition[];
+        scope: Scope;
+    }
+
+    export class ScopedDefinition {
         scope: Scope;
     }
 
@@ -277,6 +269,14 @@ declare module "ts-type-info" {
         definition: IBaseNamedDefinition & IExportableDefinition;
     }
 
+    export class VariableDefinition {
+        declarationType: VariableDeclarationType;
+        name: string;
+        isExported: boolean;
+        typeExpression: TypeExpression;
+        defaultExpression: Expression;
+    }
+
     export class Expression {
         text: string;
     }
@@ -298,6 +298,12 @@ declare module "ts-type-info" {
         public = 0,
         protected = 1,
         private = 2
+    }
+
+    export enum VariableDeclarationType {
+        Var = 0,
+        Let = 1,
+        Const = 2
     }
 
     export function getFileInfo(fileNames: string[], options?: Options): FileDefinition[];

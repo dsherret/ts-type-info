@@ -3,6 +3,7 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var scoped_definition_1 = require("./scoped-definition");
 var utils_1 = require("./../../../utils");
 var base_1 = require("./../../base");
 var general_1 = require("./../../general");
@@ -16,6 +17,6 @@ var BaseClassPropertyDefinition = (function (_super) {
     return BaseClassPropertyDefinition;
 })(general_1.ObjectPropertyDefinition);
 exports.BaseClassPropertyDefinition = BaseClassPropertyDefinition;
-utils_1.applyMixins(BaseClassPropertyDefinition, [base_1.DecoratableDefinition, base_1.ScopedDefinition]);
+utils_1.applyMixins(BaseClassPropertyDefinition, [base_1.DecoratableDefinition, scoped_definition_1.ScopedDefinition]);
 
 //# sourceMappingURL=base-class-property-definition.js.map

@@ -4,7 +4,7 @@ var interface_1 = require("./../interface");
 var function_1 = require("./../function");
 var enum_1 = require("./../enum");
 var class_1 = require("./../class");
-var general_1 = require("./../general");
+var variable_1 = require("./../variable");
 function runModuledDefinitionTests(definition, expected) {
     expected.namespaces = expected.namespaces || [];
     expected.classes = expected.classes || [];
@@ -57,7 +57,7 @@ function runModuledDefinitionTests(definition, expected) {
             assert.equal(definition.variables.length, expected.variables.length);
         });
         expected.variables.forEach(function (variableStructure, i) {
-            general_1.runVariableDefinitionTests(definition.variables[i], variableStructure);
+            variable_1.runVariableDefinitionTests(definition.variables[i], variableStructure);
         });
     });
 }

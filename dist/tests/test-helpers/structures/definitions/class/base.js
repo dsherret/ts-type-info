@@ -3,5 +3,6 @@ function __export(m) {
 }
 __export(require("./base/base-class-method-structure"));
 __export(require("./base/base-class-property-structure"));
+__export(require("./base/scoped-structure"));
 
 //# sourceMappingURL=base.js.map

@@ -1,6 +1,7 @@
 ﻿import * as path from "path";
 import {getFileInfo} from "./../../../main";
 import {runFileDefinitionTests} from "./../../test-helpers";
+import {VariableDeclarationType} from "./../../../definitions";
 
 // See Issue #23
 describe("multiple file definition tests", () => {
@@ -11,20 +12,20 @@ describe("multiple file definition tests", () => {
 
     runFileDefinitionTests(mainFileDef, {
         variables: [{
-            declarationType: "var",
+            declarationType: VariableDeclarationType.Var,
             name: "c",
             typeExpression: { text: "MyReferenceClass" }
         }, {
-            declarationType: "var",
+            declarationType: VariableDeclarationType.Var,
             name: "i",
             typeExpression: { text: "MyReferenceInterface" }
         }, {
-            declarationType: "var",
+            declarationType: VariableDeclarationType.Var,
             name: "f",
             typeExpression: { text: "typeof MyReferenceFunction" },
             defaultExpression: { text: "MyReferenceFunction" }
         }, {
-            declarationType: "var",
+            declarationType: VariableDeclarationType.Var,
             name: "e",
             typeExpression: { text: "MyReferenceEnum" }
         }]

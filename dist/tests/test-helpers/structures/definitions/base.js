@@ -6,7 +6,6 @@ __export(require("./base/default-expressioned-structure"));
 __export(require("./base/decoratable-structure"));
 __export(require("./base/exportable-structure"));
 __export(require("./base/moduled-structure"));
-__export(require("./base/scoped-structure"));
 __export(require("./base/type-expressioned-structure"));
 __export(require("./base/base-property-structure"));
 __export(require("./base/type-parametered-structure"));

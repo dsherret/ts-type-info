@@ -1,5 +1,5 @@
 var main_1 = require("./../../../main");
-var scope_1 = require("./../../../scope");
+var definitions_1 = require("./../../../definitions");
 var test_helpers_1 = require("./../../test-helpers");
 describe("class property tests", function () {
     var code = "\nclass MyClass {\n    myString: string;\n    myImplicit = 4;\n    myAny;\n    myOptional?: string;\n\n    public myExplicitPublic;\n    protected myProtected;\n    private myPrivate;\n\n    get myGetAccessor() {\n        return \"\";\n    }\n\n    get myGetAndSetAccessor() {\n        return \"\";\n    }\n    set myGetAndSetAccessor(val: string) {\n    }\n}";
@@ -24,15 +24,15 @@ describe("class property tests", function () {
                     }, {
                         name: "myExplicitPublic",
                         typeExpression: { text: "any" },
-                        scope: scope_1.Scope.public
+                        scope: definitions_1.Scope.public
                     }, {
                         name: "myProtected",
                         typeExpression: { text: "any" },
-                        scope: scope_1.Scope.protected
+                        scope: definitions_1.Scope.protected
                     }, {
                         name: "myPrivate",
                         typeExpression: { text: "any" },
-                        scope: scope_1.Scope.private
+                        scope: definitions_1.Scope.private
                     }, {
                         name: "myGetAccessor",
                         typeExpression: { text: "string" },

@@ -5,7 +5,7 @@ import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
 import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
-import {VariableDefinition} from "./../general";
+import {VariableDefinition} from "./../variable";
 
 export interface IModuledDefinition {
     namespaces: NamespaceDefinition[];

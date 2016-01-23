@@ -7,7 +7,6 @@ __export(require("./base/run-default-expressioned-definition-tests"));
 __export(require("./base/run-exportable-definition-tests"));
 __export(require("./base/run-moduled-definition-tests"));
 __export(require("./base/run-named-definition-tests"));
-__export(require("./base/run-scoped-definition-tests"));
 __export(require("./base/run-type-expressioned-definition-tests"));
 __export(require("./base/run-type-parametered-definition-tests"));
 __export(require("./base/ensure-definition-not-null"));

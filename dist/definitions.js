@@ -9,5 +9,6 @@ __export(require("./definitions/interface"));
 __export(require("./definitions/enum"));
 __export(require("./definitions/namespace"));
 __export(require("./definitions/file"));
+__export(require("./definitions/variable"));
 
 //# sourceMappingURL=definitions.js.map

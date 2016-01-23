@@ -9,5 +9,6 @@ __export(require("./class/class-property-definition"));
 __export(require("./class/constructor-definition"));
 __export(require("./class/class-static-method-definition"));
 __export(require("./class/class-static-property-definition"));
+__export(require("./class/scope"));
 
 //# sourceMappingURL=class.js.map

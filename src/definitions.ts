@@ -6,3 +6,4 @@ export * from "./definitions/interface";
 export * from "./definitions/enum";
 export * from "./definitions/namespace";
 export * from "./definitions/file";
+export * from "./definitions/variable";

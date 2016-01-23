@@ -1,9 +1,10 @@
 import * as ts from "typescript";
-import {Scope} from "./../../../scope";
+import {Scope} from "./../scope";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {DecoratorDefinition} from "./../../../definitions";
 import {BaseFunctionDefinition} from "./../../function";
-import {IDecoratableDefinition, DecoratableDefinition, IScopedDefinition, ScopedDefinition} from "./../../base";
+import {IDecoratableDefinition, DecoratableDefinition} from "./../../base";
+import {IScopedDefinition, ScopedDefinition} from "./scoped-definition";
 import {ClassMethodParameterDefinition} from "./../class-method-parameter-definition";
 
 export class BaseClassMethodDefinition extends BaseFunctionDefinition<ClassMethodParameterDefinition> implements IDecoratableDefinition, IScopedDefinition {

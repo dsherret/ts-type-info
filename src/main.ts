@@ -9,7 +9,6 @@ import {Options, CompilerOptions} from "./options";
 export * from "./options";
 export * from "./definitions";
 export * from "./expressions";
-export * from "./scope";
 
 export function getFileInfo(fileNames: string[], options?: Options): FileDefinition[] {
     verifyArray(fileNames);

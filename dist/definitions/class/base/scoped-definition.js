@@ -1,5 +1,5 @@
 var ts = require("typescript");
-var scope_1 = require("./../../scope");
+var scope_1 = require("./../scope");
 var ScopedDefinition = (function () {
     /* istanbul ignore next */ function ScopedDefinition() {
     }

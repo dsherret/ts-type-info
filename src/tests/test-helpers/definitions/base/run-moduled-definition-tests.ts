@@ -5,7 +5,7 @@ import {runInterfaceDefinitionTests} from "./../interface";
 import {runFunctionDefinitionTests} from "./../function";
 import {runEnumDefinitionTests} from "./../enum";
 import {runClassDefinitionTests} from "./../class";
-import {runVariableDefinitionTests} from "./../general";
+import {runVariableDefinitionTests} from "./../variable";
 import {ModuledStructure} from "./../../structures";
 
 export function runModuledDefinitionTests(definition: IModuledDefinition, expected: ModuledStructure) {

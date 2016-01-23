@@ -1,5 +1,6 @@
 ﻿import {getStringInfo} from "./../../../main";
 import {runFileDefinitionTests} from "./../../test-helpers";
+import {VariableDeclarationType} from "./../../../definitions";
 
 describe("variable tests", () => {
     const code = `
@@ -13,20 +14,20 @@ const myConst: number;
 
     runFileDefinitionTests(def, {
         variables: [{
-            declarationType: "var",
+            declarationType: VariableDeclarationType.Var,
             name: "myExplicitTypeVar",
             typeExpression: { text: "number" }
         }, {
-            declarationType: "var",
+            declarationType: VariableDeclarationType.Var,
             name: "myImplicitTypeVar",
             typeExpression: { text: "string" },
             defaultExpression: { text: `"my string"` }
         }, {
-            declarationType: "let",
+            declarationType: VariableDeclarationType.Let,
             name: "myLet",
             typeExpression: { text: "string" }
         }, {
-            declarationType: "const",
+            declarationType: VariableDeclarationType.Const,
             name: "myConst",
             typeExpression: { text: "number" }
         }]

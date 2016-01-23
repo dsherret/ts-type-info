@@ -9,7 +9,6 @@ var utils_1 = require("./utils");
 __export(require("./options"));
 __export(require("./definitions"));
 __export(require("./expressions"));
-__export(require("./scope"));
 function getFileInfo(fileNames, options) {
     verifyArray(fileNames);
     options = options || {};

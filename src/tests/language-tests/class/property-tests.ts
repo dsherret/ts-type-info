@@ -1,5 +1,5 @@
 import {getStringInfo} from "./../../../main";
-import {Scope} from "./../../../scope";
+import {Scope} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../test-helpers";
 
 describe("class property tests", () => {

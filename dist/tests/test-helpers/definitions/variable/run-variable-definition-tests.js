@@ -1,4 +1,5 @@
 var assert = require("assert");
+var definitions_1 = require("./../../../../definitions");
 var base_1 = require("./../base");
 function runVariableDefinitionTests(definition, structure) {
     describe("variable " + structure.name, function () {
@@ -13,7 +14,7 @@ function runVariableDefinitionTests(definition, structure) {
 }
 exports.runVariableDefinitionTests = runVariableDefinitionTests;
 function runDeclarationTypeTests(definition, structure) {
-    it("should have a declaration type " + structure.declarationType, function () {
+    it("should have declaration type " + definitions_1.VariableDeclarationType[structure.declarationType], function () {
         assert.equal(definition.declarationType, structure.declarationType);
     });
 }

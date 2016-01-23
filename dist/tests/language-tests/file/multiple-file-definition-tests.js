@@ -1,6 +1,7 @@
 var path = require("path");
 var main_1 = require("./../../../main");
 var test_helpers_1 = require("./../../test-helpers");
+var definitions_1 = require("./../../../definitions");
 // See Issue #23
 describe("multiple file definition tests", function () {
     var fileName = path.join(__dirname, "../../../../src/tests/language-tests/file/test-files/reference/main.ts");
@@ -9,20 +10,20 @@ describe("multiple file definition tests", function () {
     var referenceFileDef = fileDefs.filter(function (def) { return /reference-structures/.test(def.fileName); })[0];
     test_helpers_1.runFileDefinitionTests(mainFileDef, {
         variables: [{
-                declarationType: "var",
+                declarationType: definitions_1.VariableDeclarationType.Var,
                 name: "c",
                 typeExpression: { text: "MyReferenceClass" }
             }, {
-                declarationType: "var",
+                declarationType: definitions_1.VariableDeclarationType.Var,
                 name: "i",
                 typeExpression: { text: "MyReferenceInterface" }
             }, {
-                declarationType: "var",
+                declarationType: definitions_1.VariableDeclarationType.Var,
                 name: "f",
                 typeExpression: { text: "typeof MyReferenceFunction" },
                 defaultExpression: { text: "MyReferenceFunction" }
             }, {
-                declarationType: "var",
+                declarationType: definitions_1.VariableDeclarationType.Var,
                 name: "e",
                 typeExpression: { text: "MyReferenceEnum" }
             }]

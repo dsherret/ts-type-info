@@ -1,5 +1,5 @@
 var main_1 = require("./../../../main");
-var scope_1 = require("./../../../scope");
+var definitions_1 = require("./../../../definitions");
 var test_helpers_1 = require("./../../test-helpers");
 describe("class static property tests", function () {
     var code = "\nclass MyClass {\n    static myString: string;\n    static myImplicit = 4;\n    static myAny;\n    static myOptional?: string;\n\n    public static myExplicitPublic;\n    protected static myProtected;\n    private static myPrivate;\n}";
@@ -24,15 +24,15 @@ describe("class static property tests", function () {
                     }, {
                         name: "myExplicitPublic",
                         typeExpression: { text: "any" },
-                        scope: scope_1.Scope.public
+                        scope: definitions_1.Scope.public
                     }, {
                         name: "myProtected",
                         typeExpression: { text: "any" },
-                        scope: scope_1.Scope.protected
+                        scope: definitions_1.Scope.protected
                     }, {
                         name: "myPrivate",
                         typeExpression: { text: "any" },
-                        scope: scope_1.Scope.private
+                        scope: definitions_1.Scope.private
                     }]
             }]
     });

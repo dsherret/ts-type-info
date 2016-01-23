@@ -4,7 +4,6 @@ function __export(m) {
 __export(require("./base/named-definition"));
 __export(require("./base/type-expressioned-definition"));
 __export(require("./base/default-expressioned-definition"));
-__export(require("./base/scoped-definition"));
 __export(require("./base/decoratable-definition"));
 __export(require("./base/exportable-definition"));
 __export(require("./base/moduled-definition"));

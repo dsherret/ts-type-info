@@ -6,6 +6,7 @@ var __extends = (this && this.__extends)/* istanbul ignore next */ || function (
 var utils_1 = require("./../../../utils");
 var function_1 = require("./../../function");
 var base_1 = require("./../../base");
+var scoped_definition_1 = require("./scoped-definition");
 var class_method_parameter_definition_1 = require("./../class-method-parameter-definition");
 var BaseClassMethodDefinition = (function (_super) {
     __extends(BaseClassMethodDefinition, _super);
@@ -17,6 +18,6 @@ var BaseClassMethodDefinition = (function (_super) {
     return BaseClassMethodDefinition;
 })(function_1.BaseFunctionDefinition);
 exports.BaseClassMethodDefinition = BaseClassMethodDefinition;
-utils_1.applyMixins(BaseClassMethodDefinition, [base_1.DecoratableDefinition, base_1.ScopedDefinition]);
+utils_1.applyMixins(BaseClassMethodDefinition, [base_1.DecoratableDefinition, scoped_definition_1.ScopedDefinition]);
 
 //# sourceMappingURL=base-class-method-definition.js.map

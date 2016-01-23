@@ -1,19 +1,33 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition} from "./../base";
-import {NamedDefinition} from "./../base/named-definition";
-import {TypeExpressionedDefinition} from "./../base/type-expressioned-definition";
-import {ExportableDefinition} from "./../base/exportable-definition";
-import {DefaultExpressionedDefinition} from "./../base/default-expressioned-definition";
+import {INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition,
+        NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
+import {VariableDeclarationType} from "./variable-declaration-type";
 
 export class VariableDefinition implements INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
+    declarationType: VariableDeclarationType;
+
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
+    }
+
+    fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        const nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).parent.flags;
+
+        if (nodeFlags & ts.NodeFlags.Let) {
+            this.declarationType = VariableDeclarationType.Let;
+        }
+        else if (nodeFlags & ts.NodeFlags.Const) {
+            this.declarationType = VariableDeclarationType.Const;
+        }
+        else {
+            this.declarationType = VariableDeclarationType.Var;
+        }
     }
 
     // NamedDefinition
@@ -28,16 +42,6 @@ export class VariableDefinition implements INamedDefinition, IExportableDefiniti
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
     fillDefaultExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    // DeclarationTypeDefinition
-    declarationType: string
-    fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {
-
-        const flags = typeChecker.getDeclarationFromSymbol(symbol).parent.flags
-
-        this.declarationType = 'var'
-        this.declarationType = flags & ts.NodeFlags.Let ? 'let' : this.declarationType
-        this.declarationType = flags & ts.NodeFlags.Const ? 'const' : this.declarationType
-    }
 }
 
 applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);

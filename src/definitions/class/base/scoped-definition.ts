@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {Scope} from "./../../scope";
+import {Scope} from "./../scope";
 
 export interface IScopedDefinition {
     scope: Scope;
