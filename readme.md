@@ -85,6 +85,7 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 	}],
 	"classes": [{
 		"name": "MyClass",
+		"isAbstract": false,
 		"isExported": true,
 		"typeParameters": [],
 		"extendsTypeExpressions": [],

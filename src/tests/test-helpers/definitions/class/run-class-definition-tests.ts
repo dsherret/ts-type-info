@@ -23,6 +23,10 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
     runTypeParameteredDefinitionTests(definition, structure);
     runConstructorDefinitionTests(definition.constructorDef, structure.constructorDef);
 
+    it(`should ${structure.isAbstract ? "be" : "not be"} abstract.`, () => {
+        assert.equal(definition.isAbstract, structure.isAbstract || false);
+    });
+
     describe("methods", () => {
         it("should have the expected number of methods", () => {
             assert.equal(definition.methods.length, structure.methods.length);

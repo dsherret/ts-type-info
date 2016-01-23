@@ -11,6 +11,7 @@ import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDe
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 
 export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition {
+    isAbstract: boolean;
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
     staticMethods: ClassStaticMethodDefinition[] = [];
@@ -26,8 +27,15 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
 
         this.fillName(symbol);
         this.fillDecorators(typeChecker, symbol);
+        this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
+    }
+
+    private fillIsAbstract(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        const nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).flags;
+
+        this.isAbstract = (nodeFlags & ts.NodeFlags.Abstract) === ts.NodeFlags.Abstract;
     }
 
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {

@@ -7,6 +7,7 @@ import {ConstructorStructure} from "./constructor-structure";
 import {TypeExpressionStructure} from "./../../expressions";
 
 export interface ClassStructure extends NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure {
+    isAbstract?: boolean;
     methods?: ClassMethodStructure[];
     properties?: ClassPropertyStructure[];
     staticMethods?: ClassStaticMethodStructure[];

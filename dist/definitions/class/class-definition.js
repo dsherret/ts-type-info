@@ -1,3 +1,4 @@
+var ts = require("typescript");
 var constructor_definition_1 = require("./constructor-definition");
 var class_method_definition_1 = require("./class-method-definition");
 var class_property_definition_1 = require("./class-property-definition");
@@ -17,9 +18,14 @@ var ClassDefinition = (function () {
         this.typeParameters = [];
         this.fillName(symbol);
         this.fillDecorators(typeChecker, symbol);
+        this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
     }
+    ClassDefinition.prototype.fillIsAbstract = function (typeChecker, symbol) {
+        var nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).flags;
+        this.isAbstract = (nodeFlags & 256 /* Abstract */) === 256 /* Abstract */;
+    };
     ClassDefinition.prototype.fillMembers = function (typeChecker, symbol) {
         var _this = this;
         this.typeParameters = [];

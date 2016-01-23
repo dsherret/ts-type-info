@@ -168,6 +168,7 @@ declare module "ts-type-info" {
     }
 
     export class ClassDefinition {
+        isAbstract: boolean;
         methods: ClassMethodDefinition[];
         properties: ClassPropertyDefinition[];
         staticMethods: ClassStaticMethodDefinition[];
