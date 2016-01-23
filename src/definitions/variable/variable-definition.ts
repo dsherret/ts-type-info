@@ -16,7 +16,7 @@ export class VariableDefinition implements INamedDefinition, IExportableDefiniti
         this.fillDeclarationType(typeChecker, symbol);
     }
 
-    fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    private fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {
         const nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).parent.flags;
 
         if (nodeFlags & ts.NodeFlags.Let) {
