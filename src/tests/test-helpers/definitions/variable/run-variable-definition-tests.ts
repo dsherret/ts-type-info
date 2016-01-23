@@ -11,13 +11,10 @@ export function runVariableDefinitionTests(definition: VariableDefinition, struc
             runExportableDefinitionTests(definition, structure);
             runTypeExpressionedDefinitionTests(definition, structure);
             runDefaultExpressionedDefinitionTests(definition, structure);
-            runDeclarationTypeTests(definition, structure);
-        });
-    });
-}
 
-function runDeclarationTypeTests(definition: VariableDefinition, structure: VariableStructure) {
-    it(`should have declaration type ${VariableDeclarationType[structure.declarationType]}`, () => {
-        assert.equal(definition.declarationType, structure.declarationType);
+            it(`should have declaration type ${VariableDeclarationType[structure.declarationType]}`, () => {
+                assert.equal(definition.declarationType, structure.declarationType);
+            });
+        });
     });
 }

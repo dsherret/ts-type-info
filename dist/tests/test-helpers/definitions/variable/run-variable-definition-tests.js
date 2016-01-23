@@ -8,15 +8,12 @@ function runVariableDefinitionTests(definition, structure) {
             base_1.runExportableDefinitionTests(definition, structure);
             base_1.runTypeExpressionedDefinitionTests(definition, structure);
             base_1.runDefaultExpressionedDefinitionTests(definition, structure);
-            runDeclarationTypeTests(definition, structure);
+            it("should have declaration type " + definitions_1.VariableDeclarationType[structure.declarationType], function () {
+                assert.equal(definition.declarationType, structure.declarationType);
+            });
         });
     });
 }
 exports.runVariableDefinitionTests = runVariableDefinitionTests;
-function runDeclarationTypeTests(definition, structure) {
-    it("should have declaration type " + definitions_1.VariableDeclarationType[structure.declarationType], function () {
-        assert.equal(definition.declarationType, structure.declarationType);
-    });
-}
 
 //# sourceMappingURL=run-variable-definition-tests.js.map
