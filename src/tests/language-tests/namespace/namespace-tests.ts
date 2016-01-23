@@ -1,5 +1,6 @@
 ﻿import {getStringInfo} from "./../../../main";
 import {runFileDefinitionTests} from "./../../test-helpers";
+import {NamespaceDeclarationType} from "./../../../definitions";
 
 describe("namespace tests", () => {
     const code = `
@@ -31,6 +32,7 @@ export namespace MyExportedNamespace {
     runFileDefinitionTests(def, {
         namespaces: [{
             name: "MyNamespace",
+            declarationType: NamespaceDeclarationType.Namespace,
             classes: [
                 { name: "MyModuleClass" },
                 { name: "MyExportedModuleClass", isExported: true }
@@ -48,17 +50,21 @@ export namespace MyExportedNamespace {
                 { name: "MyExportedModuleInterface", isExported: true }
             ],
             namespaces: [{
-                name: "MyInnerModule"
+                name: "MyInnerModule",
+                declarationType: NamespaceDeclarationType.Module
             }, {
                 name: "MyInnerExportedModule",
+                declarationType: NamespaceDeclarationType.Module,
                 isExported: true,
                 classes: [
                     { name: "MyInnerModuleClass", isExported: true }
                 ]
             }, {
-                name: "MyInnerNamespace"
+                name: "MyInnerNamespace",
+                declarationType: NamespaceDeclarationType.Namespace
             }, {
                 name: "MyInnerExportedNamespace",
+                declarationType: NamespaceDeclarationType.Namespace,
                 isExported: true,
                 classes: [
                     { name: "MyInnerNamespaceClass", isExported: true }
@@ -66,6 +72,7 @@ export namespace MyExportedNamespace {
             }]
         }, {
             name: "MyExportedNamespace",
+            declarationType: NamespaceDeclarationType.Namespace,
             isExported: true
         }]
     });

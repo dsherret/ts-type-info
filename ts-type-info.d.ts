@@ -236,6 +236,7 @@ declare module "ts-type-info" {
     }
 
     export class NamespaceDefinition {
+        declarationType: NamespaceDeclarationType;
         name: string;
         namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
@@ -298,6 +299,11 @@ declare module "ts-type-info" {
         public = 0,
         protected = 1,
         private = 2
+    }
+
+    export enum NamespaceDeclarationType {
+        Namespace = 0,
+        Module = 1
     }
 
     export enum VariableDeclarationType {

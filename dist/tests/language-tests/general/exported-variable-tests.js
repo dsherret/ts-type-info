@@ -7,6 +7,7 @@ describe("variable tests", function () {
     test_helpers_1.runFileDefinitionTests(def, {
         namespaces: [{
                 name: "\"definition-var\"",
+                declarationType: definitions_1.NamespaceDeclarationType.Module,
                 variables: [{
                         declarationType: definitions_1.VariableDeclarationType.Let,
                         name: "myVariable",

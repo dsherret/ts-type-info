@@ -6,11 +6,26 @@ import {EnumDefinition} from "./../enum";
 import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
 import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
+import {NamespaceDeclarationType} from "./namespace-declaration-type";
 
 export class NamespaceDefinition implements INamedDefinition, IExportableDefinition, IModuledDefinition {
+    declarationType: NamespaceDeclarationType;
+
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
+        this.fillDeclarationType(typeChecker, symbol);
+    }
+
+    private fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        const nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).flags;
+
+        if (nodeFlags & ts.NodeFlags.Namespace) {
+            this.declarationType = NamespaceDeclarationType.Namespace;
+        }
+        else {
+            this.declarationType = NamespaceDeclarationType.Module;
+        }
     }
 
     // NamedDefinition

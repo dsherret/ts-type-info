@@ -1,6 +1,6 @@
 ﻿import {getStringInfo} from "./../../../main";
 import {runFileDefinitionTests} from "./../../test-helpers";
-import {VariableDeclarationType} from "./../../../definitions";
+import {VariableDeclarationType, NamespaceDeclarationType} from "./../../../definitions";
 
 describe("variable tests", () => {
     const code = `
@@ -14,6 +14,7 @@ declare module "definition-var" {
     runFileDefinitionTests(def, {
         namespaces: [{
             name: `"definition-var"`,
+            declarationType: NamespaceDeclarationType.Module,
             variables: [{
                 declarationType: VariableDeclarationType.Let,
                 name: "myVariable",
