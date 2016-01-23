@@ -15,6 +15,7 @@ declare module "definition-var" {
         namespaces: [{
             name: `"definition-var"`,
             declarationType: NamespaceDeclarationType.Module,
+            isAmbient: true,
             variables: [{
                 declarationType: VariableDeclarationType.Let,
                 name: "myVariable",

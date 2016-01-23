@@ -32,16 +32,20 @@ describe("multiple file definition tests", () => {
     });
     runFileDefinitionTests(referenceFileDef, {
         classes: [{
-            name: "MyReferenceClass"
+            name: "MyReferenceClass",
+            isAmbient: true
         }],
         interfaces: [{
-            name: "MyReferenceInterface"
+            name: "MyReferenceInterface",
+            isAmbient: true
         }],
         enums: [{
-            name: "MyReferenceEnum"
+            name: "MyReferenceEnum",
+            isAmbient: true
         }],
         functions: [{
-            name: "MyReferenceFunction"
+            name: "MyReferenceFunction",
+            isAmbient: true
         }]
     });
 });

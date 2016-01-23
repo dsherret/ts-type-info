@@ -245,8 +245,9 @@ var TypeChecker = (function () {
         return this.symbolHasFlag(symbol, 16 /* Function */);
     };
     TypeChecker.prototype.isSymbolVariable = function (symbol) {
-        return this.symbolHasFlag(symbol, 2 /* BlockScopedVariable */) ||
-            this.symbolHasFlag(symbol, 3 /* Variable */);
+        return this.symbolHasFlag(symbol, 3 /* Variable */) ||
+            this.symbolHasFlag(symbol, 2 /* BlockScopedVariable */) ||
+            this.symbolHasFlag(symbol, 1 /* FunctionScopedVariable */);
     };
     TypeChecker.prototype.isSymbolInterface = function (symbol) {
         return this.symbolHasFlag(symbol, 64 /* Interface */);

@@ -64,7 +64,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
             }
         });
 
-        // variables
+        // variables (I don't think ts.SymbolFlags.FunctionScopedVariable is necessary here because a variable wouldn't be function on the file level)
         typeChecker.getSymbolsInScope(file, ts.SymbolFlags.BlockScopedVariable | ts.SymbolFlags.Variable).forEach((symbol) => {
             if (typeChecker.isSymbolInFile(symbol, file)) {
                 this.tryAddVariable(definitionCache, symbol);

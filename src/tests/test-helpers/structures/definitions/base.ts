@@ -1,4 +1,5 @@
 ﻿export * from "./base/named-structure";
+export * from "./base/ambientable-structure";
 export * from "./base/default-expressioned-structure";
 export * from "./base/decoratable-structure";
 export * from "./base/exportable-structure";

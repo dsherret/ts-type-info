@@ -1,6 +1,6 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
+import {INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
@@ -8,7 +8,7 @@ import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfacePropertyDefinition} from "./interface-property-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 
-export class InterfaceDefinition implements INamedDefinition, IExportableDefinition, ITypeParameteredDefinition {
+export class InterfaceDefinition implements INamedDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
@@ -18,6 +18,7 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
     }
 
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -54,6 +55,9 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     // TypeParameteredDefinition
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
-applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition]);
+applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

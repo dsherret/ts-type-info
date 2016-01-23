@@ -6,11 +6,11 @@ import {ClassStaticMethodDefinition} from "./class-static-method-definition";
 import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition,
+import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 
-export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition {
+export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     isAbstract: boolean;
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
@@ -28,6 +28,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
         this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
@@ -105,6 +106,9 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     // TypeParameteredDefinition
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
-applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition]);
+applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

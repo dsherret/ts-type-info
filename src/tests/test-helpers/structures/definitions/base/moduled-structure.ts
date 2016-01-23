@@ -3,7 +3,7 @@ import {ClassStructure} from "./../class";
 import {InterfaceStructure} from "./../interface";
 import {FunctionStructure} from "./../function";
 import {EnumStructure} from "./../enum";
-import {VariableStructure} from "./../general";
+import {VariableStructure} from "./../variable";
 
 export interface ModuledStructure {
     namespaces?: NamespaceStructure[];

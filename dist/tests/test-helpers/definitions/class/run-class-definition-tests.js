@@ -17,6 +17,7 @@ function runClassDefinitionTests(definition, structure) {
     base_1.runExportableDefinitionTests(definition, structure);
     base_1.runDecoratableDefinitionTests(definition, structure);
     base_1.runTypeParameteredDefinitionTests(definition, structure);
+    base_1.runAmbientableDefinitionTests(definition, structure);
     run_constructor_definition_tests_1.runConstructorDefinitionTests(definition.constructorDef, structure.constructorDef);
     it("should " + (structure.isAbstract ? "be" : "not be") + " abstract.", function () {
         assert.equal(definition.isAbstract, structure.isAbstract || false);

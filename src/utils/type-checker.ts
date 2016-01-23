@@ -303,8 +303,9 @@ export class TypeChecker {
     }
 
     isSymbolVariable(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.BlockScopedVariable) ||
-            this.symbolHasFlag(symbol, ts.SymbolFlags.Variable);
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.Variable) ||
+            this.symbolHasFlag(symbol, ts.SymbolFlags.BlockScopedVariable) ||
+            this.symbolHasFlag(symbol, ts.SymbolFlags.FunctionScopedVariable);
     }
 
     isSymbolInterface(symbol: ts.Symbol) {

@@ -1,5 +1,6 @@
 ﻿import * as ts from "typescript";
-import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition} from "./../base";
+import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
+    IAmbientableDefinition, AmbientableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -8,12 +9,13 @@ import {VariableDefinition} from "./../variable";
 import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 import {NamespaceDeclarationType} from "./namespace-declaration-type";
 
-export class NamespaceDefinition implements INamedDefinition, IExportableDefinition, IModuledDefinition {
+export class NamespaceDefinition implements INamedDefinition, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
     }
 
@@ -43,6 +45,9 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
-applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition]);
+applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

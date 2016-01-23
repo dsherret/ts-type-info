@@ -12,10 +12,11 @@ var FunctionDefinition = (function (_super) {
     function FunctionDefinition(typeChecker, symbol) {
         _super.call(this, parameter_definition_1.ParameterDefinition, typeChecker, symbol);
         this.fillIsExported(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
     }
     return FunctionDefinition;
 })(base_1.BaseFunctionDefinition);
 exports.FunctionDefinition = FunctionDefinition;
-utils_1.applyMixins(FunctionDefinition, [base_2.ExportableDefinition]);
+utils_1.applyMixins(FunctionDefinition, [base_2.ExportableDefinition, base_2.AmbientableDefinition]);
 
 //# sourceMappingURL=function-definition.js.map

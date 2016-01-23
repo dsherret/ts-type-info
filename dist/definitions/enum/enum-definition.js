@@ -6,6 +6,7 @@ var EnumDefinition = (function () {
         this.members = [];
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
     EnumDefinition.prototype.fillMembers = function (typeChecker, symbol) {
@@ -24,6 +25,6 @@ var EnumDefinition = (function () {
     return EnumDefinition;
 })();
 exports.EnumDefinition = EnumDefinition;
-utils_1.applyMixins(EnumDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition]);
+utils_1.applyMixins(EnumDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition, base_1.AmbientableDefinition]);
 
 //# sourceMappingURL=enum-definition.js.map

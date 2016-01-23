@@ -19,6 +19,7 @@ var ClassDefinition = (function () {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
         this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
@@ -80,6 +81,6 @@ var ClassDefinition = (function () {
     return ClassDefinition;
 })();
 exports.ClassDefinition = ClassDefinition;
-utils_1.applyMixins(ClassDefinition, [base_1.NamedDefinition, base_1.DecoratableDefinition, base_1.ExportableDefinition, base_1.TypeParameteredDefinition]);
+utils_1.applyMixins(ClassDefinition, [base_1.NamedDefinition, base_1.DecoratableDefinition, base_1.ExportableDefinition, base_1.TypeParameteredDefinition, base_1.AmbientableDefinition]);
 
 //# sourceMappingURL=class-definition.js.map

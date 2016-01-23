@@ -8,6 +8,7 @@ describe("variable tests", function () {
         namespaces: [{
                 name: "\"definition-var\"",
                 declarationType: definitions_1.NamespaceDeclarationType.Module,
+                isAmbient: true,
                 variables: [{
                         declarationType: definitions_1.VariableDeclarationType.Let,
                         name: "myVariable",

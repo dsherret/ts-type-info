@@ -8,6 +8,7 @@ var VariableDefinition = (function () {
         this.fillIsExported(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
     }
     VariableDefinition.prototype.fillDeclarationType = function (typeChecker, symbol) {
@@ -25,6 +26,6 @@ var VariableDefinition = (function () {
     return VariableDefinition;
 })();
 exports.VariableDefinition = VariableDefinition;
-utils_1.applyMixins(VariableDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition, base_1.TypeExpressionedDefinition, base_1.DefaultExpressionedDefinition]);
+utils_1.applyMixins(VariableDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition, base_1.TypeExpressionedDefinition, base_1.DefaultExpressionedDefinition, base_1.AmbientableDefinition]);
 
 //# sourceMappingURL=variable-definition.js.map

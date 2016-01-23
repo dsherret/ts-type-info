@@ -1,11 +1,11 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition,
+import {INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
         NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableDeclarationType} from "./variable-declaration-type";
 
-export class VariableDefinition implements INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
+export class VariableDefinition implements INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -13,6 +13,7 @@ export class VariableDefinition implements INamedDefinition, IExportableDefiniti
         this.fillIsExported(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
     }
 
@@ -42,6 +43,9 @@ export class VariableDefinition implements INamedDefinition, IExportableDefiniti
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
     fillDefaultExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
-applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);
+applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

@@ -14,6 +14,7 @@ var InterfaceDefinition = (function () {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
     }
     InterfaceDefinition.prototype.fillMembers = function (typeChecker, symbol) {
         var _this = this;
@@ -42,6 +43,6 @@ var InterfaceDefinition = (function () {
     return InterfaceDefinition;
 })();
 exports.InterfaceDefinition = InterfaceDefinition;
-utils_1.applyMixins(InterfaceDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition, base_1.TypeParameteredDefinition]);
+utils_1.applyMixins(InterfaceDefinition, [base_1.NamedDefinition, base_1.ExportableDefinition, base_1.TypeParameteredDefinition, base_1.AmbientableDefinition]);
 
 //# sourceMappingURL=interface-definition.js.map

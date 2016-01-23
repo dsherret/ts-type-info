@@ -2,14 +2,20 @@
 import {VariableStructure} from "./../../structures";
 import {VariableDefinition, VariableDeclarationType} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
-        runDefaultExpressionedDefinitionTests, ensureDefinitionNotNull} from "./../base";
+        runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+import {ensureNotNull} from "./../../ensure-not-null";
 
 export function runVariableDefinitionTests(definition: VariableDefinition, structure: VariableStructure) {
     describe(`variable ${structure.name}`, () => {
-        ensureDefinitionNotNull(definition, () => {
+        ensureNotNull(definition, () => {
+            if (structure.typeExpression == null) {
+                structure.typeExpression = { text: "any" };
+            }
+
             runNamedDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runTypeExpressionedDefinitionTests(definition, structure);
+            runAmbientableDefinitionTests(definition, structure);
             runDefaultExpressionedDefinitionTests(definition, structure);
 
             it(`should have declaration type ${VariableDeclarationType[structure.declarationType]}`, () => {

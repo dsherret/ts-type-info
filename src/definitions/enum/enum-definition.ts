@@ -1,15 +1,16 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {EnumMemberDefinition} from "./enum-member-definition";
-import {INamedDefinition, NamedDefinition,
+import {INamedDefinition, NamedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
 
-export class EnumDefinition implements INamedDefinition, IExportableDefinition {
+export class EnumDefinition implements INamedDefinition, IExportableDefinition, IAmbientableDefinition {
     members: EnumMemberDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
+        this.fillIsAmbient(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
 
@@ -33,6 +34,9 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition {
     // ExportableDefinition
     fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
-applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition]);
+applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition]);
