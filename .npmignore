@@ -10,3 +10,4 @@
 *.sln
 /coverage
 /.vs
+/ts-type-info.favdoc
