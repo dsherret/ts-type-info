@@ -1,5 +1,8 @@
 import * as ts from "typescript";
-import {KeyValueCache, TypeChecker, DefinitionCache} from "./../utils";
+import {KeyValueCache} from "./key-value-cache";
+import {TypeChecker} from "./type-checker";
+import {DefinitionCache} from "./definition-cache";
+import {tryGet} from "./try-get";
 import {TypeExpression, Type} from "./../expressions";
 
 export class TypeExpressionCache {
@@ -22,7 +25,7 @@ export class TypeExpressionCache {
             cache.add(typeExpression.text, typeExpression);
 
             types.forEach(t => {
-                typeExpression.addType(this.getType(t));
+                tryGet(name, () => this.getType(t), type => typeExpression.addType(type));
             });
         }
 

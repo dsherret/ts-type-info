@@ -1,7 +1,7 @@
 ﻿import * as ts from "typescript";
 import {CallSignatureDefinition, BasePropertyDefinition, IBaseNamedDefinition} from "./../definitions";
 import {TypeExpression} from "./type-expression";
-import {TypeChecker, TypeExpressionCache} from "./../utils";
+import {TypeChecker, TypeExpressionCache, tryGet} from "./../utils";
 
 export class Type {
     callSignatures: CallSignatureDefinition[];
@@ -44,21 +44,30 @@ export class Type {
     private fillProperties(typeChecker: TypeChecker, tsType: ts.Type) {
         const properties = tsType.getProperties();
 
-        this.properties = properties.filter(p => p.name !== "prototype").map(property => new BasePropertyDefinition(typeChecker, property));
+        this.properties = [];
+
+        properties.filter(p => p.name !== "prototype").forEach(property => {
+            tryGet(property, () => new BasePropertyDefinition(typeChecker, property), def => this.properties.push(def));
+        });
     }
 
     private fillCallSignatures(typeChecker: TypeChecker, tsType: ts.Type) {
-        this.callSignatures = tsType.getCallSignatures()
-                                           .map(callSignature => new CallSignatureDefinition(typeChecker, callSignature));
+        this.callSignatures = [];
+
+        tsType.getCallSignatures().forEach(callSignature => {
+            tryGet(this.text, () => new CallSignatureDefinition(typeChecker, callSignature), def => {
+                this.callSignatures.push(def);
+            });
+        });
     }
 
-    private fillTypeArguments(typeChecker: TypeChecker, typeCache: TypeExpressionCache, tsType: ts.Type) {
+    private fillTypeArguments(typeChecker: TypeChecker, typeExpressionCache: TypeExpressionCache, tsType: ts.Type) {
         const tsTypeArguments = (tsType as ts.TypeReference).typeArguments;
         const args: TypeExpression[] = [];
 
         if (tsTypeArguments != null) {
             tsTypeArguments.forEach(arg => {
-                args.push(typeCache.get(arg));
+                tryGet(this.text, () => typeExpressionCache.get(arg), typeExpression => args.push(typeExpression));
             });
         }
 

@@ -213,10 +213,6 @@ var TypeChecker = (function () {
     TypeChecker.prototype.isNodeSourceFile = function (node) {
         return typeof node.fileName === "string";
     };
-    TypeChecker.prototype.isOptionalProperty = function (symbol) {
-        var declaration = this.getDeclarationFromSymbol(symbol);
-        return declaration != null && declaration.questionToken != null;
-    };
     TypeChecker.prototype.isSymbolInFile = function (symbol, file) {
         return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
     };

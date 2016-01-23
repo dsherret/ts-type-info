@@ -23,8 +23,8 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
         public extendsTypeExpressions: TypeExpression[],
-        public implementsTypeExpressions: TypeExpression[]) {
-
+        public implementsTypeExpressions: TypeExpression[]
+    ) {
         this.fillName(symbol);
         this.fillIsExported(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
@@ -41,6 +41,11 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.typeParameters = [];
 
+        this.fillInstanceMembers(typeChecker, symbol);
+        this.fillStaticMembers(typeChecker, symbol);
+    }
+
+    private fillInstanceMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             /* istanbul ignore else */
             if (typeChecker.isSymbolClassProperty(member)) {
@@ -61,7 +66,9 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
                 console.warn(`Not implemented member: ${member.getName()}`);
             }
         });
+    }
 
+    private fillStaticMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
         Object.keys(symbol.exports).map(memberName => symbol.exports[memberName]).forEach(staticMember => {
             /* istanbul ignore else */
             if (staticMember.getName() === "prototype") {

@@ -1,5 +1,6 @@
 var ts = require("typescript");
 var definitions_1 = require("./../definitions");
+var utils_1 = require("./../utils");
 var Type = (function () {
     /* istanbul ignore next */ function Type() {
     }
@@ -26,19 +27,29 @@ var Type = (function () {
                 2048 /* Interface */)) === 0;
     };
     Type.prototype.fillProperties = function (typeChecker, tsType) {
+        var _this = this;
         var properties = tsType.getProperties();
-        this.properties = properties.filter(function (p) { return p.name !== "prototype"; }).map(function (property) { return new definitions_1.BasePropertyDefinition(typeChecker, property); });
+        this.properties = [];
+        properties.filter(function (p) { return p.name !== "prototype"; }).forEach(function (property) {
+            utils_1.tryGet(property, function () { return new definitions_1.BasePropertyDefinition(typeChecker, property); }, function (def) { return _this.properties.push(def); });
+        });
     };
     Type.prototype.fillCallSignatures = function (typeChecker, tsType) {
-        this.callSignatures = tsType.getCallSignatures()
-            .map(function (callSignature) { return new definitions_1.CallSignatureDefinition(typeChecker, callSignature); });
+        var _this = this;
+        this.callSignatures = [];
+        tsType.getCallSignatures().forEach(function (callSignature) {
+            utils_1.tryGet(_this.text, function () { return new definitions_1.CallSignatureDefinition(typeChecker, callSignature); }, function (def) {
+                _this.callSignatures.push(def);
+            });
+        });
     };
-    Type.prototype.fillTypeArguments = function (typeChecker, typeCache, tsType) {
+    Type.prototype.fillTypeArguments = function (typeChecker, typeExpressionCache, tsType) {
+        var _this = this;
         var tsTypeArguments = tsType.typeArguments;
         var args = [];
         if (tsTypeArguments != null) {
             tsTypeArguments.forEach(function (arg) {
-                args.push(typeCache.get(arg));
+                utils_1.tryGet(_this.text, function () { return typeExpressionCache.get(arg); }, function (typeExpression) { return args.push(typeExpression); });
             });
         }
         this.typeArguments = args;

@@ -27,8 +27,12 @@ var ClassDefinition = (function () {
         this.isAbstract = (nodeFlags & 256 /* Abstract */) === 256 /* Abstract */;
     };
     ClassDefinition.prototype.fillMembers = function (typeChecker, symbol) {
-        var _this = this;
         this.typeParameters = [];
+        this.fillInstanceMembers(typeChecker, symbol);
+        this.fillStaticMembers(typeChecker, symbol);
+    };
+    ClassDefinition.prototype.fillInstanceMembers = function (typeChecker, symbol) {
+        var _this = this;
         Object.keys(symbol.members).map(function (memberName) { return symbol.members[memberName]; }).forEach(function (member) {
             /* istanbul ignore else */
             if (typeChecker.isSymbolClassProperty(member)) {
@@ -49,6 +53,9 @@ var ClassDefinition = (function () {
                 console.warn("Not implemented member: " + member.getName());
             }
         });
+    };
+    ClassDefinition.prototype.fillStaticMembers = function (typeChecker, symbol) {
+        var _this = this;
         Object.keys(symbol.exports).map(function (memberName) { return symbol.exports[memberName]; }).forEach(function (staticMember) {
             /* istanbul ignore else */
             if (staticMember.getName() === "prototype") {

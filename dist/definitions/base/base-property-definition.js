@@ -5,8 +5,12 @@ var BasePropertyDefinition = (function () {
     function BasePropertyDefinition(typeChecker, symbol) {
         this.fillName(symbol);
         this.fillTypeExpression(typeChecker, symbol);
-        this.isOptional = typeChecker.isOptionalProperty(symbol);
+        this.fillIsOptional(typeChecker, symbol);
     }
+    BasePropertyDefinition.prototype.fillIsOptional = function (typeChecker, symbol) {
+        var declaration = typeChecker.getDeclarationFromSymbol(symbol);
+        this.isOptional = declaration != null && declaration.questionToken != null;
+    };
     return BasePropertyDefinition;
 })();
 exports.BasePropertyDefinition = BasePropertyDefinition;

@@ -1,11 +1,12 @@
-var utils_1 = require("./../utils");
+var key_value_cache_1 = require("./key-value-cache");
+var try_get_1 = require("./try-get");
 var expressions_1 = require("./../expressions");
 var TypeExpressionCache = (function () {
     function TypeExpressionCache(typeChecker) {
         this.typeChecker = typeChecker;
         this.expressionCacheContainer = new CacheContainer(this.typeChecker);
         this.typeCacheContainer = new CacheContainer(this.typeChecker);
-        this.typeTsTypeCache = new utils_1.KeyValueCache();
+        this.typeTsTypeCache = new key_value_cache_1.KeyValueCache();
     }
     TypeExpressionCache.prototype.get = function (tsType) {
         var _this = this;
@@ -17,7 +18,7 @@ var TypeExpressionCache = (function () {
             typeExpression = new expressions_1.TypeExpression(this.typeChecker, tsType);
             cache.add(typeExpression.text, typeExpression);
             types.forEach(function (t) {
-                typeExpression.addType(_this.getType(t));
+                try_get_1.tryGet(name, function () { return _this.getType(t); }, function (type) { return typeExpression.addType(type); });
             });
         }
         return typeExpression;
@@ -54,8 +55,8 @@ exports.TypeExpressionCache = TypeExpressionCache;
 var CacheContainer = (function () {
     function CacheContainer(typeChecker) {
         this.typeChecker = typeChecker;
-        this.fileCache = new utils_1.KeyValueCache();
-        this.typeCache = new utils_1.KeyValueCache();
+        this.fileCache = new key_value_cache_1.KeyValueCache();
+        this.typeCache = new key_value_cache_1.KeyValueCache();
     }
     CacheContainer.prototype.getCache = function (tsType) {
         var fileName = this.getFileName(tsType);
@@ -72,7 +73,7 @@ var CacheContainer = (function () {
     CacheContainer.prototype.getFileCache = function (fileName) {
         var fileCache = this.fileCache.get(fileName);
         if (fileCache == null) {
-            fileCache = new utils_1.KeyValueCache();
+            fileCache = new key_value_cache_1.KeyValueCache();
             this.fileCache.add(fileName, fileCache);
         }
         return fileCache;

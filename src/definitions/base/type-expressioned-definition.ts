@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {TypeExpression} from "./../../expressions";
-import {TypeChecker} from "./../../utils";
+import {TypeChecker, tryGet} from "./../../utils";
 
 export interface ITypeExpressionedDefinition {
     typeExpression: TypeExpression;
@@ -11,6 +11,8 @@ export abstract class TypeExpressionedDefinition implements ITypeExpressionedDef
     typeExpression: TypeExpression;
 
     fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.typeExpression = typeChecker.getTypeExpressionOfSymbol(symbol);
+        tryGet(symbol, () => typeChecker.getTypeExpressionOfSymbol(symbol), (expression) => {
+            this.typeExpression = expression;
+        });
     }
 }

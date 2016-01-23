@@ -260,11 +260,6 @@ export class TypeChecker {
         return typeof (node as ts.SourceFile).fileName === "string";
     }
 
-    isOptionalProperty(symbol: ts.Symbol) {
-        const declaration = this.getDeclarationFromSymbol(symbol);
-        return declaration != null && (declaration as ts.PropertyDeclaration).questionToken != null;
-    }
-
     isSymbolInFile(symbol: ts.Symbol, file: ts.SourceFile) {
         return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
     }

@@ -1,5 +1,5 @@
 ﻿import * as ts from "typescript";
-import {TypeChecker, DefinitionCache} from "./../../utils";
+import {TypeChecker, DefinitionCache, tryGet} from "./../../utils";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
@@ -28,45 +28,46 @@ export abstract class ModuledDefinition implements IModuledDefinition {
 
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this.initializeMD();
+
         // namespaces
-        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Namespace).forEach((namespaceSymbol) => {
-            if (typeChecker.isSymbolInFile(namespaceSymbol, file)) {
-                this.namespaces.push(definitionCache.getNamespaceDefinition(namespaceSymbol));
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Namespace).forEach((symbol) => {
+            if (typeChecker.isSymbolInFile(symbol, file)) {
+                this.tryAddNamespace(definitionCache, symbol);
             }
         });
 
         // classes
-        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Class).forEach((classSymbol) => {
-            if (typeChecker.isSymbolInFile(classSymbol, file)) {
-                this.classes.push(definitionCache.getClassDefinition(classSymbol));
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Class).forEach((symbol) => {
+            if (typeChecker.isSymbolInFile(symbol, file)) {
+                this.tryAddClass(definitionCache, symbol);
             }
         });
 
         // enums
-        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Enum).forEach((enumSymbol) => {
-            if (typeChecker.isSymbolInFile(enumSymbol, file)) {
-                this.enums.push(definitionCache.getEnumDefinition(enumSymbol));
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Enum).forEach((symbol) => {
+            if (typeChecker.isSymbolInFile(symbol, file)) {
+                this.tryAddEnum(definitionCache, symbol);
             }
         });
 
         // functions
-        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Function).forEach((functionSymbol) => {
-            if (typeChecker.isSymbolInFile(functionSymbol, file)) {
-                this.functions.push(definitionCache.getFunctionDefinition(functionSymbol));
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Function).forEach((symbol) => {
+            if (typeChecker.isSymbolInFile(symbol, file)) {
+                this.tryAddFunction(definitionCache, symbol);
             }
         });
 
         // interfaces
-        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Interface).forEach((interfaceSymbol) => {
-            if (typeChecker.isSymbolInFile(interfaceSymbol, file)) {
-                this.interfaces.push(definitionCache.getInterfaceDefinition(interfaceSymbol));
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.Interface).forEach((symbol) => {
+            if (typeChecker.isSymbolInFile(symbol, file)) {
+                this.tryAddInterface(definitionCache, symbol);
             }
         });
 
         // variables
-        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.BlockScopedVariable | ts.SymbolFlags.Variable).forEach((variableSymbol) => {
-            if (typeChecker.isSymbolInFile(variableSymbol, file)) {
-                this.variables.push(definitionCache.getVariableDefinition(variableSymbol));
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.BlockScopedVariable | ts.SymbolFlags.Variable).forEach((symbol) => {
+            if (typeChecker.isSymbolInFile(symbol, file)) {
+                this.tryAddVariable(definitionCache, symbol);
             }
         });
     }
@@ -78,27 +79,62 @@ export abstract class ModuledDefinition implements IModuledDefinition {
 
         localSymbols.forEach(localSymbol => {
             if (typeChecker.isSymbolClass(localSymbol)) {
-                this.classes.push(definitionCache.getClassDefinition(localSymbol));
+                this.tryAddClass(definitionCache, localSymbol);
             }
             else if (typeChecker.isSymbolInterface(localSymbol)) {
-                this.interfaces.push(definitionCache.getInterfaceDefinition(localSymbol));
+                this.tryAddInterface(definitionCache, localSymbol);
             }
             else if (typeChecker.isSymbolFunction(localSymbol)) {
-                this.functions.push(definitionCache.getFunctionDefinition(localSymbol));
+                this.tryAddFunction(definitionCache, localSymbol);
             }
             else if (typeChecker.isSymbolNamespace(localSymbol)) {
-                this.namespaces.push(definitionCache.getNamespaceDefinition(localSymbol));
+                this.tryAddNamespace(definitionCache, localSymbol);
             }
             else if (typeChecker.isSymbolEnum(localSymbol)) {
-                this.enums.push(definitionCache.getEnumDefinition(localSymbol));
+                this.tryAddEnum(definitionCache, localSymbol);
             }
             else if (typeChecker.isSymbolVariable(localSymbol)) {
-                this.variables.push(definitionCache.getVariableDefinition(localSymbol));
+                this.tryAddVariable(definitionCache, localSymbol);
             }
             else {
-                // console.log(symbol);
                 console.warn(`Unhandled symbol when filling moduled definition items: ${localSymbol.name}`);
             }
+        });
+    }
+
+    private tryAddNamespace(definitionCache: DefinitionCache, symbol: ts.Symbol) {
+        tryGet(symbol, () => definitionCache.getNamespaceDefinition(symbol), (def) => {
+            this.namespaces.push(def);
+        });
+    }
+
+    private tryAddClass(definitionCache: DefinitionCache, symbol: ts.Symbol) {
+        tryGet(symbol, () => definitionCache.getClassDefinition(symbol), (def) => {
+            this.classes.push(def);
+        });
+    }
+
+    private tryAddEnum(definitionCache: DefinitionCache, symbol: ts.Symbol) {
+        tryGet(symbol, () => definitionCache.getEnumDefinition(symbol), (def) => {
+            this.enums.push(def);
+        });
+    }
+
+    private tryAddFunction(definitionCache: DefinitionCache, symbol: ts.Symbol) {
+        tryGet(symbol, () => definitionCache.getFunctionDefinition(symbol), (def) => {
+            this.functions.push(def);
+        });
+    }
+
+    private tryAddInterface(definitionCache: DefinitionCache, symbol: ts.Symbol) {
+        tryGet(symbol, () => definitionCache.getInterfaceDefinition(symbol), (def) => {
+            this.interfaces.push(def);
+        });
+    }
+
+    private tryAddVariable(definitionCache: DefinitionCache, symbol: ts.Symbol) {
+        tryGet(symbol, () => definitionCache.getVariableDefinition(symbol), (def) => {
+            this.variables.push(def);
         });
     }
 
