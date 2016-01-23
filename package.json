@@ -1,6 +1,6 @@
 {
   "name": "ts-type-info",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Experimental library to get the structure of TypeScript code.",
   "main": "dist/main.js",
   "scripts": {
