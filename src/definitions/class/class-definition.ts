@@ -26,10 +26,10 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         public implementsTypeExpressions: TypeExpression[]) {
 
         this.fillName(symbol);
+        this.fillIsExported(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
         this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
-        this.fillIsExported(typeChecker, symbol);
     }
 
     private fillIsAbstract(typeChecker: TypeChecker, symbol: ts.Symbol) {

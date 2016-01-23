@@ -17,10 +17,10 @@ var ClassDefinition = (function () {
         this.staticProperties = [];
         this.typeParameters = [];
         this.fillName(symbol);
+        this.fillIsExported(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
         this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
-        this.fillIsExported(typeChecker, symbol);
     }
     ClassDefinition.prototype.fillIsAbstract = function (typeChecker, symbol) {
         var nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).flags;
