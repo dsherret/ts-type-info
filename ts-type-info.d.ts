@@ -19,6 +19,10 @@ declare module "ts-type-info" {
     export interface INamedDefinition extends IBaseNamedDefinition {
     }
 
+    export interface IAmbientableDefinition {
+        isAmbient: boolean;
+    }
+
     export interface ITypeExpressionedDefinition {
         typeExpression: TypeExpression;
     }
@@ -65,6 +69,10 @@ declare module "ts-type-info" {
 
     export class NamedDefinition {
         name: string;
+    }
+
+    export class AmbientableDefinition {
+        isAmbient: boolean;
     }
 
     export class TypeExpressionedDefinition {
@@ -148,6 +156,7 @@ declare module "ts-type-info" {
 
     export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefinition> {
         isExported: boolean;
+        isAmbient: boolean;
     }
 
     export class ParameterDefinition extends BaseParameterDefinition {
@@ -180,6 +189,7 @@ declare module "ts-type-info" {
         name: string;
         decorators: DecoratorDefinition[];
         isExported: boolean;
+        isAmbient: boolean;
     }
 
     export class ClassMethodDefinition extends BaseClassMethodDefinition {
@@ -212,6 +222,7 @@ declare module "ts-type-info" {
         extendsTypeExpressions: TypeExpression[];
         name: string;
         isExported: boolean;
+        isAmbient: boolean;
     }
 
     export class InterfaceMethodDefinition extends BaseFunctionDefinition<ParameterDefinition> {
@@ -229,6 +240,7 @@ declare module "ts-type-info" {
         members: EnumMemberDefinition[];
         name: string;
         isExported: boolean;
+        isAmbient: boolean;
     }
 
     export class EnumMemberDefinition {
@@ -246,6 +258,7 @@ declare module "ts-type-info" {
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
         isExported: boolean;
+        isAmbient: boolean;
     }
 
     export class FileDefinition {
@@ -277,6 +290,7 @@ declare module "ts-type-info" {
         isExported: boolean;
         typeExpression: TypeExpression;
         defaultExpression: Expression;
+        isAmbient: boolean;
     }
 
     export class Expression {
