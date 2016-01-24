@@ -8,7 +8,8 @@ describe("function export tests", function () {
                 name: "myFunction"
             }, {
                 name: "myExportedFunction",
-                isExported: true
+                isExported: true,
+                hasExportKeyword: true
             }]
     });
 });

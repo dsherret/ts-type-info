@@ -25,7 +25,7 @@ dummyFunction(TestEnum);
 dummyFunction(reexports.TestClass);
 dummyFunction(reexports.TestEnum);
 
-let myVar: definition.DefinitionTestInterface;
+let myVar: definition.Test;
 dummyFunction(myVar);
 let myVar2: definitionNamespace.Test;
 dummyFunction(myVar2);

@@ -12,9 +12,9 @@ var InterfaceDefinition = (function () {
         this.properties = [];
         this.typeParameters = [];
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
     }
     InterfaceDefinition.prototype.fillMembers = function (typeChecker, symbol) {
         var _this = this;

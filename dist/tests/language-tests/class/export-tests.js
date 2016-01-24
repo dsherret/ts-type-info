@@ -6,7 +6,8 @@ describe("class exports tests", function () {
     test_helpers_1.runFileDefinitionTests(def, {
         classes: [{
                 name: "MyExportedClass",
-                isExported: true
+                isExported: true,
+                hasExportKeyword: true
             }]
     });
 });

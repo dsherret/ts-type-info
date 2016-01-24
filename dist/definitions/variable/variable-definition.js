@@ -5,10 +5,10 @@ var variable_declaration_type_1 = require("./variable-declaration-type");
 var VariableDefinition = (function () {
     function VariableDefinition(typeChecker, symbol) {
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
     }
     VariableDefinition.prototype.fillDeclarationType = function (typeChecker, symbol) {

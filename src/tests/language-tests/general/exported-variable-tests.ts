@@ -5,7 +5,8 @@ import {VariableDeclarationType, NamespaceDeclarationType} from "./../../../defi
 describe("variable tests", () => {
     const code = `
 declare module "definition-var" {
-    export let myVariable: string[];
+    export let myExplictlyExportedVariable: string[];
+    let myImplicitlyExportedVariable: string;
 }
 `;
 
@@ -19,9 +20,18 @@ declare module "definition-var" {
             hasDeclareKeyword: true,
             variables: [{
                 declarationType: VariableDeclarationType.Let,
-                name: "myVariable",
+                name: "myExplictlyExportedVariable",
                 typeExpression: { text: "string[]" },
                 isExported: true,
+                hasExportKeyword: true,
+                isAmbient: true,
+                hasDeclareKeyword: false
+            }, {
+                declarationType: VariableDeclarationType.Let,
+                name: "myImplicitlyExportedVariable",
+                typeExpression: { text: "string" },
+                isExported: true,
+                hasExportKeyword: false,
                 isAmbient: true,
                 hasDeclareKeyword: false
             }]

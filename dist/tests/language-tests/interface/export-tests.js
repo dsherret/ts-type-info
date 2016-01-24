@@ -6,7 +6,8 @@ describe("interface exports tests", function () {
     test_helpers_1.runFileDefinitionTests(def, {
         interfaces: [{
                 name: "MyExportedInterface",
-                isExported: true
+                isExported: true,
+                hasExportKeyword: true
             }]
     });
 });

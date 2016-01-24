@@ -17,9 +17,9 @@ var ClassDefinition = (function () {
         this.staticProperties = [];
         this.typeParameters = [];
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
         this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }

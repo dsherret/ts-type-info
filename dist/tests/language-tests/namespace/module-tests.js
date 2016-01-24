@@ -10,19 +10,19 @@ describe("module tests", function () {
                 declarationType: definitions_1.NamespaceDeclarationType.Module,
                 classes: [
                     { name: "MyModuleClass" },
-                    { name: "MyExportedModuleClass", isExported: true }
+                    { name: "MyExportedModuleClass", isExported: true, hasExportKeyword: true }
                 ],
                 enums: [
                     { name: "MyModuleEnum" },
-                    { name: "MyExportedModuleEnum", isExported: true }
+                    { name: "MyExportedModuleEnum", isExported: true, hasExportKeyword: true }
                 ],
                 functions: [
                     { name: "myModuleFunction" },
-                    { name: "myExportedModuleFunction", isExported: true }
+                    { name: "myExportedModuleFunction", isExported: true, hasExportKeyword: true }
                 ],
                 interfaces: [
                     { name: "MyModuleInterface" },
-                    { name: "MyExportedModuleInterface", isExported: true }
+                    { name: "MyExportedModuleInterface", isExported: true, hasExportKeyword: true }
                 ],
                 namespaces: [{
                         name: "MyInnerModule",
@@ -31,8 +31,9 @@ describe("module tests", function () {
                         name: "MyInnerExportedModule",
                         declarationType: definitions_1.NamespaceDeclarationType.Module,
                         isExported: true,
+                        hasExportKeyword: true,
                         classes: [
-                            { name: "MyInnerModuleClass", isExported: true }
+                            { name: "MyInnerModuleClass", isExported: true, hasExportKeyword: true }
                         ]
                     }, {
                         name: "MyInnerNamespace",
@@ -41,14 +42,16 @@ describe("module tests", function () {
                         name: "MyInnerExportedNamespace",
                         declarationType: definitions_1.NamespaceDeclarationType.Namespace,
                         isExported: true,
+                        hasExportKeyword: true,
                         classes: [
-                            { name: "MyInnerNamespaceClass", isExported: true }
+                            { name: "MyInnerNamespaceClass", isExported: true, hasExportKeyword: true }
                         ]
                     }]
             }, {
                 name: "MyExportedModule",
                 declarationType: definitions_1.NamespaceDeclarationType.Module,
-                isExported: true
+                isExported: true,
+                hasExportKeyword: true
             }]
     });
 });

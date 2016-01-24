@@ -11,8 +11,8 @@ var FunctionDefinition = (function (_super) {
     __extends(FunctionDefinition, _super);
     function FunctionDefinition(typeChecker, symbol) {
         _super.call(this, parameter_definition_1.ParameterDefinition, typeChecker, symbol);
-        this.fillIsExported(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
     }
     return FunctionDefinition;
 })(base_1.BaseFunctionDefinition);

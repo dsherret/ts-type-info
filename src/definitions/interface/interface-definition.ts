@@ -16,9 +16,9 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, public extendsTypeExpressions: TypeExpression[]) {
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
     }
 
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -50,15 +50,16 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // ExportableDefinition
-    fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    hasExportKeyword: boolean;
     // TypeParameteredDefinition
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     // AmbientableDefinition
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

@@ -10,10 +10,10 @@ export class VariableDefinition implements INamedDefinition, IExportableDefiniti
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
     }
 
@@ -35,18 +35,19 @@ export class VariableDefinition implements INamedDefinition, IExportableDefiniti
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // ExportableDefinition
-    fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
     // TypeExpressionedDefinition
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     typeExpression: TypeExpression;
+    hasExportKeyword: boolean;
     // DefaultExpressionedDefinition
-    defaultExpression: Expression;
     fillDefaultExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    defaultExpression: Expression;
     // AmbientableDefinition
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

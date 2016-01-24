@@ -5,8 +5,8 @@ var EnumDefinition = (function () {
     function EnumDefinition(typeChecker, symbol) {
         this.members = [];
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
     EnumDefinition.prototype.fillMembers = function (typeChecker, symbol) {

@@ -11,7 +11,8 @@ export class MyExportedClass {
     runFileDefinitionTests(def, {
         classes: [{
             name: "MyExportedClass",
-            isExported: true
+            isExported: true,
+            hasExportKeyword: true
         }]
     });
 });

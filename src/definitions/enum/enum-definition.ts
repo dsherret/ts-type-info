@@ -9,8 +9,8 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition, 
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
 
@@ -32,12 +32,13 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition, 
     fillName: (symbol: ts.Symbol) => void;
     name: string;
     // ExportableDefinition
-    fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    hasExportKeyword: boolean;
     // AmbientableDefinition
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition]);

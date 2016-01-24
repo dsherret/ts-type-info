@@ -14,8 +14,8 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
     }
 
@@ -43,12 +43,13 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
     // ExportableDefinition
-    fillIsExported: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    hasExportKeyword: boolean;
     // AmbientableDefinition
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

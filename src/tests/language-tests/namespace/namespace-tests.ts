@@ -35,19 +35,19 @@ export namespace MyExportedNamespace {
             declarationType: NamespaceDeclarationType.Namespace,
             classes: [
                 { name: "MyModuleClass" },
-                { name: "MyExportedModuleClass", isExported: true }
+                { name: "MyExportedModuleClass", isExported: true, hasExportKeyword: true }
             ],
             enums: [
                 { name: "MyModuleEnum" },
-                { name: "MyExportedModuleEnum", isExported: true }
+                { name: "MyExportedModuleEnum", isExported: true, hasExportKeyword: true }
             ],
             functions: [
                 { name: "myModuleFunction" },
-                { name: "myExportedModuleFunction", isExported: true }
+                { name: "myExportedModuleFunction", isExported: true, hasExportKeyword: true }
             ],
             interfaces: [
                 { name: "MyModuleInterface" },
-                { name: "MyExportedModuleInterface", isExported: true }
+                { name: "MyExportedModuleInterface", isExported: true, hasExportKeyword: true }
             ],
             namespaces: [{
                 name: "MyInnerModule",
@@ -56,8 +56,9 @@ export namespace MyExportedNamespace {
                 name: "MyInnerExportedModule",
                 declarationType: NamespaceDeclarationType.Module,
                 isExported: true,
+                hasExportKeyword: true,
                 classes: [
-                    { name: "MyInnerModuleClass", isExported: true }
+                    { name: "MyInnerModuleClass", isExported: true, hasExportKeyword: true }
                 ]
             }, {
                 name: "MyInnerNamespace",
@@ -66,14 +67,16 @@ export namespace MyExportedNamespace {
                 name: "MyInnerExportedNamespace",
                 declarationType: NamespaceDeclarationType.Namespace,
                 isExported: true,
+                hasExportKeyword: true,
                 classes: [
-                    { name: "MyInnerNamespaceClass", isExported: true }
+                    { name: "MyInnerNamespaceClass", isExported: true, hasExportKeyword: true }
                 ]
             }]
         }, {
             name: "MyExportedNamespace",
             declarationType: NamespaceDeclarationType.Namespace,
-            isExported: true
+            isExported: true,
+            hasExportKeyword: true
         }]
     });
 });

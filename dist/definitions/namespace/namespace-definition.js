@@ -5,8 +5,8 @@ var namespace_declaration_type_1 = require("./namespace-declaration-type");
 var NamespaceDefinition = (function () {
     function NamespaceDefinition(typeChecker, symbol) {
         this.fillName(symbol);
-        this.fillIsExported(typeChecker, symbol);
-        this.fillIsAmbient(typeChecker, symbol);
+        this.fillExportable(typeChecker, symbol);
+        this.fillAmbientable(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
     }
     NamespaceDefinition.prototype.fillDeclarationType = function (typeChecker, symbol) {

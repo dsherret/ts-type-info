@@ -15,7 +15,8 @@ export function myExportedFunction() {
             name: "myFunction"
         }, {
             name: "myExportedFunction",
-            isExported: true
+            isExported: true,
+            hasExportKeyword: true
         }]
     });
 });

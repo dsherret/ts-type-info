@@ -15,7 +15,8 @@ describe("enum tests", function () {
                     }]
             }, {
                 name: "MyExportedEnum",
-                isExported: true
+                isExported: true,
+                hasExportKeyword: true
             }]
     });
 });

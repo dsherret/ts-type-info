@@ -4,14 +4,14 @@ import {TypeChecker} from "./../../utils";
 export interface IAmbientableDefinition {
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillIsAmbient(typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    fillAmbientable(typeChecker: TypeChecker, symbol: ts.Symbol): void;
 }
 
 export abstract class AmbientableDefinition implements IAmbientableDefinition {
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
-    fillIsAmbient(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    fillAmbientable(typeChecker: TypeChecker, symbol: ts.Symbol) {
         let declaration: ts.Node;
 
         if (typeChecker.isSymbolVariable(symbol)) {

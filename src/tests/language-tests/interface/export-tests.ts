@@ -11,7 +11,8 @@ export interface MyExportedInterface {
     runFileDefinitionTests(def, {
         interfaces: [{
             name: "MyExportedInterface",
-            isExported: true
+            isExported: true,
+            hasExportKeyword: true
         }]
     });
 });

@@ -2,7 +2,7 @@ var ts = require("typescript");
 var AmbientableDefinition = (function () {
     /* istanbul ignore next */ function AmbientableDefinition() {
     }
-    AmbientableDefinition.prototype.fillIsAmbient = function (typeChecker, symbol) {
+    AmbientableDefinition.prototype.fillAmbientable = function (typeChecker, symbol) {
         var declaration;
         if (typeChecker.isSymbolVariable(symbol)) {
             declaration = typeChecker.getDeclarationFromSymbol(symbol).parent.parent;

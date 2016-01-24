@@ -38,6 +38,7 @@ declare module "ts-type-info" {
 
     export interface IExportableDefinition {
         isExported: boolean;
+        hasExportKeyword: boolean;
     }
 
     export interface IModuledDefinition {
@@ -91,6 +92,7 @@ declare module "ts-type-info" {
 
     export class ExportableDefinition {
         isExported: boolean;
+        hasExportKeyword: boolean;
     }
 
     export class ModuledDefinition {
@@ -158,6 +160,7 @@ declare module "ts-type-info" {
 
     export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefinition> {
         isExported: boolean;
+        hasExportKeyword: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
     }
@@ -192,6 +195,7 @@ declare module "ts-type-info" {
         name: string;
         decorators: DecoratorDefinition[];
         isExported: boolean;
+        hasExportKeyword: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
     }
@@ -226,6 +230,7 @@ declare module "ts-type-info" {
         extendsTypeExpressions: TypeExpression[];
         name: string;
         isExported: boolean;
+        hasExportKeyword: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
     }
@@ -245,6 +250,7 @@ declare module "ts-type-info" {
         members: EnumMemberDefinition[];
         name: string;
         isExported: boolean;
+        hasExportKeyword: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
     }
@@ -264,6 +270,7 @@ declare module "ts-type-info" {
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
         isExported: boolean;
+        hasExportKeyword: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
     }
@@ -296,6 +303,7 @@ declare module "ts-type-info" {
         name: string;
         isExported: boolean;
         typeExpression: TypeExpression;
+        hasExportKeyword: boolean;
         defaultExpression: Expression;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
