@@ -10,7 +10,22 @@ var AmbientableDefinition = (function () {
         else {
             declaration = typeChecker.getDeclarationFromSymbol(symbol);
         }
-        this.isAmbient = declaration.flags & 2 /* Ambient */ ? true : false;
+        this.hasDeclareKeyword = declaration.flags & 2 /* Ambient */ ? true : false;
+        if (this.hasDeclareKeyword || typeChecker.isSymbolInterface(symbol)) {
+            this.isAmbient = true;
+        }
+        else {
+            this.isAmbient = this.isAnyParentAmbient(declaration);
+        }
+    };
+    AmbientableDefinition.prototype.isAnyParentAmbient = function (declaration) {
+        while (declaration.parent != null) {
+            if (declaration.parent.flags & 2 /* Ambient */) {
+                return true;
+            }
+            declaration = declaration.parent;
+        }
+        return false;
     };
     return AmbientableDefinition;
 })();

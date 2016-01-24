@@ -36,7 +36,7 @@ var ModuledDefinition = (function () {
                 _this.tryAddInterface(definitionCache, symbol);
             }
         });
-        // variables
+        // variables (I don't think ts.SymbolFlags.FunctionScopedVariable is necessary here because a variable wouldn't be function on the file level)
         typeChecker.getSymbolsInScope(file, 2 /* BlockScopedVariable */ | 3 /* Variable */).forEach(function (symbol) {
             if (typeChecker.isSymbolInFile(symbol, file)) {
                 _this.tryAddVariable(definitionCache, symbol);

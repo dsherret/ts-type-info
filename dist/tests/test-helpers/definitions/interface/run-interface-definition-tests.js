@@ -11,6 +11,8 @@ function runInterfaceDefinitionTests(definition, structure) {
         structure.newSignatures = structure.newSignatures || [];
         structure.properties = structure.properties || [];
         structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
+        // interfaces should always be ambient
+        structure.isAmbient = structure.isAmbient == null ? true : structure.isAmbient;
         base_1.runNamedDefinitionTests(definition, structure);
         base_1.runExportableDefinitionTests(definition, structure);
         base_1.runAmbientableDefinitionTests(definition, structure);

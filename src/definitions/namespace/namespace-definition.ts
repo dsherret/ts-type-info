@@ -47,6 +47,7 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
     isExported: boolean;
     // AmbientableDefinition
     isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 

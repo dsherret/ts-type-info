@@ -16,11 +16,14 @@ declare module "definition-var" {
             name: `"definition-var"`,
             declarationType: NamespaceDeclarationType.Module,
             isAmbient: true,
+            hasDeclareKeyword: true,
             variables: [{
                 declarationType: VariableDeclarationType.Let,
                 name: "myVariable",
                 typeExpression: { text: "string[]" },
-                isExported: true
+                isExported: true,
+                isAmbient: true,
+                hasDeclareKeyword: false
             }]
         }]
     });

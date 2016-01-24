@@ -21,6 +21,7 @@ declare module "ts-type-info" {
 
     export interface IAmbientableDefinition {
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export interface ITypeExpressionedDefinition {
@@ -73,6 +74,7 @@ declare module "ts-type-info" {
 
     export class AmbientableDefinition {
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export class TypeExpressionedDefinition {
@@ -157,6 +159,7 @@ declare module "ts-type-info" {
     export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefinition> {
         isExported: boolean;
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export class ParameterDefinition extends BaseParameterDefinition {
@@ -190,6 +193,7 @@ declare module "ts-type-info" {
         decorators: DecoratorDefinition[];
         isExported: boolean;
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export class ClassMethodDefinition extends BaseClassMethodDefinition {
@@ -223,6 +227,7 @@ declare module "ts-type-info" {
         name: string;
         isExported: boolean;
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export class InterfaceMethodDefinition extends BaseFunctionDefinition<ParameterDefinition> {
@@ -241,6 +246,7 @@ declare module "ts-type-info" {
         name: string;
         isExported: boolean;
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export class EnumMemberDefinition {
@@ -259,6 +265,7 @@ declare module "ts-type-info" {
         variables: VariableDefinition[];
         isExported: boolean;
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export class FileDefinition {
@@ -291,6 +298,7 @@ declare module "ts-type-info" {
         typeExpression: TypeExpression;
         defaultExpression: Expression;
         isAmbient: boolean;
+        hasDeclareKeyword: boolean;
     }
 
     export class Expression {

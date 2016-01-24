@@ -9,11 +9,14 @@ describe("variable tests", function () {
                 name: "\"definition-var\"",
                 declarationType: definitions_1.NamespaceDeclarationType.Module,
                 isAmbient: true,
+                hasDeclareKeyword: true,
                 variables: [{
                         declarationType: definitions_1.VariableDeclarationType.Let,
                         name: "myVariable",
                         typeExpression: { text: "string[]" },
-                        isExported: true
+                        isExported: true,
+                        isAmbient: true,
+                        hasDeclareKeyword: false
                     }]
             }]
     });

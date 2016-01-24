@@ -108,6 +108,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 

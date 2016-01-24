@@ -33,19 +33,23 @@ describe("multiple file definition tests", () => {
     runFileDefinitionTests(referenceFileDef, {
         classes: [{
             name: "MyReferenceClass",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         interfaces: [{
             name: "MyReferenceInterface",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         enums: [{
             name: "MyReferenceEnum",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         functions: [{
             name: "MyReferenceFunction",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }]
     });
 });

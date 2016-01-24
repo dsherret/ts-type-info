@@ -36,6 +36,7 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition, 
     isExported: boolean;
     // AmbientableDefinition
     isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 

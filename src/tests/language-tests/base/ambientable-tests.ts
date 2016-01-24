@@ -10,7 +10,10 @@ declare function MyAmbientFunction(): void;
 declare var MyAmbientVariable;
 declare enum MyAmbientEnum {};
 declare namespace MyAmbientNamespace {}
-declare module MyAmbientModule {}
+declare module MyAmbientModule {
+    class MyClass {
+    }
+}
 `;
 
     const def = getStringInfo(code);
@@ -18,33 +21,46 @@ declare module MyAmbientModule {}
     runFileDefinitionTests(def, {
         classes: [{
             name: "MyAmbientClass",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         interfaces: [{
             name: "MyAmbientInterface",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         functions: [{
             name: "MyAmbientFunction",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         variables: [{
             name: "MyAmbientVariable",
             declarationType: VariableDeclarationType.Var,
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         enums: [{
             name: "MyAmbientEnum",
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }],
         namespaces: [{
             name: "MyAmbientNamespace",
             declarationType: NamespaceDeclarationType.Namespace,
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true
         }, {
             name: "MyAmbientModule",
             declarationType: NamespaceDeclarationType.Module,
-            isAmbient: true
+            isAmbient: true,
+            hasDeclareKeyword: true,
+            classes: [{
+                name: "MyClass",
+                isAmbient: true,
+                hasDeclareKeyword: false,
+                isExported: true // anything within an ambient definition is exported
+            }]
         }],
     });
 });

@@ -16,6 +16,7 @@ export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefiniti
     isExported: boolean;
     // AmbientableDefinition
     isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 

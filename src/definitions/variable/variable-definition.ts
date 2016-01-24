@@ -45,6 +45,7 @@ export class VariableDefinition implements INamedDefinition, IExportableDefiniti
     fillDefaultExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // AmbientableDefinition
     isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 

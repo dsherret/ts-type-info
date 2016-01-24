@@ -14,6 +14,8 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
         structure.newSignatures = structure.newSignatures || [];
         structure.properties = structure.properties || [];
         structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
+        // interfaces should always be ambient
+        structure.isAmbient = structure.isAmbient == null ? true : structure.isAmbient;
 
         runNamedDefinitionTests(definition, structure);
         runExportableDefinitionTests(definition, structure);

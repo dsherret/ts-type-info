@@ -57,6 +57,7 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     fillIsAmbient: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
