@@ -230,7 +230,7 @@ export class TypeChecker {
             }
             else if (c.name != null) {
                 // default exports
-                fileImports.push(this.typeChecker.getTypeAtLocation(c).symbol);
+                fileImports.push(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(c.name)));
             }
             else {
                 console.warn(`Unknown import clause in ${file.fileName}`);
