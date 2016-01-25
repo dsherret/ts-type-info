@@ -4,7 +4,6 @@ import {runFileDefinitionTests} from "./../../test-helpers";
 describe("class decorator tests", () => {
     const code = `
 function MyClassDecorator(target: Function) {
-    console.log(target);
 }
 
 @MyClassDecorator

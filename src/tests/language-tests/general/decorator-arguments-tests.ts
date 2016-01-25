@@ -5,7 +5,6 @@ describe("decorator arguments tests", () => {
     const code = `
 function MyClassDecorator(myArg: string) {
     return (target: Function) => {
-        console.log(target);
     };
 }
 

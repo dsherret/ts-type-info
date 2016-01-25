@@ -1,5 +1,5 @@
 ﻿import * as ts from "typescript";
-import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
+import {IModuledDefinition, ModuledDefinition, INamedDefinition, IBaseNamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
     IAmbientableDefinition, AmbientableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
@@ -40,17 +40,17 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: (NamedDefinition & ExportableDefinition)[];
+    exports: (IBaseNamedDefinition & IExportableDefinition)[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
     // ExportableDefinition
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
     hasExportKeyword: boolean;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // AmbientableDefinition
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

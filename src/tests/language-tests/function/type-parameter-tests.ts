@@ -4,8 +4,6 @@ import {runFileDefinitionTests} from "./../../test-helpers";
 describe("function type parameters", () => {
     const code = `
 function myTypeParameterFunction<T, U extends string>(tParam: T, uParam: U) {
-    console.log(param1);
-    console.log(param2);
 }`;
 
     const def = getStringInfo(code);

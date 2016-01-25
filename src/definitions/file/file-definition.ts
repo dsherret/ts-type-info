@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {TypeChecker, DefinitionCache, applyMixins} from "./../../utils";
-import {IModuledDefinition, ModuledDefinition, NamedDefinition, ExportableDefinition} from "./../base";
+import {IModuledDefinition, ModuledDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../base";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
@@ -51,6 +51,7 @@ export class FileDefinition implements IModuledDefinition {
                         exportDefinition
                     )
                 );
+                this.exports.push(exportDefinition);
             }
             else {
                 console.warn(`Not implemented re-export symbol: ${fileReExportSymbol.name}`);
@@ -68,7 +69,7 @@ export class FileDefinition implements IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: (NamedDefinition & ExportableDefinition)[];
+    exports: (IBaseNamedDefinition & IExportableDefinition)[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
 }
