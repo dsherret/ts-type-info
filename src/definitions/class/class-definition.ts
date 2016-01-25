@@ -95,22 +95,22 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     }
 
     // NamedDefinition
-    fillName: (symbol: ts.Symbol) => void;
     name: string;
+    fillName: (symbol: ts.Symbol) => void;
     // DecoratableDefinition
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     decorators: DecoratorDefinition[];
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ExportableDefinition
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     hasExportKeyword: boolean;
     // TypeParameteredDefinition
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     // AmbientableDefinition
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

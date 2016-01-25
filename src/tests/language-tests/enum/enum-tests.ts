@@ -27,6 +27,9 @@ export enum MyExportedEnum {
             name: "MyExportedEnum",
             isExported: true,
             hasExportKeyword: true
+        }],
+        exports: [{
+            name: "MyExportedEnum"
         }]
     });
 });

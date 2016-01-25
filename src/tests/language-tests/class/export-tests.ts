@@ -13,6 +13,9 @@ export class MyExportedClass {
             name: "MyExportedClass",
             isExported: true,
             hasExportKeyword: true
+        }],
+        exports: [{
+            name: "MyExportedClass"
         }]
     });
 });

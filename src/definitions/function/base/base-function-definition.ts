@@ -16,20 +16,20 @@ export class BaseFunctionDefinition<T extends BaseParameterDefinition> implement
     }
 
     // NamedDefinition
-    fillName: (symbol: ts.Symbol) => void;
     name: string;
+    fillName: (symbol: ts.Symbol) => void;
     // ParameteredDefinition
+    parameters: T[];
     fillParametersBySymbol: (parameterDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillParametersBySignature: (parameterDefinition: BaseParameterDefinitionConstructor<T>, typeChecker: TypeChecker, signature: ts.Signature) => void;
-    parameters: T[];
     // ReturnTyped
+    returnTypeExpression: TypeExpression;
     fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    returnTypeExpression: TypeExpression;
     // TypeParameteredDefinition
+    typeParameters: TypeParameterDefinition[];
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    typeParameters: TypeParameterDefinition[];
 }
 
 applyMixins(BaseFunctionDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

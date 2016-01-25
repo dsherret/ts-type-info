@@ -48,6 +48,7 @@ declare module "ts-type-info" {
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
+        exports: (NamedDefinition & ExportableDefinition)[];
     }
 
     export interface ITypeParameteredDefinition {
@@ -102,6 +103,7 @@ declare module "ts-type-info" {
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
+        exports: (NamedDefinition & ExportableDefinition)[];
     }
 
     export class BasePropertyDefinition {
@@ -269,6 +271,7 @@ declare module "ts-type-info" {
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
+        exports: (NamedDefinition & ExportableDefinition)[];
         isExported: boolean;
         hasExportKeyword: boolean;
         isAmbient: boolean;
@@ -286,6 +289,7 @@ declare module "ts-type-info" {
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
+        exports: (NamedDefinition & ExportableDefinition)[];
     }
 
     export class ImportDefinition {

@@ -6,6 +6,8 @@ import {runFunctionDefinitionTests} from "./../function";
 import {runEnumDefinitionTests} from "./../enum";
 import {runClassDefinitionTests} from "./../class";
 import {runVariableDefinitionTests} from "./../variable";
+import {runNamedDefinitionTests} from "./run-named-definition-tests";
+import {runExportableDefinitionTests} from "./run-exportable-definition-tests";
 import {ModuledStructure} from "./../../structures";
 
 export function runModuledDefinitionTests(definition: IModuledDefinition, expected: ModuledStructure) {
@@ -15,6 +17,7 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
     expected.functions = expected.functions || [];
     expected.interfaces = expected.interfaces || [];
     expected.variables = expected.variables || [];
+    expected.exports = expected.exports || [];
 
     describe("namespaces", () => {
         it("should have the expected number of namespaces", () => {
@@ -73,6 +76,21 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
 
         expected.variables.forEach((variableStructure, i) => {
             runVariableDefinitionTests(definition.variables[i], variableStructure);
+        });
+    });
+
+    describe("exports", () => {
+        it("should have the expected number of exports", () => {
+            assert.equal(definition.exports.length, expected.exports.length);
+        });
+
+        expected.exports.forEach((exportStructure, i) => {
+            // defaults
+            exportStructure.isExported = exportStructure.isExported == null ? true : exportStructure.isExported;
+            exportStructure.hasExportKeyword = exportStructure.hasExportKeyword == null ? true : exportStructure.hasExportKeyword;
+
+            runNamedDefinitionTests(definition.exports[i], exportStructure);
+            runExportableDefinitionTests(definition.exports[i], exportStructure);
         });
     });
 }

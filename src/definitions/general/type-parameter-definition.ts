@@ -24,8 +24,8 @@ export class TypeParameterDefinition implements INamedDefinition {
     }
 
     // NamedDefinition
-    fillName: (symbol: ts.Symbol) => void;
     name: string;
+    fillName: (symbol: ts.Symbol) => void;
 }
 
 applyMixins(TypeParameterDefinition, [NamedDefinition]);

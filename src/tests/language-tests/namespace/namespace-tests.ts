@@ -59,7 +59,10 @@ export namespace MyExportedNamespace {
                 hasExportKeyword: true,
                 classes: [
                     { name: "MyInnerModuleClass", isExported: true, hasExportKeyword: true }
-                ]
+                ],
+                exports: [{
+                    name: "MyInnerModuleClass"
+                }]
             }, {
                 name: "MyInnerNamespace",
                 declarationType: NamespaceDeclarationType.Namespace
@@ -70,13 +73,32 @@ export namespace MyExportedNamespace {
                 hasExportKeyword: true,
                 classes: [
                     { name: "MyInnerNamespaceClass", isExported: true, hasExportKeyword: true }
-                ]
+                ],
+                exports: [{
+                    name: "MyInnerNamespaceClass"
+                }]
+            }],
+            exports: [{
+                name: "MyExportedModuleClass"
+            }, {
+                name: "MyExportedModuleEnum"
+            }, {
+                name: "myExportedModuleFunction"
+            }, {
+                name: "MyExportedModuleInterface"
+            }, {
+                name: "MyInnerExportedModule"
+            }, {
+                name: "MyInnerExportedNamespace"
             }]
         }, {
             name: "MyExportedNamespace",
             declarationType: NamespaceDeclarationType.Namespace,
             isExported: true,
             hasExportKeyword: true
+        }],
+        exports: [{
+            name: "MyExportedNamespace"
         }]
     });
 });

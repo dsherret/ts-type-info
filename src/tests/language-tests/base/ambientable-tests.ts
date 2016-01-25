@@ -60,6 +60,10 @@ declare module MyAmbientModule {
                 isAmbient: true,
                 hasDeclareKeyword: false,
                 isExported: true // anything within an ambient definition is exported
+            }],
+            exports: [{
+                name: "MyClass",
+                hasExportKeyword: false
             }]
         }],
     });

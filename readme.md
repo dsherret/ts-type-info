@@ -173,7 +173,10 @@ console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
 	}],
 	"enums": [],
 	"interfaces": [],
-	"variables": []
+	"variables": [],
+	"exports": [
+		{ name: "MyClass", /* omitted rest of MyClass */ }
+	]
 }
 ```
 ### Real Life Example

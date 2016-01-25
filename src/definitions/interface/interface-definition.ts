@@ -47,19 +47,19 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     }
 
     // NamedDefinition
-    fillName: (symbol: ts.Symbol) => void;
     name: string;
+    fillName: (symbol: ts.Symbol) => void;
     // ExportableDefinition
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
     hasExportKeyword: boolean;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // TypeParameteredDefinition
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     // AmbientableDefinition
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

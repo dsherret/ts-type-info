@@ -31,17 +31,18 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
     }
 
     // NamedDefinition
-    fillName: (symbol: ts.Symbol) => void;
     name: string;
+    fillName: (symbol: ts.Symbol) => void;
     // ModuledDefinition
-    fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
-    fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
     interfaces: InterfaceDefinition[];
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
+    exports: (NamedDefinition & ExportableDefinition)[];
+    fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
+    fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
     // ExportableDefinition
     fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;

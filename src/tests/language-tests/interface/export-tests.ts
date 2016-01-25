@@ -13,6 +13,10 @@ export interface MyExportedInterface {
             name: "MyExportedInterface",
             isExported: true,
             hasExportKeyword: true
+        }],
+        exports: [{
+            name: "MyExportedInterface"
         }]
+
     });
 });

@@ -6,6 +6,8 @@ import {FunctionDefinition} from "./../function";
 import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
+import {ExportableDefinition} from "./exportable-definition";
+import {NamedDefinition} from "./named-definition";
 
 export interface IModuledDefinition {
     namespaces: NamespaceDefinition[];
@@ -14,6 +16,7 @@ export interface IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
+    exports: (NamedDefinition & ExportableDefinition)[];
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile): void;
     fillMembersBySymbol(typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol): void;
 }
@@ -25,6 +28,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
+    exports: (NamedDefinition & ExportableDefinition)[];
 
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this.initializeMD();
@@ -105,37 +109,49 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     private tryAddNamespace(definitionCache: DefinitionCache, symbol: ts.Symbol) {
         tryGet(symbol, () => definitionCache.getNamespaceDefinition(symbol), (def) => {
             this.namespaces.push(def);
+            this.checkAddToExports(def);
         });
     }
 
     private tryAddClass(definitionCache: DefinitionCache, symbol: ts.Symbol) {
         tryGet(symbol, () => definitionCache.getClassDefinition(symbol), (def) => {
             this.classes.push(def);
+            this.checkAddToExports(def);
         });
     }
 
     private tryAddEnum(definitionCache: DefinitionCache, symbol: ts.Symbol) {
         tryGet(symbol, () => definitionCache.getEnumDefinition(symbol), (def) => {
             this.enums.push(def);
+            this.checkAddToExports(def);
         });
     }
 
     private tryAddFunction(definitionCache: DefinitionCache, symbol: ts.Symbol) {
         tryGet(symbol, () => definitionCache.getFunctionDefinition(symbol), (def) => {
             this.functions.push(def);
+            this.checkAddToExports(def);
         });
     }
 
     private tryAddInterface(definitionCache: DefinitionCache, symbol: ts.Symbol) {
         tryGet(symbol, () => definitionCache.getInterfaceDefinition(symbol), (def) => {
             this.interfaces.push(def);
+            this.checkAddToExports(def);
         });
     }
 
     private tryAddVariable(definitionCache: DefinitionCache, symbol: ts.Symbol) {
         tryGet(symbol, () => definitionCache.getVariableDefinition(symbol), (def) => {
             this.variables.push(def);
+            this.checkAddToExports(def);
         });
+    }
+
+    private checkAddToExports(def: NamedDefinition & ExportableDefinition) {
+        if (def.isExported) {
+            this.exports.push(def);
+        }
     }
 
     private initializeMD() {
@@ -145,5 +161,6 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         this.enums = [];
         this.functions = [];
         this.variables = [];
+        this.exports = [];
     }
 }

@@ -20,11 +20,11 @@ export class BasePropertyDefinition implements ITypeExpressionedDefinition, INam
     }
 
     // NamedDefinition
-    fillName: (symbol: ts.Symbol) => void;
     name: string;
+    fillName: (symbol: ts.Symbol) => void;
     // TypeExpressionedDefinition
-    fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     typeExpression: TypeExpression;
+    fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(BasePropertyDefinition, [NamedDefinition, TypeExpressionedDefinition]);

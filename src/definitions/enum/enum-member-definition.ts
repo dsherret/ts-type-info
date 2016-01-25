@@ -11,12 +11,8 @@ export class EnumMemberDefinition implements INamedDefinition {
     }
 
     // NamedDefinition
-    fillName: (symbol: ts.Symbol) => void;
     name: string;
-
-    static isEnumMemberDefinition(symbol: ts.Symbol) {
-        return (symbol.flags & ts.SymbolFlags.EnumMember) !== 0;
-    }
+    fillName: (symbol: ts.Symbol) => void;
 }
 
 applyMixins(EnumMemberDefinition, [NamedDefinition]);

@@ -298,6 +298,10 @@ export class TypeChecker {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Enum);
     }
 
+    isEnumMemberSymbol(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.EnumMember);
+    }
+
     isSymbolFunction(symbol: ts.Symbol) {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Function);
     }

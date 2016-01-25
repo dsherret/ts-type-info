@@ -17,6 +17,10 @@ export function myExportedFunction() {
             name: "myExportedFunction",
             isExported: true,
             hasExportKeyword: true
+        }],
+        exports: [{
+            name: "myExportedFunction"
         }]
+
     });
 });
