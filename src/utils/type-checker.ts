@@ -347,7 +347,7 @@ export class TypeChecker {
     }
 
     typeToString(tsType: ts.Type) {
-        return this.typeChecker.typeToString(tsType, this.currentSourceFile, ts.TypeFormatFlags.UseTypeOfFunction);
+        return this.typeChecker.typeToString(tsType, this.currentSourceFile, ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation);
     }
 
     private symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {

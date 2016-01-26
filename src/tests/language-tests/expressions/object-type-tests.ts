@@ -4,7 +4,9 @@ import {runFileDefinitionTests} from "./../../test-helpers";
 describe("object type tests", () => {
     const code = `
 class MyClass {
-    myMethod(obj: { myStringParam: string; myOtherType?: Note; }) {
+    // this object type is pruposefully long because the typescript compiler will omit the text once
+    // the object type text is long enough unless TypeFormatFlags.NoTruncation is set
+    myMethod(obj: { myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }) {
     }
 }
 class Note {
@@ -20,16 +22,25 @@ class Note {
                 parameters: [{
                     name: "obj",
                     typeExpression: {
-                        text: "{ myStringParam: string; myOtherType?: Note; }",
+                        text: "{ myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
                         types: [{
-                            text: "{ myStringParam: string; myOtherType?: Note; }",
+                            text: "{ myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
                             properties: [{
-                                name: "myStringParam",
+                                name: "myString",
                                 typeExpression: { text: "string" }
                             }, {
                                 name: "myOtherType",
                                 isOptional: true,
                                 typeExpression: { text: "Note" }
+                            }, {
+                                name: "myNext",
+                                typeExpression: { text: "string" }
+                            }, {
+                                name: "myNext2",
+                                typeExpression: { text: "string" }
+                            }, {
+                                name: "myReallyReallyReallyReallyReallyLongName",
+                                typeExpression: { text: "string" }
                             }]
                         }]
                     }
