@@ -8,3 +8,4 @@ export * from "./utils/try-get";
 export * from "./utils/type-checker";
 export * from "./utils/type-expression-cache";
 export * from "./utils/type-guards";
+export * from "./utils/logger";

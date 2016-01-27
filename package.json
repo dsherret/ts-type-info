@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "tmp": "0.0.28",
-    "typescript": "^1.7.3"
+    "typescript": "^1.7.3",
+    "code-block-writer": "^1.7.0"
   },
   "devDependencies": {
-    "code-block-writer": "^1.5.2",
     "coveralls": "^2.11.6",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
