@@ -1,4 +1,5 @@
 import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {ConstructorDefinition} from "./constructor-definition";
 import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
@@ -9,6 +10,8 @@ import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
+import {ClassWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
 
 export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     isAbstract: boolean;
@@ -31,6 +34,13 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         this.fillAmbientable(typeChecker, symbol);
         this.fillIsAbstract(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
+    }
+
+    write() {
+        const writer = new CodeBlockWriter();
+        const classWriter = new ClassWriter(writer);
+        classWriter.write(this, WriteFlags.None);
+        return writer.toString();
     }
 
     private fillIsAbstract(typeChecker: TypeChecker, symbol: ts.Symbol) {
