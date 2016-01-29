@@ -1,8 +1,10 @@
 ﻿import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {EnumMemberDefinition} from "./enum-member-definition";
 import {INamedDefinition, NamedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition} from "./../base";
+import {EnumWriter} from "./../../writers";
 
 export class EnumDefinition implements INamedDefinition, IExportableDefinition, IAmbientableDefinition {
     members: EnumMemberDefinition[] = [];
@@ -12,6 +14,13 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition, 
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
+    }
+
+    write() {
+        const writer = new CodeBlockWriter();
+        const enumWriter = new EnumWriter(writer);
+        enumWriter.write(this);
+        return writer.toString();
     }
 
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
