@@ -1,4 +1,5 @@
 ﻿import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, IBaseNamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
     IAmbientableDefinition, AmbientableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
@@ -8,6 +9,8 @@ import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
 import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 import {NamespaceDeclarationType} from "./namespace-declaration-type";
+import {NamespaceWriter, ModuledWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
 
 export class NamespaceDefinition implements INamedDefinition, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
@@ -17,6 +20,13 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
+    }
+
+    write() {
+        const writer = new CodeBlockWriter();
+        const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
+        namespaceWriter.write(this, WriteFlags.None);
+        return writer.toString();
     }
 
     private fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {

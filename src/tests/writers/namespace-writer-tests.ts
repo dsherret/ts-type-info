@@ -4,6 +4,7 @@ import {NamespaceDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {namespaceWriterTestCode} from "./test-code";
 
 function getNamespaceAsString(f: NamespaceDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -14,18 +15,8 @@ function getNamespaceAsString(f: NamespaceDefinition, flags: WriteFlags) {
     return codeBlockWriter.toString();
 }
 
-describe("ModuledWriter", () => {
-    const code = `
-namespace MyNamespace {
-    interface MyInterface {
-    }
-}
-module MyModule {
-    interface MyInterface {
-    }
-}
-`;
-    const myFile = getStringInfo(code);
+describe("NamespaceWriter", () => {
+    const myFile = getStringInfo(namespaceWriterTestCode);
 
     describe("write()", () => {
         describe("MyNamespace", () => {
