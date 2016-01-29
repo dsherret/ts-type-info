@@ -1,4 +1,5 @@
 ﻿import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
@@ -7,6 +8,8 @@ import {TypeExpression} from "./../../expressions";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfacePropertyDefinition} from "./interface-property-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
+import {InterfaceWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
 
 export class InterfaceDefinition implements INamedDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
@@ -19,6 +22,13 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
         this.fillExportable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
+    }
+
+    write() {
+        const writer = new CodeBlockWriter();
+        const interfaceWriter = new InterfaceWriter(writer);
+        interfaceWriter.write(this, WriteFlags.None);
+        return writer.toString();
     }
 
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {

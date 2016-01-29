@@ -3,6 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {EnumDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {EnumWriter} from "./../../../writers";
+import {enumWriterTestCode} from "./../../writers/test-code";
 
 function getWriterString(e: EnumDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -14,13 +15,7 @@ function getWriterString(e: EnumDefinition) {
 }
 
 describe("EnumDefinition", () => {
-    const code = `
-enum MyEnum {
-    enumMember1 = 1,
-    enumMember2
-}
-`;
-    const file = getStringInfo(code);
+    const file = getStringInfo(enumWriterTestCode);
 
     describe("write()", () => {
         file.enums.forEach(e => {

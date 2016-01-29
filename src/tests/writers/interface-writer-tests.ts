@@ -4,6 +4,7 @@ import {InterfaceDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {interfaceWriterTestCode} from "./test-code";
 
 function getInterfaceAsString(i: InterfaceDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -15,19 +16,7 @@ function getInterfaceAsString(i: InterfaceDefinition, flags: WriteFlags) {
 }
 
 describe("InterfaceWriter", () => {
-    const code = `
-interface MyInterface {
-    myString: string;
-    myMethod(): void;
-}
-
-interface MyTypeParameterInterface<T> {
-}
-
-interface MyExtenedInterface extends MyTypeParameterInterface<string> {
-}
-`;
-    const file = getStringInfo(code);
+    const file = getStringInfo(interfaceWriterTestCode);
 
     describe("write()", () => {
         describe("MyInterface", () => {
