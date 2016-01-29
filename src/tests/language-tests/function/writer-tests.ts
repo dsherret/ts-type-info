@@ -21,7 +21,7 @@ describe("FunctionDefinition", () => {
     describe("write()", () => {
         file.functions.forEach(i => {
             it(`should write the same thing as a function writer for the function ${i.name}`, () => {
-                assert.equal(i.write(), getWriterString(i, WriteFlags.None));
+                assert.equal(i.write(), getWriterString(i, WriteFlags.Default));
             });
         });
     });

@@ -24,7 +24,7 @@ function myFunction(param1: string, param2 = "text", param3?: number, ...params:
     describe("write()", () => {
         it("should contain the parameters written out without the default expressions", () => {
             assert.equal(
-                getParametersAsString(myFunction.parameters, WriteFlags.None),
+                getParametersAsString(myFunction.parameters, WriteFlags.Default),
                 `(param1: string, param2?: string, param3?: number, ...params: string[])`
             );
         });

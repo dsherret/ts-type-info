@@ -21,7 +21,7 @@ describe("ClassDefinition", () => {
     describe("write()", () => {
         file.classes.forEach(c => {
             it(`should write the same thing as a class writer for the class ${c.name}`, () => {
-                assert.equal(c.write(), getWriterString(c, WriteFlags.None));
+                assert.equal(c.write(), getWriterString(c, WriteFlags.Default));
             });
         });
     });

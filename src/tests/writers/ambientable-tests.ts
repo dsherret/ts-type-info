@@ -57,7 +57,7 @@ declare enum MyEnum {
 
 declare function myFunction(): void;
 `;
-            assert.equal(getFileAsString(myFile, WriteFlags.None), expected);
+            assert.equal(getFileAsString(myFile, WriteFlags.Default), expected);
         });
     });
 });

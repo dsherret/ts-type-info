@@ -1,17 +1,16 @@
-﻿/*import * as TsTypeInfoWriter from "ts-type-info-writer";
-import {getFileInfo} from "./../main";
-import * as path from "path";
+﻿import * as path from "path";
 import * as fs from "fs";
+import {getFileInfo} from "./../main";
+import {FileDefinition} from "./../definitions";
 
 export function generateDefinitionFile() {
-    const fileInfo = getFileInfo([path.join(__dirname, "../../src/main")])[0] as any as TsTypeInfo.FileDefinition;
-    const definitionFileText = TsTypeInfoWriter.getDefinitionFileFromFileDefinitionExports({
+    const fileInfo = getFileInfo([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")])
+                        .filter(f => /main\.ts/.exec(f.fileName) ? true : false)[0] as any as FileDefinition;
+    const definitionFileText = fileInfo.writeExportsAsDefinitionFile({
         definitionName: "ts-type-info",
         moduleName: "TsTypeInfo",
-        fileDefinition: fileInfo,
         referencePaths: []
     });
 
-    fs.writeFile(path.join(__dirname, "../ts-type-info.d.ts"), definitionFileText);
+    fs.writeFile(path.join(__dirname, "../../ts-type-info.d.ts"), definitionFileText);
 }
-*/

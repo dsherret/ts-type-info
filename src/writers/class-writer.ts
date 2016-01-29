@@ -5,6 +5,7 @@ import {TypeParameterWriter} from "./type-parameter-writer";
 import {PropertyWriter} from "./property-writer";
 import {MethodWriter} from "./method-writer";
 import {WriteFlags} from "./../write-flags";
+import {Scope} from "./../definitions";
 
 export class ClassWriter extends BaseWriter {
     private typeParameterWriter = new TypeParameterWriter(this.writer);
@@ -32,13 +33,17 @@ export class ClassWriter extends BaseWriter {
 
     private writeProperties(def: ClassDefinition, flags: WriteFlags) {
         def.properties.forEach(p => {
-            this.propertyWriter.write(p, flags);
+            if (flags & WriteFlags.PrivateMembers || p.scope !== Scope.private) {
+                this.propertyWriter.write(p, flags);
+            }
         });
     }
 
     private writeMethods(def: ClassDefinition, flags: WriteFlags) {
         def.methods.forEach(m => {
-            this.methodWriter.write(m, flags);
+            if (flags & WriteFlags.PrivateMembers || m.scope !== Scope.private) {
+                this.methodWriter.write(m, flags);
+            }
         });
     }
 }

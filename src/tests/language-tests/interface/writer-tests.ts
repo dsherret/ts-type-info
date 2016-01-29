@@ -21,7 +21,7 @@ describe("InterfaceDefinition", () => {
     describe("write()", () => {
         file.interfaces.forEach(i => {
             it(`should write the same thing as a interface writer for the interface ${i.name}`, () => {
-                assert.equal(i.write(), getWriterString(i, WriteFlags.None));
+                assert.equal(i.write(), getWriterString(i, WriteFlags.Default));
             });
         });
     });

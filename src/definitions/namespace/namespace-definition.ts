@@ -25,7 +25,7 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
     write() {
         const writer = new CodeBlockWriter();
         const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
-        namespaceWriter.write(this, WriteFlags.None);
+        namespaceWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 

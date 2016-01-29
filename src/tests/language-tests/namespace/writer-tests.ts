@@ -21,7 +21,7 @@ describe("NamespaceDefinition", () => {
     describe("write()", () => {
         file.namespaces.forEach(i => {
             it(`should write the same thing as a namespace writer for the namespace ${i.name}`, () => {
-                assert.equal(i.write(), getWriterString(i, WriteFlags.None));
+                assert.equal(i.write(), getWriterString(i, WriteFlags.Default));
             });
         });
     });

@@ -27,7 +27,7 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
     write() {
         const writer = new CodeBlockWriter();
         const interfaceWriter = new InterfaceWriter(writer);
-        interfaceWriter.write(this, WriteFlags.None);
+        interfaceWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 

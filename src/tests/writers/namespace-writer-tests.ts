@@ -27,7 +27,7 @@ describe("NamespaceWriter", () => {
     }
 }
 `;
-                assert.equal(getNamespaceAsString(myFile.namespaces[0], WriteFlags.None), expected);
+                assert.equal(getNamespaceAsString(myFile.namespaces[0], WriteFlags.Default), expected);
             });
         });
 
@@ -39,7 +39,7 @@ describe("NamespaceWriter", () => {
     }
 }
 `;
-                assert.equal(getNamespaceAsString(myFile.namespaces[1], WriteFlags.None), expected);
+                assert.equal(getNamespaceAsString(myFile.namespaces[1], WriteFlags.Default), expected);
             });
         });
     });

@@ -20,7 +20,7 @@ describe("FileDefinition", () => {
 
     describe("write()", () => {
         it(`should write the same thing as a file writer for the file`, () => {
-            assert.equal(file.write(), getWriterString(file, WriteFlags.None));
+            assert.equal(file.write(), getWriterString(file, WriteFlags.Default));
         });
     });
 });

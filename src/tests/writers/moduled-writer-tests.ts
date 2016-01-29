@@ -52,7 +52,7 @@ enum MyEnum {
 function myFunction(): void {
 }
 `;
-            assert.equal(getModuledAsString(myFile, WriteFlags.None), expected);
+            assert.equal(getModuledAsString(myFile, WriteFlags.Default), expected);
         });
     });
 });

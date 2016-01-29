@@ -28,7 +28,7 @@ class MyClass {
     describe("write()", () => {
         describe("nonOptionalString", () => {
             it("should contain the property written out", () => {
-                assert.equal(getPropertyAsString(myClass.properties[0], WriteFlags.None), `nonOptionalString: string;\n`);
+                assert.equal(getPropertyAsString(myClass.properties[0], WriteFlags.Default), `nonOptionalString: string;\n`);
             });
 
             it("should contain the property written out with the default expression", () => {
@@ -38,19 +38,19 @@ class MyClass {
 
         describe("optionalNumber", () => {
             it("should contain the property written out", () => {
-                assert.equal(getPropertyAsString(myClass.properties[1], WriteFlags.None), "optionalNumber?: number;\n");
+                assert.equal(getPropertyAsString(myClass.properties[1], WriteFlags.Default), "optionalNumber?: number;\n");
             });
         });
 
         describe("protectedString", () => {
             it("should contain the property written out", () => {
-                assert.equal(getPropertyAsString(myClass.properties[2], WriteFlags.None), "protected protectedString: string;\n");
+                assert.equal(getPropertyAsString(myClass.properties[2], WriteFlags.Default), "protected protectedString: string;\n");
             });
         });
 
         describe("privateString", () => {
             it("should contain the property written out", () => {
-                assert.equal(getPropertyAsString(myClass.properties[3], WriteFlags.None), "private privateString: string;\n");
+                assert.equal(getPropertyAsString(myClass.properties[3], WriteFlags.Default), "private privateString: string;\n");
             });
         });
     });

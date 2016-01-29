@@ -1,8 +1,12 @@
 ﻿const code = `
 class MyClass {
-    private myString: string;
+    myString: string;
+    private myPrivateString: string;
 
     myMethod() {
+    }
+
+    private myPrivateMethod() {
     }
 }
 

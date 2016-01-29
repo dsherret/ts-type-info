@@ -23,7 +23,20 @@ describe("ClassWriter", () => {
             it("should contain the class written out", () => {
                 const expected =
 `class MyClass {
-    private myString: string;
+    myString: string;
+    private myPrivateString: string;
+
+    myMethod(): void;
+    private myPrivateMethod(): void;
+}
+`;
+                assert.equal(getClassAsString(file.classes[0], WriteFlags.PrivateMembers), expected);
+            });
+
+            it("should contain the class written out without the private members", () => {
+                const expected =
+`class MyClass {
+    myString: string;
 
     myMethod(): void;
 }
@@ -38,7 +51,7 @@ describe("ClassWriter", () => {
 `class MyTypeParameterClass<T> {
 }
 `;
-                assert.equal(getClassAsString(file.classes[1], WriteFlags.None), expected);
+                assert.equal(getClassAsString(file.classes[1], WriteFlags.Default), expected);
             });
         });
 
@@ -48,7 +61,7 @@ describe("ClassWriter", () => {
 `class MyChildClass extends MyTypeParameterClass<string> {
 }
 `;
-                assert.equal(getClassAsString(file.classes[2], WriteFlags.None), expected);
+                assert.equal(getClassAsString(file.classes[2], WriteFlags.Default), expected);
             });
         });
 
@@ -58,7 +71,7 @@ describe("ClassWriter", () => {
 `class MyImplementsClass implements MyChildClass {
 }
 `;
-                assert.equal(getClassAsString(file.classes[3], WriteFlags.None), expected);
+                assert.equal(getClassAsString(file.classes[3], WriteFlags.Default), expected);
             });
         });
 
@@ -68,7 +81,7 @@ describe("ClassWriter", () => {
 `class MyExtendsImplementsClass extends MyChildClass implements MyImplementsClass {
 }
 `;
-                assert.equal(getClassAsString(file.classes[4], WriteFlags.None), expected);
+                assert.equal(getClassAsString(file.classes[4], WriteFlags.Default), expected);
             });
         });
     });

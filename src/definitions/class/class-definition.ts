@@ -39,7 +39,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
     write() {
         const writer = new CodeBlockWriter();
         const classWriter = new ClassWriter(writer);
-        classWriter.write(this, WriteFlags.None);
+        classWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 

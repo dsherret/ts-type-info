@@ -28,7 +28,7 @@ describe("InterfaceWriter", () => {
     myMethod(): void;
 }
 `;
-                assert.equal(getInterfaceAsString(file.interfaces[0], WriteFlags.None), expected);
+                assert.equal(getInterfaceAsString(file.interfaces[0], WriteFlags.Default), expected);
             });
         });
 
@@ -38,7 +38,7 @@ describe("InterfaceWriter", () => {
 `interface MyTypeParameterInterface<T> {
 }
 `;
-                assert.equal(getInterfaceAsString(file.interfaces[1], WriteFlags.None), expected);
+                assert.equal(getInterfaceAsString(file.interfaces[1], WriteFlags.Default), expected);
             });
         });
 
@@ -48,7 +48,7 @@ describe("InterfaceWriter", () => {
 `interface MyExtenedInterface extends MyTypeParameterInterface<string> {
 }
 `;
-                assert.equal(getInterfaceAsString(file.interfaces[2], WriteFlags.None), expected);
+                assert.equal(getInterfaceAsString(file.interfaces[2], WriteFlags.Default), expected);
             });
         });
     });

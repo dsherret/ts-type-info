@@ -66,7 +66,7 @@ export class FileDefinition implements IModuledDefinition {
     write() {
         const writer = new CodeBlockWriter();
         const fileWriter = new FileWriter(writer);
-        fileWriter.write(this, WriteFlags.None);
+        fileWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
@@ -81,7 +81,19 @@ export class FileDefinition implements IModuledDefinition {
         writer.write(`declare module ${options.moduleName}`).block(() => {
             this.exports.forEach((exportDef) => {
                 exportDef.hasExportKeyword = false;
+
+                if ((exportDef as ClassDefinition).methods != null) {
+                    const methodDef = exportDef as InterfaceDefinition | ClassDefinition;
+                    methodDef.methods = methodDef.methods.filter(m => m.name.indexOf("fill") !== 0 && m.name !== "addType");
+                }
+
+                if ((exportDef as ClassDefinition).properties != null) {
+                    const propertyDef = exportDef as InterfaceDefinition | ClassDefinition;
+                    propertyDef.properties = propertyDef.properties.filter(m => m.name.indexOf("fill") !== 0 && m.name !== "addType");
+                }
+
                 writeDefinition(exportDef, WriteFlags.HideFunctionBodies, writer);
+                writer.newLine();
             });
         });
 

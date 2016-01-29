@@ -17,7 +17,7 @@ export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefiniti
     write() {
         const writer = new CodeBlockWriter();
         const functionWriter = new FunctionWriter(writer);
-        functionWriter.write(this, WriteFlags.None);
+        functionWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
