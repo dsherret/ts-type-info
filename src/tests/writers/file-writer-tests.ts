@@ -4,6 +4,7 @@ import {FileDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {fileWriterTestCode} from "./test-code";
 
 function getFileAsString(f: FileDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -15,21 +16,7 @@ function getFileAsString(f: FileDefinition, flags: WriteFlags) {
 }
 
 describe("FileWriter", () => {
-    const code = `
-namespace MyNamespace {
-}
-module MyModule {
-}
-interface MyInterface {
-}
-class MyClass {
-}
-enum MyEnum {
-}
-function myFunction() {
-}
-`;
-    const myFile = getStringInfo(code);
+    const myFile = getStringInfo(fileWriterTestCode);
 
     describe("write()", () => {
         it("should contain the file written out", () => {

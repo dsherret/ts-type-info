@@ -1,4 +1,5 @@
 import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {TypeChecker, DefinitionCache, applyMixins} from "./../../utils";
 import {IModuledDefinition, ModuledDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../base";
 import {NamespaceDefinition} from "./../namespace";
@@ -9,6 +10,9 @@ import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
 import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
+import {FileWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
+import {writeDefinition} from "./../../write-definition";
 
 export class FileDefinition implements IModuledDefinition {
     fileName: string;
@@ -57,6 +61,37 @@ export class FileDefinition implements IModuledDefinition {
                 console.warn(`Not implemented re-export symbol: ${fileReExportSymbol.name}`);
             }
         }
+    }
+
+    write() {
+        const writer = new CodeBlockWriter();
+        const fileWriter = new FileWriter(writer);
+        fileWriter.write(this, WriteFlags.None);
+        return writer.toString();
+    }
+
+    writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; referencePaths: string[]; }) {
+        const writer = new CodeBlockWriter();
+        (options.referencePaths || []).forEach(referencePath => {
+            writer.writeLine(`/// <reference path="${referencePath}" />`);
+        });
+
+        writer.newLine();
+
+        writer.write(`declare module ${options.moduleName}`).block(() => {
+            this.exports.forEach((exportDef) => {
+                exportDef.hasExportKeyword = false;
+                writeDefinition(exportDef, WriteFlags.HideFunctionBodies, writer);
+            });
+        });
+
+        writer.newLine();
+
+        writer.write(`declare module "${options.definitionName}"`).block(() => {
+            writer.write(`export = ${options.moduleName};`);
+        });
+
+        return writer.toString();
     }
 
     // NamedDefinition
