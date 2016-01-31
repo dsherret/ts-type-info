@@ -1,4 +1,4 @@
-﻿import {BaseParameterDefinition} from "./../definitions";
+﻿import {ParameterDefinitions} from "./../definitions";
 import {ExpressionWriter} from "./expression-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {BaseWriter} from "./base-writer";
@@ -8,7 +8,7 @@ export class ParameterWriter extends BaseWriter {
     private typeExpressionWriter = new TypeExpressionWriter(this.writer);
     private expressionWriter = new ExpressionWriter(this.writer);
 
-    write(parameters: BaseParameterDefinition[], flags: WriteFlags) {
+    write(parameters: ParameterDefinitions[], flags: WriteFlags) {
         this.writer.write("(");
         parameters.forEach((param, i) => {
             if (i !== 0) {
@@ -28,13 +28,13 @@ export class ParameterWriter extends BaseWriter {
         this.writer.write(")");
     }
 
-    private writeRestParameter(param: BaseParameterDefinition) {
+    private writeRestParameter(param: ParameterDefinitions) {
         if (param.isRestParameter) {
             this.writer.write("...");
         }
     }
 
-    private writeIsOptional(param: BaseParameterDefinition) {
+    private writeIsOptional(param: ParameterDefinitions) {
         if (param.isOptional && !param.isRestParameter) {
             this.writer.write("?");
         }

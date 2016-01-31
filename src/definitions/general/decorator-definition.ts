@@ -3,8 +3,7 @@ import {IBaseNamedDefinition} from "./../base";
 import {Expression} from "./../../expressions";
 import {TypeChecker, TypeGuards} from "./../../utils";
 
-export class DecoratorDefinition implements IBaseNamedDefinition {
-    name: string;
+export class DecoratorDefinition<T> implements IBaseNamedDefinition<T> {
     arguments: Expression[] = [];
 
     constructor(typeChecker: TypeChecker, decorator: ts.Decorator) {
@@ -35,4 +34,8 @@ export class DecoratorDefinition implements IBaseNamedDefinition {
             this.arguments.push(new Expression(typeChecker, arg));
         }
     }
+
+    // NamedDefinition
+    name: string;
+    parent: T;
 }

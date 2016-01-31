@@ -1,9 +1,9 @@
 import * as assert from "assert";
-import {IDecoratableDefinition} from "./../../../../definitions";
+import {DecoratedDefinitions} from "./../../../../definitions";
 import {runDecoratorDefinitionTests} from "./../general";
 import {DecoratableStructure} from "./../../structures";
 
-export function runDecoratableDefinitionTests(definition: IDecoratableDefinition, structure: DecoratableStructure) {
+export function runDecoratableDefinitionTests(definition: DecoratedDefinitions, structure: DecoratableStructure) {
     describe("decorators", () => {
         structure.decorators = structure.decorators || [];
 

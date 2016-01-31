@@ -1,4 +1,5 @@
-﻿import {ParameteredStructure, ParameterStructure, ReturnTypedStructure} from "./../function";
+﻿import {ParameteredStructure, ReturnTypedStructure} from "./../function";
+import {InterfaceNewSignatureParameterStructure} from "./interface-new-signature-parameter-structure";
 
-export interface InterfaceNewSignatureStructure extends ParameteredStructure<ParameterStructure>, ReturnTypedStructure {
+export interface InterfaceNewSignatureStructure extends ParameteredStructure<InterfaceNewSignatureParameterStructure>, ReturnTypedStructure {
 }

@@ -1,8 +1,9 @@
 import {InterfaceNewSignatureStructure} from "./../../structures";
 import {InterfaceNewSignatureDefinition} from "./../../../../definitions";
-import {runParameteredDefinitionTests, runParameterDefinitionTests, runReturnTypedDefinitionTests} from "./../function";
+import {runParameteredDefinitionTests, runReturnTypedDefinitionTests} from "./../function";
+import {runInterfaceNewSignatureParameterDefinitionTests} from "./run-interface-new-signature-parameter-definition-tests";
 
 export function runInterfaceNewSignatureDefinitionTests(definition: InterfaceNewSignatureDefinition, structure: InterfaceNewSignatureStructure) {
-    runParameteredDefinitionTests(runParameterDefinitionTests, definition, structure);
+    runParameteredDefinitionTests(runInterfaceNewSignatureParameterDefinitionTests, definition, structure);
     runReturnTypedDefinitionTests(definition, structure);
 }

@@ -19,11 +19,11 @@ describe("file re-export tests", () => {
         }],
         exports: [{
             name: "TestClass",
-            hasExportKeyword: true,
+            isNamedExportOfFile: true,
             isExported: true
         }, {
             name: "TestEnum",
-            hasExportKeyword: true,
+            isNamedExportOfFile: true,
             isExported: true
         }]
     });

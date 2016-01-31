@@ -5,7 +5,8 @@
 import * as TestClassModule from "./test-class";
 import {TestEnum} from "./test-enum";
 import {Class1, Class2} from "./test-multiple-classes";
-import TestDefaultClass from "./test-default-class";
+import TestDefaultClassAsImported from "./test-default-class";
+import TestDefaultSeparateClassAsImported from "./test-default-separate-class";
 import * as definition from "definition";
 import * as reexports from "./re-export";
 import {MyInterface} from "./test-interface";
@@ -18,7 +19,8 @@ function dummyFunction(t: any) {
 }
 
 dummyFunction(new TestClassModule.TestClass());
-dummyFunction(new TestDefaultClass());
+dummyFunction(new TestDefaultClassAsImported());
+dummyFunction(new TestDefaultSeparateClassAsImported());
 dummyFunction(new Class1());
 dummyFunction(new Class2());
 dummyFunction(TestEnum);

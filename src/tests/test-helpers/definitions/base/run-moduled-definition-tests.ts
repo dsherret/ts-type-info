@@ -87,7 +87,7 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
         expected.exports.forEach((exportStructure, i) => {
             // defaults
             exportStructure.isExported = exportStructure.isExported == null ? true : exportStructure.isExported;
-            exportStructure.hasExportKeyword = exportStructure.hasExportKeyword == null ? true : exportStructure.hasExportKeyword;
+            exportStructure.isNamedExportOfFile = exportStructure.isNamedExportOfFile == null ? true : exportStructure.isNamedExportOfFile;
 
             runNamedDefinitionTests(definition.exports[i], exportStructure);
             runExportableDefinitionTests(definition.exports[i], exportStructure);

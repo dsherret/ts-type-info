@@ -1,10 +1,10 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {IBaseNamedDefinition, ClassDefinition, InterfaceDefinition, FunctionDefinition, FileDefinition, NamespaceDefinition, EnumDefinition} from "./definitions";
+import {WriteableDefinitions, ClassDefinition, InterfaceDefinition, FunctionDefinition, FileDefinition, NamespaceDefinition, EnumDefinition} from "./definitions";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter} from "./writers";
 import {WriteFlags} from "./write-flags";
 import {Logger} from "./utils";
 
-export function writeDefinition(definition: IBaseNamedDefinition, writeFlags: WriteFlags, writer: CodeBlockWriter) {
+export function writeDefinition(definition: WriteableDefinitions, writeFlags: WriteFlags, writer: CodeBlockWriter) {
     if (definition instanceof ClassDefinition) {
         new ClassWriter(writer).write(definition, writeFlags);
     }

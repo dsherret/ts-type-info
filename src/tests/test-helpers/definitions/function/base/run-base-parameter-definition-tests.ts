@@ -3,7 +3,7 @@ import {BaseParameterStructure} from "./../../../structures";
 import {BaseParameterDefinition} from "./../../../../../definitions";
 import {runNamedDefinitionTests, runTypeExpressionedDefinitionTests, runDefaultExpressionedDefinitionTests} from "./../../base";
 
-export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition, structure: BaseParameterStructure) {
+export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition<any>, structure: BaseParameterStructure) {
     runNamedDefinitionTests(definition, structure);
     runTypeExpressionedDefinitionTests(definition, structure);
     runDefaultExpressionedDefinitionTests(definition, structure);

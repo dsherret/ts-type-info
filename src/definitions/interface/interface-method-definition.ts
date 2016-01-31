@@ -1,9 +1,11 @@
 ﻿import * as ts from "typescript";
-import {BaseFunctionDefinition, ParameterDefinition} from "./../function";
+import {BaseFunctionDefinition} from "./../function";
+import {InterfaceDefinition} from "./interface-definition";
+import {InterfaceMethodParameterDefinition} from "./interface-method-parameter-definition";
 import {TypeChecker} from "./../../utils";
 
-export class InterfaceMethodDefinition extends BaseFunctionDefinition<ParameterDefinition> {
+export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceMethodDefinition, InterfaceDefinition, InterfaceMethodParameterDefinition> {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(ParameterDefinition, typeChecker, symbol);
+        super(InterfaceMethodParameterDefinition, typeChecker, symbol);
     }
 }

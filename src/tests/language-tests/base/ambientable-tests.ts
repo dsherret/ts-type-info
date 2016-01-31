@@ -63,7 +63,7 @@ declare module MyAmbientModule {
             }],
             exports: [{
                 name: "MyClass",
-                hasExportKeyword: false
+                isNamedExportOfFile: false
             }]
         }],
     });

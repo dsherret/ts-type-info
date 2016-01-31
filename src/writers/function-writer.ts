@@ -1,5 +1,4 @@
-﻿import {BaseParameterDefinition, BaseFunctionDefinition, ExportableDefinition,
-    AmbientableDefinition, ParameterDefinition} from "./../definitions";
+﻿import {ExportableDefinition, AmbientableDefinition, ParameterDefinitions, FunctionDefinitions, FunctionDefinition} from "./../definitions";
 import {TypeParameterWriter} from "./type-parameter-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {ParameterWriter} from "./parameter-writer";
@@ -11,20 +10,20 @@ export class FunctionWriter extends BaseWriter {
     private typeExpressionWriter = new TypeExpressionWriter(this.writer);
     private parameterWriter = new ParameterWriter(this.writer);
 
-    write<T extends BaseParameterDefinition>(def: BaseFunctionDefinition<T>, flags: WriteFlags) {
-        this.writeExportClause(def as any as ExportableDefinition);
-        this.writeDeclareClause(def as any as AmbientableDefinition);
+    write(def: FunctionDefinitions, flags: WriteFlags) {
+        this.writeExportClause(def as FunctionDefinition);
+        this.writeDeclareClause(def as FunctionDefinition);
         this.writer.write("function ").write(def.name);
         this.typeParameterWriter.write(def.typeParameters);
-        this.parameterWriter.write(def.parameters as any as ParameterDefinition[], flags);
+        this.parameterWriter.write(def.parameters, flags);
         this.writer.write(": ");
         this.typeExpressionWriter.write(def.returnTypeExpression);
         this.writeFunctionBody(def, flags);
         this.writer.newLine();
     }
 
-    private writeFunctionBody<T extends BaseParameterDefinition>(def: BaseFunctionDefinition<T>, flags: WriteFlags) {
-        if ((flags & WriteFlags.HideFunctionBodies) || (def as any as AmbientableDefinition).isAmbient) {
+    private writeFunctionBody(def: FunctionDefinitions, flags: WriteFlags) {
+        if ((flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient) {
             this.writer.write(";");
         }
         else {

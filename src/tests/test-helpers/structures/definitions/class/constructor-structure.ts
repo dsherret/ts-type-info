@@ -1,5 +1,5 @@
 import {ParameteredStructure} from "./../function";
-import {ClassMethodParameterStructure} from "./class-method-parameter-structure";
+import {ConstructorParameterStructure} from "./constructor-parameter-structure";
 
-export interface ConstructorStructure extends ParameteredStructure<ClassMethodParameterStructure> {
+export interface ConstructorStructure extends ParameteredStructure<ConstructorParameterStructure> {
 }

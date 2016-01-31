@@ -11,12 +11,13 @@ import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 import {NamespaceDeclarationType} from "./namespace-declaration-type";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {ExportedDefinitions} from "./../../definitions";
 
-export class NamespaceDefinition implements INamedDefinition, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
+export class NamespaceDefinition implements INamedDefinition<IModuledDefinition>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.fillName(symbol);
+        this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
@@ -42,7 +43,8 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
 
     // NamedDefinition
     name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    parent: IModuledDefinition;
+    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ModuledDefinition
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
@@ -50,12 +52,13 @@ export class NamespaceDefinition implements INamedDefinition, IExportableDefinit
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: (IBaseNamedDefinition & IExportableDefinition)[];
+    exports: ExportedDefinitions[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
     // ExportableDefinition
     isExported: boolean;
-    hasExportKeyword: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
     fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // AmbientableDefinition
     isAmbient: boolean;

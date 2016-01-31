@@ -4,7 +4,7 @@ import {TypeParameterWriter} from "./../../writers";
 import {TypeParameterDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 
-function getTypeParametersAsString(typeParameters: TypeParameterDefinition[]) {
+function getTypeParametersAsString(typeParameters: TypeParameterDefinition<any>[]) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new TypeParameterWriter(codeBlockWriter);
 

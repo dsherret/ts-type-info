@@ -4,11 +4,11 @@ import {TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-expressioned-definition";
 
-export class BasePropertyDefinition implements ITypeExpressionedDefinition, INamedDefinition {
+export class BasePropertyDefinition<ParentType> implements INamedDefinition<ParentType>, ITypeExpressionedDefinition {
     isOptional: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.fillName(symbol);
+        this.fillName(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillIsOptional(typeChecker, symbol);
     }
@@ -21,7 +21,8 @@ export class BasePropertyDefinition implements ITypeExpressionedDefinition, INam
 
     // NamedDefinition
     name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    parent: ParentType;
+    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;

@@ -12,7 +12,7 @@ export interface MyExportedInterface {
         interfaces: [{
             name: "MyExportedInterface",
             isExported: true,
-            hasExportKeyword: true
+            isNamedExportOfFile: true
         }],
         exports: [{
             name: "MyExportedInterface"

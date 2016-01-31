@@ -3,14 +3,14 @@ import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {EnumMemberDefinition} from "./enum-member-definition";
 import {INamedDefinition, NamedDefinition, IAmbientableDefinition, AmbientableDefinition,
-        IExportableDefinition, ExportableDefinition} from "./../base";
+        IExportableDefinition, ExportableDefinition, IModuledDefinition} from "./../base";
 import {EnumWriter} from "./../../writers";
 
-export class EnumDefinition implements INamedDefinition, IExportableDefinition, IAmbientableDefinition {
+export class EnumDefinition implements INamedDefinition<IModuledDefinition>, IExportableDefinition, IAmbientableDefinition {
     members: EnumMemberDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.fillName(symbol);
+        this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
@@ -39,10 +39,12 @@ export class EnumDefinition implements INamedDefinition, IExportableDefinition, 
 
     // NamedDefinition
     name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    parent: IModuledDefinition;
+    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ExportableDefinition
     isExported: boolean;
-    hasExportKeyword: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
     fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // AmbientableDefinition
     isAmbient: boolean;

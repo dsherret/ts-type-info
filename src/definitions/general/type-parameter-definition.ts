@@ -3,11 +3,11 @@ import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition} from "./../base";
 
-export class TypeParameterDefinition implements INamedDefinition {
+export class TypeParameterDefinition<ParentType> implements INamedDefinition<ParentType> {
     constraintTypeExpression: TypeExpression;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.fillName(symbol);
+        this.fillName(typeChecker, symbol);
         this.fillConstraint(typeChecker, symbol);
     }
 
@@ -25,7 +25,8 @@ export class TypeParameterDefinition implements INamedDefinition {
 
     // NamedDefinition
     name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    parent: ParentType;
+    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(TypeParameterDefinition, [NamedDefinition]);

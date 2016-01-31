@@ -1,11 +1,11 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {PropertyWriter} from "./../../writers";
-import {BasePropertyDefinition} from "./../../definitions";
+import {PropertyDefinitions} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {WriteFlags} from "./../../write-flags";
 
-function getPropertyAsString(prop: BasePropertyDefinition, flags: WriteFlags) {
+function getPropertyAsString(prop: PropertyDefinitions, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new PropertyWriter(codeBlockWriter);
 

@@ -2,10 +2,10 @@
 import CodeBlockWriter from "code-block-writer";
 import {ParameterWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {BaseParameterDefinition} from "./../../definitions";
+import {ParameterDefinitions} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 
-function getParametersAsString(params: BaseParameterDefinition[], flags: WriteFlags) {
+function getParametersAsString(params: ParameterDefinitions[], flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new ParameterWriter(codeBlockWriter);
 

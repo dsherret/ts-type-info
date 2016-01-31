@@ -1,4 +1,4 @@
 import {BaseClassPropertyDefinition} from "./base";
 
-export class ClassStaticPropertyDefinition extends BaseClassPropertyDefinition {
+export class ClassStaticPropertyDefinition extends BaseClassPropertyDefinition<ClassStaticPropertyDefinition> {
 }

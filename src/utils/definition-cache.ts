@@ -1,7 +1,8 @@
-import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
-        InterfaceDefinition, VariableDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../definitions";
-import {TypeChecker, KeyValueCache} from "./../utils";
 import * as ts from "typescript";
+import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
+        InterfaceDefinition, VariableDefinition, MainDefinitions, ExportedDefinitions} from "./../definitions";
+import {Expression} from "./../expressions";
+import {TypeChecker, KeyValueCache} from "./../utils";
 
 export class DefinitionCache {
     private namespaces = new KeyValueCache<ts.Symbol, NamespaceDefinition>();
@@ -13,6 +14,29 @@ export class DefinitionCache {
     private variables = new KeyValueCache<ts.Symbol, VariableDefinition>();
 
     constructor(private typeChecker: TypeChecker) {
+    }
+
+    getDefinitionOrExpressionFromNode(node: ts.Node): Expression | MainDefinitions {
+        const expressionStatement = node as ts.ExpressionStatement;
+        if (expressionStatement.expression != null) {
+            return new Expression(this.typeChecker, expressionStatement.expression);
+        }
+        else {
+            return this.getImportDefinition(this.typeChecker.getSymbolAtLocation(node));
+        }
+    }
+
+    getDefinition(symbol: ts.Symbol): MainDefinitions {
+        return this.getImportDefinition(symbol);
+    }
+
+    getImportDefinition(symbol: ts.Symbol): ExportedDefinitions {
+        return this.getClassDefinition(symbol) ||
+            this.getFunctionDefinition(symbol) ||
+            this.getInterfaceDefinition(symbol) ||
+            this.getEnumDefinition(symbol) ||
+            this.getNamespaceDefinition(symbol) ||
+            this.getVariableDefinition(symbol);
     }
 
     getFileDefinition(sourceFile: ts.SourceFile) {
@@ -139,18 +163,5 @@ export class DefinitionCache {
         }
 
         return variableDefinition;
-    }
-
-    getDefinition(symbol: ts.Symbol): IBaseNamedDefinition {
-        return this.getImportDefinition(symbol);
-    }
-
-    getImportDefinition(symbol: ts.Symbol): IBaseNamedDefinition & IExportableDefinition {
-        return this.getClassDefinition(symbol) ||
-            this.getFunctionDefinition(symbol) ||
-            this.getInterfaceDefinition(symbol) ||
-            this.getEnumDefinition(symbol) ||
-            this.getNamespaceDefinition(symbol) ||
-            this.getVariableDefinition(symbol);
     }
 }

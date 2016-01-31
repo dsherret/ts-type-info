@@ -4,8 +4,12 @@ import {Scope} from "./../scope";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {IDecoratableDefinition, DecoratableDefinition} from "./../../base";
 import {ObjectPropertyDefinition, DecoratorDefinition} from "./../../general";
+import {ClassDefinition} from "./../class-definition";
 
-export class BaseClassPropertyDefinition extends ObjectPropertyDefinition implements IDecoratableDefinition, IScopedDefinition {
+export class BaseClassPropertyDefinition<ThisType extends BaseClassPropertyDefinition<ThisType>>
+    extends ObjectPropertyDefinition<ClassDefinition>
+    implements IDecoratableDefinition<ThisType>, IScopedDefinition {
+
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol);
 
@@ -15,7 +19,7 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition implem
 
     // DecoratableDefinition
     fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    decorators: DecoratorDefinition[];
+    decorators: DecoratorDefinition<ThisType>[];
     // ScopeDefinition
     scope: Scope;
     fillScope: (symbol: ts.Symbol) => void;

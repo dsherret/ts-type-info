@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {TypeChecker, DefinitionCache, applyMixins} from "./../../utils";
 import {IModuledDefinition, ModuledDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../base";
+import {Expression} from "./../../expressions";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
@@ -10,6 +11,7 @@ import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
 import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
+import {ExportedDefinitions} from "./../../definitions";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {writeDefinition} from "./../../write-definition";
@@ -18,10 +20,12 @@ export class FileDefinition implements IModuledDefinition {
     fileName: string;
     imports: ImportDefinition[] = [];
     reExports: ReExportDefinition[] = [];
+    defaultExport: Expression | ExportedDefinitions;
 
     constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this.fileName = file.fileName;
         this.fillMembersBySourceFile(typeChecker, definitionCache, file);
+        this.fillDefaultExport(typeChecker, definitionCache, file);
     }
 
     fillImports(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
@@ -80,15 +84,13 @@ export class FileDefinition implements IModuledDefinition {
 
         writer.write(`declare module ${options.moduleName}`).block(() => {
             this.exports.forEach((exportDef) => {
-                exportDef.hasExportKeyword = false;
-
                 if ((exportDef as ClassDefinition).methods != null) {
-                    const methodDef = exportDef as InterfaceDefinition | ClassDefinition;
+                    const methodDef = exportDef as ClassDefinition;
                     methodDef.methods = methodDef.methods.filter(m => m.name.indexOf("fill") !== 0 && m.name !== "addType");
                 }
 
                 if ((exportDef as ClassDefinition).properties != null) {
-                    const propertyDef = exportDef as InterfaceDefinition | ClassDefinition;
+                    const propertyDef = exportDef as ClassDefinition;
                     propertyDef.properties = propertyDef.properties.filter(m => m.name.indexOf("fill") !== 0 && m.name !== "addType");
                 }
 
@@ -106,9 +108,18 @@ export class FileDefinition implements IModuledDefinition {
         return writer.toString();
     }
 
-    // NamedDefinition
-    name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    private fillDefaultExport(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
+        const sourceSymbol = typeChecker.getSymbolAtLocation(file);
+
+        if (sourceSymbol != null) {
+            const defaultExport = sourceSymbol.exports["default"];
+
+            if (defaultExport != null) {
+                this.defaultExport = definitionCache.getDefinitionOrExpressionFromNode(typeChecker.getDeclarationFromSymbol(defaultExport));
+            }
+        }
+    }
+
     // ModuledDefinition
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
@@ -116,7 +127,7 @@ export class FileDefinition implements IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: (IBaseNamedDefinition & IExportableDefinition)[];
+    exports: ExportedDefinitions[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
 }

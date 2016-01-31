@@ -45,6 +45,19 @@ export class TypeChecker {
         }
     }
 
+    getLocalSymbolFromSymbol(symbol: ts.Symbol) {
+        return this.getLocalSymbolFromNode(this.getDeclarationFromSymbol(symbol));
+    }
+
+    getLocalSymbolFromNode(node: ts.Node) {
+        if (node != null) {
+            return (node as any)["localSymbol"] as ts.Symbol;
+        }
+        else {
+            return null as ts.Symbol;
+        }
+    }
+
     getLocalSymbolsFromDeclaration(declaration: ts.Declaration) {
         const locals = (declaration as any).locals as { [name: string]: ts.Symbol };
 
@@ -135,6 +148,10 @@ export class TypeChecker {
         }
 
         return currentNode as ts.SourceFile;
+    }
+
+    getAliasedSymbol(symbol: ts.Symbol) {
+        return this.typeChecker.getAliasedSymbol(symbol);
     }
 
     getSymbolAtLocation(node: ts.Node) {
@@ -247,7 +264,7 @@ export class TypeChecker {
         // when a file doesn't have exports the symbol will be null
         if (fileSymbol != null) {
             for (const exportSymbol of this.typeChecker.getExportsOfModule(fileSymbol)) {
-                if (!this.isSymbolExportOfFile(exportSymbol, file)) {
+                if (!this.isSymbolNamedExportOfFile(exportSymbol, file)) {
                     fileReExports.push(exportSymbol);
                 }
             }
@@ -267,14 +284,35 @@ export class TypeChecker {
     isSymbolExportOfParent(symbol: ts.Symbol) {
         let parentSymbol = this.getSymbolParent(symbol);
 
-        return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[symbol.name] != null;
+        if (parentSymbol == null) {
+            const sourceFile = this.getSourceFileOfSymbol(symbol);
+            return this.isSymbolDefaultExportOfFile(symbol, sourceFile);
+        }
+        else {
+            return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[symbol.name] != null;
+        }
     }
 
-    isSymbolExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
+    isSymbolNamedExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
         const fileSymbol = this.getSymbolAtLocation(file);
 
         // when a file doesn't have exports the symbol will be null
         return fileSymbol != null && fileSymbol.exports[symbol.name] != null;
+    }
+
+    isSymbolDefaultExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
+        const fileSymbol = this.getSymbolAtLocation(file);
+        let isDefaultExportOfFile = false;
+
+        if (fileSymbol != null) {
+            const defaultExport = fileSymbol.exports["default"];
+
+            if (defaultExport != null) {
+                isDefaultExportOfFile = defaultExport === symbol || this.getAliasedSymbol(defaultExport) === symbol;
+            }
+        }
+
+        return isDefaultExportOfFile;
     }
 
     isSymbolClass(symbol: ts.Symbol) {

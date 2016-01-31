@@ -4,7 +4,7 @@ import {DecoratorDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests} from "./../base";
 import {runExpressionTests} from "./../../expressions";
 
-export function runDecoratorDefinitionTests(definition: DecoratorDefinition, structure: DecoratorStructure) {
+export function runDecoratorDefinitionTests(definition: DecoratorDefinition<any>, structure: DecoratorStructure) {
     describe(`decorator ${structure.name}`, () => {
         structure.arguments = structure.arguments || [];
 

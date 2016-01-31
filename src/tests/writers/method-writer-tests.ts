@@ -2,10 +2,10 @@
 import CodeBlockWriter from "code-block-writer";
 import {MethodWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {BaseFunctionDefinition, BaseParameterDefinition} from "./../../definitions";
+import {BaseParameterDefinition, MethodDefinitions} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 
-function getMethodAsString<T extends BaseParameterDefinition>(method: BaseFunctionDefinition<T>, flags: WriteFlags) {
+function getMethodAsString(method: MethodDefinitions, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new MethodWriter(codeBlockWriter);
 

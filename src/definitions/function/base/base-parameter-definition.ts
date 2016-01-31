@@ -2,17 +2,18 @@ import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {Expression, TypeExpression} from "./../../../expressions";
 import {INamedDefinition, NamedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition, IDefaultExpressionedDefinition, DefaultExpressionedDefinition} from "./../../base";
+import {BaseFunctionDefinition} from "./base-function-definition";
 
-export interface BaseParameterDefinitionConstructor<T extends BaseParameterDefinition> {
-    new(typeChecker: TypeChecker, symbol: ts.Symbol): T;
+export interface BaseParameterDefinitionConstructor<ParameterType> {
+    new(typeChecker: TypeChecker, symbol: ts.Symbol): ParameterType;
 }
 
-export class BaseParameterDefinition implements INamedDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
+export class BaseParameterDefinition<ParentType> implements INamedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.fillName(symbol);
+        this.fillName(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillParameterDetails(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
@@ -27,7 +28,8 @@ export class BaseParameterDefinition implements INamedDefinition, ITypeExpressio
 
     // NamedDefinition
     name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    parent: ParentType;
+    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;

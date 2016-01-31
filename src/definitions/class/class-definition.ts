@@ -8,19 +8,20 @@ import {ClassStaticPropertyDefinition} from "./class-static-property-definition"
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition, AmbientableDefinition,
-        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, IModuledDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+export class ClassDefinition implements INamedDefinition<IModuledDefinition>, IDecoratableDefinition<ClassDefinition>,
+                                        IExportableDefinition, ITypeParameteredDefinition<ClassDefinition>, IAmbientableDefinition {
     isAbstract: boolean;
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
     staticMethods: ClassStaticMethodDefinition[] = [];
     staticProperties: ClassStaticPropertyDefinition[] = [];
     constructorDef: ConstructorDefinition;
-    typeParameters: TypeParameterDefinition[] = [];
+    typeParameters: TypeParameterDefinition<ClassDefinition>[] = [];
 
     constructor(
         typeChecker: TypeChecker,
@@ -28,7 +29,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
         public extendsTypeExpressions: TypeExpression[],
         public implementsTypeExpressions: TypeExpression[]
     ) {
-        this.fillName(symbol);
+        this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
@@ -71,7 +72,7 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
                 // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
-                this.typeParameters.push(new TypeParameterDefinition(typeChecker, member));
+                this.typeParameters.push(new TypeParameterDefinition<ClassDefinition>(typeChecker, member));
             }
             else {
                 console.warn(`Not implemented member: ${member.getName()}`);
@@ -106,14 +107,16 @@ export class ClassDefinition implements INamedDefinition, IDecoratableDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    parent: IModuledDefinition;
+    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // DecoratableDefinition
-    decorators: DecoratorDefinition[];
+    decorators: DecoratorDefinition<ClassDefinition>[];
     fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ExportableDefinition
     isExported: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
     fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    hasExportKeyword: boolean;
     // TypeParameteredDefinition
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;

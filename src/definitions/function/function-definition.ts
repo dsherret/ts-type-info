@@ -1,15 +1,15 @@
 import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {BaseFunctionDefinition} from "./base";
-import {ParameterDefinition} from "./parameter-definition";
-import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition} from "./../base";
+import {FunctionParameterDefinition} from "./function-parameter-definition";
+import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition, IModuledDefinition} from "./../base";
 import {TypeChecker, applyMixins} from "./../../utils";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<FunctionDefinition, IModuledDefinition, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(ParameterDefinition, typeChecker, symbol);
+        super(FunctionParameterDefinition, typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
     }
@@ -22,13 +22,14 @@ export class FunctionDefinition extends BaseFunctionDefinition<ParameterDefiniti
     }
 
     // ExportableDefinition
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isExported: boolean;
-    hasExportKeyword: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
+    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // AmbientableDefinition
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(FunctionDefinition, [ExportableDefinition, AmbientableDefinition]);

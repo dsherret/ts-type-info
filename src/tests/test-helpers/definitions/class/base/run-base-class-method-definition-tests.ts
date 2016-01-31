@@ -4,7 +4,7 @@ import {runBaseFunctionDefinitionTests} from "./../../function/base/run-base-fun
 import {runClassMethodParameterDefinitionTests} from "./../run-class-method-parameter-definition-tests";
 import {runScopedDefinitionTests} from "./run-scoped-definition-tests";
 
-export function runBaseClassMethodDefinitionTests(definition: BaseClassMethodDefinition, structure: ClassMethodStructure) {
+export function runBaseClassMethodDefinitionTests<T extends BaseClassMethodDefinition<T>>(definition: T, structure: ClassMethodStructure) {
     runBaseFunctionDefinitionTests(runClassMethodParameterDefinitionTests, definition, structure);
     runScopedDefinitionTests(definition, structure);
 }

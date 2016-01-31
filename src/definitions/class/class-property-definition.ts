@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import {BaseClassPropertyDefinition} from "./base";
 import {TypeChecker} from "./../../utils";
 
-export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
+export class ClassPropertyDefinition extends BaseClassPropertyDefinition<ClassPropertyDefinition> {
     isAccessor: boolean;
     isReadonly: boolean;
 

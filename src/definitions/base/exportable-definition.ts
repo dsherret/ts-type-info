@@ -3,25 +3,20 @@ import {TypeChecker} from "./../../utils";
 
 export interface IExportableDefinition {
     isExported: boolean;
-    hasExportKeyword: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
     fillExportable(typeChecker: TypeChecker, symbol: ts.Symbol): void;
 }
 
 export abstract class ExportableDefinition implements IExportableDefinition {
     isExported: boolean;
-    hasExportKeyword: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
 
     fillExportable(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        let declaration: ts.Node;
-
-        if (typeChecker.isSymbolVariable(symbol)) {
-            declaration = typeChecker.getDeclarationFromSymbol(symbol).parent.parent;
-        }
-        else {
-            declaration = typeChecker.getDeclarationFromSymbol(symbol);
-        }
-
-        this.hasExportKeyword = declaration.flags & ts.NodeFlags.Export ? true : false;
+        const symbolSourceFile = typeChecker.getSourceFileOfSymbol(symbol);
         this.isExported = typeChecker.isSymbolExportOfParent(symbol);
+        this.isNamedExportOfFile = typeChecker.isSymbolNamedExportOfFile(symbol, symbolSourceFile);
+        this.isDefaultExportOfFile = typeChecker.isSymbolDefaultExportOfFile(symbol, symbolSourceFile);
     }
 }

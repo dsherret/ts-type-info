@@ -1,4 +1,4 @@
-﻿import {BasePropertyDefinition, ClassPropertyDefinition, ObjectPropertyDefinition} from "./../definitions";
+﻿import {PropertyDefinitions, ObjectPropertyDefinition, ClassPropertyDefinition} from "./../definitions";
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {ExpressionWriter} from "./expression-writer";
 import {ScopeWriter} from "./scope-writer";
@@ -10,7 +10,7 @@ export class PropertyWriter extends BaseWriter {
     private expressionWriter = new ExpressionWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
 
-    write(property: BasePropertyDefinition, flags: WriteFlags) {
+    write(property: PropertyDefinitions, flags: WriteFlags) {
         this.scopeWriter.write((property as ClassPropertyDefinition).scope);
         this.writer.spaceIfLastNotSpace();
         this.writer.write(property.name);
@@ -18,12 +18,12 @@ export class PropertyWriter extends BaseWriter {
         this.writer.write(": ");
         this.typeExpressionWriter.write(property.typeExpression);
         if (flags & WriteFlags.PropertyExpressions) {
-            this.expressionWriter.writeWithEqualsSign((property as ObjectPropertyDefinition).defaultExpression);
+            this.expressionWriter.writeWithEqualsSign((property as ObjectPropertyDefinition<any>).defaultExpression);
         }
         this.writer.write(";").newLine();
     }
 
-    private writeOptionalFlag(property: BasePropertyDefinition) {
+    private writeOptionalFlag(property: PropertyDefinitions) {
         if (property.isOptional) {
             this.writer.write("?");
         }

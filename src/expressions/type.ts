@@ -1,12 +1,12 @@
 ﻿import * as ts from "typescript";
-import {CallSignatureDefinition, BasePropertyDefinition, IBaseNamedDefinition} from "./../definitions";
+import {CallSignatureDefinition, IBaseNamedDefinition, TypePropertyDefinition} from "./../definitions";
 import {TypeExpression} from "./type-expression";
 import {TypeChecker, TypeExpressionCache, tryGet} from "./../utils";
 
 export class Type {
     callSignatures: CallSignatureDefinition[];
-    definition: IBaseNamedDefinition;
-    properties: BasePropertyDefinition[];
+    definition: IBaseNamedDefinition<any>; // todo: remove any type
+    properties: TypePropertyDefinition[];
     typeArguments: TypeExpression[];
     text: string;
 
@@ -25,7 +25,7 @@ export class Type {
         this.fillTypeArguments(typeChecker, typeExpressionCache, tsType);
     }
 
-    fillDefinition(definition: IBaseNamedDefinition) {
+    fillDefinition(definition: IBaseNamedDefinition<any>) {
         this.definition = definition;
     }
 
@@ -47,7 +47,7 @@ export class Type {
         this.properties = [];
 
         properties.filter(p => p.name !== "prototype").forEach(property => {
-            tryGet(property, () => new BasePropertyDefinition(typeChecker, property), def => this.properties.push(def));
+            tryGet(property, () => new TypePropertyDefinition(typeChecker, property), def => this.properties.push(def));
         });
     }
 

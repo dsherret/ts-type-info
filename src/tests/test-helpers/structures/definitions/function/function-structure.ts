@@ -1,6 +1,6 @@
-import {ParameterStructure} from "./parameter-structure";
+import {FunctionParameterStructure} from "./function-parameter-structure";
 import {BaseFunctionStructure} from "./base";
 import {ExportableStructure, AmbientableStructure} from "./../base";
 
-export interface FunctionStructure extends BaseFunctionStructure<ParameterStructure>, ExportableStructure, AmbientableStructure {
+export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, ExportableStructure, AmbientableStructure {
 }

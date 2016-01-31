@@ -2,7 +2,7 @@
 import {BaseWriter} from "./base-writer";
 
 export class TypeParameterWriter extends BaseWriter {
-    write(typeParameters: TypeParameterDefinition[]) {
+    write(typeParameters: TypeParameterDefinition<any>[]) {
         if (typeParameters.length > 0) {
             this.writer.write("<");
             this.writeTypeParameters(typeParameters);
@@ -10,7 +10,7 @@ export class TypeParameterWriter extends BaseWriter {
         }
     }
 
-    private writeTypeParameters(typeParameters: TypeParameterDefinition[]) {
+    private writeTypeParameters(typeParameters: TypeParameterDefinition<any>[]) {
         typeParameters.forEach((p, i) => {
             if (i !== 0) {
                 this.writer.write(", ");
@@ -20,7 +20,7 @@ export class TypeParameterWriter extends BaseWriter {
         });
     }
 
-    private writeTypeParameter(typeParameter: TypeParameterDefinition) {
+    private writeTypeParameter(typeParameter: TypeParameterDefinition<any>) {
         this.writer.write(typeParameter.name);
 
         if (typeParameter.constraintTypeExpression != null) {

@@ -1,4 +1,4 @@
-﻿import {BaseFunctionDefinition, BaseParameterDefinition, ParameterDefinition, ClassMethodDefinition} from "./../definitions";
+﻿import {MethodDefinitions, MethodParameterDefinitions, ClassMethodDefinition} from "./../definitions";
 import {TypeParameterWriter} from "./type-parameter-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {ParameterWriter} from "./parameter-writer";
@@ -12,12 +12,12 @@ export class MethodWriter extends BaseWriter {
     private parameterWriter = new ParameterWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
 
-    write<T extends BaseParameterDefinition>(func: BaseFunctionDefinition<T>, flags: WriteFlags) {
-        this.scopeWriter.write((func as any as ClassMethodDefinition).scope);
+    write(func: MethodDefinitions, flags: WriteFlags) {
+        this.scopeWriter.write((func as ClassMethodDefinition).scope);
         this.writer.spaceIfLastNotSpace();
         this.writer.write(func.name);
         this.typeParameterWriter.write(func.typeParameters);
-        this.parameterWriter.write(func.parameters as any as ParameterDefinition[], flags);
+        this.parameterWriter.write(func.parameters, flags);
         this.writer.write(": ");
         this.typeExpressionWriter.write(func.returnTypeExpression);
         this.writer.write(";").newLine();

@@ -1,5 +1,5 @@
-﻿import {ParameterStructure} from "./../parameter-structure";
+﻿import {BaseParameterStructure} from "./base-parameter-structure";
 
-export interface ParameteredStructure<T extends ParameterStructure> {
+export interface ParameteredStructure<T extends BaseParameterStructure> {
     parameters?: T[];
 }

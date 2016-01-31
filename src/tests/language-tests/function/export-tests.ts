@@ -16,7 +16,7 @@ export function myExportedFunction() {
         }, {
             name: "myExportedFunction",
             isExported: true,
-            hasExportKeyword: true
+            isNamedExportOfFile: true
         }],
         exports: [{
             name: "myExportedFunction"

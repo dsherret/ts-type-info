@@ -1,4 +1,5 @@
 ﻿export interface ExportableStructure {
     isExported?: boolean;
-    hasExportKeyword?: boolean;
+    isNamedExportOfFile?: boolean;
+    isDefaultExportOfFile?: boolean;
 }

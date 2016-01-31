@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
-        ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+        ITypeParameteredDefinition, TypeParameteredDefinition, IModuledDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
@@ -11,14 +11,14 @@ import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definit
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class InterfaceDefinition implements INamedDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+export class InterfaceDefinition implements INamedDefinition<IModuledDefinition>, IExportableDefinition, ITypeParameteredDefinition<InterfaceDefinition>, IAmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
-    typeParameters: TypeParameterDefinition[] = [];
+    typeParameters: TypeParameterDefinition<InterfaceDefinition>[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, public extendsTypeExpressions: TypeExpression[]) {
-        this.fillName(symbol);
+        this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
@@ -43,7 +43,7 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
                 this.methods.push(new InterfaceMethodDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
-                this.typeParameters.push(new TypeParameterDefinition(typeChecker, member));
+                this.typeParameters.push(new TypeParameterDefinition<InterfaceDefinition>(typeChecker, member));
             }
             else if (typeChecker.isSymbolNewSignature(member)) {
                 member.getDeclarations().forEach(d => {
@@ -58,10 +58,12 @@ export class InterfaceDefinition implements INamedDefinition, IExportableDefinit
 
     // NamedDefinition
     name: string;
-    fillName: (symbol: ts.Symbol) => void;
+    parent: IModuledDefinition;
+    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ExportableDefinition
     isExported: boolean;
-    hasExportKeyword: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
     fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // TypeParameteredDefinition
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;

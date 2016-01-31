@@ -6,7 +6,7 @@ export abstract class BaseWriter {
     }
 
     protected writeExportClause(def: IExportableDefinition) {
-        if (def.hasExportKeyword) {
+        if (def.isExported && !def.isDefaultExportOfFile && !(def as any as IAmbientableDefinition).isAmbient) {
             this.writer.write("export ");
         }
     }

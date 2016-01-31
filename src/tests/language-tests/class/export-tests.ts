@@ -12,7 +12,7 @@ export class MyExportedClass {
         classes: [{
             name: "MyExportedClass",
             isExported: true,
-            hasExportKeyword: true
+            isNamedExportOfFile: true
         }],
         exports: [{
             name: "MyExportedClass"

@@ -4,7 +4,7 @@ import {BasePropertyDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runTypeExpressionedDefinitionTests} from "./run-typed-definition-tests";
 
-export function runBasePropertyDefinitionTests(definition: BasePropertyDefinition, structure: BasePropertyStructure) {
+export function runBasePropertyDefinitionTests(definition: BasePropertyDefinition<any>, structure: BasePropertyStructure) {
     runNamedDefinitionTests(definition, structure);
     runTypeExpressionedDefinitionTests(definition, structure);
 

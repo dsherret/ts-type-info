@@ -1,4 +1,4 @@
 ﻿// this is a test file
-export default class TestClass {
+export default class TestDefaultClass {
     name: string;
 }

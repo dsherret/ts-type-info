@@ -1,4 +1,5 @@
-import {ParameterStructure, BaseFunctionStructure} from "./../function";
+import {BaseFunctionStructure} from "./../function";
+import {InterfaceMethodParameterStructure} from "./interface-method-parameter-structure";
 
-export interface InterfaceMethodStructure extends BaseFunctionStructure<ParameterStructure> {
+export interface InterfaceMethodStructure extends BaseFunctionStructure<InterfaceMethodParameterStructure> {
 }

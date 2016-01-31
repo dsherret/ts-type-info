@@ -4,7 +4,7 @@ import {TypeParameterDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests} from "./../base";
 import {runTypeExpressionTests} from "./../../expressions";
 
-export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition, structure: TypeParameterStructure) {
+export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition<any>, structure: TypeParameterStructure) {
     describe(`type parameter ${structure.name}`, () => {
         runNamedDefinitionTests(definition, structure);
 
