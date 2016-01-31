@@ -1,9 +1,9 @@
 import * as ts from "typescript";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition} from "./../base";
+import {INamedDefinition, NamedDefinition, IParentedDefinition} from "./../base";
 
-export class TypeParameterDefinition<ParentType> implements INamedDefinition<ParentType> {
+export class TypeParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType> {
     constraintTypeExpression: TypeExpression;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {

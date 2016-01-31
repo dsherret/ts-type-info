@@ -6,7 +6,8 @@ import {TypeParameterDefinition} from "./../general";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
 
-export class CallSignatureDefinition implements ITypeParameteredDefinition<CallSignatureDefinition>, IParameteredDefinition<CallSignatureDefinition, CallSignatureParameterDefinition>, IReturnTypedDefinition {
+export class CallSignatureDefinition implements ITypeParameteredDefinition<CallSignatureDefinition>, IParameteredDefinition<CallSignatureDefinition,
+                                                CallSignatureParameterDefinition>, IReturnTypedDefinition {
     minArgumentCount: number;
 
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {

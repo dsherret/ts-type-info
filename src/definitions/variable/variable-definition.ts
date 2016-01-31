@@ -1,11 +1,12 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
+import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
         NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition, IModuledDefinition} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableDeclarationType} from "./variable-declaration-type";
 
-export class VariableDefinition implements INamedDefinition<IModuledDefinition>, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition {
+export class VariableDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, ITypeExpressionedDefinition,
+                                           IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {

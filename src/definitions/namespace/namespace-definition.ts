@@ -1,7 +1,7 @@
 ﻿import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
-import {IModuledDefinition, ModuledDefinition, INamedDefinition, IBaseNamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition,
-    IAmbientableDefinition, AmbientableDefinition} from "./../base";
+import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
+        IAmbientableDefinition, AmbientableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -13,7 +13,7 @@ import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {ExportedDefinitions} from "./../../definitions";
 
-export class NamespaceDefinition implements INamedDefinition<IModuledDefinition>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
+export class NamespaceDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {

@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {MethodWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {BaseParameterDefinition, MethodDefinitions} from "./../../definitions";
+import {MethodDefinitions} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 
 function getMethodAsString(method: MethodDefinitions, flags: WriteFlags) {

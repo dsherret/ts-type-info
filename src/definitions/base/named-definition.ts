@@ -1,19 +1,16 @@
 import * as ts from "typescript";
 import {TypeChecker} from "./../../utils";
-import {IModuledDefinition} from "./moduled-definition";
 
-export interface IBaseNamedDefinition<ParentType> {
+export interface IBaseNamedDefinition {
     name: string;
-    parent: ParentType;
 }
 
-export interface INamedDefinition<ParentType> extends IBaseNamedDefinition<ParentType> {
+export interface INamedDefinition extends IBaseNamedDefinition {
     fillName(typeChecker: TypeChecker, symbol: ts.Symbol): void;
 }
 
-export abstract class NamedDefinition<ParentType> implements INamedDefinition<ParentType> {
+export abstract class NamedDefinition implements INamedDefinition {
     name: string;
-    parent: ParentType;
 
     fillName(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.name = symbol.getName();

@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {TypeChecker, DefinitionCache, applyMixins} from "./../../utils";
-import {IModuledDefinition, ModuledDefinition, IBaseNamedDefinition, IExportableDefinition} from "./../base";
+import {IModuledDefinition, ModuledDefinition} from "./../base";
 import {Expression} from "./../../expressions";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";

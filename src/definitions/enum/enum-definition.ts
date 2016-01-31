@@ -2,11 +2,11 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {EnumMemberDefinition} from "./enum-member-definition";
-import {INamedDefinition, NamedDefinition, IAmbientableDefinition, AmbientableDefinition,
+import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, IModuledDefinition} from "./../base";
 import {EnumWriter} from "./../../writers";
 
-export class EnumDefinition implements INamedDefinition<IModuledDefinition>, IExportableDefinition, IAmbientableDefinition {
+export class EnumDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, IAmbientableDefinition {
     members: EnumMemberDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {

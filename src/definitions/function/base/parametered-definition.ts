@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {BaseParameterDefinition, BaseParameterDefinitionConstructor} from "./base-parameter-definition";
+import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
 import {TypeChecker} from "./../../../utils";
 
 export interface IParameteredDefinition<ParentType, ParameterType> {

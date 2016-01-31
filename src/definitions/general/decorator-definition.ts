@@ -1,9 +1,9 @@
 import * as ts from "typescript";
-import {IBaseNamedDefinition} from "./../base";
+import {IBaseNamedDefinition, IParentedDefinition} from "./../base";
 import {Expression} from "./../../expressions";
 import {TypeChecker, TypeGuards} from "./../../utils";
 
-export class DecoratorDefinition<T> implements IBaseNamedDefinition<T> {
+export class DecoratorDefinition<ParentType> implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
     arguments: Expression[] = [];
 
     constructor(typeChecker: TypeChecker, decorator: ts.Decorator) {
@@ -37,5 +37,5 @@ export class DecoratorDefinition<T> implements IBaseNamedDefinition<T> {
 
     // NamedDefinition
     name: string;
-    parent: T;
+    parent: ParentType;
 }

@@ -1,4 +1,4 @@
-﻿import {ExportableDefinition, AmbientableDefinition, ParameterDefinitions, FunctionDefinitions, FunctionDefinition} from "./../definitions";
+﻿import {FunctionDefinitions, FunctionDefinition} from "./../definitions";
 import {TypeParameterWriter} from "./type-parameter-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {ParameterWriter} from "./parameter-writer";

@@ -1,5 +1,4 @@
-﻿import {IBaseNamedDefinition, IExportableDefinition} from "./../base";
-import {ExportedDefinitions} from "./../../definitions";
+﻿import {ExportedDefinitions} from "./../../definitions";
 import {FileDefinition} from "./file-definition";
 
 export class ReExportDefinition {

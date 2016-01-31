@@ -5,7 +5,7 @@ import {TypeChecker, TypeExpressionCache, tryGet} from "./../utils";
 
 export class Type {
     callSignatures: CallSignatureDefinition[];
-    definition: IBaseNamedDefinition<any>; // todo: remove any type
+    definition: IBaseNamedDefinition;
     properties: TypePropertyDefinition[];
     typeArguments: TypeExpression[];
     text: string;
@@ -25,7 +25,7 @@ export class Type {
         this.fillTypeArguments(typeChecker, typeExpressionCache, tsType);
     }
 
-    fillDefinition(definition: IBaseNamedDefinition<any>) {
+    fillDefinition(definition: IBaseNamedDefinition) {
         this.definition = definition;
     }
 

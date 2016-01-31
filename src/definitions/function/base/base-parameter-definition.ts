@@ -1,14 +1,14 @@
 import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {Expression, TypeExpression} from "./../../../expressions";
-import {INamedDefinition, NamedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition, IDefaultExpressionedDefinition, DefaultExpressionedDefinition} from "./../../base";
-import {BaseFunctionDefinition} from "./base-function-definition";
+import {INamedDefinition, NamedDefinition, IParentedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition, IDefaultExpressionedDefinition,
+        DefaultExpressionedDefinition} from "./../../base";
 
 export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(typeChecker: TypeChecker, symbol: ts.Symbol): ParameterType;
 }
 
-export class BaseParameterDefinition<ParentType> implements INamedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
+export class BaseParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
 

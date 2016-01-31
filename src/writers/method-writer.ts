@@ -1,4 +1,4 @@
-﻿import {MethodDefinitions, MethodParameterDefinitions, ClassMethodDefinition} from "./../definitions";
+﻿import {MethodDefinitions, ClassMethodDefinition} from "./../definitions";
 import {TypeParameterWriter} from "./type-parameter-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {ParameterWriter} from "./parameter-writer";

@@ -2,9 +2,10 @@ import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
+import {IParentedDefinition} from "./parented-definition";
 import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-expressioned-definition";
 
-export class BasePropertyDefinition<ParentType> implements INamedDefinition<ParentType>, ITypeExpressionedDefinition {
+export class BasePropertyDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
     isOptional: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {

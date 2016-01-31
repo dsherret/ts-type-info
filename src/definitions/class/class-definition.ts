@@ -7,13 +7,13 @@ import {ClassStaticMethodDefinition} from "./class-static-method-definition";
 import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition, AmbientableDefinition,
+import {INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, IModuledDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class ClassDefinition implements INamedDefinition<IModuledDefinition>, IDecoratableDefinition<ClassDefinition>,
+export class ClassDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IDecoratableDefinition<ClassDefinition>,
                                         IExportableDefinition, ITypeParameteredDefinition<ClassDefinition>, IAmbientableDefinition {
     isAbstract: boolean;
     methods: ClassMethodDefinition[] = [];

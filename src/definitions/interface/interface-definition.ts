@@ -1,7 +1,7 @@
 ﻿import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
+import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition, IModuledDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
@@ -11,7 +11,8 @@ import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definit
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class InterfaceDefinition implements INamedDefinition<IModuledDefinition>, IExportableDefinition, ITypeParameteredDefinition<InterfaceDefinition>, IAmbientableDefinition {
+export class InterfaceDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, ITypeParameteredDefinition<InterfaceDefinition>,
+                                            IAmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
