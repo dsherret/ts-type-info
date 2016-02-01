@@ -29,18 +29,12 @@ export class EnumDefinition implements INamedDefinition, IParentedDefinition<IMo
 
             /* istanbul ignore else */
             if (typeChecker.isEnumMemberSymbol(memberSymbol)) {
-                this.members.push(new EnumMemberDefinition(typeChecker, memberSymbol));
+                this.members.push(new EnumMemberDefinition(typeChecker, memberSymbol, this));
             }
             else {
                 console.warn(`Unknown enum member: ${symbol.name}`);
             }
         });
-
-        this.fillEnumChildrenWithParent();
-    }
-
-    private fillEnumChildrenWithParent() {
-        this.members.forEach(m => m.parent = this);
     }
 
     // NamedDefinition

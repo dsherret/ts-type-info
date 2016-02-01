@@ -6,9 +6,10 @@ import {EnumDefinition} from "./enum-definition";
 export class EnumMemberDefinition implements INamedDefinition, IParentedDefinition<EnumDefinition> {
     value: number;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: EnumDefinition) {
         this.fillName(typeChecker, symbol);
         this.value = typeChecker.getConstantValue(symbol);
+        this.parent = parent;
     }
 
     // NamedDefinition

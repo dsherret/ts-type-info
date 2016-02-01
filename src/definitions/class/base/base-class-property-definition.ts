@@ -7,8 +7,8 @@ import {ObjectPropertyDefinition, DecoratorDefinition} from "./../../general";
 import {ClassDefinition} from "./../class-definition";
 
 export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(typeChecker, symbol);
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition) {
+        super(typeChecker, symbol, parent);
 
         this.fillDecorators(typeChecker, symbol, this);
         this.fillScope(symbol);

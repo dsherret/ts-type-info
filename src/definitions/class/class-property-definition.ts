@@ -1,13 +1,14 @@
 import * as ts from "typescript";
 import {BaseClassPropertyDefinition} from "./base";
+import {ClassDefinition} from "./class-definition";
 import {TypeChecker} from "./../../utils";
 
 export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isAccessor: boolean;
     isReadonly: boolean;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(typeChecker, symbol);
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition) {
+        super(typeChecker, symbol, parent);
 
         this.fillAccessorInformation(symbol);
     }

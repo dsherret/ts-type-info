@@ -7,8 +7,8 @@ import {BasePropertyDefinition} from "./../base/base-property-definition";
 import {Expression} from "./../../expressions";
 
 export class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(typeChecker, symbol);
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
+        super(typeChecker, symbol, parent);
 
         this.fillDefaultExpression(typeChecker, symbol);
     }

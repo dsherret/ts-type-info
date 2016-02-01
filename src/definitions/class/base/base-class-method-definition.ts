@@ -11,12 +11,13 @@ export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefini
     constructor(
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
-        parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ClassDefinition, ParameterType>, ParameterType>
+        parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ClassDefinition, ParameterType>, ParameterType>,
+        parent: ClassDefinition
     ) {
         super(typeChecker, symbol, parameterDefinition);
-
         this.fillDecorators(typeChecker, symbol, this);
         this.fillScope(symbol);
+        this.parent = parent;
     }
 
     // DecoratableDefinition

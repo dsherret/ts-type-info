@@ -5,7 +5,8 @@ import {InterfaceMethodParameterDefinition} from "./interface-method-parameter-d
 import {TypeChecker} from "./../../utils";
 
 export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceDefinition, InterfaceMethodParameterDefinition> {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: InterfaceDefinition) {
         super(typeChecker, symbol, InterfaceMethodParameterDefinition);
+        this.parent = parent;
     }
 }

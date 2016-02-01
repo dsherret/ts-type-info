@@ -37,32 +37,23 @@ export class InterfaceDefinition implements INamedDefinition, IParentedDefinitio
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             /* istanbul ignore else */
             if (typeChecker.isSymbolProperty(member)) {
-                this.properties.push(new InterfacePropertyDefinition(typeChecker, member));
+                this.properties.push(new InterfacePropertyDefinition(typeChecker, member, this));
             }
             else if (typeChecker.isSymbolInterfaceMethod(member)) {
-                this.methods.push(new InterfaceMethodDefinition(typeChecker, member));
+                this.methods.push(new InterfaceMethodDefinition(typeChecker, member, this));
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
                 this.typeParameters.push(new TypeParameterDefinition<this>(typeChecker, member, this));
             }
             else if (typeChecker.isSymbolNewSignature(member)) {
                 member.getDeclarations().forEach(d => {
-                    this.newSignatures.push(new InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d as ts.SignatureDeclaration)));
+                    this.newSignatures.push(new InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d as ts.SignatureDeclaration), this));
                 });
             }
             else {
                 console.warn(`Not implemented interface member: ${member.getName()}`);
             }
         });
-
-        this.fillInterfaceChildrenWithParent();
-    }
-
-    private fillInterfaceChildrenWithParent() {
-        const fillWithParent = (f: IParentedDefinition<InterfaceDefinition>) => f.parent = this;
-        this.methods.forEach(fillWithParent);
-        this.properties.forEach(fillWithParent);
-        this.typeParameters.forEach(fillWithParent);
     }
 
     // NamedDefinition

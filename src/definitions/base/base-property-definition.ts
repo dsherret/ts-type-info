@@ -8,10 +8,11 @@ import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-ex
 export class BasePropertyDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
     isOptional: boolean;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
         this.fillName(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillIsOptional(typeChecker, symbol);
+        this.parent = parent;
     }
 
     private fillIsOptional(typeChecker: TypeChecker, symbol: ts.Symbol) {

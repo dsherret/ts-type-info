@@ -1,15 +1,22 @@
 ﻿import * as ts from "typescript";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {IParentedDefinition} from "./../base";
 import {IParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../function";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceNewSignatureParameterDefinition} from "./interface-new-signature-parameter-definition";
+import {InterfaceDefinition} from "./interface-definition";
+import {applyMixins, TypeChecker} from "./../../utils";
 
-export class InterfaceNewSignatureDefinition implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition {
-    constructor(typeChecker: TypeChecker, signature: ts.Signature) {
+export class InterfaceNewSignatureDefinition
+    implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition, IParentedDefinition<InterfaceDefinition> {
+
+    constructor(typeChecker: TypeChecker, signature: ts.Signature, parent: InterfaceDefinition) {
         this.fillParametersBySignature(typeChecker, signature, this, InterfaceNewSignatureParameterDefinition);
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
+        this.parent = parent;
     }
 
+    // ParentedDefinition
+    parent: InterfaceDefinition;
     // ParameteredDefinition
     parameters: InterfaceNewSignatureParameterDefinition[];
     fillParametersBySymbol: (

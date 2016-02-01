@@ -61,14 +61,14 @@ export class ClassDefinition implements INamedDefinition, IParentedDefinition<IM
         Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
             /* istanbul ignore else */
             if (typeChecker.isSymbolClassProperty(member)) {
-                this.properties.push(new ClassPropertyDefinition(typeChecker, member));
+                this.properties.push(new ClassPropertyDefinition(typeChecker, member, this));
             }
             else if (typeChecker.isSymbolClassMethod(member)) {
-                this.methods.push(new ClassMethodDefinition(typeChecker, member));
+                this.methods.push(new ClassMethodDefinition(typeChecker, member, this));
             }
             else if (typeChecker.isSymbolConstructor(member)) {
                 this.verifyConstructorNotSet();
-                this.constructorDef = new ConstructorDefinition(typeChecker, member);
+                this.constructorDef = new ConstructorDefinition(typeChecker, member, this);
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
                 // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
@@ -87,10 +87,10 @@ export class ClassDefinition implements INamedDefinition, IParentedDefinition<IM
                 // ignore
             }
             else if (typeChecker.isSymbolStaticMethod(staticMember)) {
-                this.staticMethods.push(new ClassStaticMethodDefinition(typeChecker, staticMember));
+                this.staticMethods.push(new ClassStaticMethodDefinition(typeChecker, staticMember, this));
             }
             else if (typeChecker.isSymbolStaticProperty(staticMember)) {
-                this.staticProperties.push(new ClassStaticPropertyDefinition(typeChecker, staticMember));
+                this.staticProperties.push(new ClassStaticPropertyDefinition(typeChecker, staticMember, this));
             }
             else {
                 console.warn(`Not implemented static member: ${staticMember.getName()}`);

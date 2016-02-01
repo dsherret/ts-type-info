@@ -47,7 +47,7 @@ export class Type {
         this.properties = [];
 
         properties.filter(p => p.name !== "prototype").forEach(property => {
-            tryGet(property, () => new TypePropertyDefinition(typeChecker, property), def => this.properties.push(def));
+            tryGet(property, () => new TypePropertyDefinition(typeChecker, property, this), def => this.properties.push(def));
         });
     }
 
