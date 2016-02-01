@@ -1,11 +1,12 @@
 ﻿import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
+import {ModuledDefinitions} from "./../../definitions";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
-        NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition, IModuledDefinition} from "./../base";
+        NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableDeclarationType} from "./variable-declaration-type";
 
-export class VariableDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, ITypeExpressionedDefinition,
+export class VariableDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
@@ -36,7 +37,7 @@ export class VariableDefinition implements INamedDefinition, IParentedDefinition
     name: string;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // IParentedDefinition
-    parent: IModuledDefinition;
+    parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

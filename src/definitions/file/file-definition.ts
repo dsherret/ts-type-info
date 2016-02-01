@@ -11,7 +11,7 @@ import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
 import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
-import {ExportedDefinitions} from "./../../definitions";
+import {ExportableDefinitions} from "./../../definitions";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {writeDefinition} from "./../../write-definition";
@@ -20,7 +20,7 @@ export class FileDefinition implements IModuledDefinition {
     fileName: string;
     imports: ImportDefinition[] = [];
     reExports: ReExportDefinition[] = [];
-    defaultExport: Expression | ExportedDefinitions;
+    defaultExport: Expression | ExportableDefinitions;
 
     constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this.fileName = file.fileName;
@@ -115,7 +115,7 @@ export class FileDefinition implements IModuledDefinition {
             const defaultExport = sourceSymbol.exports["default"];
 
             if (defaultExport != null) {
-                this.defaultExport = definitionCache.getDefinitionOrExpressionFromNode(typeChecker.getDeclarationFromSymbol(defaultExport));
+                this.defaultExport = definitionCache.getDefinitionOrExpressionFromSymbol(defaultExport);
             }
         }
     }
@@ -127,7 +127,7 @@ export class FileDefinition implements IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: ExportedDefinitions[];
+    exports: ExportableDefinitions[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
 }

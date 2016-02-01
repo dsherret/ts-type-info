@@ -35,19 +35,19 @@ export namespace MyExportedNamespace {
             declarationType: NamespaceDeclarationType.Namespace,
             classes: [
                 { name: "MyModuleClass" },
-                { name: "MyExportedModuleClass", isExported: true, isNamedExportOfFile: true }
+                { name: "MyExportedModuleClass", isExported: true }
             ],
             enums: [
                 { name: "MyModuleEnum" },
-                { name: "MyExportedModuleEnum", isExported: true, isNamedExportOfFile: true }
+                { name: "MyExportedModuleEnum", isExported: true }
             ],
             functions: [
                 { name: "myModuleFunction" },
-                { name: "myExportedModuleFunction", isExported: true, isNamedExportOfFile: true }
+                { name: "myExportedModuleFunction", isExported: true }
             ],
             interfaces: [
                 { name: "MyModuleInterface" },
-                { name: "MyExportedModuleInterface", isExported: true, isNamedExportOfFile: true }
+                { name: "MyExportedModuleInterface", isExported: true }
             ],
             namespaces: [{
                 name: "MyInnerModule",
@@ -56,9 +56,8 @@ export namespace MyExportedNamespace {
                 name: "MyInnerExportedModule",
                 declarationType: NamespaceDeclarationType.Module,
                 isExported: true,
-                isNamedExportOfFile: true,
                 classes: [
-                    { name: "MyInnerModuleClass", isExported: true, isNamedExportOfFile: true }
+                    { name: "MyInnerModuleClass", isExported: true }
                 ],
                 exports: [{
                     name: "MyInnerModuleClass"
@@ -70,9 +69,8 @@ export namespace MyExportedNamespace {
                 name: "MyInnerExportedNamespace",
                 declarationType: NamespaceDeclarationType.Namespace,
                 isExported: true,
-                isNamedExportOfFile: true,
                 classes: [
-                    { name: "MyInnerNamespaceClass", isExported: true, isNamedExportOfFile: true }
+                    { name: "MyInnerNamespaceClass", isExported: true }
                 ],
                 exports: [{
                     name: "MyInnerNamespaceClass"

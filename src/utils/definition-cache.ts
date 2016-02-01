@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
-        InterfaceDefinition, VariableDefinition, MainDefinitions, ExportedDefinitions} from "./../definitions";
+        InterfaceDefinition, VariableDefinition, MainDefinitions, ExportableDefinitions} from "./../definitions";
 import {Expression} from "./../expressions";
 import {TypeChecker, KeyValueCache} from "./../utils";
 
@@ -14,6 +14,17 @@ export class DefinitionCache {
     private variables = new KeyValueCache<ts.Symbol, VariableDefinition>();
 
     constructor(private typeChecker: TypeChecker) {
+    }
+
+    getDefinitionOrExpressionFromSymbol(symbol: ts.Symbol): Expression | MainDefinitions {
+        if (this.typeChecker.symbolHasFlag(symbol, ts.SymbolFlags.Alias)) {
+            const aliasedSymbol = this.typeChecker.getAliasedSymbol(symbol);
+            return this.getImportDefinition(aliasedSymbol);
+        }
+        else {
+            const node = this.typeChecker.getDeclarationFromSymbol(symbol);
+            return this.getDefinitionOrExpressionFromNode(node);
+        }
     }
 
     getDefinitionOrExpressionFromNode(node: ts.Node): Expression | MainDefinitions {
@@ -30,7 +41,7 @@ export class DefinitionCache {
         return this.getImportDefinition(symbol);
     }
 
-    getImportDefinition(symbol: ts.Symbol): ExportedDefinitions {
+    getImportDefinition(symbol: ts.Symbol): ExportableDefinitions {
         return this.getClassDefinition(symbol) ||
             this.getFunctionDefinition(symbol) ||
             this.getInterfaceDefinition(symbol) ||

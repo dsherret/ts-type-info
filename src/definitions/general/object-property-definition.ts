@@ -6,7 +6,7 @@ import {DefaultExpressionedDefinition} from "./../base/default-expressioned-defi
 import {BasePropertyDefinition} from "./../base/base-property-definition";
 import {Expression} from "./../../expressions";
 
-export class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
+export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
         super(typeChecker, symbol, parent);
 

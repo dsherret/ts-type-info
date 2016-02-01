@@ -150,8 +150,13 @@ export class TypeChecker {
         return currentNode as ts.SourceFile;
     }
 
-    getAliasedSymbol(symbol: ts.Symbol) {
-        return this.typeChecker.getAliasedSymbol(symbol);
+    getAliasedSymbol(symbol: ts.Symbol): ts.Symbol {
+        if (this.symbolHasFlag(symbol, ts.SymbolFlags.Alias)) {
+            return this.typeChecker.getAliasedSymbol(symbol);
+        }
+        else {
+            return null;
+        }
     }
 
     getSymbolAtLocation(node: ts.Node) {
@@ -264,7 +269,7 @@ export class TypeChecker {
         // when a file doesn't have exports the symbol will be null
         if (fileSymbol != null) {
             for (const exportSymbol of this.typeChecker.getExportsOfModule(fileSymbol)) {
-                if (!this.isSymbolNamedExportOfFile(exportSymbol, file)) {
+                if (!this.isSymbolNamedExportOfFile(exportSymbol, file) && !this.isSymbolDefaultExportOfFile(exportSymbol, file)) {
                     fileReExports.push(exportSymbol);
                 }
             }
@@ -297,7 +302,7 @@ export class TypeChecker {
         const fileSymbol = this.getSymbolAtLocation(file);
 
         // when a file doesn't have exports the symbol will be null
-        return fileSymbol != null && fileSymbol.exports[symbol.name] != null;
+        return fileSymbol != null && fileSymbol.exports[symbol.name] != null && symbol.name !== "default";
     }
 
     isSymbolDefaultExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
@@ -388,7 +393,7 @@ export class TypeChecker {
         return this.typeChecker.typeToString(tsType, this.currentSourceFile, ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation);
     }
 
-    private symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {
+    symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {
         return (symbol.getFlags() & flag) !== 0;
     }
 }

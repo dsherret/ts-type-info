@@ -14,14 +14,42 @@ import {InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethod
         InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./definitions/interface";
 import {ClassDefinition, ClassMethodParameterDefinition, ClassStaticMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition,
         ClassStaticMethodDefinition, ClassStaticPropertyDefinition, ConstructorDefinition, ConstructorParameterDefinition} from "./definitions/class";
-import {EnumDefinition} from "./definitions/enum";
+import {EnumDefinition, EnumMemberDefinition} from "./definitions/enum";
 import {NamespaceDefinition} from "./definitions/namespace";
 import {VariableDefinition} from "./definitions/variable";
+import {TypeParameterDefinition, TypePropertyDefinition, DecoratorDefinition} from "./definitions/general";
 
-export type WriteableDefinitions = FileDefinition | NamespaceDefinition | ClassDefinition| InterfaceDefinition | FunctionDefinition | EnumDefinition | VariableDefinition;
+// all types
+export type AllDefinitions = FileDefinition | ClassDefinitions | InterfaceDefinitions | EnumDefinitions | FunctionDefinitions | GeneralDefinitions |
+    NamespaceDefinitions | VariableDefinitions;
+
+// group types (based on the folder they're in)
+export type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ConstructorDefinition |
+    ConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition;
+export type InterfaceDefinitions = InterfaceDefinition | InterfaceMethodParameterDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition |
+    InterfaceNewSignatureDefinition | InterfaceNewSignatureParameterDefinition;
+export type EnumDefinitions = EnumDefinition | EnumMemberDefinition;
+export type FunctionDefinitions = CallSignatureDefinition | CallSignatureParameterDefinition | FunctionDefinition | FunctionParameterDefinition;
+export type NamespaceDefinitions = NamespaceDefinition;
+export type GeneralDefinitions = TypeParameterDefinition<TypeParameteredDefinitions> | TypePropertyDefinition | DecoratorDefinition<DecoratedDefinitions>;
+export type VariableDefinitions = VariableDefinition;
+
+// "ed" definitions
+export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition |
+    ClassMethodParameterDefinition | ConstructorParameterDefinition;
+export type TypeParameteredDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition |
+    ClassStaticMethodDefinition;
 export type ModuledDefinitions = FileDefinition | NamespaceDefinition;
-export type FunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition;
+// "able" definitions
+export type WriteableDefinitions = FileDefinition | NamespaceDefinition | ClassDefinition| InterfaceDefinition | FunctionDefinition | EnumDefinition | VariableDefinition;
+export type ExportableDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition;
+// other
+export type BaseFunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
+export type FunctionWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
+
+export type MainDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition;
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
+export type ClassPropertyDefinitions = ClassPropertyDefinition | ClassStaticPropertyDefinition;
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
 export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition |
                                    InterfaceNewSignatureParameterDefinition | ConstructorParameterDefinition | CallSignatureParameterDefinition;
@@ -30,7 +58,3 @@ export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinit
 export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
-export type MainDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition;
-export type ExportedDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition;
-export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition |
-                                    ClassMethodParameterDefinition;

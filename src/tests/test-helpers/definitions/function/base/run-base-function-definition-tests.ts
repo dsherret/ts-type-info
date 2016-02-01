@@ -1,12 +1,12 @@
 import {FunctionStructure, ParameterStructures} from "./../../../structures";
-import {FunctionDefinitions, ParameterDefinitions} from "./../../../../../definitions";
+import {BaseFunctionDefinitions, ParameterDefinitions} from "./../../../../../definitions";
 import {runNamedDefinitionTests} from "./../../base";
 import {runReturnTypedDefinitionTests} from "./run-return-typed-definition-tests";
 import {runParameteredDefinitionTests} from "./run-parametered-definition-tests";
 
 export function runBaseFunctionDefinitionTests(
     runParameterDefinitionTests: (definition: ParameterDefinitions, structure: ParameterStructures) => void,
-    definition: FunctionDefinitions,
+    definition: BaseFunctionDefinitions,
     structure: FunctionStructure) {
 
     runNamedDefinitionTests(definition, structure);

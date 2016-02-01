@@ -7,7 +7,7 @@ import {FunctionDefinition} from "./../function";
 import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
-import {ExportedDefinitions} from "./../../definitions";
+import {ExportableDefinitions} from "./../../definitions";
 
 export interface IModuledDefinition {
     namespaces: NamespaceDefinition[];
@@ -16,7 +16,7 @@ export interface IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: ExportedDefinitions[];
+    exports: ExportableDefinitions[];
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile): void;
     fillMembersBySymbol(typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol): void;
 }
@@ -28,7 +28,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: ExportedDefinitions[];
+    exports: ExportableDefinitions[];
 
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
         this.initializeMD();
@@ -152,7 +152,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         });
     }
 
-    private checkAddToExports(def: ExportedDefinitions) {
+    private checkAddToExports(def: ExportableDefinitions) {
         if (def.isExported && !def.isDefaultExportOfFile) {
             this.exports.push(def);
         }

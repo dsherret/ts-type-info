@@ -1,4 +1,4 @@
-﻿import {FunctionDefinitions, FunctionDefinition} from "./../definitions";
+﻿import {FunctionWriteableDefinitions, FunctionDefinition} from "./../definitions";
 import {TypeParameterWriter} from "./type-parameter-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {ParameterWriter} from "./parameter-writer";
@@ -10,7 +10,7 @@ export class FunctionWriter extends BaseWriter {
     private typeExpressionWriter = new TypeExpressionWriter(this.writer);
     private parameterWriter = new ParameterWriter(this.writer);
 
-    write(def: FunctionDefinitions, flags: WriteFlags) {
+    write(def: FunctionWriteableDefinitions, flags: WriteFlags) {
         this.writeExportClause(def as FunctionDefinition);
         this.writeDeclareClause(def as FunctionDefinition);
         this.writer.write("function ").write(def.name);
@@ -22,7 +22,7 @@ export class FunctionWriter extends BaseWriter {
         this.writer.newLine();
     }
 
-    private writeFunctionBody(def: FunctionDefinitions, flags: WriteFlags) {
+    private writeFunctionBody(def: FunctionWriteableDefinitions, flags: WriteFlags) {
         if ((flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient) {
             this.writer.write(";");
         }

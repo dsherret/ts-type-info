@@ -1,4 +1,4 @@
-﻿import {FileDefinition, ExportedDefinitions} from "./../definitions";
+﻿import {FileDefinition, ExportableDefinitions} from "./../definitions";
 import {Expression} from "./../expressions";
 import {BaseWriter} from "./base-writer";
 import {ModuledWriter} from "./moduled-writer";
@@ -17,7 +17,7 @@ export class FileWriter extends BaseWriter {
             this.writer.newLine();
             this.writer.write("export default ");
 
-            const exportedDef = def.defaultExport as ExportedDefinitions;
+            const exportedDef = def.defaultExport as ExportableDefinitions;
             const expression = (def.defaultExport as Expression);
 
             if (exportedDef.name != null) {

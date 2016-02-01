@@ -12,7 +12,7 @@ import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 import {NamespaceDeclarationType} from "./namespace-declaration-type";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {ExportedDefinitions} from "./../../definitions";
+import {ExportableDefinitions} from "./../../definitions";
 
 export class NamespaceDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
@@ -54,7 +54,7 @@ export class NamespaceDefinition implements INamedDefinition, IParentedDefinitio
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
-    exports: ExportedDefinitions[];
+    exports: ExportableDefinitions[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
     fillModuledChildrenWithParent: () => void;

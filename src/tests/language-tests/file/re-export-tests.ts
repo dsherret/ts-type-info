@@ -18,13 +18,9 @@ describe("file re-export tests", () => {
             fileName: "test-enum.ts"
         }],
         exports: [{
-            name: "TestClass",
-            isNamedExportOfFile: true,
-            isExported: true
+            name: "TestClass"
         }, {
-            name: "TestEnum",
-            isNamedExportOfFile: true,
-            isExported: true
+            name: "TestEnum"
         }]
     });
 });

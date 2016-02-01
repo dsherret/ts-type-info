@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {FileDefinition, ExportedDefinitions} from "./../../../../definitions";
+import {FileDefinition, ExportableDefinitions} from "./../../../../definitions";
 import {Expression} from "./../../../../expressions";
 import {FileStructure, ExpressionStructure, NamedStructure, ExportableStructure} from "./../../structures";
 import {runImportDefinitionTests} from "./run-import-definition-tests";
@@ -11,6 +11,12 @@ import {runExpressionTests} from "./../../expressions";
 export function runFileDefinitionTests(definition: FileDefinition, structure: FileStructure) {
     structure.imports = structure.imports || [];
     structure.reExports = structure.reExports || [];
+    structure.exports = structure.exports || [];
+
+    // all exports of a file will be named
+    structure.exports.forEach(exportStructure => {
+        exportStructure.isNamedExportOfFile = exportStructure.isNamedExportOfFile == null ? true : exportStructure.isNamedExportOfFile;
+    });
 
     runModuledDefinitionTests(definition, structure);
 
@@ -46,7 +52,7 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
                     runExpressionTests(definition.defaultExport as Expression, structure.defaultExport as ExpressionStructure);
                 }
                 else {
-                    const defaultExportDef = definition.defaultExport as ExportedDefinitions;
+                    const defaultExportDef = definition.defaultExport as ExportableDefinitions;
                     runNamedDefinitionTests(defaultExportDef, structure.defaultExport as NamedStructure);
                     runExportableDefinitionTests(defaultExportDef, structure.defaultExport as ExportableStructure);
                 }

@@ -21,6 +21,5 @@ export function myExportedFunction() {
         exports: [{
             name: "myExportedFunction"
         }]
-
     });
 });
