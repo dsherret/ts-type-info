@@ -1,10 +1,13 @@
-import {ClassMethodStructure} from "./../../../structures";
-import {BaseClassMethodDefinition} from "./../../../../../definitions/class/base/base-class-method-definition";
+import {ClassMethodStructures, ClassMethodParameterStructures} from "./../../../structures";
+import {ClassMethodDefinitions, ClassMethodParameterDefinitions} from "./../../../../../definitions";
 import {runBaseFunctionDefinitionTests} from "./../../function/base/run-base-function-definition-tests";
-import {runClassMethodParameterDefinitionTests} from "./../run-class-method-parameter-definition-tests";
 import {runScopedDefinitionTests} from "./run-scoped-definition-tests";
 
-export function runBaseClassMethodDefinitionTests<T extends BaseClassMethodDefinition<T>>(definition: T, structure: ClassMethodStructure) {
-    runBaseFunctionDefinitionTests(runClassMethodParameterDefinitionTests, definition, structure);
+export function runBaseClassMethodDefinitionTests(
+    runParameterDefinitionTests: (definition: ClassMethodParameterDefinitions, structure: ClassMethodParameterStructures) => void,
+    definition: ClassMethodDefinitions,
+    structure: ClassMethodStructures) {
+
+    runBaseFunctionDefinitionTests(runParameterDefinitionTests, definition, structure);
     runScopedDefinitionTests(definition, structure);
 }

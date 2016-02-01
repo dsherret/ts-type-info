@@ -6,20 +6,17 @@ import {IDecoratableDefinition, DecoratableDefinition} from "./../../base";
 import {ObjectPropertyDefinition, DecoratorDefinition} from "./../../general";
 import {ClassDefinition} from "./../class-definition";
 
-export class BaseClassPropertyDefinition<ThisType extends BaseClassPropertyDefinition<ThisType>>
-    extends ObjectPropertyDefinition<ClassDefinition>
-    implements IDecoratableDefinition<ThisType>, IScopedDefinition {
-
+export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol);
 
-        this.fillDecorators(typeChecker, symbol);
+        this.fillDecorators(typeChecker, symbol, this);
         this.fillScope(symbol);
     }
 
     // DecoratableDefinition
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    decorators: DecoratorDefinition<ThisType>[];
+    decorators: DecoratorDefinition<this>[];
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this) => void;
     // ScopeDefinition
     scope: Scope;
     fillScope: (symbol: ts.Symbol) => void;

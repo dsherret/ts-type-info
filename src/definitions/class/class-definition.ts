@@ -13,15 +13,15 @@ import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class ClassDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IDecoratableDefinition<ClassDefinition>,
-                                        IExportableDefinition, ITypeParameteredDefinition<ClassDefinition>, IAmbientableDefinition {
+export class ClassDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IDecoratableDefinition,
+                                        IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     isAbstract: boolean;
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
     staticMethods: ClassStaticMethodDefinition[] = [];
     staticProperties: ClassStaticPropertyDefinition[] = [];
     constructorDef: ConstructorDefinition;
-    typeParameters: TypeParameterDefinition<ClassDefinition>[] = [];
+    typeParameters: TypeParameterDefinition<this>[] = [];
 
     constructor(
         typeChecker: TypeChecker,
@@ -72,7 +72,7 @@ export class ClassDefinition implements INamedDefinition, IParentedDefinition<IM
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
                 // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
-                this.typeParameters.push(new TypeParameterDefinition<ClassDefinition>(typeChecker, member));
+                this.typeParameters.push(new TypeParameterDefinition<this>(typeChecker, member, this));
             }
             else {
                 console.warn(`Not implemented member: ${member.getName()}`);
@@ -107,10 +107,11 @@ export class ClassDefinition implements INamedDefinition, IParentedDefinition<IM
 
     // NamedDefinition
     name: string;
-    parent: IModuledDefinition;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: IModuledDefinition;
     // DecoratableDefinition
-    decorators: DecoratorDefinition<ClassDefinition>[];
+    decorators: DecoratorDefinition<this>[];
     fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ExportableDefinition
     isExported: boolean;

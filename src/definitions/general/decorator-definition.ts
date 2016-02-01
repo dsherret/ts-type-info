@@ -6,7 +6,7 @@ import {TypeChecker, TypeGuards} from "./../../utils";
 export class DecoratorDefinition<ParentType> implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
     arguments: Expression[] = [];
 
-    constructor(typeChecker: TypeChecker, decorator: ts.Decorator) {
+    constructor(typeChecker: TypeChecker, decorator: ts.Decorator, parent: ParentType) {
         let decoratorExpression = decorator.expression;
 
         this.fillName(decoratorExpression);
@@ -14,6 +14,8 @@ export class DecoratorDefinition<ParentType> implements IBaseNamedDefinition, IP
         if (TypeGuards.isCallExpression(decoratorExpression)) {
             this.fillArguments(typeChecker, decoratorExpression.arguments);
         }
+
+        this.parent = parent;
     }
 
     private fillName(decoratorExpression: ts.LeftHandSideExpression) {
@@ -37,5 +39,6 @@ export class DecoratorDefinition<ParentType> implements IBaseNamedDefinition, IP
 
     // NamedDefinition
     name: string;
+    // IParentedDefinition
     parent: ParentType;
 }

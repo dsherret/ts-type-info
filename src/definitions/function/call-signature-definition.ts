@@ -6,30 +6,37 @@ import {TypeParameterDefinition} from "./../general";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
 
-export class CallSignatureDefinition implements ITypeParameteredDefinition<CallSignatureDefinition>, IParameteredDefinition<CallSignatureDefinition,
-                                                CallSignatureParameterDefinition>, IReturnTypedDefinition {
+export class CallSignatureDefinition implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
     minArgumentCount: number;
 
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
-        this.fillParametersBySignature(CallSignatureParameterDefinition, typeChecker, signature);
+        this.fillParametersBySignature(typeChecker, signature, this, CallSignatureParameterDefinition);
         this.fillTypeParametersBySignature(typeChecker, signature);
 
         this.minArgumentCount = typeChecker.getMinArgumentCount(signature);
     }
 
     // ParameteredDefinition
-    fillParametersBySymbol: (parameterDefinition: typeof CallSignatureParameterDefinition, typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillParametersBySignature: (parameterDefinition: typeof CallSignatureParameterDefinition, typeChecker: TypeChecker, signature: ts.Signature) => void;
     parameters: CallSignatureParameterDefinition[];
+    fillParametersBySymbol: (
+        typeChecker: TypeChecker,
+        symbol: ts.Symbol,
+        parent: this,
+        parameterDefinition: typeof CallSignatureParameterDefinition) => void;
+    fillParametersBySignature: (
+        typeChecker: TypeChecker,
+        signature: ts.Signature,
+        parent: this,
+        parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     // ReturnTyped
+    returnTypeExpression: TypeExpression;
     fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    returnTypeExpression: TypeExpression;
     // TypeParameteredDefinition
+    typeParameters: TypeParameterDefinition<this>[];
     fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
-    typeParameters: TypeParameterDefinition<CallSignatureDefinition>[];
 }
 
 applyMixins(CallSignatureDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

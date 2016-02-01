@@ -2,7 +2,7 @@ import * as assert from "assert";
 import {ConstructorStructure} from "./../../structures";
 import {ConstructorDefinition} from "./../../../../definitions";
 import {runParameteredDefinitionTests} from "./../function";
-import {runClassMethodParameterDefinitionTests} from "./run-class-method-parameter-definition-tests";
+import {runConstructorParameterDefinitionTests} from "./run-constructor-parameter-definition-tests";
 
 export function runConstructorDefinitionTests(definition: ConstructorDefinition, structure: ConstructorStructure) {
     if (structure == null) {
@@ -15,6 +15,6 @@ export function runConstructorDefinitionTests(definition: ConstructorDefinition,
             assert.notEqual(definition, null);
         });
 
-        runParameteredDefinitionTests(runClassMethodParameterDefinitionTests, definition, structure);
+        runParameteredDefinitionTests(runConstructorParameterDefinitionTests, definition, structure);
     }
 }

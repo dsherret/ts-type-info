@@ -1,5 +1,4 @@
-import {FunctionParameterStructure} from "./../function";
-import {DecoratableStructure} from "./../base";
+import {BaseClassMethodParameterStructure} from "./base";
 
-export interface ClassMethodParameterStructure extends FunctionParameterStructure, DecoratableStructure {
+export interface ClassMethodParameterStructure extends BaseClassMethodParameterStructure {
 }

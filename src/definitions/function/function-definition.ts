@@ -7,10 +7,9 @@ import {TypeChecker, applyMixins} from "./../../utils";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class FunctionDefinition extends BaseFunctionDefinition<FunctionDefinition, IModuledDefinition, FunctionParameterDefinition>
-                                implements IExportableDefinition, IAmbientableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<IModuledDefinition, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(FunctionParameterDefinition, typeChecker, symbol);
+        super(typeChecker, symbol, FunctionParameterDefinition);
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
     }

@@ -22,8 +22,9 @@ export class BasePropertyDefinition<ParentType> implements INamedDefinition, IPa
 
     // NamedDefinition
     name: string;
-    parent: ParentType;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;

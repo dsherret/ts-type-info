@@ -1,5 +1,6 @@
 ﻿import * as ts from "typescript";
 import {TypeChecker, DefinitionCache, tryGet} from "./../../utils";
+import {IParentedDefinition} from "./../base";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
@@ -73,6 +74,8 @@ export abstract class ModuledDefinition implements IModuledDefinition {
                 this.tryAddVariable(definitionCache, symbol);
             }
         });
+
+        this.fillModuledChildrenWithParent();
     }
 
     fillMembersBySymbol(typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) {
@@ -103,6 +106,8 @@ export abstract class ModuledDefinition implements IModuledDefinition {
                 console.warn(`Unhandled symbol when filling moduled definition items: ${localSymbol.name}`);
             }
         });
+
+        this.fillModuledChildrenWithParent();
     }
 
     private tryAddNamespace(definitionCache: DefinitionCache, symbol: ts.Symbol) {
@@ -151,6 +156,16 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         if (def.isExported && !def.isDefaultExportOfFile) {
             this.exports.push(def);
         }
+    }
+
+    private fillModuledChildrenWithParent() {
+        const fillWithParent = (f: IParentedDefinition<IModuledDefinition>) => f.parent = this;
+        this.namespaces.forEach(fillWithParent);
+        this.classes.forEach(fillWithParent);
+        this.enums.forEach(fillWithParent);
+        this.functions.forEach(fillWithParent);
+        this.interfaces.forEach(fillWithParent);
+        this.variables.forEach(fillWithParent);
     }
 
     private initializeMD() {

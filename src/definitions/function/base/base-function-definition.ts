@@ -7,32 +7,37 @@ import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
 import {IParameteredDefinition, ParameteredDefinition} from "./parametered-definition";
 import {IReturnTypedDefinition, ReturnTypedDefinition} from "./return-typed-definition";
 
-export class BaseFunctionDefinition<ThisType extends BaseFunctionDefinition<ThisType, ParentType, ParameterType>, ParentType, ParameterType>
-    implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition<ThisType>, IParameteredDefinition<ThisType, ParameterType>, IReturnTypedDefinition {
+export class BaseFunctionDefinition<ParentType, ParameterType>
+    implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition, IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
 
-    constructor(parameterDefinition: BaseParameterDefinitionConstructor<ParameterType>, typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(
+        typeChecker: TypeChecker,
+        symbol: ts.Symbol,
+        parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ParentType, ParameterType>, ParameterType>
+    ) {
         this.fillName(typeChecker, symbol);
-        this.fillParametersBySymbol(parameterDefinition, typeChecker, symbol);
+        this.fillParametersBySymbol(typeChecker, symbol, this, parameterDefinition);
         this.fillReturnTypeExpressionBySymbol(typeChecker, symbol);
-        this.fillTypeParametersBySymbol(typeChecker, symbol);
+        this.fillTypeParametersBySymbol(typeChecker, symbol, this);
     }
 
     // NamedDefinition
     name: string;
-    parent: ParentType;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: ParentType;
     // ParameteredDefinition
     parameters: ParameterType[];
-    fillParametersBySymbol: (parameterDefinition: BaseParameterDefinitionConstructor<ParameterType>, typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillParametersBySignature: (parameterDefinition: BaseParameterDefinitionConstructor<ParameterType>, typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
+    fillParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature, parent: this, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
     fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     // TypeParameteredDefinition
-    typeParameters: TypeParameterDefinition<ThisType>[];
-    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    typeParameters: TypeParameterDefinition<this>[];
+    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this) => void;
+    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature, parent: this) => void;
 }
 
 applyMixins(BaseFunctionDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

@@ -4,19 +4,20 @@ import {Expression, TypeExpression} from "./../../../expressions";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition, IDefaultExpressionedDefinition,
         DefaultExpressionedDefinition} from "./../../base";
 
-export interface BaseParameterDefinitionConstructor<ParameterType> {
-    new(typeChecker: TypeChecker, symbol: ts.Symbol): ParameterType;
+export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
+    new(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType): ParameterType;
 }
 
 export class BaseParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
         this.fillName(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillParameterDetails(typeChecker, symbol);
         this.fillDefaultExpression(typeChecker, symbol);
+        this.parent = parent;
     }
 
     private fillParameterDetails(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -28,8 +29,9 @@ export class BaseParameterDefinition<ParentType> implements INamedDefinition, IP
 
     // NamedDefinition
     name: string;
-    parent: ParentType;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
     fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;

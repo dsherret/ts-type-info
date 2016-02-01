@@ -1,9 +1,9 @@
 import {ClassMethodParameterStructure} from "./../../structures";
 import {ClassMethodParameterDefinition} from "./../../../../definitions";
-import {runBaseParameterDefinitionTests} from "./../function";
+import {runBaseClassMethodParameterDefinitionTests} from "./base";
 
 export function runClassMethodParameterDefinitionTests(definition: ClassMethodParameterDefinition, structure: ClassMethodParameterStructure) {
     describe(`parameter ${structure.name}`, () => {
-        runBaseParameterDefinitionTests(definition, structure);
+        runBaseClassMethodParameterDefinitionTests(definition, structure);
     });
 }

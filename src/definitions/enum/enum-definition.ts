@@ -35,12 +35,19 @@ export class EnumDefinition implements INamedDefinition, IParentedDefinition<IMo
                 console.warn(`Unknown enum member: ${symbol.name}`);
             }
         });
+
+        this.fillEnumChildrenWithParent();
+    }
+
+    private fillEnumChildrenWithParent() {
+        this.members.forEach(m => m.parent = this);
     }
 
     // NamedDefinition
     name: string;
-    parent: IModuledDefinition;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: IModuledDefinition;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

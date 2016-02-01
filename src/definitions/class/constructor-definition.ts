@@ -2,23 +2,24 @@ import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {IParameteredDefinition, ParameteredDefinition} from "./../function";
 import {ConstructorParameterDefinition} from "./constructor-parameter-definition";
-import {ClassDefinition} from "./class-definition";
 
-export class ConstructorDefinition implements IParameteredDefinition<ClassDefinition, ConstructorParameterDefinition> {
+export class ConstructorDefinition implements IParameteredDefinition<ConstructorParameterDefinition> {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.fillParametersBySymbol(ConstructorParameterDefinition, typeChecker, symbol);
+        this.fillParametersBySymbol(typeChecker, symbol, this, ConstructorParameterDefinition);
     }
 
     // ParameteredDefinition
-    fillParametersBySymbol: (
-        parameterDefinition: typeof ConstructorParameterDefinition,
-        typeChecker: TypeChecker,
-        symbol: ts.Symbol) => void;
-    fillParametersBySignature: (
-        parameterDefinition: typeof ConstructorParameterDefinition,
-        typeChecker: TypeChecker,
-        signature: ts.Signature) => void;
     parameters: ConstructorParameterDefinition[];
+    fillParametersBySymbol: (
+        typeChecker: TypeChecker,
+        symbol: ts.Symbol,
+        parent: this,
+        parameterDefinition: typeof ConstructorParameterDefinition) => void;
+    fillParametersBySignature: (
+        typeChecker: TypeChecker,
+        signature: ts.Signature,
+        parent: this,
+        parameterDefinition: typeof ConstructorParameterDefinition) => void;
 }
 
 applyMixins(ConstructorDefinition, [ParameteredDefinition]);

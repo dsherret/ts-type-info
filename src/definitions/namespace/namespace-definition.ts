@@ -43,8 +43,9 @@ export class NamespaceDefinition implements INamedDefinition, IParentedDefinitio
 
     // NamedDefinition
     name: string;
-    parent: IModuledDefinition;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: IModuledDefinition;
     // ModuledDefinition
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
@@ -55,6 +56,7 @@ export class NamespaceDefinition implements INamedDefinition, IParentedDefinitio
     exports: ExportedDefinitions[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
+    fillModuledChildrenWithParent: () => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

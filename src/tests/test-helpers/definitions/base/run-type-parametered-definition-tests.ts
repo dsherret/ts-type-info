@@ -3,7 +3,7 @@ import {TypeParameteredStructure} from "./../../structures";
 import {ITypeParameteredDefinition} from "./../../../../definitions";
 import {runTypeParameterDefinitionTests} from "./../general";
 
-export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDefinition<any>, structure: TypeParameteredStructure) {
+export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDefinition, structure: TypeParameteredStructure) {
     describe("type parameters", () => {
         structure.typeParameters = structure.typeParameters || [];
 

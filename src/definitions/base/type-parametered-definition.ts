@@ -2,26 +2,22 @@
 import {TypeParameterDefinition} from "./../general";
 import {TypeChecker} from "./../../utils";
 
-export interface ITypeParameteredDefinition<ThisType> {
-    typeParameters: TypeParameterDefinition<ThisType>[];
-    fillTypeParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol): void;
-    fillTypeParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature): void;
+export interface ITypeParameteredDefinition {
+    typeParameters: TypeParameterDefinition<this>[];
+    fillTypeParametersBySymbol(typeChecker: TypeChecker, parentSymbol: ts.Symbol, parent: this): void;
+    fillTypeParametersBySignature(typeChecker: TypeChecker, parentSignature: ts.Signature, parent: this): void;
 }
 
-export abstract class TypeParameteredDefinition<ThisType> implements ITypeParameteredDefinition<ThisType> {
-    typeParameters: TypeParameterDefinition<ThisType>[];
+export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
+    typeParameters: TypeParameterDefinition<this>[];
 
-    fillTypeParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.typeParameters = typeChecker.getFunctionTypeParameterSymbols(symbol).map(s => new TypeParameterDefinition<ThisType>(typeChecker, s));
+    fillTypeParametersBySymbol(typeChecker: TypeChecker, parentSymbol: ts.Symbol, parent: this) {
+        this.typeParameters = typeChecker.getFunctionTypeParameterSymbols(parentSymbol)
+                                .map(symbol => new TypeParameterDefinition<this>(typeChecker, symbol, this));
     }
 
     fillTypeParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature) {
-        this.typeParameters = [];
-
-        if (signature.typeParameters != null) {
-            for (const typeParameter of signature.typeParameters) {
-                this.typeParameters.push(new TypeParameterDefinition<ThisType>(typeChecker, typeParameter.getSymbol()));
-            }
-        }
+        this.typeParameters = (signature.typeParameters || [])
+                                .map(typeParameter => new TypeParameterDefinition<this>(typeChecker, typeParameter.getSymbol(), this));
     }
 }

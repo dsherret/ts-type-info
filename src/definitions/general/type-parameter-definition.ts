@@ -6,9 +6,10 @@ import {INamedDefinition, NamedDefinition, IParentedDefinition} from "./../base"
 export class TypeParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType> {
     constraintTypeExpression: TypeExpression;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
         this.fillName(typeChecker, symbol);
         this.fillConstraint(typeChecker, symbol);
+        this.parent = parent;
     }
 
     private fillConstraint(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -25,8 +26,9 @@ export class TypeParameterDefinition<ParentType> implements INamedDefinition, IP
 
     // NamedDefinition
     name: string;
-    parent: ParentType;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: ParentType;
 }
 
 applyMixins(TypeParameterDefinition, [NamedDefinition]);

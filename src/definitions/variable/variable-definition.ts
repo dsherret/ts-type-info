@@ -34,8 +34,9 @@ export class VariableDefinition implements INamedDefinition, IParentedDefinition
 
     // NamedDefinition
     name: string;
-    parent: IModuledDefinition;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: IModuledDefinition;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

@@ -11,12 +11,11 @@ import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definit
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class InterfaceDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, ITypeParameteredDefinition<InterfaceDefinition>,
-                                            IAmbientableDefinition {
+export class InterfaceDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
-    typeParameters: TypeParameterDefinition<InterfaceDefinition>[] = [];
+    typeParameters: TypeParameterDefinition<this>[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, public extendsTypeExpressions: TypeExpression[]) {
         this.fillName(typeChecker, symbol);
@@ -44,7 +43,7 @@ export class InterfaceDefinition implements INamedDefinition, IParentedDefinitio
                 this.methods.push(new InterfaceMethodDefinition(typeChecker, member));
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
-                this.typeParameters.push(new TypeParameterDefinition<InterfaceDefinition>(typeChecker, member));
+                this.typeParameters.push(new TypeParameterDefinition<this>(typeChecker, member, this));
             }
             else if (typeChecker.isSymbolNewSignature(member)) {
                 member.getDeclarations().forEach(d => {
@@ -55,12 +54,22 @@ export class InterfaceDefinition implements INamedDefinition, IParentedDefinitio
                 console.warn(`Not implemented interface member: ${member.getName()}`);
             }
         });
+
+        this.fillInterfaceChildrenWithParent();
+    }
+
+    private fillInterfaceChildrenWithParent() {
+        const fillWithParent = (f: IParentedDefinition<InterfaceDefinition>) => f.parent = this;
+        this.methods.forEach(fillWithParent);
+        this.properties.forEach(fillWithParent);
+        this.typeParameters.forEach(fillWithParent);
     }
 
     // NamedDefinition
     name: string;
-    parent: IModuledDefinition;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: IModuledDefinition;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

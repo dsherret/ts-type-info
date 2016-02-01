@@ -13,8 +13,9 @@ export class EnumMemberDefinition implements INamedDefinition, IParentedDefiniti
 
     // NamedDefinition
     name: string;
-    parent: EnumDefinition;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // IParentedDefinition
+    parent: EnumDefinition;
 }
 
 applyMixins(EnumMemberDefinition, [NamedDefinition]);

@@ -4,6 +4,7 @@ export * from "./class/class-method-structure";
 export * from "./class/class-property-structure";
 export * from "./class/constructor-structure";
 export * from "./class/constructor-parameter-structure";
+export * from "./class/class-static-method-parameter-structure";
 export * from "./class/class-static-method-structure";
 export * from "./class/class-static-property-structure";
 export * from "./class/class-structure";
