@@ -1,13 +1,14 @@
 import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
+import {ModuledDefinitions} from "./../../definitions";
 import {BaseFunctionDefinition} from "./base";
 import {FunctionParameterDefinition} from "./function-parameter-definition";
-import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition, IModuledDefinition} from "./../base";
+import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition} from "./../base";
 import {TypeChecker, applyMixins} from "./../../utils";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class FunctionDefinition extends BaseFunctionDefinition<IModuledDefinition, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<ModuledDefinitions, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol, FunctionParameterDefinition);
         this.fillExportable(typeChecker, symbol);

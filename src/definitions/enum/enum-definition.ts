@@ -1,12 +1,13 @@
 ﻿import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {ModuledDefinitions} from "./../../definitions";
 import {EnumMemberDefinition} from "./enum-member-definition";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
-        IExportableDefinition, ExportableDefinition, IModuledDefinition} from "./../base";
+        IExportableDefinition, ExportableDefinition} from "./../base";
 import {EnumWriter} from "./../../writers";
+import {applyMixins, TypeChecker} from "./../../utils";
 
-export class EnumDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IExportableDefinition, IAmbientableDefinition {
+export class EnumDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
     members: EnumMemberDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
@@ -41,7 +42,7 @@ export class EnumDefinition implements INamedDefinition, IParentedDefinition<IMo
     name: string;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // IParentedDefinition
-    parent: IModuledDefinition;
+    parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

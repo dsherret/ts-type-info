@@ -1,5 +1,6 @@
 import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
+import {ModuledDefinitions} from "./../../definitions";
 import {ConstructorDefinition} from "./constructor-definition";
 import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
@@ -8,12 +9,12 @@ import {ClassStaticPropertyDefinition} from "./class-static-property-definition"
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition, AmbientableDefinition,
-        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, IModuledDefinition} from "./../base";
+        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class ClassDefinition implements INamedDefinition, IParentedDefinition<IModuledDefinition>, IDecoratableDefinition,
+export class ClassDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
                                         IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     isAbstract: boolean;
     methods: ClassMethodDefinition[] = [];
@@ -109,7 +110,7 @@ export class ClassDefinition implements INamedDefinition, IParentedDefinition<IM
     name: string;
     fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // IParentedDefinition
-    parent: IModuledDefinition;
+    parent: ModuledDefinitions;
     // DecoratableDefinition
     decorators: DecoratorDefinition<this>[];
     fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;

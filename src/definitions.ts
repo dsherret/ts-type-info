@@ -19,6 +19,7 @@ import {NamespaceDefinition} from "./definitions/namespace";
 import {VariableDefinition} from "./definitions/variable";
 
 export type WriteableDefinitions = FileDefinition | NamespaceDefinition | ClassDefinition| InterfaceDefinition | FunctionDefinition | EnumDefinition | VariableDefinition;
+export type ModuledDefinitions = FileDefinition | NamespaceDefinition;
 export type FunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition;
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
