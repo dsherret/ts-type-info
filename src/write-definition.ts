@@ -1,10 +1,12 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {WriteableDefinitions, ClassDefinition, InterfaceDefinition, FunctionDefinition, FileDefinition, NamespaceDefinition, EnumDefinition} from "./definitions";
+import {WriteableDefinitions, ClassDefinition, InterfaceDefinition, FunctionDefinition, FileDefinition, NamespaceDefinition,
+    EnumDefinition, TypeAliasDefinition} from "./definitions";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter} from "./writers";
 import {WriteFlags} from "./write-flags";
 import {Logger} from "./utils";
 
 export function writeDefinition(definition: WriteableDefinitions, writeFlags: WriteFlags, writer: CodeBlockWriter) {
+    // todo: don't do an instance check so that this works with data that was serialized and loaded
     if (definition instanceof ClassDefinition) {
         new ClassWriter(writer).write(definition, writeFlags);
     }
@@ -22,6 +24,9 @@ export function writeDefinition(definition: WriteableDefinitions, writeFlags: Wr
     }
     else if (definition instanceof EnumDefinition) {
         new EnumWriter(writer).write(definition);
+    }
+    else if (definition instanceof TypeAliasDefinition) {
+        Logger.warn(`Not implemented writer for type alias definition: ${definition.name}`);
     }
     else {
         Logger.warn(`Not implemented writer for definition: ${definition.name}`);

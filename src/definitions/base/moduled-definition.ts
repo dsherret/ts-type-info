@@ -7,6 +7,7 @@ import {FunctionDefinition} from "./../function";
 import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
+import {TypeAliasDefinition} from "./../general";
 import {ExportableDefinitions} from "./../../definitions";
 
 export interface IModuledDefinition {
@@ -16,6 +17,7 @@ export interface IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
+    typeAliases: TypeAliasDefinition[];
     exports: ExportableDefinitions[];
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile): void;
     fillMembersBySymbol(typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol): void;
@@ -28,6 +30,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
+    typeAliases: TypeAliasDefinition[];
     exports: ExportableDefinitions[];
 
     fillMembersBySourceFile(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
@@ -75,6 +78,13 @@ export abstract class ModuledDefinition implements IModuledDefinition {
             }
         });
 
+        // type aliases
+        typeChecker.getSymbolsInScope(file, ts.SymbolFlags.TypeAlias).forEach((symbol) => {
+            if (typeChecker.isSymbolInFile(symbol, file)) {
+                this.tryAddTypeAlias(definitionCache, symbol);
+            }
+        });
+
         this.fillModuledChildrenWithParent();
     }
 
@@ -101,6 +111,9 @@ export abstract class ModuledDefinition implements IModuledDefinition {
             }
             else if (typeChecker.isSymbolVariable(localSymbol)) {
                 this.tryAddVariable(definitionCache, localSymbol);
+            }
+            else if (typeChecker.isSymbolTypeAlias(localSymbol)) {
+                this.tryAddTypeAlias(definitionCache, localSymbol);
             }
             else {
                 console.warn(`Unhandled symbol when filling moduled definition items: ${localSymbol.name}`);
@@ -152,6 +165,13 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         });
     }
 
+    private tryAddTypeAlias(definitionCache: DefinitionCache, symbol: ts.Symbol) {
+        tryGet(symbol, () => definitionCache.getTypeAliasDefinition(symbol), (def) => {
+            this.typeAliases.push(def);
+            this.checkAddToExports(def);
+        });
+    }
+
     private checkAddToExports(def: ExportableDefinitions) {
         if (def.isExported && !def.isDefaultExportOfFile) {
             this.exports.push(def);
@@ -166,6 +186,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         this.functions.forEach(fillWithParent);
         this.interfaces.forEach(fillWithParent);
         this.variables.forEach(fillWithParent);
+        this.typeAliases.forEach(fillWithParent);
     }
 
     private initializeMD() {
@@ -175,6 +196,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         this.enums = [];
         this.functions = [];
         this.variables = [];
+        this.typeAliases = [];
         this.exports = [];
     }
 }

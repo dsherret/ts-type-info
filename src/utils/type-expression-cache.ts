@@ -6,7 +6,7 @@ import {tryGet} from "./try-get";
 import {TypeExpression, Type} from "./../expressions";
 
 export class TypeExpressionCache {
-    private expressionCacheContainer = new CacheContainer<TypeExpression>(this.typeChecker);
+    private typeExpressionCacheContainer = new CacheContainer<TypeExpression>(this.typeChecker);
     private typeCacheContainer = new CacheContainer<Type>(this.typeChecker);
     private typeTsTypeCache = new KeyValueCache<Type, ts.Type>();
 
@@ -14,18 +14,18 @@ export class TypeExpressionCache {
     }
 
     get(tsType: ts.Type) {
-        const cache = this.expressionCacheContainer.getCache(tsType);
-        const name = this.typeChecker.typeToString(tsType);
-        let typeExpression = cache.get(name);
+        const typeExpressionCache = this.typeExpressionCacheContainer.getCache(tsType);
+        const typeText = this.typeChecker.typeToString(tsType);
+        let typeExpression = typeExpressionCache.get(typeText);
 
         if (typeExpression == null) {
             const types = (tsType as ts.UnionOrIntersectionType).types || [tsType];
 
             typeExpression = new TypeExpression(this.typeChecker, tsType);
-            cache.add(typeExpression.text, typeExpression);
+            typeExpressionCache.add(typeExpression.text, typeExpression);
 
             types.forEach(t => {
-                tryGet(name, () => this.getType(t), type => typeExpression.addType(type));
+                tryGet(typeText, () => this.getType(t), type => typeExpression.addType(type));
             });
         }
 

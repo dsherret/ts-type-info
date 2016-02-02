@@ -2,7 +2,7 @@
 import {runFileDefinitionTests} from "./../../test-helpers";
 import {VariableDeclarationType, NamespaceDeclarationType} from "./../../../definitions";
 
-describe("variable tests", () => {
+describe("exported variable tests", () => {
     describe("in definition file", () => {
         const code = `
     declare module "definition-var" {

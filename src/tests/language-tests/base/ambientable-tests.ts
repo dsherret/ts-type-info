@@ -9,6 +9,7 @@ declare interface MyAmbientInterface {}
 declare function MyAmbientFunction(): void;
 declare var MyAmbientVariable;
 declare enum MyAmbientEnum {};
+declare type MyType = string;
 declare namespace MyAmbientNamespace {}
 declare module MyAmbientModule {
     class MyClass {
@@ -42,6 +43,11 @@ declare module MyAmbientModule {
         }],
         enums: [{
             name: "MyAmbientEnum",
+            isAmbient: true,
+            hasDeclareKeyword: true
+        }],
+        typeAliases: [{
+            name: "MyType",
             isAmbient: true,
             hasDeclareKeyword: true
         }],

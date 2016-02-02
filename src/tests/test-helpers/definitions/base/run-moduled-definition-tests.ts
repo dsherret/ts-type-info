@@ -6,6 +6,7 @@ import {runFunctionDefinitionTests} from "./../function";
 import {runEnumDefinitionTests} from "./../enum";
 import {runClassDefinitionTests} from "./../class";
 import {runVariableDefinitionTests} from "./../variable";
+import {runTypeAliasDefinitionTests} from "./../general";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runExportableDefinitionTests} from "./run-exportable-definition-tests";
 import {ModuledStructure} from "./../../structures";
@@ -17,6 +18,7 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
     expected.functions = expected.functions || [];
     expected.interfaces = expected.interfaces || [];
     expected.variables = expected.variables || [];
+    expected.typeAliases = expected.typeAliases || [];
     expected.exports = expected.exports || [];
 
     describe("namespaces", () => {
@@ -76,6 +78,16 @@ export function runModuledDefinitionTests(definition: IModuledDefinition, expect
 
         expected.variables.forEach((variableStructure, i) => {
             runVariableDefinitionTests(definition.variables[i], variableStructure);
+        });
+    });
+
+    describe("typeAliases", () => {
+        it("should have the expected number of type aliases", () => {
+            assert.equal(definition.typeAliases.length, expected.typeAliases.length);
+        });
+
+        expected.typeAliases.forEach((typeAliasStructure, i) => {
+            runTypeAliasDefinitionTests(definition.typeAliases[i], typeAliasStructure);
         });
     });
 

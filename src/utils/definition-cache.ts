@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition,
-        InterfaceDefinition, VariableDefinition, MainDefinitions, ExportableDefinitions} from "./../definitions";
+        InterfaceDefinition, VariableDefinition, MainDefinitions, ExportableDefinitions, TypeAliasDefinition} from "./../definitions";
 import {Expression} from "./../expressions";
 import {TypeChecker, KeyValueCache} from "./../utils";
 
@@ -12,6 +12,7 @@ export class DefinitionCache {
     private functions = new KeyValueCache<ts.Symbol, FunctionDefinition>();
     private interfaces = new KeyValueCache<ts.Symbol, InterfaceDefinition>();
     private variables = new KeyValueCache<ts.Symbol, VariableDefinition>();
+    private typeAliases = new KeyValueCache<ts.Symbol, TypeAliasDefinition>();
 
     constructor(private typeChecker: TypeChecker) {
     }
@@ -174,5 +175,21 @@ export class DefinitionCache {
         }
 
         return variableDefinition;
+    }
+
+    getTypeAliasDefinition(symbol: ts.Symbol) {
+        let typeAliasDefinition: TypeAliasDefinition;
+
+        if (this.typeChecker.isSymbolTypeAlias(symbol)) {
+            typeAliasDefinition = this.typeAliases.get(symbol);
+
+            /* istanbul ignore else */
+            if (typeAliasDefinition == null) {
+                typeAliasDefinition = new TypeAliasDefinition(this.typeChecker, symbol);
+                this.typeAliases.add(symbol, typeAliasDefinition);
+            }
+        }
+
+        return typeAliasDefinition;
     }
 }

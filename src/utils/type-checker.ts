@@ -110,8 +110,9 @@ export class TypeChecker {
         return this.typeChecker.getConstantValue(symbol.valueDeclaration as any);
     }
 
-    getFunctionTypeParameterSymbols(symbol: ts.Symbol) {
-        const declaration = symbol.valueDeclaration as ts.ClassLikeDeclaration;
+    getTypeParameterSymbolsFromSymbol(symbol: ts.Symbol) {
+        type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
+        const declaration = this.getDeclarationFromSymbol(symbol) as typeParameteredTypes;
 
         return (declaration.typeParameters || []).map(p => this.getSymbolAtLocation(p));
     }
@@ -194,7 +195,13 @@ export class TypeChecker {
     }
 
     getTypeExpressionOfSymbol(symbol: ts.Symbol) {
-        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentSourceFile));
+        if (symbol.flags & ts.SymbolFlags.TypeAlias) {
+            const declaration = this.getDeclarationFromSymbol(symbol) as ts.TypeAliasDeclaration;
+            return this.getTypeExpressionAtLocation(declaration.type);
+        }
+        else {
+            return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentSourceFile));
+        }
     }
 
     getTypeExpressionFromTsType(tsType: ts.Type) {
@@ -367,6 +374,10 @@ export class TypeChecker {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Namespace);
     }
 
+    isSymbolTypeAlias(symbol: ts.Symbol) {
+        return this.symbolHasFlag(symbol, ts.SymbolFlags.TypeAlias);
+    }
+
     isSymbolNewSignature(symbol: ts.Symbol) {
         return this.symbolHasFlag(symbol, ts.SymbolFlags.Signature);
     }
@@ -390,7 +401,9 @@ export class TypeChecker {
     }
 
     typeToString(tsType: ts.Type) {
-        return this.typeChecker.typeToString(tsType, this.currentSourceFile, ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation);
+        const formatFlags = ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
+            ts.TypeFormatFlags.WriteTypeArgumentsOfSignature;
+        return this.typeChecker.typeToString(tsType, this.currentSourceFile, formatFlags);
     }
 
     symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {

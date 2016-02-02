@@ -11,9 +11,9 @@ export interface ITypeParameteredDefinition {
 export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
     typeParameters: TypeParameterDefinition<this>[];
 
-    fillTypeParametersBySymbol(typeChecker: TypeChecker, parentSymbol: ts.Symbol) {
-        this.typeParameters = typeChecker.getFunctionTypeParameterSymbols(parentSymbol)
-                                .map(symbol => new TypeParameterDefinition<this>(typeChecker, symbol, this));
+    fillTypeParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        this.typeParameters = typeChecker.getTypeParameterSymbolsFromSymbol(symbol)
+                                         .map(typeParameterSymbol => new TypeParameterDefinition<this>(typeChecker, typeParameterSymbol, this));
     }
 
     fillTypeParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature) {

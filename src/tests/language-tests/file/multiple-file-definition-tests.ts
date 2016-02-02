@@ -28,6 +28,10 @@ describe("multiple file definition tests", () => {
             declarationType: VariableDeclarationType.Var,
             name: "e",
             typeExpression: { text: "MyReferenceEnum" }
+        }, {
+            declarationType: VariableDeclarationType.Var,
+            name: "t",
+            typeExpression: { text: "string" }
         }]
     });
     runFileDefinitionTests(referenceFileDef, {
@@ -48,6 +52,11 @@ describe("multiple file definition tests", () => {
         }],
         functions: [{
             name: "MyReferenceFunction",
+            isAmbient: true,
+            hasDeclareKeyword: true
+        }],
+        typeAliases: [{
+            name: "MyReferenceType",
             isAmbient: true,
             hasDeclareKeyword: true
         }]

@@ -23,7 +23,7 @@ export abstract class AmbientableDefinition implements IAmbientableDefinition {
 
         this.hasDeclareKeyword = declaration.flags & ts.NodeFlags.Ambient ? true : false;
 
-        if (this.hasDeclareKeyword || typeChecker.isSymbolInterface(symbol)) {
+        if (this.hasDeclareKeyword || typeChecker.isSymbolInterface(symbol) || typeChecker.isSymbolTypeAlias(symbol)) {
             this.isAmbient = true;
         }
         else {

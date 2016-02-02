@@ -8,3 +8,5 @@ declare enum MyReferenceEnum {
 }
 
 declare function MyReferenceFunction(): void;
+
+declare type MyReferenceType = string;

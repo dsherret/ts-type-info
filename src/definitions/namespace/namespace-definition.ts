@@ -8,6 +8,7 @@ import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
 import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
+import {TypeAliasDefinition} from "./../general";
 import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 import {NamespaceDeclarationType} from "./namespace-declaration-type";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
@@ -55,6 +56,7 @@ export class NamespaceDefinition implements INamedDefinition, IParentedDefinitio
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
     exports: ExportableDefinitions[];
+    typeAliases: TypeAliasDefinition[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
     fillModuledChildrenWithParent: () => void;

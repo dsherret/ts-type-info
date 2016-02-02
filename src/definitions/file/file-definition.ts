@@ -9,6 +9,7 @@ import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
 import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
+import {TypeAliasDefinition} from "./../general";
 import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
 import {ExportableDefinitions} from "./../../definitions";
@@ -127,6 +128,7 @@ export class FileDefinition implements IModuledDefinition {
     enums: EnumDefinition[];
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
+    typeAliases: TypeAliasDefinition[];
     exports: ExportableDefinitions[];
     fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
     fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;

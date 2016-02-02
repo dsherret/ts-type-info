@@ -2,6 +2,7 @@
 import {TypeParameteredStructure} from "./../../structures";
 import {ITypeParameteredDefinition} from "./../../../../definitions";
 import {runTypeParameterDefinitionTests} from "./../general";
+import {ensureNotNull} from "./../../ensure-not-null";
 
 export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDefinition, structure: TypeParameteredStructure) {
     describe("type parameters", () => {
@@ -12,7 +13,9 @@ export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDe
         });
 
         structure.typeParameters.forEach((param, i) => {
-            runTypeParameterDefinitionTests(definition.typeParameters[i], param);
+            ensureNotNull(definition.typeParameters[i], () => {
+                runTypeParameterDefinitionTests(definition.typeParameters[i], param);
+            });
         });
     });
 }
