@@ -16,9 +16,9 @@ export class BaseFunctionDefinition<ParentType, ParameterType>
         parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ParentType, ParameterType>, ParameterType>
     ) {
         this.fillName(typeChecker, symbol);
-        this.fillParametersBySymbol(typeChecker, symbol, this, parameterDefinition);
+        this.fillParametersBySymbol(typeChecker, symbol, parameterDefinition);
         this.fillReturnTypeExpressionBySymbol(typeChecker, symbol);
-        this.fillTypeParametersBySymbol(typeChecker, symbol, this);
+        this.fillTypeParametersBySymbol(typeChecker, symbol);
     }
 
     // NamedDefinition
@@ -28,16 +28,16 @@ export class BaseFunctionDefinition<ParentType, ParameterType>
     parent: ParentType;
     // ParameteredDefinition
     parameters: ParameterType[];
-    fillParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
-    fillParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature, parent: this, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
+    fillParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
+    fillParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
     fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this) => void;
-    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature, parent: this) => void;
+    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
 }
 
 applyMixins(BaseFunctionDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

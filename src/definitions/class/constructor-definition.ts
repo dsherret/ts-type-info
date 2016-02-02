@@ -7,7 +7,7 @@ import {applyMixins, TypeChecker} from "./../../utils";
 
 export class ConstructorDefinition implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ConstructorParameterDefinition> {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition) {
-        this.fillParametersBySymbol(typeChecker, symbol, this, ConstructorParameterDefinition);
+        this.fillParametersBySymbol(typeChecker, symbol, ConstructorParameterDefinition);
         this.parent = parent;
     }
 
@@ -18,12 +18,10 @@ export class ConstructorDefinition implements IParentedDefinition<ClassDefinitio
     fillParametersBySymbol: (
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
-        parent: this,
         parameterDefinition: typeof ConstructorParameterDefinition) => void;
     fillParametersBySignature: (
         typeChecker: TypeChecker,
         signature: ts.Signature,
-        parent: this,
         parameterDefinition: typeof ConstructorParameterDefinition) => void;
 }
 

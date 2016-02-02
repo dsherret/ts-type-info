@@ -10,7 +10,7 @@ export class InterfaceNewSignatureDefinition
     implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition, IParentedDefinition<InterfaceDefinition> {
 
     constructor(typeChecker: TypeChecker, signature: ts.Signature, parent: InterfaceDefinition) {
-        this.fillParametersBySignature(typeChecker, signature, this, InterfaceNewSignatureParameterDefinition);
+        this.fillParametersBySignature(typeChecker, signature, InterfaceNewSignatureParameterDefinition);
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
         this.parent = parent;
     }
@@ -22,12 +22,10 @@ export class InterfaceNewSignatureDefinition
     fillParametersBySymbol: (
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
-        parent: this,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     fillParametersBySignature: (
         typeChecker: TypeChecker,
         signature: ts.Signature,
-        parent: this,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;

@@ -4,14 +4,14 @@ import {TypeChecker} from "./../../utils";
 
 export interface ITypeParameteredDefinition {
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbol(typeChecker: TypeChecker, parentSymbol: ts.Symbol, parent: this): void;
-    fillTypeParametersBySignature(typeChecker: TypeChecker, parentSignature: ts.Signature, parent: this): void;
+    fillTypeParametersBySymbol(typeChecker: TypeChecker, parentSymbol: ts.Symbol): void;
+    fillTypeParametersBySignature(typeChecker: TypeChecker, parentSignature: ts.Signature): void;
 }
 
 export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
     typeParameters: TypeParameterDefinition<this>[];
 
-    fillTypeParametersBySymbol(typeChecker: TypeChecker, parentSymbol: ts.Symbol, parent: this) {
+    fillTypeParametersBySymbol(typeChecker: TypeChecker, parentSymbol: ts.Symbol) {
         this.typeParameters = typeChecker.getFunctionTypeParameterSymbols(parentSymbol)
                                 .map(symbol => new TypeParameterDefinition<this>(typeChecker, symbol, this));
     }

@@ -11,7 +11,7 @@ export class CallSignatureDefinition implements ITypeParameteredDefinition, IPar
 
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
-        this.fillParametersBySignature(typeChecker, signature, this, CallSignatureParameterDefinition);
+        this.fillParametersBySignature(typeChecker, signature, CallSignatureParameterDefinition);
         this.fillTypeParametersBySignature(typeChecker, signature);
 
         this.minArgumentCount = typeChecker.getMinArgumentCount(signature);
@@ -22,12 +22,10 @@ export class CallSignatureDefinition implements ITypeParameteredDefinition, IPar
     fillParametersBySymbol: (
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
-        parent: this,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     fillParametersBySignature: (
         typeChecker: TypeChecker,
         signature: ts.Signature,
-        parent: this,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
