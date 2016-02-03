@@ -26,6 +26,10 @@ declare module TsTypeInfo {
         name: string;
     }
 
+    interface IParentedDefinition<ParentType> {
+        parent: ParentType;
+    }
+
     interface IAmbientableDefinition {
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
@@ -53,21 +57,23 @@ declare module TsTypeInfo {
     }
 
     interface IDecoratableDefinition {
-        decorators: DecoratorDefinition[];
+        decorators: DecoratorDefinition<this>[];
     }
 
     class DecoratableDefinition implements IDecoratableDefinition {
-        decorators: DecoratorDefinition[];
+        decorators: DecoratorDefinition<this>[];
     }
 
     interface IExportableDefinition {
         isExported: boolean;
-        hasExportKeyword: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
     }
 
     class ExportableDefinition implements IExportableDefinition {
         isExported: boolean;
-        hasExportKeyword: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
     }
 
     interface IModuledDefinition {
@@ -77,7 +83,8 @@ declare module TsTypeInfo {
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
-        exports: (IBaseNamedDefinition & IExportableDefinition)[];
+        typeAliases: TypeAliasDefinition[];
+        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     }
 
     class ModuledDefinition implements IModuledDefinition {
@@ -87,61 +94,84 @@ declare module TsTypeInfo {
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
-        exports: (IBaseNamedDefinition & IExportableDefinition)[];
+        typeAliases: TypeAliasDefinition[];
+        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     }
 
-    class BasePropertyDefinition implements ITypeExpressionedDefinition, INamedDefinition {
+    class BasePropertyDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
         isOptional: boolean;
         name: string;
+        parent: ParentType;
         typeExpression: TypeExpression;
     }
 
     interface ITypeParameteredDefinition {
-        typeParameters: TypeParameterDefinition[];
+        typeParameters: TypeParameterDefinition<this>[];
     }
 
     class TypeParameteredDefinition implements ITypeParameteredDefinition {
-        typeParameters: TypeParameterDefinition[];
+        typeParameters: TypeParameterDefinition<this>[];
     }
 
-    class TypeParameterDefinition implements INamedDefinition {
+    class TypeParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType> {
         constraintTypeExpression: TypeExpression;
         name: string;
+        parent: ParentType;
     }
 
-    class ObjectPropertyDefinition extends BasePropertyDefinition implements IDefaultExpressionedDefinition {
+    class TypePropertyDefinition extends BasePropertyDefinition<Type> {
+    }
+
+    class TypeAliasDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+        name: string;
+        parent: FileDefinition | NamespaceDefinition;
+        isExported: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
+        typeExpression: TypeExpression;
+        typeParameters: TypeParameterDefinition<this>[];
+        isAmbient: boolean;
+        hasDeclareKeyword: boolean;
+
+        write(): string;
+    }
+
+    class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
         defaultExpression: Expression;
     }
 
-    class DecoratorDefinition implements IBaseNamedDefinition {
-        name: string;
+    class DecoratorDefinition<ParentType> implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
         arguments: Expression[];
-    }
-
-    class BaseFunctionDefinition<T extends BaseParameterDefinition> implements INamedDefinition, ITypeParameteredDefinition, IParameteredDefinition<T>, IReturnTypedDefinition {
         name: string;
-        parameters: T[];
+        parent: ParentType;
+    }
+
+    class BaseFunctionDefinition<ParentType, ParameterType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition, IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
+        name: string;
+        parent: ParentType;
+        parameters: ParameterType[];
         returnTypeExpression: TypeExpression;
-        typeParameters: TypeParameterDefinition[];
+        typeParameters: TypeParameterDefinition<this>[];
     }
 
-    interface BaseParameterDefinitionConstructor<T extends BaseParameterDefinition> {
+    interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
     }
 
-    class BaseParameterDefinition implements INamedDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
+    class BaseParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
         isOptional: boolean;
         isRestParameter: boolean;
         name: string;
+        parent: ParentType;
         typeExpression: TypeExpression;
         defaultExpression: Expression;
     }
 
-    interface IParameteredDefinition<T extends ParameterDefinition> {
-        parameters: T[];
+    interface IParameteredDefinition<ParameterType> {
+        parameters: ParameterType[];
     }
 
-    class ParameteredDefinition<T extends ParameterDefinition> implements IParameteredDefinition<T> {
-        parameters: T[];
+    class ParameteredDefinition<ParameterType> implements IParameteredDefinition<ParameterType> {
+        parameters: ParameterType[];
     }
 
     interface IReturnTypedDefinition {
@@ -152,32 +182,40 @@ declare module TsTypeInfo {
         returnTypeExpression: TypeExpression;
     }
 
-    class CallSignatureDefinition implements ITypeParameteredDefinition, IParameteredDefinition<ParameterDefinition>, IReturnTypedDefinition {
+    class CallSignatureDefinition implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
         minArgumentCount: number;
-        parameters: ParameterDefinition[];
+        parameters: CallSignatureParameterDefinition[];
         returnTypeExpression: TypeExpression;
-        typeParameters: TypeParameterDefinition[];
+        typeParameters: TypeParameterDefinition<this>[];
     }
 
-    class FunctionDefinition extends BaseFunctionDefinition<ParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
+    class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {
+    }
+
+    class FunctionDefinition extends BaseFunctionDefinition<FileDefinition | NamespaceDefinition, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
         isExported: boolean;
-        hasExportKeyword: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
 
         write(): string;
     }
 
-    class ParameterDefinition extends BaseParameterDefinition {
+    class FunctionParameterDefinition extends BaseParameterDefinition<FunctionDefinition> {
     }
 
-    class BaseClassMethodDefinition extends BaseFunctionDefinition<ClassMethodParameterDefinition> implements IDecoratableDefinition, IScopedDefinition {
-        decorators: DecoratorDefinition[];
+    class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements IDecoratableDefinition {
+        decorators: DecoratorDefinition<this>[];
+    }
+
+    class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements IDecoratableDefinition, IScopedDefinition {
+        decorators: DecoratorDefinition<this>[];
         scope: Scope;
     }
 
-    class BaseClassPropertyDefinition extends ObjectPropertyDefinition implements IDecoratableDefinition, IScopedDefinition {
-        decorators: DecoratorDefinition[];
+    class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
+        decorators: DecoratorDefinition<this>[];
         scope: Scope;
     }
 
@@ -189,31 +227,32 @@ declare module TsTypeInfo {
         scope: Scope;
     }
 
-    class ClassDefinition implements INamedDefinition, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+    class ClassDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
         isAbstract: boolean;
         methods: ClassMethodDefinition[];
         properties: ClassPropertyDefinition[];
         staticMethods: ClassStaticMethodDefinition[];
         staticProperties: ClassStaticPropertyDefinition[];
         constructorDef: ConstructorDefinition;
-        typeParameters: TypeParameterDefinition[];
+        typeParameters: TypeParameterDefinition<this>[];
         extendsTypeExpressions: TypeExpression[];
         implementsTypeExpressions: TypeExpression[];
         name: string;
-        decorators: DecoratorDefinition[];
+        parent: FileDefinition | NamespaceDefinition;
+        decorators: DecoratorDefinition<this>[];
         isExported: boolean;
-        hasExportKeyword: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
 
         write(): string;
     }
 
-    class ClassMethodDefinition extends BaseClassMethodDefinition {
+    class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethodParameterDefinition> {
     }
 
-    class ClassMethodParameterDefinition extends BaseParameterDefinition implements IDecoratableDefinition {
-        decorators: DecoratorDefinition[];
+    class ClassMethodParameterDefinition extends BaseClassMethodParameterDefinition<ClassMethodDefinition> {
     }
 
     class ClassPropertyDefinition extends BaseClassPropertyDefinition {
@@ -221,14 +260,22 @@ declare module TsTypeInfo {
         isReadonly: boolean;
     }
 
-    class ConstructorDefinition implements IParameteredDefinition<ClassMethodParameterDefinition> {
-        parameters: ClassMethodParameterDefinition[];
+    class ConstructorDefinition implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ConstructorParameterDefinition> {
+        parent: ClassDefinition;
+        parameters: ConstructorParameterDefinition[];
     }
 
-    class ClassStaticMethodDefinition extends BaseClassMethodDefinition {
+    class ConstructorParameterDefinition extends BaseParameterDefinition<ConstructorDefinition> implements IDecoratableDefinition {
+        decorators: DecoratorDefinition<this>[];
+    }
+
+    class ClassStaticMethodDefinition extends BaseClassMethodDefinition<ClassStaticMethodParameterDefinition> {
     }
 
     class ClassStaticPropertyDefinition extends BaseClassPropertyDefinition {
+    }
+
+    class ClassStaticMethodParameterDefinition extends BaseClassMethodParameterDefinition<ClassStaticMethodDefinition> {
     }
 
     enum Scope {
@@ -237,46 +284,58 @@ declare module TsTypeInfo {
         private = 2
     }
 
-    class InterfaceDefinition implements INamedDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+    class InterfaceDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
         methods: InterfaceMethodDefinition[];
         newSignatures: InterfaceNewSignatureDefinition[];
         properties: InterfacePropertyDefinition[];
-        typeParameters: TypeParameterDefinition[];
+        typeParameters: TypeParameterDefinition<this>[];
         extendsTypeExpressions: TypeExpression[];
         name: string;
+        parent: FileDefinition | NamespaceDefinition;
         isExported: boolean;
-        hasExportKeyword: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
 
         write(): string;
     }
 
-    class InterfaceMethodDefinition extends BaseFunctionDefinition<ParameterDefinition> {
+    class InterfaceMethodParameterDefinition extends BaseParameterDefinition<InterfaceMethodDefinition> {
     }
 
-    class InterfacePropertyDefinition extends BasePropertyDefinition {
+    class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceDefinition, InterfaceMethodParameterDefinition> {
     }
 
-    class InterfaceNewSignatureDefinition implements IParameteredDefinition<ParameterDefinition>, IReturnTypedDefinition {
-        parameters: ParameterDefinition[];
+    class InterfacePropertyDefinition extends BasePropertyDefinition<InterfaceDefinition> {
+    }
+
+    class InterfaceNewSignatureDefinition implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition, IParentedDefinition<InterfaceDefinition> {
+        parent: InterfaceDefinition;
+        parameters: InterfaceNewSignatureParameterDefinition[];
         returnTypeExpression: TypeExpression;
     }
 
-    class EnumDefinition implements INamedDefinition, IExportableDefinition, IAmbientableDefinition {
+    class InterfaceNewSignatureParameterDefinition extends BaseParameterDefinition<InterfaceNewSignatureDefinition> {
+    }
+
+    class EnumDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, IAmbientableDefinition {
         members: EnumMemberDefinition[];
         name: string;
+        parent: FileDefinition | NamespaceDefinition;
         isExported: boolean;
-        hasExportKeyword: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
 
         write(): string;
     }
 
-    class EnumMemberDefinition implements INamedDefinition {
+    class EnumMemberDefinition implements INamedDefinition, IParentedDefinition<EnumDefinition> {
         value: number;
         name: string;
+        parent: EnumDefinition;
     }
 
     enum NamespaceDeclarationType {
@@ -284,18 +343,21 @@ declare module TsTypeInfo {
         Module = 1
     }
 
-    class NamespaceDefinition implements INamedDefinition, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
+    class NamespaceDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
         declarationType: NamespaceDeclarationType;
         name: string;
+        parent: FileDefinition | NamespaceDefinition;
         namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
         interfaces: InterfaceDefinition[];
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
-        exports: (IBaseNamedDefinition & IExportableDefinition)[];
+        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+        typeAliases: TypeAliasDefinition[];
         isExported: boolean;
-        hasExportKeyword: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
 
@@ -306,14 +368,15 @@ declare module TsTypeInfo {
         fileName: string;
         imports: ImportDefinition[];
         reExports: ReExportDefinition[];
-        name: string;
+        defaultExport: Expression | ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
         namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
         interfaces: InterfaceDefinition[];
         enums: EnumDefinition[];
         functions: FunctionDefinition[];
         variables: VariableDefinition[];
-        exports: (IBaseNamedDefinition & IExportableDefinition)[];
+        typeAliases: TypeAliasDefinition[];
+        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 
         write(): string;
         writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; referencePaths: string[]; }): string;
@@ -321,20 +384,22 @@ declare module TsTypeInfo {
 
     class ImportDefinition {
         file: FileDefinition;
-        definition: IBaseNamedDefinition & IExportableDefinition;
+        definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
     }
 
     class ReExportDefinition {
         file: FileDefinition;
-        definition: IBaseNamedDefinition & IExportableDefinition;
+        definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
     }
 
-    class VariableDefinition implements INamedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition {
+    class VariableDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition {
         declarationType: VariableDeclarationType;
         name: string;
+        parent: FileDefinition | NamespaceDefinition;
         isExported: boolean;
+        isNamedExportOfFile: boolean;
+        isDefaultExportOfFile: boolean;
         typeExpression: TypeExpression;
-        hasExportKeyword: boolean;
         defaultExpression: Expression;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
@@ -353,7 +418,7 @@ declare module TsTypeInfo {
     class Type {
         callSignatures: CallSignatureDefinition[];
         definition: IBaseNamedDefinition;
-        properties: BasePropertyDefinition[];
+        properties: TypePropertyDefinition[];
         typeArguments: TypeExpression[];
         text: string;
     }

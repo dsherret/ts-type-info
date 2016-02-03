@@ -16,6 +16,8 @@ function getModuledAsString(f: IModuledDefinition, flags: WriteFlags) {
 
 describe("ModuledWriter", () => {
     const code = `
+type myType = string;
+type mySecondType = string | number;
 namespace MyNamespace {
 }
 module MyModule {
@@ -34,7 +36,10 @@ function myFunction() {
     describe("write()", () => {
         it("should contain everything written out", () => {
             const expected =
-`namespace MyNamespace {
+`type myType = string;
+type mySecondType = string | number;
+
+namespace MyNamespace {
 }
 
 module MyModule {

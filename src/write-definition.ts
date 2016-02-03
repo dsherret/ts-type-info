@@ -1,7 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {WriteableDefinitions, ClassDefinition, InterfaceDefinition, FunctionDefinition, FileDefinition, NamespaceDefinition,
     EnumDefinition, TypeAliasDefinition} from "./definitions";
-import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter} from "./writers";
+import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter, TypeAliasWriter} from "./writers";
 import {WriteFlags} from "./write-flags";
 import {Logger} from "./utils";
 
@@ -26,7 +26,7 @@ export function writeDefinition(definition: WriteableDefinitions, writeFlags: Wr
         new EnumWriter(writer).write(definition);
     }
     else if (definition instanceof TypeAliasDefinition) {
-        Logger.warn(`Not implemented writer for type alias definition: ${definition.name}`);
+        new TypeAliasWriter(writer).write(definition);
     }
     else {
         Logger.warn(`Not implemented writer for definition: ${definition.name}`);

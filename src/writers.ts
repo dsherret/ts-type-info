@@ -12,5 +12,6 @@ export * from "./writers/namespace-writer";
 export * from "./writers/parameter-writer";
 export * from "./writers/property-writer";
 export * from "./writers/scope-writer";
+export * from "./writers/type-alias-writer";
 export * from "./writers/type-expression-writer";
 export * from "./writers/type-parameter-writer";

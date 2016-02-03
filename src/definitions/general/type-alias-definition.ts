@@ -1,4 +1,5 @@
 ﻿import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition} from "./../base";
@@ -10,6 +11,7 @@ import {ExportableDefinition} from "./../base/exportable-definition";
 import {AmbientableDefinition} from "./../base/ambientable-definition";
 import {TypeParameterDefinition} from "./type-parameter-definition";
 import {TypeExpression} from "./../../expressions";
+import {TypeAliasWriter} from "./../../writers";
 
 export class TypeAliasDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                             ITypeParameteredDefinition, IAmbientableDefinition {
@@ -19,6 +21,13 @@ export class TypeAliasDefinition implements INamedDefinition, IParentedDefinitio
         this.fillTypeExpression(typeChecker, symbol);
         this.fillTypeParametersBySymbol(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
+    }
+
+    write() {
+        const writer = new CodeBlockWriter();
+        const typeAliasWriter = new TypeAliasWriter(writer);
+        typeAliasWriter.write(this);
+        return writer.toString();
     }
 
     // NamedDefinition
