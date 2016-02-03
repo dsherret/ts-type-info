@@ -1,10 +1,13 @@
 ﻿import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
         NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableDeclarationType} from "./variable-declaration-type";
+import {VariableWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
 
 export class VariableDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
@@ -17,6 +20,13 @@ export class VariableDefinition implements INamedDefinition, IParentedDefinition
         this.fillDefaultExpression(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
         this.fillDeclarationType(typeChecker, symbol);
+    }
+
+    write() {
+        const writer = new CodeBlockWriter();
+        const variableWriter = new VariableWriter(writer);
+        variableWriter.write(this, WriteFlags.Default);
+        return writer.toString();
     }
 
     private fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {

@@ -15,3 +15,4 @@ export * from "./writers/scope-writer";
 export * from "./writers/type-alias-writer";
 export * from "./writers/type-expression-writer";
 export * from "./writers/type-parameter-writer";
+export * from "./writers/variable-writer";

@@ -5,11 +5,11 @@ import {getStringInfo} from "./../../main";
 import {TypeAliasWriter} from "./../../writers";
 import {typeAliasWriterTestCode} from "./test-code";
 
-function getTypeAliasAsString(f: TypeAliasDefinition) {
+function getTypeAliasAsString(def: TypeAliasDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new TypeAliasWriter(codeBlockWriter);
 
-    writer.write(f);
+    writer.write(def);
 
     return codeBlockWriter.toString();
 }
