@@ -95,6 +95,10 @@ export class FileDefinition implements IModuledDefinition {
                     propertyDef.properties = propertyDef.properties.filter(m => m.name.indexOf("fill") !== 0 && m.name !== "addType");
                 }
 
+                exportDef.isExported = false;
+                exportDef.isNamedExportOfFile = false;
+                exportDef.isDefaultExportOfFile = false;
+
                 writeDefinition(exportDef, WriteFlags.HideFunctionBodies, writer);
                 writer.newLine();
             });
