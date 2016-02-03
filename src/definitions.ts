@@ -47,10 +47,8 @@ export type ExportableDefinitions = ClassDefinition | FunctionDefinition | Inter
 // other
 export type BaseFunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
 export type FunctionWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
-
 export type MainDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
-export type ClassPropertyDefinitions = ClassPropertyDefinition | ClassStaticPropertyDefinition;
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
 export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition |
                                    InterfaceNewSignatureParameterDefinition | ConstructorParameterDefinition | CallSignatureParameterDefinition;
