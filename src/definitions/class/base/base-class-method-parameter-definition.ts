@@ -1,12 +1,12 @@
 import * as ts from "typescript";
 import {DecoratorDefinition} from "./../../general";
-import {IDecoratableDefinition, DecoratableDefinition} from "./../../base";
+import {IDecoratableDefinition, DecoratableDefinition, DefinitionType} from "./../../base";
 import {BaseParameterDefinition} from "./../../function";
 import {applyMixins, TypeChecker} from "./../../../utils";
 
 export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements IDecoratableDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
-        super(typeChecker, symbol, parent);
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType, definitionType: DefinitionType) {
+        super(typeChecker, symbol, parent, definitionType);
         this.fillDecorators(typeChecker, symbol, this);
     }
 

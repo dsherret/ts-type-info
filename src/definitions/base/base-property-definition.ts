@@ -4,11 +4,14 @@ import {TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {IParentedDefinition} from "./parented-definition";
 import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-expressioned-definition";
+import {DefinitionType} from "./definition-type";
+import {BaseDefinition} from "./base-definition";
 
-export class BasePropertyDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
+export class BasePropertyDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
     isOptional: boolean;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType, definitionType: DefinitionType) {
+        super(definitionType);
         this.fillName(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillIsOptional(typeChecker, symbol);

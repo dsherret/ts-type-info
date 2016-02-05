@@ -6,7 +6,7 @@ import {runClassPropertyDefinitionTests} from "./run-class-property-definition-t
 import {runClassMethodDefinitionTests} from "./run-class-method-definition-tests";
 import {runClassStaticPropertyDefinitionTests} from "./run-class-static-property-definition-tests";
 import {runClassStaticMethodDefinitionTests} from "./run-class-static-method-definition-tests";
-import {runConstructorDefinitionTests} from "./run-constructor-definition-tests";
+import {runClassConstructorDefinitionTests} from "./run-class-constructor-definition-tests";
 import {runTypeExpressionTests} from "./../../expressions";
 import {ensureNotNull} from "./../../ensure-not-null";
 
@@ -25,7 +25,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
             runDecoratableDefinitionTests(definition, structure);
             runTypeParameteredDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
-            runConstructorDefinitionTests(definition.constructorDef, structure.constructorDef);
+            runClassConstructorDefinitionTests(definition.constructorDef, structure.constructorDef);
 
             it(`should ${structure.isAbstract ? "be" : "not be"} abstract.`, () => {
                 assert.equal(definition.isAbstract, structure.isAbstract || false);

@@ -13,7 +13,7 @@ import {FunctionDefinition, FunctionParameterDefinition, CallSignatureDefinition
 import {InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition,
         InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./definitions/interface";
 import {ClassDefinition, ClassMethodParameterDefinition, ClassStaticMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition,
-        ClassStaticMethodDefinition, ClassStaticPropertyDefinition, ConstructorDefinition, ConstructorParameterDefinition} from "./definitions/class";
+        ClassStaticMethodDefinition, ClassStaticPropertyDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./definitions/class";
 import {EnumDefinition, EnumMemberDefinition} from "./definitions/enum";
 import {NamespaceDefinition} from "./definitions/namespace";
 import {VariableDefinition} from "./definitions/variable";
@@ -24,8 +24,8 @@ export type AllDefinitions = FileDefinition | ClassDefinitions | InterfaceDefini
     NamespaceDefinitions | VariableDefinitions;
 
 // group types (based on the folder they're in)
-export type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ConstructorDefinition |
-    ConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition;
+export type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition |
+    ClassConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition;
 export type InterfaceDefinitions = InterfaceDefinition | InterfaceMethodParameterDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition |
     InterfaceNewSignatureDefinition | InterfaceNewSignatureParameterDefinition;
 export type EnumDefinitions = EnumDefinition | EnumMemberDefinition;
@@ -36,7 +36,7 @@ export type VariableDefinitions = VariableDefinition;
 
 // "ed" definitions
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition |
-    ClassMethodParameterDefinition | ConstructorParameterDefinition;
+    ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
 export type TypeParameteredDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition |
     ClassStaticMethodDefinition | TypeAliasDefinition;
 export type ModuledDefinitions = FileDefinition | NamespaceDefinition;
@@ -51,8 +51,8 @@ export type MainDefinitions = ClassDefinition | FunctionDefinition | InterfaceDe
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
 export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition |
-                                   InterfaceNewSignatureParameterDefinition | ConstructorParameterDefinition | CallSignatureParameterDefinition;
-export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | InterfaceNewSignatureDefinition | ConstructorDefinition |
+                                   InterfaceNewSignatureParameterDefinition | ClassConstructorParameterDefinition | CallSignatureParameterDefinition;
+export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | InterfaceNewSignatureDefinition | ClassConstructorDefinition |
                                      CallSignatureDefinition;
 export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;

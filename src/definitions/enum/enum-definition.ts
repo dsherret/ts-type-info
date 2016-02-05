@@ -3,14 +3,16 @@ import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {EnumMemberDefinition} from "./enum-member-definition";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
-        IExportableDefinition, ExportableDefinition} from "./../base";
+        IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumWriter} from "./../../writers";
 import {applyMixins, TypeChecker} from "./../../utils";
 
-export class EnumDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
+export class EnumDefinition extends BaseDefinition
+                            implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
     members: EnumMemberDefinition[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        super(DefinitionType.Enum);
         this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);

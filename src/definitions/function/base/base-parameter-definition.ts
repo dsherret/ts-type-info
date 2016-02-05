@@ -2,17 +2,19 @@ import * as ts from "typescript";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {Expression, TypeExpression} from "./../../../expressions";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition, IDefaultExpressionedDefinition,
-        DefaultExpressionedDefinition} from "./../../base";
+        DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../../base";
 
 export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
     new(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType): ParameterType;
 }
 
-export class BaseParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
+export class BaseParameterDefinition<ParentType> extends BaseDefinition
+                                                 implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
+    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType, definitionType: DefinitionType) {
+        super(definitionType);
         this.fillName(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);
         this.fillParameterDetails(typeChecker, symbol);

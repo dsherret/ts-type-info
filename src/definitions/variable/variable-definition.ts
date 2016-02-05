@@ -3,17 +3,19 @@ import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
-        NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition} from "./../base";
+        NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableDeclarationType} from "./variable-declaration-type";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class VariableDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
+export class VariableDefinition extends BaseDefinition
+                                implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        super(DefinitionType.Variable);
         this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);

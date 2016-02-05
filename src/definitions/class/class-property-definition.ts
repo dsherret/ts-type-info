@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 import {BaseClassPropertyDefinition} from "./base";
 import {ClassDefinition} from "./class-definition";
+import {DefinitionType} from "./../base";
 import {TypeChecker} from "./../../utils";
 
 export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
@@ -8,7 +9,7 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isReadonly: boolean;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition) {
-        super(typeChecker, symbol, parent);
+        super(typeChecker, symbol, parent, DefinitionType.ClassProperty);
 
         this.fillAccessorInformation(symbol);
     }

@@ -2,7 +2,8 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
-import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition} from "./../base";
+import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition,
+        BaseDefinition, DefinitionType} from "./../base";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/named-definition";
 import {TypeParameteredDefinition} from "./../base/type-parametered-definition";
@@ -13,9 +14,11 @@ import {TypeParameterDefinition} from "./type-parameter-definition";
 import {TypeExpression} from "./../../expressions";
 import {TypeAliasWriter} from "./../../writers";
 
-export class TypeAliasDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
+export class TypeAliasDefinition extends BaseDefinition
+                                 implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                             ITypeParameteredDefinition, IAmbientableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        super(DefinitionType.TypeAlias);
         this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillTypeExpression(typeChecker, symbol);

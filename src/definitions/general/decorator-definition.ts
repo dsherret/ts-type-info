@@ -1,12 +1,13 @@
 import * as ts from "typescript";
-import {IBaseNamedDefinition, IParentedDefinition} from "./../base";
+import {IBaseNamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {Expression} from "./../../expressions";
 import {TypeChecker, TypeGuards} from "./../../utils";
 
-export class DecoratorDefinition<ParentType> implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
+export class DecoratorDefinition<ParentType> extends BaseDefinition implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
     arguments: Expression[] = [];
 
     constructor(typeChecker: TypeChecker, decorator: ts.Decorator, parent: ParentType) {
+        super(DefinitionType.Decorator);
         let decoratorExpression = decorator.expression;
 
         this.fillName(decoratorExpression);

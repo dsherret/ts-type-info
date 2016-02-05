@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
-        ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+        ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
@@ -12,13 +12,15 @@ import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, TypeChecker} from "./../../utils";
 
-export class InterfaceDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+export class InterfaceDefinition extends BaseDefinition
+                                 implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
     typeParameters: TypeParameterDefinition<this>[] = [];
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, public extendsTypeExpressions: TypeExpression[]) {
+        super(DefinitionType.Interface);
         this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);

@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
-        IAmbientableDefinition, AmbientableDefinition} from "./../base";
+        IAmbientableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -15,10 +15,12 @@ import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {ExportableDefinitions} from "./../../definitions";
 
-export class NamespaceDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
+export class NamespaceDefinition extends BaseDefinition
+                                 implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+        super(DefinitionType.Namespace);
         this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);

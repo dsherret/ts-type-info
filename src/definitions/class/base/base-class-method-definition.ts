@@ -3,7 +3,7 @@ import {Scope} from "./../scope";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {DecoratorDefinition} from "./../../../definitions";
 import {BaseFunctionDefinition, BaseParameterDefinitionConstructor} from "./../../function";
-import {IDecoratableDefinition, DecoratableDefinition} from "./../../base";
+import {IDecoratableDefinition, DecoratableDefinition, DefinitionType} from "./../../base";
 import {IScopedDefinition, ScopedDefinition} from "./scoped-definition";
 import {ClassDefinition} from "./../class-definition";
 
@@ -12,9 +12,10 @@ export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefini
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
         parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ClassDefinition, ParameterType>, ParameterType>,
-        parent: ClassDefinition
+        parent: ClassDefinition,
+        definitionType: DefinitionType
     ) {
-        super(typeChecker, symbol, parameterDefinition);
+        super(typeChecker, symbol, parameterDefinition, definitionType);
         this.fillDecorators(typeChecker, symbol, this);
         this.fillScope(symbol);
         this.parent = parent;

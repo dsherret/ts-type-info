@@ -1,12 +1,13 @@
 import * as ts from "typescript";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition, IParentedDefinition} from "./../base";
+import {INamedDefinition, NamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 
-export class TypeParameterDefinition<ParentType> implements INamedDefinition, IParentedDefinition<ParentType> {
+export class TypeParameterDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType> {
     constraintTypeExpression: TypeExpression;
 
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType) {
+        super(DefinitionType.TypeParameter);
         this.fillName(typeChecker, symbol);
         this.fillConstraint(typeChecker, symbol);
         this.parent = parent;

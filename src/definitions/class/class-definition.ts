@@ -1,27 +1,27 @@
 import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {ConstructorDefinition} from "./constructor-definition";
+import {ClassConstructorDefinition} from "./class-constructor-definition";
 import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
 import {ClassStaticMethodDefinition} from "./class-static-method-definition";
 import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
-import {INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition, AmbientableDefinition,
-        IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
+        AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-export class ClassDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
+export class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
                                         IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
     isAbstract: boolean;
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
     staticMethods: ClassStaticMethodDefinition[] = [];
     staticProperties: ClassStaticPropertyDefinition[] = [];
-    constructorDef: ConstructorDefinition;
+    constructorDef: ClassConstructorDefinition;
     typeParameters: TypeParameterDefinition<this>[] = [];
 
     constructor(
@@ -30,6 +30,8 @@ export class ClassDefinition implements INamedDefinition, IParentedDefinition<Mo
         public extendsTypeExpressions: TypeExpression[],
         public implementsTypeExpressions: TypeExpression[]
     ) {
+        super(DefinitionType.Class);
+
         this.fillName(typeChecker, symbol);
         this.fillExportable(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
@@ -69,7 +71,7 @@ export class ClassDefinition implements INamedDefinition, IParentedDefinition<Mo
             }
             else if (typeChecker.isSymbolConstructor(member)) {
                 this.verifyConstructorNotSet();
-                this.constructorDef = new ConstructorDefinition(typeChecker, member, this);
+                this.constructorDef = new ClassConstructorDefinition(typeChecker, member, this);
             }
             else if (typeChecker.isSymbolTypeParameter(member)) {
                 // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)

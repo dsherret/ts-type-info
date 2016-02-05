@@ -1,15 +1,17 @@
 import * as ts from "typescript";
 import {CallSignatureParameterDefinition} from "./call-signature-parameter-definition";
 import {IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./base";
-import {ITypeParameteredDefinition, TypeParameteredDefinition} from "./../base";
+import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
 
-export class CallSignatureDefinition implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
+export class CallSignatureDefinition extends BaseDefinition
+                                     implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
     minArgumentCount: number;
 
     constructor(typeChecker: TypeChecker, signature: ts.Signature) {
+        super(DefinitionType.CallSignature);
         this.fillReturnTypeExpressionBySignature(typeChecker, signature);
         this.fillParametersBySignature(typeChecker, signature, CallSignatureParameterDefinition);
         this.fillTypeParametersBySignature(typeChecker, signature);

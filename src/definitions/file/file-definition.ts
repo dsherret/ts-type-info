@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {TypeChecker, DefinitionCache, applyMixins} from "./../../utils";
-import {IModuledDefinition, ModuledDefinition} from "./../base";
+import {IModuledDefinition, ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {Expression} from "./../../expressions";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
@@ -17,13 +17,14 @@ import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {writeDefinition} from "./../../write-definition";
 
-export class FileDefinition implements IModuledDefinition {
+export class FileDefinition extends BaseDefinition implements IModuledDefinition {
     fileName: string;
     imports: ImportDefinition[] = [];
     reExports: ReExportDefinition[] = [];
     defaultExport: Expression | ExportableDefinitions;
 
     constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
+        super(DefinitionType.File);
         this.fileName = file.fileName;
         this.fillMembersBySourceFile(typeChecker, definitionCache, file);
         this.fillDefaultExport(typeChecker, definitionCache, file);

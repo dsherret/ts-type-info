@@ -1,20 +1,22 @@
 import * as ts from "typescript";
 import {TypeExpression} from "./../../../expressions";
 import {applyMixins, TypeChecker} from "./../../../utils";
-import {INamedDefinition, NamedDefinition, IParentedDefinition, ITypeParameteredDefinition, TypeParameteredDefinition} from "./../../base";
+import {INamedDefinition, NamedDefinition, IParentedDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../../base";
 import {TypeParameterDefinition} from "./../../general";
 import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
 import {IParameteredDefinition, ParameteredDefinition} from "./parametered-definition";
 import {IReturnTypedDefinition, ReturnTypedDefinition} from "./return-typed-definition";
 
-export class BaseFunctionDefinition<ParentType, ParameterType>
+export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefinition
     implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition, IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
 
     constructor(
         typeChecker: TypeChecker,
         symbol: ts.Symbol,
-        parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ParentType, ParameterType>, ParameterType>
+        parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ParentType, ParameterType>, ParameterType>,
+        definitionType: DefinitionType
     ) {
+        super(definitionType);
         this.fillName(typeChecker, symbol);
         this.fillParametersBySymbol(typeChecker, symbol, parameterDefinition);
         this.fillReturnTypeExpressionBySymbol(typeChecker, symbol);

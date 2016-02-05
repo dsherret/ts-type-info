@@ -13,7 +13,7 @@ import {FunctionStructure, FunctionParameterStructure, CallSignatureStructure, C
 import {InterfaceStructure, InterfaceMethodParameterStructure, InterfaceMethodStructure,
         InterfaceNewSignatureParameterStructure, InterfacePropertyStructure, InterfaceNewSignatureStructure} from "./definitions/interface";
 import {ClassStructure, ClassMethodParameterStructure, ClassStaticMethodParameterStructure, ClassMethodStructure, ClassPropertyStructure,
-        ClassStaticMethodStructure, ClassStaticPropertyStructure, ConstructorStructure, ConstructorParameterStructure} from "./definitions/class";
+        ClassStaticMethodStructure, ClassStaticPropertyStructure, ClassConstructorStructure, ClassConstructorParameterStructure} from "./definitions/class";
 import {EnumStructure} from "./definitions/enum";
 import {NamespaceStructure} from "./definitions/namespace";
 import {VariableStructure} from "./definitions/variable";
@@ -23,8 +23,8 @@ export type FunctionStructures = FunctionStructure | InterfaceMethodStructure | 
 export type ClassMethodStructures = ClassMethodStructure | ClassStaticMethodStructure;
 export type ClassMethodParameterStructures = ClassMethodParameterStructure | ClassStaticMethodParameterStructure;
 export type ParameterStructures = FunctionParameterStructure | InterfaceMethodParameterStructure | ClassMethodParameterStructure | ClassStaticMethodParameterStructure |
-                                   InterfaceNewSignatureParameterStructure | ConstructorParameterStructure | CallSignatureParameterStructure;
-export type ParameteredStructures = FunctionStructure | InterfaceMethodStructure | ClassMethodStructure | InterfaceNewSignatureStructure | ConstructorStructure |
+                                   InterfaceNewSignatureParameterStructure | ClassConstructorParameterStructure | CallSignatureParameterStructure;
+export type ParameteredStructures = FunctionStructure | InterfaceMethodStructure | ClassMethodStructure | InterfaceNewSignatureStructure | ClassConstructorStructure |
                                      CallSignatureStructure;
 export type PropertyStructures = InterfacePropertyStructure | ClassPropertyStructure | ClassStaticPropertyStructure;
 export type MethodStructures = InterfaceMethodStructure | ClassMethodStructure;

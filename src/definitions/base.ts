@@ -1,4 +1,6 @@
-﻿export * from "./base/named-definition";
+﻿export * from "./base/base-definition";
+export * from "./base/definition-type";
+export * from "./base/named-definition";
 export * from "./base/parented-definition";
 export * from "./base/ambientable-definition";
 export * from "./base/type-expressioned-definition";

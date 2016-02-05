@@ -1,34 +1,32 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {WriteableDefinitions, ClassDefinition, InterfaceDefinition, FunctionDefinition, FileDefinition, NamespaceDefinition,
-    EnumDefinition, TypeAliasDefinition, VariableDefinition} from "./definitions";
+import {WriteableDefinitions} from "./definitions";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter, TypeAliasWriter, VariableWriter} from "./writers";
 import {WriteFlags} from "./write-flags";
 import {Logger} from "./utils";
 
 export function writeDefinition(definition: WriteableDefinitions, writeFlags: WriteFlags, writer: CodeBlockWriter) {
-    // todo: don't do an instance check so that this works with data that was serialized and loaded
-    if (definition instanceof ClassDefinition) {
+    if (definition.isClassDefinition()) {
         new ClassWriter(writer).write(definition, writeFlags);
     }
-    else if (definition instanceof InterfaceDefinition) {
+    else if (definition.isInterfaceDefinition()) {
         new InterfaceWriter(writer).write(definition, writeFlags);
     }
-    else if (definition instanceof FunctionDefinition) {
+    else if (definition.isFunctionDefinition()) {
         new FunctionWriter(writer).write(definition, writeFlags);
     }
-    else if (definition instanceof FileDefinition) {
+    else if (definition.isFileDefinition()) {
         new FileWriter(writer).write(definition, writeFlags);
     }
-    else if (definition instanceof NamespaceDefinition) {
+    else if (definition.isNamespaceDefinition()) {
         new NamespaceWriter(writer, new ModuledWriter(writer)).write(definition, writeFlags);
     }
-    else if (definition instanceof EnumDefinition) {
+    else if (definition.isEnumDefinition()) {
         new EnumWriter(writer).write(definition);
     }
-    else if (definition instanceof TypeAliasDefinition) {
+    else if (definition.isTypeAliasDefinition()) {
         new TypeAliasWriter(writer).write(definition);
     }
-    else if (definition instanceof VariableDefinition) {
+    else if (definition.isVariableDefinition) {
         new VariableWriter(writer).write(definition, writeFlags);
     }
     else {
