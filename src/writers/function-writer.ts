@@ -17,9 +17,15 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
         this.writer.write("function ").write(def.name);
         this.typeParametersWriter.write(def.typeParameters);
         this.parametersWriter.write(def.parameters);
-        this.writer.write(": ");
-        this.typeExpressionWriter.write(def.returnTypeExpression);
-        this.functionBodyWriter.writeFunctionBody(def);
+        this.writeReturnType(def);
+        this.functionBodyWriter.write(def);
         this.writer.newLine();
+    }
+
+    private writeReturnType(def: FunctionWriteableDefinitions) {
+        if (def.isInterfaceMethodDefinition() || typeof def.onWriteFunctionBody !== "function") {
+            this.writer.write(": ");
+            this.typeExpressionWriter.write(def.returnTypeExpression);
+        }
     }
 }

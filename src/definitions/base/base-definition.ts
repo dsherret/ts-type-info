@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../class";
-import {InterfaceDefinition} from "./../interface";
+import {InterfaceDefinition, InterfaceMethodDefinition} from "./../interface";
 import {FileDefinition} from "./../file";
 import {FunctionDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
@@ -22,6 +22,10 @@ export abstract class BaseDefinition {
 
     isInterfaceDefinition(): this is InterfaceDefinition {
         return this._definitionType === DefinitionType.Interface;
+    }
+
+    isInterfaceMethodDefinition(): this is InterfaceMethodDefinition {
+        return this._definitionType === DefinitionType.InterfaceMethod;
     }
 
     isEnumDefinition(): this is EnumDefinition {

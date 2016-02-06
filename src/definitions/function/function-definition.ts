@@ -8,6 +8,8 @@ import {WriteFlags} from "./../../write-flags";
 import {FunctionParameterDefinition} from "./function-parameter-definition";
 
 export class FunctionDefinition extends BaseFunctionDefinition<ModuledDefinitions, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
+    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
         super(typeChecker, symbol, FunctionParameterDefinition, DefinitionType.Function);
         this.fillExportable(typeChecker, symbol);

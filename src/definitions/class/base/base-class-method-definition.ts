@@ -1,4 +1,5 @@
 import * as ts from "typescript";
+import CodeBlockWriter from "code-block-writer";
 import {Scope} from "./../scope";
 import {applyMixins, TypeChecker} from "./../../../utils";
 import {DecoratorDefinition} from "./../../../definitions";
@@ -7,6 +8,8 @@ import {IScopedDefinition, ScopedDefinition} from "./scoped-definition";
 import {ClassDefinition} from "./../class-definition";
 
 export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements IDecoratableDefinition, IScopedDefinition {
+    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+
     constructor(
         typeChecker: TypeChecker,
         symbol: ts.Symbol,

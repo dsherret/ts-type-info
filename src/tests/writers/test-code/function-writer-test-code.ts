@@ -1,6 +1,6 @@
 ﻿const code = `
 function myFunction(str: string) {
-    return "test";
+    return "text";
 }
 function myFunction2<T extends string, U>(str: T, num: U) {
 }

@@ -21,7 +21,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         this.parametersWriter.write(def.parameters);
         this.writer.write(": ");
         this.typeExpressionWriter.write(def.returnTypeExpression);
-        this.functionBodyWriter.writeFunctionBody(def);
+        this.functionBodyWriter.write(def);
         this.writer.newLine();
     }
 }

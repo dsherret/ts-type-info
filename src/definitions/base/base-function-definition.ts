@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import CodeBlockWriter from "code-block-writer";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeParameterDefinition} from "./../general";
@@ -14,8 +13,6 @@ import {IReturnTypedDefinition, ReturnTypedDefinition} from "./return-typed-defi
 
 export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefinition
     implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition, IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
-
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
     constructor(
         typeChecker: TypeChecker,
