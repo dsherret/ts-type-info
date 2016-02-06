@@ -2,14 +2,13 @@ import * as ts from "typescript";
 import * as Lint from "tslint/lib/lint";
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "duplicate imports from same file forbidden";
+    static FAILURE_STRING = "duplicate imports from same file forbidden";
 
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoImportsWalker(sourceFile, this.getOptions()));
     }
 }
 
-// The walker takes care of all the work.
 class NoDuplicateImportsFromSameFileWalker extends Lint.RuleWalker {
     private fileImportsByFileName: { [fileName: string]: { [importName: string]: boolean } } = {};
 
