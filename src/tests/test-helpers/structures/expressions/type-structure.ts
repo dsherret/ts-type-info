@@ -1,6 +1,5 @@
-﻿import {NamedStructure, CallSignatureStructure} from "./../definitions";
+﻿import {NamedStructure, CallSignatureStructure, TypePropertyStructure} from "./../definitions";
 import {TypeExpressionStructure} from "./type-expression-structure";
-import {TypePropertyStructure} from "./../definitions";
 
 export interface TypeStructure {
     callSignatures?: CallSignatureStructure[];

@@ -1,6 +1,6 @@
 ﻿import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
-import {ModuledDefinitions} from "./../../definitions";
+import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
         IAmbientableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
@@ -13,7 +13,6 @@ import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 import {NamespaceDeclarationType} from "./namespace-declaration-type";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {ExportableDefinitions} from "./../../definitions";
 
 export class NamespaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {

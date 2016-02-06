@@ -43,7 +43,9 @@ gulp.task("test", ["pre-test"], function() {
 
 gulp.task("tslint", function() {
     return gulp.src(["./src/**/*.ts", "!./src/typings/**/*.d.ts"])
-        .pipe(tslint())
+        .pipe(tslint({
+            rulesDirectory: "tslint-rules"
+        }))
         .pipe(tslint.report("verbose"));
 });
 
