@@ -53,7 +53,7 @@ class MyClass {
 enum MyEnum {
 }
 
-function myFunction(): void {
+function myFunction() {
 }
 `;
             assert.equal(getModuledAsString(myFile), expected);

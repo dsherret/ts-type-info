@@ -105,12 +105,12 @@ class MyClass {
         const file = getStringInfo(`function myFunction(param1 = "text") {}`);
 
         it("should contain the default expression", () => {
-            const expected = `function myFunction(param1: string = "text"): void {\n}\n`;
+            const expected = `function myFunction(param1: string = "text") {\n}\n`;
             assert.equal(getFileAsString(file, WriteFlags.None), expected);
         });
 
         it("should contain the property written out with the default expression", () => {
-            const expected = `function myFunction(param1?: string): void {\n}\n`;
+            const expected = `function myFunction(param1?: string) {\n}\n`;
             assert.equal(getFileAsString(file, WriteFlags.HideExpressions), expected);
         });
     });

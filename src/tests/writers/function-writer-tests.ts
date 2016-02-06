@@ -20,14 +20,14 @@ describe("FunctionWriter", () => {
     describe("write()", () => {
         describe("myFunction", () => {
             it("should contain the function written out", () => {
-                const expected = `function myFunction(str: string): string {\n}\n`;
+                const expected = `function myFunction(str: string) {\n}\n`;
                 assert.equal(getFunctionAsString(file.functions[0]), expected);
             });
         });
 
         describe("myFunction2", () => {
             it("should contain the function written out", () => {
-                const expected = `function myFunction2<T extends string, U>(str: T, num: U): void {\n}\n`;
+                const expected = `function myFunction2<T extends string, U>(str: T, num: U) {\n}\n`;
                 assert.equal(getFunctionAsString(file.functions[1]), expected);
             });
         });

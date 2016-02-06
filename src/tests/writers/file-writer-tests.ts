@@ -37,7 +37,7 @@ class MyClass {
 enum MyEnum {
 }
 
-function myFunction(): void {
+function myFunction() {
 }
 `;
             assert.equal(getFileAsString(myFile), expected);

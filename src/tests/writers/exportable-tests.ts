@@ -48,7 +48,7 @@ export class MyClass {
 export enum MyEnum {
 }
 
-export function myFunction(): void {
+export function myFunction() {
 }
 `;
                 assert.equal(getFileAsString(myFile), expected);
@@ -89,7 +89,7 @@ export function myFunction(): void {
 
         it("should write export default for a function", () => {
             const code = `function MyFunction() {}\nexport default MyFunction;`;
-            const expected = `function MyFunction(): void {\n}\n\nexport default MyFunction;\n`;
+            const expected = `function MyFunction() {\n}\n\nexport default MyFunction;\n`;
             assert.equal(getFileAsString(getStringInfo(code)), expected);
         });
     });

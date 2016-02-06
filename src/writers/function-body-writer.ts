@@ -2,21 +2,27 @@
 import {WriteFlags} from "./../write-flags";
 import {BaseWriter} from "./base-writer";
 
+type NotInterfaceMethod = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
+
 export class FunctionBodyWriter extends BaseWriter {
-    write(def: FunctionWriteableDefinitions) {
+    static willWriteFunctionBody(def: FunctionWriteableDefinitions, flags: WriteFlags): def is NotInterfaceMethod {
         if (def.isInterfaceMethodDefinition()) {
-            this.writeSemiColon();
+            return false;
         }
         else {
             const isOnWriteFunctionBodyDefined = typeof def.onWriteFunctionBody === "function";
-            const suggestedToHideFunctionBody = (this.flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient;
+            const suggestedToHideFunctionBody = (flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient;
 
-            if (!isOnWriteFunctionBodyDefined && suggestedToHideFunctionBody) {
-                this.writeSemiColon();
-            }
-            else {
-                this.writeFunctionBody(def);
-            }
+            return isOnWriteFunctionBodyDefined || !suggestedToHideFunctionBody;
+        }
+    }
+
+    write(def: FunctionWriteableDefinitions) {
+        if (FunctionBodyWriter.willWriteFunctionBody(def, this.flags)) {
+            this.writeFunctionBody(def);
+        }
+        else {
+            this.writeSemiColon();
         }
     }
 
@@ -24,7 +30,7 @@ export class FunctionBodyWriter extends BaseWriter {
         this.writer.write(";");
     }
 
-    private writeFunctionBody(def: FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition) {
+    private writeFunctionBody(def: NotInterfaceMethod) {
         this.writer.block(() => {
             if (typeof def.onWriteFunctionBody === "function") {
                 def.onWriteFunctionBody(this.writer);
