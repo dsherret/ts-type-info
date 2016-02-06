@@ -3,11 +3,10 @@ import CodeBlockWriter from "code-block-writer";
 import {TypeExpressionWriter} from "./../../writers";
 import {TypeExpression} from "./../../expressions";
 import {getStringInfo} from "./../../main";
-import {WriteFlags} from "./../../write-flags";
 
 function getTypeExpressionAsString(typeExpression: TypeExpression) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new TypeExpressionWriter(codeBlockWriter, WriteFlags.Default);
+    const writer = new TypeExpressionWriter(codeBlockWriter);
 
     writer.write(typeExpression);
 

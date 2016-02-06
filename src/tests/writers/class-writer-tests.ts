@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {ClassWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 import {classWriterTestCode} from "./test-code";
 
-function getClassAsString(c: ClassDefinition, flags: WriteFlags) {
+function getClassAsString(c: ClassDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ClassWriter(codeBlockWriter, flags);
+    const writer = new ClassWriter(codeBlockWriter);
 
     writer.write(c);
 
@@ -33,7 +32,7 @@ describe("ClassWriter", () => {
     }
 }
 `;
-                assert.equal(getClassAsString(file.classes[0], WriteFlags.Default), expected);
+                assert.equal(getClassAsString(file.classes[0]), expected);
             });
         });
 
@@ -43,7 +42,7 @@ describe("ClassWriter", () => {
 `class MyTypeParameterClass<T> {
 }
 `;
-                assert.equal(getClassAsString(file.classes[1], WriteFlags.Default), expected);
+                assert.equal(getClassAsString(file.classes[1]), expected);
             });
         });
 
@@ -53,7 +52,7 @@ describe("ClassWriter", () => {
 `class MyChildClass extends MyTypeParameterClass<string> {
 }
 `;
-                assert.equal(getClassAsString(file.classes[2], WriteFlags.Default), expected);
+                assert.equal(getClassAsString(file.classes[2]), expected);
             });
         });
 
@@ -63,7 +62,7 @@ describe("ClassWriter", () => {
 `class MyImplementsClass implements MyChildClass {
 }
 `;
-                assert.equal(getClassAsString(file.classes[3], WriteFlags.Default), expected);
+                assert.equal(getClassAsString(file.classes[3]), expected);
             });
         });
 
@@ -73,7 +72,7 @@ describe("ClassWriter", () => {
 `class MyExtendsImplementsClass extends MyChildClass implements MyImplementsClass {
 }
 `;
-                assert.equal(getClassAsString(file.classes[4], WriteFlags.Default), expected);
+                assert.equal(getClassAsString(file.classes[4]), expected);
             });
         });
     });

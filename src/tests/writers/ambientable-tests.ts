@@ -3,11 +3,10 @@ import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {FileWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 
-function getFileAsString(f: FileDefinition, flags: WriteFlags) {
+function getFileAsString(f: FileDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FileWriter(codeBlockWriter, flags);
+    const writer = new FileWriter(codeBlockWriter);
 
     writer.write(f);
 
@@ -57,7 +56,7 @@ declare enum MyEnum {
 
 declare function myFunction(): void;
 `;
-            assert.equal(getFileAsString(myFile, WriteFlags.Default), expected);
+            assert.equal(getFileAsString(myFile), expected);
         });
     });
 });

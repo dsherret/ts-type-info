@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {FunctionDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {FunctionWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 import {functionWriterTestCode} from "./test-code";
 
-function getFunctionAsString(i: FunctionDefinition, flags: WriteFlags) {
+function getFunctionAsString(i: FunctionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FunctionWriter(codeBlockWriter, flags);
+    const writer = new FunctionWriter(codeBlockWriter);
 
     writer.write(i);
 
@@ -22,14 +21,14 @@ describe("FunctionWriter", () => {
         describe("myFunction", () => {
             it("should contain the function written out", () => {
                 const expected = `function myFunction(str: string): string {\n}\n`;
-                assert.equal(getFunctionAsString(file.functions[0], WriteFlags.Default), expected);
+                assert.equal(getFunctionAsString(file.functions[0]), expected);
             });
         });
 
         describe("myFunction2", () => {
             it("should contain the function written out", () => {
                 const expected = `function myFunction2<T extends string, U>(str: T, num: U): void {\n}\n`;
-                assert.equal(getFunctionAsString(file.functions[1], WriteFlags.Default), expected);
+                assert.equal(getFunctionAsString(file.functions[1]), expected);
             });
         });
     });

@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {FileWriter} from "./../../../writers";
-import {WriteFlags} from "./../../../write-flags";
 import {fileWriterTestCode} from "./../../writers/test-code";
 
-function getWriterString(f: FileDefinition, flags: WriteFlags) {
+function getWriterString(f: FileDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FileWriter(codeBlockWriter, flags);
+    const writer = new FileWriter(codeBlockWriter);
 
     writer.write(f);
 
@@ -20,7 +19,7 @@ describe("FileDefinition", () => {
 
     describe("write()", () => {
         it(`should write the same thing as a file writer for the file`, () => {
-            assert.equal(file.write(), getWriterString(file, WriteFlags.Default));
+            assert.equal(file.write(), getWriterString(file));
         });
     });
 });

@@ -3,11 +3,10 @@ import CodeBlockWriter from "code-block-writer";
 import {ScopeWriter} from "./../../writers";
 import {ScopedDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
-import {WriteFlags} from "./../../write-flags";
 
 function getScopeAsString(def: ScopedDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ScopeWriter(codeBlockWriter, WriteFlags.Default);
+    const writer = new ScopeWriter(codeBlockWriter);
 
     writer.write(def.scope);
 

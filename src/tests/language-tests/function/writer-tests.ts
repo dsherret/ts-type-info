@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {FunctionDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {FunctionWriter} from "./../../../writers";
-import {WriteFlags} from "./../../../write-flags";
 import {functionWriterTestCode} from "./../../writers/test-code";
 
-function getWriterString(i: FunctionDefinition, flags: WriteFlags) {
+function getWriterString(i: FunctionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FunctionWriter(codeBlockWriter, flags);
+    const writer = new FunctionWriter(codeBlockWriter);
 
     writer.write(i);
 
@@ -21,7 +20,7 @@ describe("FunctionDefinition", () => {
     describe("write()", () => {
         file.functions.forEach(i => {
             it(`should write the same thing as a function writer for the function ${i.name}`, () => {
-                assert.equal(i.write(), getWriterString(i, WriteFlags.Default));
+                assert.equal(i.write(), getWriterString(i));
             });
         });
     });

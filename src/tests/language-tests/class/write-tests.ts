@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {ClassWriter} from "./../../../writers";
-import {WriteFlags} from "./../../../write-flags";
 import {classWriterTestCode} from "./../../writers/test-code";
 
-function getWriterString(c: ClassDefinition, flags: WriteFlags) {
+function getWriterString(c: ClassDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ClassWriter(codeBlockWriter, flags);
+    const writer = new ClassWriter(codeBlockWriter);
 
     writer.write(c);
 
@@ -21,7 +20,7 @@ describe("ClassDefinition", () => {
     describe("write()", () => {
         file.classes.forEach(c => {
             it(`should write the same thing as a class writer for the class ${c.name}`, () => {
-                assert.equal(c.write(), getWriterString(c, WriteFlags.Default));
+                assert.equal(c.write(), getWriterString(c));
             });
         });
     });

@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {InterfaceDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {InterfaceWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 import {interfaceWriterTestCode} from "./test-code";
 
-function getInterfaceAsString(i: InterfaceDefinition, flags: WriteFlags) {
+function getInterfaceAsString(i: InterfaceDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new InterfaceWriter(codeBlockWriter, flags);
+    const writer = new InterfaceWriter(codeBlockWriter);
 
     writer.write(i);
 
@@ -28,7 +27,7 @@ describe("InterfaceWriter", () => {
     myMethod(): void;
 }
 `;
-                assert.equal(getInterfaceAsString(file.interfaces[0], WriteFlags.Default), expected);
+                assert.equal(getInterfaceAsString(file.interfaces[0]), expected);
             });
         });
 
@@ -38,7 +37,7 @@ describe("InterfaceWriter", () => {
 `interface MyTypeParameterInterface<T> {
 }
 `;
-                assert.equal(getInterfaceAsString(file.interfaces[1], WriteFlags.Default), expected);
+                assert.equal(getInterfaceAsString(file.interfaces[1]), expected);
             });
         });
 
@@ -48,7 +47,7 @@ describe("InterfaceWriter", () => {
 `interface MyExtenedInterface extends MyTypeParameterInterface<string> {
 }
 `;
-                assert.equal(getInterfaceAsString(file.interfaces[2], WriteFlags.Default), expected);
+                assert.equal(getInterfaceAsString(file.interfaces[2]), expected);
             });
         });
     });

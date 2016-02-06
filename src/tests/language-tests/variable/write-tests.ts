@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {VariableDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {VariableWriter} from "./../../../writers";
-import {WriteFlags} from "./../../../write-flags";
 import {variableWriterTestCode} from "./../../writers/test-code";
 
-function getWriterString(def: VariableDefinition, flags: WriteFlags) {
+function getWriterString(def: VariableDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new VariableWriter(codeBlockWriter, flags);
+    const writer = new VariableWriter(codeBlockWriter);
 
     writer.write(def);
 
@@ -21,7 +20,7 @@ describe("VariableDefinition", () => {
     describe("write()", () => {
         file.variables.forEach(v => {
             it(`should write the same thing as a variable writer for the variable ${v.name}`, () => {
-                assert.equal(v.write(), getWriterString(v, WriteFlags.Default));
+                assert.equal(v.write(), getWriterString(v));
             });
         });
     });

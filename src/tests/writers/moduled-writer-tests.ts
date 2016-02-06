@@ -3,11 +3,10 @@ import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {ModuledWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 
-function getModuledAsString(f: ModuledDefinitions, flags: WriteFlags) {
+function getModuledAsString(f: ModuledDefinitions) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ModuledWriter(codeBlockWriter, flags);
+    const writer = new ModuledWriter(codeBlockWriter);
 
     writer.write(f);
 
@@ -57,7 +56,7 @@ enum MyEnum {
 function myFunction(): void {
 }
 `;
-            assert.equal(getModuledAsString(myFile, WriteFlags.Default), expected);
+            assert.equal(getModuledAsString(myFile), expected);
         });
     });
 });

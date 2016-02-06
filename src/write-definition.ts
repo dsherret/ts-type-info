@@ -4,7 +4,7 @@ import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWrite
 import {WriteFlags} from "./write-flags";
 import {Logger} from "./utils";
 
-export function writeDefinition(definition: WriteableDefinitions, writeFlags: WriteFlags, writer: CodeBlockWriter) {
+export function writeDefinition(definition: WriteableDefinitions, writer: CodeBlockWriter, writeFlags = WriteFlags.Default) {
     if (definition.isClassDefinition()) {
         new ClassWriter(writer, writeFlags).write(definition);
     }
@@ -18,7 +18,7 @@ export function writeDefinition(definition: WriteableDefinitions, writeFlags: Wr
         new FileWriter(writer, writeFlags).write(definition);
     }
     else if (definition.isNamespaceDefinition()) {
-        new NamespaceWriter(writer, writeFlags, new ModuledWriter(writer, writeFlags)).write(definition);
+        new NamespaceWriter(writer, new ModuledWriter(writer, writeFlags), writeFlags).write(definition);
     }
     else if (definition.isEnumDefinition()) {
         new EnumWriter(writer, writeFlags).write(definition);

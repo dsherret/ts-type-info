@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {TypeAliasDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {TypeAliasWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 import {typeAliasWriterTestCode} from "./test-code";
 
 function getTypeAliasAsString(def: TypeAliasDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new TypeAliasWriter(codeBlockWriter, WriteFlags.Default);
+    const writer = new TypeAliasWriter(codeBlockWriter);
 
     writer.write(def);
 

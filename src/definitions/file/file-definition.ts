@@ -100,7 +100,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
                 exportDef.isNamedExportOfFile = false;
                 exportDef.isDefaultExportOfFile = false;
 
-                writeDefinition(exportDef, WriteFlags.HideFunctionBodies, writer);
+                writeDefinition(exportDef, writer, WriteFlags.HideFunctionBodies | WriteFlags.HideExpressions | WriteFlags.HidePrivateMembers | WriteFlags.HideProtectedMembers);
                 writer.newLine();
             });
         });

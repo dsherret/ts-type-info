@@ -8,7 +8,7 @@ import {FunctionWriter} from "./function-writer";
 import {TypeAliasWriter} from "./type-alias-writer";
 
 export class ModuledWriter extends BaseDefinitionWriter<ModuledDefinitions> {
-    private namespaceWriter = new NamespaceWriter(this.writer, this.flags, this);
+    private namespaceWriter = new NamespaceWriter(this.writer, this, this.flags);
     private interfaceWriter = new InterfaceWriter(this.writer, this.flags);
     private classWriter = new ClassWriter(this.writer, this.flags);
     private enumWriter = new EnumWriter(this.writer, this.flags);

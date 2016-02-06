@@ -1,14 +1,13 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {TypeAliasDefinition} from "./../../../definitions";
-import {WriteFlags} from "./../../../write-flags";
 import {getStringInfo} from "./../../../main";
 import {TypeAliasWriter} from "./../../../writers";
 import {typeAliasWriterTestCode} from "./../../writers/test-code";
 
 function getWriterString(i: TypeAliasDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new TypeAliasWriter(codeBlockWriter, WriteFlags.Default);
+    const writer = new TypeAliasWriter(codeBlockWriter);
 
     writer.write(i);
 

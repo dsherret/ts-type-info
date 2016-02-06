@@ -5,7 +5,7 @@ import {BaseDefinitionWriter} from "./base-definition-writer";
 import {ModuledWriter} from "./moduled-writer";
 
 export class NamespaceWriter extends BaseDefinitionWriter<NamespaceDefinition> {
-    constructor(writer: CodeBlockWriter, flags: WriteFlags, private moduledWriter: ModuledWriter) {
+    constructor(writer: CodeBlockWriter, private moduledWriter: ModuledWriter, flags = WriteFlags.Default) {
         super(writer, flags);
     }
 

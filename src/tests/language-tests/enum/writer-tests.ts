@@ -1,6 +1,5 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
-import {WriteFlags} from "./../../../write-flags";
 import {EnumDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {EnumWriter} from "./../../../writers";
@@ -8,7 +7,7 @@ import {enumWriterTestCode} from "./../../writers/test-code";
 
 function getWriterString(e: EnumDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new EnumWriter(codeBlockWriter, WriteFlags.Default);
+    const writer = new EnumWriter(codeBlockWriter);
 
     writer.write(e);
 

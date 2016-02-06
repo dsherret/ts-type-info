@@ -3,12 +3,11 @@ import CodeBlockWriter from "code-block-writer";
 import {NamespaceDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 import {namespaceWriterTestCode} from "./test-code";
 
-function getNamespaceAsString(f: NamespaceDefinition, flags: WriteFlags) {
+function getNamespaceAsString(f: NamespaceDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new NamespaceWriter(codeBlockWriter, flags, new ModuledWriter(codeBlockWriter, flags));
+    const writer = new NamespaceWriter(codeBlockWriter, new ModuledWriter(codeBlockWriter));
 
     writer.write(f);
 
@@ -27,7 +26,7 @@ describe("NamespaceWriter", () => {
     }
 }
 `;
-                assert.equal(getNamespaceAsString(myFile.namespaces[0], WriteFlags.Default), expected);
+                assert.equal(getNamespaceAsString(myFile.namespaces[0]), expected);
             });
         });
 
@@ -39,7 +38,7 @@ describe("NamespaceWriter", () => {
     }
 }
 `;
-                assert.equal(getNamespaceAsString(myFile.namespaces[1], WriteFlags.Default), expected);
+                assert.equal(getNamespaceAsString(myFile.namespaces[1]), expected);
             });
         });
     });
