@@ -1,8 +1,8 @@
 ﻿import {EnumMemberDefinition} from "./../definitions";
-import {BaseWriter} from "./base-writer";
+import {BaseDefinitionWriter} from "./base-definition-writer";
 
-export class EnumMemberWriter extends BaseWriter {
-    write(member: EnumMemberDefinition) {
+export class EnumMemberWriter extends BaseDefinitionWriter<EnumMemberDefinition> {
+    protected writeDefault(member: EnumMemberDefinition) {
         this.writer.write(member.name + " = " + member.value);
     }
 }

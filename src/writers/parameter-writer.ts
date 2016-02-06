@@ -1,31 +1,23 @@
 ﻿import {ParameterDefinitions} from "./../definitions";
 import {ExpressionWriter} from "./expression-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
-import {BaseWriter} from "./base-writer";
+import {BaseDefinitionWriter} from "./base-definition-writer";
 import {WriteFlags} from "./../write-flags";
 
-export class ParameterWriter extends BaseWriter {
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
-    private expressionWriter = new ExpressionWriter(this.writer);
+export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> {
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
+    private expressionWriter = new ExpressionWriter(this.writer, this.flags);
 
-    write(parameters: ParameterDefinitions[], flags: WriteFlags) {
-        this.writer.write("(");
-        parameters.forEach((param, i) => {
-            if (i !== 0) {
-                this.writer.write(", ");
-            }
+    protected writeDefault(param: ParameterDefinitions) {
+        this.writeRestParameter(param);
+        this.writer.write(param.name);
+        this.writeIsOptional(param);
+        this.writer.write(": ");
+        this.typeExpressionWriter.write(param.typeExpression);
 
-            this.writeRestParameter(param);
-            this.writer.write(param.name);
-            this.writeIsOptional(param);
-            this.writer.write(": ");
-            this.typeExpressionWriter.write(param.typeExpression);
-
-            if (flags & WriteFlags.ParameterDefaultExpressions) {
-                this.expressionWriter.writeWithEqualsSign(param.defaultExpression);
-            }
-        });
-        this.writer.write(")");
+        if ((this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
+            this.expressionWriter.writeWithEqualsSign(param.defaultExpression);
+        }
     }
 
     private writeRestParameter(param: ParameterDefinitions) {
@@ -35,7 +27,11 @@ export class ParameterWriter extends BaseWriter {
     }
 
     private writeIsOptional(param: ParameterDefinitions) {
-        if (param.isOptional && !param.isRestParameter) {
+        const isOptionalNotRest = param.isOptional && !param.isRestParameter;
+        const willWriteDefaultExpression = param.defaultExpression != null &&
+                                           (this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions;
+
+        if (isOptionalNotRest && !willWriteDefaultExpression) {
             this.writer.write("?");
         }
     }

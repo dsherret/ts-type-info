@@ -1,4 +1,5 @@
 ﻿const code = `
+var myVariable: string;
 namespace MyNamespace {
 }
 module MyModule {

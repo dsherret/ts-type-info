@@ -28,8 +28,9 @@ export class NamespaceDefinition extends BaseDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
-        namespaceWriter.write(this, WriteFlags.Default);
+        const flags = WriteFlags.Default;
+        const namespaceWriter = new NamespaceWriter(writer, flags, new ModuledWriter(writer, flags));
+        namespaceWriter.write(this);
         return writer.toString();
     }
 

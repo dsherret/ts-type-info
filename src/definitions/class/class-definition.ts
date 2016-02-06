@@ -42,8 +42,8 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
 
     write() {
         const writer = new CodeBlockWriter();
-        const classWriter = new ClassWriter(writer);
-        classWriter.write(this, WriteFlags.Default);
+        const classWriter = new ClassWriter(writer, WriteFlags.Default);
+        classWriter.write(this);
         return writer.toString();
     }
 

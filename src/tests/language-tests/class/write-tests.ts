@@ -8,9 +8,9 @@ import {classWriterTestCode} from "./../../writers/test-code";
 
 function getWriterString(c: ClassDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ClassWriter(codeBlockWriter);
+    const writer = new ClassWriter(codeBlockWriter, flags);
 
-    writer.write(c, flags);
+    writer.write(c);
 
     return codeBlockWriter.toString();
 }

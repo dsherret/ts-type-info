@@ -1,4 +1,4 @@
-﻿import {DefinitionType} from "./definition-type";
+﻿import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {FileDefinition} from "./../file";
@@ -7,10 +7,14 @@ import {NamespaceDefinition} from "./../namespace";
 import {EnumDefinition} from "./../enum";
 import {TypeAliasDefinition} from "./../general";
 import {VariableDefinition} from "./../variable";
+import {DefinitionType} from "./definition-type";
 
 export abstract class BaseDefinition {
     constructor(private _definitionType: DefinitionType) {
     }
+
+    onBeforeWrite: (writer: CodeBlockWriter) => void;
+    onAfterWrite: (writer: CodeBlockWriter) => void;
 
     isClassDefinition(): this is ClassDefinition {
         return this._definitionType === DefinitionType.Class;

@@ -29,8 +29,8 @@ export class InterfaceDefinition extends BaseDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const interfaceWriter = new InterfaceWriter(writer);
-        interfaceWriter.write(this, WriteFlags.Default);
+        const interfaceWriter = new InterfaceWriter(writer, WriteFlags.Default);
+        interfaceWriter.write(this);
         return writer.toString();
     }
 

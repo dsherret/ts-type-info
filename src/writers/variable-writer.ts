@@ -1,20 +1,20 @@
 ﻿import {VariableDefinition, VariableDeclarationType} from "./../definitions";
+import {WriteFlags} from "./../write-flags";
 import {ExpressionWriter} from "./expression-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
-import {BaseWriter} from "./base-writer";
-import {WriteFlags} from "./../write-flags";
+import {BaseDefinitionWriter} from "./base-definition-writer";
 
-export class VariableWriter extends BaseWriter {
-    private expressionWriter = new ExpressionWriter(this.writer);
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
+export class VariableWriter extends BaseDefinitionWriter<VariableDefinition> {
+    private expressionWriter = new ExpressionWriter(this.writer, this.flags);
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
 
-    write(def: VariableDefinition, flags: WriteFlags) {
+    protected writeDefault(def: VariableDefinition) {
         this.writeDeclareClause(def);
         this.writeExportClause(def);
         this.writeDeclarationType(def.declarationType);
         this.writer.spaceIfLastNotSpace().write(def.name).write(": ");
         this.typeExpressionWriter.write(def.typeExpression);
-        if (flags & WriteFlags.Expressions) {
+        if ((this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
             this.expressionWriter.writeWithEqualsSign(def.defaultExpression);
         }
         this.writer.write(";").newLine();

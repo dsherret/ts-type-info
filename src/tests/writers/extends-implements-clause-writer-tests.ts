@@ -2,11 +2,12 @@
 import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
+import {WriteFlags} from "./../../write-flags";
 import {ExtendsImplementsClauseWriter} from "./../../writers";
 
 function getStringUsingWriter(writeFuncCallback: (writer: ExtendsImplementsClauseWriter) => void) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ExtendsImplementsClauseWriter(codeBlockWriter);
+    const writer = new ExtendsImplementsClauseWriter(codeBlockWriter, WriteFlags.Default);
 
     writeFuncCallback(writer);
 

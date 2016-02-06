@@ -2,22 +2,22 @@
 import {TypeExpressionWriter} from "./type-expression-writer";
 import {ExpressionWriter} from "./expression-writer";
 import {ScopeWriter} from "./scope-writer";
-import {BaseWriter} from "./base-writer";
+import {BaseDefinitionWriter} from "./base-definition-writer";
 import {WriteFlags} from "./../write-flags";
 
-export class PropertyWriter extends BaseWriter {
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
-    private expressionWriter = new ExpressionWriter(this.writer);
-    private scopeWriter = new ScopeWriter(this.writer);
+export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
+    private expressionWriter = new ExpressionWriter(this.writer, this.flags);
+    private scopeWriter = new ScopeWriter(this.writer, this.flags);
 
-    write(property: PropertyDefinitions, flags: WriteFlags) {
+    protected writeDefault(property: PropertyDefinitions) {
         this.scopeWriter.write((property as ClassPropertyDefinition).scope);
         this.writer.spaceIfLastNotSpace();
         this.writer.write(property.name);
         this.writeOptionalFlag(property);
         this.writer.write(": ");
         this.typeExpressionWriter.write(property.typeExpression);
-        if (flags & WriteFlags.PropertyExpressions) {
+        if ((this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
             this.expressionWriter.writeWithEqualsSign((property as ObjectPropertyDefinition<any>).defaultExpression);
         }
         this.writer.write(";").newLine();

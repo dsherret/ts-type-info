@@ -1,19 +1,20 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
-import {TypeParameterWriter} from "./../../writers";
+import {TypeParametersWriter} from "./../../writers";
 import {TypeParameterDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
+import {WriteFlags} from "./../../write-flags";
 
 function getTypeParametersAsString(typeParameters: TypeParameterDefinition<any>[]) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new TypeParameterWriter(codeBlockWriter);
+    const writer = new TypeParametersWriter(codeBlockWriter, WriteFlags.Default);
 
     writer.write(typeParameters);
 
     return codeBlockWriter.toString();
 }
 
-describe("TypeExpressionWriter", () => {
+describe("TypeParametersWriter", () => {
     const code = `
 class MyClassOne<T> {
     name: T;

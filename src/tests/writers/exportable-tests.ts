@@ -7,9 +7,9 @@ import {WriteFlags} from "./../../write-flags";
 
 function getFileAsString(f: FileDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FileWriter(codeBlockWriter);
+    const writer = new FileWriter(codeBlockWriter, flags);
 
-    writer.write(f, flags);
+    writer.write(f);
 
     return codeBlockWriter.toString();
 }

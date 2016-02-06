@@ -1,11 +1,12 @@
 ﻿import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {EnumMemberDefinition} from "./enum-member-definition";
+import {EnumWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
+import {applyMixins, TypeChecker} from "./../../utils";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {EnumWriter} from "./../../writers";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {EnumMemberDefinition} from "./enum-member-definition";
 
 export class EnumDefinition extends BaseDefinition
                             implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
@@ -21,7 +22,7 @@ export class EnumDefinition extends BaseDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const enumWriter = new EnumWriter(writer);
+        const enumWriter = new EnumWriter(writer, WriteFlags.Default);
         enumWriter.write(this);
         return writer.toString();
     }

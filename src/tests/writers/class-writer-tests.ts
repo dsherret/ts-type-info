@@ -8,9 +8,9 @@ import {classWriterTestCode} from "./test-code";
 
 function getClassAsString(c: ClassDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ClassWriter(codeBlockWriter);
+    const writer = new ClassWriter(codeBlockWriter, flags);
 
-    writer.write(c, flags);
+    writer.write(c);
 
     return codeBlockWriter.toString();
 }
@@ -26,22 +26,14 @@ describe("ClassWriter", () => {
     myString: string;
     private myPrivateString: string;
 
-    myMethod(): void;
-    private myPrivateMethod(): void;
+    myMethod(): void {
+    }
+
+    private myPrivateMethod(): void {
+    }
 }
 `;
-                assert.equal(getClassAsString(file.classes[0], WriteFlags.PrivateMembers), expected);
-            });
-
-            it("should contain the class written out without the private members", () => {
-                const expected =
-`class MyClass {
-    myString: string;
-
-    myMethod(): void;
-}
-`;
-                assert.equal(getClassAsString(file.classes[0], WriteFlags.None), expected);
+                assert.equal(getClassAsString(file.classes[0], WriteFlags.Default), expected);
             });
         });
 

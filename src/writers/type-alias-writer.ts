@@ -1,17 +1,17 @@
 ﻿import {TypeAliasDefinition} from "./../definitions";
-import {TypeParameterWriter} from "./type-parameter-writer";
+import {TypeParametersWriter} from "./type-parameters-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
-import {BaseWriter} from "./base-writer";
+import {BaseDefinitionWriter} from "./base-definition-writer";
 
-export class TypeAliasWriter extends BaseWriter {
-    private typeParameterWriter = new TypeParameterWriter(this.writer);
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
+export class TypeAliasWriter extends BaseDefinitionWriter<TypeAliasDefinition> {
+    private typeParametersWriter = new TypeParametersWriter(this.writer, this.flags);
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
 
-    write(def: TypeAliasDefinition) {
+    protected writeDefault(def: TypeAliasDefinition) {
         this.writeDeclareClause(def);
         this.writeExportClause(def);
         this.writer.write("type ").write(def.name);
-        this.typeParameterWriter.write(def.typeParameters);
+        this.typeParametersWriter.write(def.typeParameters);
         this.writer.write(" = ");
         this.typeExpressionWriter.write(def.typeExpression);
         this.writer.write(";").newLine();

@@ -1,11 +1,11 @@
 ﻿import {EnumDefinition, EnumMemberDefinition} from "./../definitions";
-import {BaseWriter} from "./base-writer";
+import {BaseDefinitionWriter} from "./base-definition-writer";
 import {EnumMemberWriter} from "./enum-member-writer";
 
-export class EnumWriter extends BaseWriter {
-    enumMemberWriter = new EnumMemberWriter(this.writer);
+export class EnumWriter extends BaseDefinitionWriter<EnumDefinition> {
+    private enumMemberWriter = new EnumMemberWriter(this.writer, this.flags);
 
-    write(def: EnumDefinition) {
+    protected writeDefault(def: EnumDefinition) {
         this.writeExportClause(def);
         this.writeDeclareClause(def);
         this.writer.write("enum " + def.name).block(() => {
@@ -13,7 +13,7 @@ export class EnumWriter extends BaseWriter {
         });
     }
 
-    writeMembers(members: EnumMemberDefinition[]) {
+    private writeMembers(members: EnumMemberDefinition[]) {
         members.forEach((member, i) => {
             this.enumMemberWriter.write(member);
 

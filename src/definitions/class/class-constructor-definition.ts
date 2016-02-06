@@ -1,8 +1,8 @@
 import * as ts from "typescript";
 import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition} from "./../base";
+import {applyMixins, TypeChecker} from "./../../utils";
 import {ClassConstructorParameterDefinition} from "./class-constructor-parameter-definition";
 import {ClassDefinition} from "./class-definition";
-import {applyMixins, TypeChecker} from "./../../utils";
 
 export class ClassConstructorDefinition extends BaseDefinition implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition> {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition) {

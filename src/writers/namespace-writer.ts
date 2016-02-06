@@ -1,19 +1,19 @@
-﻿import {NamespaceDefinition, NamespaceDeclarationType} from "./../definitions";
-import CodeBlockWriter from "code-block-writer";
-import {BaseWriter} from "./base-writer";
-import {ModuledWriter} from "./moduled-writer";
+﻿import CodeBlockWriter from "code-block-writer";
+import {NamespaceDefinition, NamespaceDeclarationType} from "./../definitions";
 import {WriteFlags} from "./../write-flags";
+import {BaseDefinitionWriter} from "./base-definition-writer";
+import {ModuledWriter} from "./moduled-writer";
 
-export class NamespaceWriter extends BaseWriter {
-    constructor(writer: CodeBlockWriter, private moduledWriter: ModuledWriter) {
-        super(writer);
+export class NamespaceWriter extends BaseDefinitionWriter<NamespaceDefinition> {
+    constructor(writer: CodeBlockWriter, flags: WriteFlags, private moduledWriter: ModuledWriter) {
+        super(writer, flags);
     }
 
-    write(def: NamespaceDefinition, flags: WriteFlags) {
+    protected writeDefault(def: NamespaceDefinition) {
         this.writeExportClause(def);
         this.writeDeclareClause(def);
         this.writer.write(this.getDeclarationTypeAsString(def.declarationType)).write(` ${def.name}`).block(() => {
-            this.moduledWriter.write(def, flags);
+            this.moduledWriter.write(def);
         });
     }
 

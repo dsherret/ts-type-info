@@ -2,6 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
+import {WriteFlags} from "./../../write-flags";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition,
         BaseDefinition, DefinitionType} from "./../base";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
@@ -28,7 +29,7 @@ export class TypeAliasDefinition extends BaseDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const typeAliasWriter = new TypeAliasWriter(writer);
+        const typeAliasWriter = new TypeAliasWriter(writer, WriteFlags.Default);
         typeAliasWriter.write(this);
         return writer.toString();
     }

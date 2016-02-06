@@ -4,13 +4,12 @@ import {VariableDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {VariableWriter} from "./../../writers";
 import {variableWriterTestCode} from "./test-code";
-import {WriteFlags} from "./../../write-flags";
 
-function getVariableAsString(def: VariableDefinition, flags = WriteFlags.Expressions) {
+function getVariableAsString(def: VariableDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new VariableWriter(codeBlockWriter);
 
-    writer.write(def, flags);
+    writer.write(def);
 
     return codeBlockWriter.toString();
 }
@@ -36,12 +35,7 @@ describe("VariableWriter", () => {
         describe("myImplicitTypeVar", () => {
             it("should write out the expression when specifying to", () => {
                 const expected = `var myImplicitTypeVar: string = "my string";\n`;
-                assert.equal(getVariableAsString(myFile.variables[2], WriteFlags.Expressions), expected);
-            });
-
-            it("should not write out the expression when not specifying to", () => {
-                const expected = `var myImplicitTypeVar: string;\n`;
-                assert.equal(getVariableAsString(myFile.variables[2], WriteFlags.None), expected);
+                assert.equal(getVariableAsString(myFile.variables[2]), expected);
             });
         });
 

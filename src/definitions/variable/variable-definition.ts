@@ -26,8 +26,8 @@ export class VariableDefinition extends BaseDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const variableWriter = new VariableWriter(writer);
-        variableWriter.write(this, WriteFlags.Default);
+        const variableWriter = new VariableWriter(writer, WriteFlags.Default);
+        variableWriter.write(this);
         return writer.toString();
     }
 

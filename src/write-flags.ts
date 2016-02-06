@@ -1,10 +1,8 @@
 ﻿export enum WriteFlags {
     None = 0,
-    PropertyExpressions = 1 << 0,
-    ParameterDefaultExpressions = 1 << 1,
-    HideFunctionBodies = 1 << 2,
-    PrivateMembers = 1 << 3,
-    Expressions = PropertyExpressions | ParameterDefaultExpressions,
-    All = PropertyExpressions | ParameterDefaultExpressions | Expressions,
-    Default = PrivateMembers
+    HideExpressions = 1 << 0,
+    HideFunctionBodies = 1 << 1,
+    HidePrivateMembers = 1 << 2,
+    HideProtectedMembers = 1 << 3,
+    Default = None
 }

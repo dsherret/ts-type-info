@@ -1,22 +1,22 @@
-﻿import {ClassDefinition, Scope} from "./../definitions";
-import {BaseWriter} from "./base-writer";
+﻿import {ClassDefinition, Scope, ScopedDefinition} from "./../definitions";
+import {BaseDefinitionWriter} from "./base-definition-writer";
 import {ExtendsImplementsClauseWriter} from "./extends-implements-clause-writer";
-import {TypeParameterWriter} from "./type-parameter-writer";
+import {TypeParametersWriter} from "./type-parameters-writer";
 import {PropertyWriter} from "./property-writer";
 import {MethodWriter} from "./method-writer";
 import {WriteFlags} from "./../write-flags";
 
-export class ClassWriter extends BaseWriter {
-    private typeParameterWriter = new TypeParameterWriter(this.writer);
-    private propertyWriter = new PropertyWriter(this.writer);
-    private methodWriter = new MethodWriter(this.writer);
+export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
+    private typeParametersWriter = new TypeParametersWriter(this.writer, this.flags);
+    private propertyWriter = new PropertyWriter(this.writer, this.flags);
+    private methodWriter = new MethodWriter(this.writer, this.flags);
 
-    write(def: ClassDefinition, flags: WriteFlags) {
+    protected writeDefault(def: ClassDefinition) {
         this.writeHeader(def);
         this.writer.block(() => {
-            this.writeProperties(def, flags);
+            this.writeProperties(def);
             this.writer.newLine();
-            this.writeMethods(def, flags);
+            this.writeMethods(def);
         });
     }
 
@@ -24,25 +24,37 @@ export class ClassWriter extends BaseWriter {
         this.writeExportClause(def);
         this.writeDeclareClause(def);
         this.writer.write("class ").write(def.name);
-        this.typeParameterWriter.write(def.typeParameters);
+        this.typeParametersWriter.write(def.typeParameters);
 
-        const extendsImplementsWriter = new ExtendsImplementsClauseWriter(this.writer);
+        const extendsImplementsWriter = new ExtendsImplementsClauseWriter(this.writer, this.flags);
         extendsImplementsWriter.writeExtends(def).writeImplements(def);
     }
 
-    private writeProperties(def: ClassDefinition, flags: WriteFlags) {
+    private writeProperties(def: ClassDefinition) {
         def.properties.forEach(p => {
-            if (flags & WriteFlags.PrivateMembers || p.scope !== Scope.private) {
-                this.propertyWriter.write(p, flags);
+            if (this.shouldInclude(p)) {
+                this.propertyWriter.write(p);
             }
         });
     }
 
-    private writeMethods(def: ClassDefinition, flags: WriteFlags) {
+    private writeMethods(def: ClassDefinition) {
         def.methods.forEach(m => {
-            if (flags & WriteFlags.PrivateMembers || m.scope !== Scope.private) {
-                this.methodWriter.write(m, flags);
+            if (this.shouldInclude(m)) {
+                this.methodWriter.write(m);
             }
         });
+    }
+
+    private shouldInclude(def: ScopedDefinition) {
+        if (def.scope === Scope.private && (this.flags & WriteFlags.HidePrivateMembers)) {
+            return false;
+        }
+        else if (def.scope === Scope.protected && (this.flags & WriteFlags.HideProtectedMembers)) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

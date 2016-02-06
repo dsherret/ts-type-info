@@ -8,9 +8,9 @@ import {namespaceWriterTestCode} from "./test-code";
 
 function getNamespaceAsString(f: NamespaceDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new NamespaceWriter(codeBlockWriter, new ModuledWriter(codeBlockWriter));
+    const writer = new NamespaceWriter(codeBlockWriter, flags, new ModuledWriter(codeBlockWriter, flags));
 
-    writer.write(f, flags);
+    writer.write(f);
 
     return codeBlockWriter.toString();
 }

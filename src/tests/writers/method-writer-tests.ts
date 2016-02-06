@@ -7,9 +7,9 @@ import {getStringInfo} from "./../../main";
 
 function getMethodAsString(method: MethodDefinitions, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new MethodWriter(codeBlockWriter);
+    const writer = new MethodWriter(codeBlockWriter, flags);
 
-    writer.write(method, flags);
+    writer.write(method);
 
     return codeBlockWriter.toString();
 }
@@ -33,20 +33,20 @@ class MyClass {
 
     describe("write()", () => {
         describe("myMethod", () => {
-            it("should contain the method written out", () => {
-                assert.equal(getMethodAsString(myClass.methods[0], WriteFlags.Default), "myMethod<T extends string, U>(t: T, u: U): void;\n");
+            it("should contain the method written out with the function body", () => {
+                assert.equal(getMethodAsString(myClass.methods[0], WriteFlags.Default), "myMethod<T extends string, U>(t: T, u: U): void {\n}\n");
             });
         });
 
         describe("myProtectedMethod", () => {
             it("should contain the method written out", () => {
-                assert.equal(getMethodAsString(myClass.methods[1], WriteFlags.Default), "protected myProtectedMethod(myParam: string): number;\n");
+                assert.equal(getMethodAsString(myClass.methods[1], WriteFlags.Default), "protected myProtectedMethod(myParam: string): number {\n}\n");
             });
         });
 
         describe("myPrivateMethod", () => {
             it("should contain the method written out", () => {
-                assert.equal(getMethodAsString(myClass.methods[2], WriteFlags.Default), "private myPrivateMethod(): string;\n");
+                assert.equal(getMethodAsString(myClass.methods[2], WriteFlags.Default), "private myPrivateMethod(): string {\n}\n");
             });
         });
     });

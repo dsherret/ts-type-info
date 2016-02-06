@@ -1,25 +1,27 @@
 ﻿import {MethodDefinitions, ClassMethodDefinition} from "./../definitions";
-import {TypeParameterWriter} from "./type-parameter-writer";
+import {TypeParametersWriter} from "./type-parameters-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
-import {ParameterWriter} from "./parameter-writer";
+import {ParametersWriter} from "./parameters-writer";
 import {ScopeWriter} from "./scope-writer";
-import {BaseWriter} from "./base-writer";
-import {WriteFlags} from "./../write-flags";
+import {BaseDefinitionWriter} from "./base-definition-writer";
+import {FunctionBodyWriter} from "./function-body-writer";
 
-export class MethodWriter extends BaseWriter {
-    private typeParameterWriter = new TypeParameterWriter(this.writer);
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
-    private parameterWriter = new ParameterWriter(this.writer);
-    private scopeWriter = new ScopeWriter(this.writer);
+export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
+    private typeParametersWriter = new TypeParametersWriter(this.writer, this.flags);
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
+    private parametersWriter = new ParametersWriter(this.writer, this.flags);
+    private scopeWriter = new ScopeWriter(this.writer, this.flags);
+    private functionBodyWriter = new FunctionBodyWriter(this.writer, this.flags);
 
-    write(func: MethodDefinitions, flags: WriteFlags) {
-        this.scopeWriter.write((func as ClassMethodDefinition).scope);
+    protected writeDefault(def: MethodDefinitions) {
+        this.scopeWriter.write((def as ClassMethodDefinition).scope);
         this.writer.spaceIfLastNotSpace();
-        this.writer.write(func.name);
-        this.typeParameterWriter.write(func.typeParameters);
-        this.parameterWriter.write(func.parameters, flags);
+        this.writer.write(def.name);
+        this.typeParametersWriter.write(def.typeParameters);
+        this.parametersWriter.write(def.parameters);
         this.writer.write(": ");
-        this.typeExpressionWriter.write(func.returnTypeExpression);
-        this.writer.write(";").newLine();
+        this.typeExpressionWriter.write(def.returnTypeExpression);
+        this.functionBodyWriter.writeFunctionBody(def);
+        this.writer.newLine();
     }
 }

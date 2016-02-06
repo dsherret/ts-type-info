@@ -8,9 +8,9 @@ import {interfaceWriterTestCode} from "./test-code";
 
 function getInterfaceAsString(i: InterfaceDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new InterfaceWriter(codeBlockWriter);
+    const writer = new InterfaceWriter(codeBlockWriter, flags);
 
-    writer.write(i, flags);
+    writer.write(i);
 
     return codeBlockWriter.toString();
 }

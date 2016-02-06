@@ -3,11 +3,12 @@ import CodeBlockWriter from "code-block-writer";
 import {EnumWriter} from "./../../writers";
 import {EnumDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
+import {WriteFlags} from "./../../write-flags";
 import {enumWriterTestCode} from "./test-code";
 
 function getEnumAsString(enumMember: EnumDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new EnumWriter(codeBlockWriter);
+    const writer = new EnumWriter(codeBlockWriter, WriteFlags.Default);
 
     writer.write(enumMember);
 

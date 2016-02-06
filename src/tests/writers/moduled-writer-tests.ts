@@ -1,15 +1,15 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
-import {IModuledDefinition} from "./../../definitions";
+import {ModuledDefinitions} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-function getModuledAsString(f: IModuledDefinition, flags: WriteFlags) {
+function getModuledAsString(f: ModuledDefinitions, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ModuledWriter(codeBlockWriter);
+    const writer = new ModuledWriter(codeBlockWriter, flags);
 
-    writer.write(f, flags);
+    writer.write(f);
 
     return codeBlockWriter.toString();
 }

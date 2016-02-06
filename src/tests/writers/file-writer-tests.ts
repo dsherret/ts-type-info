@@ -8,9 +8,9 @@ import {fileWriterTestCode} from "./test-code";
 
 function getFileAsString(f: FileDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FileWriter(codeBlockWriter);
+    const writer = new FileWriter(codeBlockWriter, flags);
 
-    writer.write(f, flags);
+    writer.write(f);
 
     return codeBlockWriter.toString();
 }
@@ -21,7 +21,9 @@ describe("FileWriter", () => {
     describe("write()", () => {
         it("should contain the file written out", () => {
             const expected =
-`namespace MyNamespace {
+`var myVariable: string;
+
+namespace MyNamespace {
 }
 
 module MyModule {

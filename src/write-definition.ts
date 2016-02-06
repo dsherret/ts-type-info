@@ -6,28 +6,28 @@ import {Logger} from "./utils";
 
 export function writeDefinition(definition: WriteableDefinitions, writeFlags: WriteFlags, writer: CodeBlockWriter) {
     if (definition.isClassDefinition()) {
-        new ClassWriter(writer).write(definition, writeFlags);
+        new ClassWriter(writer, writeFlags).write(definition);
     }
     else if (definition.isInterfaceDefinition()) {
-        new InterfaceWriter(writer).write(definition, writeFlags);
+        new InterfaceWriter(writer, writeFlags).write(definition);
     }
     else if (definition.isFunctionDefinition()) {
-        new FunctionWriter(writer).write(definition, writeFlags);
+        new FunctionWriter(writer, writeFlags).write(definition);
     }
     else if (definition.isFileDefinition()) {
-        new FileWriter(writer).write(definition, writeFlags);
+        new FileWriter(writer, writeFlags).write(definition);
     }
     else if (definition.isNamespaceDefinition()) {
-        new NamespaceWriter(writer, new ModuledWriter(writer)).write(definition, writeFlags);
+        new NamespaceWriter(writer, writeFlags, new ModuledWriter(writer, writeFlags)).write(definition);
     }
     else if (definition.isEnumDefinition()) {
-        new EnumWriter(writer).write(definition);
+        new EnumWriter(writer, writeFlags).write(definition);
     }
     else if (definition.isTypeAliasDefinition()) {
-        new TypeAliasWriter(writer).write(definition);
+        new TypeAliasWriter(writer, writeFlags).write(definition);
     }
     else if (definition.isVariableDefinition) {
-        new VariableWriter(writer).write(definition, writeFlags);
+        new VariableWriter(writer, writeFlags).write(definition);
     }
     else {
         Logger.warn(`Not implemented writer for definition: ${definition.name}`);

@@ -8,9 +8,9 @@ import {fileWriterTestCode} from "./../../writers/test-code";
 
 function getWriterString(f: FileDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FileWriter(codeBlockWriter);
+    const writer = new FileWriter(codeBlockWriter, flags);
 
-    writer.write(f, flags);
+    writer.write(f);
 
     return codeBlockWriter.toString();
 }

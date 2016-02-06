@@ -2,11 +2,12 @@
 import CodeBlockWriter from "code-block-writer";
 import {ExpressionWriter} from "./../../writers";
 import {Expression} from "./../../expressions";
+import {WriteFlags} from "./../../write-flags";
 import {getStringInfo} from "./../../main";
 
 function getExpressionAsString(typeExpression: Expression) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ExpressionWriter(codeBlockWriter);
+    const writer = new ExpressionWriter(codeBlockWriter, WriteFlags.Default);
 
     writer.writeWithEqualsSign(typeExpression);
 

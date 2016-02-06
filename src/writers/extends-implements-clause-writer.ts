@@ -1,8 +1,11 @@
 ﻿import {ClassDefinition, InterfaceDefinition} from "./../definitions";
 import {TypeExpression} from "./../expressions";
 import {BaseWriter} from "./base-writer";
+import {TypeExpressionWriter} from "./type-expression-writer";
 
 export class ExtendsImplementsClauseWriter extends BaseWriter {
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
+
     writeExtends(def: ClassDefinition | InterfaceDefinition) {
         this.writeClause({
             word: "extends",
@@ -34,7 +37,7 @@ export class ExtendsImplementsClauseWriter extends BaseWriter {
                 this.writer.write(", ");
             }
 
-            this.writer.write(t.text);
+            this.typeExpressionWriter.write(t);
         });
     }
 }

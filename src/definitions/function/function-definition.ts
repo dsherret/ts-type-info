@@ -16,8 +16,8 @@ export class FunctionDefinition extends BaseFunctionDefinition<ModuledDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const functionWriter = new FunctionWriter(writer);
-        functionWriter.write(this, WriteFlags.Default);
+        const functionWriter = new FunctionWriter(writer, WriteFlags.Default);
+        functionWriter.write(this);
         return writer.toString();
     }
 

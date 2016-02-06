@@ -71,8 +71,8 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const fileWriter = new FileWriter(writer);
-        fileWriter.write(this, WriteFlags.Default);
+        const fileWriter = new FileWriter(writer, WriteFlags.Default);
+        fileWriter.write(this);
         return writer.toString();
     }
 

@@ -1,33 +1,25 @@
 ﻿import {FunctionWriteableDefinitions, FunctionDefinition} from "./../definitions";
-import {TypeParameterWriter} from "./type-parameter-writer";
+import {TypeParametersWriter} from "./type-parameters-writer";
 import {TypeExpressionWriter} from "./type-expression-writer";
-import {ParameterWriter} from "./parameter-writer";
-import {BaseWriter} from "./base-writer";
-import {WriteFlags} from "./../write-flags";
+import {ParametersWriter} from "./parameters-writer";
+import {BaseDefinitionWriter} from "./base-definition-writer";
+import {FunctionBodyWriter} from "./function-body-writer";
 
-export class FunctionWriter extends BaseWriter {
-    private typeParameterWriter = new TypeParameterWriter(this.writer);
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
-    private parameterWriter = new ParameterWriter(this.writer);
+export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
+    private typeParametersWriter = new TypeParametersWriter(this.writer, this.flags);
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
+    private parametersWriter = new ParametersWriter(this.writer, this.flags);
+    private functionBodyWriter = new FunctionBodyWriter(this.writer, this.flags);
 
-    write(def: FunctionWriteableDefinitions, flags: WriteFlags) {
+    protected writeDefault(def: FunctionWriteableDefinitions) {
         this.writeExportClause(def as FunctionDefinition);
         this.writeDeclareClause(def as FunctionDefinition);
         this.writer.write("function ").write(def.name);
-        this.typeParameterWriter.write(def.typeParameters);
-        this.parameterWriter.write(def.parameters, flags);
+        this.typeParametersWriter.write(def.typeParameters);
+        this.parametersWriter.write(def.parameters);
         this.writer.write(": ");
         this.typeExpressionWriter.write(def.returnTypeExpression);
-        this.writeFunctionBody(def, flags);
+        this.functionBodyWriter.writeFunctionBody(def);
         this.writer.newLine();
-    }
-
-    private writeFunctionBody(def: FunctionWriteableDefinitions, flags: WriteFlags) {
-        if ((flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient) {
-            this.writer.write(";");
-        }
-        else {
-            this.writer.block(() => { /* empty block */ });
-        }
     }
 }
