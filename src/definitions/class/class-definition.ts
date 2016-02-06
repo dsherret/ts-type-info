@@ -1,11 +1,6 @@
 import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {ClassConstructorDefinition} from "./class-constructor-definition";
-import {ClassMethodDefinition} from "./class-method-definition";
-import {ClassPropertyDefinition} from "./class-property-definition";
-import {ClassStaticMethodDefinition} from "./class-static-method-definition";
-import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
@@ -13,6 +8,11 @@ import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, 
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {ClassConstructorDefinition} from "./class-constructor-definition";
+import {ClassMethodDefinition} from "./class-method-definition";
+import {ClassPropertyDefinition} from "./class-property-definition";
+import {ClassStaticMethodDefinition} from "./class-static-method-definition";
+import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 
 export class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
                                         IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {

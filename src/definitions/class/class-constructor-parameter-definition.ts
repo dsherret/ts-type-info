@@ -1,9 +1,8 @@
 ﻿import * as ts from "typescript";
-import {DecoratorDefinition} from "./../general";
-import {IDecoratableDefinition, DecoratableDefinition, DefinitionType} from "./../base";
-import {ClassConstructorDefinition} from "./class-constructor-definition";
-import {BaseParameterDefinition} from "./../function";
 import {applyMixins, TypeChecker} from "./../../utils";
+import {DecoratorDefinition} from "./../general";
+import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
+import {ClassConstructorDefinition} from "./class-constructor-definition";
 
 export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements IDecoratableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassConstructorDefinition) {

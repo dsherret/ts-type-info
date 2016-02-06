@@ -1,4 +1,4 @@
-import {BaseParameterStructure} from "./base";
+import {BaseParameterStructure} from "./../base";
 
 export interface FunctionParameterStructure extends BaseParameterStructure {
 }

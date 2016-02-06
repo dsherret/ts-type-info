@@ -1,6 +1,5 @@
 ﻿import * as ts from "typescript";
-import {DefinitionType} from "./../base";
-import {BaseParameterDefinition} from "./../function";
+import {DefinitionType, BaseParameterDefinition} from "./../base";
 import {TypeChecker} from "./../../utils";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 

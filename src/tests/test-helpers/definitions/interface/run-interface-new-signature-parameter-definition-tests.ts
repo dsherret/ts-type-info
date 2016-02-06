@@ -1,6 +1,6 @@
-﻿import {InterfaceNewSignatureParameterStructure} from "./../../structures";
-import {InterfaceNewSignatureParameterDefinition} from "./../../../../definitions";
-import {runBaseParameterDefinitionTests} from "./../function";
+﻿import {InterfaceNewSignatureParameterDefinition} from "./../../../../definitions";
+import {InterfaceNewSignatureParameterStructure} from "./../../structures";
+import {runBaseParameterDefinitionTests} from "./../base";
 
 export function runInterfaceNewSignatureParameterDefinitionTests(definition: InterfaceNewSignatureParameterDefinition, structure: InterfaceNewSignatureParameterStructure) {
     describe(`parameter ${structure.name}`, () => {

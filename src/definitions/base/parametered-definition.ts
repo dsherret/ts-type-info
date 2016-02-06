@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
-import {TypeChecker} from "./../../../utils";
+import {TypeChecker} from "./../../utils";
 
 export interface IParameteredDefinition<ParameterType> {
     fillParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>): void;

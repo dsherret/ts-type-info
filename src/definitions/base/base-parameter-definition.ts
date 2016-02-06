@@ -1,8 +1,12 @@
 import * as ts from "typescript";
-import {applyMixins, TypeChecker} from "./../../../utils";
-import {Expression, TypeExpression} from "./../../../expressions";
-import {INamedDefinition, NamedDefinition, IParentedDefinition, ITypeExpressionedDefinition, TypeExpressionedDefinition, IDefaultExpressionedDefinition,
-        DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../../base";
+import {applyMixins, TypeChecker} from "./../../utils";
+import {Expression, TypeExpression} from "./../../expressions";
+import {INamedDefinition, NamedDefinition} from "./named-definition";
+import {IParentedDefinition} from "./parented-definition";
+import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./type-expressioned-definition";
+import {IDefaultExpressionedDefinition, DefaultExpressionedDefinition} from "./default-expressioned-definition";
+import {BaseDefinition} from "./base-definition";
+import {DefinitionType} from "./definition-type";
 
 export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
     new(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType): ParameterType;

@@ -1,6 +1,6 @@
 ﻿import * as ts from "typescript";
-import {BasePropertyDefinition, DefinitionType} from "./../base";
 import {TypeChecker} from "./../../utils";
+import {BasePropertyDefinition, DefinitionType} from "./../base";
 import {InterfaceDefinition} from "./interface-definition";
 
 export class InterfacePropertyDefinition extends BasePropertyDefinition<InterfaceDefinition> {

@@ -1,7 +1,6 @@
 ﻿import * as ts from "typescript";
-import {BaseParameterDefinition} from "./base";
 import {CallSignatureDefinition} from "./call-signature-definition";
-import {DefinitionType} from "./../base";
+import {DefinitionType, BaseParameterDefinition} from "./../base";
 import {TypeChecker} from "./../../utils";
 
 export class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {

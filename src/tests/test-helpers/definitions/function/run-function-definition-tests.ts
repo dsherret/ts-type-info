@@ -1,8 +1,7 @@
 import {FunctionStructure} from "./../../structures";
 import {FunctionDefinition} from "./../../../../definitions";
-import {runExportableDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+import {runExportableDefinitionTests, runAmbientableDefinitionTests, runBaseFunctionDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
-import {runBaseFunctionDefinitionTests} from "./base";
 import {runFunctionParameterDefinitionTests} from "./run-function-parameter-definition-tests";
 
 export function runFunctionDefinitionTests(definition: FunctionDefinition, structure: FunctionStructure) {

@@ -5,12 +5,12 @@ import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefin
         ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
-import {InterfaceMethodDefinition} from "./interface-method-definition";
-import {InterfacePropertyDefinition} from "./interface-property-definition";
-import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, TypeChecker} from "./../../utils";
+import {InterfaceMethodDefinition} from "./interface-method-definition";
+import {InterfacePropertyDefinition} from "./interface-property-definition";
+import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 
 export class InterfaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {

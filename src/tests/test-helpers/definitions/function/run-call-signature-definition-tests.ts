@@ -1,8 +1,7 @@
 ﻿import * as assert from "assert";
 import {CallSignatureStructure} from "./../../structures";
-import {runParameteredDefinitionTests, runReturnTypedDefinitionTests} from "./base";
 import {CallSignatureDefinition} from "./../../../../definitions";
-import {runTypeParameteredDefinitionTests} from "./../base";
+import {runTypeParameteredDefinitionTests, runParameteredDefinitionTests, runReturnTypedDefinitionTests} from "./../base";
 import {runCallSignatureParameterDefinitionTests} from "./run-call-signature-parameter-definition-tests";
 
 export function runCallSignatureDefinitionTests(definition: CallSignatureDefinition, structure: CallSignatureStructure) {

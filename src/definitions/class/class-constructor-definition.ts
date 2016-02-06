@@ -1,6 +1,5 @@
 import * as ts from "typescript";
-import {IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {IParameteredDefinition, ParameteredDefinition} from "./../function";
+import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {ClassConstructorParameterDefinition} from "./class-constructor-parameter-definition";
 import {ClassDefinition} from "./class-definition";
 import {applyMixins, TypeChecker} from "./../../utils";

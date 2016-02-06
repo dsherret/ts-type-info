@@ -1,5 +1,5 @@
-﻿import {InterfacePropertyStructure} from "./../../structures";
-import {InterfacePropertyDefinition} from "./../../../../definitions";
+﻿import {InterfacePropertyDefinition} from "./../../../../definitions";
+import {InterfacePropertyStructure} from "./../../structures";
 import {runBasePropertyDefinitionTests} from "./../base";
 
 export function runInterfacePropertyDefinitionTests(definition: InterfacePropertyDefinition, structure: InterfacePropertyStructure) {

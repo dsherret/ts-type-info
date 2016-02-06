@@ -1,8 +1,12 @@
 import * as ts from "typescript";
-import {TypeExpression} from "./../../../expressions";
-import {applyMixins, TypeChecker} from "./../../../utils";
-import {INamedDefinition, NamedDefinition, IParentedDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../../base";
-import {TypeParameterDefinition} from "./../../general";
+import {TypeExpression} from "./../../expressions";
+import {applyMixins, TypeChecker} from "./../../utils";
+import {TypeParameterDefinition} from "./../general";
+import {INamedDefinition, NamedDefinition} from "./named-definition";
+import {IParentedDefinition} from "./parented-definition";
+import {ITypeParameteredDefinition, TypeParameteredDefinition} from "./type-parametered-definition";
+import {BaseDefinition} from "./base-definition";
+import {DefinitionType} from "./definition-type";
 import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
 import {IParameteredDefinition, ParameteredDefinition} from "./parametered-definition";
 import {IReturnTypedDefinition, ReturnTypedDefinition} from "./return-typed-definition";

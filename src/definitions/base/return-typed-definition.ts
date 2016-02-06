@@ -1,6 +1,6 @@
 import * as ts from "typescript";
-import {TypeExpression} from "./../../../expressions";
-import {TypeChecker} from "./../../../utils";
+import {TypeExpression} from "./../../expressions";
+import {TypeChecker} from "./../../utils";
 
 export interface IReturnTypedDefinition {
     fillReturnTypeExpressionBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol): void;

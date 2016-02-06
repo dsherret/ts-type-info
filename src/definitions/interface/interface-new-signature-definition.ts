@@ -1,10 +1,9 @@
 ﻿import * as ts from "typescript";
-import {IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {IParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../function";
+import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../base";
 import {TypeExpression} from "./../../expressions";
+import {applyMixins, TypeChecker} from "./../../utils";
 import {InterfaceNewSignatureParameterDefinition} from "./interface-new-signature-parameter-definition";
 import {InterfaceDefinition} from "./interface-definition";
-import {applyMixins, TypeChecker} from "./../../utils";
 
 export class InterfaceNewSignatureDefinition extends BaseDefinition
                                              implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition,

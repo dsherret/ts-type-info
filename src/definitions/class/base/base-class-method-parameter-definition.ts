@@ -1,7 +1,6 @@
 import * as ts from "typescript";
 import {DecoratorDefinition} from "./../../general";
-import {IDecoratableDefinition, DecoratableDefinition, DefinitionType} from "./../../base";
-import {BaseParameterDefinition} from "./../../function";
+import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../../base";
 import {applyMixins, TypeChecker} from "./../../../utils";
 
 export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements IDecoratableDefinition {

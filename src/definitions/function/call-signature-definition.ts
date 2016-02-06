@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import {CallSignatureParameterDefinition} from "./call-signature-parameter-definition";
-import {IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./base";
-import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType,
+        IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {TypeExpression} from "./../../expressions";
