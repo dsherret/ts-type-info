@@ -2,9 +2,12 @@
 import * as path from "path";
 import {ReExportStructure} from "./../../structures";
 import {ReExportDefinition} from "./../../../../definitions";
+import {runParentedDefinitionTests} from "./../base";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, reExport: ReExportStructure) {
     describe(`re-export ${reExport.definitionName}`, () => {
+        runParentedDefinitionTests(definition);
+
         it(`should have the name ${reExport.definitionName}`, () => {
             assert.equal(definition.definition.name, reExport.definitionName);
         });

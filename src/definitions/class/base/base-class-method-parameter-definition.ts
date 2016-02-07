@@ -6,12 +6,12 @@ import {applyMixins, TypeChecker} from "./../../../utils";
 export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements IDecoratableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType, definitionType: DefinitionType) {
         super(typeChecker, symbol, parent, definitionType);
-        this.fillDecorators(typeChecker, symbol, this);
+        this.fillDecorators(typeChecker, symbol);
     }
 
     // DecoratableDefinition
     decorators: DecoratorDefinition<this>[];
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this) => void;
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
 applyMixins(BaseClassMethodParameterDefinition, [DecoratableDefinition]);

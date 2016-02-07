@@ -2,9 +2,12 @@
 import * as path from "path";
 import {ImportStructure} from "./../../structures";
 import {ImportDefinition} from "./../../../../definitions";
+import {runParentedDefinitionTests} from "./../base";
 
 export function runImportDefinitionTests(definition: ImportDefinition, importStructure: ImportStructure) {
     describe(`import ${importStructure.definitionName}`, () => {
+        runParentedDefinitionTests(definition);
+
         it(`should have the name ${importStructure.definitionName}`, () => {
             assert.equal(definition.definition.name, importStructure.definitionName);
         });

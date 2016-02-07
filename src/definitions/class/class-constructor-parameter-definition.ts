@@ -7,11 +7,11 @@ import {ClassConstructorDefinition} from "./class-constructor-definition";
 export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements IDecoratableDefinition {
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassConstructorDefinition) {
         super(typeChecker, symbol, parent, DefinitionType.ClassConstructorParameter);
-        this.fillDecorators(typeChecker, symbol, this);
+        this.fillDecorators(typeChecker, symbol);
     }
 
     // DecoratableDefinition
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this) => void;
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     decorators: DecoratorDefinition<this>[];
 }
 

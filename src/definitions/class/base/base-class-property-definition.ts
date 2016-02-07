@@ -10,13 +10,13 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassD
     constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition, definitionType: DefinitionType) {
         super(typeChecker, symbol, parent, definitionType);
 
-        this.fillDecorators(typeChecker, symbol, this);
+        this.fillDecorators(typeChecker, symbol);
         this.fillScope(symbol);
     }
 
     // DecoratableDefinition
     decorators: DecoratorDefinition<this>[];
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this) => void;
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ScopeDefinition
     scope: Scope;
     fillScope: (symbol: ts.Symbol) => void;

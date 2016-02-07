@@ -18,14 +18,14 @@ export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefini
         definitionType: DefinitionType
     ) {
         super(typeChecker, symbol, parameterDefinition, definitionType);
-        this.fillDecorators(typeChecker, symbol, this);
+        this.fillDecorators(typeChecker, symbol);
         this.fillScope(symbol);
         this.parent = parent;
     }
 
     // DecoratableDefinition
     decorators: DecoratorDefinition<this>[];
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol, parent: this) => void;
+    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
     // ScopeDefinition
     scope: Scope;
     fillScope: (symbol: ts.Symbol) => void;

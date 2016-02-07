@@ -1,7 +1,7 @@
 ﻿import {TypeAliasStructure} from "./../../structures";
 import {TypeAliasDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
-        runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+        runTypeParameteredDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 
 export function runTypeAliasDefinitionTests(definition: TypeAliasDefinition, structure: TypeAliasStructure) {
@@ -18,6 +18,7 @@ export function runTypeAliasDefinitionTests(definition: TypeAliasDefinition, str
             runTypeExpressionedDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
             runTypeParameteredDefinitionTests(definition, structure);
+            runParentedDefinitionTests(definition);
         });
     });
 }

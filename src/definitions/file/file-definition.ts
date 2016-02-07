@@ -39,7 +39,8 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
                 this.imports.push(
                     new ImportDefinition(
                         definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)),
-                        importDefinition
+                        importDefinition,
+                        this
                     )
                 );
             }
@@ -58,7 +59,8 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
                 this.reExports.push(
                     new ReExportDefinition(
                         definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileReExportSymbol)),
-                        exportDefinition
+                        exportDefinition,
+                        this
                     )
                 );
                 this.exports.push(exportDefinition);

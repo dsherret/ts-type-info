@@ -2,7 +2,7 @@
 import {VariableStructure} from "./../../structures";
 import {VariableDefinition, VariableDeclarationType} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
-        runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+        runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 
 export function runVariableDefinitionTests(definition: VariableDefinition, structure: VariableStructure) {
@@ -17,6 +17,7 @@ export function runVariableDefinitionTests(definition: VariableDefinition, struc
             runTypeExpressionedDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
             runDefaultExpressionedDefinitionTests(definition, structure);
+            runParentedDefinitionTests(definition);
 
             it(`should have declaration type ${VariableDeclarationType[structure.declarationType]}`, () => {
                 assert.equal(definition.declarationType, structure.declarationType);
