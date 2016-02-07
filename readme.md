@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/dsherret/ts-type-info.svg?branch=master)](https://travis-ci.org/dsherret/ts-type-info?branch=master)
 [![Coverage Status](https://coveralls.io/repos/dsherret/ts-type-info/badge.svg?branch=master&service=github)](https://coveralls.io/github/dsherret/ts-type-info?branch=master)
 
+Reflection and code generation in TypeScript.
+
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get the type and structure information of TypeScript code in an easily usable format.
 
 ```
@@ -11,9 +13,7 @@ npm install ts-type-info --save-dev
 tsd link
 ```
 
-## Example
-
-### Input
+## Reflection
 
 ```typescript
 // V:/TestFile.ts
@@ -27,7 +27,7 @@ function myDecorator(str: string) {
 @myDecorator("My decorator value")
 export class MyClass {
     static myStaticProperty: string | number;
-    
+
     myProperty = 253;
 
     myMethod(myParameter: string) {
@@ -42,145 +42,51 @@ Get the file info:
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
 
-console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
+const files = TsTypeInfo.getFileInfo(["V:/TestFile.ts"]);
+const myPropertyName = files[0].classes[0].properties[0].name;
+
+console.log(myPropertyName); // myProperty
 ```
 
-### Output
+## Code Generation
 
-```text
-{
-	"fileName": "V:/TestFile.ts",
-	"imports": [],
-	"reExports": [],
-	"namespaces": [],
-	"functions": [{
-		"name": "myDecorator",
-		"isAmbient": false,
-		"isExported": false,
-		"isNamedExportOfFile": false,
-		"isDefaultExportOfFile": false,
-		"typeParameters": [],
-		"parameters": [{
-			"name": "str",
-			"isOptional": false,
-			"isRestParameter": false,
-			"defaultExpression": null,
-			"typeExpression": {
-				"text": "string",
-				"types": [{
-					"text": "string",
-					"properties": [],
-					"callSignatures": [],
-					"typeArguments": []
-				}]
-			}
-		}],
-		"returnTypeExpression": {
-			"types": [{
-				"text": "(target: typeof MyClass) => void",
-				"callSignatures": [{ /* omitted */ }],
-				"properties": [],
-				"typeArguments": [],
-				"definition": { /* omitted */ }
-			}],
-			"text": "(target: typeof MyClass) => void"
-		}
-	}],
-	"classes": [{
-		"name": "MyClass",
-		"isAbstract": false,
-		"isAmbient": false,
-		"isExported": true,
-		"isNamedExportOfFile": true,
-		"isDefaultExportOfFile": false,
-		"typeParameters": [],
-		"extendsTypeExpressions": [],
-		"implementsTypeExpressions": [],
-		"decorators": [{
-			"arguments": [{ "text": "\"My decorator value\"" }],
-			"name": "myDecorator"
-		}],
-		"methods": [{
-			"name": "myMethod",
-			"parameters": [{
-				"name": "myParameter",
-				"typeExpression": {
-					"text": "string",
-					"types": [{
-						"text": "string",
-						"properties": [],
-						"callSignatures": [],
-						"typeArguments": []
-					}]
-				},
-				"isOptional": false,
-				"isRestParameter": false,
-				"defaultExpression": null,
-				"decorators": []
-			}],
-			"typeParameters": [],
-			"decorators": [],
-			"scope": 0,
-			"returnTypeExpression": {
-				"text": "string",
-				"types": [{
-					"text": "string",
-					"properties": [],
-					"callSignatures": [],
-					"typeArguments": []
-				}]
-			}
-		}],
-		"properties": [{
-			"name": "myProperty",
-			"typeExpression": {
-				"text": "number",
-				"types": [{
-					"text": "number",
-					"properties": [],
-					"callSignatures": [],
-					"typeArguments": []
-				}]
-			},
-			"isOptional": false,
-			"decorators": [],
-			"scope": 0,
-			"isAccessor": false,
-			"isReadonly": false,
-			"defaultExpression": {
-				text: "253"
-			}
-		}],
-		"staticMethods": [],
-		"staticProperties": [{
-			"name": "myStaticProperty",
-			"isOptional": false,
-			"decorators": [],
-			"scope": 0,
-			"typeExpression": {
-				"text": "string | number",
-				"types": [{
-					"text": "string",
-					"properties": [],
-					"callSignatures": [],
-					"typeArguments": []
-				}, {
-					"text": "number",
-					"properties": [],
-					"callSignatures": [],
-					"typeArguments": []
-				}]
-			}
-		}]
-	}],
-	"enums": [],
-	"interfaces": [],
-	"variables": [],
-	"exports": [
-		{ name: "MyClass", /* omitted rest of MyClass */ }
-	]
+```typeScript
+// V:/TestFile2.ts
+
+class MyClass {
+	myMethod(str: string) {
+	}
 }
 ```
+
+Get the file info and tell it how it should output:
+
+```typescript
+import * as TsTypeInfo from "ts-type-info";
+
+const files = TsTypeInfo.getFileInfo(["V:/TestFile.ts"]);
+const myClass = files[0].classes[0];
+
+myClass.isAbstract = true;
+myClass.onBeforeWrite = writer => writer.write("@MyDecorator");
+myClass.methods[0].onBeforeWrite = writer => writer.write("// myMethod is here");
+myClass.methods[0].onWriteFunctionBody = writer => writer.write("return str;");
+
+console.log(myClass.write());
+```
+
+Outputs:
+
+```typeScript
+@MyDecorator
+abstract class MyClass {
+	// myMethod is here
+	myMethod(str: string) {
+		return str;
+	}
+}
+```
+
 ### Real Life Example
 
 * [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code.
