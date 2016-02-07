@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {NamespaceDefinition, NamespaceDeclarationType} from "./../../../../definitions";
+import {NamespaceDefinition} from "./../../../../definitions";
 import {NamespaceStructure} from "./../../structures";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runModuledDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";

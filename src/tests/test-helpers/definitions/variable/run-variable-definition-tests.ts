@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {VariableStructure} from "./../../structures";
-import {VariableDefinition, VariableDeclarationType} from "./../../../../definitions";
+import {VariableDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
         runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
