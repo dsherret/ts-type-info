@@ -1,7 +1,9 @@
 ﻿const code = `
-class MyClass {
+abstract class MyClass {
     myString: string;
     private myPrivateString: string;
+
+    abstract myAbstractMethod(): string;
 
     myMethod() {
     }

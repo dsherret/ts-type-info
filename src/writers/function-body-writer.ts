@@ -6,7 +6,7 @@ type NotInterfaceMethod = FunctionDefinition | ClassMethodDefinition | ClassStat
 
 export class FunctionBodyWriter extends BaseWriter {
     static willWriteFunctionBody(def: FunctionWriteableDefinitions, flags: WriteFlags): def is NotInterfaceMethod {
-        if (def.isInterfaceMethodDefinition()) {
+        if (def.isInterfaceMethodDefinition() || (def.isClassMethodDefinition() && def.isAbstract)) {
             return false;
         }
         else {
@@ -27,7 +27,7 @@ export class FunctionBodyWriter extends BaseWriter {
     }
 
     private writeSemiColon() {
-        this.writer.write(";");
+        this.writer.write(";").newLine();
     }
 
     private writeFunctionBody(def: NotInterfaceMethod) {

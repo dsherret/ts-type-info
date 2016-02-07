@@ -2,6 +2,7 @@
 export * from "./base/definition-type";
 export * from "./base/named-definition";
 export * from "./base/parented-definition";
+export * from "./base/abstractable-definition";
 export * from "./base/ambientable-definition";
 export * from "./base/type-expressioned-definition";
 export * from "./base/default-expressioned-definition";

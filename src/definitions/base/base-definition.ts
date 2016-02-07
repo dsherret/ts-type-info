@@ -1,5 +1,5 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {ClassDefinition} from "./../class";
+import {ClassDefinition, ClassMethodDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition} from "./../interface";
 import {FileDefinition} from "./../file";
 import {FunctionDefinition} from "./../function";
@@ -18,6 +18,10 @@ export abstract class BaseDefinition {
 
     isClassDefinition(): this is ClassDefinition {
         return this._definitionType === DefinitionType.Class;
+    }
+
+    isClassMethodDefinition(): this is ClassMethodDefinition {
+        return this._definitionType === DefinitionType.ClassMethod;
     }
 
     isInterfaceDefinition(): this is InterfaceDefinition {

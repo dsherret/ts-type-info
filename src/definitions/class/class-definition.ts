@@ -4,7 +4,8 @@ import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, TypeChecker} from "./../../utils";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
-        AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition, DefinitionType} from "./../base";
+        AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
+        IAbstractableDefinition, AbstractableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
@@ -15,8 +16,7 @@ import {ClassStaticMethodDefinition} from "./class-static-method-definition";
 import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 
 export class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
-                                        IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
-    isAbstract: boolean;
+                                        IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition, IAbstractableDefinition {
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
     staticMethods: ClassStaticMethodDefinition[] = [];
@@ -36,7 +36,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         this.fillExportable(typeChecker, symbol);
         this.fillDecorators(typeChecker, symbol);
         this.fillAmbientable(typeChecker, symbol);
-        this.fillIsAbstract(typeChecker, symbol);
+        this.fillAbstractable(typeChecker, symbol);
         this.fillMembers(typeChecker, symbol);
     }
 
@@ -47,15 +47,8 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         return writer.toString();
     }
 
-    private fillIsAbstract(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        const nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).flags;
-
-        this.isAbstract = (nodeFlags & ts.NodeFlags.Abstract) === ts.NodeFlags.Abstract;
-    }
-
     private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
         this.typeParameters = [];
-
         this.fillInstanceMembers(typeChecker, symbol);
         this.fillStaticMembers(typeChecker, symbol);
     }
@@ -128,6 +121,9 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    // AbstractableDefinition
+    isAbstract: boolean;
+    fillAbstractable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
 }
 
-applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);
+applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition]);

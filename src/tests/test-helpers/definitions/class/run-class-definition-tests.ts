@@ -1,7 +1,8 @@
 ﻿import * as assert from "assert";
 import {ClassStructure} from "./../../structures";
 import {ClassDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+import {runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests,
+        runAbstractableDefinitionTests} from "./../base";
 import {runClassPropertyDefinitionTests} from "./run-class-property-definition-tests";
 import {runClassMethodDefinitionTests} from "./run-class-method-definition-tests";
 import {runClassStaticPropertyDefinitionTests} from "./run-class-static-property-definition-tests";
@@ -24,6 +25,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
             runExportableDefinitionTests(definition, structure);
             runDecoratableDefinitionTests(definition, structure);
             runTypeParameteredDefinitionTests(definition, structure);
+            runAbstractableDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
             runClassConstructorDefinitionTests(definition.constructorDef, structure.constructorDef);
 

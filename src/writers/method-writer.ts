@@ -16,6 +16,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     protected writeDefault(def: MethodDefinitions) {
         this.scopeWriter.write((def as ClassMethodDefinition).scope);
         this.writer.spaceIfLastNotSpace();
+        this.writeAbstract(def as ClassMethodDefinition);
         this.writer.write(def.name);
         this.typeParametersWriter.write(def.typeParameters);
         this.parametersWriter.write(def.parameters);
@@ -23,5 +24,11 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         this.typeExpressionWriter.write(def.returnTypeExpression);
         this.functionBodyWriter.write(def);
         this.writer.newLine();
+    }
+
+    private writeAbstract(def: ClassMethodDefinition) {
+        if (def.isAbstract) {
+            this.writer.write("abstract ");
+        }
     }
 }

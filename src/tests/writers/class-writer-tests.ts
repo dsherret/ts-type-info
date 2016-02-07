@@ -21,9 +21,11 @@ describe("ClassWriter", () => {
         describe("MyClass", () => {
             it("should contain the class written out", () => {
                 const expected =
-`class MyClass {
+`abstract class MyClass {
     myString: string;
     private myPrivateString: string;
+
+    abstract myAbstractMethod(): string;
 
     myMethod(): void {
     }

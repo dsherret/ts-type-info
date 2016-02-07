@@ -23,11 +23,18 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     private writeHeader(def: ClassDefinition) {
         this.writeExportClause(def);
         this.writeDeclareClause(def);
+        this.writeAbstract(def);
         this.writer.write("class ").write(def.name);
         this.typeParametersWriter.write(def.typeParameters);
 
         const extendsImplementsWriter = new ExtendsImplementsClauseWriter(this.writer, this.flags);
         extendsImplementsWriter.writeExtends(def).writeImplements(def);
+    }
+
+    private writeAbstract(def: ClassDefinition) {
+        if (def.isAbstract) {
+            this.writer.write("abstract ");
+        }
     }
 
     private writeProperties(def: ClassDefinition) {
