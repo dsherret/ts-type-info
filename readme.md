@@ -54,8 +54,8 @@ console.log(myPropertyName); // myProperty
 // V:/TestFile2.ts
 
 class MyClass {
-	myMethod(str: string) {
-	}
+    myMethod(str: string) {
+    }
 }
 ```
 
@@ -70,7 +70,12 @@ const myClass = files[0].classes[0];
 myClass.isAbstract = true;
 myClass.onBeforeWrite = writer => writer.write("@MyDecorator");
 myClass.methods[0].onBeforeWrite = writer => writer.write("// myMethod is here");
-myClass.methods[0].onWriteFunctionBody = writer => writer.write("return str;");
+myClass.methods[0].onWriteFunctionBody = writer => {
+    writer.write(`if (str != null && str.length > 40)`).block(() => {
+        writer.write("alert(str)");
+    });
+    writer.newLine().write("return str;");
+};
 
 console.log(myClass.write());
 ```
@@ -80,10 +85,14 @@ Outputs:
 ```typeScript
 @MyDecorator
 abstract class MyClass {
-	// myMethod is here
-	myMethod(str: string) {
-		return str;
-	}
+    // myMethod is here
+    myMethod(str: string) {
+        if (str != null && str.length > 40) {
+            alert(str);
+        }
+
+        return str;
+    }
 }
 ```
 
