@@ -54,10 +54,10 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     }
 
     private shouldInclude(def: ScopedDefinition) {
-        if (def.scope === Scope.private && (this.flags & WriteFlags.HidePrivateMembers)) {
+        if (def.scope === Scope.Private && (this.flags & WriteFlags.HidePrivateMembers)) {
             return false;
         }
-        else if (def.scope === Scope.protected && (this.flags & WriteFlags.HideProtectedMembers)) {
+        else if (def.scope === Scope.Protected && (this.flags & WriteFlags.HideProtectedMembers)) {
             return false;
         }
         else {

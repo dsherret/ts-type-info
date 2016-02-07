@@ -11,13 +11,13 @@ export abstract class ScopedDefinition implements IScopedDefinition {
 
     fillScope(symbol: ts.Symbol) {
         if ((symbol.valueDeclaration.flags & ts.NodeFlags.Private) !== 0) {
-            this.scope = Scope.private;
+            this.scope = Scope.Private;
         }
         else if ((symbol.valueDeclaration.flags & ts.NodeFlags.Protected) !== 0) {
-            this.scope = Scope.protected;
+            this.scope = Scope.Protected;
         }
         else {
-            this.scope = Scope.public;
+            this.scope = Scope.Public;
         }
     }
 }

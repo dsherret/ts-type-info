@@ -3,9 +3,9 @@ import {IScopedDefinition, Scope} from "./../../../../../definitions";
 import {ScopedStructure} from "./../../../structures";
 
 export function runScopedDefinitionTests(definition: IScopedDefinition, structure: ScopedStructure) {
-    structure.scope = typeof structure.scope === "number" ? structure.scope : Scope.public;
+    structure.scope = structure.scope != null ? structure.scope : Scope.Public;
 
-    it(`should have a scope ${Scope[structure.scope]}`, () => {
+    it(`should have a scope ${structure.scope}`, () => {
         assert.equal(definition.scope, structure.scope);
     });
 }

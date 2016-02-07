@@ -64,13 +64,13 @@ class MyClassWithStaticMethods {
                 returnTypeExpression: { text: "string" }
             }, {
                 name: "myPublicMethod",
-                scope: Scope.public
+                scope: Scope.Public
             }, {
                 name: "myProtectedMethod",
-                scope: Scope.protected
+                scope: Scope.Protected
             }, {
                 name: "myPrivateMethod",
-                scope: Scope.private
+                scope: Scope.Private
             }]
         }]
     });

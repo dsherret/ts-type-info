@@ -13,7 +13,7 @@ export function runNamespaceDefinitionTests(definition: NamespaceDefinition, str
             runModuledDefinitionTests(definition, structure);
             runParentedDefinitionTests(definition);
 
-            it(`should have declaration type ${NamespaceDeclarationType[structure.declarationType]}`, () => {
+            it(`should have declaration type ${structure.declarationType}`, () => {
                 assert.equal(definition.declarationType, structure.declarationType);
             });
         });

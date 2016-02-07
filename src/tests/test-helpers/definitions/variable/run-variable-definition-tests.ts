@@ -19,7 +19,7 @@ export function runVariableDefinitionTests(definition: VariableDefinition, struc
             runDefaultExpressionedDefinitionTests(definition, structure);
             runParentedDefinitionTests(definition);
 
-            it(`should have declaration type ${VariableDeclarationType[structure.declarationType]}`, () => {
+            it(`should have declaration type ${structure.declarationType}`, () => {
                 assert.equal(definition.declarationType, structure.declarationType);
             });
         });

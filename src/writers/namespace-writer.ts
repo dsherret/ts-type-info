@@ -24,7 +24,7 @@ export class NamespaceWriter extends BaseDefinitionWriter<NamespaceDefinition> {
             case NamespaceDeclarationType.Namespace:
                 return "namespace";
             default:
-                throw `Not implemented NamespaceDeclarationType: ${NamespaceDeclarationType[declarationType]}`;
+                throw `Not implemented NamespaceDeclarationType: ${declarationType}`;
         }
     }
 }

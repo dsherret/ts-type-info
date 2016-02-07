@@ -5,9 +5,9 @@ import {ModuledDefinitions} from "./../../definitions";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
         NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
-import {VariableDeclarationType} from "./variable-declaration-type";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {VariableDeclarationType} from "./variable-declaration-type";
 
 export class VariableDefinition extends BaseDefinition
                                 implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,

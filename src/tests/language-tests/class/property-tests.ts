@@ -47,15 +47,15 @@ class MyClass {
             }, {
                 name: "myExplicitPublic",
                 typeExpression: { text: "any" },
-                scope: Scope.public
+                scope: Scope.Public
             }, {
                 name: "myProtected",
                 typeExpression: { text: "any" },
-                scope: Scope.protected
+                scope: Scope.Protected
             }, {
                 name: "myPrivate",
                 typeExpression: { text: "any" },
-                scope: Scope.private
+                scope: Scope.Private
             }, {
                 name: "myGetAccessor",
                 typeExpression: { text: "string" },
