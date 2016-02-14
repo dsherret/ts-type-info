@@ -1,5 +1,5 @@
 ﻿import {WrappedSymbolNode} from "./../../wrappers";
-import {DefinitionCache, tryGet} from "./../../utils";
+import {DefinitionCache, tryGet, Logger} from "./../../utils";
 import {IParentedDefinition} from "./../base";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
@@ -61,7 +61,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
                     this.namespaces.push(def);
                 }
                 else {
-                    console.warn(`Not implemented: ${symbolNode.getName()}`);
+                    Logger.warn(`Not implemented: ${symbolNode.getName()}`);
                 }
 
                 this.checkAddToExports(def);
@@ -70,7 +70,7 @@ export abstract class ModuledDefinition implements IModuledDefinition {
                 const isKnownTypeToIgnore = symbolNode.isDefaultExport() || symbolNode.isExportDeclaration() || symbolNode.isExportAssignment();
 
                 if (!isKnownTypeToIgnore) {
-                    console.warn(`Symbol definition is null for: ${symbolNode.getName()}`);
+                    Logger.warn(`Symbol definition is null for: ${symbolNode.getName()}`);
                 }
             }
         });

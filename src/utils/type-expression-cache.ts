@@ -5,6 +5,7 @@ import {KeyValueCache} from "./key-value-cache";
 import {TypeChecker} from "./type-checker";
 import {DefinitionCache} from "./definition-cache";
 import {tryGet} from "./try-get";
+import {Logger} from "./logger";
 
 export class TypeExpressionCache {
     private typeExpressionCacheContainer = new CacheContainer<TypeExpression>(this.typeChecker);
@@ -117,7 +118,7 @@ class CacheContainer<T> {
                 fileName = sourceFile.fileName;
             }
             else {
-                console.warn(`Could not get source file.`);
+                Logger.warn(`Could not get source file.`);
             }
         }
 

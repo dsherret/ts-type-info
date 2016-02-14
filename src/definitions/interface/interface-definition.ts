@@ -1,13 +1,13 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
-        ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {applyMixins, tryGet} from "./../../utils";
+import {applyMixins, tryGet, Logger} from "./../../utils";
 import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
+import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
+        ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {TypeParameterDefinition} from "./../general";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfacePropertyDefinition} from "./interface-property-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
@@ -67,7 +67,7 @@ export class InterfaceDefinition extends BaseDefinition
                 // ignore, it's handled in TypeParameteredDefinition
             }
             else {
-                console.warn(`Unknown interface child kind: ${childSymbol.nodeKindToString()}`);
+                Logger.warn(`Unknown interface child kind: ${childSymbol.nodeKindToString()}`);
             }
         });
     }
@@ -83,7 +83,7 @@ export class InterfaceDefinition extends BaseDefinition
             this.newSignatures.push(def);
         }
         else {
-            console.warn(`Not implemented interface member.`);
+            Logger.warn(`Not implemented interface member.`);
         }
     }
 

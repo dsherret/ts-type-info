@@ -1,26 +1,34 @@
-﻿import {logError} from "./../../utils";
+﻿import {logError, Logger} from "./../../utils";
 import * as assert from "assert";
 
 describe("logError", () => {
-    let oldConsoleWarn = console.warn;
+    let wasLoggerEnabled = Logger.getIsEnabled();
     let message: string;
     let logFunc = (loggedMessage: string) => message = loggedMessage;
 
+    before(() => {
+        Logger.setWarnFunction(logFunc);
+        Logger.enable();
+    });
+
+    after(() => {
+        Logger.setLogFunction(logFunc);
+        Logger.toggleEnabled(wasLoggerEnabled);
+    });
+
     it("should log the name", () => {
-        logError("MySymbolName", { message: "Message", stack: "Stack" } as any, logFunc);
+        logError("MySymbolName", { message: "Message", stack: "Stack" } as any);
         assert.equal(message, getMessage(`Failed getting info from "MySymbolName".\n\nDetail: Message\n\nStack: Stack`));
     });
 
     it("should log that the name was null", () => {
-        logError(null, { message: "Message", stack: "Stack" } as any, logFunc);
+        logError(null, { message: "Message", stack: "Stack" } as any);
         assert.equal(message, getMessage(`Unknown error. Object was null.\n\nDetail: Message\n\nStack: Stack`));
     });
-
-    console.warn = oldConsoleWarn;
 });
 
 function getMessage(msg: string) {
-    return getLine() + msg + "\n" + getLine() + "\n";
+    return "[ts-type-info]: \n" + getLine() + msg + "\n" + getLine() + "\n";
 }
 
 function getLine() {

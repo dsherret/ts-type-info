@@ -3,7 +3,7 @@ import * as path from "path";
 import * as tmp from "tmp";
 import * as fs from "fs";
 import {FileDefinition} from "./definitions";
-import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils} from "./utils";
+import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils, Logger} from "./utils";
 import {WrappedSymbolNode} from "./wrappers";
 import {Options, CompilerOptions} from "./options";
 
@@ -14,6 +14,8 @@ export * from "./expressions";
 export function getFileInfo(fileNames: string[], options?: Options): FileDefinition[] {
     verifyArray(fileNames);
     options = options || {};
+
+    Logger.toggleEnabled(options.showDebugMessages || false);
 
     const compilerOptions = getTsCompilerOptions(options.compilerOptions);
     const host = ts.createCompilerHost(compilerOptions);

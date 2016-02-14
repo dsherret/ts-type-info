@@ -1,5 +1,6 @@
 ﻿import * as ts from "typescript";
 import {TypeGuards} from "./../utils/type-guards";
+import {Logger} from "./../utils/logger";
 import {WrappedSignature} from "./wrapped-signature";
 import {WrappedExpression} from "./wrapped-expression";
 import {BaseWrappedTypeOptions, BaseWrappedType} from "./base-wrapped-type";
@@ -186,7 +187,7 @@ export class WrappedNode extends BaseWrappedType {
             return this.getNameFromExpression((expression as any)["expression"] as ts.LiteralExpression);
         }
         else {
-            console.warn("The expression was null");
+            Logger.warn("The expression was null");
         }
     }
 

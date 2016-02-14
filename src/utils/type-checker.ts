@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {TypeExpressionCache} from "./../utils";
+import {TypeExpressionCache, Logger} from "./../utils";
 
 export class TypeChecker {
     private typeCreator: TypeExpressionCache;
@@ -33,7 +33,7 @@ export class TypeChecker {
                 throw new Error(`Declaration should not be null for symbol: ${symbol.name}`);
             }
             else if (declarations.length > 1) {
-                console.warn(`Not implemented. Symbol has more than one declaration: ${symbol.name}`);
+                Logger.warn(`Not implemented. Symbol has more than one declaration: ${symbol.name}`);
             }
             else if (declarations.length === 0) {
                 throw new Error(`Declaration length should not be 0 for symbol: ${symbol.name}`);
@@ -209,7 +209,7 @@ export class TypeChecker {
                             fileImports.push(symbol);
                         }
                         else {
-                            console.warn(`Unknown symbol: ${e.name.text}`);
+                            Logger.warn(`Unknown symbol: ${e.name.text}`);
                         }
                     });
                 }
@@ -224,11 +224,11 @@ export class TypeChecker {
                         }
                     }
                     else {
-                        console.warn(`Unknown symbol: ${namedBindings.name.text}`);
+                        Logger.warn(`Unknown symbol: ${namedBindings.name.text}`);
                     }
                 }
                 else {
-                    console.warn(`Unknown scenario with import clause: ${c.name}`);
+                    Logger.warn(`Unknown scenario with import clause: ${c.name}`);
                 }
             }
             else if (c.name != null) {
@@ -236,7 +236,7 @@ export class TypeChecker {
                 fileImports.push(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(c.name)));
             }
             else {
-                console.warn(`Unknown import clause in ${file.fileName}`);
+                Logger.warn(`Unknown import clause in ${file.fileName}`);
             }
         });
 

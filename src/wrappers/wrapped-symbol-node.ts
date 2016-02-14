@@ -2,7 +2,7 @@
 import {Scope} from "./../definitions/class/scope";
 import {VariableDeclarationType} from "./../definitions/variable/variable-declaration-type";
 import {NamespaceDeclarationType} from "./../definitions/namespace/namespace-declaration-type";
-import {tryGet} from "./../utils";
+import {tryGet, Logger} from "./../utils";
 import {WrappedNode, WrappedNodeOptions} from "./wrapped-node";
 
 interface WrappedSymbolNodeOptions extends WrappedNodeOptions {
@@ -200,7 +200,7 @@ export class WrappedSymbolNode extends WrappedNode {
                     node = declarationList.declarations[0];
 
                     if (declarationList.declarations.length > 1) {
-                        console.warn(`Unknown situation where declaration list was greater than 1 for ${node.getText(this.sourceFile)}`);
+                        Logger.warn(`Unknown situation where declaration list was greater than 1 for ${node.getText(this.sourceFile)}`);
                     }
                 }
 

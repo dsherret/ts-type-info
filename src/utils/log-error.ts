@@ -1,5 +1,7 @@
-﻿export function logError(name: string, innerError: Error, logFunc = console.warn) {
-    logFunc(getWarningMessage(name, innerError));
+﻿import {Logger} from "./logger";
+
+export function logError(name: string, innerError: Error) {
+    Logger.warn("\n" + getWarningMessage(name, innerError));
 }
 
 function getWarningMessage(name: string, innerError: Error) {

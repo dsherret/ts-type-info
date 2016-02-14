@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
         MainDefinitions, TypeAliasDefinition, ImportDefinition} from "./../definitions";
 import {Expression} from "./../expressions";
-import {TypeChecker, KeyValueCache} from "./../utils";
+import {TypeChecker, KeyValueCache, Logger} from "./../utils";
 import {WrappedSymbolNode, WrappedExpression} from "./../wrappers";
 
 export class DefinitionCache {
@@ -147,7 +147,7 @@ export class DefinitionCache {
             // ignore
         }
         else {
-            console.log(`Unknown node kind: ${symbolNode.nodeKindToString()}`);
+            Logger.warn(`Unknown node kind: ${symbolNode.nodeKindToString()}`);
         }
 
         if (definition != null) {

@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, tryGet} from "./../../utils";
+import {applyMixins, tryGet, Logger} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
@@ -90,7 +90,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
                 // ignore, type parameters are handled elsewhere
             }
             else {
-                console.warn(`Unknown class child kind: ${childSymbol.nodeKindToString()}`);
+                Logger.warn(`Unknown class child kind: ${childSymbol.nodeKindToString()}`);
             }
         });
     }
@@ -112,7 +112,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
             this.constructorDef = def;
         }
         else {
-            console.warn(`Unknown member definition for class.`);
+            Logger.warn(`Unknown member definition for class.`);
         }
     }
 

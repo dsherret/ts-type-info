@@ -1,5 +1,6 @@
 ﻿export interface Options {
     compilerOptions?: CompilerOptions;
+    showDebugMessages?: boolean;
 }
 
 export interface CompilerOptions {
