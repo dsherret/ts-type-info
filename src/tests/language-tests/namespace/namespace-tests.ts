@@ -1,6 +1,6 @@
 ﻿import {getStringInfo} from "./../../../main";
 import {runFileDefinitionTests} from "./../../test-helpers";
-import {NamespaceDeclarationType} from "./../../../definitions";
+import {NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
 
 describe("namespace tests", () => {
     const code = `
@@ -22,6 +22,7 @@ namespace MyNamespace {
     }
     export namespace MyInnerExportedNamespace {
         export class MyInnerNamespaceClass {}
+        export const myInnerVariable = "string";
     }
 }
 export namespace MyExportedNamespace {
@@ -72,8 +73,21 @@ export namespace MyExportedNamespace {
                 classes: [
                     { name: "MyInnerNamespaceClass", isExported: true }
                 ],
+                variables: [{
+                    name: "myInnerVariable",
+                    isExported: true,
+                    declarationType: VariableDeclarationType.Const,
+                    defaultExpression: {
+                        text: `"string"`
+                    },
+                    typeExpression: {
+                        text: "string"
+                    }
+                }],
                 exports: [{
                     name: "MyInnerNamespaceClass"
+                }, {
+                    name: "myInnerVariable",
                 }]
             }],
             exports: [{

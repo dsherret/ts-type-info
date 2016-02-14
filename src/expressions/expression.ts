@@ -1,10 +1,9 @@
-﻿import * as ts from "typescript";
-import {TypeChecker} from "./../utils";
+﻿import {WrappedExpression} from "./../wrappers";
 
 export class Expression {
     text: string;
 
-    constructor(typeChecker: TypeChecker, expression: ts.Expression) {
-        this.text = typeChecker.getExpressionFullText(expression);
+    constructor(expression: WrappedExpression) {
+        this.text = expression.getText();
     }
 }

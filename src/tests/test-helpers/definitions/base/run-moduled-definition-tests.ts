@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {IModuledDefinition} from "./../../../../definitions";
+import {ModuledDefinitions} from "./../../../../definitions";
 import {runNamespaceDefinitionTests} from "./../namespace";
 import {runInterfaceDefinitionTests} from "./../interface";
 import {runFunctionDefinitionTests} from "./../function";
@@ -11,7 +11,7 @@ import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runExportableDefinitionTests} from "./run-exportable-definition-tests";
 import {ModuledStructure} from "./../../structures";
 
-export function runModuledDefinitionTests(definition: IModuledDefinition, expected: ModuledStructure) {
+export function runModuledDefinitionTests(definition: ModuledDefinitions, expected: ModuledStructure) {
     expected.namespaces = expected.namespaces || [];
     expected.classes = expected.classes || [];
     expected.enums = expected.enums || [];

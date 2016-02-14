@@ -5,6 +5,6 @@ export interface TypeStructure {
     callSignatures?: CallSignatureStructure[];
     properties?: TypePropertyStructure[];
     typeArguments?: TypeExpressionStructure[];
-    definition?: NamedStructure;
+    definitions?: NamedStructure[];
     text: string;
 }

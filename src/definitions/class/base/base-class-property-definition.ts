@@ -1,25 +1,25 @@
-import * as ts from "typescript";
-import {IScopedDefinition, ScopedDefinition} from "./scoped-definition";
-import {Scope} from "./../scope";
-import {applyMixins, TypeChecker} from "./../../../utils";
+import {applyMixins} from "./../../../utils";
+import {WrappedSymbolNode} from "./../../../wrappers";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, ObjectPropertyDefinition} from "./../../base";
 import {DecoratorDefinition} from "./../../general";
+import {Scope} from "./../scope";
 import {ClassDefinition} from "./../class-definition";
+import {IScopedDefinition, ScopedDefinition} from "./scoped-definition";
 
 export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition, definitionType: DefinitionType) {
-        super(typeChecker, symbol, parent, definitionType);
+    constructor(symbolNode: WrappedSymbolNode, parent: ClassDefinition, definitionType: DefinitionType) {
+        super(symbolNode, parent, definitionType);
 
-        this.fillDecorators(typeChecker, symbol);
-        this.fillScope(symbol);
+        this.fillDecorators(symbolNode);
+        this.fillScope(symbolNode);
     }
 
     // DecoratableDefinition
     decorators: DecoratorDefinition<this>[];
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillDecorators: (symbolNode: WrappedSymbolNode) => void;
     // ScopeDefinition
     scope: Scope;
-    fillScope: (symbol: ts.Symbol) => void;
+    fillScope: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(BaseClassPropertyDefinition, [DecoratableDefinition, ScopedDefinition]);

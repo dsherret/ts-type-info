@@ -1,17 +1,17 @@
-﻿import * as ts from "typescript";
-import {applyMixins, TypeChecker} from "./../../utils";
+﻿import {applyMixins} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
 import {DecoratorDefinition} from "./../general";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
 import {ClassConstructorDefinition} from "./class-constructor-definition";
 
 export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements IDecoratableDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassConstructorDefinition) {
-        super(typeChecker, symbol, parent, DefinitionType.ClassConstructorParameter);
-        this.fillDecorators(typeChecker, symbol);
+    constructor(symbolNode: WrappedSymbolNode, parent: ClassConstructorDefinition) {
+        super(symbolNode, parent, DefinitionType.ClassConstructorParameter);
+        this.fillDecorators(symbolNode);
     }
 
     // DecoratableDefinition
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillDecorators: (symbolNode: WrappedSymbolNode) => void;
     decorators: DecoratorDefinition<this>[];
 }
 

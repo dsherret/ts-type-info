@@ -1,6 +1,6 @@
-﻿import * as ts from "typescript";
-import CodeBlockWriter from "code-block-writer";
-import {applyMixins, TypeChecker} from "./../../utils";
+﻿import CodeBlockWriter from "code-block-writer";
+import {applyMixins} from "./../../utils";
+import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../write-flags";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition,
@@ -18,13 +18,13 @@ import {TypeAliasWriter} from "./../../writers";
 export class TypeAliasDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                             ITypeParameteredDefinition, IAmbientableDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.TypeAlias);
-        this.fillName(typeChecker, symbol);
-        this.fillExportable(typeChecker, symbol);
-        this.fillTypeExpression(typeChecker, symbol);
-        this.fillTypeParametersBySymbol(typeChecker, symbol);
-        this.fillAmbientable(typeChecker, symbol);
+        this.fillName(symbolNode);
+        this.fillExportable(symbolNode);
+        this.fillTypeExpression(symbolNode);
+        this.fillTypeParametersBySymbolDeclaration(symbolNode);
+        this.fillAmbientable(symbolNode);
     }
 
     write() {
@@ -36,25 +36,25 @@ export class TypeAliasDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillName: (symbolNode: WrappedSymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillTypeExpression: (symbolNode: WrappedSymbolNode) => void;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(TypeAliasDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition]);

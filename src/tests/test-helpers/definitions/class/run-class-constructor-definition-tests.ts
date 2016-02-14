@@ -3,6 +3,7 @@ import {ClassConstructorStructure} from "./../../structures";
 import {ClassConstructorDefinition} from "./../../../../definitions";
 import {runParameteredDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {runClassConstructorParameterDefinitionTests} from "./run-class-constructor-parameter-definition-tests";
+import {ensureNotNull} from "./../../ensure-not-null";
 
 export function runClassConstructorDefinitionTests(definition: ClassConstructorDefinition, structure: ClassConstructorStructure) {
     if (structure == null) {
@@ -11,11 +12,9 @@ export function runClassConstructorDefinitionTests(definition: ClassConstructorD
         });
     }
     else {
-        it("should have a constructor", () => {
-            assert.notEqual(definition, null);
+        ensureNotNull(definition, () => {
+            runParameteredDefinitionTests(runClassConstructorParameterDefinitionTests, definition, structure);
+            runParentedDefinitionTests(definition);
         });
-
-        runParameteredDefinitionTests(runClassConstructorParameterDefinitionTests, definition, structure);
-        runParentedDefinitionTests(definition);
     }
 }

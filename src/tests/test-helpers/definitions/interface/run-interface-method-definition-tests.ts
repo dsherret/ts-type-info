@@ -2,9 +2,12 @@
 import {InterfaceMethodDefinition} from "./../../../../definitions";
 import {runBaseFunctionDefinitionTests} from "./../base";
 import {runInterfaceMethodParameterDefinitionTests} from "./run-interface-method-parameter-definition-tests";
+import {ensureNotNull} from "./../../ensure-not-null";
 
 export function runInterfaceMethodDefinitionTests(definition: InterfaceMethodDefinition, structure: InterfaceMethodStructure) {
     describe(`method ${structure.name}`, () => {
-        runBaseFunctionDefinitionTests(runInterfaceMethodParameterDefinitionTests, definition, structure);
+        ensureNotNull(definition, () => {
+            runBaseFunctionDefinitionTests(runInterfaceMethodParameterDefinitionTests, definition, structure);
+        });
     });
 }

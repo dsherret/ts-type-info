@@ -1,11 +1,10 @@
-import * as ts from "typescript";
+import {WrappedSymbolNode} from "./../../wrappers";
+import {DefinitionType} from "./../base";
 import {BaseClassPropertyDefinition} from "./base";
 import {ClassDefinition} from "./class-definition";
-import {DefinitionType} from "./../base";
-import {TypeChecker} from "./../../utils";
 
 export class ClassStaticPropertyDefinition extends BaseClassPropertyDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition) {
-        super(typeChecker, symbol, parent, DefinitionType.ClassStaticProperty);
+    constructor(symbolNode: WrappedSymbolNode, parent: ClassDefinition) {
+        super(symbolNode, parent, DefinitionType.ClassStaticProperty);
     }
 }

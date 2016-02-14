@@ -1,18 +1,15 @@
-import * as ts from "typescript";
 import {TypeExpression} from "./../../expressions";
-import {TypeChecker, tryGet} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
 
 export interface ITypeExpressionedDefinition {
     typeExpression: TypeExpression;
-    fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    fillTypeExpression(symbolNode: WrappedSymbolNode): void;
 }
 
 export abstract class TypeExpressionedDefinition implements ITypeExpressionedDefinition {
     typeExpression: TypeExpression;
 
-    fillTypeExpression(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        tryGet(symbol, () => typeChecker.getTypeExpressionOfSymbol(symbol), (expression) => {
-            this.typeExpression = expression;
-        });
+    fillTypeExpression(symbolNode: WrappedSymbolNode) {
+        this.typeExpression = symbolNode.getTypeExpression();
     }
 }

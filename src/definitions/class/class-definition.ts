@@ -1,8 +1,8 @@
-import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {applyMixins, tryGet} from "./../../utils";
+import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
         IAbstractableDefinition, AbstractableDefinition, DefinitionType} from "./../base";
@@ -15,6 +15,8 @@ import {ClassPropertyDefinition} from "./class-property-definition";
 import {ClassStaticMethodDefinition} from "./class-static-method-definition";
 import {ClassStaticPropertyDefinition} from "./class-static-property-definition";
 
+type ClassMemberDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
+
 export class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
                                         IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition, IAbstractableDefinition {
     methods: ClassMethodDefinition[] = [];
@@ -23,21 +25,21 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     staticProperties: ClassStaticPropertyDefinition[] = [];
     constructorDef: ClassConstructorDefinition;
     typeParameters: TypeParameterDefinition<this>[] = [];
+    extendsTypeExpressions: TypeExpression[];
+    implementsTypeExpressions: TypeExpression[];
 
-    constructor(
-        typeChecker: TypeChecker,
-        symbol: ts.Symbol,
-        public extendsTypeExpressions: TypeExpression[],
-        public implementsTypeExpressions: TypeExpression[]
-    ) {
+    constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Class);
 
-        this.fillName(typeChecker, symbol);
-        this.fillExportable(typeChecker, symbol);
-        this.fillDecorators(typeChecker, symbol);
-        this.fillAmbientable(typeChecker, symbol);
-        this.fillAbstractable(typeChecker, symbol);
-        this.fillMembers(typeChecker, symbol);
+        this.fillName(symbolNode);
+        this.fillExportable(symbolNode);
+        this.fillDecorators(symbolNode);
+        this.fillAmbientable(symbolNode);
+        this.fillAbstractable(symbolNode);
+        this.fillMembers(symbolNode);
+        this.fillTypeParametersBySymbolDeclaration(symbolNode);
+        this.extendsTypeExpressions = symbolNode.getExtendsTypeExpressions();
+        this.implementsTypeExpressions = symbolNode.getImplementsTypeExpressions();
     }
 
     write() {
@@ -47,83 +49,96 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         return writer.toString();
     }
 
-    private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.typeParameters = [];
-        this.fillInstanceMembers(typeChecker, symbol);
-        this.fillStaticMembers(typeChecker, symbol);
-    }
+    private fillMembers(symbolNode: WrappedSymbolNode) {
+        symbolNode.forEachChild(childSymbol => {
+            const def = this.getMemberDefinition(childSymbol);
 
-    private fillInstanceMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
-            /* istanbul ignore else */
-            if (typeChecker.isSymbolClassProperty(member)) {
-                this.properties.push(new ClassPropertyDefinition(typeChecker, member, this));
-            }
-            else if (typeChecker.isSymbolClassMethod(member)) {
-                this.methods.push(new ClassMethodDefinition(typeChecker, member, this));
-            }
-            else if (typeChecker.isSymbolConstructor(member)) {
-                this.verifyConstructorNotSet();
-                this.constructorDef = new ClassConstructorDefinition(typeChecker, member, this);
-            }
-            else if (typeChecker.isSymbolTypeParameter(member)) {
-                // todo: maybe make this work like how it does in call signature definition and function? (use method in TypeParameteredDefinition?)
-                this.typeParameters.push(new TypeParameterDefinition<this>(typeChecker, member, this));
-            }
-            else {
-                console.warn(`Not implemented member: ${member.getName()}`);
+            if (def != null) {
+                this.addDefinition(def);
             }
         });
     }
 
-    private fillStaticMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        Object.keys(symbol.exports).map(memberName => symbol.exports[memberName]).forEach(staticMember => {
-            /* istanbul ignore else */
-            if (staticMember.getName() === "prototype") {
-                // ignore
+    private getMemberDefinition(childSymbol: WrappedSymbolNode): ClassMemberDefinitions {
+        return tryGet(childSymbol, () => {
+            if (childSymbol.isMethodDeclaration()) {
+                if (childSymbol.hasStaticKeyword()) {
+                    return new ClassStaticMethodDefinition(childSymbol, this);
+                }
+                else {
+                    return new ClassMethodDefinition(childSymbol, this);
+                }
             }
-            else if (typeChecker.isSymbolStaticMethod(staticMember)) {
-                this.staticMethods.push(new ClassStaticMethodDefinition(typeChecker, staticMember, this));
+            else if (childSymbol.isPropertyDeclaration() || childSymbol.isGetAccessor()) {
+                if (childSymbol.hasStaticKeyword()) {
+                    return new ClassStaticPropertyDefinition(childSymbol, this);
+                }
+                else {
+                    return new ClassPropertyDefinition(childSymbol, this);
+                }
             }
-            else if (typeChecker.isSymbolStaticProperty(staticMember)) {
-                this.staticProperties.push(new ClassStaticPropertyDefinition(typeChecker, staticMember, this));
+            else if (childSymbol.isConstructor()) {
+                return new ClassConstructorDefinition(childSymbol, this);
+            }
+            else if (childSymbol.isSetAccessor()) {
+                // ignore, GetAccessor is the one that will be handled
+            }
+            else if (childSymbol.isIdentifier()) {
+                // ignore, it's the class identifier
+            }
+            else if (childSymbol.isTypeParameter()) {
+                // ignore, type parameters are handled elsewhere
             }
             else {
-                console.warn(`Not implemented static member: ${staticMember.getName()}`);
+                console.warn(`Unknown class child kind: ${childSymbol.nodeKindToString()}`);
             }
         });
     }
 
-    private verifyConstructorNotSet() {
-        /* istanbul ignore if */
-        if (this.constructorDef != null) {
-            throw `Unknown error: Duplicate constructors on ${this.name}.`;
+    private addDefinition(def: ClassMemberDefinitions) {
+        if (def.isClassPropertyDefinition()) {
+            this.properties.push(def);
+        }
+        else if (def.isClassMethodDefinition()) {
+            this.methods.push(def);
+        }
+        else if (def.isClassStaticPropertyDefinition()) {
+            this.staticProperties.push(def);
+        }
+        else if (def.isClassStaticMethodDefinition()) {
+            this.staticMethods.push(def);
+        }
+        else if (def.isClassConstructorDefinition()) {
+            this.constructorDef = def;
+        }
+        else {
+            console.warn(`Unknown member definition for class.`);
         }
     }
 
     // NamedDefinition
     name: string;
-    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillName: (symbolNode: WrappedSymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // DecoratableDefinition
     decorators: DecoratorDefinition<this>[];
-    fillDecorators: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillDecorators: (symbolNode: WrappedSymbolNode) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
     // AbstractableDefinition
     isAbstract: boolean;
-    fillAbstractable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillAbstractable: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition]);

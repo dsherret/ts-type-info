@@ -1,7 +1,7 @@
 ﻿export type VariableDeclarationType = "var" | "let" | "const";
 
-export module VariableDeclarationType {
-    export const Var: VariableDeclarationType = "var";
-    export const Let: VariableDeclarationType = "let";
-    export const Const: VariableDeclarationType = "const";
-}
+export const VariableDeclarationType = {
+    Var: "var" as VariableDeclarationType,
+    Let: "let" as VariableDeclarationType,
+    Const: "const" as VariableDeclarationType
+};

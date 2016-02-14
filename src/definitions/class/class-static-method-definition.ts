@@ -1,12 +1,11 @@
-import * as ts from "typescript";
+import {WrappedSymbolNode} from "./../../wrappers";
+import {DefinitionType} from "./../base";
 import {BaseClassMethodDefinition} from "./base";
 import {ClassStaticMethodParameterDefinition} from "./class-static-method-parameter-definition";
 import {ClassDefinition} from "./class-definition";
-import {DefinitionType} from "./../base";
-import {TypeChecker} from "./../../utils";
 
 export class ClassStaticMethodDefinition extends BaseClassMethodDefinition<ClassStaticMethodParameterDefinition> {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ClassDefinition) {
-        super(typeChecker, symbol, ClassStaticMethodParameterDefinition, parent, DefinitionType.ClassStaticMethod);
+    constructor(symbolNode: WrappedSymbolNode, parent: ClassDefinition) {
+        super(symbolNode, ClassStaticMethodParameterDefinition, parent, DefinitionType.ClassStaticMethod);
     }
 }

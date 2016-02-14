@@ -1,6 +1,6 @@
-import * as ts from "typescript";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {applyMixins} from "./../../utils";
+import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {TypeParameterDefinition} from "./../general";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {IParentedDefinition} from "./parented-definition";
@@ -12,38 +12,37 @@ import {IParameteredDefinition, ParameteredDefinition} from "./parametered-defin
 import {IReturnTypedDefinition, ReturnTypedDefinition} from "./return-typed-definition";
 
 export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefinition
-    implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition, IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
-
+                                                               implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition,
+                                                                          IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
     constructor(
-        typeChecker: TypeChecker,
-        symbol: ts.Symbol,
+        symbolNode: WrappedSymbolNode,
         parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ParentType, ParameterType>, ParameterType>,
         definitionType: DefinitionType
     ) {
         super(definitionType);
-        this.fillName(typeChecker, symbol);
-        this.fillParametersBySymbol(typeChecker, symbol, parameterDefinition);
-        this.fillReturnTypeExpressionBySymbol(typeChecker, symbol);
-        this.fillTypeParametersBySymbol(typeChecker, symbol);
+        this.fillName(symbolNode);
+        this.fillParametersBySymbol(symbolNode, parameterDefinition);
+        this.fillReturnTypeExpressionBySymbol(symbolNode);
+        this.fillTypeParametersBySymbolDeclaration(symbolNode);
     }
 
     // NamedDefinition
     name: string;
-    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillName: (symbolNode: WrappedSymbolNode) => void;
     // IParentedDefinition
     parent: ParentType;
     // ParameteredDefinition
     parameters: ParameterType[];
-    fillParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
-    fillParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
+    fillParametersBySymbol: (symbolNode: WrappedSymbolNode, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
+    fillParametersBySignature: (signature: WrappedSignature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillReturnTypeExpressionBySymbol: (symbolNode: WrappedSymbolNode) => void;
+    fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
 }
 
 applyMixins(BaseFunctionDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

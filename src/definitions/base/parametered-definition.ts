@@ -1,25 +1,20 @@
-import * as ts from "typescript";
 import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
-import {TypeChecker} from "./../../utils";
+import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 
 export interface IParameteredDefinition<ParameterType> {
-    fillParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>): void;
-    fillParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>): void;
+    fillParametersBySymbol(symbolNode: WrappedSymbolNode, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>): void;
+    fillParametersBySignature(signature: WrappedSignature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>): void;
     parameters: ParameterType[];
 }
 
 export abstract class ParameteredDefinition<ParameterType> implements IParameteredDefinition<ParameterType> {
     parameters: ParameterType[];
 
-    fillParametersBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) {
-        this.parameters = typeChecker.getSymbolParametersFromSymbol(symbol).map(parameterSymbol => new paramDefinition(typeChecker, parameterSymbol, this));
+    fillParametersBySymbol(symbolNode: WrappedSymbolNode, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) {
+        this.parameters = symbolNode.getParameters().map(param => new paramDefinition(param, this));
     }
 
-    fillParametersBySignature(typeChecker: TypeChecker, signature: ts.Signature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) {
-        this.parameters = [];
-
-        for (const param of signature.parameters) {
-            this.parameters.push(new paramDefinition(typeChecker, param, this));
-        }
+    fillParametersBySignature(signature: WrappedSignature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) {
+        this.parameters = signature.getParameters().map(param => new paramDefinition(param, this));
     }
 }

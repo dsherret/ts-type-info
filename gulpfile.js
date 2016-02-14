@@ -1,3 +1,4 @@
+/// <binding AfterBuild='tslint' />
 var gulp = require("gulp");
 var del = require("del");
 var mocha = require("gulp-mocha");
@@ -64,8 +65,6 @@ gulp.task("generate-readme", function(cb) {
     var readmeText = fs.readFileSync(path.join(__dirname, "resources/readme.txt"), "utf8");
     var tsTypeInfo = require("./dist/main");
     var readmeInfo = tsTypeInfo.getStringInfo(readmeCode);
-
-    console.log(readmeInfo.classes[0].staticProperties);
 
     readmeText = readmeText
         .replace("{{Code}}", readmeCode)

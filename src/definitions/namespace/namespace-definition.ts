@@ -1,6 +1,9 @@
-﻿import * as ts from "typescript";
-import CodeBlockWriter from "code-block-writer";
+﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
+import {applyMixins, DefinitionCache} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
+import {NamespaceWriter, ModuledWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
         IAmbientableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
@@ -9,21 +12,19 @@ import {EnumDefinition} from "./../enum";
 import {FunctionDefinition} from "./../function";
 import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
-import {applyMixins, DefinitionCache, TypeChecker} from "./../../utils";
 import {NamespaceDeclarationType} from "./namespace-declaration-type";
-import {NamespaceWriter, ModuledWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
 
 export class NamespaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Namespace);
-        this.fillName(typeChecker, symbol);
-        this.fillExportable(typeChecker, symbol);
-        this.fillAmbientable(typeChecker, symbol);
-        this.fillDeclarationType(typeChecker, symbol);
+        this.fillName(symbolNode);
+        this.fillExportable(symbolNode);
+        this.fillAmbientable(symbolNode);
+        this.fillMembersByNode(definitionCache, symbolNode);
+        this.declarationType = symbolNode.getDeclarationType();
     }
 
     write() {
@@ -34,20 +35,9 @@ export class NamespaceDefinition extends BaseDefinition
         return writer.toString();
     }
 
-    private fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        const nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).flags;
-
-        if (nodeFlags & ts.NodeFlags.Namespace) {
-            this.declarationType = NamespaceDeclarationType.Namespace;
-        }
-        else {
-            this.declarationType = NamespaceDeclarationType.Module;
-        }
-    }
-
     // NamedDefinition
     name: string;
-    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillName: (symbolNode: WrappedSymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ModuledDefinition
@@ -59,18 +49,16 @@ export class NamespaceDefinition extends BaseDefinition
     variables: VariableDefinition[];
     exports: ExportableDefinitions[];
     typeAliases: TypeAliasDefinition[];
-    fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
-    fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
-    fillModuledChildrenWithParent: () => void;
+    fillMembersByNode: (definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

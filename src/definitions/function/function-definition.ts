@@ -1,7 +1,7 @@
-import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {TypeChecker, applyMixins} from "./../../utils";
+import {applyMixins} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
 import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition, DefinitionType, BaseFunctionDefinition} from "./../base";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
@@ -10,10 +10,10 @@ import {FunctionParameterDefinition} from "./function-parameter-definition";
 export class FunctionDefinition extends BaseFunctionDefinition<ModuledDefinitions, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        super(typeChecker, symbol, FunctionParameterDefinition, DefinitionType.Function);
-        this.fillExportable(typeChecker, symbol);
-        this.fillAmbientable(typeChecker, symbol);
+    constructor(symbolNode: WrappedSymbolNode) {
+        super(symbolNode, FunctionParameterDefinition, DefinitionType.Function);
+        this.fillExportable(symbolNode);
+        this.fillAmbientable(symbolNode);
     }
 
     write() {
@@ -27,11 +27,11 @@ export class FunctionDefinition extends BaseFunctionDefinition<ModuledDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(FunctionDefinition, [ExportableDefinition, AmbientableDefinition]);

@@ -1,10 +1,9 @@
-import * as ts from "typescript";
-import {TypeChecker} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
 import {DefinitionType, BaseParameterDefinition} from "./../base";
 import {FunctionDefinition} from "./function-definition";
 
 export class FunctionParameterDefinition extends BaseParameterDefinition<FunctionDefinition> {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: FunctionDefinition) {
-        super(typeChecker, symbol, parent, DefinitionType.FunctionParameter);
+    constructor(symbolNode: WrappedSymbolNode, parent: FunctionDefinition) {
+        super(symbolNode, parent, DefinitionType.FunctionParameter);
     }
 }

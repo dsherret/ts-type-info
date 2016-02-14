@@ -1,12 +1,12 @@
-﻿import * as ts from "typescript";
-import CodeBlockWriter from "code-block-writer";
-import {applyMixins, TypeChecker} from "./../../utils";
+﻿import CodeBlockWriter from "code-block-writer";
+import {applyMixins} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
-import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
-        NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
+        NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {VariableDeclarationType} from "./variable-declaration-type";
 
 export class VariableDefinition extends BaseDefinition
@@ -14,14 +14,14 @@ export class VariableDefinition extends BaseDefinition
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol) {
+    constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Variable);
-        this.fillName(typeChecker, symbol);
-        this.fillExportable(typeChecker, symbol);
-        this.fillTypeExpression(typeChecker, symbol);
-        this.fillDefaultExpression(typeChecker, symbol);
-        this.fillAmbientable(typeChecker, symbol);
-        this.fillDeclarationType(typeChecker, symbol);
+        this.fillName(symbolNode);
+        this.fillExportable(symbolNode);
+        this.fillTypeExpression(symbolNode);
+        this.fillDefaultExpression(symbolNode);
+        this.fillAmbientable(symbolNode);
+        this.declarationType = symbolNode.getVariableDeclarationType();
     }
 
     write() {
@@ -31,40 +31,26 @@ export class VariableDefinition extends BaseDefinition
         return writer.toString();
     }
 
-    private fillDeclarationType(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        const nodeFlags = typeChecker.getDeclarationFromSymbol(symbol).parent.flags;
-
-        if (nodeFlags & ts.NodeFlags.Let) {
-            this.declarationType = VariableDeclarationType.Let;
-        }
-        else if (nodeFlags & ts.NodeFlags.Const) {
-            this.declarationType = VariableDeclarationType.Const;
-        }
-        else {
-            this.declarationType = VariableDeclarationType.Var;
-        }
-    }
-
     // NamedDefinition
     name: string;
-    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillName: (symbolNode: WrappedSymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillTypeExpression: (symbolNode: WrappedSymbolNode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
-    fillDefaultExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillDefaultExpression: (symbolNode: WrappedSymbolNode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

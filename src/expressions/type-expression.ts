@@ -1,13 +1,12 @@
-import * as ts from "typescript";
 import {Type} from "./type";
-import {TypeChecker} from "./../utils";
+import {WrappedType} from "./../wrappers";
 
 export class TypeExpression {
     text: string;
     types: Type[] = [];
 
-    constructor(typeChecker: TypeChecker, tsType: ts.Type) {
-        this.text = typeChecker.typeToString(tsType);
+    constructor(wrappedType: WrappedType) {
+        this.text = wrappedType.getText();
     }
 
     addType(type: Type) {

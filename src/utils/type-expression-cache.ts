@@ -1,19 +1,20 @@
 import * as ts from "typescript";
+import {TypeExpression, Type} from "./../expressions";
+import {WrappedType} from "./../wrappers";
 import {KeyValueCache} from "./key-value-cache";
 import {TypeChecker} from "./type-checker";
 import {DefinitionCache} from "./definition-cache";
 import {tryGet} from "./try-get";
-import {TypeExpression, Type} from "./../expressions";
 
 export class TypeExpressionCache {
     private typeExpressionCacheContainer = new CacheContainer<TypeExpression>(this.typeChecker);
     private typeCacheContainer = new CacheContainer<Type>(this.typeChecker);
     private typeTsTypeCache = new KeyValueCache<Type, ts.Type>();
 
-    constructor(private typeChecker: TypeChecker) {
+    constructor(private typeChecker: TypeChecker, private definitionCache: DefinitionCache) {
     }
 
-    get(tsType: ts.Type) {
+    get(tsType: ts.Type, sourceFile: ts.SourceFile) {
         const typeExpressionCache = this.typeExpressionCacheContainer.getCache(tsType);
         const typeText = this.typeChecker.typeToString(tsType);
         let typeExpression = typeExpressionCache.get(typeText);
@@ -21,33 +22,30 @@ export class TypeExpressionCache {
         if (typeExpression == null) {
             const types = (tsType as ts.UnionOrIntersectionType).types || [tsType];
 
-            typeExpression = new TypeExpression(this.typeChecker, tsType);
+            typeExpression = new TypeExpression(this.getTypeWrapperFromTsTypeAndSourceFile(tsType, sourceFile));
             typeExpressionCache.add(typeExpression.text, typeExpression);
 
             types.forEach(t => {
-                tryGet(typeText, () => this.getType(t), type => typeExpression.addType(type));
+                tryGet(typeText, () => this.getType(t, sourceFile), type => typeExpression.addType(type));
             });
         }
 
         return typeExpression;
     }
 
-    fillAllCachedTypesWithDefinitions(definitionCache: DefinitionCache) {
+    fillAllCachedTypesWithDefinitions() {
         this.typeCacheContainer.getAllCacheItems().forEach(type => {
             const tsType = this.typeTsTypeCache.get(type);
             const symbols = this.typeChecker.getSymbolsFromType(tsType);
 
             /* istanbul ignore else */
-            if (symbols.length === 1) {
-                type.fillDefinition(definitionCache.getDefinition(symbols[0]));
-            }
-            else if (symbols.length > 1) {
-                console.warn(`Symbol length should not be greater than 1 for ${this.typeChecker.typeToString(tsType)}`);
-            }
+            symbols.forEach(s => {
+                type.addDefinitions(this.definitionCache.getDefinitionsBySymbol(s));
+            });
         });
     }
 
-    private getType(tsType: ts.Type) {
+    private getType(tsType: ts.Type, sourceFile: ts.SourceFile) {
         const cache = this.typeCacheContainer.getCache(tsType);
         const name = this.typeChecker.typeToString(tsType);
         let type = cache.get(name);
@@ -55,11 +53,20 @@ export class TypeExpressionCache {
         if (type == null) {
             type = new Type();
             cache.add(name, type);
-            type.fillTypeInformation(this.typeChecker, this, tsType);
+
+            type.fillTypeInformation(this.getTypeWrapperFromTsTypeAndSourceFile(tsType, sourceFile));
             this.typeTsTypeCache.add(type, tsType);
         }
 
         return type;
+    }
+
+    private getTypeWrapperFromTsTypeAndSourceFile(tsType: ts.Type, sourceFile: ts.SourceFile) {
+        return new WrappedType({
+            typeChecker: this.typeChecker,
+            sourceFile: sourceFile,
+            tsType: tsType
+        });
     }
 }
 

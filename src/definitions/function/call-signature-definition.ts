@@ -1,42 +1,40 @@
-import * as ts from "typescript";
 import {CallSignatureParameterDefinition} from "./call-signature-parameter-definition";
 import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType,
         IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {applyMixins} from "./../../utils";
+import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
 
 export class CallSignatureDefinition extends BaseDefinition
                                      implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
     minArgumentCount: number;
 
-    constructor(typeChecker: TypeChecker, signature: ts.Signature) {
+    constructor(signature: WrappedSignature) {
         super(DefinitionType.CallSignature);
-        this.fillReturnTypeExpressionBySignature(typeChecker, signature);
-        this.fillParametersBySignature(typeChecker, signature, CallSignatureParameterDefinition);
-        this.fillTypeParametersBySignature(typeChecker, signature);
+        this.fillReturnTypeExpressionBySignature(signature);
+        this.fillParametersBySignature(signature, CallSignatureParameterDefinition);
+        this.fillTypeParametersBySignature(signature);
 
-        this.minArgumentCount = typeChecker.getMinArgumentCount(signature);
+        this.minArgumentCount = signature.getMinArgumentCount();
     }
 
     // ParameteredDefinition
     parameters: CallSignatureParameterDefinition[];
     fillParametersBySymbol: (
-        typeChecker: TypeChecker,
-        symbol: ts.Symbol,
+        symbolNode: WrappedSymbolNode,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     fillParametersBySignature: (
-        typeChecker: TypeChecker,
-        signature: ts.Signature,
+        signature: WrappedSignature,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillReturnTypeExpressionBySymbol: (symbolNode: WrappedSymbolNode) => void;
+    fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
 }
 
 applyMixins(CallSignatureDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

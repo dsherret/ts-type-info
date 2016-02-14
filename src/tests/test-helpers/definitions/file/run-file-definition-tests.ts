@@ -52,9 +52,12 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
                     runExpressionTests(definition.defaultExport as Expression, structure.defaultExport as ExpressionStructure);
                 }
                 else {
-                    const defaultExportDef = definition.defaultExport as ExportableDefinitions;
-                    runNamedDefinitionTests(defaultExportDef, structure.defaultExport as NamedStructure);
-                    runExportableDefinitionTests(defaultExportDef, structure.defaultExport as ExportableStructure);
+                    const defaultExportDefs = definition.defaultExport as ExportableDefinitions[];
+
+                    defaultExportDefs.forEach(defaultExportDef => {
+                        runNamedDefinitionTests(defaultExportDef, structure.defaultExport as NamedStructure);
+                        runExportableDefinitionTests(defaultExportDef, structure.defaultExport as ExportableStructure);
+                    });
                 }
             });
         }

@@ -1,8 +1,6 @@
 import * as ts from "typescript";
 import {TypeExpressionCache} from "./../utils";
 
-// this is just what I've found works. There are some hacky solutions in here.
-
 export class TypeChecker {
     private typeCreator: TypeExpressionCache;
     private currentSourceFile: ts.SourceFile;
@@ -45,10 +43,6 @@ export class TypeChecker {
         }
     }
 
-    getLocalSymbolFromSymbol(symbol: ts.Symbol) {
-        return this.getLocalSymbolFromNode(this.getDeclarationFromSymbol(symbol));
-    }
-
     getLocalSymbolFromNode(node: ts.Node) {
         if (node != null) {
             return (node as any)["localSymbol"] as ts.Symbol;
@@ -58,8 +52,8 @@ export class TypeChecker {
         }
     }
 
-    getLocalSymbolsFromDeclaration(declaration: ts.Declaration) {
-        const locals = (declaration as any).locals as { [name: string]: ts.Symbol };
+    getLocalSymbolsFromNode(node: ts.Node) {
+        const locals = (node as any).locals as { [name: string]: ts.Symbol };
 
         /* istanbul ignore if */
         if (locals == null) {
@@ -106,24 +100,12 @@ export class TypeChecker {
         return [];
     }
 
-    getConstantValue(symbol: ts.Symbol) {
-        return this.typeChecker.getConstantValue(symbol.valueDeclaration as any);
+    getConstantValue(node: ts.ElementAccessExpression) {
+        return this.typeChecker.getConstantValue(node);
     }
 
-    getTypeParameterSymbolsFromSymbol(symbol: ts.Symbol) {
-        type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
-        const declaration = this.getDeclarationFromSymbol(symbol) as typeParameteredTypes;
-
-        return (declaration.typeParameters || []).map(p => this.getSymbolAtLocation(p));
-    }
-
-    getMinArgumentCount(signature: ts.Signature) {
-        return (signature as any)["minArgumentCount"];
-    }
-
-    getReturnTypeFromSymbol(symbol: ts.Symbol) {
-        const signature = this.typeChecker.getSignatureFromDeclaration(symbol.valueDeclaration as any);
-        return this.getReturnTypeFromSignature(signature);
+    getReturnTypeFromDeclaration(declaration: ts.Node) {
+        return this.getReturnTypeFromSignature(this.typeChecker.getSignatureFromDeclaration(declaration as ts.SignatureDeclaration));
     }
 
     getReturnTypeFromSignature(signature: ts.Signature) {
@@ -161,7 +143,7 @@ export class TypeChecker {
     }
 
     getSymbolAtLocation(node: ts.Node) {
-        return (node as any).symbol as ts.Symbol;
+        return (node as any).symbol as ts.Symbol || this.typeChecker.getSymbolAtLocation(node);
     }
 
     getSymbolsFromType(type: ts.Type) {
@@ -178,16 +160,8 @@ export class TypeChecker {
         }
     }
 
-    getSymbolsInScope(node: ts.Node, flags: ts.SymbolFlags) {
-        return this.typeChecker.getSymbolsInScope(node, flags);
-    }
-
     getSymbolParent(symbol: ts.Symbol) {
         return symbol == null ? null : (symbol as any).parent as ts.Symbol;
-    }
-
-    getSymbolParametersFromSymbol(symbol: ts.Symbol) {
-        return (this.getDeclarationFromSymbol(symbol) as ts.SignatureDeclaration).parameters.filter(p => p != null).map(p => this.getSymbolAtLocation(p));
     }
 
     getTypeExpressionAtLocation(node: ts.Node) {
@@ -205,7 +179,7 @@ export class TypeChecker {
     }
 
     getTypeExpressionFromTsType(tsType: ts.Type) {
-        return this.typeCreator.get(tsType);
+        return this.typeCreator.get(tsType, this.currentSourceFile);
     }
 
     /* istanbul ignore next */
@@ -289,10 +263,6 @@ export class TypeChecker {
         return typeof (node as ts.SourceFile).fileName === "string";
     }
 
-    isSymbolInFile(symbol: ts.Symbol, file: ts.SourceFile) {
-        return this.getSourceFileOfSymbol(symbol).fileName === file.fileName;
-    }
-
     isSymbolExportOfParent(symbol: ts.Symbol) {
         let parentSymbol = this.getSymbolParent(symbol);
 
@@ -327,79 +297,6 @@ export class TypeChecker {
         return isDefaultExportOfFile;
     }
 
-    isSymbolClass(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Class);
-    }
-
-    isSymbolClassMethod(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Method);
-    }
-
-    isSymbolClassProperty(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Property) ||
-            this.symbolHasFlag(symbol, ts.SymbolFlags.GetAccessor);
-    }
-
-    isSymbolConstructor(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Constructor);
-    }
-
-    isSymbolEnum(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Enum);
-    }
-
-    isEnumMemberSymbol(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.EnumMember);
-    }
-
-    isSymbolFunction(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Function);
-    }
-
-    isSymbolVariable(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Variable) ||
-            this.symbolHasFlag(symbol, ts.SymbolFlags.BlockScopedVariable) ||
-            this.symbolHasFlag(symbol, ts.SymbolFlags.FunctionScopedVariable);
-    }
-
-    isSymbolInterface(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Interface);
-    }
-
-    isSymbolInterfaceMethod(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Method);
-    }
-
-    isSymbolNamespace(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Namespace);
-    }
-
-    isSymbolTypeAlias(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.TypeAlias);
-    }
-
-    isSymbolNewSignature(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Signature);
-    }
-
-    isSymbolProperty(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Property);
-    }
-
-    isSymbolStaticMethod(symbol: ts.Symbol) {
-        // could be a function for value modules (see value-module-tests.ts)
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Method) ||
-            this.symbolHasFlag(symbol, ts.SymbolFlags.Function);
-    }
-
-    isSymbolStaticProperty(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.Property);
-    }
-
-    isSymbolTypeParameter(symbol: ts.Symbol) {
-        return this.symbolHasFlag(symbol, ts.SymbolFlags.TypeParameter);
-    }
-
     typeToString(tsType: ts.Type) {
         const formatFlags = ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
             ts.TypeFormatFlags.WriteTypeArgumentsOfSignature;
@@ -408,5 +305,9 @@ export class TypeChecker {
 
     symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {
         return (symbol.getFlags() & flag) !== 0;
+    }
+
+    getSyntaxKindAsString(kind: ts.SyntaxKind) {
+        return (ts as any).SyntaxKind[kind] as string;
     }
 }

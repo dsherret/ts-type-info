@@ -16,7 +16,6 @@ describe("export default tests", () => {
 
     describe("on same line", () => {
         const code = `export default class MyOnSameLineClass {}`;
-
         const def = getStringInfo(code);
 
         runFileDefinitionTests(def, {
@@ -34,7 +33,6 @@ describe("export default tests", () => {
 
     describe("on different line", () => {
         const code = `class MyOnDifferentLineClass {}\r\nexport default MyOnDifferentLineClass;`;
-
         const def = getStringInfo(code);
 
         runFileDefinitionTests(def, {
@@ -52,7 +50,6 @@ describe("export default tests", () => {
 
     describe("expression with class", () => {
         const code = `class MyOnDifferentLineClass {}\r\nexport default new MyOnDifferentLineClass();`;
-
         const def = getStringInfo(code);
 
         runFileDefinitionTests(def, {

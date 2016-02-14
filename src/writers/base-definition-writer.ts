@@ -23,7 +23,7 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
         if (def.isExported && !def.isDefaultExportOfFile) {
             let shouldWrite = false;
 
-            if (DefinitionUtils.isInterfaceDefinition(def)) {
+            if (def.isInterfaceDefinition()) {
                 shouldWrite = !DefinitionUtils.isInterfaceInAmbientContext(def);
             }
             else {

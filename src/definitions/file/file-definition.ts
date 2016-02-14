@@ -1,8 +1,12 @@
-import * as ts from "typescript";
 import CodeBlockWriter from "code-block-writer";
-import {TypeChecker, DefinitionCache, applyMixins} from "./../../utils";
-import {IModuledDefinition, ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {applyMixins, DefinitionCache} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
 import {Expression} from "./../../expressions";
+import {ExportableDefinitions} from "./../../definitions";
+import {FileWriter} from "./../../writers";
+import {WriteFlags} from "./../../write-flags";
+import {writeDefinition} from "./../../write-definition";
+import {IModuledDefinition, ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
@@ -12,63 +16,27 @@ import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
 import {ReExportDefinition} from "./re-export-definition";
 import {ImportDefinition} from "./import-definition";
-import {ExportableDefinitions} from "./../../definitions";
-import {FileWriter} from "./../../writers";
-import {WriteFlags} from "./../../write-flags";
-import {writeDefinition} from "./../../write-definition";
 
 export class FileDefinition extends BaseDefinition implements IModuledDefinition {
     fileName: string;
     imports: ImportDefinition[] = [];
     reExports: ReExportDefinition[] = [];
-    defaultExport: Expression | ExportableDefinitions;
+    defaultExport: Expression | ExportableDefinitions[];
 
-    constructor(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
+    constructor(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
         super(DefinitionType.File);
-        this.fileName = file.fileName;
-        this.fillMembersBySourceFile(typeChecker, definitionCache, file);
-        this.fillDefaultExport(typeChecker, definitionCache, file);
+        this.fileName = symbolNode.getFileName();
+        this.fillMembersByNode(definitionCache, symbolNode);
+        this.defaultExport = definitionCache.getDefaultExport(symbolNode);
     }
 
-    fillImports(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
-        for (const fileImportSymbol of typeChecker.getFileImportSymbols(file)) {
-            const importDefinition = definitionCache.getImportDefinition(fileImportSymbol);
-
-            /* istanbul ignore else */
-            if (importDefinition != null) {
-                this.imports.push(
-                    new ImportDefinition(
-                        definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileImportSymbol)),
-                        importDefinition,
-                        this
-                    )
-                );
-            }
-            else {
-                console.warn(`Not implemented import symbol: ${fileImportSymbol.name}`);
-            }
-        }
+    fillImports(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
+        this.imports = definitionCache.getImportDefinitions(symbolNode, this);
     }
 
-    fillReExports(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
-        for (const fileReExportSymbol of typeChecker.getFileReExportSymbols(file)) {
-            const exportDefinition = definitionCache.getImportDefinition(fileReExportSymbol);
-
-            /* istanbul ignore else */
-            if (exportDefinition != null) {
-                this.reExports.push(
-                    new ReExportDefinition(
-                        definitionCache.getFileDefinition(typeChecker.getSourceFileOfSymbol(fileReExportSymbol)),
-                        exportDefinition,
-                        this
-                    )
-                );
-                this.exports.push(exportDefinition);
-            }
-            else {
-                console.warn(`Not implemented re-export symbol: ${fileReExportSymbol.name}`);
-            }
-        }
+    fillReExports(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
+        this.reExports = definitionCache.getReExportDefinitions(symbolNode, this);
+        this.exports.push(...this.reExports.map(reExport => reExport.definition));
     }
 
     write() {
@@ -116,18 +84,6 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         return writer.toString();
     }
 
-    private fillDefaultExport(typeChecker: TypeChecker, definitionCache: DefinitionCache, file: ts.SourceFile) {
-        const sourceSymbol = typeChecker.getSymbolAtLocation(file);
-
-        if (sourceSymbol != null) {
-            const defaultExport = sourceSymbol.exports["default"];
-
-            if (defaultExport != null) {
-                this.defaultExport = definitionCache.getDefinitionOrExpressionFromSymbol(defaultExport);
-            }
-        }
-    }
-
     // ModuledDefinition
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
@@ -137,8 +93,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     variables: VariableDefinition[];
     typeAliases: TypeAliasDefinition[];
     exports: ExportableDefinitions[];
-    fillMembersBySourceFile: (typeChecker: TypeChecker, definitionCache: DefinitionCache, node: ts.SourceFile) => void;
-    fillMembersBySymbol: (typeChecker: TypeChecker, definitionCache: DefinitionCache, symbol: ts.Symbol) => void;
+    fillMembersByNode: (definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(FileDefinition, [ModuledDefinition]);

@@ -1,9 +1,10 @@
 import * as ts from "typescript";
-import {FileDefinition} from "./definitions";
 import * as path from "path";
 import * as tmp from "tmp";
 import * as fs from "fs";
+import {FileDefinition} from "./definitions";
 import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils} from "./utils";
+import {WrappedSymbolNode} from "./wrappers";
 import {Options, CompilerOptions} from "./options";
 
 export * from "./options";
@@ -19,12 +20,12 @@ export function getFileInfo(fileNames: string[], options?: Options): FileDefinit
     const program = ts.createProgram(fileNames, compilerOptions, host);
     const tsTypeChecker = program.getTypeChecker();
     const typeChecker = new TypeChecker(tsTypeChecker);
-    const typeExpressionCache = new TypeExpressionCache(typeChecker);
     const definitionCache = new DefinitionCache(typeChecker);
+    const typeExpressionCache = new TypeExpressionCache(typeChecker, definitionCache);
 
     typeChecker.setTypeCache(typeExpressionCache);
 
-    const sourceFiles = program.getSourceFiles()
+    const definitionWithSymbolNodes = program.getSourceFiles()
         .filter(file => {
             const baseName = path.basename(file.fileName);
 
@@ -33,12 +34,28 @@ export function getFileInfo(fileNames: string[], options?: Options): FileDefinit
         .map(file => {
             typeChecker.setCurrentSourceFile(file);
 
-            return definitionCache.getFileDefinition(file);
+            const fileSymbolNode = new WrappedSymbolNode({
+                typeChecker: typeChecker,
+                sourceFile: file,
+                node: file,
+                parentNode: null,
+                symbol: typeChecker.getSymbolAtLocation(file)
+            });
+
+            return {
+                definition: definitionCache.getFileDefinition(fileSymbolNode),
+                symbolNode: fileSymbolNode
+            };
         });
 
-    typeExpressionCache.fillAllCachedTypesWithDefinitions(definitionCache);
+    definitionWithSymbolNodes.forEach(definitionWithSymbolNode => {
+        definitionWithSymbolNode.definition.fillImports(definitionCache, definitionWithSymbolNode.symbolNode);
+        definitionWithSymbolNode.definition.fillReExports(definitionCache, definitionWithSymbolNode.symbolNode);
+    });
 
-    return sourceFiles;
+    typeExpressionCache.fillAllCachedTypesWithDefinitions();
+
+    return definitionWithSymbolNodes.map(f => f.definition);
 }
 
 export function getStringInfo(code: string, options?: Options): FileDefinition {

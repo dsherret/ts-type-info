@@ -281,20 +281,20 @@ declare module TsTypeInfo {
     class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements IDecoratableDefinition, IScopedDefinition {
         onWriteFunctionBody: (writer: CodeBlockWriter) => void;
         decorators: DecoratorDefinition<this>[];
-        scope: Scope;
+        scope: "public" | "protected" | "private";
     }
 
     class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
         decorators: DecoratorDefinition<this>[];
-        scope: Scope;
+        scope: "public" | "protected" | "private";
     }
 
     interface IScopedDefinition {
-        scope: Scope;
+        scope: "public" | "protected" | "private";
     }
 
     abstract class ScopedDefinition implements IScopedDefinition {
-        scope: Scope;
+        scope: "public" | "protected" | "private";
     }
 
     class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition, IAbstractableDefinition {
@@ -349,10 +349,7 @@ declare module TsTypeInfo {
     class ClassStaticMethodParameterDefinition extends BaseClassMethodParameterDefinition<ClassStaticMethodDefinition> {
     }
 
-    enum Scope {
-        public = 0,
-        protected = 1,
-        private = 2
+    module Scope {
     }
 
     class InterfaceDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
@@ -409,13 +406,11 @@ declare module TsTypeInfo {
         parent: EnumDefinition;
     }
 
-    enum NamespaceDeclarationType {
-        Namespace = 0,
-        Module = 1
+    module NamespaceDeclarationType {
     }
 
     class NamespaceDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
-        declarationType: NamespaceDeclarationType;
+        declarationType: "namespace" | "module";
         name: string;
         parent: FileDefinition | NamespaceDefinition;
         namespaces: NamespaceDefinition[];
@@ -454,18 +449,20 @@ declare module TsTypeInfo {
         writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; referencePaths: string[]; }): string;
     }
 
-    class ImportDefinition extends BaseDefinition {
+    class ImportDefinition extends BaseDefinition implements IParentedDefinition<FileDefinition> {
         file: FileDefinition;
         definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+        parent: FileDefinition;
     }
 
-    class ReExportDefinition extends BaseDefinition {
+    class ReExportDefinition extends BaseDefinition implements IParentedDefinition<FileDefinition> {
         file: FileDefinition;
         definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+        parent: FileDefinition;
     }
 
     class VariableDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition {
-        declarationType: VariableDeclarationType;
+        declarationType: "var" | "let" | "const";
         name: string;
         parent: FileDefinition | NamespaceDefinition;
         isExported: boolean;
@@ -479,10 +476,7 @@ declare module TsTypeInfo {
         write(): string;
     }
 
-    enum VariableDeclarationType {
-        Var = 0,
-        Let = 1,
-        Const = 2
+    module VariableDeclarationType {
     }
 
     class Expression {

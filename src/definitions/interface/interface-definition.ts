@@ -1,5 +1,4 @@
-﻿import * as ts from "typescript";
-import CodeBlockWriter from "code-block-writer";
+﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
@@ -7,10 +6,13 @@ import {TypeParameterDefinition} from "./../general";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {applyMixins, tryGet} from "./../../utils";
+import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {InterfaceMethodDefinition} from "./interface-method-definition";
 import {InterfacePropertyDefinition} from "./interface-property-definition";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
+
+type InterfaceMemberDefinitions = InterfaceMethodDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition;
 
 export class InterfaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
@@ -18,13 +20,16 @@ export class InterfaceDefinition extends BaseDefinition
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
     typeParameters: TypeParameterDefinition<this>[] = [];
+    extendsTypeExpressions: TypeExpression[];
 
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, public extendsTypeExpressions: TypeExpression[]) {
+    constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Interface);
-        this.fillName(typeChecker, symbol);
-        this.fillExportable(typeChecker, symbol);
-        this.fillMembers(typeChecker, symbol);
-        this.fillAmbientable(typeChecker, symbol);
+        this.fillName(symbolNode);
+        this.fillExportable(symbolNode);
+        this.fillMembers(symbolNode);
+        this.fillAmbientable(symbolNode);
+        this.fillTypeParametersBySymbolDeclaration(symbolNode);
+        this.extendsTypeExpressions = symbolNode.getExtendsTypeExpressions();
     }
 
     write() {
@@ -34,48 +39,68 @@ export class InterfaceDefinition extends BaseDefinition
         return writer.toString();
     }
 
-    private fillMembers(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.typeParameters = [];
+    private fillMembers(symbolNode: WrappedSymbolNode) {
+        symbolNode.forEachChild(childSymbol => {
+            const def = this.getMemberDefinition(childSymbol);
 
-        Object.keys(symbol.members).map(memberName => symbol.members[memberName]).forEach(member => {
-            /* istanbul ignore else */
-            if (typeChecker.isSymbolProperty(member)) {
-                this.properties.push(new InterfacePropertyDefinition(typeChecker, member, this));
-            }
-            else if (typeChecker.isSymbolInterfaceMethod(member)) {
-                this.methods.push(new InterfaceMethodDefinition(typeChecker, member, this));
-            }
-            else if (typeChecker.isSymbolTypeParameter(member)) {
-                this.typeParameters.push(new TypeParameterDefinition<this>(typeChecker, member, this));
-            }
-            else if (typeChecker.isSymbolNewSignature(member)) {
-                member.getDeclarations().forEach(d => {
-                    this.newSignatures.push(new InterfaceNewSignatureDefinition(typeChecker, typeChecker.getSignatureFromDeclaration(d as ts.SignatureDeclaration), this));
-                });
-            }
-            else {
-                console.warn(`Not implemented interface member: ${member.getName()}`);
+            if (def != null) {
+                this.addDefinition(def);
             }
         });
     }
 
+    private getMemberDefinition(childSymbol: WrappedSymbolNode): InterfaceMemberDefinitions {
+        return tryGet(childSymbol, () => {
+            if (childSymbol.isMethodSignature()) {
+                return new InterfaceMethodDefinition(childSymbol, this);
+            }
+            else if (childSymbol.isPropertySignature()) {
+                return new InterfacePropertyDefinition(childSymbol, this);
+            }
+            else if (childSymbol.isConstructSignature()) {
+                return new InterfaceNewSignatureDefinition(childSymbol.getSignatureFromThis(), this);
+            }
+            else if (childSymbol.isIdentifier()) {
+                // ignore, it's the interface identifier
+            }
+            else {
+                console.warn(`Unknown interface child kind: ${childSymbol.nodeKindToString()}`);
+            }
+        });
+    }
+
+    private addDefinition(def: InterfaceMemberDefinitions) {
+        if (def.isInterfacePropertyDefinition()) {
+            this.properties.push(def);
+        }
+        else if (def.isInterfaceMethodDefinition()) {
+            this.methods.push(def);
+        }
+        else if (def.isInterfaceNewSignatureDefinition()) {
+            this.newSignatures.push(def);
+        }
+        else {
+            console.warn(`Not implemented interface member.`);
+        }
+    }
+
     // NamedDefinition
     name: string;
-    fillName: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillName: (symbolNode: WrappedSymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillTypeParametersBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

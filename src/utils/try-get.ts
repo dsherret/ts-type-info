@@ -1,8 +1,8 @@
-﻿import * as ts from "typescript";
+﻿import {WrappedSymbolNode} from "./../wrappers";
 import {logError} from "./log-error";
 
 /* istanbul ignore next */
-export function tryGet<T>(objOrString: ts.Symbol | string, attemptToGet: () => T, onSuccess: (def: T) => void) {
+export function tryGet<T>(objOrString: WrappedSymbolNode | string, attemptToGet: () => T, onSuccess?: (def: T) => void) {
     let def: T;
 
     try {
@@ -12,11 +12,13 @@ export function tryGet<T>(objOrString: ts.Symbol | string, attemptToGet: () => T
             logError(objOrString, ex);
         }
         else {
-            logError(objOrString.name, ex);
+            logError(objOrString.getName(), ex);
         }
     }
 
-    if (def != null) {
+    if (typeof onSuccess === "function" && def != null) {
         onSuccess(def);
     }
+
+    return def;
 }

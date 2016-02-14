@@ -1,10 +1,9 @@
-﻿import * as ts from "typescript";
-import {TypeChecker} from "./../../utils";
+﻿import {WrappedSymbolNode} from "./../../wrappers";
 import {BasePropertyDefinition, DefinitionType} from "./../base";
 import {InterfaceDefinition} from "./interface-definition";
 
 export class InterfacePropertyDefinition extends BasePropertyDefinition<InterfaceDefinition> {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: InterfaceDefinition) {
-        super(typeChecker, symbol, parent, DefinitionType.InterfaceProperty);
+    constructor(symbolNode: WrappedSymbolNode, parent: InterfaceDefinition) {
+        super(symbolNode, parent, DefinitionType.InterfaceProperty);
     }
 }

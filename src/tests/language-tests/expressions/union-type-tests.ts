@@ -23,17 +23,17 @@ class MyOtherClass<T> {
                     text: "MyClass | MyOtherClass<string>",
                     types: [{
                         text: "MyClass",
-                        definition: {
+                        definitions: [{
                             name: "MyClass"
-                        }
+                        }]
                     }, {
                         text: "MyOtherClass<string>",
                         typeArguments: [{
                             text: "string"
                         }],
-                        definition: {
+                        definitions: [{
                             name: "MyOtherClass"
-                        }
+                        }]
                     }]
                 }
             }]

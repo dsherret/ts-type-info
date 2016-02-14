@@ -1,21 +1,20 @@
-import * as ts from "typescript";
 import {TypeExpression} from "./../../expressions";
-import {TypeChecker} from "./../../utils";
+import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 
 export interface IReturnTypedDefinition {
-    fillReturnTypeExpressionBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol): void;
-    fillReturnTypeExpressionBySignature(typeChecker: TypeChecker, signature: ts.Signature): void;
+    fillReturnTypeExpressionBySymbol(symbolNode: WrappedSymbolNode): void;
+    fillReturnTypeExpressionBySignature(signature: WrappedSignature): void;
     returnTypeExpression: TypeExpression;
 }
 
 export abstract class ReturnTypedDefinition implements IReturnTypedDefinition {
     returnTypeExpression: TypeExpression;
 
-    fillReturnTypeExpressionBySymbol(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        this.returnTypeExpression = typeChecker.getReturnTypeFromSymbol(symbol);
+    fillReturnTypeExpressionBySymbol(symbolNode: WrappedSymbolNode) {
+        this.returnTypeExpression = symbolNode.getReturnTypeExpression();
     }
 
-    fillReturnTypeExpressionBySignature(typeChecker: TypeChecker, signature: ts.Signature) {
-        this.returnTypeExpression = typeChecker.getReturnTypeFromSignature(signature);
+    fillReturnTypeExpressionBySignature(signature: WrappedSignature) {
+        this.returnTypeExpression = signature.getReturnTypeExpression();
     }
 }

@@ -1,10 +1,9 @@
-﻿import * as ts from "typescript";
-import {CallSignatureDefinition} from "./call-signature-definition";
+﻿import {WrappedSymbolNode} from "./../../wrappers";
 import {DefinitionType, BaseParameterDefinition} from "./../base";
-import {TypeChecker} from "./../../utils";
+import {CallSignatureDefinition} from "./call-signature-definition";
 
 export class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: CallSignatureDefinition) {
-        super(typeChecker, symbol, parent, DefinitionType.CallSignatureParameter);
+    constructor(symbolNode: WrappedSymbolNode, parent: CallSignatureDefinition) {
+        super(symbolNode, parent, DefinitionType.CallSignatureParameter);
     }
 }

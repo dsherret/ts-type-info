@@ -1,11 +1,10 @@
-﻿import * as ts from "typescript";
-import {TypeChecker} from "./../../utils";
+﻿import {WrappedSymbolNode} from "./../../wrappers";
 
 export interface IExportableDefinition {
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable(typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    fillExportable(symbolNode: WrappedSymbolNode): void;
 }
 
 export abstract class ExportableDefinition implements IExportableDefinition {
@@ -13,10 +12,9 @@ export abstract class ExportableDefinition implements IExportableDefinition {
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
 
-    fillExportable(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        const symbolSourceFile = typeChecker.getSourceFileOfSymbol(symbol);
-        this.isExported = typeChecker.isSymbolExportOfParent(symbol);
-        this.isNamedExportOfFile = typeChecker.isSymbolNamedExportOfFile(symbol, symbolSourceFile);
-        this.isDefaultExportOfFile = typeChecker.isSymbolDefaultExportOfFile(symbol, symbolSourceFile);
+    fillExportable(symbolNode: WrappedSymbolNode) {
+        this.isExported = symbolNode.isExported();
+        this.isNamedExportOfFile = symbolNode.isNamedExport();
+        this.isDefaultExportOfFile = symbolNode.isDefaultExport();
     }
 }

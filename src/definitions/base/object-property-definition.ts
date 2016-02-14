@@ -1,20 +1,20 @@
-﻿import * as ts from "typescript";
-import {TypeChecker, applyMixins} from "./../../utils";
+﻿import {applyMixins} from "./../../utils";
+import {WrappedSymbolNode} from "./../../wrappers";
+import {Expression} from "./../../expressions";
 import {DefinitionType} from "./definition-type";
 import {DefaultExpressionedDefinition, IDefaultExpressionedDefinition} from "./default-expressioned-definition";
 import {BasePropertyDefinition} from "./base-property-definition";
-import {Expression} from "./../../expressions";
 
 export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
-    constructor(typeChecker: TypeChecker, symbol: ts.Symbol, parent: ParentType, definitionType: DefinitionType) {
-        super(typeChecker, symbol, parent, definitionType);
+    constructor(symbolNode: WrappedSymbolNode, parent: ParentType, definitionType: DefinitionType) {
+        super(symbolNode, parent, definitionType);
 
-        this.fillDefaultExpression(typeChecker, symbol);
+        this.fillDefaultExpression(symbolNode);
     }
 
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
-    fillDefaultExpression: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
+    fillDefaultExpression: (symbolNode: WrappedSymbolNode) => void;
 }
 
 applyMixins(ObjectPropertyDefinition, [DefaultExpressionedDefinition]);

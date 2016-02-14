@@ -1,7 +1,7 @@
-﻿import * as ts from "typescript";
-import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../base";
+﻿import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../base";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, TypeChecker} from "./../../utils";
+import {applyMixins} from "./../../utils";
+import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {InterfaceNewSignatureParameterDefinition} from "./interface-new-signature-parameter-definition";
 import {InterfaceDefinition} from "./interface-definition";
 
@@ -9,10 +9,10 @@ export class InterfaceNewSignatureDefinition extends BaseDefinition
                                              implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition,
                                                         IParentedDefinition<InterfaceDefinition> {
 
-    constructor(typeChecker: TypeChecker, signature: ts.Signature, parent: InterfaceDefinition) {
+    constructor(signature: WrappedSignature, parent: InterfaceDefinition) {
         super(DefinitionType.InterfaceNewSignature);
-        this.fillParametersBySignature(typeChecker, signature, InterfaceNewSignatureParameterDefinition);
-        this.fillReturnTypeExpressionBySignature(typeChecker, signature);
+        this.fillParametersBySignature(signature, InterfaceNewSignatureParameterDefinition);
+        this.fillReturnTypeExpressionBySignature(signature);
         this.parent = parent;
     }
 
@@ -21,17 +21,15 @@ export class InterfaceNewSignatureDefinition extends BaseDefinition
     // ParameteredDefinition
     parameters: InterfaceNewSignatureParameterDefinition[];
     fillParametersBySymbol: (
-        typeChecker: TypeChecker,
-        symbol: ts.Symbol,
+        symbolNode: WrappedSymbolNode,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     fillParametersBySignature: (
-        typeChecker: TypeChecker,
-        signature: ts.Signature,
+        signature: WrappedSignature,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (typeChecker: TypeChecker, symbol: ts.Symbol) => void;
-    fillReturnTypeExpressionBySignature: (typeChecker: TypeChecker, signature: ts.Signature) => void;
+    fillReturnTypeExpressionBySymbol: (symbolNode: WrappedSymbolNode) => void;
+    fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
 }
 
 applyMixins(InterfaceNewSignatureDefinition, [ParameteredDefinition, ReturnTypedDefinition]);

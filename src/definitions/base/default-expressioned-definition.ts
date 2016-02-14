@@ -1,18 +1,19 @@
-﻿import * as ts from "typescript";
-import {Expression} from "./../../expressions";
-import {TypeChecker} from "./../../utils";
+﻿import {Expression} from "./../../expressions";
+import {WrappedSymbolNode} from "./../../wrappers";
 
 export interface IDefaultExpressionedDefinition {
     defaultExpression: Expression;
-    fillDefaultExpression(typeChecker: TypeChecker, symbol: ts.Symbol): void;
+    fillDefaultExpression(symbolNode: WrappedSymbolNode): void;
 }
 
 export abstract class DefaultExpressionedDefinition implements IDefaultExpressionedDefinition {
     defaultExpression: Expression;
 
-    fillDefaultExpression(typeChecker: TypeChecker, symbol: ts.Symbol) {
-        let declaration = typeChecker.getDeclarationFromSymbol(symbol) as ts.PropertyDeclaration;
+    fillDefaultExpression(symbolNode: WrappedSymbolNode) {
+        const expression = symbolNode.getDefaultExpression();
 
-        this.defaultExpression = declaration.initializer != null ? new Expression(typeChecker, declaration.initializer) : null;
+        if (expression != null) {
+            this.defaultExpression = new Expression(expression);
+        }
     }
 }
