@@ -1,6 +1,6 @@
 {
   "name": "ts-type-info",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "Gets the structure of TypeScript code.",
   "main": "dist/main.js",
   "scripts": {
