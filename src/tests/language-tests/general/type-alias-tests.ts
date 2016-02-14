@@ -9,6 +9,7 @@ type myUnionTypeAlias = string | number;
 type myTypeAliasWithTypeParameter<T> = T[];
 type myTypeAliasWithTypeParameterConstraint<T extends string> = T[];
 export type myExportedType = string;
+type myStringLiteralTypeAlias = "some string" | "other string";
 var myVariableUsingType: myUnionTypeAlias;
 `;
 
@@ -44,6 +45,9 @@ var myVariableUsingType: myUnionTypeAlias;
             typeExpression: { text: "string" },
             isExported: true,
             isNamedExportOfFile: true
+        }, {
+            name: "myStringLiteralTypeAlias",
+            typeExpression: { text: `"some string" | "other string"` }
         }],
         exports: [{
             name: "myExportedType"

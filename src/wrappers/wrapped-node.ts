@@ -86,6 +86,10 @@ export class WrappedNode extends BaseWrappedType {
         return this.kind === ts.SyntaxKind.FunctionDeclaration;
     }
 
+    isFunctionType() {
+        return this.kind === ts.SyntaxKind.FunctionType;
+    }
+
     isGetAccessor() {
         return this.kind === ts.SyntaxKind.GetAccessor;
     }

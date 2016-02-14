@@ -143,6 +143,9 @@ export class DefinitionCache {
         else if (symbolNode.isTypeParameter()) {
             // ignore type parameter here, handled in TypedParameterDefinition
         }
+        else if (symbolNode.isMethodSignature() || symbolNode.isFunctionType()) {
+            // ignore
+        }
         else {
             console.log(`Unknown node kind: ${symbolNode.nodeKindToString()}`);
         }

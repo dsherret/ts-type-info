@@ -14,7 +14,7 @@ function getTypeAliasAsString(def: TypeAliasDefinition) {
     return codeBlockWriter.toString();
 }
 
-describe("NamespaceWriter", () => {
+describe("TypeAliasWriter", () => {
     const myFile = getStringInfo(typeAliasWriterTestCode);
 
     describe("write()", () => {
@@ -29,6 +29,13 @@ describe("NamespaceWriter", () => {
             it("should contain everything written out", () => {
                 const expected = `type myTypeParameteredTypeAlias<T> = T[];\n`;
                 assert.equal(getTypeAliasAsString(myFile.typeAliases[1]), expected);
+            });
+        });
+
+        describe("myStringLiteralTypeAlias", () => {
+            it("should contain everything written out", () => {
+                const expected = `type myStringLiteralTypeAlias = "some string" | "other string";\n`;
+                assert.equal(getTypeAliasAsString(myFile.typeAliases[2]), expected);
             });
         });
     });
