@@ -20,6 +20,7 @@ declare namespace MyNamespace {
 declare module MyModule {
 }
 declare namespace MyOtherNamespace {
+    interface myOtherInterface {}
     function myOtherFunction(): void;
 }
 declare interface MyInterface {
@@ -42,6 +43,9 @@ declare module MyModule {
 }
 
 declare namespace MyOtherNamespace {
+    interface myOtherInterface {
+    }
+
     function myOtherFunction(): void;
 }
 
