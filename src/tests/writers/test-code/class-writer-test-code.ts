@@ -4,6 +4,7 @@ abstract class MyClass {
     private myPrivateString: string;
 
     abstract myAbstractMethod(): string;
+    abstract myAbstractMethod2(): string;
 
     myMethod() {
     }

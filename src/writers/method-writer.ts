@@ -23,7 +23,6 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         this.writer.write(": ");
         this.typeExpressionWriter.write(def.returnTypeExpression);
         this.functionBodyWriter.write(def);
-        this.writer.newLine();
     }
 
     private writeAbstract(def: ClassMethodDefinition) {

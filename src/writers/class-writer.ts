@@ -4,6 +4,7 @@ import {ExtendsImplementsClauseWriter} from "./extends-implements-clause-writer"
 import {TypeParametersWriter} from "./type-parameters-writer";
 import {PropertyWriter} from "./property-writer";
 import {MethodWriter} from "./method-writer";
+import {FunctionBodyWriter} from "./function-body-writer";
 import {WriteFlags} from "./../write-flags";
 
 export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
@@ -46,10 +47,24 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     }
 
     private writeMethods(def: ClassDefinition) {
+        let lastHadBlankLine = true;
+
         def.methods.forEach(m => {
+            const thisHasBlankLine = FunctionBodyWriter.willWriteFunctionBody(m, this.flags);
+
+            if (!lastHadBlankLine && thisHasBlankLine) {
+                this.writer.newLine();
+            }
+
             if (this.shouldInclude(m)) {
                 this.methodWriter.write(m);
             }
+
+            if (thisHasBlankLine) {
+                this.writer.newLine();
+            }
+
+            lastHadBlankLine = thisHasBlankLine;
         });
     }
 

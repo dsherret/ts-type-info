@@ -69,35 +69,20 @@ declare module TsTypeInfo {
         onAfterWrite: (writer: CodeBlockWriter) => void;
 
         isClassDefinition(): this is ClassDefinition;
-
         isClassMethodDefinition(): this is ClassMethodDefinition;
-
         isClassPropertyDefinition(): this is ClassPropertyDefinition;
-
         isClassStaticMethodDefinition(): this is ClassStaticMethodDefinition;
-
         isClassStaticPropertyDefinition(): this is ClassStaticPropertyDefinition;
-
         isClassConstructorDefinition(): this is ClassConstructorDefinition;
-
         isInterfaceDefinition(): this is InterfaceDefinition;
-
         isInterfaceMethodDefinition(): this is InterfaceMethodDefinition;
-
         isInterfaceNewSignatureDefinition(): this is InterfaceNewSignatureDefinition;
-
         isInterfacePropertyDefinition(): this is InterfacePropertyDefinition;
-
         isEnumDefinition(): this is EnumDefinition;
-
         isFunctionDefinition(): this is FunctionDefinition;
-
         isFileDefinition(): this is FileDefinition;
-
         isNamespaceDefinition(): this is NamespaceDefinition;
-
         isTypeAliasDefinition(): this is TypeAliasDefinition;
-
         isVariableDefinition(): this is VariableDefinition;
     }
 
@@ -506,7 +491,6 @@ declare module TsTypeInfo {
         exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 
         write(): string;
-
         writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; referencePaths: string[]; }): string;
     }
 
