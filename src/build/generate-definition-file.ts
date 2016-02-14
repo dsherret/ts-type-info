@@ -4,7 +4,7 @@ import {getFileInfo} from "./../main";
 import {FileDefinition} from "./../definitions";
 
 export function generateDefinitionFile() {
-    const fileInfo = getFileInfo([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")])
+    const fileInfo = getFileInfo([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")], { showDebugMessages: true })
                         .filter(f => /main\.ts/.exec(f.fileName) ? true : false)[0] as any as FileDefinition;
     const definitionFileText = fileInfo.writeExportsAsDefinitionFile({
         definitionName: "ts-type-info",

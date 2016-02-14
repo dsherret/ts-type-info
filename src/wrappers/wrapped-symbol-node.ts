@@ -46,7 +46,7 @@ export class WrappedSymbolNode extends WrappedNode {
     }
 
     getTypeExpression() {
-        return tryGet(this, () => this.typeChecker.getTypeExpressionOfSymbol(this.symbol));
+        return tryGet(this, () => this.typeChecker.getTypeExpressionAtLocation(this.node));
     }
 
     getTypeParameters() {

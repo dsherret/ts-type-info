@@ -1,5 +1,6 @@
 import * as ts from "typescript";
 import {TypeExpressionCache, Logger} from "./../utils";
+import {TypeExpression} from "./../expressions";
 
 export class TypeChecker {
     private typeCreator: TypeExpressionCache;
@@ -164,17 +165,13 @@ export class TypeChecker {
         return symbol == null ? null : (symbol as any).parent as ts.Symbol;
     }
 
-    getTypeExpressionAtLocation(node: ts.Node) {
-        return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
-    }
-
-    getTypeExpressionOfSymbol(symbol: ts.Symbol) {
-        if (symbol.flags & ts.SymbolFlags.TypeAlias) {
-            const declaration = this.getDeclarationFromSymbol(symbol) as ts.TypeAliasDeclaration;
+    getTypeExpressionAtLocation(node: ts.Node): TypeExpression {
+        if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
+            const declaration = node as ts.TypeAliasDeclaration;
             return this.getTypeExpressionAtLocation(declaration.type);
         }
         else {
-            return this.getTypeExpressionFromTsType(this.typeChecker.getTypeOfSymbolAtLocation(symbol, this.currentSourceFile));
+            return this.getTypeExpressionFromTsType(this.typeChecker.getTypeAtLocation(node));
         }
     }
 
