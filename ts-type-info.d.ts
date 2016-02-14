@@ -7,6 +7,7 @@ declare module TsTypeInfo {
 
     interface Options {
         compilerOptions?: CompilerOptions;
+        showDebugMessages?: boolean;
     }
 
     interface CompilerOptions {
@@ -17,6 +18,52 @@ declare module TsTypeInfo {
         rootDir?: string;
     }
 
+    type AllDefinitions = FileDefinition | ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition | ClassConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition | InterfaceDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition | InterfaceNewSignatureParameterDefinition | EnumDefinition | EnumMemberDefinition | CallSignatureDefinition | CallSignatureParameterDefinition | FunctionDefinition | FunctionParameterDefinition | TypeParameterDefinition<ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition> | TypePropertyDefinition | DecoratorDefinition<ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition> | TypeAliasDefinition | NamespaceDefinition | VariableDefinition;
+
+    type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition | ClassConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition;
+
+    type InterfaceDefinitions = InterfaceDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition | InterfaceNewSignatureParameterDefinition;
+
+    type EnumDefinitions = EnumDefinition | EnumMemberDefinition;
+
+    type FunctionDefinitions = CallSignatureDefinition | CallSignatureParameterDefinition | FunctionDefinition | FunctionParameterDefinition;
+
+    type NamespaceDefinitions = NamespaceDefinition;
+
+    type GeneralDefinitions = TypeParameterDefinition<ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition> | TypePropertyDefinition | DecoratorDefinition<ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition> | TypeAliasDefinition;
+
+    type VariableDefinitions = VariableDefinition;
+
+    type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
+
+    type TypeParameteredDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition;
+
+    type ModuledDefinitions = FileDefinition | NamespaceDefinition;
+
+    type WriteableDefinitions = FileDefinition | NamespaceDefinition | ClassDefinition | InterfaceDefinition | FunctionDefinition | EnumDefinition | VariableDefinition | TypeAliasDefinition;
+
+    type ExportableDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+
+    type BaseFunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
+
+    type FunctionWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
+
+    type MainDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+
+    type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
+
+    type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
+
+    type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition | InterfaceNewSignatureParameterDefinition | ClassConstructorParameterDefinition | CallSignatureParameterDefinition;
+
+    type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | InterfaceNewSignatureDefinition | ClassConstructorDefinition | CallSignatureDefinition;
+
+    type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
+
+    type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;
+
+    type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
+
     abstract class BaseDefinition {
         onBeforeWrite: (writer: CodeBlockWriter) => void;
         onAfterWrite: (writer: CodeBlockWriter) => void;
@@ -25,9 +72,21 @@ declare module TsTypeInfo {
 
         isClassMethodDefinition(): this is ClassMethodDefinition;
 
+        isClassPropertyDefinition(): this is ClassPropertyDefinition;
+
+        isClassStaticMethodDefinition(): this is ClassStaticMethodDefinition;
+
+        isClassStaticPropertyDefinition(): this is ClassStaticPropertyDefinition;
+
+        isClassConstructorDefinition(): this is ClassConstructorDefinition;
+
         isInterfaceDefinition(): this is InterfaceDefinition;
 
         isInterfaceMethodDefinition(): this is InterfaceMethodDefinition;
+
+        isInterfaceNewSignatureDefinition(): this is InterfaceNewSignatureDefinition;
+
+        isInterfacePropertyDefinition(): this is InterfacePropertyDefinition;
 
         isEnumDefinition(): this is EnumDefinition;
 
@@ -349,8 +408,9 @@ declare module TsTypeInfo {
     class ClassStaticMethodParameterDefinition extends BaseClassMethodParameterDefinition<ClassStaticMethodDefinition> {
     }
 
-    module Scope {
-    }
+    type Scope = "public" | "protected" | "private";
+
+    const Scope: { Public: "public" | "protected" | "private"; Protected: "public" | "protected" | "private"; Private: "public" | "protected" | "private"; };
 
     class InterfaceDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
         methods: InterfaceMethodDefinition[];
@@ -406,8 +466,9 @@ declare module TsTypeInfo {
         parent: EnumDefinition;
     }
 
-    module NamespaceDeclarationType {
-    }
+    type NamespaceDeclarationType = "namespace" | "module";
+
+    const NamespaceDeclarationType: { Namespace: "namespace" | "module"; Module: "namespace" | "module"; };
 
     class NamespaceDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
         declarationType: "namespace" | "module";
@@ -434,7 +495,7 @@ declare module TsTypeInfo {
         fileName: string;
         imports: ImportDefinition[];
         reExports: ReExportDefinition[];
-        defaultExport: Expression | ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+        defaultExport: Expression | (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
         namespaces: NamespaceDefinition[];
         classes: ClassDefinition[];
         interfaces: InterfaceDefinition[];
@@ -450,14 +511,10 @@ declare module TsTypeInfo {
     }
 
     class ImportDefinition extends BaseDefinition implements IParentedDefinition<FileDefinition> {
-        file: FileDefinition;
-        definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
         parent: FileDefinition;
     }
 
     class ReExportDefinition extends BaseDefinition implements IParentedDefinition<FileDefinition> {
-        file: FileDefinition;
-        definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
         parent: FileDefinition;
     }
 
@@ -476,8 +533,9 @@ declare module TsTypeInfo {
         write(): string;
     }
 
-    module VariableDeclarationType {
-    }
+    type VariableDeclarationType = "var" | "let" | "const";
+
+    const VariableDeclarationType: { Var: "var" | "let" | "const"; Let: "var" | "let" | "const"; Const: "var" | "let" | "const"; };
 
     class Expression {
         text: string;
@@ -485,7 +543,7 @@ declare module TsTypeInfo {
 
     class Type {
         callSignatures: CallSignatureDefinition[];
-        definition: IBaseNamedDefinition;
+        definitions: IBaseNamedDefinition[];
         properties: TypePropertyDefinition[];
         typeArguments: TypeExpression[];
         text: string;
