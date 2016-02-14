@@ -139,13 +139,13 @@ export class WrappedNode extends BaseWrappedType {
     }
 
     protected createNode(node: ts.Node) {
-        return this.createNodeFromOptions({
+        return this.createWrappedNode({
             parentNode: this.node,
             node: node
         });
     }
 
-    protected createNodeFromOptions(opts: { node: ts.Node; parentNode: ts.Node; }) {
+    protected createWrappedNode(opts: { node: ts.Node; parentNode: ts.Node; }) {
         return new WrappedNode({
             typeChecker: this.typeChecker,
             sourceFile: this.sourceFile,

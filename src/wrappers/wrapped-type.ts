@@ -44,7 +44,7 @@ export class WrappedType extends BaseWrappedType {
         const callSignatures = this.tsType.getCallSignatures();
 
         return (callSignatures || []).map(callSignature => {
-            return this.createSignatureFromOptions({
+            return this.createWrappedSignature({
                 signature: callSignature
             });
         });
@@ -67,14 +67,14 @@ export class WrappedType extends BaseWrappedType {
     }
 
     protected createSymbolNodeFromSymbol(symbol: ts.Symbol) {
-        return this.createSymbolNodeFromOptions({
+        return this.createSymbolNode({
             node: this.typeChecker.getDeclarationFromSymbol(symbol),
             parentNode: null,
             symbol: symbol
         });
     }
 
-    protected createSymbolNodeFromOptions(opts: { node: ts.Node; parentNode: ts.Node; symbol: ts.Symbol; }) {
+    protected createSymbolNode(opts: { node: ts.Node; parentNode: ts.Node; symbol: ts.Symbol; }) {
         return new WrappedSymbolNode({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
@@ -84,7 +84,7 @@ export class WrappedType extends BaseWrappedType {
         });
     }
 
-    protected createSignatureFromOptions(opts: { signature: ts.Signature }) {
+    protected createWrappedSignature(opts: { signature: ts.Signature }) {
         return new WrappedSignature({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,

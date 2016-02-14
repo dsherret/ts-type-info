@@ -22,7 +22,7 @@ export class WrappedSignature extends BaseWrappedType {
         const parameters = this.signature.parameters;
 
         return parameters.filter(p => p != null).map(parameter => {
-            return this.createSymbolNodeFromOptions({
+            return this.createWrappedSymbolNode({
                 symbol: parameter,
                 node: parameter.valueDeclaration,
                 parentNode: null
@@ -35,7 +35,7 @@ export class WrappedSignature extends BaseWrappedType {
         let typeParameters = this.signature.typeParameters;
 
         return (typeParameters || []).map(typeParameter => {
-            const symbolNode = this.createSymbolNodeFromOptions({
+            const symbolNode = this.createWrappedSymbolNode({
                 symbol: typeParameter.symbol,
                 node: this.typeChecker.getDeclarationFromSymbol(typeParameter.symbol),
                 parentNode: null
@@ -49,7 +49,7 @@ export class WrappedSignature extends BaseWrappedType {
         return (this.signature as any)["minArgumentCount"];
     }
 
-    protected createSymbolNodeFromOptions(opts: { node: ts.Node; parentNode: ts.Node; symbol: ts.Symbol; }) {
+    protected createWrappedSymbolNode(opts: { node: ts.Node; parentNode: ts.Node; symbol: ts.Symbol; }) {
         return new WrappedSymbolNode({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,

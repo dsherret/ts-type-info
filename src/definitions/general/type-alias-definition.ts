@@ -23,7 +23,7 @@ export class TypeAliasDefinition extends BaseDefinition
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
         this.fillTypeExpression(symbolNode);
-        this.fillTypeParametersBySymbolDeclaration(symbolNode);
+        this.fillTypeParametersBySymbol(symbolNode);
         this.fillAmbientable(symbolNode);
     }
 
@@ -49,7 +49,7 @@ export class TypeAliasDefinition extends BaseDefinition
     fillTypeExpression: (symbolNode: WrappedSymbolNode) => void;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;

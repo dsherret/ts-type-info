@@ -37,7 +37,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         this.fillAmbientable(symbolNode);
         this.fillAbstractable(symbolNode);
         this.fillMembers(symbolNode);
-        this.fillTypeParametersBySymbolDeclaration(symbolNode);
+        this.fillTypeParametersBySymbol(symbolNode);
         this.extendsTypeExpressions = symbolNode.getExtendsTypeExpressions();
         this.implementsTypeExpressions = symbolNode.getImplementsTypeExpressions();
     }
@@ -130,7 +130,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     isDefaultExportOfFile: boolean;
     fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;

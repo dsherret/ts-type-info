@@ -28,7 +28,7 @@ export class InterfaceDefinition extends BaseDefinition
         this.fillExportable(symbolNode);
         this.fillMembers(symbolNode);
         this.fillAmbientable(symbolNode);
-        this.fillTypeParametersBySymbolDeclaration(symbolNode);
+        this.fillTypeParametersBySymbol(symbolNode);
         this.extendsTypeExpressions = symbolNode.getExtendsTypeExpressions();
     }
 
@@ -95,7 +95,7 @@ export class InterfaceDefinition extends BaseDefinition
     isDefaultExportOfFile: boolean;
     fillExportable: (symbolNode: WrappedSymbolNode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;

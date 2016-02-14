@@ -1,4 +1,4 @@
-/// <binding AfterBuild='tslint' />
+/// <binding />
 var gulp = require("gulp");
 var del = require("del");
 var mocha = require("gulp-mocha");

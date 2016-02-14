@@ -33,7 +33,7 @@ export class CallSignatureDefinition extends BaseDefinition
     fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
 }
 

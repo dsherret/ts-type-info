@@ -3,14 +3,14 @@ import {TypeParameterDefinition} from "./../general";
 
 export interface ITypeParameteredDefinition {
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbolDeclaration(symbolNode: WrappedSymbolNode): void;
+    fillTypeParametersBySymbol(symbolNode: WrappedSymbolNode): void;
     fillTypeParametersBySignature(signature: WrappedSignature): void;
 }
 
 export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
     typeParameters: TypeParameterDefinition<this>[];
 
-    fillTypeParametersBySymbolDeclaration(symbolNode: WrappedSymbolNode) {
+    fillTypeParametersBySymbol(symbolNode: WrappedSymbolNode) {
         this.typeParameters = symbolNode.getTypeParameters().map(typeParameterSymbol => new TypeParameterDefinition(typeParameterSymbol, this));
     }
 

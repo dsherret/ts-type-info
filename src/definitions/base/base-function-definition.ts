@@ -23,7 +23,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefin
         this.fillName(symbolNode);
         this.fillParametersBySymbol(symbolNode, parameterDefinition);
         this.fillReturnTypeExpressionBySymbol(symbolNode);
-        this.fillTypeParametersBySymbolDeclaration(symbolNode);
+        this.fillTypeParametersBySymbol(symbolNode);
     }
 
     // NamedDefinition
@@ -41,7 +41,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefin
     fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition<this>[];
-    fillTypeParametersBySymbolDeclaration: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
 }
 
