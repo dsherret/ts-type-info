@@ -8,11 +8,11 @@ import {WrappedSymbolNode} from "./wrappers";
 import {Options, CompilerOptions} from "./options";
 
 export * from "./options";
-export {ArrayExt} from "./utils";
+export * from "./utils/array-ext";
 export * from "./definitions";
 export * from "./expressions";
 
-export function getFileInfo(fileNames: string[], options?: Options): FileDefinition[] {
+export function getFileInfo(fileNames: string[], options?: Options): ArrayExt<FileDefinition> {
     verifyArray(fileNames);
     options = options || {};
 

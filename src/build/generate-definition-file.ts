@@ -6,7 +6,7 @@ import {FileDefinition} from "./../definitions";
 export function generateDefinitionFile() {
     // todo: better way of doing this
     const fileInfo = getFileInfo([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")], { showDebugMessages: true })
-                        .filter(f => /main\.ts/.exec(f.fileName) ? true : false)[0] as any as FileDefinition;
+                        .firstOrDefault(f => f.fileName.indexOf("main.ts") >= 0);
 
     fileInfo.reExports.map(r => r.definition).forEach(def => {
         // todo: once typescript supports it type-wise, this should be merged into one if statement

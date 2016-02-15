@@ -1,7 +1,7 @@
 /// <reference path="node_modules/code-block-writer/code-block-writer.d.ts" />
 
 declare module TsTypeInfo {
-    function getFileInfo(fileNames: string[], options?: Options): FileDefinition[];
+    function getFileInfo(fileNames: string[], options?: Options): ArrayExt<FileDefinition>;
 
     function getStringInfo(code: string, options?: Options): FileDefinition;
 
@@ -16,6 +16,11 @@ declare module TsTypeInfo {
         locale?: string;
         project?: string;
         rootDir?: string;
+    }
+
+    class ArrayExt<T> extends Array<T> {
+        firstOrDefault(condition: (item: T) => boolean): T;
+        removeWhere(condition: (item: T) => boolean): void;
     }
 
     type AllDefinitions = FileDefinition | ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition | ClassConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition | InterfaceDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition | InterfaceNewSignatureParameterDefinition | EnumDefinition | EnumMemberDefinition | CallSignatureDefinition | CallSignatureParameterDefinition | FunctionDefinition | FunctionParameterDefinition | TypeParameterDefinition<ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition> | TypePropertyDefinition | DecoratorDefinition<ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition> | TypeAliasDefinition | NamespaceDefinition | VariableDefinition;
@@ -169,11 +174,11 @@ declare module TsTypeInfo {
     }
 
     interface IDecoratableDefinition {
-        decorators: DecoratorDefinition<this>[];
+        decorators: ArrayExt<DecoratorDefinition<this>>;
     }
 
     abstract class DecoratableDefinition implements IDecoratableDefinition {
-        decorators: DecoratorDefinition<this>[];
+        decorators: ArrayExt<DecoratorDefinition<this>>;
     }
 
     interface IExportableDefinition {
@@ -189,25 +194,25 @@ declare module TsTypeInfo {
     }
 
     interface IModuledDefinition {
-        namespaces: NamespaceDefinition[];
-        classes: ClassDefinition[];
-        interfaces: InterfaceDefinition[];
-        enums: EnumDefinition[];
-        functions: FunctionDefinition[];
-        variables: VariableDefinition[];
-        typeAliases: TypeAliasDefinition[];
-        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+        namespaces: ArrayExt<NamespaceDefinition>;
+        classes: ArrayExt<ClassDefinition>;
+        interfaces: ArrayExt<InterfaceDefinition>;
+        enums: ArrayExt<EnumDefinition>;
+        functions: ArrayExt<FunctionDefinition>;
+        variables: ArrayExt<VariableDefinition>;
+        typeAliases: ArrayExt<TypeAliasDefinition>;
+        exports: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>;
     }
 
     abstract class ModuledDefinition implements IModuledDefinition {
-        namespaces: NamespaceDefinition[];
-        classes: ClassDefinition[];
-        interfaces: InterfaceDefinition[];
-        enums: EnumDefinition[];
-        functions: FunctionDefinition[];
-        variables: VariableDefinition[];
-        typeAliases: TypeAliasDefinition[];
-        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+        namespaces: ArrayExt<NamespaceDefinition>;
+        classes: ArrayExt<ClassDefinition>;
+        interfaces: ArrayExt<InterfaceDefinition>;
+        enums: ArrayExt<EnumDefinition>;
+        functions: ArrayExt<FunctionDefinition>;
+        variables: ArrayExt<VariableDefinition>;
+        typeAliases: ArrayExt<TypeAliasDefinition>;
+        exports: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>;
     }
 
     class BasePropertyDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
@@ -218,11 +223,11 @@ declare module TsTypeInfo {
     }
 
     interface ITypeParameteredDefinition {
-        typeParameters: TypeParameterDefinition<this>[];
+        typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     }
 
     abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
-        typeParameters: TypeParameterDefinition<this>[];
+        typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     }
 
     abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
@@ -232,9 +237,9 @@ declare module TsTypeInfo {
     class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition, IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
         name: string;
         parent: ParentType;
-        parameters: ParameterType[];
+        parameters: ArrayExt<ParameterType>;
         returnTypeExpression: TypeExpression;
-        typeParameters: TypeParameterDefinition<this>[];
+        typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     }
 
     interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
@@ -250,11 +255,11 @@ declare module TsTypeInfo {
     }
 
     interface IParameteredDefinition<ParameterType> {
-        parameters: ParameterType[];
+        parameters: ArrayExt<ParameterType>;
     }
 
     abstract class ParameteredDefinition<ParameterType> implements IParameteredDefinition<ParameterType> {
-        parameters: ParameterType[];
+        parameters: ArrayExt<ParameterType>;
     }
 
     interface IReturnTypedDefinition {
@@ -281,7 +286,7 @@ declare module TsTypeInfo {
         isNamedExportOfFile: boolean;
         isDefaultExportOfFile: boolean;
         typeExpression: TypeExpression;
-        typeParameters: TypeParameterDefinition<this>[];
+        typeParameters: ArrayExt<TypeParameterDefinition<this>>;
         isAmbient: boolean;
         hasDeclareKeyword: boolean;
 
@@ -289,16 +294,16 @@ declare module TsTypeInfo {
     }
 
     class DecoratorDefinition<ParentType> extends BaseDefinition implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
-        arguments: Expression[];
+        arguments: ArrayExt<Expression>;
         name: string;
         parent: ParentType;
     }
 
     class CallSignatureDefinition extends BaseDefinition implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
         minArgumentCount: number;
-        parameters: CallSignatureParameterDefinition[];
+        parameters: ArrayExt<CallSignatureParameterDefinition>;
         returnTypeExpression: TypeExpression;
-        typeParameters: TypeParameterDefinition<this>[];
+        typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     }
 
     class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {
@@ -319,17 +324,17 @@ declare module TsTypeInfo {
     }
 
     class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements IDecoratableDefinition {
-        decorators: DecoratorDefinition<this>[];
+        decorators: ArrayExt<DecoratorDefinition<this>>;
     }
 
     class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements IDecoratableDefinition, IScopedDefinition {
         onWriteFunctionBody: (writer: CodeBlockWriter) => void;
-        decorators: DecoratorDefinition<this>[];
+        decorators: ArrayExt<DecoratorDefinition<this>>;
         scope: "public" | "protected" | "private";
     }
 
     class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
-        decorators: DecoratorDefinition<this>[];
+        decorators: ArrayExt<DecoratorDefinition<this>>;
         scope: "public" | "protected" | "private";
     }
 
@@ -342,17 +347,17 @@ declare module TsTypeInfo {
     }
 
     class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition, IAbstractableDefinition {
-        methods: ClassMethodDefinition[];
-        properties: ClassPropertyDefinition[];
-        staticMethods: ClassStaticMethodDefinition[];
-        staticProperties: ClassStaticPropertyDefinition[];
+        methods: ArrayExt<ClassMethodDefinition>;
+        properties: ArrayExt<ClassPropertyDefinition>;
+        staticMethods: ArrayExt<ClassStaticMethodDefinition>;
+        staticProperties: ArrayExt<ClassStaticPropertyDefinition>;
         constructorDef: ClassConstructorDefinition;
-        typeParameters: TypeParameterDefinition<this>[];
-        extendsTypeExpressions: TypeExpression[];
-        implementsTypeExpressions: TypeExpression[];
+        typeParameters: ArrayExt<TypeParameterDefinition<this>>;
+        extendsTypeExpressions: ArrayExt<TypeExpression>;
+        implementsTypeExpressions: ArrayExt<TypeExpression>;
         name: string;
         parent: FileDefinition | NamespaceDefinition;
-        decorators: DecoratorDefinition<this>[];
+        decorators: ArrayExt<DecoratorDefinition<this>>;
         isExported: boolean;
         isNamedExportOfFile: boolean;
         isDefaultExportOfFile: boolean;
@@ -377,11 +382,11 @@ declare module TsTypeInfo {
 
     class ClassConstructorDefinition extends BaseDefinition implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition> {
         parent: ClassDefinition;
-        parameters: ClassConstructorParameterDefinition[];
+        parameters: ArrayExt<ClassConstructorParameterDefinition>;
     }
 
     class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements IDecoratableDefinition {
-        decorators: DecoratorDefinition<this>[];
+        decorators: ArrayExt<DecoratorDefinition<this>>;
     }
 
     class ClassStaticMethodDefinition extends BaseClassMethodDefinition<ClassStaticMethodParameterDefinition> {
@@ -398,11 +403,11 @@ declare module TsTypeInfo {
     const Scope: { Public: "public" | "protected" | "private"; Protected: "public" | "protected" | "private"; Private: "public" | "protected" | "private"; };
 
     class InterfaceDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
-        methods: InterfaceMethodDefinition[];
-        newSignatures: InterfaceNewSignatureDefinition[];
-        properties: InterfacePropertyDefinition[];
-        typeParameters: TypeParameterDefinition<this>[];
-        extendsTypeExpressions: TypeExpression[];
+        methods: ArrayExt<InterfaceMethodDefinition>;
+        newSignatures: ArrayExt<InterfaceNewSignatureDefinition>;
+        properties: ArrayExt<InterfacePropertyDefinition>;
+        typeParameters: ArrayExt<TypeParameterDefinition<this>>;
+        extendsTypeExpressions: ArrayExt<TypeExpression>;
         name: string;
         parent: FileDefinition | NamespaceDefinition;
         isExported: boolean;
@@ -425,7 +430,7 @@ declare module TsTypeInfo {
 
     class InterfaceNewSignatureDefinition extends BaseDefinition implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition, IParentedDefinition<InterfaceDefinition> {
         parent: InterfaceDefinition;
-        parameters: InterfaceNewSignatureParameterDefinition[];
+        parameters: ArrayExt<InterfaceNewSignatureParameterDefinition>;
         returnTypeExpression: TypeExpression;
     }
 
@@ -433,7 +438,7 @@ declare module TsTypeInfo {
     }
 
     class EnumDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, IAmbientableDefinition {
-        members: EnumMemberDefinition[];
+        members: ArrayExt<EnumMemberDefinition>;
         name: string;
         parent: FileDefinition | NamespaceDefinition;
         isExported: boolean;
@@ -459,14 +464,14 @@ declare module TsTypeInfo {
         declarationType: "namespace" | "module";
         name: string;
         parent: FileDefinition | NamespaceDefinition;
-        namespaces: NamespaceDefinition[];
-        classes: ClassDefinition[];
-        interfaces: InterfaceDefinition[];
-        enums: EnumDefinition[];
-        functions: FunctionDefinition[];
-        variables: VariableDefinition[];
-        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-        typeAliases: TypeAliasDefinition[];
+        namespaces: ArrayExt<NamespaceDefinition>;
+        classes: ArrayExt<ClassDefinition>;
+        interfaces: ArrayExt<InterfaceDefinition>;
+        enums: ArrayExt<EnumDefinition>;
+        functions: ArrayExt<FunctionDefinition>;
+        variables: ArrayExt<VariableDefinition>;
+        exports: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>;
+        typeAliases: ArrayExt<TypeAliasDefinition>;
         isExported: boolean;
         isNamedExportOfFile: boolean;
         isDefaultExportOfFile: boolean;
@@ -478,17 +483,17 @@ declare module TsTypeInfo {
 
     class FileDefinition extends BaseDefinition implements IModuledDefinition {
         fileName: string;
-        imports: ImportDefinition[];
-        reExports: ReExportDefinition[];
-        defaultExport: Expression | (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-        namespaces: NamespaceDefinition[];
-        classes: ClassDefinition[];
-        interfaces: InterfaceDefinition[];
-        enums: EnumDefinition[];
-        functions: FunctionDefinition[];
-        variables: VariableDefinition[];
-        typeAliases: TypeAliasDefinition[];
-        exports: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+        imports: ArrayExt<ImportDefinition>;
+        reExports: ArrayExt<ReExportDefinition>;
+        defaultExport: Expression | ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>;
+        namespaces: ArrayExt<NamespaceDefinition>;
+        classes: ArrayExt<ClassDefinition>;
+        interfaces: ArrayExt<InterfaceDefinition>;
+        enums: ArrayExt<EnumDefinition>;
+        functions: ArrayExt<FunctionDefinition>;
+        variables: ArrayExt<VariableDefinition>;
+        typeAliases: ArrayExt<TypeAliasDefinition>;
+        exports: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>;
 
         write(): string;
         writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; referencePaths: string[]; }): string;
@@ -526,16 +531,16 @@ declare module TsTypeInfo {
     }
 
     class Type {
-        callSignatures: CallSignatureDefinition[];
-        definitions: IBaseNamedDefinition[];
-        properties: TypePropertyDefinition[];
-        typeArguments: TypeExpression[];
+        callSignatures: ArrayExt<CallSignatureDefinition>;
+        definitions: ArrayExt<IBaseNamedDefinition>;
+        properties: ArrayExt<TypePropertyDefinition>;
+        typeArguments: ArrayExt<TypeExpression>;
         text: string;
     }
 
     class TypeExpression {
         text: string;
-        types: Type[];
+        types: ArrayExt<Type>;
     }
 }
 
