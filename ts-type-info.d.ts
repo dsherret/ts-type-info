@@ -18,7 +18,9 @@ declare module TsTypeInfo {
         rootDir?: string;
     }
 
-    class ArrayExt<T> extends Array<T> {
+    class ArrayExt<T> extends T[] {
+        constructor(...items: T[]);
+
         firstOrDefault(condition: (item: T) => boolean): T;
         removeWhere(condition: (item: T) => boolean): void;
     }
@@ -52,6 +54,8 @@ declare module TsTypeInfo {
     type BaseFunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
 
     type FunctionWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
+
+    type FunctionBodyWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition;
 
     type MainDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
 
@@ -381,6 +385,7 @@ declare module TsTypeInfo {
     }
 
     class ClassConstructorDefinition extends BaseDefinition implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition> {
+        onWriteFunctionBody: (writer: CodeBlockWriter) => void;
         parent: ClassDefinition;
         parameters: ArrayExt<ClassConstructorParameterDefinition>;
     }

@@ -15,6 +15,10 @@ export function generateDefinitionFile() {
                                          m.name.indexOf("fill") >= 0 ||
                                          m.name === "addType");
             def.properties.removeWhere(p => p.name.indexOf("fill") >= 0 || p.name === "addType");
+
+            if (def.name !== "ArrayExt") {
+                def.constructorDef = null;
+            }
         }
         else if (def.isInterfaceDefinition()) {
             def.methods.removeWhere(m => m.name === "addDefinitions" ||

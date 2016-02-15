@@ -22,6 +22,9 @@ describe("ClassWriter", () => {
             it("should contain the class written out", () => {
                 const expected =
 `abstract class MyClass {
+    constructor(myParam: string) {
+    }
+
     myString: string;
     private myPrivateString: string;
 

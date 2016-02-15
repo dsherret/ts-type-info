@@ -1,6 +1,7 @@
 ﻿import {ClassDefinition, Scope, ScopedDefinition} from "./../definitions";
 import {BaseDefinitionWriter} from "./base-definition-writer";
 import {ExtendsImplementsClauseWriter} from "./extends-implements-clause-writer";
+import {ClassConstructorWriter} from "./class-constructor-writer";
 import {TypeParametersWriter} from "./type-parameters-writer";
 import {PropertyWriter} from "./property-writer";
 import {MethodWriter} from "./method-writer";
@@ -11,10 +12,12 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     private typeParametersWriter = new TypeParametersWriter(this.writer, this.flags);
     private propertyWriter = new PropertyWriter(this.writer, this.flags);
     private methodWriter = new MethodWriter(this.writer, this.flags);
+    private classConstructorWriter = new ClassConstructorWriter(this.writer, this.flags);
 
     protected writeDefault(def: ClassDefinition) {
         this.writeHeader(def);
         this.writer.block(() => {
+            this.writeConstructor(def);
             this.writeProperties(def);
             this.writer.newLine();
             this.writeMethods(def);
@@ -35,6 +38,13 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     private writeAbstract(def: ClassDefinition) {
         if (def.isAbstract) {
             this.writer.write("abstract ");
+        }
+    }
+
+    private writeConstructor(def: ClassDefinition) {
+        if (def.constructorDef != null) {
+            this.classConstructorWriter.write(def.constructorDef);
+            this.writer.newLine();
         }
     }
 

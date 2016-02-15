@@ -1,5 +1,8 @@
 ﻿const code = `
 abstract class MyClass {
+    constructor(myParam: string) {
+    }
+
     myString: string;
     private myPrivateString: string;
 

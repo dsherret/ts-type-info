@@ -1,3 +1,4 @@
+import CodeBlockWriter from "code-block-writer";
 import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
@@ -5,6 +6,8 @@ import {ClassConstructorParameterDefinition} from "./class-constructor-parameter
 import {ClassDefinition} from "./class-definition";
 
 export class ClassConstructorDefinition extends BaseDefinition implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition> {
+    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+
     constructor(symbolNode: WrappedSymbolNode, parent: ClassDefinition) {
         super(DefinitionType.ClassConstructor);
         this.fillParametersBySymbol(symbolNode, ClassConstructorParameterDefinition);

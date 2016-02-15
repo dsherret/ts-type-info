@@ -1,23 +1,23 @@
-﻿import {FunctionWriteableDefinitions, FunctionDefinition, ClassMethodDefinition, ClassStaticMethodDefinition} from "./../definitions";
+﻿import {FunctionBodyWriteableDefinitions, FunctionDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassConstructorDefinition} from "./../definitions";
 import {WriteFlags} from "./../write-flags";
 import {BaseWriter} from "./base-writer";
 
-type NotInterfaceMethod = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
+type NotInterfaceMethod = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition;
 
 export class FunctionBodyWriter extends BaseWriter {
-    static willWriteFunctionBody(def: FunctionWriteableDefinitions, flags: WriteFlags): def is NotInterfaceMethod {
+    static willWriteFunctionBody(def: FunctionBodyWriteableDefinitions, flags: WriteFlags): def is NotInterfaceMethod {
         if (def.isInterfaceMethodDefinition() || (def.isClassMethodDefinition() && def.isAbstract)) {
             return false;
         }
         else {
             const isOnWriteFunctionBodyDefined = typeof def.onWriteFunctionBody === "function";
-            const suggestedToHideFunctionBody = (flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient;
+            const suggestedToHideFunctionBody = (flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient || (def as ClassMethodDefinition).parent.isAmbient;
 
             return isOnWriteFunctionBodyDefined || !suggestedToHideFunctionBody;
         }
     }
 
-    write(def: FunctionWriteableDefinitions) {
+    write(def: FunctionBodyWriteableDefinitions) {
         if (FunctionBodyWriter.willWriteFunctionBody(def, this.flags)) {
             this.writeFunctionBody(def);
         }
