@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
-import {TypeParameteredStructure} from "./../../structures";
+import {TypeParameteredTestStructure} from "./../../test-structures";
 import {ITypeParameteredDefinition} from "./../../../../definitions";
 import {runTypeParameterDefinitionTests} from "./../general";
 import {ensureNotNull} from "./../../ensure-not-null";
 
-export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDefinition, structure: TypeParameteredStructure) {
+export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDefinition, structure: TypeParameteredTestStructure) {
     describe("type parameters", () => {
         structure.typeParameters = structure.typeParameters || [];
 

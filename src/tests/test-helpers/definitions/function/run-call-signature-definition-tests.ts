@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
-import {CallSignatureStructure} from "./../../structures";
+import {CallSignatureTestStructure} from "./../../test-structures";
 import {CallSignatureDefinition} from "./../../../../definitions";
 import {runTypeParameteredDefinitionTests, runParameteredDefinitionTests, runReturnTypedDefinitionTests} from "./../base";
 import {runCallSignatureParameterDefinitionTests} from "./run-call-signature-parameter-definition-tests";
 
-export function runCallSignatureDefinitionTests(definition: CallSignatureDefinition, structure: CallSignatureStructure) {
+export function runCallSignatureDefinitionTests(definition: CallSignatureDefinition, structure: CallSignatureTestStructure) {
     describe(`call signature`, () => {
         runTypeParameteredDefinitionTests(definition, structure);
         runParameteredDefinitionTests(runCallSignatureParameterDefinitionTests, definition, structure);

@@ -1,8 +1,8 @@
 ﻿import * as assert from "assert";
 import {IExportableDefinition} from "./../../../../definitions";
-import {ExportableStructure} from "./../../structures";
+import {ExportableTestStructure} from "./../../test-structures";
 
-export function runExportableDefinitionTests(definition: IExportableDefinition, structure: ExportableStructure) {
+export function runExportableDefinitionTests(definition: IExportableDefinition, structure: ExportableTestStructure) {
     it(`should ${structure.isExported ? "be" : "not be"} exported.`, () => {
         assert.equal(definition.isExported, structure.isExported || false);
     });

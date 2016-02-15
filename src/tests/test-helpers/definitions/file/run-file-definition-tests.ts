@@ -2,21 +2,21 @@
 import {FileDefinition, ExportableDefinitions} from "./../../../../definitions";
 import {Expression} from "./../../../../expressions";
 import {ArrayExt} from "./../../../../utils";
-import {FileStructure, ExpressionStructure, NamedStructure, ExportableStructure} from "./../../structures";
+import {FileTestStructure, ExpressionTestStructure, NamedTestStructure, ExportableTestStructure} from "./../../test-structures";
 import {runImportDefinitionTests} from "./run-import-definition-tests";
 import {runReExportDefinitionTests} from "./run-re-export-definition-tests";
 import {runModuledDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 import {runExpressionTests} from "./../../expressions";
 
-export function runFileDefinitionTests(definition: FileDefinition, structure: FileStructure) {
+export function runFileDefinitionTests(definition: FileDefinition, structure: FileTestStructure) {
     structure.imports = structure.imports || [];
     structure.reExports = structure.reExports || [];
     structure.exports = structure.exports || [];
 
     // all exports of a file will be named
-    structure.exports.forEach(exportStructure => {
-        exportStructure.isNamedExportOfFile = exportStructure.isNamedExportOfFile == null ? true : exportStructure.isNamedExportOfFile;
+    structure.exports.forEach(exportTestStructure => {
+        exportTestStructure.isNamedExportOfFile = exportTestStructure.isNamedExportOfFile == null ? true : exportTestStructure.isNamedExportOfFile;
     });
 
     runModuledDefinitionTests(definition, structure);
@@ -26,8 +26,8 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
             assert.equal(definition.imports.length, structure.imports.length);
         });
 
-        structure.imports.forEach((importStructure, i) => {
-            runImportDefinitionTests(definition.imports[i], importStructure);
+        structure.imports.forEach((importTestStructure, i) => {
+            runImportDefinitionTests(definition.imports[i], importTestStructure);
         });
     });
 
@@ -36,8 +36,8 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
             assert.equal(definition.reExports.length, structure.reExports.length);
         });
 
-        structure.reExports.forEach((reExportStructure, i) => {
-            runReExportDefinitionTests(definition.reExports[i], reExportStructure);
+        structure.reExports.forEach((reExportTestStructure, i) => {
+            runReExportDefinitionTests(definition.reExports[i], reExportTestStructure);
         });
     });
 
@@ -49,15 +49,15 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
         }
         else {
             ensureNotNull(definition.defaultExport, () => {
-                if ((structure.defaultExport as ExpressionStructure).text != null) {
-                    runExpressionTests(definition.defaultExport as Expression, structure.defaultExport as ExpressionStructure);
+                if ((structure.defaultExport as ExpressionTestStructure).text != null) {
+                    runExpressionTests(definition.defaultExport as Expression, structure.defaultExport as ExpressionTestStructure);
                 }
                 else {
                     const defaultExportDefs = definition.defaultExport as ArrayExt<ExportableDefinitions>;
 
                     defaultExportDefs.forEach(defaultExportDef => {
-                        runNamedDefinitionTests(defaultExportDef, structure.defaultExport as NamedStructure);
-                        runExportableDefinitionTests(defaultExportDef, structure.defaultExport as ExportableStructure);
+                        runNamedDefinitionTests(defaultExportDef, structure.defaultExport as NamedTestStructure);
+                        runExportableDefinitionTests(defaultExportDef, structure.defaultExport as ExportableTestStructure);
                     });
                 }
             });

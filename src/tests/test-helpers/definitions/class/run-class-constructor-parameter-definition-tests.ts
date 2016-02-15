@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
-import {ClassConstructorParameterStructure} from "./../../structures";
+import {ClassConstructorParameterTestStructure} from "./../../test-structures";
 import {ClassConstructorParameterDefinition, ClassConstructorParameterScope} from "./../../../../definitions";
 import {runBaseParameterDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 
-export function runClassConstructorParameterDefinitionTests(definition: ClassConstructorParameterDefinition, structure: ClassConstructorParameterStructure) {
+export function runClassConstructorParameterDefinitionTests(definition: ClassConstructorParameterDefinition, structure: ClassConstructorParameterTestStructure) {
     describe(`parameter ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             structure.scope = structure.scope || ClassConstructorParameterScope.None;

@@ -1,9 +1,9 @@
 import * as assert from "assert";
 import {DecoratedDefinitions} from "./../../../../definitions";
 import {runDecoratorDefinitionTests} from "./../general";
-import {DecoratableStructure} from "./../../structures";
+import {DecoratableTestStructure} from "./../../test-structures";
 
-export function runDecoratableDefinitionTests(definition: DecoratedDefinitions, structure: DecoratableStructure) {
+export function runDecoratableDefinitionTests(definition: DecoratedDefinitions, structure: DecoratableTestStructure) {
     describe("decorators", () => {
         structure.decorators = structure.decorators || [];
 
@@ -11,7 +11,7 @@ export function runDecoratableDefinitionTests(definition: DecoratedDefinitions, 
             assert.equal(definition.decorators.length, structure.decorators.length);
         });
 
-        structure.decorators.forEach((decoratorStructure, i) => {
+        structure.decorators.forEach((decoratorTestStructure, i) => {
             runDecoratorDefinitionTests(definition.decorators[i], structure.decorators[i]);
         });
     });

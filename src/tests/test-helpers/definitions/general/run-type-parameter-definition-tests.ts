@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
-import {TypeParameterStructure} from "./../../structures";
+import {TypeParameterTestStructure} from "./../../test-structures";
 import {TypeParameterDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {runTypeExpressionTests} from "./../../expressions";
 
-export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition<any>, structure: TypeParameterStructure) {
+export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition<any>, structure: TypeParameterTestStructure) {
     describe(`type parameter ${structure.name}`, () => {
         runNamedDefinitionTests(definition, structure);
         runParentedDefinitionTests(definition);

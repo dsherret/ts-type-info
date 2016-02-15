@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
 import * as path from "path";
-import {ReExportStructure} from "./../../structures";
+import {ReExportTestStructure} from "./../../test-structures";
 import {ReExportDefinition} from "./../../../../definitions";
 import {runParentedDefinitionTests} from "./../base";
 
-export function runReExportDefinitionTests(definition: ReExportDefinition, reExport: ReExportStructure) {
+export function runReExportDefinitionTests(definition: ReExportDefinition, reExport: ReExportTestStructure) {
     describe(`re-export ${reExport.definitionName}`, () => {
         runParentedDefinitionTests(definition);
 

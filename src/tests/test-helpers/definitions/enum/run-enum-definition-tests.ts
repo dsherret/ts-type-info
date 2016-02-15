@@ -1,11 +1,11 @@
 ﻿import * as assert from "assert";
-import {EnumStructure} from "./../../structures";
+import {EnumTestStructure} from "./../../test-structures";
 import {EnumDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 import {runEnumMemberDefinitionTests} from "./run-enum-member-definition-tests";
 
-export function runEnumDefinitionTests(definition: EnumDefinition, structure: EnumStructure) {
+export function runEnumDefinitionTests(definition: EnumDefinition, structure: EnumTestStructure) {
     describe(`enum ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             structure.members = structure.members || [];
@@ -19,8 +19,8 @@ export function runEnumDefinitionTests(definition: EnumDefinition, structure: En
                 assert.equal(definition.members.length, structure.members.length);
             });
 
-            structure.members.forEach((memberStructure, i) => {
-                runEnumMemberDefinitionTests(definition.members[i], memberStructure);
+            structure.members.forEach((memberTestStructure, i) => {
+                runEnumMemberDefinitionTests(definition.members[i], memberTestStructure);
             });
         });
     });

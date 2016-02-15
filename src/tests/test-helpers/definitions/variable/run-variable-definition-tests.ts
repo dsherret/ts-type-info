@@ -1,11 +1,11 @@
 ﻿import * as assert from "assert";
-import {VariableStructure} from "./../../structures";
+import {VariableTestStructure} from "./../../test-structures";
 import {VariableDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
         runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 
-export function runVariableDefinitionTests(definition: VariableDefinition, structure: VariableStructure) {
+export function runVariableDefinitionTests(definition: VariableDefinition, structure: VariableTestStructure) {
     describe(`variable ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             if (structure.typeExpression == null) {

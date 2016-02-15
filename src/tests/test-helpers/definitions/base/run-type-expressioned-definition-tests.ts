@@ -1,9 +1,9 @@
 ﻿import * as assert from "assert";
-import {TypeExpressionedStructure} from "./../../structures";
+import {TypeExpressionedTestStructure} from "./../../test-structures";
 import {ITypeExpressionedDefinition} from "./../../../../definitions";
 import {runTypeExpressionTests} from "./../../expressions";
 
-export function runTypeExpressionedDefinitionTests(definition: ITypeExpressionedDefinition, structure: TypeExpressionedStructure) {
+export function runTypeExpressionedDefinitionTests(definition: ITypeExpressionedDefinition, structure: TypeExpressionedTestStructure) {
     describe("typeExpression", () => {
         if (structure.typeExpression == null) {
             it("should not have a type expression", () => {

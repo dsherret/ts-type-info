@@ -1,12 +1,12 @@
 import * as assert from "assert";
-import {BaseParameterStructure} from "./../../structures";
+import {BaseParameterTestStructure} from "./../../test-structures";
 import {BaseParameterDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runTypeExpressionedDefinitionTests} from "./run-type-expressioned-definition-tests";
 import {runDefaultExpressionedDefinitionTests} from "./run-default-expressioned-definition-tests";
 import {runParentedDefinitionTests} from "./run-parented-definition-tests";
 
-export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition<any>, structure: BaseParameterStructure) {
+export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition<any>, structure: BaseParameterTestStructure) {
     runNamedDefinitionTests(definition, structure);
     runTypeExpressionedDefinitionTests(definition, structure);
     runDefaultExpressionedDefinitionTests(definition, structure);

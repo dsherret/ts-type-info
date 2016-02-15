@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {ClassStructure} from "./../../structures";
+import {ClassTestStructure} from "./../../test-structures";
 import {ClassDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests,
         runAbstractableDefinitionTests, runParentedDefinitionTests} from "./../base";
@@ -11,7 +11,7 @@ import {runClassConstructorDefinitionTests} from "./run-class-constructor-defini
 import {runTypeExpressionTests} from "./../../expressions";
 import {ensureNotNull} from "./../../ensure-not-null";
 
-export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassStructure) {
+export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassTestStructure) {
     describe(`class ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             structure.methods = structure.methods || [];
@@ -39,8 +39,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                     assert.equal(definition.methods.length, structure.methods.length);
                 });
 
-                structure.methods.forEach((methodStructure, i) => {
-                    runClassMethodDefinitionTests(definition.methods[i], methodStructure);
+                structure.methods.forEach((methodTestStructure, i) => {
+                    runClassMethodDefinitionTests(definition.methods[i], methodTestStructure);
                 });
             });
 
@@ -49,8 +49,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                     assert.equal(definition.properties.length, structure.properties.length);
                 });
 
-                structure.properties.forEach((propertyStructure, i) => {
-                    runClassPropertyDefinitionTests(definition.properties[i], propertyStructure);
+                structure.properties.forEach((propertyTestStructure, i) => {
+                    runClassPropertyDefinitionTests(definition.properties[i], propertyTestStructure);
                 });
             });
 
@@ -59,8 +59,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                     assert.equal(definition.staticMethods.length, structure.staticMethods.length);
                 });
 
-                structure.staticMethods.forEach((methodStructure, i) => {
-                    runClassStaticMethodDefinitionTests(definition.staticMethods[i], methodStructure);
+                structure.staticMethods.forEach((methodTestStructure, i) => {
+                    runClassStaticMethodDefinitionTests(definition.staticMethods[i], methodTestStructure);
                 });
             });
 
@@ -69,8 +69,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                     assert.equal(definition.staticProperties.length, structure.staticProperties.length);
                 });
 
-                structure.staticProperties.forEach((propertyStructure, i) => {
-                    runClassStaticPropertyDefinitionTests(definition.staticProperties[i], propertyStructure);
+                structure.staticProperties.forEach((propertyTestStructure, i) => {
+                    runClassStaticPropertyDefinitionTests(definition.staticProperties[i], propertyTestStructure);
                 });
             });
 
@@ -79,8 +79,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                     assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
                 });
 
-                structure.extendsTypeExpressions.forEach((extendStructure, i) => {
-                    runTypeExpressionTests(definition.extendsTypeExpressions[i], extendStructure);
+                structure.extendsTypeExpressions.forEach((extendTestStructure, i) => {
+                    runTypeExpressionTests(definition.extendsTypeExpressions[i], extendTestStructure);
                 });
             });
 
@@ -89,8 +89,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                     assert.equal(definition.implementsTypeExpressions.length, structure.implementsTypeExpressions.length);
                 });
 
-                structure.implementsTypeExpressions.forEach((implementStructure, i) => {
-                    runTypeExpressionTests(definition.implementsTypeExpressions[i], implementStructure);
+                structure.implementsTypeExpressions.forEach((implementTestStructure, i) => {
+                    runTypeExpressionTests(definition.implementsTypeExpressions[i], implementTestStructure);
                 });
             });
         });

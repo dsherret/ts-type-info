@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
 import {NamespaceDefinition} from "./../../../../definitions";
-import {NamespaceStructure} from "./../../structures";
+import {NamespaceTestStructure} from "./../../test-structures";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runModuledDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 
-export function runNamespaceDefinitionTests(definition: NamespaceDefinition, structure: NamespaceStructure) {
+export function runNamespaceDefinitionTests(definition: NamespaceDefinition, structure: NamespaceTestStructure) {
     describe(`namespace ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             runNamedDefinitionTests(definition, structure);

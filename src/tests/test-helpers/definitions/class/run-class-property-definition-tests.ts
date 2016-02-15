@@ -1,10 +1,10 @@
 import * as assert from "assert";
-import {ClassPropertyStructure} from "./../../structures";
+import {ClassPropertyTestStructure} from "./../../test-structures";
 import {ClassPropertyDefinition} from "./../../../../definitions";
 import {runBaseClassPropertyDefinitionTests} from "./base";
 import {ensureNotNull} from "./../../ensure-not-null";
 
-export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, structure: ClassPropertyStructure) {
+export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinition, structure: ClassPropertyTestStructure) {
     describe(`property ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             runBaseClassPropertyDefinitionTests(definition, structure);

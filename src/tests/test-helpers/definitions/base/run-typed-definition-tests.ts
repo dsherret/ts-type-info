@@ -1,7 +1,7 @@
 import {ITypeExpressionedDefinition} from "./../../../../definitions";
 import {runTypeExpressionTests} from "./../../expressions";
-import {TypeExpressionedStructure} from "./../../structures";
+import {TypeExpressionedTestStructure} from "./../../test-structures";
 
-export function runTypeExpressionedDefinitionTests(definition: ITypeExpressionedDefinition, structure: TypeExpressionedStructure) {
+export function runTypeExpressionedDefinitionTests(definition: ITypeExpressionedDefinition, structure: TypeExpressionedTestStructure) {
     runTypeExpressionTests(definition.typeExpression, structure.typeExpression);
 }

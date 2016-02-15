@@ -1,10 +1,10 @@
 import * as assert from "assert";
 import {TypeExpression} from "./../../../expressions";
-import {TypeExpressionStructure} from "./../structures";
+import {TypeExpressionTestStructure} from "./../test-structures";
 import {ensureNotNull} from "./../ensure-not-null";
 import {runTypeTests} from "./run-type-tests";
 
-export function runTypeExpressionTests(typeExpression: TypeExpression, structure: TypeExpressionStructure) {
+export function runTypeExpressionTests(typeExpression: TypeExpression, structure: TypeExpressionTestStructure) {
     describe("type expression", () => {
         ensureNotNull(typeExpression, () => {
             it(`should have a type text of ${structure.text}`, () => {
@@ -17,8 +17,8 @@ export function runTypeExpressionTests(typeExpression: TypeExpression, structure
                     assert.equal(typeExpression.types.length, structure.types.length);
                 });
 
-                structure.types.forEach((typeStructure, i) => {
-                    runTypeTests(typeExpression.types[i], typeStructure);
+                structure.types.forEach((typeTestStructure, i) => {
+                    runTypeTests(typeExpression.types[i], typeTestStructure);
                 });
             }
         });

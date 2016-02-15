@@ -1,10 +1,10 @@
-﻿import {TypeAliasStructure} from "./../../structures";
+﻿import {TypeAliasTestStructure} from "./../../test-structures";
 import {TypeAliasDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
         runTypeParameteredDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
 
-export function runTypeAliasDefinitionTests(definition: TypeAliasDefinition, structure: TypeAliasStructure) {
+export function runTypeAliasDefinitionTests(definition: TypeAliasDefinition, structure: TypeAliasTestStructure) {
     describe(`type expression ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             structure.isAmbient = structure.isAmbient == null ? true : structure.isAmbient;

@@ -9,9 +9,9 @@ import {runVariableDefinitionTests} from "./../variable";
 import {runTypeAliasDefinitionTests} from "./../general";
 import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runExportableDefinitionTests} from "./run-exportable-definition-tests";
-import {ModuledStructure} from "./../../structures";
+import {ModuledTestStructure} from "./../../test-structures";
 
-export function runModuledDefinitionTests(definition: ModuledDefinitions, expected: ModuledStructure) {
+export function runModuledDefinitionTests(definition: ModuledDefinitions, expected: ModuledTestStructure) {
     expected.namespaces = expected.namespaces || [];
     expected.classes = expected.classes || [];
     expected.enums = expected.enums || [];
@@ -26,8 +26,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.namespaces.length, expected.namespaces.length);
         });
 
-        expected.namespaces.forEach((namespaceStructure, i) => {
-            runNamespaceDefinitionTests(definition.namespaces[i], namespaceStructure);
+        expected.namespaces.forEach((namespaceTestStructure, i) => {
+            runNamespaceDefinitionTests(definition.namespaces[i], namespaceTestStructure);
         });
     });
 
@@ -36,8 +36,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.classes.length, expected.classes.length);
         });
 
-        expected.classes.forEach((classStructure, i) => {
-            runClassDefinitionTests(definition.classes[i], classStructure);
+        expected.classes.forEach((classTestStructure, i) => {
+            runClassDefinitionTests(definition.classes[i], classTestStructure);
         });
     });
 
@@ -46,8 +46,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.interfaces.length, expected.interfaces.length);
         });
 
-        expected.interfaces.forEach((interfaceStructure, i) => {
-            runInterfaceDefinitionTests(definition.interfaces[i], interfaceStructure);
+        expected.interfaces.forEach((interfaceTestStructure, i) => {
+            runInterfaceDefinitionTests(definition.interfaces[i], interfaceTestStructure);
         });
     });
 
@@ -56,8 +56,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.functions.length, expected.functions.length);
         });
 
-        expected.functions.forEach((functionStructure, i) => {
-            runFunctionDefinitionTests(definition.functions[i], functionStructure);
+        expected.functions.forEach((functionTestStructure, i) => {
+            runFunctionDefinitionTests(definition.functions[i], functionTestStructure);
         });
     });
 
@@ -66,8 +66,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.enums.length, expected.enums.length);
         });
 
-        expected.enums.forEach((enumStructure, i) => {
-            runEnumDefinitionTests(definition.enums[i], enumStructure);
+        expected.enums.forEach((enumTestStructure, i) => {
+            runEnumDefinitionTests(definition.enums[i], enumTestStructure);
         });
     });
 
@@ -76,8 +76,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.variables.length, expected.variables.length);
         });
 
-        expected.variables.forEach((variableStructure, i) => {
-            runVariableDefinitionTests(definition.variables[i], variableStructure);
+        expected.variables.forEach((variableTestStructure, i) => {
+            runVariableDefinitionTests(definition.variables[i], variableTestStructure);
         });
     });
 
@@ -86,8 +86,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.typeAliases.length, expected.typeAliases.length);
         });
 
-        expected.typeAliases.forEach((typeAliasStructure, i) => {
-            runTypeAliasDefinitionTests(definition.typeAliases[i], typeAliasStructure);
+        expected.typeAliases.forEach((typeAliasTestStructure, i) => {
+            runTypeAliasDefinitionTests(definition.typeAliases[i], typeAliasTestStructure);
         });
     });
 
@@ -96,13 +96,13 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, expect
             assert.equal(definition.exports.length, expected.exports.length);
         });
 
-        expected.exports.forEach((exportStructure, i) => {
+        expected.exports.forEach((exportTestStructure, i) => {
             // defaults
-            exportStructure.isExported = exportStructure.isExported == null ? true : exportStructure.isExported;
-            exportStructure.isNamedExportOfFile = exportStructure.isNamedExportOfFile == null ? false : exportStructure.isNamedExportOfFile;
+            exportTestStructure.isExported = exportTestStructure.isExported == null ? true : exportTestStructure.isExported;
+            exportTestStructure.isNamedExportOfFile = exportTestStructure.isNamedExportOfFile == null ? false : exportTestStructure.isNamedExportOfFile;
 
-            runNamedDefinitionTests(definition.exports[i], exportStructure);
-            runExportableDefinitionTests(definition.exports[i], exportStructure);
+            runNamedDefinitionTests(definition.exports[i], exportTestStructure);
+            runExportableDefinitionTests(definition.exports[i], exportTestStructure);
         });
     });
 }

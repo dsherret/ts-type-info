@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {InterfaceStructure} from "./../../structures";
+import {InterfaceTestStructure} from "./../../test-structures";
 import {InterfaceDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensure-not-null";
@@ -8,7 +8,7 @@ import {runInterfacePropertyDefinitionTests} from "./run-interface-property-defi
 import {runInterfaceNewSignatureDefinitionTests} from "./run-interface-new-signature-definition-tests";
 import {runTypeExpressionTests} from "./../../expressions";
 
-export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: InterfaceStructure) {
+export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: InterfaceTestStructure) {
     describe(`interface ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             structure.methods = structure.methods || [];
@@ -29,8 +29,8 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
                     assert.equal(definition.methods.length, structure.methods.length);
                 });
 
-                structure.methods.forEach((methodStructure, i) => {
-                    runInterfaceMethodDefinitionTests(definition.methods[i], methodStructure);
+                structure.methods.forEach((methodTestStructure, i) => {
+                    runInterfaceMethodDefinitionTests(definition.methods[i], methodTestStructure);
                 });
             });
 
@@ -39,8 +39,8 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
                     assert.equal(definition.newSignatures.length, structure.newSignatures.length);
                 });
 
-                structure.newSignatures.forEach((newSignatureStructure, i) => {
-                    runInterfaceNewSignatureDefinitionTests(definition.newSignatures[i], newSignatureStructure);
+                structure.newSignatures.forEach((newSignatureTestStructure, i) => {
+                    runInterfaceNewSignatureDefinitionTests(definition.newSignatures[i], newSignatureTestStructure);
                 });
             });
 
@@ -49,8 +49,8 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
                     assert.equal(definition.properties.length, structure.properties.length);
                 });
 
-                structure.properties.forEach((propertyStructure, i) => {
-                    runInterfacePropertyDefinitionTests(definition.properties[i], propertyStructure);
+                structure.properties.forEach((propertyTestStructure, i) => {
+                    runInterfacePropertyDefinitionTests(definition.properties[i], propertyTestStructure);
                 });
             });
 
@@ -59,8 +59,8 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
                     assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
                 });
 
-                structure.extendsTypeExpressions.forEach((extendStructure, i) => {
-                    runTypeExpressionTests(definition.extendsTypeExpressions[i], extendStructure);
+                structure.extendsTypeExpressions.forEach((extendTestStructure, i) => {
+                    runTypeExpressionTests(definition.extendsTypeExpressions[i], extendTestStructure);
                 });
             });
         });

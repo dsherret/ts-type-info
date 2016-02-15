@@ -1,9 +1,9 @@
 ﻿import * as assert from "assert";
-import {EnumMemberStructure} from "./../../structures";
+import {EnumMemberTestStructure} from "./../../test-structures";
 import {EnumMemberDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runParentedDefinitionTests} from "./../base";
 
-export function runEnumMemberDefinitionTests(definition: EnumMemberDefinition, structure: EnumMemberStructure) {
+export function runEnumMemberDefinitionTests(definition: EnumMemberDefinition, structure: EnumMemberTestStructure) {
     describe(`enum member ${structure.name}`, () => {
         runNamedDefinitionTests(definition, structure);
         runParentedDefinitionTests(definition);

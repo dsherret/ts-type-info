@@ -1,9 +1,9 @@
 ﻿import * as assert from "assert";
-import {DefaultExpressionedStructure} from "./../../structures";
+import {DefaultExpressionedTestStructure} from "./../../test-structures";
 import {IDefaultExpressionedDefinition} from "./../../../../definitions";
 import {runExpressionTests} from "./../../expressions";
 
-export function runDefaultExpressionedDefinitionTests(definition: IDefaultExpressionedDefinition, structure: DefaultExpressionedStructure) {
+export function runDefaultExpressionedDefinitionTests(definition: IDefaultExpressionedDefinition, structure: DefaultExpressionedTestStructure) {
     describe("defaultExpression", () => {
         if (structure.defaultExpression != null) {
             it(`should have the default expression`, () => {
