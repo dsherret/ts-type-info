@@ -5,6 +5,7 @@ export * from "./class/class-method-parameter-definition";
 export * from "./class/class-property-definition";
 export * from "./class/class-constructor-definition";
 export * from "./class/class-constructor-parameter-definition";
+export * from "./class/class-constructor-parameter-scope";
 export * from "./class/class-static-method-definition";
 export * from "./class/class-static-property-definition";
 export * from "./class/class-static-method-parameter-definition";

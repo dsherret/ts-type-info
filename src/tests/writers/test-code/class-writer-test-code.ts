@@ -1,6 +1,6 @@
 ﻿const code = `
 abstract class MyClass {
-    constructor(myParam: string) {
+    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
     myString: string;

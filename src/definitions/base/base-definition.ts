@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
-        ClassConstructorDefinition} from "./../class";
+        ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./../interface";
 import {FileDefinition} from "./../file";
 import {FunctionDefinition} from "./../function";
@@ -39,6 +39,10 @@ export abstract class BaseDefinition {
 
     isClassConstructorDefinition(): this is ClassConstructorDefinition {
         return this._definitionType === DefinitionType.ClassConstructor;
+    }
+
+    isClassConstructorParameterDefinition(): this is ClassConstructorParameterDefinition {
+        return this._definitionType === DefinitionType.ClassConstructorParameter;
     }
 
     isInterfaceDefinition(): this is InterfaceDefinition {

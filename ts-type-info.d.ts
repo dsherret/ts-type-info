@@ -18,7 +18,7 @@ declare module TsTypeInfo {
         rootDir?: string;
     }
 
-    class ArrayExt<T> extends T[] {
+    class ArrayExt<T> extends Array<T> {
         constructor(...items: T[]);
 
         firstOrDefault(condition: (item: T) => boolean): T;

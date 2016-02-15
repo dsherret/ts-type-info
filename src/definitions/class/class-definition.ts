@@ -10,6 +10,7 @@ import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {ClassConstructorDefinition} from "./class-constructor-definition";
+import {ClassConstructorParameterScope} from "./class-constructor-parameter-scope";
 import {ClassMethodDefinition} from "./class-method-definition";
 import {ClassPropertyDefinition} from "./class-property-definition";
 import {ClassStaticMethodDefinition} from "./class-static-method-definition";
@@ -40,6 +41,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         this.fillTypeParametersBySymbol(symbolNode);
         this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions());
         this.implementsTypeExpressions.push(...symbolNode.getImplementsTypeExpressions());
+        this.fillPropertiesFromConstructorDef();
     }
 
     write() {
@@ -47,6 +49,10 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         const classWriter = new ClassWriter(writer, WriteFlags.Default);
         classWriter.write(this);
         return writer.toString();
+    }
+
+    addProperty(prop: any) {
+        throw new Error("NOT IMPLEMENTED");
     }
 
     private fillMembers(symbolNode: WrappedSymbolNode) {
@@ -57,6 +63,22 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
                 this.addDefinition(def);
             }
         });
+    }
+
+    private fillPropertiesFromConstructorDef() {
+        if (this.constructorDef != null) {
+            this.constructorDef.parameters.forEach(param => {
+                if (param.scope !== ClassConstructorParameterScope.None) {
+                    this.addProperty({
+                        name: param.name,
+                        scope: ClassConstructorParameterScope.toScope(param.scope),
+                        type: param.typeExpression.text,
+                        isOptional: param.isOptional,
+                        defaultExpression: param.defaultExpression
+                    });
+                }
+            });
+        }
     }
 
     private getMemberDefinition(childSymbol: WrappedSymbolNode): ClassMemberDefinitions {

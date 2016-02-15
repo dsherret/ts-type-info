@@ -1,4 +1,4 @@
-﻿import {ParameterDefinitions} from "./../definitions";
+﻿import {ParameterDefinitions, ClassConstructorParameterScope} from "./../definitions";
 import {BaseWriter} from "./base-writer";
 import {ParameterWriter} from "./parameter-writer";
 
@@ -12,8 +12,24 @@ export class ParametersWriter extends BaseWriter {
                 this.writer.write(", ");
             }
 
+            if (param.isClassConstructorParameterDefinition()) {
+                this.writeScope(param.scope);
+            }
+
             this.parameterWriter.write(param);
         });
         this.writer.write(")");
+    }
+
+    private writeScope(scope: ClassConstructorParameterScope) {
+        if (scope === ClassConstructorParameterScope.Private) {
+            this.writer.write("private ");
+        }
+        else if (scope === ClassConstructorParameterScope.Protected) {
+            this.writer.write("protected ");
+        }
+        else if (scope === ClassConstructorParameterScope.Public) {
+            this.writer.write("public ");
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿import * as ts from "typescript";
 import {Scope} from "./../definitions/class/scope";
+import {ClassConstructorParameterScope} from "./../definitions/class/class-constructor-parameter-scope";
 import {VariableDeclarationType} from "./../definitions/variable/variable-declaration-type";
 import {NamespaceDeclarationType} from "./../definitions/namespace/namespace-declaration-type";
 import {tryGet, Logger} from "./../utils";
@@ -146,6 +147,23 @@ export class WrappedSymbolNode extends WrappedNode {
         }
         else {
             return Scope.Public;
+        }
+    }
+
+    getClassConstructorParameterScope() {
+        const nodeFlags = this.node.flags;
+
+        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+            return ClassConstructorParameterScope.Private;
+        }
+        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+            return ClassConstructorParameterScope.Protected;
+        }
+        else if ((nodeFlags & ts.NodeFlags.Public) !== 0) {
+            return ClassConstructorParameterScope.Public;
+        }
+        else {
+            return ClassConstructorParameterScope.None;
         }
     }
 

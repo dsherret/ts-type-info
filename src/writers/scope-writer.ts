@@ -1,4 +1,4 @@
-﻿import {Scope} from "./../definitions";
+﻿import {Scope, ClassConstructorParameterScope} from "./../definitions";
 import {BaseWriter} from "./base-writer";
 
 export class ScopeWriter extends BaseWriter {
