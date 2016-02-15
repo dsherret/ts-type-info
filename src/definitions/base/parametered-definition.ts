@@ -1,21 +1,21 @@
 import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
 import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
-import {ExtendedArray} from "./../../utils";
+import {ArrayExt} from "./../../utils";
 
 export interface IParameteredDefinition<ParameterType> {
     fillParametersBySymbol(symbolNode: WrappedSymbolNode, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>): void;
     fillParametersBySignature(signature: WrappedSignature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>): void;
-    parameters: ExtendedArray<ParameterType>;
+    parameters: ArrayExt<ParameterType>;
 }
 
 export abstract class ParameteredDefinition<ParameterType> implements IParameteredDefinition<ParameterType> {
-    parameters: ExtendedArray<ParameterType>;
+    parameters: ArrayExt<ParameterType>;
 
     fillParametersBySymbol(symbolNode: WrappedSymbolNode, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) {
-        this.parameters = new ExtendedArray<ParameterType>(...symbolNode.getParameters().map(param => new paramDefinition(param, this)));
+        this.parameters = new ArrayExt<ParameterType>(...symbolNode.getParameters().map(param => new paramDefinition(param, this)));
     }
 
     fillParametersBySignature(signature: WrappedSignature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) {
-        this.parameters = new ExtendedArray<ParameterType>(...signature.getParameters().map(param => new paramDefinition(param, this)));
+        this.parameters = new ArrayExt<ParameterType>(...signature.getParameters().map(param => new paramDefinition(param, this)));
     }
 }

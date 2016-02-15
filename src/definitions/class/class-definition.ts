@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, tryGet, Logger, ExtendedArray} from "./../../utils";
+import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
@@ -19,14 +19,14 @@ type ClassMemberDefinitions = ClassMethodDefinition | ClassStaticMethodDefinitio
 
 export class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
                                         IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition, IAbstractableDefinition {
-    methods = new ExtendedArray<ClassMethodDefinition>();
-    properties = new ExtendedArray<ClassPropertyDefinition>();
-    staticMethods = new ExtendedArray<ClassStaticMethodDefinition>();
-    staticProperties = new ExtendedArray<ClassStaticPropertyDefinition>();
+    methods = new ArrayExt<ClassMethodDefinition>();
+    properties = new ArrayExt<ClassPropertyDefinition>();
+    staticMethods = new ArrayExt<ClassStaticMethodDefinition>();
+    staticProperties = new ArrayExt<ClassStaticPropertyDefinition>();
     constructorDef: ClassConstructorDefinition;
-    typeParameters = new ExtendedArray<TypeParameterDefinition<this>>();
-    extendsTypeExpressions = new ExtendedArray<TypeExpression>();
-    implementsTypeExpressions = new ExtendedArray<TypeExpression>();
+    typeParameters = new ArrayExt<TypeParameterDefinition<this>>();
+    extendsTypeExpressions = new ArrayExt<TypeExpression>();
+    implementsTypeExpressions = new ArrayExt<TypeExpression>();
 
     constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Class);
@@ -122,7 +122,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     // IParentedDefinition
     parent: ModuledDefinitions;
     // DecoratableDefinition
-    decorators: ExtendedArray<DecoratorDefinition<this>>;
+    decorators: ArrayExt<DecoratorDefinition<this>>;
     fillDecorators: (symbolNode: WrappedSymbolNode) => void;
     // ExportableDefinition
     isExported: boolean;

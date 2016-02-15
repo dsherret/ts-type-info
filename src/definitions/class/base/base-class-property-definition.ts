@@ -1,4 +1,4 @@
-import {applyMixins, ExtendedArray} from "./../../../utils";
+import {applyMixins, ArrayExt} from "./../../../utils";
 import {WrappedSymbolNode} from "./../../../wrappers";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, ObjectPropertyDefinition} from "./../../base";
 import {DecoratorDefinition} from "./../../general";
@@ -15,7 +15,7 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassD
     }
 
     // DecoratableDefinition
-    decorators: ExtendedArray<DecoratorDefinition<this>>;
+    decorators: ArrayExt<DecoratorDefinition<this>>;
     fillDecorators: (symbolNode: WrappedSymbolNode) => void;
     // ScopeDefinition
     scope: Scope;

@@ -1,6 +1,6 @@
 ﻿import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../base";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, ExtendedArray} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {InterfaceNewSignatureParameterDefinition} from "./interface-new-signature-parameter-definition";
 import {InterfaceDefinition} from "./interface-definition";
@@ -19,7 +19,7 @@ export class InterfaceNewSignatureDefinition extends BaseDefinition
     // ParentedDefinition
     parent: InterfaceDefinition;
     // ParameteredDefinition
-    parameters: ExtendedArray<InterfaceNewSignatureParameterDefinition>;
+    parameters: ArrayExt<InterfaceNewSignatureParameterDefinition>;
     fillParametersBySymbol: (
         symbolNode: WrappedSymbolNode,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;

@@ -3,7 +3,7 @@ import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {applyMixins, tryGet, Logger, ExtendedArray} from "./../../utils";
+import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
@@ -16,11 +16,11 @@ type InterfaceMemberDefinitions = InterfaceMethodDefinition | InterfacePropertyD
 
 export class InterfaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
-    methods = new ExtendedArray<InterfaceMethodDefinition>();
-    newSignatures = new ExtendedArray<InterfaceNewSignatureDefinition>();
-    properties = new ExtendedArray<InterfacePropertyDefinition>();
-    typeParameters = new ExtendedArray<TypeParameterDefinition<this>>();
-    extendsTypeExpressions = new ExtendedArray<TypeExpression>();
+    methods = new ArrayExt<InterfaceMethodDefinition>();
+    newSignatures = new ArrayExt<InterfaceNewSignatureDefinition>();
+    properties = new ArrayExt<InterfacePropertyDefinition>();
+    typeParameters = new ArrayExt<TypeParameterDefinition<this>>();
+    extendsTypeExpressions = new ArrayExt<TypeExpression>();
 
     constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Interface);

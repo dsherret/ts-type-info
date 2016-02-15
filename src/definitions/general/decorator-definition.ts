@@ -1,10 +1,10 @@
 import {Expression} from "./../../expressions";
 import {WrappedNode} from "./../../wrappers";
-import {ExtendedArray} from "./../../utils";
+import {ArrayExt} from "./../../utils";
 import {IBaseNamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 
 export class DecoratorDefinition<ParentType> extends BaseDefinition implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
-    arguments = new ExtendedArray<Expression>();
+    arguments = new ArrayExt<Expression>();
 
     constructor(declaration: WrappedNode, parent: ParentType) {
         super(DefinitionType.Decorator);

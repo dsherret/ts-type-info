@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
-import {applyMixins, DefinitionCache, ExtendedArray} from "./../../utils";
+import {applyMixins, DefinitionCache, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
@@ -41,14 +41,14 @@ export class NamespaceDefinition extends BaseDefinition
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ModuledDefinition
-    namespaces: ExtendedArray<NamespaceDefinition>;
-    classes: ExtendedArray<ClassDefinition>;
-    interfaces: ExtendedArray<InterfaceDefinition>;
-    enums: ExtendedArray<EnumDefinition>;
-    functions: ExtendedArray<FunctionDefinition>;
-    variables: ExtendedArray<VariableDefinition>;
-    exports: ExtendedArray<ExportableDefinitions>;
-    typeAliases: ExtendedArray<TypeAliasDefinition>;
+    namespaces: ArrayExt<NamespaceDefinition>;
+    classes: ArrayExt<ClassDefinition>;
+    interfaces: ArrayExt<InterfaceDefinition>;
+    enums: ArrayExt<EnumDefinition>;
+    functions: ArrayExt<FunctionDefinition>;
+    variables: ArrayExt<VariableDefinition>;
+    exports: ArrayExt<ExportableDefinitions>;
+    typeAliases: ArrayExt<TypeAliasDefinition>;
     fillMembersByNode: (definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) => void;
     // ExportableDefinition
     isExported: boolean;

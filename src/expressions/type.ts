@@ -1,13 +1,13 @@
 ﻿import {CallSignatureDefinition, IBaseNamedDefinition, TypePropertyDefinition} from "./../definitions";
 import {WrappedType} from "./../wrappers";
-import {ExtendedArray} from "./../utils";
+import {ArrayExt} from "./../utils";
 import {TypeExpression} from "./type-expression";
 
 export class Type {
-    callSignatures = new ExtendedArray<CallSignatureDefinition>();
-    definitions = new ExtendedArray<IBaseNamedDefinition>();
-    properties = new ExtendedArray<TypePropertyDefinition>();
-    typeArguments = new ExtendedArray<TypeExpression>();
+    callSignatures = new ArrayExt<CallSignatureDefinition>();
+    definitions = new ArrayExt<IBaseNamedDefinition>();
+    properties = new ArrayExt<TypePropertyDefinition>();
+    typeArguments = new ArrayExt<TypeExpression>();
     text: string;
 
     fillTypeInformation(type: WrappedType) {

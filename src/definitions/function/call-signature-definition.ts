@@ -2,7 +2,7 @@ import {CallSignatureParameterDefinition} from "./call-signature-parameter-defin
 import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType,
         IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
-import {applyMixins, ExtendedArray} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
 
@@ -20,7 +20,7 @@ export class CallSignatureDefinition extends BaseDefinition
     }
 
     // ParameteredDefinition
-    parameters: ExtendedArray<CallSignatureParameterDefinition>;
+    parameters: ArrayExt<CallSignatureParameterDefinition>;
     fillParametersBySymbol: (
         symbolNode: WrappedSymbolNode,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
@@ -32,7 +32,7 @@ export class CallSignatureDefinition extends BaseDefinition
     fillReturnTypeExpressionBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
     // TypeParameteredDefinition
-    typeParameters: ExtendedArray<TypeParameterDefinition<this>>;
+    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
 }

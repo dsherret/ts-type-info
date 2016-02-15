@@ -1,4 +1,4 @@
-﻿export class ExtendedArray<T> extends Array<T> {
+﻿export class ArrayExt<T> extends Array<T> {
     constructor(...items: T[]) {
         super();
         this.push(...items);

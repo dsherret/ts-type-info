@@ -1,5 +1,5 @@
 import CodeBlockWriter from "code-block-writer";
-import {applyMixins, DefinitionCache, ExtendedArray} from "./../../utils";
+import {applyMixins, DefinitionCache, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
 import {Expression} from "./../../expressions";
 import {ExportableDefinitions} from "./../../definitions";
@@ -19,9 +19,9 @@ import {ImportDefinition} from "./import-definition";
 
 export class FileDefinition extends BaseDefinition implements IModuledDefinition {
     fileName: string;
-    imports = new ExtendedArray<ImportDefinition>();
-    reExports = new ExtendedArray<ReExportDefinition>();
-    defaultExport: Expression | ExtendedArray<ExportableDefinitions>;
+    imports = new ArrayExt<ImportDefinition>();
+    reExports = new ArrayExt<ReExportDefinition>();
+    defaultExport: Expression | ArrayExt<ExportableDefinitions>;
 
     constructor(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
         super(DefinitionType.File);
@@ -75,14 +75,14 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     }
 
     // ModuledDefinition
-    namespaces: ExtendedArray<NamespaceDefinition>;
-    classes: ExtendedArray<ClassDefinition>;
-    interfaces: ExtendedArray<InterfaceDefinition>;
-    enums: ExtendedArray<EnumDefinition>;
-    functions: ExtendedArray<FunctionDefinition>;
-    variables: ExtendedArray<VariableDefinition>;
-    typeAliases: ExtendedArray<TypeAliasDefinition>;
-    exports: ExtendedArray<ExportableDefinitions>;
+    namespaces: ArrayExt<NamespaceDefinition>;
+    classes: ArrayExt<ClassDefinition>;
+    interfaces: ArrayExt<InterfaceDefinition>;
+    enums: ArrayExt<EnumDefinition>;
+    functions: ArrayExt<FunctionDefinition>;
+    variables: ArrayExt<VariableDefinition>;
+    typeAliases: ArrayExt<TypeAliasDefinition>;
+    exports: ArrayExt<ExportableDefinitions>;
     fillMembersByNode: (definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) => void;
 }
 

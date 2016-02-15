@@ -1,5 +1,5 @@
 import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition} from "./../base";
-import {applyMixins, ExtendedArray} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {ClassConstructorParameterDefinition} from "./class-constructor-parameter-definition";
 import {ClassDefinition} from "./class-definition";
@@ -14,7 +14,7 @@ export class ClassConstructorDefinition extends BaseDefinition implements IParen
     // IParentedDefinition
     parent: ClassDefinition;
     // ParameteredDefinition
-    parameters: ExtendedArray<ClassConstructorParameterDefinition>;
+    parameters: ArrayExt<ClassConstructorParameterDefinition>;
     fillParametersBySymbol: (
         symbolNode: WrappedSymbolNode,
         parameterDefinition: typeof ClassConstructorParameterDefinition) => void;

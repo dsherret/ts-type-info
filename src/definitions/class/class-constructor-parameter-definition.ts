@@ -1,4 +1,4 @@
-﻿import {applyMixins, ExtendedArray} from "./../../utils";
+﻿import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
 import {DecoratorDefinition} from "./../general";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
@@ -12,7 +12,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
 
     // DecoratableDefinition
     fillDecorators: (symbolNode: WrappedSymbolNode) => void;
-    decorators: ExtendedArray<DecoratorDefinition<this>>;
+    decorators: ArrayExt<DecoratorDefinition<this>>;
 }
 
 applyMixins(ClassConstructorParameterDefinition, [DecoratableDefinition]);

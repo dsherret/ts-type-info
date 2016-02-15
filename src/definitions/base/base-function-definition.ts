@@ -1,5 +1,5 @@
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, ExtendedArray} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
 import {TypeParameterDefinition} from "./../general";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
@@ -32,7 +32,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefin
     // IParentedDefinition
     parent: ParentType;
     // ParameteredDefinition
-    parameters: ExtendedArray<ParameterType>;
+    parameters: ArrayExt<ParameterType>;
     fillParametersBySymbol: (symbolNode: WrappedSymbolNode, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
     fillParametersBySignature: (signature: WrappedSignature, paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>) => void;
     // ReturnTyped
@@ -40,7 +40,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefin
     fillReturnTypeExpressionBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
     // TypeParameteredDefinition
-    typeParameters: ExtendedArray<TypeParameterDefinition<this>>;
+    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
 }
