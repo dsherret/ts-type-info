@@ -2,7 +2,7 @@
 import {ModuledDefinitions} from "./../../definitions";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {applyMixins} from "./../../utils";
+import {applyMixins, ExtendedArray} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
@@ -10,14 +10,14 @@ import {EnumMemberDefinition} from "./enum-member-definition";
 
 export class EnumDefinition extends BaseDefinition
                             implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
-    members: EnumMemberDefinition[] = [];
+    members = new ExtendedArray<EnumMemberDefinition>();
 
     constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Enum);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
         this.fillAmbientable(symbolNode);
-        this.members = symbolNode.getEnumMembers().map(member => new EnumMemberDefinition(member, this));
+        this.members.push(...symbolNode.getEnumMembers().map(member => new EnumMemberDefinition(member, this)));
     }
 
     write() {

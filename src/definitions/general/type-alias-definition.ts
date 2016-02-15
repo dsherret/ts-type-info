@@ -1,5 +1,5 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {applyMixins} from "./../../utils";
+import {applyMixins, ExtendedArray} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../write-flags";
@@ -48,7 +48,7 @@ export class TypeAliasDefinition extends BaseDefinition
     typeExpression: TypeExpression;
     fillTypeExpression: (symbolNode: WrappedSymbolNode) => void;
     // TypeParameteredDefinition
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: ExtendedArray<TypeParameterDefinition<this>>;
     fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
     fillTypeParametersBySignature: (signature: WrappedSignature) => void;
     // AmbientableDefinition

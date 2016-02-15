@@ -1,5 +1,5 @@
-﻿import {logError, Logger} from "./../../utils";
-import * as assert from "assert";
+﻿import * as assert from "assert";
+import {logError, Logger} from "./../../utils";
 
 describe("logError", () => {
     let wasLoggerEnabled = Logger.getIsEnabled();

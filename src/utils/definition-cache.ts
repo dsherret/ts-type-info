@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
         MainDefinitions, TypeAliasDefinition, ImportDefinition} from "./../definitions";
 import {Expression} from "./../expressions";
-import {TypeChecker, KeyValueCache, Logger} from "./../utils";
+import {TypeChecker, KeyValueCache, Logger, ExtendedArray} from "./../utils";
 import {WrappedSymbolNode, WrappedExpression} from "./../wrappers";
 
 export class DefinitionCache {
@@ -87,10 +87,10 @@ export class DefinitionCache {
         return this.files.get(sourceFile);
     }
 
-    getDefinitionsOrExpressionFromSymbol(symbol: ts.Symbol): Expression | MainDefinitions[] {
+    getDefinitionsOrExpressionFromSymbol(symbol: ts.Symbol): Expression | ExtendedArray<MainDefinitions> {
         if (this.typeChecker.symbolHasFlag(symbol, ts.SymbolFlags.Alias)) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(symbol);
-            return this.getDefinitionsBySymbol(aliasedSymbol);
+            return new ExtendedArray<MainDefinitions>(...this.getDefinitionsBySymbol(aliasedSymbol));
         }
         else {
             const node = this.typeChecker.getDeclarationFromSymbol(symbol);
@@ -98,7 +98,7 @@ export class DefinitionCache {
         }
     }
 
-    getDefinitionsOrExpressionFromNodeAndSymbol(node: ts.Node, symbol: ts.Symbol): Expression | MainDefinitions[] {
+    getDefinitionsOrExpressionFromNodeAndSymbol(node: ts.Node, symbol: ts.Symbol): Expression | ExtendedArray<MainDefinitions> {
         const expressionStatement = node as ts.ExpressionStatement;
         if (expressionStatement.expression != null) {
             const wrappedExpression = new WrappedExpression({
@@ -109,7 +109,7 @@ export class DefinitionCache {
             return new Expression(wrappedExpression);
         }
         else {
-            return this.getDefinitionsBySymbol(symbol);
+            return new ExtendedArray<MainDefinitions>(...this.getDefinitionsBySymbol(symbol));
         }
     }
 

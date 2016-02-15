@@ -8,9 +8,19 @@ export function generateDefinitionFile() {
     const fileInfo = getFileInfo([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")], { showDebugMessages: true })
                         .filter(f => /main\.ts/.exec(f.fileName) ? true : false)[0] as any as FileDefinition;
 
-    fileInfo.reExports.map(r => r.definition).filter(c => c.name === "Type").forEach(c => {
-        if (c.isClassDefinition()) {
-            c.methods = c.methods.filter(m => m.name !== "addDefinitions");
+    fileInfo.reExports.map(r => r.definition).forEach(def => {
+        // todo: once typescript supports it type-wise, this should be merged into one if statement
+        if (def.isClassDefinition()) {
+            def.methods.removeWhere(m => m.name === "addDefinitions" ||
+                                         m.name.indexOf("fill") >= 0 ||
+                                         m.name === "addType");
+            def.properties.removeWhere(p => p.name.indexOf("fill") >= 0 || p.name === "addType");
+        }
+        else if (def.isInterfaceDefinition()) {
+            def.methods.removeWhere(m => m.name === "addDefinitions" ||
+                                         m.name.indexOf("fill") >= 0 ||
+                                         m.name === "addType");
+            def.properties.removeWhere(p => p.name.indexOf("fill") >= 0 || p.name === "addType");
         }
     });
 

@@ -1,5 +1,5 @@
 import CodeBlockWriter from "code-block-writer";
-import {applyMixins, DefinitionCache} from "./../../utils";
+import {applyMixins, DefinitionCache, ExtendedArray} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
 import {Expression} from "./../../expressions";
 import {ExportableDefinitions} from "./../../definitions";
@@ -19,9 +19,9 @@ import {ImportDefinition} from "./import-definition";
 
 export class FileDefinition extends BaseDefinition implements IModuledDefinition {
     fileName: string;
-    imports: ImportDefinition[] = [];
-    reExports: ReExportDefinition[] = [];
-    defaultExport: Expression | ExportableDefinitions[];
+    imports = new ExtendedArray<ImportDefinition>();
+    reExports = new ExtendedArray<ReExportDefinition>();
+    defaultExport: Expression | ExtendedArray<ExportableDefinitions>;
 
     constructor(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
         super(DefinitionType.File);
@@ -31,11 +31,11 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     }
 
     fillImports(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
-        this.imports = definitionCache.getImportDefinitions(symbolNode, this);
+        this.imports.push(...definitionCache.getImportDefinitions(symbolNode, this));
     }
 
     fillReExports(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
-        this.reExports = definitionCache.getReExportDefinitions(symbolNode, this);
+        this.reExports.push(...definitionCache.getReExportDefinitions(symbolNode, this));
         this.exports.push(...this.reExports.map(reExport => reExport.definition));
     }
 
@@ -56,16 +56,6 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
 
         writer.write(`declare module ${options.moduleName}`).block(() => {
             this.exports.forEach((exportDef) => {
-                if ((exportDef as ClassDefinition).methods != null) {
-                    const methodDef = exportDef as ClassDefinition;
-                    methodDef.methods = methodDef.methods.filter(m => m.name.indexOf("fill") !== 0 && m.name !== "addType");
-                }
-
-                if ((exportDef as ClassDefinition).properties != null) {
-                    const propertyDef = exportDef as ClassDefinition;
-                    propertyDef.properties = propertyDef.properties.filter(m => m.name.indexOf("fill") !== 0 && m.name !== "addType");
-                }
-
                 exportDef.isExported = false;
                 exportDef.isNamedExportOfFile = false;
                 exportDef.isDefaultExportOfFile = false;
@@ -85,14 +75,14 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     }
 
     // ModuledDefinition
-    namespaces: NamespaceDefinition[];
-    classes: ClassDefinition[];
-    interfaces: InterfaceDefinition[];
-    enums: EnumDefinition[];
-    functions: FunctionDefinition[];
-    variables: VariableDefinition[];
-    typeAliases: TypeAliasDefinition[];
-    exports: ExportableDefinitions[];
+    namespaces: ExtendedArray<NamespaceDefinition>;
+    classes: ExtendedArray<ClassDefinition>;
+    interfaces: ExtendedArray<InterfaceDefinition>;
+    enums: ExtendedArray<EnumDefinition>;
+    functions: ExtendedArray<FunctionDefinition>;
+    variables: ExtendedArray<VariableDefinition>;
+    typeAliases: ExtendedArray<TypeAliasDefinition>;
+    exports: ExtendedArray<ExportableDefinitions>;
     fillMembersByNode: (definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) => void;
 }
 

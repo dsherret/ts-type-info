@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 import {Scope} from "./../scope";
-import {applyMixins} from "./../../../utils";
+import {applyMixins, ExtendedArray} from "./../../../utils";
 import {WrappedSymbolNode} from "./../../../wrappers";
 import {DecoratorDefinition} from "./../../../definitions";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseFunctionDefinition, BaseParameterDefinitionConstructor} from "./../../base";
@@ -23,7 +23,7 @@ export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefini
     }
 
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: ExtendedArray<DecoratorDefinition<this>>;
     fillDecorators: (symbolNode: WrappedSymbolNode) => void;
     // ScopeDefinition
     scope: Scope;

@@ -1,5 +1,5 @@
 ﻿import {WrappedSymbolNode} from "./../../wrappers";
-import {DefinitionCache, tryGet, Logger} from "./../../utils";
+import {DefinitionCache, tryGet, Logger, ExtendedArray} from "./../../utils";
 import {IParentedDefinition} from "./../base";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
@@ -11,26 +11,26 @@ import {TypeAliasDefinition} from "./../general";
 import {ExportableDefinitions} from "./../../definitions";
 
 export interface IModuledDefinition {
-    namespaces: NamespaceDefinition[];
-    classes: ClassDefinition[];
-    interfaces: InterfaceDefinition[];
-    enums: EnumDefinition[];
-    functions: FunctionDefinition[];
-    variables: VariableDefinition[];
-    typeAliases: TypeAliasDefinition[];
-    exports: ExportableDefinitions[];
+    namespaces: ExtendedArray<NamespaceDefinition>;
+    classes: ExtendedArray<ClassDefinition>;
+    interfaces: ExtendedArray<InterfaceDefinition>;
+    enums: ExtendedArray<EnumDefinition>;
+    functions: ExtendedArray<FunctionDefinition>;
+    variables: ExtendedArray<VariableDefinition>;
+    typeAliases: ExtendedArray<TypeAliasDefinition>;
+    exports: ExtendedArray<ExportableDefinitions>;
     fillMembersByNode(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode): void;
 }
 
 export abstract class ModuledDefinition implements IModuledDefinition {
-    namespaces: NamespaceDefinition[];
-    classes: ClassDefinition[];
-    interfaces: InterfaceDefinition[];
-    enums: EnumDefinition[];
-    functions: FunctionDefinition[];
-    variables: VariableDefinition[];
-    typeAliases: TypeAliasDefinition[];
-    exports: ExportableDefinitions[];
+    namespaces: ExtendedArray<NamespaceDefinition>;
+    classes: ExtendedArray<ClassDefinition>;
+    interfaces: ExtendedArray<InterfaceDefinition>;
+    enums: ExtendedArray<EnumDefinition>;
+    functions: ExtendedArray<FunctionDefinition>;
+    variables: ExtendedArray<VariableDefinition>;
+    typeAliases: ExtendedArray<TypeAliasDefinition>;
+    exports: ExtendedArray<ExportableDefinitions>;
 
     fillMembersByNode(definitionCache: DefinitionCache, fileSymbolNode: WrappedSymbolNode) {
         this.initializeMD();
@@ -96,13 +96,13 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     }
 
     private initializeMD() {
-        this.namespaces = [];
-        this.classes = [];
-        this.interfaces = [];
-        this.enums = [];
-        this.functions = [];
-        this.variables = [];
-        this.typeAliases = [];
-        this.exports = [];
+        this.namespaces = new ExtendedArray<NamespaceDefinition>();
+        this.classes = new ExtendedArray<ClassDefinition>();
+        this.interfaces = new ExtendedArray<InterfaceDefinition>();
+        this.enums = new ExtendedArray<EnumDefinition>();
+        this.functions = new ExtendedArray<FunctionDefinition>();
+        this.variables = new ExtendedArray<VariableDefinition>();
+        this.typeAliases = new ExtendedArray<TypeAliasDefinition>();
+        this.exports = new ExtendedArray<ExportableDefinitions>();
     }
 }

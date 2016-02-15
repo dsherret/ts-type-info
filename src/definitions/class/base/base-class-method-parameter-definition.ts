@@ -1,4 +1,4 @@
-import {applyMixins} from "./../../../utils";
+import {applyMixins, ExtendedArray} from "./../../../utils";
 import {WrappedSymbolNode} from "./../../../wrappers";
 import {DecoratorDefinition} from "./../../general";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../../base";
@@ -10,7 +10,7 @@ export class BaseClassMethodParameterDefinition<ParentType> extends BaseParamete
     }
 
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: ExtendedArray<DecoratorDefinition<this>>;
     fillDecorators: (symbolNode: WrappedSymbolNode) => void;
 }
 

@@ -1,20 +1,23 @@
 ﻿import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
+import {ExtendedArray} from "./../../utils";
 import {TypeParameterDefinition} from "./../general";
 
 export interface ITypeParameteredDefinition {
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: ExtendedArray<TypeParameterDefinition<this>>;
     fillTypeParametersBySymbol(symbolNode: WrappedSymbolNode): void;
     fillTypeParametersBySignature(signature: WrappedSignature): void;
 }
 
 export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: ExtendedArray<TypeParameterDefinition<this>>;
 
     fillTypeParametersBySymbol(symbolNode: WrappedSymbolNode) {
-        this.typeParameters = symbolNode.getTypeParameters().map(typeParameterSymbol => new TypeParameterDefinition(typeParameterSymbol, this));
+        const typeParameters = symbolNode.getTypeParameters().map(typeParameterSymbol => new TypeParameterDefinition(typeParameterSymbol, this));
+        this.typeParameters = new ExtendedArray<TypeParameterDefinition<this>>(...typeParameters);
     }
 
     fillTypeParametersBySignature(signature: WrappedSignature) {
-        this.typeParameters = signature.getTypeParameters().map(typeParameterSymbol => new TypeParameterDefinition(typeParameterSymbol, this));
+        const typeParameters = signature.getTypeParameters().map(typeParameterSymbol => new TypeParameterDefinition(typeParameterSymbol, this));
+        this.typeParameters = new ExtendedArray<TypeParameterDefinition<this>>(...typeParameters);
     }
 }

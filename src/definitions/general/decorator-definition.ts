@@ -1,14 +1,15 @@
-import {IBaseNamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {Expression} from "./../../expressions";
 import {WrappedNode} from "./../../wrappers";
+import {ExtendedArray} from "./../../utils";
+import {IBaseNamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 
 export class DecoratorDefinition<ParentType> extends BaseDefinition implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
-    arguments: Expression[] = [];
+    arguments = new ExtendedArray<Expression>();
 
     constructor(declaration: WrappedNode, parent: ParentType) {
         super(DefinitionType.Decorator);
         this.name = declaration.getDecoratorName();
-        this.arguments = declaration.getDecoratorArguments().map(arg => new Expression(arg));
+        this.arguments.push(...declaration.getDecoratorArguments().map(arg => new Expression(arg)));
         this.parent = parent;
     }
 

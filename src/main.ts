@@ -3,11 +3,12 @@ import * as path from "path";
 import * as tmp from "tmp";
 import * as fs from "fs";
 import {FileDefinition} from "./definitions";
-import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils, Logger} from "./utils";
+import {TypeChecker, TypeExpressionCache, DefinitionCache, StringUtils, Logger, ExtendedArray} from "./utils";
 import {WrappedSymbolNode} from "./wrappers";
 import {Options, CompilerOptions} from "./options";
 
 export * from "./options";
+export {ExtendedArray} from "./utils";
 export * from "./definitions";
 export * from "./expressions";
 
@@ -57,7 +58,7 @@ export function getFileInfo(fileNames: string[], options?: Options): FileDefinit
 
     typeExpressionCache.fillAllCachedTypesWithDefinitions();
 
-    return definitionWithSymbolNodes.map(f => f.definition);
+    return new ExtendedArray(...definitionWithSymbolNodes.map(f => f.definition));
 }
 
 export function getStringInfo(code: string, options?: Options): FileDefinition {

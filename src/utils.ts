@@ -1,4 +1,5 @@
 export * from "./utils/apply-mixins";
+export * from "./utils/extended-array";
 export * from "./utils/definition-cache";
 export * from "./utils/definition-utils";
 export * from "./utils/file-utils";

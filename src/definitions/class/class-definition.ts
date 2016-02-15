@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, tryGet, Logger} from "./../../utils";
+import {applyMixins, tryGet, Logger, ExtendedArray} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
@@ -19,14 +19,14 @@ type ClassMemberDefinitions = ClassMethodDefinition | ClassStaticMethodDefinitio
 
 export class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IDecoratableDefinition,
                                         IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition, IAbstractableDefinition {
-    methods: ClassMethodDefinition[] = [];
-    properties: ClassPropertyDefinition[] = [];
-    staticMethods: ClassStaticMethodDefinition[] = [];
-    staticProperties: ClassStaticPropertyDefinition[] = [];
+    methods = new ExtendedArray<ClassMethodDefinition>();
+    properties = new ExtendedArray<ClassPropertyDefinition>();
+    staticMethods = new ExtendedArray<ClassStaticMethodDefinition>();
+    staticProperties = new ExtendedArray<ClassStaticPropertyDefinition>();
     constructorDef: ClassConstructorDefinition;
-    typeParameters: TypeParameterDefinition<this>[] = [];
-    extendsTypeExpressions: TypeExpression[];
-    implementsTypeExpressions: TypeExpression[];
+    typeParameters = new ExtendedArray<TypeParameterDefinition<this>>();
+    extendsTypeExpressions = new ExtendedArray<TypeExpression>();
+    implementsTypeExpressions = new ExtendedArray<TypeExpression>();
 
     constructor(symbolNode: WrappedSymbolNode) {
         super(DefinitionType.Class);
@@ -38,8 +38,8 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         this.fillAbstractable(symbolNode);
         this.fillMembers(symbolNode);
         this.fillTypeParametersBySymbol(symbolNode);
-        this.extendsTypeExpressions = symbolNode.getExtendsTypeExpressions();
-        this.implementsTypeExpressions = symbolNode.getImplementsTypeExpressions();
+        this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions());
+        this.implementsTypeExpressions.push(...symbolNode.getImplementsTypeExpressions());
     }
 
     write() {
@@ -122,7 +122,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     // IParentedDefinition
     parent: ModuledDefinitions;
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: ExtendedArray<DecoratorDefinition<this>>;
     fillDecorators: (symbolNode: WrappedSymbolNode) => void;
     // ExportableDefinition
     isExported: boolean;
