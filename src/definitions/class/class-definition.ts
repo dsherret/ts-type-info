@@ -9,6 +9,7 @@ import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, 
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
+import {ClassPropertyStructure} from "./../../structures";
 import {ClassConstructorDefinition} from "./class-constructor-definition";
 import {ClassConstructorParameterScope} from "./class-constructor-parameter-scope";
 import {ClassMethodDefinition} from "./class-method-definition";
@@ -51,7 +52,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         return writer.toString();
     }
 
-    addProperty(prop: any) {
+    addProperty(prop: ClassPropertyStructure) {
         throw new Error("NOT IMPLEMENTED");
     }
 
@@ -74,7 +75,13 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
                         scope: ClassConstructorParameterScope.toScope(param.scope),
                         type: param.typeExpression.text,
                         isOptional: param.isOptional,
-                        defaultExpression: param.defaultExpression
+                        defaultExpression: param.defaultExpression != null ? param.defaultExpression.text : null,
+                        decorators: param.decorators.map(d => {
+                            return {
+                                name: d.name,
+                                arguments: d.arguments.map(d => d.text)
+                            };
+                        })
                     });
                 }
             });

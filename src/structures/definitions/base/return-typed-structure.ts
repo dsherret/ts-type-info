@@ -1,5 +1,3 @@
-﻿import {TypeExpressionStructure} from "./../../expressions";
-
-export interface ReturnTypedStructure {
-    returnTypeExpression?: TypeExpressionStructure;
+﻿export interface ReturnTypedStructure {
+    returnType?: string;
 }
