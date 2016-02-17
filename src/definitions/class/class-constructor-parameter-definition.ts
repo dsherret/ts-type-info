@@ -1,5 +1,6 @@
 ﻿import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
+import {DecoratableStructure} from "./../../structures";
 import {DecoratorDefinition} from "./../general";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
 import {ClassConstructorDefinition} from "./class-constructor-definition";
@@ -15,7 +16,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     }
 
     // DecoratableDefinition
-    fillDecorators: (symbolNode: WrappedSymbolNode) => void;
+    fillDecorators: (symbolNode: WrappedSymbolNode | DecoratableStructure) => void;
     decorators: ArrayExt<DecoratorDefinition<this>>;
 }
 

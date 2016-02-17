@@ -1,17 +1,23 @@
 import {WrappedSymbolNode} from "./../../wrappers";
+import {NamedStructure} from "./../../structures";
 
 export interface IBaseNamedDefinition {
     name: string;
 }
 
 export interface INamedDefinition extends IBaseNamedDefinition {
-    fillName(symbolNode: WrappedSymbolNode): void;
+    fillName(symbolNodeOrStructure: WrappedSymbolNode | NamedStructure): void;
 }
 
 export abstract class NamedDefinition implements INamedDefinition {
     name: string;
 
-    fillName(symbolNode: WrappedSymbolNode) {
-        this.name = symbolNode.getName();
+    fillName(symbolNodeOrStructure: WrappedSymbolNode | NamedStructure) {
+        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
+            this.name = symbolNodeOrStructure.getName();
+        }
+        else {
+            this.name = symbolNodeOrStructure.name;
+        }
     }
 }

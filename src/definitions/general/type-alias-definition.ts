@@ -3,6 +3,7 @@ import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../write-flags";
+import {NamedStructure, TypeExpressionedStructure, TypeParameteredStructure, ExportableStructure, AmbientableStructure} from "./../../structures";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition,
         BaseDefinition, DefinitionType} from "./../base";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
@@ -36,25 +37,25 @@ export class TypeAliasDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode) => void;
+    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: WrappedSymbolNode) => void;
+    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeExpression: (symbolNodeOrStructure: WrappedSymbolNode | TypeExpressionedStructure) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
-    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
+    fillTypeParametersBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | TypeParameteredStructure) => void;
+    fillTypeParametersBySignature: (signatureOrStructure: WrappedSignature | TypeParameteredStructure) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
+    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
 }
 
 applyMixins(TypeAliasDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition]);

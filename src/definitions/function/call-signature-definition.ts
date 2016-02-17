@@ -1,13 +1,15 @@
-import {CallSignatureParameterDefinition} from "./call-signature-parameter-definition";
+import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
+import {ReturnTypedStructure, CallSignatureParameterStructure, TypeParameteredStructure} from "./../../structures";
+import {TypeExpression} from "./../../expressions";
+import {applyMixins, ArrayExt} from "./../../utils";
 import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType,
         IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
-import {applyMixins, ArrayExt} from "./../../utils";
-import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
-import {TypeExpression} from "./../../expressions";
+import {CallSignatureParameterDefinition} from "./call-signature-parameter-definition";
 
-export class CallSignatureDefinition extends BaseDefinition
-                                     implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
+export class CallSignatureDefinition
+        extends BaseDefinition
+        implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, IReturnTypedDefinition {
     minArgumentCount: number;
 
     constructor(signature: WrappedSignature) {
@@ -29,12 +31,12 @@ export class CallSignatureDefinition extends BaseDefinition
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (symbolNode: WrappedSymbolNode) => void;
-    fillReturnTypeExpressionBySignature: (signature: WrappedSignature) => void;
+    fillReturnTypeExpressionBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | ReturnTypedStructure) => void;
+    fillReturnTypeExpressionBySignature: (signatureOrStructure: WrappedSignature | ReturnTypedStructure) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
-    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
+    fillTypeParametersBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | TypeParameteredStructure) => void;
+    fillTypeParametersBySignature: (signatureOrStructure: WrappedSignature | TypeParameteredStructure) => void;
 }
 
 applyMixins(CallSignatureDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

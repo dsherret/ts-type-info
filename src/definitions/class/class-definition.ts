@@ -3,6 +3,7 @@ import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
+import {AbstractableStructure, AmbientableStructure, DecoratableStructure, NamedStructure, TypeParameteredStructure, ExportableStructure} from "./../../structures";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
         IAbstractableDefinition, AbstractableDefinition, DefinitionType} from "./../base";
@@ -147,27 +148,27 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode) => void;
+    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // DecoratableDefinition
     decorators: ArrayExt<DecoratorDefinition<this>>;
-    fillDecorators: (symbolNode: WrappedSymbolNode) => void;
+    fillDecorators: (symbolNode: WrappedSymbolNode | DecoratableStructure) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: WrappedSymbolNode) => void;
+    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
-    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
+    fillTypeParametersBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | TypeParameteredStructure) => void;
+    fillTypeParametersBySignature: (signatureOrStructure: WrappedSignature | TypeParameteredStructure) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
+    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
     // AbstractableDefinition
     isAbstract: boolean;
-    fillAbstractable: (symbolNode: WrappedSymbolNode) => void;
+    fillAbstractable: (symbolNodeOrStructure: WrappedSymbolNode | AbstractableStructure) => void;
 }
 
 applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition]);

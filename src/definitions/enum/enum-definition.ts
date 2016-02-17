@@ -4,6 +4,7 @@ import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
+import {NamedStructure, AmbientableStructure, ExportableStructure} from "./../../structures";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./enum-member-definition";
@@ -29,18 +30,18 @@ export class EnumDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode) => void;
+    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: WrappedSymbolNode) => void;
+    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
+    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
 }
 
 applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition]);

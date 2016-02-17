@@ -5,6 +5,7 @@ import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
+import {AmbientableStructure, TypeParameteredStructure, NamedStructure, ExportableStructure} from "./../../structures";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -89,21 +90,21 @@ export class InterfaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode) => void;
+    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: WrappedSymbolNode) => void;
+    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (symbolNode: WrappedSymbolNode) => void;
-    fillTypeParametersBySignature: (signature: WrappedSignature) => void;
+    fillTypeParametersBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | TypeParameteredStructure) => void;
+    fillTypeParametersBySignature: (signatureOrStructure: WrappedSignature | TypeParameteredStructure) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
+    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
 }
 
 applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

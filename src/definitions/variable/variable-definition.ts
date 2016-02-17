@@ -1,6 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {applyMixins} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
+import {NamedStructure, TypeExpressionedStructure, AmbientableStructure, DefaultExpressionedStructure, VariableStructure, ExportableStructure} from "./../../structures";
 import {ModuledDefinitions} from "./../../definitions";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableWriter} from "./../../writers";
@@ -14,14 +15,20 @@ export class VariableDefinition extends BaseDefinition
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
-    constructor(symbolNode: WrappedSymbolNode) {
+    constructor(symbolNodeOrStructure: WrappedSymbolNode | VariableStructure) {
         super(DefinitionType.Variable);
-        this.fillName(symbolNode);
-        this.fillExportable(symbolNode);
-        this.fillTypeExpression(symbolNode);
-        this.fillDefaultExpression(symbolNode);
-        this.fillAmbientable(symbolNode);
-        this.declarationType = symbolNode.getVariableDeclarationType();
+        this.fillName(symbolNodeOrStructure);
+        this.fillExportable(symbolNodeOrStructure);
+        this.fillTypeExpression(symbolNodeOrStructure);
+        this.fillDefaultExpression(symbolNodeOrStructure);
+        this.fillAmbientable(symbolNodeOrStructure);
+
+        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
+            this.declarationType = symbolNodeOrStructure.getVariableDeclarationType();
+        }
+        else {
+            this.declarationType = symbolNodeOrStructure.declarationType;
+        }
     }
 
     write() {
@@ -33,24 +40,24 @@ export class VariableDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode) => void;
+    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: WrappedSymbolNode) => void;
+    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (symbolNode: WrappedSymbolNode) => void;
+    fillTypeExpression: (symbolNodeOrStructure: WrappedSymbolNode | TypeExpressionedStructure) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
-    fillDefaultExpression: (symbolNode: WrappedSymbolNode) => void;
+    fillDefaultExpression: (symbolNodeOrStructure: WrappedSymbolNode | DefaultExpressionedStructure) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
+    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
 }
 
 applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

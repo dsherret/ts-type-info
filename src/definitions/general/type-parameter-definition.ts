@@ -1,6 +1,7 @@
 import {TypeExpression} from "./../../expressions";
 import {applyMixins} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
+import {NamedStructure} from "./../../structures";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 
 export class TypeParameterDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType> {
@@ -15,7 +16,7 @@ export class TypeParameterDefinition<ParentType> extends BaseDefinition implemen
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode) => void;
+    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
     // IParentedDefinition
     parent: ParentType;
 }

@@ -2,6 +2,7 @@
 import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
 import {applyMixins, DefinitionCache, ArrayExt} from "./../../utils";
 import {WrappedSymbolNode} from "./../../wrappers";
+import {NamedStructure, AmbientableStructure} from "./../../structures";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
@@ -37,7 +38,7 @@ export class NamespaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode) => void;
+    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ModuledDefinition
@@ -58,7 +59,7 @@ export class NamespaceDefinition extends BaseDefinition
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: WrappedSymbolNode) => void;
+    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
 }
 
 applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);
