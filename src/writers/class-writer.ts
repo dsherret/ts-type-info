@@ -50,7 +50,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
 
     private writeProperties(def: ClassDefinition) {
         def.properties.forEach(p => {
-            if (this.shouldInclude(p)) {
+            if (this.shouldInclude(p) && !p.isConstructorParameter) {
                 this.propertyWriter.write(p);
             }
         });

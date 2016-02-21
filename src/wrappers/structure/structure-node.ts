@@ -1,4 +1,5 @@
-﻿import {INode} from "./../node";
+﻿import {ClassPropertyStructure} from "./../../structures";
+import {INode} from "./../node";
 import {IExpression} from "./../expression";
 import {ITypeExpression} from "./../type-expression";
 import {ISignature} from "./../signature";
@@ -8,7 +9,14 @@ import {StructureSignature} from "./structure-signature";
 import {StructureTypeExpression} from "./structure-type-expression";
 import {StructureSourceFileChildBase} from "./structure-source-file-child-base";
 
+// add each structure type as it's implemented
+type Structures = ClassPropertyStructure;
+
 export class StructureNode extends StructureSourceFileChildBase implements INode {
+    constructor(protected structure: Structures) {
+        super();
+    }
+
     getConstantValue() {
         return 0;
     }

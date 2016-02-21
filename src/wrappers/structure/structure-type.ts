@@ -3,8 +3,11 @@ import {ISignature} from "./../signature";
 import {IType} from "./../type";
 
 export class StructureType implements IType {
+    constructor(private expressionText: string) {
+    }
+
     getText() {
-        return "";
+        return this.expressionText;
     }
 
     hasCallSignaturesAndProperties() {

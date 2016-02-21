@@ -9,7 +9,7 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isReadonly: boolean;
     isConstructorParameter: boolean;
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode, parent?: ClassDefinition) {
+    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ClassDefinition) {
         super(mainFactory, symbolNode, parent, DefinitionType.ClassProperty);
 
         this.isAccessor = symbolNode.isPropertyAccessor();

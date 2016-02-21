@@ -4,6 +4,7 @@ import {TypeExpression} from "./../../expressions";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {ISignature, ISymbolNode} from "./../../wrappers";
+import {StructureSymbolNode} from "./../../wrappers/structure";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
         IAbstractableDefinition, AbstractableDefinition, DefinitionType} from "./../base";
@@ -53,9 +54,8 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         return writer.toString();
     }
 
-    // todo: this will be made public once I move out the caching
-    private addProperty(prop: ClassPropertyStructure) {
-        // this.properties.push(new ClassPropertyDefinition(mainFactory, new ));
+    addProperty(prop: ClassPropertyStructure) {
+        this.properties.push(new ClassPropertyDefinition(new MainFactory(), new StructureSymbolNode(prop), this));
     }
 
     private fillMembers(mainFactory: MainFactory, symbolNode: ISymbolNode) {
@@ -74,6 +74,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
                 if (param.scope !== ClassConstructorParameterScope.None) {
                     this.addProperty({
                         name: param.name,
+                        isConstructorParameter: true,
                         scope: ClassConstructorParameterScope.toScope(param.scope),
                         type: param.typeExpression.text,
                         isOptional: param.isOptional,

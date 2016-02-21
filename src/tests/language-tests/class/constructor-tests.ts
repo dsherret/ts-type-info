@@ -62,7 +62,7 @@ class MyClass4 {
                 isConstructorParameter: true
             }, {
                 name: "param2",
-                typeExpression: { text: "string" },
+                typeExpression: { text: "number" },
                 scope: Scope.Protected,
                 isConstructorParameter: true
             }, {

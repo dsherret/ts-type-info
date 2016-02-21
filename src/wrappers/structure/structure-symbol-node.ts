@@ -1,13 +1,16 @@
 ﻿import {ITypeExpression} from "./../type-expression";
 import {VariableDeclarationType, Scope, ClassConstructorParameterScope, NamespaceDeclarationType} from "./../../definitions";
+import {ClassPropertyStructure, BasePropertyStructure, ScopedStructure, DefaultExpressionedStructure, TypeExpressionedStructure} from "./../../structures";
 import {INode} from "./../node";
 import {IExpression} from "./../expression";
 import {ISymbolNode} from "./../symbol-node";
 import {StructureNode} from "./structure-node";
+import {StructureExpression} from "./structure-expression";
+import {StructureTypeExpression} from "./structure-type-expression";
 
 export class StructureSymbolNode extends StructureNode implements ISymbolNode {
     getName() {
-        return "";
+        return this.structure.name || "";
     }
 
     isExported() {
@@ -31,7 +34,7 @@ export class StructureSymbolNode extends StructureNode implements ISymbolNode {
     }
 
     isConstructorParameter() {
-        return false;
+        return (this.structure as ClassPropertyStructure).isConstructorParameter || false;
     }
 
     isPropertyReadonly() {
@@ -43,7 +46,7 @@ export class StructureSymbolNode extends StructureNode implements ISymbolNode {
     }
 
     isParameterOptional() {
-        return false;
+        return (this.structure as BasePropertyStructure).isOptional;
     }
 
     isRestParameter() {
@@ -59,7 +62,8 @@ export class StructureSymbolNode extends StructureNode implements ISymbolNode {
     }
 
     getTypeExpression(): ITypeExpression {
-        return null;
+        const typeExpression = (this.structure as TypeExpressionedStructure).type;
+        return typeExpression == null ? null : new StructureTypeExpression(typeExpression);
     }
 
     getTypeParameters(): ISymbolNode[] {
@@ -75,7 +79,7 @@ export class StructureSymbolNode extends StructureNode implements ISymbolNode {
     }
 
     getScope(): Scope {
-        return Scope.Public;
+        return (this.structure as ScopedStructure).scope || Scope.Public;
     }
 
     getEnumMembers(): ISymbolNode[] {
@@ -91,7 +95,8 @@ export class StructureSymbolNode extends StructureNode implements ISymbolNode {
     }
 
     getDefaultExpression(): IExpression {
-        return null;
+        const defaultExpression = (this.structure as DefaultExpressionedStructure).defaultExpression;
+        return defaultExpression == null ? null : new StructureExpression(defaultExpression);
     }
 
     getParameters(): ISymbolNode[] {
