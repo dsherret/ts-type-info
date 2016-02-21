@@ -38,7 +38,7 @@ class MyClass {
             return {
                 hasPrivate: /private/.exec(writtenCode) != null,
                 hasProtected: /protected/.exec(writtenCode) != null,
-                hasPublic: /Public/.exec(writtenCode) != null,
+                hasPublic: /Public/.exec(writtenCode) != null
             };
         }
 

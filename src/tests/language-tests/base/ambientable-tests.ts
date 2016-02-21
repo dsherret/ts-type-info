@@ -71,6 +71,6 @@ declare module MyAmbientModule {
                 name: "MyClass",
                 isExported: true
             }]
-        }],
+        }]
     });
 });

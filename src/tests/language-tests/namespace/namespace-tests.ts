@@ -87,7 +87,7 @@ export namespace MyExportedNamespace {
                 exports: [{
                     name: "MyInnerNamespaceClass"
                 }, {
-                    name: "myInnerVariable",
+                    name: "myInnerVariable"
                 }]
             }],
             exports: [{

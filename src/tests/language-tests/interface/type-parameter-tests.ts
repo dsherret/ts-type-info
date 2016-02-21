@@ -14,7 +14,7 @@ interface MyInterface<T, U extends string> {
         interfaces: [{
             name: "MyInterface",
             typeParameters: [{
-                name: "T",
+                name: "T"
             }, {
                 name: "U",
                 constraintTypeExpression: { text: "string" }

@@ -21,10 +21,6 @@ export class TsNode extends TsSourceFileChildBase implements INode {
     protected node: ts.Node;
     protected parentNode: ts.Node;
 
-    private get kind() {
-        return (this.node == null) ? ts.SyntaxKind.Unknown : this.node.kind;
-    }
-
     constructor(opts: TsNodeOptions) {
         super(opts);
 
@@ -260,5 +256,9 @@ export class TsNode extends TsSourceFileChildBase implements INode {
     private hasModifierWithSyntaxKind(syntaxKind: ts.SyntaxKind) {
         const node = (this.isVariable()) ? this.node.parent.parent : this.node;
         return (node.modifiers || []).some(m => m.kind === syntaxKind);
+    }
+
+    private get kind() {
+        return (this.node == null) ? ts.SyntaxKind.Unknown : this.node.kind;
     }
 }
