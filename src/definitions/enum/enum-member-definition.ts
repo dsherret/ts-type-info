@@ -1,29 +1,22 @@
 ﻿import {applyMixins} from "./../../utils";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {NamedStructure, EnumMemberStructure} from "./../../structures";
+import {ISymbolNode} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumDefinition} from "./enum-definition";
 
 export class EnumMemberDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<EnumDefinition> {
     value: number;
 
-    constructor(symbolNodeOrStructure: WrappedSymbolNode | EnumMemberStructure, parent: EnumDefinition) {
+    constructor(symbolNode: ISymbolNode, parent: EnumDefinition) {
         super(DefinitionType.EnumMember);
-        this.fillName(symbolNodeOrStructure);
+        this.fillName(symbolNode);
 
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            this.value = symbolNodeOrStructure.getConstantValue();
-        }
-        else {
-            this.value = symbolNodeOrStructure.value;
-        }
-
+        this.value = symbolNode.getConstantValue();
         this.parent = parent;
     }
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
+    fillName: (symbolNode: ISymbolNode) => void;
     // IParentedDefinition
     parent: EnumDefinition;
 }

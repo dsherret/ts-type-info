@@ -12,3 +12,5 @@
 /.vs
 /ts-type-info.favdoc
 /dist
+/backup-exclude-list.txt
+/backup.bat

@@ -1,22 +1,21 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {applyMixins} from "./../../utils";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {FunctionStructure, FunctionParameterStructure, ExportableStructure, AmbientableStructure} from "./../../structures";
+import {applyMixins, MainCache} from "./../../utils";
+import {ISymbolNode} from "./../../wrappers";
 import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition, DefinitionType, BaseFunctionDefinition} from "./../base";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {FunctionParameterDefinition} from "./function-parameter-definition";
 
 export class FunctionDefinition
-        extends BaseFunctionDefinition<ModuledDefinitions, FunctionParameterDefinition, FunctionParameterStructure>
+        extends BaseFunctionDefinition<ModuledDefinitions, FunctionParameterDefinition>
         implements IExportableDefinition, IAmbientableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
-    constructor(symbolNodeOrStructure: WrappedSymbolNode | FunctionStructure) {
-        super(symbolNodeOrStructure, FunctionParameterDefinition, DefinitionType.Function);
-        this.fillExportable(symbolNodeOrStructure);
-        this.fillAmbientable(symbolNodeOrStructure);
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode) {
+        super(mainCache, symbolNode, FunctionParameterDefinition, DefinitionType.Function);
+        this.fillExportable(symbolNode);
+        this.fillAmbientable(symbolNode);
     }
 
     write() {
@@ -30,11 +29,11 @@ export class FunctionDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
+    fillExportable: (symbolNode: ISymbolNode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
+    fillAmbientable: (symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(FunctionDefinition, [ExportableDefinition, AmbientableDefinition]);

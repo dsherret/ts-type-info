@@ -1,19 +1,21 @@
 ﻿import * as ts from "typescript";
-import {Scope} from "./../definitions/class/scope";
-import {ClassConstructorParameterScope} from "./../definitions/class/class-constructor-parameter-scope";
-import {VariableDeclarationType} from "./../definitions/variable/variable-declaration-type";
-import {NamespaceDeclarationType} from "./../definitions/namespace/namespace-declaration-type";
-import {tryGet, Logger} from "./../utils";
-import {WrappedNode, WrappedNodeOptions} from "./wrapped-node";
+import {Scope} from "./../../definitions/class/scope";
+import {ClassConstructorParameterScope} from "./../../definitions/class/class-constructor-parameter-scope";
+import {VariableDeclarationType} from "./../../definitions/variable/variable-declaration-type";
+import {NamespaceDeclarationType} from "./../../definitions/namespace/namespace-declaration-type";
+import {tryGet, Logger} from "./../../utils";
+import {ITypeExpression} from "./../type-expression";
+import {ISymbolNode} from "./../symbol-node";
+import {TsNode, TsNodeOptions} from "./ts-node";
 
-interface WrappedSymbolNodeOptions extends WrappedNodeOptions {
+interface TsSymbolNodeOptions extends TsNodeOptions {
     symbol: ts.Symbol;
 }
 
-export class WrappedSymbolNode extends WrappedNode {
+export class TsSymbolNode extends TsNode implements ISymbolNode {
     protected symbol: ts.Symbol;
 
-    constructor(opts: WrappedSymbolNodeOptions) {
+    constructor(opts: TsSymbolNodeOptions) {
         super(opts);
 
         this.symbol = opts.symbol;
@@ -30,12 +32,19 @@ export class WrappedSymbolNode extends WrappedNode {
         return name;
     }
 
-    getFileName() {
-        return (this.node as ts.SourceFile).fileName;
+    isExported() {
+        let parentSymbol = this.getSymbolParent(this.symbol);
+
+        if (parentSymbol == null) {
+            return this.isDefaultExport();
+        }
+        else {
+            return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[this.symbol.name] != null;
+        }
     }
 
-    isExported() {
-        return this.typeChecker.isSymbolExportOfParent(this.symbol);
+    isAlias() {
+        return this.typeChecker.symbolHasFlag(this.symbol, ts.SymbolFlags.Alias);
     }
 
     isDefaultExport() {
@@ -46,8 +55,20 @@ export class WrappedSymbolNode extends WrappedNode {
         return this.typeChecker.isSymbolNamedExportOfFile(this.symbol, this.sourceFile);
     }
 
-    getTypeExpression() {
-        return tryGet(this, () => this.typeChecker.getTypeExpressionAtLocation(this.node));
+    isConstructorParameter() {
+        // a ts symbol node will never be a constructor parameter
+        return false;
+    }
+
+    getAllRelatedSymbolNodes() {
+        return (this.symbol.getDeclarations() || []).map(declaration => this.createSymbolNode({
+            node: declaration,
+            symbol: this.symbol
+        }));
+    }
+
+    getTypeExpression(): ITypeExpression {
+        return tryGet(this, () => this.getTypeExpressionAtLocation(this.node));
     }
 
     getTypeParameters() {
@@ -62,7 +83,7 @@ export class WrappedSymbolNode extends WrappedNode {
 
     getTypeParameterConstraintTypeExpression() {
         const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
-        return constraint == null ? null : this.typeChecker.getTypeExpressionAtLocation((this.node as ts.TypeParameterDeclaration).constraint);
+        return constraint == null ? null : this.getTypeExpressionAtLocation((this.node as ts.TypeParameterDeclaration).constraint);
     }
 
     isAmbient() {
@@ -95,17 +116,17 @@ export class WrappedSymbolNode extends WrappedNode {
         });
     }
 
-    getParameterIsOptional() {
+    isParameterOptional() {
         const parameterDeclaration = this.node as ts.ParameterDeclaration;
         return parameterDeclaration.questionToken != null || parameterDeclaration.initializer != null || parameterDeclaration.dotDotDotToken != null;
     }
 
-    getParameterIsRestParameter() {
+    isRestParameter() {
         const parameterDeclaration = this.node as ts.ParameterDeclaration;
         return parameterDeclaration.dotDotDotToken != null;
     }
 
-    getPropertyIsOptional() {
+    isPropertyOptional() {
         const propertyDeclaration = this.node as ts.PropertyDeclaration;
         return propertyDeclaration.questionToken != null;
     }
@@ -116,7 +137,7 @@ export class WrappedSymbolNode extends WrappedNode {
 
     getDefaultExpression() {
         const propertyDeclaration = this.node as ts.PropertyDeclaration;
-        return propertyDeclaration.initializer != null ? this.createWrappedExpression(propertyDeclaration.initializer) : null;
+        return propertyDeclaration.initializer != null ? this.createTsExpression(propertyDeclaration.initializer) : null;
     }
 
     getParameters() {
@@ -124,16 +145,27 @@ export class WrappedSymbolNode extends WrappedNode {
         return parameters.filter(p => p != null).map(p => this.createSymbolNodeFromDeclaration(p));
     }
 
-    getReturnTypeExpression() {
-        return this.typeChecker.getReturnTypeFromDeclaration(this.node);
-    }
-
     getExtendsTypeExpressions() {
-        return this.typeChecker.getExtendsTypeExpressions(this.symbol);
+        const symbolType = this.typeChecker.getDeclaredTypeOfSymbol(this.symbol);
+        return symbolType.getBaseTypes().map(t => this.getTypeExpressionFromType(t));
     }
 
     getImplementsTypeExpressions() {
-        return this.typeChecker.getImplementsTypeExpressions(this.symbol);
+        const valueDeclaration = this.node as ts.ClassLikeDeclaration;
+        const symbolType = this.typeChecker.getDeclaredTypeOfSymbol(this.symbol);
+        const implementsIndex = symbolType.getBaseTypes().length > 0 ? 1 : 0;
+
+        if (valueDeclaration.heritageClauses != null && valueDeclaration.heritageClauses.length > implementsIndex) {
+            const types = valueDeclaration.heritageClauses[implementsIndex].types;
+
+            /* istanbul ignore else */
+            if (types != null && types.length > 0) {
+                return types.map(t => this.typeChecker.getTypeAtLocation(t))
+                    .map(t => this.getTypeExpressionFromType(t));
+            }
+        }
+
+        return [];
     }
 
     getScope() {
@@ -167,6 +199,10 @@ export class WrappedSymbolNode extends WrappedNode {
         }
     }
 
+    getAliasSymbolNode() {
+        return this.createSymbolNodeFromSymbol(this.typeChecker.getAliasedSymbol(this.symbol));
+    }
+
     isPropertyReadonly() {
         return this.isPropertyAccessor() && (this.symbol.flags & ts.SymbolFlags.SetAccessor) === 0;
     }
@@ -175,7 +211,7 @@ export class WrappedSymbolNode extends WrappedNode {
         return (this.symbol.flags & ts.SymbolFlags.GetAccessor) !== 0;
     }
 
-    getDeclarationType() {
+    getNamespaceDeclarationType() {
         const nodeFlags = this.node.flags;
 
         if ((nodeFlags & ts.NodeFlags.Namespace) !== 0) {
@@ -186,20 +222,36 @@ export class WrappedSymbolNode extends WrappedNode {
         }
     }
 
-    getConstantValue() {
-        return this.typeChecker.getConstantValue(this.node as ts.ElementAccessExpression);
-    }
-
-    forEachChild(callback: (symbolNode: WrappedSymbolNode) => void) {
+    forEachChild(callback: (symbolNode: ISymbolNode) => void) {
         if (this.isNamespace()) {
-            return this.forEachLocalSymbol(callback);
+            this.forEachLocalSymbol(callback);
         }
         else {
-            return this.forEachChildNode(callback);
+            this.forEachChildNode(callback);
         }
     }
 
-    private forEachLocalSymbol(callback: (symbolNode: WrappedSymbolNode) => void) {
+    protected createSymbolNodeFromDeclaration(declaration: ts.Declaration) {
+        return this.createSymbolNode({ node: declaration, symbol: this.typeChecker.getSymbolAtLocation(declaration) });
+    }
+
+    protected createSymbolNodeFromSymbol(symbol: ts.Symbol) {
+        return this.createSymbolNode({ node: this.typeChecker.getDeclarationFromSymbol(symbol), symbol: symbol });
+    }
+
+    protected createSymbolNode(opts: { symbol: ts.Symbol; node: ts.Node; }): ISymbolNode {
+        return this.tsCache.getSymbolNode(opts.symbol, opts.node, () => new TsSymbolNode({
+            sourceFile: this.sourceFile,
+            typeChecker: this.typeChecker,
+            tsCache: this.tsCache,
+            parentNode: this.node,
+            node: opts.node,
+            symbol: opts.symbol,
+            tsSourceFile: this.tsSourceFile
+        }));
+    }
+
+    private forEachLocalSymbol(callback: (symbolNode: ISymbolNode) => void) {
         this.typeChecker.getLocalSymbolsFromNode(this.node).forEach(symbol => {
             (symbol.getDeclarations() || []).forEach(declaration => {
                 const symbolNode = this.createSymbolNode({ node: declaration, symbol: symbol });
@@ -208,7 +260,7 @@ export class WrappedSymbolNode extends WrappedNode {
         });
     }
 
-    private forEachChildNode(callback: (symbolNode: WrappedSymbolNode) => void) {
+    private forEachChildNode(callback: (symbolNode: ISymbolNode) => void) {
         ts.forEachChild(this.node, (node) => {
             if (this.isNotDisallowedNode(node)) {
                 let symbol: ts.Symbol;
@@ -251,21 +303,7 @@ export class WrappedSymbolNode extends WrappedNode {
         return false;
     }
 
-    private createSymbolNodeFromDeclaration(declaration: ts.Declaration) {
-        return this.createSymbolNode({ node: declaration, symbol: this.typeChecker.getSymbolAtLocation(declaration) });
-    }
-
-    private createSymbolNodeFromSymbol(symbol: ts.Symbol) {
-        return this.createSymbolNode({ node: this.typeChecker.getDeclarationFromSymbol(symbol), symbol: symbol });
-    }
-
-    private createSymbolNode(opts: { node: ts.Node; symbol: ts.Symbol }): WrappedSymbolNode {
-        return new WrappedSymbolNode({
-            sourceFile: this.sourceFile,
-            typeChecker: this.typeChecker,
-            parentNode: this.node,
-            node: opts.node,
-            symbol: opts.symbol
-        });
+    private getSymbolParent(symbol: ts.Symbol) {
+        return symbol == null ? null : (symbol as any).parent as ts.Symbol;
     }
 }

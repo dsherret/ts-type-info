@@ -1,11 +1,10 @@
-﻿import {WrappedSymbolNode} from "./../../wrappers";
-import {ExportableStructure} from "./../../structures";
+﻿import {ISymbolNode} from "./../../wrappers";
 
 export interface IExportableDefinition {
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable(symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure): void;
+    fillExportable(symbolNode: ISymbolNode): void;
 }
 
 export abstract class ExportableDefinition implements IExportableDefinition {
@@ -13,16 +12,9 @@ export abstract class ExportableDefinition implements IExportableDefinition {
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
 
-    fillExportable(symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) {
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            this.isExported = symbolNodeOrStructure.isExported();
-            this.isNamedExportOfFile = symbolNodeOrStructure.isNamedExport();
-            this.isDefaultExportOfFile = symbolNodeOrStructure.isDefaultExport();
-        }
-        else {
-            this.isExported = symbolNodeOrStructure.isExported;
-            this.isNamedExportOfFile = symbolNodeOrStructure.isNamedExportOfFile;
-            this.isDefaultExportOfFile = symbolNodeOrStructure.isDefaultExportOfFile;
-        }
+    fillExportable(symbolNode: ISymbolNode) {
+        this.isExported = symbolNode.isExported();
+        this.isNamedExportOfFile = symbolNode.isNamedExport();
+        this.isDefaultExportOfFile = symbolNode.isDefaultExport();
     }
 }

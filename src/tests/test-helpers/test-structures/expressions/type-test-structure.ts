@@ -4,7 +4,7 @@ import {TypeExpressionTestStructure} from "./type-expression-test-structure";
 export interface TypeTestStructure {
     callSignatures?: CallSignatureTestStructure[];
     properties?: TypePropertyTestStructure[];
-    typeArguments?: TypeExpressionTestStructure[];
+    typeArguments?: TypeTestStructure[];
     definitions?: NamedTestStructure[];
     text: string;
 }

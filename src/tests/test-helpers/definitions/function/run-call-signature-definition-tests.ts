@@ -5,13 +5,11 @@ import {runTypeParameteredDefinitionTests, runParameteredDefinitionTests, runRet
 import {runCallSignatureParameterDefinitionTests} from "./run-call-signature-parameter-definition-tests";
 
 export function runCallSignatureDefinitionTests(definition: CallSignatureDefinition, structure: CallSignatureTestStructure) {
-    describe(`call signature`, () => {
-        runTypeParameteredDefinitionTests(definition, structure);
-        runParameteredDefinitionTests(runCallSignatureParameterDefinitionTests, definition, structure);
-        runReturnTypedDefinitionTests(definition, structure);
+    runTypeParameteredDefinitionTests(definition, structure);
+    runParameteredDefinitionTests(runCallSignatureParameterDefinitionTests, definition, structure);
+    runReturnTypedDefinitionTests(definition, structure);
 
-        it(`should have a minimum argument count of ${structure.minArgumentCount || 0}`, () => {
-            assert.equal(definition.minArgumentCount, structure.minArgumentCount || 0);
-        });
+    it(`should have a minimum argument count of ${structure.minArgumentCount || 0}`, () => {
+        assert.equal(definition.minArgumentCount, structure.minArgumentCount || 0);
     });
 }

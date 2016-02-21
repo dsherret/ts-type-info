@@ -1,5 +1,5 @@
-﻿import {WrappedSymbolNode} from "./../../wrappers";
-import {DefinitionCache, tryGet, Logger, ArrayExt} from "./../../utils";
+﻿import {ISymbolNode} from "./../../wrappers";
+import {MainCache, tryGet, Logger, ArrayExt} from "./../../utils";
 import {IParentedDefinition} from "./../base";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
@@ -19,7 +19,7 @@ export interface IModuledDefinition {
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
-    fillMembersByNode(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode): void;
+    fillMembersBySymbolNode(definitionCache: MainCache, symbolNode: ISymbolNode): void;
 }
 
 export abstract class ModuledDefinition implements IModuledDefinition {
@@ -32,11 +32,11 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
 
-    fillMembersByNode(definitionCache: DefinitionCache, fileSymbolNode: WrappedSymbolNode) {
+    fillMembersBySymbolNode(definitionCache: MainCache, fileSymbolNode: ISymbolNode) {
         this.initializeMD();
 
         fileSymbolNode.forEachChild((symbolNode) => {
-            const def = tryGet(symbolNode, () => definitionCache.getDefinition(symbolNode));
+            const def = tryGet(symbolNode, () => definitionCache.getDefinitionBySymbolNode(symbolNode));
 
             if (def != null) {
                 if (def.isFunctionDefinition()) {

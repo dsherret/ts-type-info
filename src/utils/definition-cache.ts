@@ -1,138 +1,130 @@
-import * as ts from "typescript";
 import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
-        MainDefinitions, TypeAliasDefinition, ImportDefinition} from "./../definitions";
-import {Expression} from "./../expressions";
-import {TypeChecker, KeyValueCache, Logger, ArrayExt} from "./../utils";
-import {WrappedSymbolNode, WrappedExpression} from "./../wrappers";
+        MainDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition} from "./../definitions";
+import {Expression, Type, TypeExpression} from "./../expressions";
+import {KeyValueCache, Logger, ArrayExt} from "./../utils";
+import {ISourceFile, ISymbolNode, INode, IExpression, IType, ITypeExpression} from "./../wrappers";
 
-export class DefinitionCache {
-    private definitionByNode = new KeyValueCache<ts.Node, MainDefinitions>();
-    private files = new KeyValueCache<ts.SourceFile, FileDefinition>();
+export class MainCache {
+    private definitionBySymbolNode = new KeyValueCache<INode, MainDefinitions>();
+    private files = new KeyValueCache<ISourceFile, FileDefinition>();
+    private typeExpressions = new KeyValueCache<ITypeExpression, TypeExpression>();
+    private types = new KeyValueCache<IType, Type>();
 
-    constructor(private typeChecker: TypeChecker) {
-    }
-
-    getImportDefinitions(symbolNode: WrappedSymbolNode, parent: FileDefinition) {
-        let importDefinitions: ImportDefinition[] = [];
-
-        for (const fileImportSymbol of this.typeChecker.getFileImportSymbols(symbolNode.getSourceFile())) {
-            importDefinitions.push(...this.getImportDefinitionsFromFileImportSymbol(fileImportSymbol, parent));
+    getTypeExpression(typeExpression: ITypeExpression) {
+        if (typeExpression == null) {
+            return null;
         }
 
-        return importDefinitions;
+        return this.typeExpressions.getOrCreate(typeExpression, () => new TypeExpression(typeExpression), createdTypeExpression => {
+            typeExpression.getTypes().forEach(type => {
+                createdTypeExpression.addType(this.getType(type));
+            });
+        });
     }
 
-    getReExportDefinitions(symbolNode: WrappedSymbolNode, parent: FileDefinition) {
-        let reExportDefinitions: ImportDefinition[] = [];
-
-        for (const fileImportSymbol of this.typeChecker.getFileReExportSymbols(symbolNode.getSourceFile())) {
-            reExportDefinitions.push(...this.getImportDefinitionsFromFileImportSymbol(fileImportSymbol, parent));
-        }
-
-        return reExportDefinitions;
+    getType(type: IType) {
+        return this.types.getOrCreate(type, () => new Type(), createdType => {
+            createdType.fillTypeInformation(this, type);
+        });
     }
 
-    private getImportDefinitionsFromFileImportSymbol(fileImportSymbol: ts.Symbol, parent: FileDefinition) {
-        const definitions = this.getDefinitionsBySymbol(fileImportSymbol);
+    getImportDefinitions(opts: { symbol: ISymbolNode; parent: FileDefinition; }) {
+        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.symbol);
 
         return (definitions || []).map(definition => new ImportDefinition(
-            this.getFileDefinitionFromSourceFile(this.typeChecker.getSourceFileOfSymbol(fileImportSymbol)),
+            this.getFileDefinitionFromSourceFile(opts.symbol.getSourceFile()),
             definition,
-            parent
+            opts.parent
         ));
     }
 
-    getDefaultExport(symbolNode: WrappedSymbolNode) {
-        const sourceFileSymbol = this.typeChecker.getSymbolAtLocation(symbolNode.getSourceFile());
+    getReExportDefinitions(opts: { symbol: ISymbolNode; parent: FileDefinition; }) {
+        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.symbol);
 
-        if (sourceFileSymbol != null) {
-            const defaultExport = sourceFileSymbol.exports["default"];
-
-            if (defaultExport != null) {
-                return this.getDefinitionsOrExpressionFromSymbol(defaultExport);
-            }
-        }
+        return (definitions || []).map(definition => new ReExportDefinition(
+            this.getFileDefinitionFromSourceFile(opts.symbol.getSourceFile()),
+            definition,
+            opts.parent
+        ));
     }
 
-    getDefinitionsBySymbol(symbol: ts.Symbol) {
-        return (symbol.getDeclarations() || []).map(node => {
-            return this.getDefinition(new WrappedSymbolNode({
-                typeChecker: this.typeChecker,
-                parentNode: node.parent,
-                sourceFile: node.getSourceFile(),
-                node: node,
-                symbol: symbol
-            }));
+    getAllDefinitionsBySymbolOfSymbolNode(symbol: ISymbolNode) {
+        return (symbol.getAllRelatedSymbolNodes() || []).map(symbolNode => {
+            return this.getDefinitionBySymbolNode(symbolNode);
         }).filter(d => d != null);
     }
 
-    getDefinition(symbolNode: WrappedSymbolNode) {
-        return this.definitionByNode.get(symbolNode.getNode()) || this.createDefinition(symbolNode);
+    getDefinitionBySymbolNode(symbolNode: ISymbolNode) {
+        return this.definitionBySymbolNode.get(symbolNode) || this.createDefinition(symbolNode);
     }
 
-    getFileDefinition(file: WrappedSymbolNode) {
-        let fileDefinition = this.files.get(file.getSourceFile());
+    getFileDefinition(file: ISourceFile) {
+        let fileDefinition = this.files.get(file);
 
         /* istanbul ignore else */
         if (fileDefinition == null) {
             fileDefinition = new FileDefinition(this, file);
 
-            this.files.add(file.getSourceFile(), fileDefinition);
+            this.files.add(file, fileDefinition);
         }
 
         return fileDefinition;
     }
 
-    getFileDefinitionFromSourceFile(sourceFile: ts.SourceFile) {
+    getFileDefinitionFromSourceFile(sourceFile: ISourceFile) {
         return this.files.get(sourceFile);
     }
 
-    getDefinitionsOrExpressionFromSymbol(symbol: ts.Symbol): Expression | ArrayExt<MainDefinitions> {
-        if (this.typeChecker.symbolHasFlag(symbol, ts.SymbolFlags.Alias)) {
-            const aliasedSymbol = this.typeChecker.getAliasedSymbol(symbol);
-            return new ArrayExt<MainDefinitions>(...this.getDefinitionsBySymbol(aliasedSymbol));
+    getDefinitionsOrExpressionFromSymbol(symbol: ISymbolNode): Expression | ArrayExt<MainDefinitions> {
+        if (symbol == null) {
+            return null;
+        }
+        else if (symbol.isAlias()) {
+            return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbol.getAliasSymbolNode()));
         }
         else {
-            const node = this.typeChecker.getDeclarationFromSymbol(symbol);
-            return this.getDefinitionsOrExpressionFromNodeAndSymbol(node, symbol);
+            let expression = symbol.getExpression();
+
+            if (expression != null) {
+                return new Expression(expression);
+            }
+            else {
+                return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbol));
+            }
         }
     }
 
-    getDefinitionsOrExpressionFromNodeAndSymbol(node: ts.Node, symbol: ts.Symbol): Expression | ArrayExt<MainDefinitions> {
-        const expressionStatement = node as ts.ExpressionStatement;
-        if (expressionStatement.expression != null) {
-            const wrappedExpression = new WrappedExpression({
-                typeChecker: this.typeChecker,
-                sourceFile: node.getSourceFile(),
-                expression: expressionStatement.expression
+    fillAllCachedTypesWithDefinitions() {
+        this.types.getAll().forEach(type => {
+            const iType = this.types.getKeyFromValue(type);
+            const symbols = iType.getSymbolNodes();
+
+            symbols.forEach(s => {
+                type.addDefinitions(this.getAllDefinitionsBySymbolOfSymbolNode(s));
             });
-            return new Expression(wrappedExpression);
-        }
-        else {
-            return new ArrayExt<MainDefinitions>(...this.getDefinitionsBySymbol(symbol));
-        }
+        });
     }
 
-    private createDefinition(symbolNode: WrappedSymbolNode) {
+    private createDefinition(symbolNode: ISymbolNode) {
         let definition: MainDefinitions;
 
         if (symbolNode.isFunction()) {
-            definition = new FunctionDefinition(symbolNode);
+            definition = new FunctionDefinition(this, symbolNode);
         }
         else if (symbolNode.isClass()) {
-            definition = new ClassDefinition(symbolNode);
+            definition = new ClassDefinition(this, symbolNode);
         }
         else if (symbolNode.isInterface()) {
-            definition = new InterfaceDefinition(symbolNode);
+            definition = new InterfaceDefinition(this, symbolNode);
         }
         else if (symbolNode.isEnum()) {
             definition = new EnumDefinition(symbolNode);
         }
         else if (symbolNode.isVariable()) {
-            definition = new VariableDefinition(symbolNode);
+            definition = new VariableDefinition(this, symbolNode);
         }
         else if (symbolNode.isTypeAlias()) {
-            definition = new TypeAliasDefinition(symbolNode);
+            definition = new TypeAliasDefinition(this, symbolNode);
         }
         else if (symbolNode.isNamespace()) {
             definition = new NamespaceDefinition(this, symbolNode);
@@ -151,7 +143,7 @@ export class DefinitionCache {
         }
 
         if (definition != null) {
-            this.definitionByNode.add(symbolNode.getNode(), definition);
+            this.definitionBySymbolNode.add(symbolNode, definition);
         }
 
         return definition;

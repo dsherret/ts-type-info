@@ -1,24 +1,18 @@
-﻿import {WrappedSymbolNode} from "./../../wrappers";
+﻿import {ISymbolNode} from "./../../wrappers";
 import {AmbientableStructure} from "./../../structures";
 
 export interface IAmbientableDefinition {
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable(symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure): void;
+    fillAmbientable(symbolNode: ISymbolNode): void;
 }
 
 export abstract class AmbientableDefinition implements IAmbientableDefinition {
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
-    fillAmbientable(symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) {
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            this.hasDeclareKeyword = symbolNodeOrStructure.hasDeclareKeyword();
-            this.isAmbient = symbolNodeOrStructure.isAmbient();
-        }
-        else {
-            this.hasDeclareKeyword = symbolNodeOrStructure.hasDeclareKeyword;
-            this.isAmbient = symbolNodeOrStructure.isAmbient;
-        }
+    fillAmbientable(symbolNode: ISymbolNode) {
+        this.hasDeclareKeyword = symbolNode.hasDeclareKeyword();
+        this.isAmbient = symbolNode.isAmbient();
     }
 }

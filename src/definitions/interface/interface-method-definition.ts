@@ -1,12 +1,12 @@
 ﻿import {DefinitionType, BaseFunctionDefinition} from "./../base";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {InterfaceMethodParameterStructure} from "./../../structures";
+import {ISymbolNode} from "./../../wrappers";
+import {MainCache} from "./../../utils";
 import {InterfaceDefinition} from "./interface-definition";
 import {InterfaceMethodParameterDefinition} from "./interface-method-parameter-definition";
 
-export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethodParameterStructure> {
-    constructor(symbolNode: WrappedSymbolNode, parent: InterfaceDefinition) {
-        super(symbolNode, InterfaceMethodParameterDefinition, DefinitionType.InterfaceMethod);
+export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceDefinition, InterfaceMethodParameterDefinition> {
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: InterfaceDefinition) {
+        super(mainCache, symbolNode, InterfaceMethodParameterDefinition, DefinitionType.InterfaceMethod);
         this.parent = parent;
     }
 }

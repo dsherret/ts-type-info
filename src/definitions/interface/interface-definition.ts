@@ -3,8 +3,8 @@ import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
-import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
-import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
+import {applyMixins, tryGet, Logger, ArrayExt, MainCache} from "./../../utils";
+import {ISymbolNode, ISignature} from "./../../wrappers";
 import {AmbientableStructure, TypeParameteredStructure, NamedStructure, ExportableStructure} from "./../../structures";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
@@ -23,14 +23,14 @@ export class InterfaceDefinition extends BaseDefinition
     typeParameters = new ArrayExt<TypeParameterDefinition<this>>();
     extendsTypeExpressions = new ArrayExt<TypeExpression>();
 
-    constructor(symbolNode: WrappedSymbolNode) {
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode) {
         super(DefinitionType.Interface);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
-        this.fillMembers(symbolNode);
+        this.fillMembers(mainCache, symbolNode);
         this.fillAmbientable(symbolNode);
-        this.fillTypeParametersBySymbol(symbolNode);
-        this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions());
+        this.fillTypeParametersBySymbol(mainCache, symbolNode);
+        this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions().map(typeExpression => mainCache.getTypeExpression(typeExpression)));
     }
 
     write() {
@@ -40,9 +40,9 @@ export class InterfaceDefinition extends BaseDefinition
         return writer.toString();
     }
 
-    private fillMembers(symbolNode: WrappedSymbolNode) {
+    private fillMembers(mainCache: MainCache, symbolNode: ISymbolNode) {
         symbolNode.forEachChild(childSymbol => {
-            const def = this.getMemberDefinition(childSymbol);
+            const def = this.getMemberDefinition(mainCache, childSymbol);
 
             if (def != null) {
                 this.addDefinition(def);
@@ -50,16 +50,16 @@ export class InterfaceDefinition extends BaseDefinition
         });
     }
 
-    private getMemberDefinition(childSymbol: WrappedSymbolNode): InterfaceMemberDefinitions {
+    private getMemberDefinition(mainCache: MainCache, childSymbol: ISymbolNode): InterfaceMemberDefinitions {
         return tryGet(childSymbol, () => {
             if (childSymbol.isMethodSignature()) {
-                return new InterfaceMethodDefinition(childSymbol, this);
+                return new InterfaceMethodDefinition(mainCache, childSymbol, this);
             }
             else if (childSymbol.isPropertySignature()) {
-                return new InterfacePropertyDefinition(childSymbol, this);
+                return new InterfacePropertyDefinition(mainCache, childSymbol, this);
             }
             else if (childSymbol.isConstructSignature()) {
-                return new InterfaceNewSignatureDefinition(childSymbol.getSignatureFromThis(), this);
+                return new InterfaceNewSignatureDefinition(mainCache, childSymbol.getSignatureFromThis(), this);
             }
             else if (childSymbol.isIdentifier()) {
                 // ignore, it's the interface identifier
@@ -90,21 +90,21 @@ export class InterfaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
+    fillName: (symbolNode: ISymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
+    fillExportable: (symbolNode: ISymbolNode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | TypeParameteredStructure) => void;
-    fillTypeParametersBySignature: (signatureOrStructure: WrappedSignature | TypeParameteredStructure) => void;
+    fillTypeParametersBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySignature: (mainCache: MainCache, signature: ISignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
+    fillAmbientable: (symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

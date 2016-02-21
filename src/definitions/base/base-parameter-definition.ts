@@ -1,6 +1,5 @@
-import {applyMixins} from "./../../utils";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {BaseParameterStructure, NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure} from "./../../structures";
+import {applyMixins, MainCache} from "./../../utils";
+import {ISymbolNode} from "./../../wrappers";
 import {Expression, TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {IParentedDefinition} from "./parented-definition";
@@ -9,8 +8,8 @@ import {IDefaultExpressionedDefinition, DefaultExpressionedDefinition} from "./d
 import {BaseDefinition} from "./base-definition";
 import {DefinitionType} from "./definition-type";
 
-export interface BaseParameterDefinitionConstructor<ParentType, ParameterType, ParameterStructureType extends BaseParameterStructure> {
-    new(symbolNodeOrStructure: WrappedSymbolNode | ParameterStructureType, parent: ParentType): ParameterType;
+export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
+    new(mainCache: MainCache, symbolNode: ISymbolNode, parent: ParentType): ParameterType;
 }
 
 export class BaseParameterDefinition<ParentType> extends BaseDefinition
@@ -18,35 +17,29 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     isOptional: boolean;
     isRestParameter: boolean;
 
-    constructor(symbolNodeOrStructure: WrappedSymbolNode | BaseParameterStructure, parent: ParentType, definitionType: DefinitionType) {
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
         super(definitionType);
-        this.fillName(symbolNodeOrStructure);
-        this.fillTypeExpression(symbolNodeOrStructure);
-        this.fillDefaultExpression(symbolNodeOrStructure);
 
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            this.isOptional = symbolNodeOrStructure.getParameterIsOptional();
-            this.isRestParameter = symbolNodeOrStructure.getParameterIsRestParameter();
-        }
-        else {
-            this.isOptional = symbolNodeOrStructure.isOptional;
-            this.isRestParameter = symbolNodeOrStructure.isRestParameter;
-        }
+        this.fillName(symbolNode);
+        this.fillTypeExpression(mainCache, symbolNode);
+        this.fillDefaultExpression(symbolNode);
 
+        this.isOptional = symbolNode.isParameterOptional();
+        this.isRestParameter = symbolNode.isRestParameter();
         this.parent = parent;
     }
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
+    fillName: (symbolNode: ISymbolNode) => void;
     // IParentedDefinition
     parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (symbolNodeOrStructure: WrappedSymbolNode | TypeExpressionedStructure) => void;
+    fillTypeExpression: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
-    fillDefaultExpression: (symbolNodeOrStructure: WrappedSymbolNode | DefaultExpressionedStructure) => void;
+    fillDefaultExpression: (symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(BaseParameterDefinition, [NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);

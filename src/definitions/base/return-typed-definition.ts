@@ -1,20 +1,21 @@
 import {TypeExpression} from "./../../expressions";
-import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
+import {ISignature, ISymbolNode} from "./../../wrappers";
+import {MainCache} from "./../../utils";
 
 export interface IReturnTypedDefinition {
-    fillReturnTypeExpressionBySymbol(symbolNode: WrappedSymbolNode): void;
-    fillReturnTypeExpressionBySignature(signature: WrappedSignature): void;
+    fillReturnTypeExpressionBySymbol(mainCache: MainCache, symbolNode: ISymbolNode): void;
+    fillReturnTypeExpressionBySignature(mainCache: MainCache, signature: ISignature): void;
     returnTypeExpression: TypeExpression;
 }
 
 export abstract class ReturnTypedDefinition implements IReturnTypedDefinition {
     returnTypeExpression: TypeExpression;
 
-    fillReturnTypeExpressionBySymbol(symbolNode: WrappedSymbolNode) {
-        this.returnTypeExpression = symbolNode.getReturnTypeExpression();
+    fillReturnTypeExpressionBySymbol(mainCache: MainCache, symbolNode: ISymbolNode) {
+        this.returnTypeExpression = mainCache.getTypeExpression(symbolNode.getReturnTypeExpression());
     }
 
-    fillReturnTypeExpressionBySignature(signature: WrappedSignature) {
-        this.returnTypeExpression = signature.getReturnTypeExpression();
+    fillReturnTypeExpressionBySignature(mainCache: MainCache, signature: ISignature) {
+        this.returnTypeExpression = mainCache.getTypeExpression(signature.getReturnTypeExpression());
     }
 }

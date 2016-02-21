@@ -1,21 +1,15 @@
 import {Scope} from "./../scope";
-import {WrappedSymbolNode} from "./../../../wrappers";
-import {ScopedStructure} from "./../../../structures";
+import {ISymbolNode} from "./../../../wrappers";
 
 export interface IScopedDefinition {
     scope: Scope;
-    fillScope(symbolNode: WrappedSymbolNode | ScopedStructure): void;
+    fillScope(symbolNode: ISymbolNode): void;
 }
 
 export abstract class ScopedDefinition implements IScopedDefinition {
     scope: Scope;
 
-    fillScope(symbolNodeOrStructure: WrappedSymbolNode | ScopedStructure) {
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            this.scope = symbolNodeOrStructure.getScope();
-        }
-        else {
-            this.scope = symbolNodeOrStructure.scope;
-        }
+    fillScope(symbolNode: ISymbolNode) {
+        this.scope = symbolNode.getScope();
     }
 }

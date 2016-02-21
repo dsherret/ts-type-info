@@ -1,25 +1,19 @@
 ﻿import {Expression} from "./../../expressions";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {DefaultExpressionedStructure} from "./../../structures";
+import {ISymbolNode} from "./../../wrappers";
 
 export interface IDefaultExpressionedDefinition {
     defaultExpression: Expression;
-    fillDefaultExpression(symbolNodeOrStructure: WrappedSymbolNode | DefaultExpressionedStructure): void;
+    fillDefaultExpression(symbolNode: ISymbolNode): void;
 }
 
 export abstract class DefaultExpressionedDefinition implements IDefaultExpressionedDefinition {
     defaultExpression: Expression;
 
-    fillDefaultExpression(symbolNodeOrStructure: WrappedSymbolNode | DefaultExpressionedStructure) {
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            const expression = symbolNodeOrStructure.getDefaultExpression();
+    fillDefaultExpression(symbolNode: ISymbolNode) {
+        const expression = symbolNode.getDefaultExpression();
 
-            if (expression != null) {
-                this.defaultExpression = new Expression(expression);
-            }
-        }
-        else {
-            this.defaultExpression = new Expression(symbolNodeOrStructure.defaultExpression);
+        if (expression != null) {
+            this.defaultExpression = new Expression(expression);
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
-import {applyMixins, DefinitionCache, ArrayExt} from "./../../utils";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {NamedStructure, AmbientableStructure} from "./../../structures";
+import {applyMixins, MainCache, ArrayExt} from "./../../utils";
+import {ISymbolNode} from "./../../wrappers";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
@@ -19,13 +18,13 @@ export class NamespaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
-    constructor(definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) {
+    constructor(definitionCache: MainCache, symbolNode: ISymbolNode) {
         super(DefinitionType.Namespace);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
         this.fillAmbientable(symbolNode);
-        this.fillMembersByNode(definitionCache, symbolNode);
-        this.declarationType = symbolNode.getDeclarationType();
+        this.fillMembersBySymbolNode(definitionCache, symbolNode);
+        this.declarationType = symbolNode.getNamespaceDeclarationType();
     }
 
     write() {
@@ -38,7 +37,7 @@ export class NamespaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
+    fillName: (symbolNode: ISymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ModuledDefinition
@@ -50,16 +49,16 @@ export class NamespaceDefinition extends BaseDefinition
     variables: ArrayExt<VariableDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    fillMembersByNode: (definitionCache: DefinitionCache, symbolNode: WrappedSymbolNode) => void;
+    fillMembersBySymbolNode: (definitionCache: MainCache, symbolNode: ISymbolNode) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: WrappedSymbolNode) => void;
+    fillExportable: (symbolNode: ISymbolNode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
+    fillAmbientable: (symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

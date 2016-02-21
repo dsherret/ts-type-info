@@ -3,7 +3,7 @@ import {ModuledDefinitions} from "./../../definitions";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, ArrayExt} from "./../../utils";
-import {WrappedSymbolNode} from "./../../wrappers";
+import {ISymbolNode} from "./../../wrappers";
 import {NamedStructure, AmbientableStructure, ExportableStructure} from "./../../structures";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
@@ -13,7 +13,7 @@ export class EnumDefinition extends BaseDefinition
                             implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
     members = new ArrayExt<EnumMemberDefinition>();
 
-    constructor(symbolNode: WrappedSymbolNode) {
+    constructor(symbolNode: ISymbolNode) {
         super(DefinitionType.Enum);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
@@ -30,18 +30,18 @@ export class EnumDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
+    fillName: (symbolNode: ISymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
+    fillExportable: (symbolNode: ISymbolNode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
+    fillAmbientable: (symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition]);

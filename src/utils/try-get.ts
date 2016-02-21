@@ -1,8 +1,8 @@
-﻿import {WrappedSymbolNode} from "./../wrappers";
+﻿import {ISymbolNode} from "./../wrappers";
 import {logError} from "./log-error";
 
 /* istanbul ignore next */
-export function tryGet<T>(objOrString: WrappedSymbolNode | string, attemptToGet: () => T, onSuccess?: (def: T) => void) {
+export function tryGet<T>(objOrString: ISymbolNode | string, attemptToGet: () => T, onSuccess?: (def: T) => void) {
     let def: T;
 
     try {

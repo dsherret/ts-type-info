@@ -1,19 +1,18 @@
 import CodeBlockWriter from "code-block-writer";
 import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition} from "./../base";
-import {applyMixins, ArrayExt} from "./../../utils";
-import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
-import {ClassConstructorParameterStructure} from "./../../structures";
+import {applyMixins, ArrayExt, MainCache} from "./../../utils";
+import {ISignature, ISymbolNode} from "./../../wrappers";
 import {ClassConstructorParameterDefinition} from "./class-constructor-parameter-definition";
 import {ClassDefinition} from "./class-definition";
 
 export class ClassConstructorDefinition
         extends BaseDefinition
-        implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure> {
+        implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition> {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
-    constructor(symbolNode: WrappedSymbolNode, parent: ClassDefinition) {
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ClassDefinition) {
         super(DefinitionType.ClassConstructor);
-        this.fillParametersBySymbol(symbolNode, ClassConstructorParameterDefinition);
+        this.fillParametersBySymbol(mainCache, symbolNode, ClassConstructorParameterDefinition);
         this.parent = parent;
     }
 
@@ -22,10 +21,12 @@ export class ClassConstructorDefinition
     // ParameteredDefinition
     parameters: ArrayExt<ClassConstructorParameterDefinition>;
     fillParametersBySymbol: (
-        symbolNodeOrStructure: WrappedSymbolNode | ClassConstructorParameterStructure,
+        mainCache: MainCache,
+        symbolNode: ISymbolNode,
         parameterDefinition: typeof ClassConstructorParameterDefinition) => void;
     fillParametersBySignature: (
-        signatureOrStructure: WrappedSignature | ClassConstructorParameterStructure,
+        mainCache: MainCache,
+        signature: ISignature,
         parameterDefinition: typeof ClassConstructorParameterDefinition) => void;
 }
 

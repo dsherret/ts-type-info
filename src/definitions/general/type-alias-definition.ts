@@ -1,9 +1,8 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {applyMixins, ArrayExt} from "./../../utils";
-import {WrappedSignature, WrappedSymbolNode} from "./../../wrappers";
+import {applyMixins, ArrayExt, MainCache} from "./../../utils";
+import {ISignature, ISymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../write-flags";
-import {NamedStructure, TypeExpressionedStructure, TypeParameteredStructure, ExportableStructure, AmbientableStructure} from "./../../structures";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition,
         BaseDefinition, DefinitionType} from "./../base";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
@@ -19,12 +18,12 @@ import {TypeAliasWriter} from "./../../writers";
 export class TypeAliasDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                             ITypeParameteredDefinition, IAmbientableDefinition {
-    constructor(symbolNode: WrappedSymbolNode) {
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode) {
         super(DefinitionType.TypeAlias);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
-        this.fillTypeExpression(symbolNode);
-        this.fillTypeParametersBySymbol(symbolNode);
+        this.fillTypeExpression(mainCache, symbolNode);
+        this.fillTypeParametersBySymbol(mainCache, symbolNode);
         this.fillAmbientable(symbolNode);
     }
 
@@ -37,25 +36,25 @@ export class TypeAliasDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
+    fillName: (symbolNode: ISymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
+    fillExportable: (symbolNode: ISymbolNode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (symbolNodeOrStructure: WrappedSymbolNode | TypeExpressionedStructure) => void;
+    fillTypeExpression: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | TypeParameteredStructure) => void;
-    fillTypeParametersBySignature: (signatureOrStructure: WrappedSignature | TypeParameteredStructure) => void;
+    fillTypeParametersBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySignature: (mainCache: MainCache, signature: ISignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
+    fillAmbientable: (symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(TypeAliasDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition]);

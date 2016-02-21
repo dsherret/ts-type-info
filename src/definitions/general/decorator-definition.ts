@@ -1,5 +1,5 @@
 import {Expression} from "./../../expressions";
-import {WrappedNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {DecoratorStructure} from "./../../structures";
 import {ArrayExt} from "./../../utils";
 import {IBaseNamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
@@ -7,18 +7,10 @@ import {IBaseNamedDefinition, IParentedDefinition, BaseDefinition, DefinitionTyp
 export class DecoratorDefinition<ParentType> extends BaseDefinition implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
     arguments = new ArrayExt<Expression>();
 
-    constructor(nodeOrStructure: WrappedNode | DecoratorStructure, parent: ParentType) {
+    constructor(node: INode, parent: ParentType) {
         super(DefinitionType.Decorator);
-
-        if (nodeOrStructure instanceof WrappedNode) {
-            this.name = nodeOrStructure.getDecoratorName();
-            this.arguments.push(...nodeOrStructure.getDecoratorArguments().map(arg => new Expression(arg)));
-        }
-        else {
-            this.name = nodeOrStructure.name;
-            this.arguments.push(...(nodeOrStructure.arguments || []).map(arg => new Expression(arg)));
-        }
-
+        this.name = node.getDecoratorName();
+        this.arguments.push(...node.getDecoratorArguments().map(arg => new Expression(arg)));
         this.parent = parent;
     }
 

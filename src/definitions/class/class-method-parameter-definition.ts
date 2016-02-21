@@ -1,10 +1,11 @@
-﻿import {WrappedSymbolNode} from "./../../wrappers";
+﻿import {ISymbolNode} from "./../../wrappers";
+import {MainCache} from "./../../utils";
 import {DefinitionType} from "./../base";
 import {BaseClassMethodParameterDefinition} from "./base";
 import {ClassMethodDefinition} from "./class-method-definition";
 
 export class ClassMethodParameterDefinition extends BaseClassMethodParameterDefinition<ClassMethodDefinition> {
-    constructor(symbolNode: WrappedSymbolNode, parent: ClassMethodDefinition) {
-        super(symbolNode, parent, DefinitionType.ClassMethodParameter);
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ClassMethodDefinition) {
+        super(mainCache, symbolNode, parent, DefinitionType.ClassMethodParameter);
     }
 }

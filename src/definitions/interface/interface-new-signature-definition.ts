@@ -1,19 +1,19 @@
 ﻿import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, IReturnTypedDefinition} from "./../base";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, ArrayExt} from "./../../utils";
-import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
-import {InterfaceNewSignatureStructure, ReturnTypedStructure, ParameteredStructure, InterfaceNewSignatureParameterStructure} from "./../../structures";
+import {applyMixins, ArrayExt, MainCache} from "./../../utils";
+import {ISymbolNode, ISignature} from "./../../wrappers";
 import {InterfaceNewSignatureParameterDefinition} from "./interface-new-signature-parameter-definition";
 import {InterfaceDefinition} from "./interface-definition";
 
-export class InterfaceNewSignatureDefinition extends BaseDefinition
-        implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition, InterfaceNewSignatureParameterStructure>, IReturnTypedDefinition,
+export class InterfaceNewSignatureDefinition
+        extends BaseDefinition
+        implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition,
                    IParentedDefinition<InterfaceDefinition> {
 
-    constructor(signatureOrStructure: WrappedSignature | InterfaceNewSignatureStructure, parent: InterfaceDefinition) {
+    constructor(mainCache: MainCache, signature: ISignature, parent: InterfaceDefinition) {
         super(DefinitionType.InterfaceNewSignature);
-        this.fillParametersBySignature(signatureOrStructure, InterfaceNewSignatureParameterDefinition);
-        this.fillReturnTypeExpressionBySignature(signatureOrStructure);
+        this.fillParametersBySignature(mainCache, signature, InterfaceNewSignatureParameterDefinition);
+        this.fillReturnTypeExpressionBySignature(mainCache, signature);
         this.parent = parent;
     }
 
@@ -22,15 +22,17 @@ export class InterfaceNewSignatureDefinition extends BaseDefinition
     // ParameteredDefinition
     parameters: ArrayExt<InterfaceNewSignatureParameterDefinition>;
     fillParametersBySymbol: (
-        symbolNodeOrStructure: WrappedSymbolNode | ParameteredStructure<InterfaceNewSignatureParameterStructure>,
+        mainCache: MainCache,
+        symbolNode: ISymbolNode,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     fillParametersBySignature: (
-        signatureOrStructure: WrappedSignature | ParameteredStructure<InterfaceNewSignatureParameterStructure>,
+        mainCache: MainCache,
+        signature: ISignature,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | ReturnTypedStructure) => void;
-    fillReturnTypeExpressionBySignature: (signatureOrStructure: WrappedSignature | ReturnTypedStructure) => void;
+    fillReturnTypeExpressionBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillReturnTypeExpressionBySignature: (mainCache: MainCache, signature: ISignature) => void;
 }
 
 applyMixins(InterfaceNewSignatureDefinition, [ParameteredDefinition, ReturnTypedDefinition]);

@@ -1,7 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {applyMixins} from "./../../utils";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {NamedStructure, TypeExpressionedStructure, AmbientableStructure, DefaultExpressionedStructure, VariableStructure, ExportableStructure} from "./../../structures";
+import {applyMixins, MainCache} from "./../../utils";
+import {ISymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableWriter} from "./../../writers";
@@ -15,20 +14,15 @@ export class VariableDefinition extends BaseDefinition
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
-    constructor(symbolNodeOrStructure: WrappedSymbolNode | VariableStructure) {
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode) {
         super(DefinitionType.Variable);
-        this.fillName(symbolNodeOrStructure);
-        this.fillExportable(symbolNodeOrStructure);
-        this.fillTypeExpression(symbolNodeOrStructure);
-        this.fillDefaultExpression(symbolNodeOrStructure);
-        this.fillAmbientable(symbolNodeOrStructure);
+        this.fillName(symbolNode);
+        this.fillExportable(symbolNode);
+        this.fillTypeExpression(mainCache, symbolNode);
+        this.fillDefaultExpression(symbolNode);
+        this.fillAmbientable(symbolNode);
 
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            this.declarationType = symbolNodeOrStructure.getVariableDeclarationType();
-        }
-        else {
-            this.declarationType = symbolNodeOrStructure.declarationType;
-        }
+        this.declarationType = symbolNode.getVariableDeclarationType();
     }
 
     write() {
@@ -40,24 +34,24 @@ export class VariableDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: WrappedSymbolNode | NamedStructure) => void;
+    fillName: (symbolNode: ISymbolNode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNodeOrStructure: WrappedSymbolNode | ExportableStructure) => void;
+    fillExportable: (symbolNode: ISymbolNode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (symbolNodeOrStructure: WrappedSymbolNode | TypeExpressionedStructure) => void;
+    fillTypeExpression: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
-    fillDefaultExpression: (symbolNodeOrStructure: WrappedSymbolNode | DefaultExpressionedStructure) => void;
+    fillDefaultExpression: (symbolNode: ISymbolNode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNodeOrStructure: WrappedSymbolNode | AmbientableStructure) => void;
+    fillAmbientable: (symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

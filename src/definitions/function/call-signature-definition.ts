@@ -1,7 +1,6 @@
-import {WrappedSymbolNode, WrappedSignature} from "./../../wrappers";
-import {ReturnTypedStructure, CallSignatureParameterStructure, TypeParameteredStructure} from "./../../structures";
+import {ISymbolNode, ISignature} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins, ArrayExt, MainCache} from "./../../utils";
 import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType,
         IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -9,14 +8,14 @@ import {CallSignatureParameterDefinition} from "./call-signature-parameter-defin
 
 export class CallSignatureDefinition
         extends BaseDefinition
-        implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, IReturnTypedDefinition {
+        implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
     minArgumentCount: number;
 
-    constructor(signature: WrappedSignature) {
+    constructor(mainCache: MainCache, signature: ISignature) {
         super(DefinitionType.CallSignature);
-        this.fillReturnTypeExpressionBySignature(signature);
-        this.fillParametersBySignature(signature, CallSignatureParameterDefinition);
-        this.fillTypeParametersBySignature(signature);
+        this.fillReturnTypeExpressionBySignature(mainCache, signature);
+        this.fillParametersBySignature(mainCache, signature, CallSignatureParameterDefinition);
+        this.fillTypeParametersBySignature(mainCache, signature);
 
         this.minArgumentCount = signature.getMinArgumentCount();
     }
@@ -24,19 +23,21 @@ export class CallSignatureDefinition
     // ParameteredDefinition
     parameters: ArrayExt<CallSignatureParameterDefinition>;
     fillParametersBySymbol: (
-        symbolNode: WrappedSymbolNode,
+        mainCache: MainCache,
+        symbolNode: ISymbolNode,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     fillParametersBySignature: (
-        signature: WrappedSignature,
+        mainCache: MainCache,
+        signature: ISignature,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | ReturnTypedStructure) => void;
-    fillReturnTypeExpressionBySignature: (signatureOrStructure: WrappedSignature | ReturnTypedStructure) => void;
+    fillReturnTypeExpressionBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillReturnTypeExpressionBySignature: (mainCache: MainCache, signature: ISignature) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (symbolNodeOrStructure: WrappedSymbolNode | TypeParameteredStructure) => void;
-    fillTypeParametersBySignature: (signatureOrStructure: WrappedSignature | TypeParameteredStructure) => void;
+    fillTypeParametersBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySignature: (mainCache: MainCache, signature: ISignature) => void;
 }
 
 applyMixins(CallSignatureDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

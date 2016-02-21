@@ -1,14 +1,9 @@
-﻿import {WrappedExpression} from "./../wrappers";
+﻿import {IExpression} from "./../wrappers";
 
 export class Expression {
     text: string;
 
-    constructor(expression: WrappedExpression | string) {
-        if (expression instanceof WrappedExpression) {
-            this.text = expression.getText();
-        }
-        else {
-            this.text = expression;
-        }
+    constructor(expression: IExpression) {
+        this.text = expression.getText();
     }
 }

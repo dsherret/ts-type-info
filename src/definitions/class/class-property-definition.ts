@@ -1,5 +1,5 @@
-import {WrappedSymbolNode} from "./../../wrappers";
-import {ClassPropertyStructure} from "./../../structures";
+import {ISymbolNode} from "./../../wrappers";
+import {MainCache} from "./../../utils";
 import {DefinitionType} from "./../base";
 import {BaseClassPropertyDefinition} from "./base";
 import {ClassDefinition} from "./class-definition";
@@ -9,18 +9,11 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isReadonly: boolean;
     isConstructorParameter: boolean;
 
-    constructor(symbolNode: WrappedSymbolNode, parent: ClassDefinition);
-    constructor(structure: ClassPropertyStructure);
-    constructor(symbolNodeOrStructure: WrappedSymbolNode | ClassPropertyStructure, parent?: ClassDefinition) {
-        super(symbolNodeOrStructure, parent, DefinitionType.ClassProperty);
+    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent?: ClassDefinition) {
+        super(mainCache, symbolNode, parent, DefinitionType.ClassProperty);
 
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            this.isAccessor = symbolNodeOrStructure.isPropertyAccessor();
-            this.isReadonly = symbolNodeOrStructure.isPropertyReadonly();
-        }
-        else {
-            this.isAccessor = symbolNodeOrStructure.isAccessor;
-            this.isReadonly = symbolNodeOrStructure.isReadonly;
-        }
+        this.isAccessor = symbolNode.isPropertyAccessor();
+        this.isReadonly = symbolNode.isPropertyReadonly();
+        this.isConstructorParameter = symbolNode.isConstructorParameter();
     }
 }

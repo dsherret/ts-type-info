@@ -1,25 +1,19 @@
 import {DecoratorDefinition} from "./../general";
-import {WrappedSymbolNode} from "./../../wrappers";
-import {DecoratableStructure} from "./../../structures";
+import {ISymbolNode} from "./../../wrappers";
 import {ArrayExt} from "./../../utils";
 
 export interface IDecoratableDefinition {
     decorators: ArrayExt<DecoratorDefinition<this>>;
-    fillDecorators(symbolNode: WrappedSymbolNode | DecoratableStructure): void;
+    fillDecorators(symbolNode: ISymbolNode): void;
 }
 
 export abstract class DecoratableDefinition implements IDecoratableDefinition {
     decorators: ArrayExt<DecoratorDefinition<this>>;
 
-    fillDecorators(symbolNodeOrStructure: WrappedSymbolNode | DecoratableStructure) {
+    fillDecorators(symbolNode: ISymbolNode) {
         let decorators: DecoratorDefinition<this>[];
 
-        if (symbolNodeOrStructure instanceof WrappedSymbolNode) {
-            decorators = symbolNodeOrStructure.getDecorators().map(decorator => new DecoratorDefinition<this>(decorator, this));
-        }
-        else {
-            decorators = (symbolNodeOrStructure.decorators || []).map(structure => new DecoratorDefinition<this>(structure, this));
-        }
+        decorators = symbolNode.getDecorators().map(decorator => new DecoratorDefinition<this>(decorator, this));
 
         this.decorators = new ArrayExt<DecoratorDefinition<this>>(...decorators);
     }
