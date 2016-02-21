@@ -1,16 +1,16 @@
 import {TypeExpression} from "./../../expressions";
 import {ISymbolNode} from "./../../wrappers";
-import {IDefinitionFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 
 export interface ITypeExpressionedDefinition {
     typeExpression: TypeExpression;
-    fillTypeExpression(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode): void;
+    fillTypeExpression(mainFactory: MainFactory, symbolNode: ISymbolNode): void;
 }
 
 export abstract class TypeExpressionedDefinition implements ITypeExpressionedDefinition {
     typeExpression: TypeExpression;
 
-    fillTypeExpression(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) {
-        this.typeExpression = definitionFactory.getTypeExpression(symbolNode.getTypeExpression());
+    fillTypeExpression(mainFactory: MainFactory, symbolNode: ISymbolNode) {
+        this.typeExpression = mainFactory.getTypeExpression(symbolNode.getTypeExpression());
     }
 }

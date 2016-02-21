@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {applyMixins} from "./../../utils";
-import {IDefinitionFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {Expression, TypeExpression} from "./../../expressions";
@@ -15,11 +15,11 @@ export class VariableDefinition extends BaseDefinition
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
-    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) {
+    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
         super(DefinitionType.Variable);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
-        this.fillTypeExpression(definitionFactory, symbolNode);
+        this.fillTypeExpression(mainFactory, symbolNode);
         this.fillDefaultExpression(symbolNode);
         this.fillAmbientable(symbolNode);
 
@@ -45,7 +45,7 @@ export class VariableDefinition extends BaseDefinition
     fillExportable: (symbolNode: ISymbolNode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
     fillDefaultExpression: (symbolNode: ISymbolNode) => void;

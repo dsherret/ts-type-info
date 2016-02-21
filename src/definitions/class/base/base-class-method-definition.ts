@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {Scope} from "./../scope";
 import {applyMixins, ArrayExt} from "./../../../utils";
-import {IDefinitionFactory} from "./../../../factories";
+import {MainFactory} from "./../../../factories";
 import {ISymbolNode} from "./../../../wrappers";
 import {DecoratorDefinition} from "./../../../definitions";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseFunctionDefinition, BaseParameterDefinitionConstructor} from "./../../base";
@@ -14,13 +14,13 @@ export class BaseClassMethodDefinition<ParameterType>
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
     constructor(
-        definitionFactory: IDefinitionFactory,
+        mainFactory: MainFactory,
         symbolNode: ISymbolNode,
         parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ClassDefinition, ParameterType>, ParameterType>,
         parent: ClassDefinition,
         definitionType: DefinitionType
     ) {
-        super(definitionFactory, symbolNode, parameterDefinition, definitionType);
+        super(mainFactory, symbolNode, parameterDefinition, definitionType);
         this.fillDecorators(symbolNode);
         this.fillScope(symbolNode);
         this.parent = parent;

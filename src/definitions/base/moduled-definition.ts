@@ -1,6 +1,6 @@
 ﻿import {ISymbolNode} from "./../../wrappers";
 import {tryGet, Logger, ArrayExt} from "./../../utils";
-import {IDefinitionFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {IParentedDefinition} from "./../base";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
@@ -20,7 +20,7 @@ export interface IModuledDefinition {
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
-    fillMembersBySymbolNode(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode): void;
+    fillMembersBySymbolNode(mainFactory: MainFactory, symbolNode: ISymbolNode): void;
 }
 
 export abstract class ModuledDefinition implements IModuledDefinition {
@@ -33,11 +33,11 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
 
-    fillMembersBySymbolNode(definitionFactory: IDefinitionFactory, fileSymbolNode: ISymbolNode) {
+    fillMembersBySymbolNode(mainFactory: MainFactory, fileSymbolNode: ISymbolNode) {
         this.initializeMD();
 
         fileSymbolNode.forEachChild((symbolNode) => {
-            const def = tryGet(symbolNode, () => definitionFactory.getDefinitionBySymbolNode(symbolNode));
+            const def = tryGet(symbolNode, () => mainFactory.getDefinitionBySymbolNode(symbolNode));
 
             if (def != null) {
                 if (def.isFunctionDefinition()) {

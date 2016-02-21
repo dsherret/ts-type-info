@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {applyMixins} from "./../../utils";
-import {IDefinitionFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition, DefinitionType, BaseFunctionDefinition} from "./../base";
 import {FunctionWriter} from "./../../writers";
@@ -13,8 +13,8 @@ export class FunctionDefinition
         implements IExportableDefinition, IAmbientableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
-    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) {
-        super(definitionFactory, symbolNode, FunctionParameterDefinition, DefinitionType.Function);
+    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
+        super(mainFactory, symbolNode, FunctionParameterDefinition, DefinitionType.Function);
         this.fillExportable(symbolNode);
         this.fillAmbientable(symbolNode);
     }

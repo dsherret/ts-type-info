@@ -1,5 +1,5 @@
 import {applyMixins} from "./../../utils";
-import {IDefinitionFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {Expression, TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
@@ -10,7 +10,7 @@ import {BaseDefinition} from "./base-definition";
 import {DefinitionType} from "./definition-type";
 
 export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
-    new(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ParentType): ParameterType;
+    new(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ParentType): ParameterType;
 }
 
 export class BaseParameterDefinition<ParentType> extends BaseDefinition
@@ -18,11 +18,11 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     isOptional: boolean;
     isRestParameter: boolean;
 
-    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
+    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
         super(definitionType);
 
         this.fillName(symbolNode);
-        this.fillTypeExpression(definitionFactory, symbolNode);
+        this.fillTypeExpression(mainFactory, symbolNode);
         this.fillDefaultExpression(symbolNode);
 
         this.isOptional = symbolNode.isParameterOptional();
@@ -37,7 +37,7 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
     fillDefaultExpression: (symbolNode: ISymbolNode) => void;

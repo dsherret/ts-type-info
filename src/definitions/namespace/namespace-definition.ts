@@ -1,7 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
 import {applyMixins, ArrayExt} from "./../../utils";
-import {IDefinitionFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
@@ -19,12 +19,12 @@ export class NamespaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
-    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) {
+    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
         super(DefinitionType.Namespace);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
         this.fillAmbientable(symbolNode);
-        this.fillMembersBySymbolNode(definitionFactory, symbolNode);
+        this.fillMembersBySymbolNode(mainFactory, symbolNode);
         this.declarationType = symbolNode.getNamespaceDeclarationType();
     }
 
@@ -50,7 +50,7 @@ export class NamespaceDefinition extends BaseDefinition
     variables: ArrayExt<VariableDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    fillMembersBySymbolNode: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillMembersBySymbolNode: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, ArrayExt} from "./../../utils";
-import {IDefinitionFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ISourceFile, ISymbolNode} from "./../../wrappers";
 import {Expression} from "./../../expressions";
 import {ExportableDefinitions} from "./../../definitions";
@@ -24,25 +24,25 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     reExports = new ArrayExt<ReExportDefinition>();
     defaultExport: Expression | ArrayExt<ExportableDefinitions>;
 
-    constructor(definitionFactory: IDefinitionFactory, sourceFile: ISourceFile) {
+    constructor(mainFactory: MainFactory, sourceFile: ISourceFile) {
         super(DefinitionType.File);
         this.fileName = sourceFile.getFileName();
-        this.fillMembersBySymbolNode(definitionFactory, sourceFile);
-        this.defaultExport = definitionFactory.getDefinitionsOrExpressionFromSymbol(sourceFile.getDefaultExportSymbol());
+        this.fillMembersBySymbolNode(mainFactory, sourceFile);
+        this.defaultExport = mainFactory.getDefinitionsOrExpressionFromSymbol(sourceFile.getDefaultExportSymbol());
     }
 
-    fillImports(definitionFactory: IDefinitionFactory, sourceFile: ISourceFile) {
+    fillImports(mainFactory: MainFactory, sourceFile: ISourceFile) {
         sourceFile.getFileImportSymbols().map(fileImportSymbol => {
-            this.imports.push(...definitionFactory.getImportDefinitions({
+            this.imports.push(...mainFactory.getImportDefinitions({
                 symbol: fileImportSymbol,
                 parent: this
             }));
         });
     }
 
-    fillReExports(definitionFactory: IDefinitionFactory, sourceFile: ISourceFile) {
+    fillReExports(mainFactory: MainFactory, sourceFile: ISourceFile) {
         sourceFile.getFileReExportSymbols().map(reExportSymbol => {
-            this.reExports.push(...definitionFactory.getReExportDefinitions({
+            this.reExports.push(...mainFactory.getReExportDefinitions({
                 symbol: reExportSymbol,
                 parent: this
             }));
@@ -94,7 +94,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
-    fillMembersBySymbolNode: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillMembersBySymbolNode: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(FileDefinition, [ModuledDefinition]);

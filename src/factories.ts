@@ -1,1 +1,1 @@
-﻿export * from "./factories/definition-factory";
+﻿export * from "./factories/main-factory";

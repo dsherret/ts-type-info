@@ -1,11 +1,10 @@
-import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
-        MainDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition} from "./../../definitions";
-import {Expression, Type, TypeExpression} from "./../../expressions";
-import {KeyValueCache, Logger, ArrayExt} from "./../../utils";
-import {ISourceFile, ISymbolNode, INode, IExpression, IType, ITypeExpression} from "./../../wrappers";
-import {IDefinitionFactory} from "./../definition-factory";
+﻿import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
+        MainDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition} from "./../definitions";
+import {Expression, Type, TypeExpression} from "./../expressions";
+import {KeyValueCache, Logger, ArrayExt} from "./../utils";
+import {ISourceFile, ISymbolNode, INode, IExpression, IType, ITypeExpression} from "./../wrappers";
 
-export class TsDefinitionFactory implements IDefinitionFactory {
+export class MainFactory {
     private definitionBySymbolNode = new KeyValueCache<INode, MainDefinitions>();
     private files = new KeyValueCache<ISourceFile, FileDefinition>();
     private typeExpressions = new KeyValueCache<ITypeExpression, TypeExpression>();
