@@ -3,10 +3,6 @@ import {INode} from "./../node";
 import {IExpression} from "./../expression";
 import {ITypeExpression} from "./../type-expression";
 import {ISignature} from "./../signature";
-import {ISourceFileChildBase} from "./../source-file-child-base";
-import {StructureExpression} from "./structure-expression";
-import {StructureSignature} from "./structure-signature";
-import {StructureTypeExpression} from "./structure-type-expression";
 import {StructureSourceFileChildBase} from "./structure-source-file-child-base";
 
 // add each structure type as it's implemented

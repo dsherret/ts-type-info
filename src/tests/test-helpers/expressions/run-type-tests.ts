@@ -2,7 +2,6 @@
 import {Type} from "./../../../expressions";
 import {TypeTestStructure} from "./../test-structures";
 import {runNamedDefinitionTests, runCallSignatureDefinitionTests, runBasePropertyDefinitionTests} from "./../definitions";
-import {runTypeExpressionTests} from "./run-type-expression-tests";
 import {ensureNotNull} from "./../ensure-not-null";
 
 export function runTypeTests(type: Type, structure: TypeTestStructure) {

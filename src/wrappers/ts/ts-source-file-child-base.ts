@@ -1,7 +1,4 @@
-﻿import * as ts from "typescript";
-import {TsTypeChecker} from "./utils/ts-type-checker";
-import {TsCache} from "./utils/ts-cache";
-import {TsBaseOptions, TsBase} from "./ts-base";
+﻿import {TsBaseOptions, TsBase} from "./ts-base";
 import {TsSourceFile} from "./ts-source-file";
 import {ISourceFile} from "./../source-file";
 import {ISourceFileChildBase} from "./../source-file-child-base";

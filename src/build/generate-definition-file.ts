@@ -1,7 +1,6 @@
 ﻿import * as path from "path";
 import * as fs from "fs";
 import {getFileInfo} from "./../main";
-import {FileDefinition} from "./../definitions";
 
 export function generateDefinitionFile() {
     // todo: better way of doing this

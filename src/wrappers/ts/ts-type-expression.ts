@@ -2,14 +2,13 @@
 import {ITypeExpression} from "./../type-expression";
 import {IType} from "./../type";
 import {TsBase, TsBaseOptions} from "./ts-base";
-import {TsType} from "./ts-type";
 
 export interface TsTypeExpressionOptions extends TsBaseOptions {
     tsType: ts.Type;
 }
 
 export class TsTypeExpression extends TsBase implements ITypeExpression {
-    private types: IType[] = []
+    private types: IType[] = [];
     protected tsType: ts.Type;
 
     constructor(opts: TsTypeExpressionOptions) {

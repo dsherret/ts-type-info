@@ -4,7 +4,6 @@ import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {ISymbolNode} from "./../../wrappers";
-import {NamedStructure, AmbientableStructure, ExportableStructure} from "./../../structures";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./enum-member-definition";

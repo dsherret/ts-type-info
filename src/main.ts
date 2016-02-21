@@ -4,7 +4,7 @@ import {FileDefinition} from "./definitions";
 import {StringUtils, Logger, ArrayExt} from "./utils";
 import {MainFactory} from "./factories";
 import {TsMain} from "./wrappers/ts/ts-main";
-import {Options, CompilerOptions} from "./options";
+import {Options} from "./options";
 
 export * from "./options";
 export * from "./utils/array-ext";
@@ -15,7 +15,7 @@ export function getFileInfo(fileNames: string[], options?: Options): ArrayExt<Fi
     verifyArray(fileNames);
     options = options || {};
 
-    Logger.toggleEnabled(true || options.showDebugMessages || false); // TODO-CHANGE: REVERT THIS BACK!!
+    Logger.toggleEnabled(options.showDebugMessages || false);
 
     const tsMain = new TsMain(fileNames, options);
     const mainFactory = new MainFactory();

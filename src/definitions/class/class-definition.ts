@@ -79,10 +79,10 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
                         type: param.typeExpression.text,
                         isOptional: param.isOptional,
                         defaultExpression: param.defaultExpression != null ? param.defaultExpression.text : null,
-                        decorators: param.decorators.map(d => {
+                        decorators: param.decorators.map(decorator => {
                             return {
-                                name: d.name,
-                                arguments: d.arguments.map(d => d.text)
+                                name: decorator.name,
+                                arguments: decorator.arguments.map(arg => arg.text)
                             };
                         })
                     });

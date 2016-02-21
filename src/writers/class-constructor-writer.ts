@@ -1,8 +1,5 @@
 ﻿import {ClassConstructorDefinition} from "./../definitions";
-import {TypeParametersWriter} from "./type-parameters-writer";
-import {TypeExpressionWriter} from "./type-expression-writer";
 import {ParametersWriter} from "./parameters-writer";
-import {ScopeWriter} from "./scope-writer";
 import {BaseDefinitionWriter} from "./base-definition-writer";
 import {FunctionBodyWriter} from "./function-body-writer";
 

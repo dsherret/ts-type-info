@@ -1,5 +1,4 @@
 ﻿import {ISymbolNode} from "./../../wrappers";
-import {AbstractableStructure} from "./../../structures";
 
 export interface IAbstractableDefinition {
     isAbstract: boolean;

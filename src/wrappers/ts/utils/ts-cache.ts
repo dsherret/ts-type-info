@@ -4,8 +4,6 @@ import {IType} from "./../../type";
 import {ITypeExpression} from "./../../type-expression";
 import {TsSymbolNode} from "./../ts-symbol-node";
 import {TsNode} from "./../ts-node";
-import {TsTypeExpression} from "./../ts-type-expression";
-import {TsType} from "./../ts-type";
 import {TsTypeChecker} from "./ts-type-checker";
 
 export class TsCache {

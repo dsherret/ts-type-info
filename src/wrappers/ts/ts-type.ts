@@ -3,7 +3,6 @@ import {tryGet} from "./../../utils";
 import {IType} from "./../type";
 import {ISymbolNode} from "./../symbol-node";
 import {ISignature} from "./../signature";
-import {TsTypeChecker} from "./utils/ts-type-checker";
 import {TsSourceFileChildBase, TsSourceFileChildBaseOptions} from "./ts-source-file-child-base";
 import {TsSymbolNode} from "./ts-symbol-node";
 import {TsSignature} from "./ts-signature";
@@ -61,7 +60,6 @@ export class TsType extends TsSourceFileChildBase implements IType {
             return tryGet(this.getText(), () => this.createType(arg));
         });
     }
-
 
     getSymbolNodes() {
         const typeArray = (this.tsType as ts.UnionOrIntersectionType).types;

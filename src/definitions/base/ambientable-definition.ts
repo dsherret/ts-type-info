@@ -1,5 +1,4 @@
 ﻿import {ISymbolNode} from "./../../wrappers";
-import {AmbientableStructure} from "./../../structures";
 
 export interface IAmbientableDefinition {
     isAmbient: boolean;

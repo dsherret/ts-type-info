@@ -1,5 +1,4 @@
 import {ISymbolNode} from "./../../wrappers";
-import {NamedStructure} from "./../../structures";
 
 export interface IBaseNamedDefinition {
     name: string;

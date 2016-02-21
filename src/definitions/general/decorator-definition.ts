@@ -1,6 +1,5 @@
 import {Expression} from "./../../expressions";
 import {INode} from "./../../wrappers";
-import {DecoratorStructure} from "./../../structures";
 import {ArrayExt} from "./../../utils";
 import {IBaseNamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 

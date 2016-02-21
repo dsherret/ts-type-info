@@ -6,7 +6,6 @@ import {WriteFlags} from "./../../write-flags";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {ISymbolNode, ISignature} from "./../../wrappers";
-import {AmbientableStructure, TypeParameteredStructure, NamedStructure, ExportableStructure} from "./../../structures";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";

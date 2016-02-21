@@ -8,7 +8,6 @@ import {TsSourceFile} from "./ts-source-file";
 
 export class TsMain {
     private sourceFiles: ISourceFile[];
-    private typeChecker: TsTypeChecker;
     private tsCache = new TsCache();
 
     constructor(fileNames: string[], private options: Options) {

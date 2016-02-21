@@ -2,7 +2,7 @@
         MainDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition} from "./../definitions";
 import {Expression, Type, TypeExpression} from "./../expressions";
 import {KeyValueCache, Logger, ArrayExt} from "./../utils";
-import {ISourceFile, ISymbolNode, INode, IExpression, IType, ITypeExpression} from "./../wrappers";
+import {ISourceFile, ISymbolNode, INode, IType, ITypeExpression} from "./../wrappers";
 
 export class MainFactory {
     private definitionBySymbolNode = new KeyValueCache<INode, MainDefinitions>();

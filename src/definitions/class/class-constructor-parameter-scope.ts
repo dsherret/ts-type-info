@@ -8,7 +8,7 @@ export const ClassConstructorParameterScope = {
     Protected: "protected" as ClassConstructorParameterScope,
     Private: "private" as ClassConstructorParameterScope,
     toScope(scope: ClassConstructorParameterScope) {
-        switch(scope) {
+        switch (scope) {
             case ClassConstructorParameterScope.Public:
                 return Scope.Public;
             case ClassConstructorParameterScope.Protected:
@@ -17,6 +17,8 @@ export const ClassConstructorParameterScope = {
                 return Scope.Private;
             case ClassConstructorParameterScope.None:
                 throw new Error("Unexpected conversion of ClassConstructorParameterScope.None to Scope");
+            default:
+                throw new Error(`Not implemented ClassConstructorParameterScope: ${scope}`);
         }
     }
 };
