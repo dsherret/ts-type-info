@@ -115,5 +115,6 @@ export class StructureSymbolNode extends StructureNode implements ISymbolNode {
     }
 
     forEachChild(callback: (symbolNode: ISymbolNode) => void) {
+        throw new Error("Not implemented");
     }
 }

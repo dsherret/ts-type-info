@@ -6,6 +6,10 @@ interface KeyValueCacheItem<T, U> {
 export class KeyValueCache<T, U> {
     private cacheItems: KeyValueCacheItem<T, U>[] = [];
 
+    clear() {
+        this.cacheItems.length = 0;
+    }
+
     getOrCreate(key: T, createFunc: () => U, onAfterAdd: (item: U) => void = () => {}) {
         let item = this.get(key);
 

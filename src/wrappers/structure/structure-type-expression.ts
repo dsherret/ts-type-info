@@ -7,6 +7,7 @@ export class StructureTypeExpression implements ITypeExpression {
     }
 
     addType(type: IType) {
+        throw new Error("Not implemented");
     }
 
     getTypes(): IType[] {

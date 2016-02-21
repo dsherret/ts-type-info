@@ -1,4 +1,5 @@
-import {applyMixins, MainCache} from "./../../utils";
+import {applyMixins} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
@@ -10,10 +11,10 @@ import {BaseDefinition} from "./base-definition";
 export class BasePropertyDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
     isOptional: boolean;
 
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
         super(definitionType);
         this.fillName(symbolNode);
-        this.fillTypeExpression(mainCache, symbolNode);
+        this.fillTypeExpression(definitionFactory, symbolNode);
 
         this.isOptional = symbolNode.isPropertyOptional();
         this.parent = parent;
@@ -26,7 +27,7 @@ export class BasePropertyDefinition<ParentType> extends BaseDefinition implement
     parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
 }
 
 applyMixins(BasePropertyDefinition, [NamedDefinition, TypeExpressionedDefinition]);

@@ -1,6 +1,7 @@
 import {ISymbolNode, ISignature} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, ArrayExt, MainCache} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType,
         IReturnTypedDefinition, ReturnTypedDefinition, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -11,11 +12,11 @@ export class CallSignatureDefinition
         implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
     minArgumentCount: number;
 
-    constructor(mainCache: MainCache, signature: ISignature) {
+    constructor(definitionFactory: IDefinitionFactory, signature: ISignature) {
         super(DefinitionType.CallSignature);
-        this.fillReturnTypeExpressionBySignature(mainCache, signature);
-        this.fillParametersBySignature(mainCache, signature, CallSignatureParameterDefinition);
-        this.fillTypeParametersBySignature(mainCache, signature);
+        this.fillReturnTypeExpressionBySignature(definitionFactory, signature);
+        this.fillParametersBySignature(definitionFactory, signature, CallSignatureParameterDefinition);
+        this.fillTypeParametersBySignature(definitionFactory, signature);
 
         this.minArgumentCount = signature.getMinArgumentCount();
     }
@@ -23,21 +24,21 @@ export class CallSignatureDefinition
     // ParameteredDefinition
     parameters: ArrayExt<CallSignatureParameterDefinition>;
     fillParametersBySymbol: (
-        mainCache: MainCache,
+        definitionFactory: IDefinitionFactory,
         symbolNode: ISymbolNode,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     fillParametersBySignature: (
-        mainCache: MainCache,
+        definitionFactory: IDefinitionFactory,
         signature: ISignature,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
-    fillReturnTypeExpressionBySignature: (mainCache: MainCache, signature: ISignature) => void;
+    fillReturnTypeExpressionBySymbol: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillReturnTypeExpressionBySignature: (definitionFactory: IDefinitionFactory, signature: ISignature) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
-    fillTypeParametersBySignature: (mainCache: MainCache, signature: ISignature) => void;
+    fillTypeParametersBySymbol: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySignature: (definitionFactory: IDefinitionFactory, signature: ISignature) => void;
 }
 
 applyMixins(CallSignatureDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

@@ -1,4 +1,5 @@
-import {applyMixins, ArrayExt, MainCache} from "./../../../utils";
+import {applyMixins, ArrayExt} from "./../../../utils";
+import {IDefinitionFactory} from "./../../../factories";
 import {ISymbolNode} from "./../../../wrappers";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, ObjectPropertyDefinition} from "./../../base";
 import {DecoratorDefinition} from "./../../general";
@@ -7,8 +8,8 @@ import {ClassDefinition} from "./../class-definition";
 import {IScopedDefinition, ScopedDefinition} from "./scoped-definition";
 
 export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ClassDefinition, definitionType: DefinitionType) {
-        super(mainCache, symbolNode, parent, definitionType);
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ClassDefinition, definitionType: DefinitionType) {
+        super(definitionFactory, symbolNode, parent, definitionType);
 
         this.fillDecorators(symbolNode);
         this.fillScope(symbolNode);

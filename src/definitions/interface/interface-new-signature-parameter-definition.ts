@@ -1,10 +1,10 @@
 ﻿import {ISymbolNode} from "./../../wrappers";
-import {MainCache} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {DefinitionType, BaseParameterDefinition} from "./../base";
 import {InterfaceNewSignatureDefinition} from "./interface-new-signature-definition";
 
 export class InterfaceNewSignatureParameterDefinition extends BaseParameterDefinition<InterfaceNewSignatureDefinition> {
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: InterfaceNewSignatureDefinition) {
-        super(mainCache, symbolNode, parent, DefinitionType.InterfaceNewSignatureParameter);
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: InterfaceNewSignatureDefinition) {
+        super(definitionFactory, symbolNode, parent, DefinitionType.InterfaceNewSignatureParameter);
     }
 }

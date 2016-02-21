@@ -1,7 +1,8 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 import {FileDefinition} from "./definitions";
-import {MainCache, StringUtils, Logger, ArrayExt} from "./utils";
+import {StringUtils, Logger, ArrayExt} from "./utils";
+import {TsDefinitionFactory} from "./factories/ts/ts-definition-factory";
 import {TsMain} from "./wrappers/ts/ts-main";
 import {Options, CompilerOptions} from "./options";
 
@@ -17,21 +18,21 @@ export function getFileInfo(fileNames: string[], options?: Options): ArrayExt<Fi
     Logger.toggleEnabled(true || options.showDebugMessages || false); // TODO-CHANGE: REVERT THIS BACK!!
 
     const tsMain = new TsMain(fileNames, options);
-    const mainCache = new MainCache();
+    const definitionFactory = new TsDefinitionFactory();
 
     const definitionWithSourceFiles = tsMain.getSourceFiles().map(sourceFile => {
         return {
-            definition: mainCache.getFileDefinition(sourceFile),
+            definition: definitionFactory.getFileDefinition(sourceFile),
             sourceFile: sourceFile
         };
     });
 
     definitionWithSourceFiles.forEach(definitionWithSourceFile => {
-        definitionWithSourceFile.definition.fillImports(mainCache, definitionWithSourceFile.sourceFile);
-        definitionWithSourceFile.definition.fillReExports(mainCache, definitionWithSourceFile.sourceFile);
+        definitionWithSourceFile.definition.fillImports(definitionFactory, definitionWithSourceFile.sourceFile);
+        definitionWithSourceFile.definition.fillReExports(definitionFactory, definitionWithSourceFile.sourceFile);
     });
 
-    mainCache.fillAllCachedTypesWithDefinitions();
+    definitionFactory.fillAllCachedTypesWithDefinitions();
 
     return new ArrayExt(...definitionWithSourceFiles.map(f => f.definition));
 }

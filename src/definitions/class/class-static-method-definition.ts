@@ -1,12 +1,12 @@
 import {ISymbolNode} from "./../../wrappers";
-import {MainCache} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {DefinitionType} from "./../base";
 import {BaseClassMethodDefinition} from "./base";
 import {ClassStaticMethodParameterDefinition} from "./class-static-method-parameter-definition";
 import {ClassDefinition} from "./class-definition";
 
 export class ClassStaticMethodDefinition extends BaseClassMethodDefinition<ClassStaticMethodParameterDefinition> {
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ClassDefinition) {
-        super(mainCache, symbolNode, ClassStaticMethodParameterDefinition, parent, DefinitionType.ClassStaticMethod);
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ClassDefinition) {
+        super(definitionFactory, symbolNode, ClassStaticMethodParameterDefinition, parent, DefinitionType.ClassStaticMethod);
     }
 }

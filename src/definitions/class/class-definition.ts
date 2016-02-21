@@ -1,7 +1,8 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, tryGet, Logger, ArrayExt, MainCache} from "./../../utils";
+import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ISignature, ISymbolNode} from "./../../wrappers";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
@@ -30,7 +31,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     extendsTypeExpressions = new ArrayExt<TypeExpression>();
     implementsTypeExpressions = new ArrayExt<TypeExpression>();
 
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode) {
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) {
         super(DefinitionType.Class);
 
         this.fillName(symbolNode);
@@ -38,10 +39,10 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         this.fillDecorators(symbolNode);
         this.fillAmbientable(symbolNode);
         this.fillAbstractable(symbolNode);
-        this.fillMembers(mainCache, symbolNode);
-        this.fillTypeParametersBySymbol(mainCache, symbolNode);
-        this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions().map(typeExpression => mainCache.getTypeExpression(typeExpression)));
-        this.implementsTypeExpressions.push(...symbolNode.getImplementsTypeExpressions().map(typeExpression => mainCache.getTypeExpression(typeExpression)));
+        this.fillMembers(definitionFactory, symbolNode);
+        this.fillTypeParametersBySymbol(definitionFactory, symbolNode);
+        this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions().map(typeExpression => definitionFactory.getTypeExpression(typeExpression)));
+        this.implementsTypeExpressions.push(...symbolNode.getImplementsTypeExpressions().map(typeExpression => definitionFactory.getTypeExpression(typeExpression)));
         this.fillPropertiesFromConstructorDef();
     }
 
@@ -52,13 +53,14 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         return writer.toString();
     }
 
-    addProperty(prop: ClassPropertyStructure) {
-        // throw new Error("NOT IMPLEMENTED");// TODO-CHANGE: THIS
+    // todo: this will be made public once I move out the caching
+    private addProperty(prop: ClassPropertyStructure) {
+        // this.properties.push(new ClassPropertyDefinition(definitionFactory, new ));
     }
 
-    private fillMembers(mainCache: MainCache, symbolNode: ISymbolNode) {
+    private fillMembers(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) {
         symbolNode.forEachChild(childSymbol => {
-            const def = this.getMemberDefinition(mainCache, childSymbol);
+            const def = this.getMemberDefinition(definitionFactory, childSymbol);
 
             if (def != null) {
                 this.addDefinition(def);
@@ -88,26 +90,26 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         }
     }
 
-    private getMemberDefinition(mainCache: MainCache, childSymbol: ISymbolNode): ClassMemberDefinitions {
+    private getMemberDefinition(definitionFactory: IDefinitionFactory, childSymbol: ISymbolNode): ClassMemberDefinitions {
         return tryGet(childSymbol, () => {
             if (childSymbol.isMethodDeclaration()) {
                 if (childSymbol.hasStaticKeyword()) {
-                    return new ClassStaticMethodDefinition(mainCache, childSymbol, this);
+                    return new ClassStaticMethodDefinition(definitionFactory, childSymbol, this);
                 }
                 else {
-                    return new ClassMethodDefinition(mainCache, childSymbol, this);
+                    return new ClassMethodDefinition(definitionFactory, childSymbol, this);
                 }
             }
             else if (childSymbol.isPropertyDeclaration() || childSymbol.isGetAccessor()) {
                 if (childSymbol.hasStaticKeyword()) {
-                    return new ClassStaticPropertyDefinition(mainCache, childSymbol, this);
+                    return new ClassStaticPropertyDefinition(definitionFactory, childSymbol, this);
                 }
                 else {
-                    return new ClassPropertyDefinition(mainCache, childSymbol, this);
+                    return new ClassPropertyDefinition(definitionFactory, childSymbol, this);
                 }
             }
             else if (childSymbol.isConstructor()) {
-                return new ClassConstructorDefinition(mainCache, childSymbol, this);
+                return new ClassConstructorDefinition(definitionFactory, childSymbol, this);
             }
             else if (childSymbol.isSetAccessor()) {
                 // ignore, GetAccessor is the one that will be handled
@@ -159,8 +161,8 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     isDefaultExportOfFile: boolean;
     fillExportable: (symbolNode: ISymbolNode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
-    fillTypeParametersBySignature: (mainCache: MainCache, signature: ISignature) => void;
+    fillTypeParametersBySymbol: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySignature: (definitionFactory: IDefinitionFactory, signature: ISignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

@@ -1,5 +1,5 @@
 import {ISymbolNode} from "./../../wrappers";
-import {MainCache} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {DefinitionType} from "./../base";
 import {BaseClassPropertyDefinition} from "./base";
 import {ClassDefinition} from "./class-definition";
@@ -9,8 +9,8 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isReadonly: boolean;
     isConstructorParameter: boolean;
 
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent?: ClassDefinition) {
-        super(mainCache, symbolNode, parent, DefinitionType.ClassProperty);
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent?: ClassDefinition) {
+        super(definitionFactory, symbolNode, parent, DefinitionType.ClassProperty);
 
         this.isAccessor = symbolNode.isPropertyAccessor();
         this.isReadonly = symbolNode.isPropertyReadonly();

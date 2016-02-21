@@ -1,4 +1,5 @@
-﻿import {applyMixins, ArrayExt, MainCache} from "./../../utils";
+﻿import {applyMixins, ArrayExt} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {DecoratorDefinition} from "./../general";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
@@ -8,8 +9,8 @@ import {ClassConstructorParameterScope} from "./class-constructor-parameter-scop
 export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements IDecoratableDefinition {
     scope: ClassConstructorParameterScope;
 
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ClassConstructorDefinition) {
-        super(mainCache, symbolNode, parent, DefinitionType.ClassConstructorParameter);
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ClassConstructorDefinition) {
+        super(definitionFactory, symbolNode, parent, DefinitionType.ClassConstructorParameter);
         this.fillDecorators(symbolNode);
         this.scope = symbolNode.getClassConstructorParameterScope();
     }

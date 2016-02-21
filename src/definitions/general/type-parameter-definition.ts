@@ -1,15 +1,16 @@
 import {TypeExpression} from "./../../expressions";
-import {applyMixins, MainCache} from "./../../utils";
+import {applyMixins} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 
 export class TypeParameterDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType> {
     constraintTypeExpression: TypeExpression;
 
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ParentType) {
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ParentType) {
         super(DefinitionType.TypeParameter);
         this.fillName(symbolNode);
-        this.constraintTypeExpression = mainCache.getTypeExpression(symbolNode.getTypeParameterConstraintTypeExpression());
+        this.constraintTypeExpression = definitionFactory.getTypeExpression(symbolNode.getTypeParameterConstraintTypeExpression());
         this.parent = parent;
     }
 

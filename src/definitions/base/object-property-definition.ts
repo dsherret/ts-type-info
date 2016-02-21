@@ -1,4 +1,5 @@
-﻿import {applyMixins, MainCache} from "./../../utils";
+﻿import {applyMixins} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {Expression} from "./../../expressions";
 import {DefinitionType} from "./definition-type";
@@ -6,8 +7,8 @@ import {DefaultExpressionedDefinition, IDefaultExpressionedDefinition} from "./d
 import {BasePropertyDefinition} from "./base-property-definition";
 
 export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
-        super(mainCache, symbolNode, parent, definitionType);
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
+        super(definitionFactory, symbolNode, parent, definitionType);
 
         this.fillDefaultExpression(symbolNode);
     }

@@ -1,5 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {applyMixins, ArrayExt, MainCache} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ISignature, ISymbolNode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../write-flags";
@@ -18,12 +19,12 @@ import {TypeAliasWriter} from "./../../writers";
 export class TypeAliasDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                             ITypeParameteredDefinition, IAmbientableDefinition {
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode) {
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) {
         super(DefinitionType.TypeAlias);
         this.fillName(symbolNode);
         this.fillExportable(symbolNode);
-        this.fillTypeExpression(mainCache, symbolNode);
-        this.fillTypeParametersBySymbol(mainCache, symbolNode);
+        this.fillTypeExpression(definitionFactory, symbolNode);
+        this.fillTypeParametersBySymbol(definitionFactory, symbolNode);
         this.fillAmbientable(symbolNode);
     }
 
@@ -46,11 +47,11 @@ export class TypeAliasDefinition extends BaseDefinition
     fillExportable: (symbolNode: ISymbolNode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
-    fillTypeParametersBySignature: (mainCache: MainCache, signature: ISignature) => void;
+    fillTypeParametersBySymbol: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySignature: (definitionFactory: IDefinitionFactory, signature: ISignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

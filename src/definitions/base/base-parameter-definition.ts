@@ -1,4 +1,5 @@
-import {applyMixins, MainCache} from "./../../utils";
+import {applyMixins} from "./../../utils";
+import {IDefinitionFactory} from "./../../factories";
 import {ISymbolNode} from "./../../wrappers";
 import {Expression, TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
@@ -9,7 +10,7 @@ import {BaseDefinition} from "./base-definition";
 import {DefinitionType} from "./definition-type";
 
 export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
-    new(mainCache: MainCache, symbolNode: ISymbolNode, parent: ParentType): ParameterType;
+    new(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ParentType): ParameterType;
 }
 
 export class BaseParameterDefinition<ParentType> extends BaseDefinition
@@ -17,11 +18,11 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     isOptional: boolean;
     isRestParameter: boolean;
 
-    constructor(mainCache: MainCache, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
+    constructor(definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
         super(definitionType);
 
         this.fillName(symbolNode);
-        this.fillTypeExpression(mainCache, symbolNode);
+        this.fillTypeExpression(definitionFactory, symbolNode);
         this.fillDefaultExpression(symbolNode);
 
         this.isOptional = symbolNode.isParameterOptional();
@@ -36,7 +37,7 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (mainCache: MainCache, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (definitionFactory: IDefinitionFactory, symbolNode: ISymbolNode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
     fillDefaultExpression: (symbolNode: ISymbolNode) => void;

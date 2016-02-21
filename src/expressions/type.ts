@@ -1,6 +1,7 @@
 ﻿import {CallSignatureDefinition, IBaseNamedDefinition, TypePropertyDefinition} from "./../definitions";
 import {IType} from "./../wrappers";
-import {ArrayExt, MainCache} from "./../utils";
+import {ArrayExt} from "./../utils";
+import {IDefinitionFactory} from "./../factories";
 
 export class Type {
     callSignatures = new ArrayExt<CallSignatureDefinition>();
@@ -9,15 +10,15 @@ export class Type {
     typeArguments = new ArrayExt<Type>();
     text: string;
 
-    fillTypeInformation(mainCache: MainCache, type: IType) {
+    fillTypeInformation(definitionFactory: IDefinitionFactory, type: IType) {
         this.text = type.getText();
 
         if (type.hasCallSignaturesAndProperties()) {
-            this.callSignatures.push(...type.getCallSignatures().map(callSignature => new CallSignatureDefinition(mainCache, callSignature)));
-            this.properties.push(...type.getProperties().map(prop => new TypePropertyDefinition(mainCache, prop, this)));
+            this.callSignatures.push(...type.getCallSignatures().map(callSignature => new CallSignatureDefinition(definitionFactory, callSignature)));
+            this.properties.push(...type.getProperties().map(prop => new TypePropertyDefinition(definitionFactory, prop, this)));
         }
 
-        this.typeArguments.push(...type.getTypeArguments().map(arg => mainCache.getType(arg)));
+        this.typeArguments.push(...type.getTypeArguments().map(arg => definitionFactory.getType(arg)));
     }
 
     addDefinitions(definitions: IBaseNamedDefinition[]) {

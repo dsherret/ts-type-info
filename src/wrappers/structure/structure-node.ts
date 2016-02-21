@@ -10,7 +10,7 @@ import {StructureSourceFileChildBase} from "./structure-source-file-child-base";
 
 export class StructureNode extends StructureSourceFileChildBase implements INode {
     getConstantValue() {
-        return 1;
+        return 0;
     }
 
     getDecoratorName() {
