@@ -3,7 +3,7 @@ import {INode} from "./../node";
 import {IExpression} from "./../expression";
 import {ITypeExpression} from "./../type-expression";
 import {ISignature} from "./../signature";
-import {StructureSourceFileChildBase} from "./structure-source-file-child-base";
+import {StructureSourceFileChildBase} from "./structure-source-file-child";
 
 // add each structure type as it's implemented
 type Structures = ClassPropertyStructure;

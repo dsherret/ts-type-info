@@ -3,7 +3,7 @@ import {tryGet} from "./../../utils";
 import {IType} from "./../type";
 import {ISymbolNode} from "./../symbol-node";
 import {ISignature} from "./../signature";
-import {TsSourceFileChildBase, TsSourceFileChildBaseOptions} from "./ts-source-file-child-base";
+import {TsSourceFileChildBase, TsSourceFileChildBaseOptions} from "./ts-source-file-child";
 import {TsSymbolNode} from "./ts-symbol-node";
 import {TsSignature} from "./ts-signature";
 
@@ -22,17 +22,6 @@ export class TsType extends TsSourceFileChildBase implements IType {
 
     getText() {
         return this.typeChecker.typeToString(this.sourceFile, this.tsType);
-    }
-
-    hasCallSignaturesAndProperties() {
-        return (this.tsType.flags & (
-            ts.TypeFlags.ObjectType |
-            ts.TypeFlags.Instantiated
-        )) !== 0 &&
-        (this.tsType.flags & (
-            ts.TypeFlags.Class |
-            ts.TypeFlags.Interface
-        )) === 0;
     }
 
     getProperties() {
@@ -73,6 +62,17 @@ export class TsType extends TsSourceFileChildBase implements IType {
         else {
             return [];
         }
+    }
+
+    hasCallSignaturesAndProperties() {
+        return (this.tsType.flags & (
+            ts.TypeFlags.ObjectType |
+            ts.TypeFlags.Instantiated
+        )) !== 0 &&
+        (this.tsType.flags & (
+            ts.TypeFlags.Class |
+            ts.TypeFlags.Interface
+        )) === 0;
     }
 
     protected createType(tsType: ts.Type): IType {

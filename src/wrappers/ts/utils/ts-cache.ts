@@ -13,64 +13,33 @@ export class TsCache {
     private typeCacheContainer = new TypeCacheContainer<IType>();
 
     getSymbolNode(symbol: ts.Symbol, node: ts.Node, createFunc: () => TsSymbolNode) {
-        let tsNodeCache = this.symbolNodeCache.get(symbol);
-
-        if (tsNodeCache == null) {
-            tsNodeCache = new KeyValueCache<ts.Node, TsSymbolNode>();
-            this.symbolNodeCache.add(symbol, tsNodeCache);
-        }
-
-        let tsSymbolNode = tsNodeCache.get(node);
-
-        if (tsSymbolNode == null) {
-            tsSymbolNode = createFunc();
-            tsNodeCache.add(node, tsSymbolNode);
-        }
-
+        let tsNodeCache = this.symbolNodeCache.getOrCreate(symbol, () => new KeyValueCache<ts.Node, TsSymbolNode>());
+        let tsSymbolNode = tsNodeCache.getOrCreate(node, () => createFunc());
         return tsSymbolNode;
     }
 
-    getNode(node: ts.Node, createFunc: () => TsNode) {
-        let tsNode = this.nodeCache.get(node);
-
-        if (tsNode == null) {
-            tsNode = createFunc();
-            this.nodeCache.add(node, tsNode);
-        }
-
-        return tsNode;
+    getNodeOrCreate(node: ts.Node, createFunc: () => TsNode) {
+        return this.nodeCache.getOrCreate(node, () => createFunc());
     }
 
     getTypeExpression(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createFunc: () => ITypeExpression, createTsType: (tsType: ts.Type) => IType) {
         const typeExpressionCache = this.typeExpressionCacheContainer.getCache(tsType);
         const typeText = typeChecker.typeToString(sourceFile, tsType);
-        let typeExpression = typeExpressionCache.get(typeText);
 
-        if (typeExpression == null) {
+        return typeExpressionCache.getOrCreate(typeText, () => createFunc(), typeExpression => {
             const types = (tsType as ts.UnionOrIntersectionType).types || [tsType];
-
-            typeExpression = createFunc();
-            typeExpressionCache.add(typeExpression.getText(), typeExpression);
 
             types.forEach(t => {
                 tryGet(typeText, () => this.getType(typeChecker, sourceFile, t, createTsType), type => typeExpression.addType(type));
             });
-        }
-
-        return typeExpression;
+        });
     }
 
     private getType(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createTsType: (tsType: ts.Type) => IType) {
         const cache = this.typeCacheContainer.getCache(tsType);
         const typeText = typeChecker.typeToString(sourceFile, tsType);
-        let type = cache.get(typeText);
 
-        if (type == null) {
-            type = createTsType(tsType);
-            cache.add(typeText, type);
-        }
-
-        return type;
+        return cache.getOrCreate(typeText, () => createTsType(tsType));
     }
 }
 
@@ -80,19 +49,11 @@ class TypeCacheContainer<T> {
 
     getCache(tsType: ts.Type) {
         const fileName = this.getFileName(tsType);
-
         return fileName == null ? this.typeCache : this.getFileCache(fileName);
     }
 
     private getFileCache(fileName: string) {
-        let fileCache = this.fileCache.get(fileName);
-
-        if (fileCache == null) {
-            fileCache = new KeyValueCache<string, T>();
-            this.fileCache.add(fileName, fileCache);
-        }
-
-        return fileCache;
+        return this.fileCache.getOrCreate(fileName, () => new KeyValueCache<string, T>());
     }
 
     private getFileName(tsType: ts.Type) {

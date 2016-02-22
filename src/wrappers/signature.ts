@@ -1,8 +1,8 @@
 ﻿import {ITypeExpression} from "./type-expression";
 import {ISymbolNode} from "./symbol-node";
-import {ISourceFileChildBase} from "./source-file-child-base";
+import {ISourceFileChild} from "./source-file-child";
 
-export interface ISignature extends ISourceFileChildBase {
+export interface ISignature extends ISourceFileChild {
     getReturnTypeExpression(): ITypeExpression;
     getParameters(): ISymbolNode[];
     getTypeParameters(): ISymbolNode[];

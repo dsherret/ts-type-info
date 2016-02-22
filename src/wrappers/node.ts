@@ -1,9 +1,9 @@
 ﻿import {IExpression} from "./expression";
 import {ITypeExpression} from "./type-expression";
 import {ISignature} from "./signature";
-import {ISourceFileChildBase} from "./source-file-child-base";
+import {ISourceFileChild} from "./source-file-child";
 
-export interface INode extends ISourceFileChildBase {
+export interface INode extends ISourceFileChild {
     getConstantValue(): number;
     getDecoratorName(): string;
     getDecoratorArguments(): IExpression[];

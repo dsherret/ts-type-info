@@ -1,7 +1,7 @@
 ﻿import {ITypeExpression} from "./../type-expression";
 import {ISymbolNode} from "./../symbol-node";
 import {ISignature} from "./../signature";
-import {StructureSourceFileChildBase} from "./structure-source-file-child-base";
+import {StructureSourceFileChildBase} from "./structure-source-file-child";
 
 export class StructureSignature extends StructureSourceFileChildBase implements ISignature  {
     getReturnTypeExpression(): ITypeExpression {

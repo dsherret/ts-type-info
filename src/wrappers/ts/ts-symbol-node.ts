@@ -21,45 +21,6 @@ export class TsSymbolNode extends TsNode implements ISymbolNode {
         this.symbol = opts.symbol;
     }
 
-    getName() {
-        let name = this.symbol.getName();
-
-        if (name === "default") {
-            const localSymbol = this.typeChecker.getLocalSymbolFromNode(this.node);
-            name = localSymbol.getName();
-        }
-
-        return name;
-    }
-
-    isExported() {
-        let parentSymbol = this.getSymbolParent(this.symbol);
-
-        if (parentSymbol == null) {
-            return this.isDefaultExport();
-        }
-        else {
-            return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[this.symbol.name] != null;
-        }
-    }
-
-    isAlias() {
-        return this.typeChecker.symbolHasFlag(this.symbol, ts.SymbolFlags.Alias);
-    }
-
-    isDefaultExport() {
-        return this.typeChecker.isSymbolDefaultExportOfFile(this.symbol, this.sourceFile);
-    }
-
-    isNamedExport() {
-        return this.typeChecker.isSymbolNamedExportOfFile(this.symbol, this.sourceFile);
-    }
-
-    isConstructorParameter() {
-        // a ts symbol node will never be a constructor parameter
-        return false;
-    }
-
     getAllRelatedSymbolNodes() {
         return (this.symbol.getDeclarations() || []).map(declaration => this.createSymbolNode({
             node: declaration,
@@ -67,45 +28,24 @@ export class TsSymbolNode extends TsNode implements ISymbolNode {
         }));
     }
 
-    getTypeExpression(): ITypeExpression {
-        return tryGet(this, () => this.getTypeExpressionAtLocation(this.node));
+    getAliasSymbolNode() {
+        return this.createSymbolNodeFromSymbol(this.typeChecker.getAliasedSymbol(this.symbol));
     }
 
-    getTypeParameters() {
-        type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
-        let typeParameteredDeclaration = this.node as typeParameteredTypes;
-        let typeParameters = typeParameteredDeclaration.typeParameters;
+    getClassConstructorParameterScope() {
+        const nodeFlags = this.node.flags;
 
-        return (typeParameters || []).map(typeParameter => {
-            return this.createSymbolNodeFromDeclaration(typeParameter);
-        });
-    }
-
-    getTypeParameterConstraintTypeExpression() {
-        const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
-        return constraint == null ? null : this.getTypeExpressionAtLocation((this.node as ts.TypeParameterDeclaration).constraint);
-    }
-
-    isAmbient() {
-        if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias()) {
-            return true;
+        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+            return ClassConstructorParameterScope.Private;
+        }
+        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+            return ClassConstructorParameterScope.Protected;
+        }
+        else if ((nodeFlags & ts.NodeFlags.Public) !== 0) {
+            return ClassConstructorParameterScope.Public;
         }
         else {
-            return this.isAnyParentAmbient();
-        }
-    }
-
-    getVariableDeclarationType() {
-        const nodeFlags = this.node.parent.flags;
-
-        if (nodeFlags & ts.NodeFlags.Let) {
-            return VariableDeclarationType.Let;
-        }
-        else if (nodeFlags & ts.NodeFlags.Const) {
-            return VariableDeclarationType.Const;
-        }
-        else {
-            return VariableDeclarationType.Var;
+            return ClassConstructorParameterScope.None;
         }
     }
 
@@ -114,35 +54,6 @@ export class TsSymbolNode extends TsNode implements ISymbolNode {
             const memberSymbol = this.symbol.exports[memberName];
             return this.createSymbolNodeFromSymbol(memberSymbol);
         });
-    }
-
-    isParameterOptional() {
-        const parameterDeclaration = this.node as ts.ParameterDeclaration;
-        return parameterDeclaration.questionToken != null || parameterDeclaration.initializer != null || parameterDeclaration.dotDotDotToken != null;
-    }
-
-    isRestParameter() {
-        const parameterDeclaration = this.node as ts.ParameterDeclaration;
-        return parameterDeclaration.dotDotDotToken != null;
-    }
-
-    isPropertyOptional() {
-        const propertyDeclaration = this.node as ts.PropertyDeclaration;
-        return propertyDeclaration.questionToken != null;
-    }
-
-    getDecorators() {
-        return (this.node.decorators || []).map(decorator => this.createNode(decorator));
-    }
-
-    getDefaultExpression() {
-        const propertyDeclaration = this.node as ts.PropertyDeclaration;
-        return propertyDeclaration.initializer != null ? this.createTsExpression(propertyDeclaration.initializer) : null;
-    }
-
-    getParameters() {
-        const parameters = (this.node as ts.SignatureDeclaration).parameters;
-        return parameters.filter(p => p != null).map(p => this.createSymbolNodeFromDeclaration(p));
     }
 
     getExtendsTypeExpressions() {
@@ -168,6 +79,33 @@ export class TsSymbolNode extends TsNode implements ISymbolNode {
         return [];
     }
 
+    getName() {
+        let name = this.symbol.getName();
+
+        if (name === "default") {
+            const localSymbol = this.typeChecker.getLocalSymbolFromNode(this.node);
+            name = localSymbol.getName();
+        }
+
+        return name;
+    }
+
+    getNamespaceDeclarationType() {
+        const nodeFlags = this.node.flags;
+
+        if ((nodeFlags & ts.NodeFlags.Namespace) !== 0) {
+            return NamespaceDeclarationType.Namespace;
+        }
+        else {
+            return NamespaceDeclarationType.Module;
+        }
+    }
+
+    getParameters() {
+        const parameters = (this.node as ts.SignatureDeclaration).parameters;
+        return parameters.filter(p => p != null).map(p => this.createSymbolNodeFromDeclaration(p));
+    }
+
     getScope() {
         const nodeFlags = this.node.flags;
 
@@ -182,44 +120,106 @@ export class TsSymbolNode extends TsNode implements ISymbolNode {
         }
     }
 
-    getClassConstructorParameterScope() {
-        const nodeFlags = this.node.flags;
+    getTypeExpression(): ITypeExpression {
+        return tryGet(this, () => this.getTypeExpressionAtLocation(this.node));
+    }
 
-        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
-            return ClassConstructorParameterScope.Private;
+    getTypeParameters() {
+        type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
+        let typeParameteredDeclaration = this.node as typeParameteredTypes;
+        let typeParameters = typeParameteredDeclaration.typeParameters;
+
+        return (typeParameters || []).map(typeParameter => {
+            return this.createSymbolNodeFromDeclaration(typeParameter);
+        });
+    }
+
+    getTypeParameterConstraintTypeExpression() {
+        const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
+        return constraint == null ? null : this.getTypeExpressionAtLocation((this.node as ts.TypeParameterDeclaration).constraint);
+    }
+
+    getVariableDeclarationType() {
+        const nodeFlags = this.node.parent.flags;
+
+        if (nodeFlags & ts.NodeFlags.Let) {
+            return VariableDeclarationType.Let;
         }
-        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
-            return ClassConstructorParameterScope.Protected;
-        }
-        else if ((nodeFlags & ts.NodeFlags.Public) !== 0) {
-            return ClassConstructorParameterScope.Public;
+        else if (nodeFlags & ts.NodeFlags.Const) {
+            return VariableDeclarationType.Const;
         }
         else {
-            return ClassConstructorParameterScope.None;
+            return VariableDeclarationType.Var;
         }
     }
 
-    getAliasSymbolNode() {
-        return this.createSymbolNodeFromSymbol(this.typeChecker.getAliasedSymbol(this.symbol));
+    isAlias() {
+        return this.typeChecker.symbolHasFlag(this.symbol, ts.SymbolFlags.Alias);
     }
 
-    isPropertyReadonly() {
-        return this.isPropertyAccessor() && (this.symbol.flags & ts.SymbolFlags.SetAccessor) === 0;
+    isAmbient() {
+        if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias()) {
+            return true;
+        }
+        else {
+            return this.isAnyParentAmbient();
+        }
+    }
+
+    isConstructorParameter() {
+        // a ts symbol node will never be a constructor parameter
+        return false;
+    }
+
+    getDecorators() {
+        return (this.node.decorators || []).map(decorator => this.createNode(decorator));
+    }
+
+    isDefaultExport() {
+        return this.typeChecker.isSymbolDefaultExportOfFile(this.symbol, this.sourceFile);
+    }
+
+    getDefaultExpression() {
+        const propertyDeclaration = this.node as ts.PropertyDeclaration;
+        return propertyDeclaration.initializer != null ? this.createTsExpression(propertyDeclaration.initializer) : null;
+    }
+
+    isExported() {
+        let parentSymbol = this.getSymbolParent(this.symbol);
+
+        if (parentSymbol == null) {
+            return this.isDefaultExport();
+        }
+        else {
+            return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[this.symbol.name] != null;
+        }
+    }
+
+    isNamedExport() {
+        return this.typeChecker.isSymbolNamedExportOfFile(this.symbol, this.sourceFile);
+    }
+
+    isParameterOptional() {
+        const parameterDeclaration = this.node as ts.ParameterDeclaration;
+        return parameterDeclaration.questionToken != null || parameterDeclaration.initializer != null || parameterDeclaration.dotDotDotToken != null;
+    }
+
+    isPropertyOptional() {
+        const propertyDeclaration = this.node as ts.PropertyDeclaration;
+        return propertyDeclaration.questionToken != null;
     }
 
     isPropertyAccessor() {
         return (this.symbol.flags & ts.SymbolFlags.GetAccessor) !== 0;
     }
 
-    getNamespaceDeclarationType() {
-        const nodeFlags = this.node.flags;
+    isPropertyReadonly() {
+        return this.isPropertyAccessor() && (this.symbol.flags & ts.SymbolFlags.SetAccessor) === 0;
+    }
 
-        if ((nodeFlags & ts.NodeFlags.Namespace) !== 0) {
-            return NamespaceDeclarationType.Namespace;
-        }
-        else {
-            return NamespaceDeclarationType.Module;
-        }
+    isRestParameter() {
+        const parameterDeclaration = this.node as ts.ParameterDeclaration;
+        return parameterDeclaration.dotDotDotToken != null;
     }
 
     forEachChild(callback: (symbolNode: ISymbolNode) => void) {

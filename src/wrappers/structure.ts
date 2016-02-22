@@ -1,4 +1,4 @@
-﻿export * from "./structure/structure-source-file-child-base";
+﻿export * from "./structure/structure-source-file-child";
 export * from "./structure/structure-expression";
 export * from "./structure/structure-node";
 export * from "./structure/structure-source-file";

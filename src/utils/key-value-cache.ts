@@ -18,21 +18,20 @@ export class KeyValueCache<T, U> {
         return item;
     }
 
-    // TODO-CHANGE: Make this private
-    get(key: T) {
+    getKeyFromValue(value: U) {
         for (let cacheItem of this.cacheItems) {
-            if (cacheItem.key === key) {
-                return cacheItem.value;
+            if (cacheItem.value === value) {
+                return cacheItem.key;
             }
         }
 
         return null;
     }
 
-    getKeyFromValue(value: U) {
+    get(key: T) {
         for (let cacheItem of this.cacheItems) {
-            if (cacheItem.value === value) {
-                return cacheItem.key;
+            if (cacheItem.key === key) {
+                return cacheItem.value;
             }
         }
 

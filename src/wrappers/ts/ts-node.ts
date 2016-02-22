@@ -10,7 +10,7 @@ import {TsSignature} from "./ts-signature";
 import {TsExpression} from "./ts-expression";
 import {TsType} from "./ts-type";
 import {TsTypeExpression} from "./ts-type-expression";
-import {TsSourceFileChildBaseOptions, TsSourceFileChildBase} from "./ts-source-file-child-base";
+import {TsSourceFileChildBaseOptions, TsSourceFileChildBase} from "./ts-source-file-child";
 
 export interface TsNodeOptions extends TsSourceFileChildBaseOptions {
     node: ts.Node;
@@ -32,16 +32,6 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return this.typeChecker.getConstantValue(this.node);
     }
 
-    getReturnTypeExpression() {
-        const tsType = this.typeChecker.getReturnTypeOfNode(this.node);
-
-        return this.getTypeExpressionFromType(tsType);
-    }
-
-    getNode() {
-        return this.node;
-    }
-
     getDecoratorName() {
         const decorator = this.node as ts.Decorator;
         return this.getNameFromExpression(decorator.expression);
@@ -50,6 +40,23 @@ export class TsNode extends TsSourceFileChildBase implements INode {
     getDecoratorArguments() {
         const decorator = this.node as ts.Decorator;
         return this.getArgumentsFromExpression(decorator.expression);
+    }
+
+    getExpression() {
+        let expression: IExpression;
+        const expressionStatement = this. node as ts.ExpressionStatement;
+
+        if (expressionStatement.expression != null) {
+            expression = this.createTsExpression(expressionStatement.expression);
+        }
+
+        return expression;
+    }
+
+    getReturnTypeExpression() {
+        const tsType = this.typeChecker.getReturnTypeOfNode(this.node);
+
+        return this.getTypeExpressionFromType(tsType);
     }
 
     getSignatureFromThis(): ISignature {
@@ -75,98 +82,87 @@ export class TsNode extends TsSourceFileChildBase implements INode {
     }
 
     isClass() {
-        return this.kind === ts.SyntaxKind.ClassDeclaration;
+        return this.getKind() === ts.SyntaxKind.ClassDeclaration;
     }
 
     isConstructor() {
-        return this.kind === ts.SyntaxKind.Constructor;
+        return this.getKind() === ts.SyntaxKind.Constructor;
     }
 
     isConstructSignature() {
-        return this.kind === ts.SyntaxKind.ConstructSignature;
+        return this.getKind() === ts.SyntaxKind.ConstructSignature;
     }
 
     isEnum() {
-        return this.kind === ts.SyntaxKind.EnumDeclaration;
+        return this.getKind() === ts.SyntaxKind.EnumDeclaration;
     }
 
     isExportDeclaration() {
-        return this.kind === ts.SyntaxKind.ExportDeclaration;
+        return this.getKind() === ts.SyntaxKind.ExportDeclaration;
     }
 
     isExportAssignment() {
-        return this.kind === ts.SyntaxKind.ExportAssignment;
+        return this.getKind() === ts.SyntaxKind.ExportAssignment;
     }
 
     isFunction() {
-        return this.kind === ts.SyntaxKind.FunctionDeclaration;
+        return this.getKind() === ts.SyntaxKind.FunctionDeclaration;
     }
 
     isFunctionType() {
-        return this.kind === ts.SyntaxKind.FunctionType;
+        return this.getKind() === ts.SyntaxKind.FunctionType;
     }
 
     isGetAccessor() {
-        return this.kind === ts.SyntaxKind.GetAccessor;
+        return this.getKind() === ts.SyntaxKind.GetAccessor;
     }
 
     isIdentifier() {
-        return this.kind === ts.SyntaxKind.Identifier;
+        return this.getKind() === ts.SyntaxKind.Identifier;
     }
 
     isInterface() {
-        return this.kind === ts.SyntaxKind.InterfaceDeclaration;
+        return this.getKind() === ts.SyntaxKind.InterfaceDeclaration;
     }
 
     isMethodDeclaration() {
-        return this.kind === ts.SyntaxKind.MethodDeclaration;
+        return this.getKind() === ts.SyntaxKind.MethodDeclaration;
     }
 
     isMethodSignature() {
-        return this.kind === ts.SyntaxKind.MethodSignature;
+        return this.getKind() === ts.SyntaxKind.MethodSignature;
     }
 
     isNamespace() {
-        return this.kind === ts.SyntaxKind.ModuleDeclaration;
+        return this.getKind() === ts.SyntaxKind.ModuleDeclaration;
     }
 
     isPropertyDeclaration() {
-        return this.kind === ts.SyntaxKind.PropertyDeclaration;
+        return this.getKind() === ts.SyntaxKind.PropertyDeclaration;
     }
 
     isPropertySignature() {
-        return this.kind === ts.SyntaxKind.PropertySignature;
+        return this.getKind() === ts.SyntaxKind.PropertySignature;
     }
 
     isSetAccessor() {
-        return this.kind === ts.SyntaxKind.SetAccessor;
+        return this.getKind() === ts.SyntaxKind.SetAccessor;
     }
 
     isTypeAlias() {
-        return this.kind === ts.SyntaxKind.TypeAliasDeclaration;
+        return this.getKind() === ts.SyntaxKind.TypeAliasDeclaration;
     }
 
     isTypeParameter() {
-        return this.kind === ts.SyntaxKind.TypeParameter;
+        return this.getKind() === ts.SyntaxKind.TypeParameter;
     }
 
     isVariable() {
-        return this.kind === ts.SyntaxKind.VariableDeclaration;
+        return this.getKind() === ts.SyntaxKind.VariableDeclaration;
     }
 
     nodeKindToString() {
-        return this.typeChecker.getSyntaxKindAsString(this.kind);
-    }
-
-    getExpression() {
-        let expression: IExpression;
-        const expressionStatement = this. node as ts.ExpressionStatement;
-
-        if (expressionStatement.expression != null) {
-            expression = this.createTsExpression(expressionStatement.expression);
-        }
-
-        return expression;
+        return this.typeChecker.getSyntaxKindAsString(this.getKind());
     }
 
     protected getTypeExpressionAtLocation(node: ts.Node): ITypeExpression {
@@ -210,7 +206,7 @@ export class TsNode extends TsSourceFileChildBase implements INode {
     }
 
     protected createTsNode(opts: { node: ts.Node; parentNode: ts.Node; }): INode {
-        return this.tsCache.getNode(opts.node, () => new TsNode({
+        return this.tsCache.getNodeOrCreate(opts.node, () => new TsNode({
             typeChecker: this.typeChecker,
             sourceFile: this.sourceFile,
             tsSourceFile: this.tsSourceFile,
@@ -253,12 +249,12 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         }
     }
 
+    private getKind() {
+        return (this.node == null) ? ts.SyntaxKind.Unknown : this.node.kind;
+    }
+
     private hasModifierWithSyntaxKind(syntaxKind: ts.SyntaxKind) {
         const node = (this.isVariable()) ? this.node.parent.parent : this.node;
         return (node.modifiers || []).some(m => m.kind === syntaxKind);
-    }
-
-    private get kind() {
-        return (this.node == null) ? ts.SyntaxKind.Unknown : this.node.kind;
     }
 }

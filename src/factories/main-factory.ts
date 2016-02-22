@@ -59,16 +59,7 @@ export class MainFactory {
     }
 
     getFileDefinition(file: ISourceFile) {
-        let fileDefinition = this.files.get(file);
-
-        /* istanbul ignore else */
-        if (fileDefinition == null) {
-            fileDefinition = new FileDefinition(this, file);
-
-            this.files.add(file, fileDefinition);
-        }
-
-        return fileDefinition;
+        return this.files.getOrCreate(file, () => new FileDefinition(this, file));
     }
 
     getFileDefinitionFromSourceFile(sourceFile: ISourceFile) {

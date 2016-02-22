@@ -2,7 +2,7 @@
 import {ISymbolNode} from "./../symbol-node";
 import {IType} from "./../type";
 import {ITypeExpression} from "./../type-expression";
-import {TsSourceFileChildBase, TsSourceFileChildBaseOptions} from "./ts-source-file-child-base";
+import {TsSourceFileChildBase, TsSourceFileChildBaseOptions} from "./ts-source-file-child";
 import {TsSymbolNode} from "./ts-symbol-node";
 import {TsTypeExpression} from "./ts-type-expression";
 import {TsType} from "./ts-type";
