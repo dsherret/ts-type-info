@@ -4,7 +4,7 @@
 /* tslint:disable */
 import * as TestClassModule from "./test-class";
 import {TestEnum} from "./test-enum";
-import {Class1, Class2} from "./test-multiple-classes";
+import {Class1, Class2 as AliasedClass} from "./test-multiple-classes";
 import TestDefaultClassAsImported from "./test-default-class";
 import TestDefaultSeparateClassAsImported from "./test-default-separate-class";
 import * as definition from "definition";
@@ -22,7 +22,7 @@ dummyFunction(new TestClassModule.TestClass());
 dummyFunction(new TestDefaultClassAsImported());
 dummyFunction(new TestDefaultSeparateClassAsImported());
 dummyFunction(new Class1());
-dummyFunction(new Class2());
+dummyFunction(new AliasedClass());
 dummyFunction(TestEnum);
 dummyFunction(reexports.TestClass);
 dummyFunction(reexports.TestEnum);

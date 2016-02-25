@@ -28,13 +28,13 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         super(DefinitionType.File);
         this.fileName = sourceFile.getFileName();
         this.fillMembersBySymbolNode(mainFactory, sourceFile);
-        this.defaultExport = mainFactory.getDefinitionsOrExpressionFromSymbol(sourceFile.getDefaultExportSymbol());
+        this.defaultExport = mainFactory.getDefinitionsOrExpressionFromSymbolNode(sourceFile.getDefaultExportSymbol());
     }
 
     fillImports(mainFactory: MainFactory, sourceFile: ISourceFile) {
-        sourceFile.getFileImportSymbols().map(fileImportSymbol => {
+        sourceFile.getFileImportClauses().map(importClause => {
             this.imports.push(...mainFactory.getImportDefinitions({
-                symbol: fileImportSymbol,
+                importClause: importClause,
                 parent: this
             }));
         });
@@ -43,7 +43,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     fillReExports(mainFactory: MainFactory, sourceFile: ISourceFile) {
         sourceFile.getFileReExportSymbols().map(reExportSymbol => {
             this.reExports.push(...mainFactory.getReExportDefinitions({
-                symbol: reExportSymbol,
+                symbolNode: reExportSymbol,
                 parent: this
             }));
         });

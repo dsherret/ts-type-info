@@ -1,5 +1,6 @@
 ﻿import {ISymbolNode} from "./../symbol-node";
 import {ISourceFile} from "./../source-file";
+import {IImportClause} from "./../import-clause";
 import {StructureSymbolNode} from "./structure-symbol-node";
 
 export class StructureSourceFile extends StructureSymbolNode implements ISourceFile {
@@ -7,7 +8,7 @@ export class StructureSourceFile extends StructureSymbolNode implements ISourceF
         return "";
     }
 
-    getFileImportSymbols(): ISymbolNode[] {
+    getFileImportClauses(): IImportClause[] {
         return [];
     }
 

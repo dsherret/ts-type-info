@@ -2,7 +2,7 @@
         MainDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition} from "./../definitions";
 import {Expression, Type, TypeExpression} from "./../expressions";
 import {KeyValueCache, Logger, ArrayExt} from "./../utils";
-import {ISourceFile, ISymbolNode, INode, IType, ITypeExpression} from "./../wrappers";
+import {ISourceFile, ISymbolNode, INode, IType, ITypeExpression, IImportClause} from "./../wrappers";
 
 export class MainFactory {
     private definitionBySymbolNode = new KeyValueCache<INode, MainDefinitions>();
@@ -28,29 +28,29 @@ export class MainFactory {
         });
     }
 
-    getImportDefinitions(opts: { symbol: ISymbolNode; parent: FileDefinition; }) {
-        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.symbol);
+    getImportDefinitions(opts: { importClause: IImportClause; parent: FileDefinition; }) {
+        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.importClause.getSymbolNode());
 
         return (definitions || []).map(definition => new ImportDefinition(
-            this.getFileDefinitionFromSourceFile(opts.symbol.getSourceFile()),
+            opts.importClause,
             definition,
             opts.parent
         ));
     }
 
-    getReExportDefinitions(opts: { symbol: ISymbolNode; parent: FileDefinition; }) {
-        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.symbol);
+    getReExportDefinitions(opts: { symbolNode: ISymbolNode; parent: FileDefinition; }) {
+        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.symbolNode);
 
         return (definitions || []).map(definition => new ReExportDefinition(
-            this.getFileDefinitionFromSourceFile(opts.symbol.getSourceFile()),
+            this.getFileDefinitionFromSourceFile(opts.symbolNode.getSourceFile()),
             definition,
             opts.parent
         ));
     }
 
-    getAllDefinitionsBySymbolOfSymbolNode(symbol: ISymbolNode) {
-        return (symbol.getAllRelatedSymbolNodes() || []).map(symbolNode => {
-            return this.getDefinitionBySymbolNode(symbolNode);
+    getAllDefinitionsBySymbolOfSymbolNode(symbolNode: ISymbolNode) {
+        return (symbolNode.getAllRelatedSymbolNodes() || []).map(relatedSymbolNode => {
+            return this.getDefinitionBySymbolNode(relatedSymbolNode);
         }).filter(d => d != null);
     }
 
@@ -66,21 +66,21 @@ export class MainFactory {
         return this.files.get(sourceFile);
     }
 
-    getDefinitionsOrExpressionFromSymbol(symbol: ISymbolNode): Expression | ArrayExt<MainDefinitions> {
-        if (symbol == null) {
+    getDefinitionsOrExpressionFromSymbolNode(symbolNode: ISymbolNode): Expression | ArrayExt<MainDefinitions> {
+        if (symbolNode == null) {
             return null;
         }
-        else if (symbol.isAlias()) {
-            return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbol.getAliasSymbolNode()));
+        else if (symbolNode.isAlias()) {
+            return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbolNode.getAliasSymbolNode()));
         }
         else {
-            let expression = symbol.getExpression();
+            let expression = symbolNode.getExpression();
 
             if (expression != null) {
                 return new Expression(expression);
             }
             else {
-                return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbol));
+                return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbolNode));
             }
         }
     }

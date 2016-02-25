@@ -1,7 +1,9 @@
-﻿import {NamedTestStructure} from "./../base";
+﻿import {ImportType} from "./../../../../../definitions";
+import {NamedTestStructure} from "./../base";
 
-export interface ImportTestStructure {
-    fileName: string;
+export interface ImportTestStructure extends NamedTestStructure {
+    importType: ImportType;
+    moduleSpecifier: string;
     definitionName: string;
     definitionType: { new(...args: any[]): NamedTestStructure; };
 }
