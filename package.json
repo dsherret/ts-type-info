@@ -26,9 +26,9 @@
     "definition": "ts-type-info.d.ts"
   },
   "dependencies": {
+    "code-block-writer": "^1.7.2",
     "tmp": "0.0.28",
-    "typescript": "^1.8.0",
-    "code-block-writer": "^1.7.2"
+    "typescript": "^1.8.2"
   },
   "devDependencies": {
     "coveralls": "^2.11.6",
@@ -41,6 +41,6 @@
     "gulp-tslint": "^4.3.1",
     "gulp-typescript": "^2.10.0",
     "mocha": "^2.3.3",
-    "tslint": "^3.3.0"
+    "tslint": "^3.5.0"
   }
 }
