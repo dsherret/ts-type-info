@@ -72,6 +72,7 @@ export class TsSymbolNode extends TsNode implements ISymbolNode {
             /* istanbul ignore else */
             if (types != null && types.length > 0) {
                 return types.map(t => this.typeChecker.getTypeAtLocation(t))
+                    .filter(t => t ? true : false)
                     .map(t => this.getTypeExpressionFromType(t));
             }
         }
