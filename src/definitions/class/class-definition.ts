@@ -3,8 +3,8 @@ import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISignature, ISymbolNode} from "./../../wrappers";
-import {StructureSymbolNode} from "./../../wrappers/structure";
+import {ISignature, INode} from "./../../wrappers";
+import {StructureNode} from "./../../wrappers/structure";
 import {BaseDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IDecoratableDefinition, DecoratableDefinition, IAmbientableDefinition,
         AmbientableDefinition, IExportableDefinition, ExportableDefinition, ITypeParameteredDefinition, TypeParameteredDefinition,
         IAbstractableDefinition, AbstractableDefinition, DefinitionType} from "./../base";
@@ -32,18 +32,18 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     extendsTypeExpressions = new ArrayExt<TypeExpression>();
     implementsTypeExpressions = new ArrayExt<TypeExpression>();
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
+    constructor(mainFactory: MainFactory, node: INode) {
         super(DefinitionType.Class);
 
-        this.fillName(symbolNode);
-        this.fillExportable(symbolNode);
-        this.fillDecorators(symbolNode);
-        this.fillAmbientable(symbolNode);
-        this.fillAbstractable(symbolNode);
-        this.fillMembers(mainFactory, symbolNode);
-        this.fillTypeParametersBySymbol(mainFactory, symbolNode);
-        this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions().map(typeExpression => mainFactory.getTypeExpression(typeExpression)));
-        this.implementsTypeExpressions.push(...symbolNode.getImplementsTypeExpressions().map(typeExpression => mainFactory.getTypeExpression(typeExpression)));
+        this.fillName(node);
+        this.fillExportable(node);
+        this.fillDecorators(node);
+        this.fillAmbientable(node);
+        this.fillAbstractable(node);
+        this.fillMembers(mainFactory, node);
+        this.fillTypeParametersBySymbol(mainFactory, node);
+        this.extendsTypeExpressions.push(...node.getSymbol().getExtendsTypeExpressions().map(typeExpression => mainFactory.getTypeExpression(typeExpression)));
+        this.implementsTypeExpressions.push(...node.getImplementsTypeExpressions().map(typeExpression => mainFactory.getTypeExpression(typeExpression)));
         this.fillPropertiesFromConstructorDef();
     }
 
@@ -55,12 +55,12 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     }
 
     addProperty(prop: ClassPropertyStructure) {
-        this.properties.push(new ClassPropertyDefinition(new MainFactory(), new StructureSymbolNode(prop), this));
+        this.properties.push(new ClassPropertyDefinition(new MainFactory(), new StructureNode(prop), this));
     }
 
-    private fillMembers(mainFactory: MainFactory, symbolNode: ISymbolNode) {
-        symbolNode.forEachChild(childSymbol => {
-            const def = this.getMemberDefinition(mainFactory, childSymbol);
+    private fillMembers(mainFactory: MainFactory, node: INode) {
+        node.forEachChild(childNode => {
+            const def = this.getMemberDefinition(mainFactory, childNode);
 
             if (def != null) {
                 this.addDefinition(def);
@@ -91,38 +91,38 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
         }
     }
 
-    private getMemberDefinition(mainFactory: MainFactory, childSymbol: ISymbolNode): ClassMemberDefinitions {
-        return tryGet(childSymbol, () => {
-            if (childSymbol.isMethodDeclaration()) {
-                if (childSymbol.hasStaticKeyword()) {
-                    return new ClassStaticMethodDefinition(mainFactory, childSymbol, this);
+    private getMemberDefinition(mainFactory: MainFactory, childNode: INode): ClassMemberDefinitions {
+        return tryGet(childNode, () => {
+            if (childNode.isMethodDeclaration()) {
+                if (childNode.hasStaticKeyword()) {
+                    return new ClassStaticMethodDefinition(mainFactory, childNode, this);
                 }
                 else {
-                    return new ClassMethodDefinition(mainFactory, childSymbol, this);
+                    return new ClassMethodDefinition(mainFactory, childNode, this);
                 }
             }
-            else if (childSymbol.isPropertyDeclaration() || childSymbol.isGetAccessor()) {
-                if (childSymbol.hasStaticKeyword()) {
-                    return new ClassStaticPropertyDefinition(mainFactory, childSymbol, this);
+            else if (childNode.isPropertyDeclaration() || childNode.isGetAccessor()) {
+                if (childNode.hasStaticKeyword()) {
+                    return new ClassStaticPropertyDefinition(mainFactory, childNode, this);
                 }
                 else {
-                    return new ClassPropertyDefinition(mainFactory, childSymbol, this);
+                    return new ClassPropertyDefinition(mainFactory, childNode, this);
                 }
             }
-            else if (childSymbol.isConstructor()) {
-                return new ClassConstructorDefinition(mainFactory, childSymbol, this);
+            else if (childNode.isConstructor()) {
+                return new ClassConstructorDefinition(mainFactory, childNode, this);
             }
-            else if (childSymbol.isSetAccessor()) {
+            else if (childNode.isSetAccessor()) {
                 // ignore, GetAccessor is the one that will be handled
             }
-            else if (childSymbol.isIdentifier()) {
+            else if (childNode.isIdentifier()) {
                 // ignore, it's the class identifier
             }
-            else if (childSymbol.isTypeParameter()) {
+            else if (childNode.isTypeParameter()) {
                 // ignore, type parameters are handled elsewhere
             }
             else {
-                Logger.warn(`Unknown class child kind: ${childSymbol.nodeKindToString()}`);
+                Logger.warn(`Unknown class child kind: ${childNode.nodeKindToString()}`);
             }
         });
     }
@@ -150,27 +150,27 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // DecoratableDefinition
     decorators: ArrayExt<DecoratorDefinition<this>>;
-    fillDecorators: (symbolNode: ISymbolNode) => void;
+    fillDecorators: (node: INode) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: ISymbolNode) => void;
+    fillExportable: (node: INode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillTypeParametersBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: ISymbolNode) => void;
+    fillAmbientable: (node: INode) => void;
     // AbstractableDefinition
     isAbstract: boolean;
-    fillAbstractable: (symbolNode: ISymbolNode) => void;
+    fillAbstractable: (node: INode) => void;
 }
 
 applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition]);

@@ -1,17 +1,17 @@
-﻿import {ISymbolNode} from "./../../wrappers";
+﻿import {INode} from "./../../wrappers";
 
 export interface IAmbientableDefinition {
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable(symbolNode: ISymbolNode): void;
+    fillAmbientable(node: INode): void;
 }
 
 export abstract class AmbientableDefinition implements IAmbientableDefinition {
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
-    fillAmbientable(symbolNode: ISymbolNode) {
-        this.hasDeclareKeyword = symbolNode.hasDeclareKeyword();
-        this.isAmbient = symbolNode.isAmbient();
+    fillAmbientable(node: INode) {
+        this.hasDeclareKeyword = node.hasDeclareKeyword();
+        this.isAmbient = node.isAmbient();
     }
 }

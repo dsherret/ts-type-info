@@ -1,9 +1,9 @@
 import {TypeExpression} from "./../../expressions";
-import {ISignature, ISymbolNode} from "./../../wrappers";
+import {ISignature, INode} from "./../../wrappers";
 import {MainFactory} from "./../../factories";
 
 export interface IReturnTypedDefinition {
-    fillReturnTypeExpressionBySymbol(mainFactory: MainFactory, symbolNode: ISymbolNode): void;
+    fillReturnTypeExpressionBySymbol(mainFactory: MainFactory, node: INode): void;
     fillReturnTypeExpressionBySignature(mainFactory: MainFactory, signature: ISignature): void;
     returnTypeExpression: TypeExpression;
 }
@@ -11,8 +11,8 @@ export interface IReturnTypedDefinition {
 export abstract class ReturnTypedDefinition implements IReturnTypedDefinition {
     returnTypeExpression: TypeExpression;
 
-    fillReturnTypeExpressionBySymbol(mainFactory: MainFactory, symbolNode: ISymbolNode) {
-        this.returnTypeExpression = mainFactory.getTypeExpression(symbolNode.getReturnTypeExpression());
+    fillReturnTypeExpressionBySymbol(mainFactory: MainFactory, node: INode) {
+        this.returnTypeExpression = mainFactory.getTypeExpression(node.getReturnTypeExpression());
     }
 
     fillReturnTypeExpressionBySignature(mainFactory: MainFactory, signature: ISignature) {

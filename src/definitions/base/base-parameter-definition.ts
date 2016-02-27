@@ -1,6 +1,6 @@
 import {applyMixins} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {Expression, TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {IParentedDefinition} from "./parented-definition";
@@ -10,7 +10,7 @@ import {BaseDefinition} from "./base-definition";
 import {DefinitionType} from "./definition-type";
 
 export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
-    new(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ParentType): ParameterType;
+    new(mainFactory: MainFactory, node: INode, parent: ParentType): ParameterType;
 }
 
 export class BaseParameterDefinition<ParentType> extends BaseDefinition
@@ -18,29 +18,29 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     isOptional: boolean;
     isRestParameter: boolean;
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ParentType, definitionType: DefinitionType) {
+    constructor(mainFactory: MainFactory, node: INode, parent: ParentType, definitionType: DefinitionType) {
         super(definitionType);
 
-        this.fillName(symbolNode);
-        this.fillTypeExpression(mainFactory, symbolNode);
-        this.fillDefaultExpression(symbolNode);
+        this.fillName(node);
+        this.fillTypeExpression(mainFactory, node);
+        this.fillDefaultExpression(node);
 
-        this.isOptional = symbolNode.isParameterOptional();
-        this.isRestParameter = symbolNode.isRestParameter();
+        this.isOptional = node.isParameterOptional();
+        this.isRestParameter = node.isRestParameter();
         this.parent = parent;
     }
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (mainFactory: MainFactory, node: INode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
-    fillDefaultExpression: (symbolNode: ISymbolNode) => void;
+    fillDefaultExpression: (node: INode) => void;
 }
 
 applyMixins(BaseParameterDefinition, [NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);

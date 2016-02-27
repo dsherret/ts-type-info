@@ -1,7 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {applyMixins} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableWriter} from "./../../writers";
@@ -15,15 +15,15 @@ export class VariableDefinition extends BaseDefinition
                                            IDefaultExpressionedDefinition, IAmbientableDefinition {
     declarationType: VariableDeclarationType;
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
+    constructor(mainFactory: MainFactory, node: INode) {
         super(DefinitionType.Variable);
-        this.fillName(symbolNode);
-        this.fillExportable(symbolNode);
-        this.fillTypeExpression(mainFactory, symbolNode);
-        this.fillDefaultExpression(symbolNode);
-        this.fillAmbientable(symbolNode);
+        this.fillName(node);
+        this.fillExportable(node);
+        this.fillTypeExpression(mainFactory, node);
+        this.fillDefaultExpression(node);
+        this.fillAmbientable(node);
 
-        this.declarationType = symbolNode.getVariableDeclarationType();
+        this.declarationType = node.getVariableDeclarationType();
     }
 
     write() {
@@ -35,24 +35,24 @@ export class VariableDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: ISymbolNode) => void;
+    fillExportable: (node: INode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (mainFactory: MainFactory, node: INode) => void;
     // DefaultExpressionedDefinition
     defaultExpression: Expression;
-    fillDefaultExpression: (symbolNode: ISymbolNode) => void;
+    fillDefaultExpression: (node: INode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: ISymbolNode) => void;
+    fillAmbientable: (node: INode) => void;
 }
 
 applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

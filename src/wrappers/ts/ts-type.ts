@@ -1,39 +1,45 @@
 ﻿import * as ts from "typescript";
 import {tryGet} from "./../../utils";
 import {IType} from "./../type";
-import {ISymbolNode} from "./../symbol-node";
+import {ITypeExpression} from "./../type-expression";
+import {ISymbol} from "./../symbol";
 import {ISignature} from "./../signature";
-import {TsSourceFileChildBase, TsSourceFileChildBaseOptions} from "./ts-source-file-child";
-import {TsSymbolNode} from "./ts-symbol-node";
+import {TsSourceFileChild, TsSourceFileChildOptions} from "./ts-source-file-child";
+import {TsSymbol} from "./ts-symbol";
 import {TsSignature} from "./ts-signature";
+import {TsTypeExpression} from "./ts-type-expression";
 
-export interface TsTypeOptions extends TsSourceFileChildBaseOptions {
-    tsType: ts.Type;
+export interface TsTypeOptions extends TsSourceFileChildOptions {
+    type: ts.Type;
 }
 
-export class TsType extends TsSourceFileChildBase implements IType {
-    protected tsType: ts.Type;
+export class TsType extends TsSourceFileChild implements IType {
+    private type: ts.Type;
 
     constructor(opts: TsTypeOptions) {
         super(opts);
 
-        this.tsType = opts.tsType;
+        this.type = opts.type;
     }
 
     getText() {
-        return this.typeChecker.typeToString(this.sourceFile, this.tsType);
+        return this.typeChecker.typeToString(this.sourceFile, this.type);
     }
 
-    getProperties() {
-        const properties = this.tsType.getProperties();
+    getBaseTypeExpressions(): ITypeExpression[] {
+        return (this.type.getBaseTypes() || []).map(baseType => this.createTypeExpression(baseType));
+    }
+
+    getProperties(): ISymbol[] {
+        const properties = this.type.getProperties();
 
         return (properties || []).filter(p => p.name !== "prototype").map(property => {
-            return this.createSymbolNodeFromSymbol(property);
+            return this.createSymbol(property);
         });
     }
 
     getCallSignatures() {
-        const callSignatures = this.tsType.getCallSignatures();
+        const callSignatures = this.type.getCallSignatures();
 
         return (callSignatures || []).map(callSignature => {
             return this.createTsSignature({
@@ -43,21 +49,21 @@ export class TsType extends TsSourceFileChildBase implements IType {
     }
 
     getTypeArguments() {
-        const tsTypeArguments = (this.tsType as ts.TypeReference).typeArguments;
+        const tsTypeArguments = (this.type as ts.TypeReference).typeArguments;
 
         return (tsTypeArguments || []).map(arg => {
             return tryGet(this.getText(), () => this.createType(arg));
         });
     }
 
-    getSymbolNodes() {
-        const typeArray = (this.tsType as ts.UnionOrIntersectionType).types;
+    getSymbols(): ISymbol[] {
+        const typeArray = (this.type as ts.UnionOrIntersectionType).types;
 
         if (typeArray != null) {
-            return typeArray.map(t => t.symbol).filter(s => s != null).map(s => this.createSymbolNodeFromSymbol(s));
+            return typeArray.map(t => t.symbol).filter(s => s != null).map(s => this.createSymbol(s));
         }
-        else if (this.tsType.symbol != null) {
-            return [this.createSymbolNodeFromSymbol(this.tsType.symbol)];
+        else if (this.type.symbol != null) {
+            return [this.createSymbol(this.type.symbol)];
         }
         else {
             return [];
@@ -65,49 +71,59 @@ export class TsType extends TsSourceFileChildBase implements IType {
     }
 
     hasCallSignaturesAndProperties() {
-        return (this.tsType.flags & (
+        return (this.type.flags & (
             ts.TypeFlags.ObjectType |
             ts.TypeFlags.Instantiated
         )) !== 0 &&
-        (this.tsType.flags & (
+        (this.type.flags & (
             ts.TypeFlags.Class |
             ts.TypeFlags.Interface
         )) === 0;
     }
 
-    protected createType(tsType: ts.Type): IType {
-        return new TsType({
-            sourceFile: this.sourceFile,
-            typeChecker: this.typeChecker,
-            tsType: tsType,
-            tsCache: this.tsCache,
-            tsSourceFile: this.tsSourceFile
-        });
-    }
-
-    protected createSymbolNodeFromSymbol(symbol: ts.Symbol) {
-        return this.createSymbolNode({
-            node: this.typeChecker.getDeclarationFromSymbol(symbol),
-            parentNode: null,
-            symbol: symbol
-        });
-    }
-
-    protected createSymbolNode(opts: { node: ts.Node; parentNode: ts.Node; symbol: ts.Symbol; }): ISymbolNode {
-        return this.tsCache.getSymbolNode(opts.symbol, opts.node, () => {
-            return new TsSymbolNode({
+    private createTypeExpression(type: ts.Type): ITypeExpression {
+        return this.tsCache.getTypeExpression(
+            this.typeChecker,
+            this.sourceFile,
+            type,
+            () => new TsTypeExpression({
                 sourceFile: this.sourceFile,
                 typeChecker: this.typeChecker,
                 tsCache: this.tsCache,
-                parentNode: opts.parentNode,
-                node: opts.node,
-                symbol: opts.symbol,
+                type: type
+            }),
+            (typeType) => new TsType({
+                sourceFile: this.sourceFile,
+                tsSourceFile: this.tsSourceFile,
+                typeChecker: this.typeChecker,
+                tsCache: this.tsCache,
+                type: typeType
+            }));
+    }
+
+    private createType(type: ts.Type): IType {
+        return this.tsCache.getType(this.typeChecker, this.sourceFile, type, () => new TsType({
+            sourceFile: this.sourceFile,
+            tsSourceFile: this.tsSourceFile,
+            typeChecker: this.typeChecker,
+            tsCache: this.tsCache,
+            type: type
+        }));
+    }
+
+    private createSymbol(symbol: ts.Symbol) {
+        return this.tsCache.getSymbol(symbol, () => {
+            return new TsSymbol({
+                sourceFile: this.sourceFile,
+                typeChecker: this.typeChecker,
+                tsCache: this.tsCache,
+                symbol: symbol,
                 tsSourceFile: this.tsSourceFile
             });
         });
     }
 
-    protected createTsSignature(opts: { signature: ts.Signature }): ISignature {
+    private createTsSignature(opts: { signature: ts.Signature }): ISignature {
         return new TsSignature({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,

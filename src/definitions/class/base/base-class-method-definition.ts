@@ -2,7 +2,7 @@ import CodeBlockWriter from "code-block-writer";
 import {Scope} from "./../scope";
 import {applyMixins, ArrayExt} from "./../../../utils";
 import {MainFactory} from "./../../../factories";
-import {ISymbolNode} from "./../../../wrappers";
+import {INode} from "./../../../wrappers";
 import {DecoratorDefinition} from "./../../../definitions";
 import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseFunctionDefinition, BaseParameterDefinitionConstructor} from "./../../base";
 import {ClassDefinition} from "./../class-definition";
@@ -15,23 +15,23 @@ export class BaseClassMethodDefinition<ParameterType>
 
     constructor(
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ClassDefinition, ParameterType>, ParameterType>,
         parent: ClassDefinition,
         definitionType: DefinitionType
     ) {
-        super(mainFactory, symbolNode, parameterDefinition, definitionType);
-        this.fillDecorators(symbolNode);
-        this.fillScope(symbolNode);
+        super(mainFactory, node, parameterDefinition, definitionType);
+        this.fillDecorators(node);
+        this.fillScope(node);
         this.parent = parent;
     }
 
     // DecoratableDefinition
     decorators: ArrayExt<DecoratorDefinition<this>>;
-    fillDecorators: (symbolNode: ISymbolNode) => void;
+    fillDecorators: (node: INode) => void;
     // ScopeDefinition
     scope: Scope;
-    fillScope: (symbolNode: ISymbolNode) => void;
+    fillScope: (node: INode) => void;
 }
 
 applyMixins(BaseClassMethodDefinition, [DecoratableDefinition, ScopedDefinition]);

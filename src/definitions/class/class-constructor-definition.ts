@@ -2,7 +2,7 @@ import CodeBlockWriter from "code-block-writer";
 import {IParentedDefinition, BaseDefinition, DefinitionType, IParameteredDefinition, ParameteredDefinition} from "./../base";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISignature, ISymbolNode} from "./../../wrappers";
+import {ISignature, INode} from "./../../wrappers";
 import {ClassConstructorParameterDefinition} from "./class-constructor-parameter-definition";
 import {ClassDefinition} from "./class-definition";
 
@@ -11,9 +11,9 @@ export class ClassConstructorDefinition
         implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition> {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ClassDefinition) {
+    constructor(mainFactory: MainFactory, node: INode, parent: ClassDefinition) {
         super(DefinitionType.ClassConstructor);
-        this.fillParametersBySymbol(mainFactory, symbolNode, ClassConstructorParameterDefinition);
+        this.fillParametersBySymbol(mainFactory, node, ClassConstructorParameterDefinition);
         this.parent = parent;
     }
 
@@ -23,7 +23,7 @@ export class ClassConstructorDefinition
     parameters: ArrayExt<ClassConstructorParameterDefinition>;
     fillParametersBySymbol: (
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         parameterDefinition: typeof ClassConstructorParameterDefinition) => void;
     fillParametersBySignature: (
         mainFactory: MainFactory,

@@ -1,14 +1,14 @@
-﻿import {ISymbolNode} from "./../../wrappers";
+﻿import {INode} from "./../../wrappers";
 
 export interface IAbstractableDefinition {
     isAbstract: boolean;
-    fillAbstractable(symbolNode: ISymbolNode): void;
+    fillAbstractable(node: INode): void;
 }
 
 export abstract class AbstractableDefinition implements IAbstractableDefinition {
     isAbstract: boolean;
 
-    fillAbstractable(symbolNode: ISymbolNode) {
-        this.isAbstract = symbolNode.hasAbstractKeyword();
+    fillAbstractable(node: INode) {
+        this.isAbstract = node.hasAbstractKeyword();
     }
 }

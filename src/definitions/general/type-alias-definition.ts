@@ -1,7 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISignature, ISymbolNode} from "./../../wrappers";
+import {ISignature, INode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../write-flags";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition,
@@ -19,13 +19,13 @@ import {TypeAliasWriter} from "./../../writers";
 export class TypeAliasDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, ITypeExpressionedDefinition,
                                             ITypeParameteredDefinition, IAmbientableDefinition {
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
+    constructor(mainFactory: MainFactory, node: INode) {
         super(DefinitionType.TypeAlias);
-        this.fillName(symbolNode);
-        this.fillExportable(symbolNode);
-        this.fillTypeExpression(mainFactory, symbolNode);
-        this.fillTypeParametersBySymbol(mainFactory, symbolNode);
-        this.fillAmbientable(symbolNode);
+        this.fillName(node);
+        this.fillExportable(node);
+        this.fillTypeExpression(mainFactory, node);
+        this.fillTypeParametersBySymbol(mainFactory, node);
+        this.fillAmbientable(node);
     }
 
     write() {
@@ -37,25 +37,25 @@ export class TypeAliasDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: ISymbolNode) => void;
+    fillExportable: (node: INode) => void;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeExpression: (mainFactory: MainFactory, node: INode) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillTypeParametersBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: ISymbolNode) => void;
+    fillAmbientable: (node: INode) => void;
 }
 
 applyMixins(TypeAliasDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition]);

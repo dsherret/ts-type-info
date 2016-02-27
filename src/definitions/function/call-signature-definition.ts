@@ -1,4 +1,4 @@
-import {ISymbolNode, ISignature} from "./../../wrappers";
+import {INode, ISignature} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
@@ -25,7 +25,7 @@ export class CallSignatureDefinition
     parameters: ArrayExt<CallSignatureParameterDefinition>;
     fillParametersBySymbol: (
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     fillParametersBySignature: (
         mainFactory: MainFactory,
@@ -33,11 +33,11 @@ export class CallSignatureDefinition
         parameterDefinition: typeof CallSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillReturnTypeExpressionBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillReturnTypeExpressionBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillTypeParametersBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
 }
 

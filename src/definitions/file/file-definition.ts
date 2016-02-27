@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISourceFile, ISymbolNode} from "./../../wrappers";
+import {ISourceFile, INode} from "./../../wrappers";
 import {Expression} from "./../../expressions";
 import {ExportableDefinitions} from "./../../definitions";
 import {FileWriter} from "./../../writers";
@@ -27,8 +27,16 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     constructor(mainFactory: MainFactory, sourceFile: ISourceFile) {
         super(DefinitionType.File);
         this.fileName = sourceFile.getFileName();
-        this.fillMembersBySymbolNode(mainFactory, sourceFile);
-        this.defaultExport = mainFactory.getDefinitionsOrExpressionFromSymbolNode(sourceFile.getDefaultExportSymbol());
+        this.fillMembersByNode(mainFactory, sourceFile.getNode());
+        this.fillDefaultExport(mainFactory, sourceFile);
+    }
+
+    private fillDefaultExport(mainFactory: MainFactory, sourceFile: ISourceFile) {
+        const symbol = sourceFile.getDefaultExportSymbol();
+
+        if (symbol != null) {
+            this.defaultExport = mainFactory.getDefinitionsOrExpressionFromSymbol(symbol);
+        }
     }
 
     fillImports(mainFactory: MainFactory, sourceFile: ISourceFile) {
@@ -43,7 +51,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     fillReExports(mainFactory: MainFactory, sourceFile: ISourceFile) {
         sourceFile.getFileReExportSymbols().map(reExportSymbol => {
             this.reExports.push(...mainFactory.getReExportDefinitions({
-                symbolNode: reExportSymbol,
+                symbol: reExportSymbol,
                 parent: this
             }));
         });
@@ -94,7 +102,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
-    fillMembersBySymbolNode: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillMembersByNode: (mainFactory: MainFactory, node: INode) => void;
 }
 
 applyMixins(FileDefinition, [ModuledDefinition]);

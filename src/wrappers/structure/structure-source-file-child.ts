@@ -1,7 +1,7 @@
 ﻿import {ISourceFileChild} from "./../source-file-child";
 import {ISourceFile} from "./../source-file";
 
-export class StructureSourceFileChildBase implements ISourceFileChild {
+export class StructureSourceFileChild implements ISourceFileChild {
     getSourceFile(): ISourceFile {
         return null;
     }

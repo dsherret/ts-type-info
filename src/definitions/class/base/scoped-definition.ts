@@ -1,15 +1,15 @@
 import {Scope} from "./../scope";
-import {ISymbolNode} from "./../../../wrappers";
+import {INode} from "./../../../wrappers";
 
 export interface IScopedDefinition {
     scope: Scope;
-    fillScope(symbolNode: ISymbolNode): void;
+    fillScope(node: INode): void;
 }
 
 export abstract class ScopedDefinition implements IScopedDefinition {
     scope: Scope;
 
-    fillScope(symbolNode: ISymbolNode) {
-        this.scope = symbolNode.getScope();
+    fillScope(node: INode) {
+        this.scope = node.getScope();
     }
 }

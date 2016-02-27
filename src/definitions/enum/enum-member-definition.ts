@@ -1,22 +1,22 @@
 ﻿import {applyMixins} from "./../../utils";
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumDefinition} from "./enum-definition";
 
 export class EnumMemberDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<EnumDefinition> {
     value: number;
 
-    constructor(symbolNode: ISymbolNode, parent: EnumDefinition) {
+    constructor(node: INode, parent: EnumDefinition) {
         super(DefinitionType.EnumMember);
-        this.fillName(symbolNode);
+        this.fillName(node);
 
-        this.value = symbolNode.getConstantValue();
+        this.value = node.getConstantValue();
         this.parent = parent;
     }
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: EnumDefinition;
 }

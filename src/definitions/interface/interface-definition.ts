@@ -5,7 +5,7 @@ import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISymbolNode, ISignature} from "./../../wrappers";
+import {INode, ISignature} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition,
         ITypeParameteredDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -23,14 +23,14 @@ export class InterfaceDefinition extends BaseDefinition
     typeParameters = new ArrayExt<TypeParameterDefinition<this>>();
     extendsTypeExpressions = new ArrayExt<TypeExpression>();
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
+    constructor(mainFactory: MainFactory, node: INode) {
         super(DefinitionType.Interface);
-        this.fillName(symbolNode);
-        this.fillExportable(symbolNode);
-        this.fillMembers(mainFactory, symbolNode);
-        this.fillAmbientable(symbolNode);
-        this.fillTypeParametersBySymbol(mainFactory, symbolNode);
-        this.extendsTypeExpressions.push(...symbolNode.getExtendsTypeExpressions().map(typeExpression => mainFactory.getTypeExpression(typeExpression)));
+        this.fillName(node);
+        this.fillExportable(node);
+        this.fillMembers(mainFactory, node);
+        this.fillAmbientable(node);
+        this.fillTypeParametersBySymbol(mainFactory, node);
+        this.extendsTypeExpressions.push(...node.getSymbol().getExtendsTypeExpressions().map(typeExpression => mainFactory.getTypeExpression(typeExpression)));
     }
 
     write() {
@@ -40,8 +40,8 @@ export class InterfaceDefinition extends BaseDefinition
         return writer.toString();
     }
 
-    private fillMembers(mainFactory: MainFactory, symbolNode: ISymbolNode) {
-        symbolNode.forEachChild(childSymbol => {
+    private fillMembers(mainFactory: MainFactory, node: INode) {
+        node.forEachChild(childSymbol => {
             const def = this.getMemberDefinition(mainFactory, childSymbol);
 
             if (def != null) {
@@ -50,7 +50,7 @@ export class InterfaceDefinition extends BaseDefinition
         });
     }
 
-    private getMemberDefinition(mainFactory: MainFactory, childSymbol: ISymbolNode): InterfaceMemberDefinitions {
+    private getMemberDefinition(mainFactory: MainFactory, childSymbol: INode): InterfaceMemberDefinitions {
         return tryGet(childSymbol, () => {
             if (childSymbol.isMethodSignature()) {
                 return new InterfaceMethodDefinition(mainFactory, childSymbol, this);
@@ -90,21 +90,21 @@ export class InterfaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: ISymbolNode) => void;
+    fillExportable: (node: INode) => void;
     // TypeParameteredDefinition
-    fillTypeParametersBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillTypeParametersBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: ISymbolNode) => void;
+    fillAmbientable: (node: INode) => void;
 }
 
 applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

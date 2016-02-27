@@ -3,14 +3,14 @@ import {TsSourceFile} from "./ts-source-file";
 import {ISourceFile} from "./../source-file";
 import {ISourceFileChild} from "./../source-file-child";
 
-export interface TsSourceFileChildBaseOptions extends TsBaseOptions {
+export interface TsSourceFileChildOptions extends TsBaseOptions {
     tsSourceFile: TsSourceFile;
 }
 
-export class TsSourceFileChildBase extends TsBase implements ISourceFileChild {
+export class TsSourceFileChild extends TsBase implements ISourceFileChild {
     protected tsSourceFile: TsSourceFile;
 
-    constructor(opts: TsSourceFileChildBaseOptions) {
+    constructor(opts: TsSourceFileChildOptions) {
         super(opts);
 
         this.tsSourceFile = opts.tsSourceFile;

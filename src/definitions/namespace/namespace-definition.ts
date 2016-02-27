@@ -2,7 +2,7 @@
 import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
@@ -19,13 +19,13 @@ export class NamespaceDefinition extends BaseDefinition
                                  implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
+    constructor(mainFactory: MainFactory, node: INode) {
         super(DefinitionType.Namespace);
-        this.fillName(symbolNode);
-        this.fillExportable(symbolNode);
-        this.fillAmbientable(symbolNode);
-        this.fillMembersBySymbolNode(mainFactory, symbolNode);
-        this.declarationType = symbolNode.getNamespaceDeclarationType();
+        this.fillName(node);
+        this.fillExportable(node);
+        this.fillAmbientable(node);
+        this.fillMembersByNode(mainFactory, node);
+        this.declarationType = node.getNamespaceDeclarationType();
     }
 
     write() {
@@ -38,7 +38,7 @@ export class NamespaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ModuledDefinition
@@ -50,16 +50,16 @@ export class NamespaceDefinition extends BaseDefinition
     variables: ArrayExt<VariableDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    fillMembersBySymbolNode: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillMembersByNode: (mainFactory: MainFactory, node: INode) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: ISymbolNode) => void;
+    fillExportable: (node: INode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: ISymbolNode) => void;
+    fillAmbientable: (node: INode) => void;
 }
 
 applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

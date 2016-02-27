@@ -1,4 +1,4 @@
-import {ISymbolNode, ISignature} from "./../../wrappers";
+import {INode, ISignature} from "./../../wrappers";
 import {ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
@@ -6,7 +6,7 @@ import {BaseParameterDefinitionConstructor} from "./base-parameter-definition";
 export interface IParameteredDefinition<ParameterType> {
     fillParametersBySymbol(
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>
     ): void;
     fillParametersBySignature(
@@ -23,10 +23,10 @@ export abstract class ParameteredDefinition<ParameterType>
 
     fillParametersBySymbol(
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>
     ) {
-        this.parameters = new ArrayExt<ParameterType>(...symbolNode.getParameters().map(param => new paramDefinition(mainFactory, param, this)));
+        this.parameters = new ArrayExt<ParameterType>(...node.getParameters().map(param => new paramDefinition(mainFactory, param, this)));
     }
 
     fillParametersBySignature(
@@ -34,6 +34,6 @@ export abstract class ParameteredDefinition<ParameterType>
         signature: ISignature,
         paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>
     ) {
-        this.parameters = new ArrayExt<ParameterType>(...signature.getParameters().map(param => new paramDefinition(mainFactory, param, this)));
+        this.parameters = new ArrayExt<ParameterType>(...signature.getParameters().map(param => new paramDefinition(mainFactory, param.getOnlyNode(), this)));
     }
 }

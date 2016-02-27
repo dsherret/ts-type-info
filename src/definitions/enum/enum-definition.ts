@@ -3,7 +3,7 @@ import {ModuledDefinitions} from "./../../definitions";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 import {applyMixins, ArrayExt} from "./../../utils";
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
         IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./enum-member-definition";
@@ -12,12 +12,12 @@ export class EnumDefinition extends BaseDefinition
                             implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
     members = new ArrayExt<EnumMemberDefinition>();
 
-    constructor(symbolNode: ISymbolNode) {
+    constructor(node: INode) {
         super(DefinitionType.Enum);
-        this.fillName(symbolNode);
-        this.fillExportable(symbolNode);
-        this.fillAmbientable(symbolNode);
-        this.members.push(...symbolNode.getEnumMembers().map(member => new EnumMemberDefinition(member, this)));
+        this.fillName(node);
+        this.fillExportable(node);
+        this.fillAmbientable(node);
+        this.fillEnumMembers(node);
     }
 
     write() {
@@ -27,20 +27,27 @@ export class EnumDefinition extends BaseDefinition
         return writer.toString();
     }
 
+    private fillEnumMembers(node: INode) {
+        this.members.push(...node.getSymbol().getEnumMemberSymbols().map(memberSymbol => {
+            const memberNode = memberSymbol.getOnlyNode();
+            return new EnumMemberDefinition(memberNode, this);
+        }));
+    }
+
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: ISymbolNode) => void;
+    fillExportable: (node: INode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: ISymbolNode) => void;
+    fillAmbientable: (node: INode) => void;
 }
 
 applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition]);

@@ -1,7 +1,10 @@
 ﻿import * as ts from "typescript";
-import {TypeGuards} from "./../../utils/type-guards";
 import {Logger} from "./../../utils/logger";
+import {tryGet} from "./../../utils/try-get";
+import {TypeGuards} from "./../../utils/type-guards";
+import {ClassConstructorParameterScope, NamespaceDeclarationType, Scope, VariableDeclarationType} from "./../../definitions";
 import {INode} from "./../node";
+import {ISymbol} from "./../symbol";
 import {ISignature} from "./../signature";
 import {IExpression} from "./../expression";
 import {IType} from "./../type";
@@ -9,23 +12,92 @@ import {ITypeExpression} from "./../type-expression";
 import {TsSignature} from "./ts-signature";
 import {TsExpression} from "./ts-expression";
 import {TsType} from "./ts-type";
+import {TsSymbol} from "./ts-symbol";
 import {TsTypeExpression} from "./ts-type-expression";
-import {TsSourceFileChildBaseOptions, TsSourceFileChildBase} from "./ts-source-file-child";
+import {TsSourceFileChildOptions, TsSourceFileChild} from "./ts-source-file-child";
 
-export interface TsNodeOptions extends TsSourceFileChildBaseOptions {
+export interface TsNodeOptions extends TsSourceFileChildOptions {
     node: ts.Node;
-    parentNode: ts.Node;
 }
 
-export class TsNode extends TsSourceFileChildBase implements INode {
-    protected node: ts.Node;
-    protected parentNode: ts.Node;
+export class TsNode extends TsSourceFileChild implements INode {
+    private node: ts.Node;
+    private __tsSymbol: ISymbol; // todo coding standard: use this convention for variables that should only be accessed by an accessor
 
-    constructor(opts: TsNodeOptions) {
+    private get tsSymbol() {
+        if (this.__tsSymbol == null) {
+            this.__tsSymbol = this.createSymbol(this.typeChecker.getSymbolAtLocation(this.node));
+        }
+
+        return this.__tsSymbol;
+    }
+
+    constructor(opts: TsNodeOptions, tsSymbol?: ISymbol) {
         super(opts);
 
+        if (opts.node == null) {
+            throw new Error("Passed in ts.Node cannot be null.");
+        }
+
         this.node = opts.node;
-        this.parentNode = opts.parentNode;
+        this.__tsSymbol = tsSymbol;
+    }
+
+    getName() {
+        let name: string;
+        const symbol = this.tsSymbol;
+
+        if (symbol != null) {
+            name = symbol.getName();
+
+            if (name === "default") {
+                name = this.getLocalSymbol().getName();
+            }
+        }
+
+        return name || "";
+    }
+
+    getSymbol() {
+        return this.tsSymbol;
+    }
+
+    forEachChild(callback: (node: INode) => void) {
+        if (this.isNamespace()) {
+            this.forEachLocalSymbol(callback);
+        }
+        else {
+            this.forEachChildNode(callback);
+        }
+    }
+
+    getImplementsTypeExpressions() {
+        const symbolType = this.tsSymbol.getDeclaredType();
+        const implementsIndex = symbolType.getBaseTypeExpressions().length > 0 ? 1 : 0;
+        const heritageNodes = this.getHeritageNodes();
+
+        if (heritageNodes.length > implementsIndex) {
+            return heritageNodes[implementsIndex].getTypes();
+        }
+
+        return [];
+    }
+
+    getClassConstructorParameterScope() {
+        const nodeFlags = this.node.flags;
+
+        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+            return ClassConstructorParameterScope.Private;
+        }
+        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+            return ClassConstructorParameterScope.Protected;
+        }
+        else if ((nodeFlags & ts.NodeFlags.Public) !== 0) {
+            return ClassConstructorParameterScope.Public;
+        }
+        else {
+            return ClassConstructorParameterScope.None;
+        }
     }
 
     getConstantValue() {
@@ -42,9 +114,18 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return this.getArgumentsFromExpression(decorator.expression);
     }
 
+    getDecorators() {
+        return (this.node.decorators || []).map(decorator => this.createNode(decorator));
+    }
+
+    getDefaultExpression() {
+        const propertyDeclaration = this.node as ts.PropertyDeclaration;
+        return propertyDeclaration.initializer != null ? this.createTsExpression(propertyDeclaration.initializer) : null;
+    }
+
     getExpression() {
         let expression: IExpression;
-        const expressionStatement = this. node as ts.ExpressionStatement;
+        const expressionStatement = this.node as ts.ExpressionStatement;
 
         if (expressionStatement.expression != null) {
             expression = this.createTsExpression(expressionStatement.expression);
@@ -53,10 +134,49 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return expression;
     }
 
+    getLocalSymbol() {
+        return this.createSymbol(this.typeChecker.getLocalSymbolFromNode(this.node));
+    }
+
+    getHeritageNodes(): INode[] {
+        const classDeclaration = this.node as ts.ClassDeclaration;
+        return (classDeclaration.heritageClauses || []).map(heritageClause => this.createNode(heritageClause));
+    }
+
+    getNamespaceDeclarationType() {
+        const nodeFlags = this.node.flags;
+
+        if ((nodeFlags & ts.NodeFlags.Namespace) !== 0) {
+            return NamespaceDeclarationType.Namespace;
+        }
+        else {
+            return NamespaceDeclarationType.Module;
+        }
+    }
+
+    getParameters() {
+        const parameters = (this.node as ts.SignatureDeclaration).parameters;
+        return parameters.filter(p => p != null).map(p => this.createNode(p));
+    }
+
     getReturnTypeExpression() {
         const tsType = this.typeChecker.getReturnTypeOfNode(this.node);
 
         return this.getTypeExpressionFromType(tsType);
+    }
+
+    getScope() {
+        const nodeFlags = this.node.flags;
+
+        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+            return Scope.Private;
+        }
+        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+            return Scope.Protected;
+        }
+        else {
+            return Scope.Public;
+        }
     }
 
     getSignatureFromThis(): ISignature {
@@ -67,6 +187,43 @@ export class TsNode extends TsSourceFileChildBase implements INode {
             tsCache: this.tsCache,
             signature: this.typeChecker.getSignatureFromNode(this.node)
         });
+    }
+
+    getTypeExpression(): ITypeExpression {
+        return tryGet(this, () => this.getTypeExpressionAtLocation(this.node));
+    }
+
+    getTypeParameters() {
+        type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
+        let typeParameteredDeclaration = this.node as typeParameteredTypes;
+
+        return (typeParameteredDeclaration.typeParameters || []).map(typeParameter => {
+            return this.createNode(typeParameter);
+        });
+    }
+
+    getTypeParameterConstraintTypeExpression() {
+        const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
+        return constraint == null ? null : this.getTypeExpressionAtLocation((this.node as ts.TypeParameterDeclaration).constraint);
+    }
+
+    getTypes(): ITypeExpression[] {
+        const clause = this.node as ts.HeritageClause;
+        return (clause.types || []).map(type => this.createTypeExpression(this.typeChecker.getTypeAtLocation(type)));
+    }
+
+    getVariableDeclarationType() {
+        const nodeFlags = this.node.parent.flags;
+
+        if (nodeFlags & ts.NodeFlags.Let) {
+            return VariableDeclarationType.Let;
+        }
+        else if (nodeFlags & ts.NodeFlags.Const) {
+            return VariableDeclarationType.Const;
+        }
+        else {
+            return VariableDeclarationType.Var;
+        }
     }
 
     hasAbstractKeyword() {
@@ -81,12 +238,26 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return this.hasModifierWithSyntaxKind(ts.SyntaxKind.StaticKeyword);
     }
 
+    isAmbient() {
+        if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias()) {
+            return true;
+        }
+        else {
+            return this.isAnyParentAmbient();
+        }
+    }
+
     isClass() {
         return this.getKind() === ts.SyntaxKind.ClassDeclaration;
     }
 
     isConstructor() {
         return this.getKind() === ts.SyntaxKind.Constructor;
+    }
+
+    isConstructorParameter() {
+        // this implementation will never be a constructor parameter
+        return false;
     }
 
     isConstructSignature() {
@@ -97,12 +268,12 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return this.getKind() === ts.SyntaxKind.EnumDeclaration;
     }
 
-    isExportDeclaration() {
-        return this.getKind() === ts.SyntaxKind.ExportDeclaration;
-    }
-
     isExportAssignment() {
         return this.getKind() === ts.SyntaxKind.ExportAssignment;
+    }
+
+    isExportDeclaration() {
+        return this.getKind() === ts.SyntaxKind.ExportDeclaration;
     }
 
     isFunction() {
@@ -121,6 +292,10 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return this.getKind() === ts.SyntaxKind.Identifier;
     }
 
+    isImport() {
+        return this.getKind() === ts.SyntaxKind.ImportDeclaration;
+    }
+
     isInterface() {
         return this.getKind() === ts.SyntaxKind.InterfaceDeclaration;
     }
@@ -137,12 +312,27 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return this.getKind() === ts.SyntaxKind.ModuleDeclaration;
     }
 
+    isParameterOptional() {
+        const parameterDeclaration = this.node as ts.ParameterDeclaration;
+        return parameterDeclaration.questionToken != null || parameterDeclaration.initializer != null || parameterDeclaration.dotDotDotToken != null;
+    }
+
+    isPropertyOptional() {
+        const propertyDeclaration = this.node as ts.PropertyDeclaration;
+        return propertyDeclaration.questionToken != null;
+    }
+
     isPropertyDeclaration() {
         return this.getKind() === ts.SyntaxKind.PropertyDeclaration;
     }
 
     isPropertySignature() {
         return this.getKind() === ts.SyntaxKind.PropertySignature;
+    }
+
+    isRestParameter() {
+        const parameterDeclaration = this.node as ts.ParameterDeclaration;
+        return parameterDeclaration.dotDotDotToken != null;
     }
 
     isSetAccessor() {
@@ -165,7 +355,7 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         return this.typeChecker.getSyntaxKindAsString(this.getKind());
     }
 
-    protected getTypeExpressionAtLocation(node: ts.Node): ITypeExpression {
+    private getTypeExpressionAtLocation(node: ts.Node): ITypeExpression {
         if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
             const declaration = node as ts.TypeAliasDeclaration;
             return this.getTypeExpressionAtLocation(declaration.type);
@@ -175,54 +365,105 @@ export class TsNode extends TsSourceFileChildBase implements INode {
         }
     }
 
-    protected getTypeExpressionFromType(tsType: ts.Type) {
+    private getTypeExpressionFromType(tsType: ts.Type) {
         return this.tsCache.getTypeExpression(this.typeChecker, this.sourceFile, tsType, () => this.createTypeExpression(tsType), type => this.createType(type));
     }
 
-    protected createType(tsType: ts.Type): IType {
+    private createType(type: ts.Type): IType {
         return new TsType({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
-            tsType: tsType,
+            type: type,
             tsCache: this.tsCache,
             tsSourceFile: this.tsSourceFile
         });
     }
 
-    protected createTypeExpression(tsType: ts.Type): ITypeExpression {
+    private createTypeExpression(tsType: ts.Type): ITypeExpression {
         return new TsTypeExpression({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
-            tsType: tsType,
+            type: tsType,
             tsCache: this.tsCache
         });
     }
 
-    protected createNode(node: ts.Node): INode {
-        return this.createTsNode({
-            parentNode: this.node,
-            node: node
-        });
-    }
-
-    protected createTsNode(opts: { node: ts.Node; parentNode: ts.Node; }): INode {
-        return this.tsCache.getNodeOrCreate(opts.node, () => new TsNode({
+    private createNode(node: ts.Node): INode {
+        return this.tsCache.getNode(node, () => new TsNode({
             typeChecker: this.typeChecker,
             sourceFile: this.sourceFile,
             tsSourceFile: this.tsSourceFile,
             tsCache: this.tsCache,
-            parentNode: opts.parentNode,
-            node: opts.node
+            node: node
         }));
     }
 
-    protected createTsExpression(expression: ts.Expression): IExpression {
+    private createSymbol(symbol: ts.Symbol): ISymbol {
+        if (symbol == null) {
+            return null;
+        }
+        else {
+            return this.tsCache.getSymbol(symbol, () => new TsSymbol({
+                typeChecker: this.typeChecker,
+                sourceFile: this.sourceFile,
+                tsSourceFile: this.tsSourceFile,
+                tsCache: this.tsCache,
+                symbol: symbol
+            }));
+        }
+    }
+
+    private createTsExpression(expression: ts.Expression): IExpression {
         return new TsExpression({
             typeChecker: this.typeChecker,
             sourceFile: this.sourceFile,
             tsCache: this.tsCache,
             expression: expression
         });
+    }
+
+    private forEachChildNode(callback: (node: INode) => void) {
+        ts.forEachChild(this.node, (node) => {
+            if (this.isNotDisallowedNode(node)) {
+                const declarationList = (node as ts.VariableStatement).declarationList;
+
+                if (declarationList != null) {
+                    node = declarationList.declarations[0];
+
+                    if (declarationList.declarations.length > 1) {
+                        Logger.warn(`Unknown situation where declaration list was greater than 1 for ${node.getText(this.sourceFile)}`);
+                    }
+                }
+
+                callback(this.createNode(node));
+            }
+        });
+    }
+
+    private forEachLocalSymbol(callback: (node: INode) => void) {
+        this.typeChecker.getLocalSymbolsFromNode(this.node).forEach(symbol => {
+            (symbol.getDeclarations() || []).forEach(node => {
+                callback(this.createNode(node));
+            });
+        });
+    }
+
+    private isNotDisallowedNode(node: ts.Node) {
+        return node.kind !== ts.SyntaxKind.EndOfFileToken;
+    }
+
+    private isAnyParentAmbient() {
+        let declaration = this.node.parent;
+
+        while (declaration != null) {
+            if (declaration.flags & ts.NodeFlags.Ambient) {
+                return true;
+            }
+
+            declaration = declaration.parent;
+        }
+
+        return false;
     }
 
     private getArgumentsFromExpression(expression: ts.LeftHandSideExpression) {

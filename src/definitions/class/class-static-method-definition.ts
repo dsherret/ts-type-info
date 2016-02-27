@@ -1,4 +1,4 @@
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {MainFactory} from "./../../factories";
 import {DefinitionType} from "./../base";
 import {BaseClassMethodDefinition} from "./base";
@@ -6,7 +6,7 @@ import {ClassStaticMethodParameterDefinition} from "./class-static-method-parame
 import {ClassDefinition} from "./class-definition";
 
 export class ClassStaticMethodDefinition extends BaseClassMethodDefinition<ClassStaticMethodParameterDefinition> {
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ClassDefinition) {
-        super(mainFactory, symbolNode, ClassStaticMethodParameterDefinition, parent, DefinitionType.ClassStaticMethod);
+    constructor(mainFactory: MainFactory, node: INode, parent: ClassDefinition) {
+        super(mainFactory, node, ClassStaticMethodParameterDefinition, parent, DefinitionType.ClassStaticMethod);
     }
 }

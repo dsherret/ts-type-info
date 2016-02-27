@@ -1,18 +1,18 @@
 ﻿import {ITypeExpression} from "./../type-expression";
-import {ISymbolNode} from "./../symbol-node";
+import {ISymbol} from "./../symbol";
 import {ISignature} from "./../signature";
-import {StructureSourceFileChildBase} from "./structure-source-file-child";
+import {StructureSourceFileChild} from "./structure-source-file-child";
 
-export class StructureSignature extends StructureSourceFileChildBase implements ISignature  {
+export class StructureSignature extends StructureSourceFileChild implements ISignature  {
     getReturnTypeExpression(): ITypeExpression {
         return null;
     }
 
-    getParameters(): ISymbolNode[] {
+    getParameters(): ISymbol[] {
         return [];
     }
 
-    getTypeParameters(): ISymbolNode[] {
+    getTypeParameters(): ISymbol[] {
         return [];
     }
 

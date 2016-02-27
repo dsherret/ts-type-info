@@ -1,9 +1,9 @@
-﻿import {ISymbolNode} from "./symbol-node";
+﻿import {ISymbol} from "./symbol";
 import {ImportType} from "./../definitions";
 
 export interface IImportClause {
     getImportType(): ImportType;
     getModuleSpecifier(): string;
     getName(): string;
-    getSymbolNode(): ISymbolNode;
+    getSymbol(): ISymbol;
 }

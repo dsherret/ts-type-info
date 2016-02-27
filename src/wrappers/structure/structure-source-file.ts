@@ -1,9 +1,9 @@
-﻿import {ISymbolNode} from "./../symbol-node";
+﻿import {ISymbol} from "./../symbol";
+import {INode} from "./../node";
 import {ISourceFile} from "./../source-file";
 import {IImportClause} from "./../import-clause";
-import {StructureSymbolNode} from "./structure-symbol-node";
 
-export class StructureSourceFile extends StructureSymbolNode implements ISourceFile {
+export class StructureSourceFile implements ISourceFile {
     getFileName() {
         return "";
     }
@@ -12,11 +12,15 @@ export class StructureSourceFile extends StructureSymbolNode implements ISourceF
         return [];
     }
 
-    getFileReExportSymbols(): ISymbolNode[] {
+    getFileReExportSymbols(): ISymbol[] {
         return [];
     }
 
-    getDefaultExportSymbol(): ISymbolNode {
+    getDefaultExportSymbol(): ISymbol {
+        return null;
+    }
+
+    getNode(): INode {
         return null;
     }
 }

@@ -1,10 +1,10 @@
 ﻿import {ITypeExpression} from "./type-expression";
-import {ISymbolNode} from "./symbol-node";
+import {ISymbol} from "./symbol";
 import {ISourceFileChild} from "./source-file-child";
 
 export interface ISignature extends ISourceFileChild {
     getReturnTypeExpression(): ITypeExpression;
-    getParameters(): ISymbolNode[];
-    getTypeParameters(): ISymbolNode[];
+    getParameters(): ISymbol[];
+    getTypeParameters(): ISymbol[];
     getMinArgumentCount(): number;
 }

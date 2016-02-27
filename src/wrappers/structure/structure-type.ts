@@ -1,5 +1,6 @@
-﻿import {ISymbolNode} from "./../symbol-node";
+﻿import {ISymbol} from "./../symbol";
 import {ISignature} from "./../signature";
+import {ITypeExpression} from "./../type-expression";
 import {IType} from "./../type";
 
 export class StructureType implements IType {
@@ -14,7 +15,7 @@ export class StructureType implements IType {
         return false;
     }
 
-    getProperties(): ISymbolNode[] {
+    getBaseTypeExpressions(): ITypeExpression[] {
         return [];
     }
 
@@ -22,11 +23,19 @@ export class StructureType implements IType {
         return [];
     }
 
+    getProperties(): ISymbol[] {
+        return [];
+    }
+
+    getSymbols(): ISymbol[] {
+        return [];
+    }
+
     getTypeArguments(): IType[] {
         return [];
     }
 
-    getSymbolNodes(): ISymbolNode[] {
+    getSymbolNodes(): ISymbol[] {
         return [];
     }
 }

@@ -1,11 +1,14 @@
-﻿import {ISymbolNode} from "./symbol-node";
+﻿import {ISymbol} from "./symbol";
 import {ISignature} from "./signature";
+import {IType} from "./type";
+import {ITypeExpression} from "./type-expression";
 
 export interface IType {
     getText(): string;
     hasCallSignaturesAndProperties(): boolean;
-    getProperties(): ISymbolNode[];
+    getBaseTypeExpressions(): ITypeExpression[];
+    getProperties(): ISymbol[];
     getCallSignatures(): ISignature[];
     getTypeArguments(): IType[];
-    getSymbolNodes(): ISymbolNode[];
+    getSymbols(): ISymbol[];
 }

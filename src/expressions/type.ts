@@ -15,7 +15,10 @@ export class Type {
 
         if (type.hasCallSignaturesAndProperties()) {
             this.callSignatures.push(...type.getCallSignatures().map(callSignature => new CallSignatureDefinition(mainFactory, callSignature)));
-            this.properties.push(...type.getProperties().map(prop => new TypePropertyDefinition(mainFactory, prop, this)));
+            this.properties.push(...type.getProperties().map(prop => {
+                const node = prop.getOnlyNode();
+                return new TypePropertyDefinition(mainFactory, node, this);
+            }));
         }
 
         this.typeArguments.push(...type.getTypeArguments().map(arg => mainFactory.getType(arg)));

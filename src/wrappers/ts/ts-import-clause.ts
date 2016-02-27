@@ -1,18 +1,18 @@
 ﻿import {ImportType} from "./../../definitions";
-import {ISymbolNode} from "./../symbol-node";
+import {ISymbol} from "./../symbol";
 import {IImportClause} from "./../import-clause";
 import {TsBase, TsBaseOptions} from "./ts-base";
 
 export interface TsImportClauseOptions extends TsBaseOptions {
     importType: ImportType;
-    symbolNode: ISymbolNode;
+    symbol: ISymbol;
     name: string;
     moduleSpecifier: string;
 }
 
 export class TsImportClause extends TsBase implements IImportClause {
     private importType: ImportType;
-    private symbolNode: ISymbolNode;
+    private symbol: ISymbol;
     private name: string;
     private moduleSpecifier: string;
 
@@ -22,7 +22,7 @@ export class TsImportClause extends TsBase implements IImportClause {
         this.importType = opts.importType;
         this.name = opts.name;
         this.moduleSpecifier = opts.moduleSpecifier;
-        this.symbolNode = opts.symbolNode;
+        this.symbol = opts.symbol;
     }
 
     getImportType() {
@@ -37,7 +37,7 @@ export class TsImportClause extends TsBase implements IImportClause {
         return this.name;
     }
 
-    getSymbolNode(): ISymbolNode {
-        return this.symbolNode;
+    getSymbol(): ISymbol {
+        return this.symbol;
     }
 }

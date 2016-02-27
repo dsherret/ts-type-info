@@ -2,7 +2,7 @@
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISymbolNode, ISignature} from "./../../wrappers";
+import {INode, ISignature} from "./../../wrappers";
 import {InterfaceNewSignatureParameterDefinition} from "./interface-new-signature-parameter-definition";
 import {InterfaceDefinition} from "./interface-definition";
 
@@ -24,7 +24,7 @@ export class InterfaceNewSignatureDefinition
     parameters: ArrayExt<InterfaceNewSignatureParameterDefinition>;
     fillParametersBySymbol: (
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     fillParametersBySignature: (
         mainFactory: MainFactory,
@@ -32,7 +32,7 @@ export class InterfaceNewSignatureDefinition
         parameterDefinition: typeof InterfaceNewSignatureParameterDefinition) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillReturnTypeExpressionBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillReturnTypeExpressionBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
 }
 

@@ -2,10 +2,10 @@
         MainDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition} from "./../definitions";
 import {Expression, Type, TypeExpression} from "./../expressions";
 import {KeyValueCache, Logger, ArrayExt} from "./../utils";
-import {ISourceFile, ISymbolNode, INode, IType, ITypeExpression, IImportClause} from "./../wrappers";
+import {ISourceFile, INode, IType, ITypeExpression, IImportClause, ISymbol} from "./../wrappers";
 
 export class MainFactory {
-    private definitionBySymbolNode = new KeyValueCache<INode, MainDefinitions>();
+    private definitionByNode = new KeyValueCache<INode, MainDefinitions>();
     private files = new KeyValueCache<ISourceFile, FileDefinition>();
     private typeExpressions = new KeyValueCache<ITypeExpression, TypeExpression>();
     private types = new KeyValueCache<IType, Type>();
@@ -29,7 +29,7 @@ export class MainFactory {
     }
 
     getImportDefinitions(opts: { importClause: IImportClause; parent: FileDefinition; }) {
-        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.importClause.getSymbolNode());
+        const definitions = this.getAllDefinitionsBySymbol(opts.importClause.getSymbol());
 
         return (definitions || []).map(definition => new ImportDefinition(
             opts.importClause,
@@ -38,24 +38,24 @@ export class MainFactory {
         ));
     }
 
-    getReExportDefinitions(opts: { symbolNode: ISymbolNode; parent: FileDefinition; }) {
-        const definitions = this.getAllDefinitionsBySymbolOfSymbolNode(opts.symbolNode);
+    getReExportDefinitions(opts: { symbol: ISymbol; parent: FileDefinition; }) {
+        const definitions = this.getAllDefinitionsBySymbol(opts.symbol);
 
         return (definitions || []).map(definition => new ReExportDefinition(
-            this.getFileDefinitionFromSourceFile(opts.symbolNode.getSourceFile()),
+            this.getFileDefinitionFromSourceFile(opts.symbol.getSourceFile()),
             definition,
             opts.parent
         ));
     }
 
-    getAllDefinitionsBySymbolOfSymbolNode(symbolNode: ISymbolNode) {
-        return (symbolNode.getAllRelatedSymbolNodes() || []).map(relatedSymbolNode => {
-            return this.getDefinitionBySymbolNode(relatedSymbolNode);
+    getAllDefinitionsBySymbol(symbol: ISymbol) {
+        return (symbol.getNodes() || []).map(node => {
+            return this.getDefinitionByNode(node);
         }).filter(d => d != null);
     }
 
-    getDefinitionBySymbolNode(symbolNode: ISymbolNode) {
-        return this.definitionBySymbolNode.get(symbolNode) || this.createDefinition(symbolNode);
+    getDefinitionByNode(node: INode) {
+        return this.definitionByNode.get(node) || this.createDefinition(node);
     }
 
     getFileDefinition(file: ISourceFile) {
@@ -66,75 +66,81 @@ export class MainFactory {
         return this.files.get(sourceFile);
     }
 
-    getDefinitionsOrExpressionFromSymbolNode(symbolNode: ISymbolNode): Expression | ArrayExt<MainDefinitions> {
-        if (symbolNode == null) {
+    getDefinitionsOrExpressionFromSymbol(symbol: ISymbol): Expression | ArrayExt<MainDefinitions> {
+        if (symbol == null) {
             return null;
         }
-        else if (symbolNode.isAlias()) {
-            return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbolNode.getAliasSymbolNode()));
+        else if (symbol.isAlias()) {
+            return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbol(symbol.getAliasSymbol()));
         }
         else {
-            let expression = symbolNode.getExpression();
+            const node = symbol.getOnlyNode();
 
-            if (expression != null) {
-                return new Expression(expression);
-            }
-            else {
-                return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbolOfSymbolNode(symbolNode));
+            if (node != null) {
+                const expression = node.getExpression();
+
+                if (expression != null) {
+                    return new Expression(expression);
+                }
             }
         }
+
+        return new ArrayExt<MainDefinitions>();
     }
 
     fillAllCachedTypesWithDefinitions() {
         this.types.getAll().forEach(type => {
             const iType = this.types.getKeyFromValue(type);
-            const symbols = iType.getSymbolNodes();
+            const symbols = iType.getSymbols();
 
             symbols.forEach(s => {
-                type.addDefinitions(this.getAllDefinitionsBySymbolOfSymbolNode(s));
+                type.addDefinitions(this.getAllDefinitionsBySymbol(s));
             });
         });
     }
 
-    private createDefinition(symbolNode: ISymbolNode) {
+    private createDefinition(node: INode) {
         let definition: MainDefinitions;
 
-        if (symbolNode.isFunction()) {
-            definition = new FunctionDefinition(this, symbolNode);
+        if (node.isFunction()) {
+            definition = new FunctionDefinition(this, node);
         }
-        else if (symbolNode.isClass()) {
-            definition = new ClassDefinition(this, symbolNode);
+        else if (node.isClass()) {
+            definition = new ClassDefinition(this, node);
         }
-        else if (symbolNode.isInterface()) {
-            definition = new InterfaceDefinition(this, symbolNode);
+        else if (node.isInterface()) {
+            definition = new InterfaceDefinition(this, node);
         }
-        else if (symbolNode.isEnum()) {
-            definition = new EnumDefinition(symbolNode);
+        else if (node.isEnum()) {
+            definition = new EnumDefinition(node);
         }
-        else if (symbolNode.isVariable()) {
-            definition = new VariableDefinition(this, symbolNode);
+        else if (node.isVariable()) {
+            definition = new VariableDefinition(this, node);
         }
-        else if (symbolNode.isTypeAlias()) {
-            definition = new TypeAliasDefinition(this, symbolNode);
+        else if (node.isTypeAlias()) {
+            definition = new TypeAliasDefinition(this, node);
         }
-        else if (symbolNode.isNamespace()) {
-            definition = new NamespaceDefinition(this, symbolNode);
+        else if (node.isNamespace()) {
+            definition = new NamespaceDefinition(this, node);
         }
-        else if (symbolNode.isExportAssignment() || symbolNode.isExportDeclaration()) {
+        else if (node.isExportAssignment() || node.isExportDeclaration()) {
             // ignore exports here, handled in ExportableDefinition
         }
-        else if (symbolNode.isTypeParameter()) {
+        else if (node.isTypeParameter()) {
             // ignore type parameter here, handled in TypedParameterDefinition
         }
-        else if (symbolNode.isMethodSignature() || symbolNode.isFunctionType()) {
+        else if (node.isMethodSignature() || node.isFunctionType()) {
             // ignore
         }
+        else if (node.isImport()) {
+            // ignore imports here, handled in FileDefinition
+        }
         else {
-            Logger.warn(`Unknown node kind: ${symbolNode.nodeKindToString()}`);
+            Logger.warn(`Unknown node kind: ${node.nodeKindToString()}`);
         }
 
         if (definition != null) {
-            this.definitionBySymbolNode.add(symbolNode, definition);
+            this.definitionByNode.add(node, definition);
         }
 
         return definition;

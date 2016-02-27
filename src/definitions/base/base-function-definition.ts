@@ -1,7 +1,7 @@
 import {TypeExpression} from "./../../expressions";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISymbolNode, ISignature} from "./../../wrappers";
+import {INode, ISignature} from "./../../wrappers";
 import {TypeParameterDefinition} from "./../general";
 import {INamedDefinition, NamedDefinition} from "./named-definition";
 import {IParentedDefinition} from "./parented-definition";
@@ -18,27 +18,27 @@ export class BaseFunctionDefinition<ParentType, ParameterType>
                    IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
     constructor(
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         parameterDefinition: BaseParameterDefinitionConstructor<BaseFunctionDefinition<ParentType, ParameterType>, ParameterType>,
         definitionType: DefinitionType
     ) {
         super(definitionType);
-        this.fillName(symbolNode);
-        this.fillParametersBySymbol(mainFactory, symbolNode, parameterDefinition);
-        this.fillReturnTypeExpressionBySymbol(mainFactory, symbolNode);
-        this.fillTypeParametersBySymbol(mainFactory, symbolNode);
+        this.fillName(node);
+        this.fillParametersBySymbol(mainFactory, node, parameterDefinition);
+        this.fillReturnTypeExpressionBySymbol(mainFactory, node);
+        this.fillTypeParametersBySymbol(mainFactory, node);
     }
 
     // NamedDefinition
     name: string;
-    fillName: (symbolNode: ISymbolNode) => void;
+    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ParentType;
     // ParameteredDefinition
     parameters: ArrayExt<ParameterType>;
     fillParametersBySymbol: (
         mainFactory: MainFactory,
-        symbolNode: ISymbolNode,
+        node: INode,
         paramDefinition: BaseParameterDefinitionConstructor<this, ParameterType>
     ) => void;
     fillParametersBySignature: (
@@ -48,11 +48,11 @@ export class BaseFunctionDefinition<ParentType, ParameterType>
     ) => void;
     // ReturnTyped
     returnTypeExpression: TypeExpression;
-    fillReturnTypeExpressionBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillReturnTypeExpressionBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillReturnTypeExpressionBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    fillTypeParametersBySymbol: (mainFactory: MainFactory, symbolNode: ISymbolNode) => void;
+    fillTypeParametersBySymbol: (mainFactory: MainFactory, node: INode) => void;
     fillTypeParametersBySignature: (mainFactory: MainFactory, signature: ISignature) => void;
 }
 

@@ -2,7 +2,7 @@ import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {applyMixins} from "./../../utils";
 import {MainFactory} from "./../../factories";
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition, DefinitionType, BaseFunctionDefinition} from "./../base";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
@@ -13,10 +13,10 @@ export class FunctionDefinition
         implements IExportableDefinition, IAmbientableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode) {
-        super(mainFactory, symbolNode, FunctionParameterDefinition, DefinitionType.Function);
-        this.fillExportable(symbolNode);
-        this.fillAmbientable(symbolNode);
+    constructor(mainFactory: MainFactory, node: INode) {
+        super(mainFactory, node, FunctionParameterDefinition, DefinitionType.Function);
+        this.fillExportable(node);
+        this.fillAmbientable(node);
     }
 
     write() {
@@ -30,11 +30,11 @@ export class FunctionDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (symbolNode: ISymbolNode) => void;
+    fillExportable: (node: INode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (symbolNode: ISymbolNode) => void;
+    fillAmbientable: (node: INode) => void;
 }
 
 applyMixins(FunctionDefinition, [ExportableDefinition, AmbientableDefinition]);

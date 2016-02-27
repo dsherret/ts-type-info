@@ -2,23 +2,21 @@
 import {KeyValueCache, tryGet, Logger} from "./../../../utils";
 import {IType} from "./../../type";
 import {ITypeExpression} from "./../../type-expression";
-import {TsSymbolNode} from "./../ts-symbol-node";
+import {TsSymbol} from "./../ts-symbol";
 import {TsNode} from "./../ts-node";
 import {TsTypeChecker} from "./ts-type-checker";
 
 export class TsCache {
-    private symbolNodeCache = new KeyValueCache<ts.Symbol, KeyValueCache<ts.Node, TsSymbolNode>>();
     private nodeCache = new KeyValueCache<ts.Node, TsNode>();
+    private symbolCache = new KeyValueCache<ts.Symbol, TsSymbol>();
     private typeExpressionCacheContainer = new TypeCacheContainer<ITypeExpression>();
     private typeCacheContainer = new TypeCacheContainer<IType>();
 
-    getSymbolNode(symbol: ts.Symbol, node: ts.Node, createFunc: () => TsSymbolNode) {
-        let tsNodeCache = this.symbolNodeCache.getOrCreate(symbol, () => new KeyValueCache<ts.Node, TsSymbolNode>());
-        let tsSymbolNode = tsNodeCache.getOrCreate(node, () => createFunc());
-        return tsSymbolNode;
+    getSymbol(symbol: ts.Symbol, createFunc: () => TsSymbol) {
+        return this.symbolCache.getOrCreate(symbol, () => createFunc());
     }
 
-    getNodeOrCreate(node: ts.Node, createFunc: () => TsNode) {
+    getNode(node: ts.Node, createFunc: () => TsNode) {
         return this.nodeCache.getOrCreate(node, () => createFunc());
     }
 
@@ -30,16 +28,16 @@ export class TsCache {
             const types = (tsType as ts.UnionOrIntersectionType).types || [tsType];
 
             types.forEach(t => {
-                tryGet(typeText, () => this.getType(typeChecker, sourceFile, t, createTsType), type => typeExpression.addType(type));
+                tryGet(typeText, () => this.getType(typeChecker, sourceFile, t, () => createTsType(t)), type => typeExpression.addType(type));
             });
         });
     }
 
-    private getType(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createTsType: (tsType: ts.Type) => IType) {
+    getType(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createTsType: () => IType) {
         const cache = this.typeCacheContainer.getCache(tsType);
         const typeText = typeChecker.typeToString(sourceFile, tsType);
 
-        return cache.getOrCreate(typeText, () => createTsType(tsType));
+        return cache.getOrCreate(typeText, () => createTsType());
     }
 }
 

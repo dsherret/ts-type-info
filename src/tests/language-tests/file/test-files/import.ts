@@ -1,5 +1,6 @@
 ﻿// this is a test file used in import-tests
 /// <reference path="definition.d.ts" />
+/// <reference path="definition-var.d.ts" />
 
 /* tslint:disable */
 import * as TestClassModule from "./test-class";

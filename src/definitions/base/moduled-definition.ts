@@ -1,4 +1,4 @@
-﻿import {ISymbolNode} from "./../../wrappers";
+﻿import {INode} from "./../../wrappers";
 import {tryGet, Logger, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {IParentedDefinition} from "./../base";
@@ -20,7 +20,7 @@ export interface IModuledDefinition {
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
-    fillMembersBySymbolNode(mainFactory: MainFactory, symbolNode: ISymbolNode): void;
+    fillMembersByNode(mainFactory: MainFactory, node: INode): void;
 }
 
 export abstract class ModuledDefinition implements IModuledDefinition {
@@ -33,11 +33,11 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
 
-    fillMembersBySymbolNode(mainFactory: MainFactory, fileSymbolNode: ISymbolNode) {
+    fillMembersByNode(mainFactory: MainFactory, fileNode: INode) {
         this.initializeMD();
 
-        fileSymbolNode.forEachChild((symbolNode) => {
-            const def = tryGet(symbolNode, () => mainFactory.getDefinitionBySymbolNode(symbolNode));
+        fileNode.forEachChild((node) => {
+            const def = tryGet(node, () => mainFactory.getDefinitionByNode(node));
 
             if (def != null) {
                 if (def.isFunctionDefinition()) {
@@ -62,16 +62,17 @@ export abstract class ModuledDefinition implements IModuledDefinition {
                     this.namespaces.push(def);
                 }
                 else {
-                    Logger.warn(`Not implemented: ${symbolNode.getName()}`);
+                    Logger.warn(`Not implemented: ${node.getName()}`);
                 }
 
                 this.checkAddToExports(def);
             }
             else {
-                const isKnownTypeToIgnore = symbolNode.isDefaultExport() || symbolNode.isExportDeclaration() || symbolNode.isExportAssignment();
+                const symbol = node.getSymbol();
+                const isKnownTypeToIgnore = (symbol != null && symbol.isDefaultExport()) || node.isExportDeclaration() || node.isExportAssignment() || node.isImport();
 
                 if (!isKnownTypeToIgnore) {
-                    Logger.warn(`Symbol definition is null for: ${symbolNode.getName()}`);
+                    Logger.warn(`Node is not handled for: ${node.getName()}`);
                 }
             }
         });

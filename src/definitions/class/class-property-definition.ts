@@ -1,4 +1,4 @@
-import {ISymbolNode} from "./../../wrappers";
+import {INode} from "./../../wrappers";
 import {MainFactory} from "./../../factories";
 import {DefinitionType} from "./../base";
 import {BaseClassPropertyDefinition} from "./base";
@@ -9,11 +9,13 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isReadonly: boolean;
     isConstructorParameter: boolean;
 
-    constructor(mainFactory: MainFactory, symbolNode: ISymbolNode, parent: ClassDefinition) {
-        super(mainFactory, symbolNode, parent, DefinitionType.ClassProperty);
+    constructor(mainFactory: MainFactory, node: INode, parent: ClassDefinition) {
+        super(mainFactory, node, parent, DefinitionType.ClassProperty);
 
-        this.isAccessor = symbolNode.isPropertyAccessor();
-        this.isReadonly = symbolNode.isPropertyReadonly();
-        this.isConstructorParameter = symbolNode.isConstructorParameter();
+        const symbol = node.getSymbol();
+
+        this.isAccessor = symbol.isPropertyAccessor();
+        this.isReadonly = symbol.isPropertyReadonly();
+        this.isConstructorParameter = node.isConstructorParameter();
     }
 }

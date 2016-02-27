@@ -1,9 +1,11 @@
-﻿import {ISymbolNode} from "./symbol-node";
+﻿import {ISymbol} from "./symbol";
+import {INode} from "./node";
 import {IImportClause} from "./import-clause";
 
-export interface ISourceFile extends ISymbolNode {
+export interface ISourceFile {
     getFileName(): string;
     getFileImportClauses(): IImportClause[];
-    getFileReExportSymbols(): ISymbolNode[];
-    getDefaultExportSymbol(): ISymbolNode;
+    getFileReExportSymbols(): ISymbol[];
+    getDefaultExportSymbol(): ISymbol;
+    getNode(): INode;
 }

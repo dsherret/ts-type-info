@@ -4,7 +4,7 @@ import {IType} from "./../type";
 import {TsBase, TsBaseOptions} from "./ts-base";
 
 export interface TsTypeExpressionOptions extends TsBaseOptions {
-    tsType: ts.Type;
+    type: ts.Type;
 }
 
 export class TsTypeExpression extends TsBase implements ITypeExpression {
@@ -14,7 +14,7 @@ export class TsTypeExpression extends TsBase implements ITypeExpression {
     constructor(opts: TsTypeExpressionOptions) {
         super(opts);
 
-        this.tsType = opts.tsType;
+        this.tsType = opts.type;
     }
 
     getText() {

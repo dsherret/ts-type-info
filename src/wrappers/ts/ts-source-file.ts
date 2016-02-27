@@ -3,34 +3,30 @@ import {ImportType} from "./../../definitions";
 import {Logger} from "./../../utils";
 import {IImportClause} from "./../import-clause";
 import {ISourceFile} from "./../source-file";
-import {ISymbolNode} from "./../symbol-node";
+import {INode} from "./../node";
+import {ISymbol} from "./../symbol";
+import {TsBase, TsBaseOptions} from "./ts-base";
+import {TsNode} from "./ts-node";
+import {TsSymbol} from "./ts-symbol";
 import {TsImportClause} from "./ts-import-clause";
-import {TsSymbolNode} from "./ts-symbol-node";
-import {TsTypeChecker} from "./utils/ts-type-checker";
-import {TsCache} from "./utils/ts-cache";
 
-export interface TsSourceFileOptions {
-    typeChecker: TsTypeChecker;
-    sourceFile: ts.SourceFile;
-    tsCache: TsCache;
+// todo: consider passing in ISymbol and INode
+export interface TsSourceFileOptions extends TsBaseOptions {
     symbol: ts.Symbol;
-    node: ts.Node;
+    sourceFile: ts.SourceFile;
 }
 
-export class TsSourceFile extends TsSymbolNode implements ISourceFile {
+export class TsSourceFile extends TsBase implements ISourceFile {
+    private symbol: ts.Symbol;
+
     constructor(opts: TsSourceFileOptions) {
-        super({
-            typeChecker: opts.typeChecker,
-            sourceFile: opts.sourceFile,
-            tsCache: opts.tsCache,
-            parentNode: null,
-            node: opts.node,
-            symbol: opts.symbol,
-            tsSourceFile: this
-        });
+        super(opts);
+
+        // symbol can be null
+        this.symbol = opts.symbol;
     }
 
-    getFileReExportSymbols(): ISymbolNode[] {
+    getFileReExportSymbols(): ISymbol[] {
         const fileReExports: ts.Symbol[] = [];
 
         if (this.fileHasExports()) {
@@ -41,21 +37,21 @@ export class TsSourceFile extends TsSymbolNode implements ISourceFile {
             }
         }
 
-        return fileReExports.map(symbol => this.createSymbolNodeFromSymbol(symbol));
+        return fileReExports.map(symbol => this.createSymbol(symbol));
     }
 
-    getDefaultExportSymbol(): ISymbolNode {
+    getDefaultExportSymbol(): ISymbol {
         if (this.fileHasExports()) {
-            const defaultExport = this.symbol.exports["default"];
+            const defaultExportSymbol = this.symbol.exports["default"];
 
-            if (defaultExport != null) {
-                return this.createSymbolNodeFromSymbol(defaultExport);
+            if (defaultExportSymbol != null) {
+                return this.createSymbol(defaultExportSymbol);
             }
         }
     }
 
     getFileName() {
-        return (this.node as ts.SourceFile).fileName;
+        return (this.sourceFile as ts.SourceFile).fileName;
     }
 
     getFileImportClauses(): IImportClause[] {
@@ -86,6 +82,10 @@ export class TsSourceFile extends TsSymbolNode implements ISourceFile {
         });
 
         return importClauses;
+    }
+
+    getNode(): INode {
+        return this.createNode(this.sourceFile, this.createSymbol(this.symbol));
     }
 
     private fileHasExports() {
@@ -145,15 +145,42 @@ export class TsSourceFile extends TsSymbolNode implements ISourceFile {
         return new TsImportClause({
             tsCache: this.tsCache,
             typeChecker: this.typeChecker,
-            sourceFile: this.sourceFile,
             name: opts.name,
             moduleSpecifier: opts.moduleSpecifier,
             importType: opts.importType,
-            // todo: this should just be a symbol and not a SymbolNode
-            symbolNode: this.createSymbolNode({
-                node: null,
-                symbol: opts.symbol
-            })
+            symbol: this.createSymbol(opts.symbol),
+            sourceFile: this.sourceFile
         });
+    }
+
+    private createNode(node: ts.Node, tsSymbol: ISymbol): INode {
+        return this.tsCache.getNode(
+            node,
+            () => new TsNode(
+                {
+                    tsCache: this.tsCache,
+                    typeChecker: this.typeChecker,
+                    node: node,
+                    tsSourceFile: this,
+                    sourceFile: this.sourceFile
+                },
+                tsSymbol
+            )
+        );
+    }
+
+    private createSymbol(symbol: ts.Symbol): ISymbol {
+        if (symbol == null) {
+            return null;
+        }
+        else {
+            return this.tsCache.getSymbol(symbol, () => new TsSymbol({
+                tsCache: this.tsCache,
+                typeChecker: this.typeChecker,
+                symbol: symbol,
+                tsSourceFile: this,
+                sourceFile: this.sourceFile
+            }));
+        }
     }
 }
