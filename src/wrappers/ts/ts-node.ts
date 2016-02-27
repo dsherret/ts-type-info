@@ -209,7 +209,10 @@ export class TsNode extends TsSourceFileChild implements INode {
 
     getTypes(): ITypeExpression[] {
         const clause = this.node as ts.HeritageClause;
-        return (clause.types || []).map(type => this.createTypeExpression(this.typeChecker.getTypeAtLocation(type)));
+        return (clause.types || [])
+            .map(expressionWithTypeArguments => this.typeChecker.getTypeAtLocation(expressionWithTypeArguments))
+            .filter(type => type != null)
+            .map(type => this.createTypeExpression(type));
     }
 
     getVariableDeclarationType() {
