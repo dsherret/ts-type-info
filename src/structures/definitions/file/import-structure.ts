@@ -1,5 +1,3 @@
-﻿import {NamedStructure} from "./../base";
-
-export interface ImportStructure {
+﻿export interface ImportStructure {
     // todo
 }
