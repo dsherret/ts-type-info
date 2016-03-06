@@ -1,5 +1,5 @@
 ﻿declare namespace definitionNamespace {
-    interface Test {
+    interface DefinitionNamespaceInterface {
     }
 }
 

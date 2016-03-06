@@ -1,11 +1,11 @@
-﻿import {CallSignatureDefinition, IBaseNamedDefinition, TypePropertyDefinition} from "./../definitions";
+﻿import {CallSignatureDefinition, ModuleMemberDefinitions, TypePropertyDefinition} from "./../definitions";
 import {IType} from "./../wrappers";
 import {ArrayExt} from "./../utils";
 import {MainFactory} from "./../factories";
 
 export class Type {
     callSignatures = new ArrayExt<CallSignatureDefinition>();
-    definitions = new ArrayExt<IBaseNamedDefinition>();
+    definitions = new ArrayExt<ModuleMemberDefinitions>();
     properties = new ArrayExt<TypePropertyDefinition>();
     typeArguments = new ArrayExt<Type>();
     text: string;
@@ -24,7 +24,7 @@ export class Type {
         this.typeArguments.push(...type.getTypeArguments().map(arg => mainFactory.getType(arg)));
     }
 
-    addDefinitions(definitions: IBaseNamedDefinition[]) {
+    addDefinitions(definitions: ModuleMemberDefinitions[]) {
         this.definitions.push(...definitions);
     }
 }

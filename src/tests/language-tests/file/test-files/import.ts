@@ -3,34 +3,28 @@
 /// <reference path="definition-var.d.ts" />
 
 /* tslint:disable */
-import * as TestClassModule from "./test-class";
-import {TestEnum} from "./test-enum";
-import {Class1, Class2 as AliasedClass} from "./test-multiple-classes";
-import TestDefaultClassAsImported from "./test-default-class";
-import TestDefaultSeparateClassAsImported from "./test-default-separate-class";
-import * as definition from "definition";
+import DefaultExport from "./default-export";
+import DefaultExportSeparate from "./default-export-separate";
+import {NamedExport1, NamedExport2} from "./named-exports";
+import * as NamedExports from "./named-exports";
+import DefaultExportClassLocalName, {NamedExportEnum as NamedExportLocalName} from "./named-with-default-export";
+import Expression from "./expression";
+
 import * as reexports from "./re-export";
-import {MyInterface} from "./test-interface";
+import * as definitionLocal from "definition";
 import * as definitionNamespace from "./definition-namespace";
 import * as definitionVar from "definition-var";
 
 // removes linting errors
-function dummyFunction(t: any) {
+function dummyFunction(...t: any[]) {
     return t;
 }
 
-dummyFunction(new TestClassModule.TestClass());
-dummyFunction(new TestDefaultClassAsImported());
-dummyFunction(new TestDefaultSeparateClassAsImported());
-dummyFunction(new Class1());
-dummyFunction(new AliasedClass());
-dummyFunction(TestEnum);
-dummyFunction(reexports.TestClass);
-dummyFunction(reexports.TestEnum);
+dummyFunction(DefaultExportSeparate, NamedExport1, NamedExport2, NamedExports.NamedExport1, NamedExports.NamedExport2,
+    DefaultExportClassLocalName, NamedExportLocalName, reexports.RenamedExport, reexports.NamedExport1, reexports.NamedExport2, Expression);
 
-let myVar: definition.Test;
-dummyFunction(myVar);
-let myVar2: definitionNamespace.Test;
+let myVar1: definitionLocal.DefinitionInterface;
+dummyFunction(myVar1);
+let myVar2: definitionNamespace.DefinitionNamespaceInterface;
 dummyFunction(myVar2);
-let myInterface: MyInterface;
-dummyFunction(myInterface);
+let myVar3 = () => definitionVar.Methods;

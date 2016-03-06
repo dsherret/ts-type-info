@@ -1,8 +1,9 @@
 ﻿import CodeBlockWriter from "code-block-writer";
+import {ExportableDefinitions, ExportableDefinition} from "./../../definitions";
 import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./../interface";
-import {FileDefinition} from "./../file";
+import {FileDefinition, ImportDefinition, ReExportDefinition} from "./../file";
 import {FunctionDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
 import {EnumDefinition} from "./../enum";
@@ -45,6 +46,26 @@ export abstract class BaseDefinition {
         return this._definitionType === DefinitionType.ClassConstructorParameter;
     }
 
+    isEnumDefinition(): this is EnumDefinition {
+        return this._definitionType === DefinitionType.Enum;
+    }
+
+    isExportableDefinition(): this is ExportableDefinitions {
+        return typeof (this as any as ExportableDefinition).isExported === "boolean";
+    }
+
+    isFunctionDefinition(): this is FunctionDefinition {
+        return this._definitionType === DefinitionType.Function;
+    }
+
+    isFileDefinition(): this is FileDefinition {
+        return this._definitionType === DefinitionType.File;
+    }
+
+    isImportDefinition(): this is ImportDefinition {
+        return this._definitionType === DefinitionType.Import;
+    }
+
     isInterfaceDefinition(): this is InterfaceDefinition {
         return this._definitionType === DefinitionType.Interface;
     }
@@ -61,20 +82,12 @@ export abstract class BaseDefinition {
         return this._definitionType === DefinitionType.InterfaceProperty;
     }
 
-    isEnumDefinition(): this is EnumDefinition {
-        return this._definitionType === DefinitionType.Enum;
-    }
-
-    isFunctionDefinition(): this is FunctionDefinition {
-        return this._definitionType === DefinitionType.Function;
-    }
-
-    isFileDefinition(): this is FileDefinition {
-        return this._definitionType === DefinitionType.File;
-    }
-
     isNamespaceDefinition(): this is NamespaceDefinition {
         return this._definitionType === DefinitionType.Namespace;
+    }
+
+    isReExportDefinition(): this is ReExportDefinition {
+        return this._definitionType === DefinitionType.ReExport;
     }
 
     isTypeAliasDefinition(): this is TypeAliasDefinition {

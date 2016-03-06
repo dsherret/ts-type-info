@@ -8,7 +8,7 @@ export * from "./definitions/namespace";
 export * from "./definitions/file";
 export * from "./definitions/variable";
 
-import {FileDefinition} from "./definitions/file";
+import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/file";
 import {FunctionDefinition, FunctionParameterDefinition, CallSignatureDefinition, CallSignatureParameterDefinition} from "./definitions/function";
 import {InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition,
         InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./definitions/interface";
@@ -19,11 +19,7 @@ import {NamespaceDefinition} from "./definitions/namespace";
 import {VariableDefinition} from "./definitions/variable";
 import {TypeParameterDefinition, TypePropertyDefinition, DecoratorDefinition, TypeAliasDefinition} from "./definitions/general";
 
-// all types
-export type AllDefinitions = FileDefinition | ClassDefinitions | InterfaceDefinitions | EnumDefinitions | FunctionDefinitions | GeneralDefinitions |
-    NamespaceDefinitions | VariableDefinitions;
-
-// group types (based on the folder they're in)
+// group types
 export type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition |
     ClassConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition;
 export type InterfaceDefinitions = InterfaceDefinition | InterfaceMethodParameterDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition |
@@ -45,10 +41,12 @@ export type WriteableDefinitions = FileDefinition | NamespaceDefinition | ClassD
     VariableDefinition | TypeAliasDefinition;
 export type ExportableDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
 // other
+export type NodeDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition |
+    ImportDefinition | ReExportDefinition;
+export type ModuleMemberDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
 export type BaseFunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
 export type FunctionWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
 export type FunctionBodyWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition;
-export type MainDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
 export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition |

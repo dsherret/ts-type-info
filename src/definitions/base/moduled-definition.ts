@@ -1,5 +1,6 @@
 ﻿import {INode} from "./../../wrappers";
 import {tryGet, Logger, ArrayExt} from "./../../utils";
+import {ExportableDefinitions, NodeDefinitions} from "./../../definitions";
 import {MainFactory} from "./../../factories";
 import {IParentedDefinition} from "./../base";
 import {EnumDefinition} from "./../enum";
@@ -9,7 +10,6 @@ import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
-import {ExportableDefinitions} from "./../../definitions";
 
 export interface IModuledDefinition {
     namespaces: ArrayExt<NamespaceDefinition>;
@@ -20,7 +20,7 @@ export interface IModuledDefinition {
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
-    fillMembersByNode(mainFactory: MainFactory, node: INode): void;
+    fillMembersByNode(mainFactory: MainFactory, node: INode, handleCustomDefinition?: (def: NodeDefinitions) => void): void;
 }
 
 export abstract class ModuledDefinition implements IModuledDefinition {
@@ -33,10 +33,10 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     typeAliases: ArrayExt<TypeAliasDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
 
-    fillMembersByNode(mainFactory: MainFactory, fileNode: INode) {
+    fillMembersByNode(mainFactory: MainFactory, fileNode: INode, handleCustomDefinition?: (def: NodeDefinitions) => void) {
         this.initializeMD();
 
-        fileNode.forEachChild((node) => {
+        fileNode.forEachChild(node => {
             const def = tryGet(node, () => mainFactory.getDefinitionByNode(node));
 
             if (def != null) {
@@ -61,11 +61,16 @@ export abstract class ModuledDefinition implements IModuledDefinition {
                 else if (def.isNamespaceDefinition()) {
                     this.namespaces.push(def);
                 }
+                else if (handleCustomDefinition instanceof Function) {
+                    handleCustomDefinition(def);
+                }
                 else {
-                    Logger.warn(`Not implemented: ${node.getName()}`);
+                    Logger.warn(`Not implemented definition: ${node.getName()}`);
                 }
 
-                this.checkAddToExports(def);
+                if (def.isExportableDefinition()) {
+                    this.checkAddToExports(def);
+                }
             }
             else {
                 const symbol = node.getSymbol();

@@ -7,13 +7,16 @@ export interface ISymbol extends ISourceFileChild {
     getName(): string;
     getAliasSymbol(): ISymbol;
     getDeclaredType(): IType;
-    getEnumMemberSymbols(): ISymbol[];
+    getExportSymbols(): ISymbol[];
+    getExportSymbolsByName(): { [name: string]: ISymbol; };
+    getExportSymbolsOfModuleByName(): { [name: string]: ISymbol; };
     getExtendsTypeExpressions(): ITypeExpression[];
     getNodes(): INode[];
     getOnlyNode(): INode;
     isAlias(): boolean;
     isDefaultExport(): boolean;
     isExported(): boolean;
+    isExportStar(): boolean;
     isNamedExport(): boolean;
     isPropertyAccessor(): boolean;
     isPropertyReadonly(): boolean;

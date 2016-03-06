@@ -1,4 +1,4 @@
 ﻿declare module "definition" {
-    export interface Test {
+    export interface DefinitionInterface {
     }
 }

@@ -5,8 +5,6 @@ import {getStringInfo} from "./../../main";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../write-flags";
 
-// todo: clean up this file
-
 function getFileAsString(def: FileDefinition, flags: WriteFlags) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new FileWriter(codeBlockWriter, flags);

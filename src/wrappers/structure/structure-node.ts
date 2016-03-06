@@ -42,12 +42,20 @@ export class StructureNode extends StructureSourceFileChild implements INode {
         return [];
     }
 
+    getDefaultImportNameAndSymbol(): { name: string; symbol: ISymbol; } {
+        return null;
+    }
+
     getDefaultExpression(): IExpression {
         const defaultExpression = (this.structure as DefaultExpressionedStructure).defaultExpression;
         return defaultExpression == null ? null : new StructureExpression(defaultExpression);
     }
 
     getExpression(): IExpression {
+        return null;
+    }
+
+    getFileNameOfModuleSpecifier(): string {
         return null;
     }
 
@@ -63,12 +71,28 @@ export class StructureNode extends StructureSourceFileChild implements INode {
         return null;
     }
 
+    getModuleSpecifierText() {
+        return "";
+    }
+
+    getModuleSpecifierSymbol(): ISymbol {
+        return null;
+    }
+
     getName(): string {
         return (this.structure as NamedStructure).name;
     }
 
     getNamespaceDeclarationType(): NamespaceDeclarationType {
         return NamespaceDeclarationType.Namespace;
+    }
+
+    getNamedExportSymbolsByName(): { [name: string]: ISymbol; } {
+        return {};
+    }
+
+    getNamedImportSymbolsByName(): { [name: string]: ISymbol; } {
+        return {};
     }
 
     getParameters(): INode[] {
@@ -84,6 +108,14 @@ export class StructureNode extends StructureSourceFileChild implements INode {
     }
 
     getSignatureFromThis(): ISignature {
+        return null;
+    }
+
+    getStarImportName(): string {
+        return null;
+    }
+
+    getStarSymbol(): ISymbol {
         return null;
     }
 
@@ -144,7 +176,15 @@ export class StructureNode extends StructureSourceFileChild implements INode {
         return false;
     }
 
+    isDefaultKeyword() {
+        return false;
+    }
+
     isEnum() {
+        return false;
+    }
+
+    isExportAssignment() {
         return false;
     }
 
@@ -152,7 +192,7 @@ export class StructureNode extends StructureSourceFileChild implements INode {
         return false;
     }
 
-    isExportAssignment() {
+    isExportKeyword() {
         return false;
     }
 
@@ -213,6 +253,10 @@ export class StructureNode extends StructureSourceFileChild implements INode {
     }
 
     isSetAccessor() {
+        return false;
+    }
+
+    isStarImport() {
         return false;
     }
 

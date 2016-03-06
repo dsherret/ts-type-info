@@ -28,8 +28,22 @@ export function getFileInfo(fileNames: string[], options?: Options): ArrayExt<Fi
     });
 
     definitionWithSourceFiles.forEach(definitionWithSourceFile => {
-        definitionWithSourceFile.definition.fillImports(mainFactory, definitionWithSourceFile.sourceFile);
-        definitionWithSourceFile.definition.fillReExports(mainFactory, definitionWithSourceFile.sourceFile);
+        definitionWithSourceFile.definition.reExports.forEach(reExportDefinition => {
+            reExportDefinition.fillExports(mainFactory);
+            reExportDefinition.starExports.forEach(e => {
+                e.definitions.forEach(definition => {
+                    definitionWithSourceFile.definition.exports.push(definition);
+                });
+            });
+            reExportDefinition.namedExports.forEach(e => {
+                e.definitions.forEach(definition => {
+                    definitionWithSourceFile.definition.exports.push(definition);
+                });
+            });
+        });
+        definitionWithSourceFile.definition.imports.forEach(importDefinition => {
+            importDefinition.fillImports(mainFactory);
+        });
     });
 
     mainFactory.fillAllCachedTypesWithDefinitions();

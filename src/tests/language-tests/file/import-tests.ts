@@ -2,110 +2,218 @@
 import * as assert from "assert";
 import {getFileInfo} from "./../../../main";
 import {runImportDefinitionTests} from "./../../test-helpers";
-import {ClassDefinition, EnumDefinition, InterfaceDefinition, VariableDefinition, ImportType} from "./../../../definitions";
+import {ClassDefinition, EnumDefinition, InterfaceDefinition, NamespaceDefinition, VariableDefinition} from "./../../../definitions";
 
 describe("file import tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/language-tests/file/test-files/import.ts");
     const fileDef = getFileInfo([fileName]).filter(def => /import/.test(def.fileName))[0];
-    const NUM_IMPORTS = 12;
+    let i = 0;
 
-    it(`should have ${NUM_IMPORTS} imports`, () => {
-        assert.equal(fileDef.imports.length, NUM_IMPORTS);
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./default-export",
+        fileName: "default-export.ts",
+        defaultImport: {
+            importName: "DefaultExport",
+            definitions: [{
+                name: "DefaultExport",
+                type: ClassDefinition
+            }],
+            expression: null
+        },
+        namedImports: [],
+        starImportName: null,
+        starImports: []
     });
 
-    runImportDefinitionTests(fileDef.imports[0], {
-        name: "TestClassModule",
-        importType: ImportType.Namespace,
-        definitionName: "TestClass",
-        definitionType: ClassDefinition,
-        moduleSpecifier: "./test-class"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./default-export-separate",
+        fileName: "default-export-separate.ts",
+        defaultImport: {
+            importName: "DefaultExportSeparate",
+            definitions: [{
+                name: "DefaultExportSeparate",
+                type: ClassDefinition
+            }],
+            expression: null
+        },
+        namedImports: [],
+        starImportName: null,
+        starImports: []
     });
 
-    runImportDefinitionTests(fileDef.imports[1], {
-        name: "TestEnum",
-        importType: ImportType.Named,
-        definitionName: "TestEnum",
-        definitionType: EnumDefinition,
-        moduleSpecifier: "./test-enum"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./named-exports",
+        fileName: "named-exports.ts",
+        defaultImport: null,
+        namedImports: [{
+            importName: "NamedExport1",
+            definitions: [{
+                name: "NamedExport1",
+                type: ClassDefinition
+            }, {
+                name: "NamedExport1",
+                type: NamespaceDefinition
+            }],
+            expression: null
+        }, {
+            importName: "NamedExport2",
+            definitions: [{
+                name: "NamedExport2",
+                type: ClassDefinition
+            }],
+            expression: null
+        }],
+        starImportName: null,
+        starImports: []
     });
 
-    runImportDefinitionTests(fileDef.imports[2], {
-        name: "Class1",
-        importType: ImportType.Named,
-        definitionName: "Class1",
-        definitionType: ClassDefinition,
-        moduleSpecifier: "./test-multiple-classes"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./named-exports",
+        fileName: "named-exports.ts",
+        defaultImport: null,
+        namedImports: [],
+        starImportName: "NamedExports",
+        starImports: [{
+            importName: "NamedExport1",
+            definitions: [{
+                name: "NamedExport1",
+                type: ClassDefinition
+            }, {
+                name: "NamedExport1",
+                type: NamespaceDefinition
+            }],
+            expression: null
+        }, {
+            importName: "NamedExport2",
+            definitions: [{
+                name: "NamedExport2",
+                type: ClassDefinition
+            }],
+            expression: null
+        }]
     });
 
-    runImportDefinitionTests(fileDef.imports[3], {
-        name: "AliasedClass",
-        importType: ImportType.Named,
-        definitionName: "Class2",
-        definitionType: ClassDefinition,
-        moduleSpecifier: "./test-multiple-classes"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./named-with-default-export",
+        fileName: "named-with-default-export.ts",
+        defaultImport: {
+            importName: "DefaultExportClassLocalName",
+            definitions: [{
+                name: "DefaultExportClass",
+                type: ClassDefinition
+            }],
+            expression: null
+        },
+        namedImports: [{
+            importName: "NamedExportLocalName",
+            definitions: [{
+                name: "NamedExportEnum",
+                type: EnumDefinition
+            }],
+            expression: null
+        }],
+        starImportName: null,
+        starImports: []
     });
 
-    runImportDefinitionTests(fileDef.imports[4], {
-        name: "TestDefaultClassAsImported",
-        importType: ImportType.Default,
-        definitionName: "TestDefaultClass",
-        definitionType: ClassDefinition,
-        moduleSpecifier: "./test-default-class"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./expression",
+        fileName: "expression.ts",
+        defaultImport: {
+            importName: "Expression",
+            definitions: [],
+            expression: { text: `"test string"` }
+        },
+        namedImports: [],
+        starImportName: null,
+        starImports: []
     });
 
-    runImportDefinitionTests(fileDef.imports[5], {
-        name: "TestDefaultSeparateClassAsImported",
-        importType: ImportType.Default,
-        definitionName: "TestDefaultSeparateClass",
-        definitionType: ClassDefinition,
-        moduleSpecifier: "./test-default-separate-class"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./re-export",
+        fileName: "re-export.ts",
+        defaultImport: null,
+        namedImports: [],
+        starImportName: "reexports",
+        starImports: [{
+            importName: "RenamedExport",
+            definitions: [{
+                name: "NamedExport1",
+                type: ClassDefinition
+            }, {
+                name: "NamedExport1",
+                type: NamespaceDefinition
+            }],
+            expression: null
+        }, {
+            importName: "NamedExport1",
+            definitions: [{
+                name: "NamedExport1",
+                type: ClassDefinition
+            }, {
+                name: "NamedExport1",
+                type: NamespaceDefinition
+            }],
+            expression: null
+        }, {
+            importName: "NamedExport2",
+            definitions: [{
+                name: "NamedExport2",
+                type: ClassDefinition
+            }],
+            expression: null
+        }]
     });
 
-    runImportDefinitionTests(fileDef.imports[6], {
-        name: "definition",
-        importType: ImportType.Namespace,
-        definitionName: "Test",
-        definitionType: InterfaceDefinition,
-        moduleSpecifier: "definition"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "definition",
+        fileName: "definition.d.ts",
+        defaultImport: null,
+        namedImports: [],
+        starImportName: "definitionLocal",
+        starImports: [{
+            importName: "DefinitionInterface",
+            definitions: [{
+                name: "DefinitionInterface",
+                type: InterfaceDefinition
+            }],
+            expression: null
+        }]
     });
 
-    runImportDefinitionTests(fileDef.imports[7], {
-        name: "reexports",
-        importType: ImportType.Namespace,
-        definitionName: "TestClass",
-        definitionType: ClassDefinition,
-        moduleSpecifier: "./re-export"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./definition-namespace",
+        fileName: "definition-namespace.d.ts",
+        defaultImport: null,
+        namedImports: [],
+        starImportName: "definitionNamespace",
+        starImports: [{
+            importName: "DefinitionNamespaceInterface",
+            definitions: [{
+                name: "DefinitionNamespaceInterface",
+                type: InterfaceDefinition
+            }],
+            expression: null
+        }]
     });
 
-    runImportDefinitionTests(fileDef.imports[8], {
-        name: "reexports",
-        importType: ImportType.Namespace,
-        definitionName: "TestEnum",
-        definitionType: EnumDefinition,
-        moduleSpecifier: "./re-export"
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "definition-var",
+        fileName: "definition-var.d.ts",
+        defaultImport: null,
+        namedImports: [],
+        starImportName: "definitionVar",
+        starImports: [{
+            importName: "Methods",
+            definitions: [{
+                name: "Methods",
+                type: VariableDefinition
+            }],
+            expression: null
+        }]
     });
 
-    runImportDefinitionTests(fileDef.imports[9], {
-        name: "MyInterface",
-        importType: ImportType.Named,
-        definitionName: "MyInterface",
-        definitionType: InterfaceDefinition,
-        moduleSpecifier: "./test-interface"
-    });
-
-    runImportDefinitionTests(fileDef.imports[10], {
-        name: "definitionNamespace",
-        importType: ImportType.Namespace,
-        definitionName: "Test",
-        definitionType: InterfaceDefinition,
-        moduleSpecifier: "./definition-namespace"
-    });
-
-    runImportDefinitionTests(fileDef.imports[11], {
-        name: "definitionVar",
-        importType: ImportType.Namespace,
-        definitionName: "METHODS",
-        definitionType: VariableDefinition,
-        moduleSpecifier: "definition-var"
+    it(`should have ${i} imports`, () => {
+        assert.equal(fileDef.imports.length, i);
     });
 });

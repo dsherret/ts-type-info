@@ -26,11 +26,11 @@ export class FileWriter extends BaseDefinitionWriter<FileDefinition> {
             this.writer.newLine();
             this.writer.write("export default ");
 
-            if (defaultExport instanceof Array) {
-                this.writer.write(defaultExport[0].name);
+            if (defaultExport.expression != null) {
+                this.writer.write(defaultExport.expression.text);
             }
             else {
-                this.writer.write(defaultExport.text);
+                this.writer.write(defaultExport.definitions[0].name);
             }
 
             this.writer.write(";").newLine();

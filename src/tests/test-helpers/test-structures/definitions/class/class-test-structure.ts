@@ -6,8 +6,8 @@ import {ClassStaticMethodTestStructure} from "./class-static-method-test-structu
 import {ClassStaticPropertyTestStructure} from "./class-static-property-test-structure";
 import {ClassConstructorTestStructure} from "./class-constructor-test-structure";
 
-export interface ClassTestStructure
-        extends NamedTestStructure, DecoratableTestStructure, ExportableTestStructure, TypeParameteredTestStructure, AmbientableTestStructure, AbstractableTestStructure {
+export interface ClassTestStructure extends NamedTestStructure, DecoratableTestStructure, ExportableTestStructure, TypeParameteredTestStructure,
+        AmbientableTestStructure, AbstractableTestStructure {
     methods?: ClassMethodTestStructure[];
     properties?: ClassPropertyTestStructure[];
     staticMethods?: ClassStaticMethodTestStructure[];

@@ -65,7 +65,13 @@ export class InterfaceDefinition extends BaseDefinition
                 // ignore, it's the interface identifier
             }
             else if (childSymbol.isTypeParameter()) {
-                // ignore, it's handled in TypeParameteredDefinition
+                // ignore, handled elsewhere
+            }
+            else if (childSymbol.isExportKeyword()) {
+                // ignore, handled elsewhere
+            }
+            else if (childSymbol.isDefaultKeyword()) {
+                // ignore, handled elsewhere
             }
             else {
                 Logger.warn(`Unknown interface child kind: ${childSymbol.nodeKindToString()}`);

@@ -1,5 +1,5 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
+import {ModuledDefinitions, ExportableDefinitions, NodeDefinitions} from "./../../definitions";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {INode} from "./../../wrappers";
@@ -50,7 +50,7 @@ export class NamespaceDefinition extends BaseDefinition
     variables: ArrayExt<VariableDefinition>;
     exports: ArrayExt<ExportableDefinitions>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    fillMembersByNode: (mainFactory: MainFactory, node: INode) => void;
+    fillMembersByNode: (mainFactory: MainFactory, node: INode, handleCustomDefinition?: (def: NodeDefinitions) => void) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

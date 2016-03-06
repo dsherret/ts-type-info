@@ -23,7 +23,7 @@ const VariableDeclarationType = {
                 text: `{ Var: "var" | "let" | "const"; Let: "var" | "let" | "const"; Const: "var" | "let" | "const"; }`
             },
             defaultExpression: {
-                text: `{\n    Var: "var" as VariableDeclarationType,\n    Let: "let" as VariableDeclarationType,\n    Const: "const" as VariableDeclaraionType\n}`
+                text: `{\n    Var: "var" as VariableDeclarationType,\n    Let: "let" as VariableDeclarationType,\n    Const: "const" as VariableDeclarationType\n}`
             }
         }],
         typeAliases: [{

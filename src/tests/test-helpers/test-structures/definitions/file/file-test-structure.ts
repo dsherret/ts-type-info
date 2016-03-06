@@ -7,5 +7,8 @@ export interface FileTestStructure extends ModuledTestStructure {
     imports?: ImportTestStructure[];
     reExports?: ReExportTestStructure[];
     fileName?: string;
-    defaultExport?: ExpressionTestStructure | (NamedTestStructure & ExportableTestStructure);
+    defaultExport?: {
+        expression: ExpressionTestStructure;
+        definitions: (NamedTestStructure & ExportableTestStructure)[];
+    };
 }

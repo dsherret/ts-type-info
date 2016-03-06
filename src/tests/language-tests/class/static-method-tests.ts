@@ -44,7 +44,7 @@ class MyClassWithStaticMethods {
                     name: "myDefaultParameter",
                     typeExpression: { text: "string" },
                     isOptional: true,
-                    defaultExpression: { text: `some string` }
+                    defaultExpression: { text: `"some string"` }
                 }, {
                     name: "myOptionalParameter",
                     typeExpression: { text: "string" },

@@ -1,7 +1,16 @@
-﻿import {NamedTestStructure} from "./../base";
+﻿import {ExpressionTestStructure} from "./../../expressions";
 
 export interface ReExportTestStructure {
+    moduleSpecifier: string;
     fileName: string;
-    definitionName: string;
-    definitionType: { new(...args: any[]): NamedTestStructure };
+    starExports: ({
+        exportName: string;
+        expression: ExpressionTestStructure;
+        definitions: { name: string, type: any }[];
+    })[];
+    namedExports: ({
+        exportName: string;
+        expression: ExpressionTestStructure;
+        definitions: { name: string, type: any }[];
+    })[];
 }

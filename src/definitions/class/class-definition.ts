@@ -119,7 +119,13 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
                 // ignore, it's the class identifier
             }
             else if (childNode.isTypeParameter()) {
-                // ignore, type parameters are handled elsewhere
+                // ignore, handled elsewhere
+            }
+            else if (childNode.isExportKeyword()) {
+                // ignore, handled elsewhere
+            }
+            else if (childNode.isDefaultKeyword()) {
+                // ignore, handled elsewhere
             }
             else {
                 Logger.warn(`Unknown class child kind: ${childNode.nodeKindToString()}`);

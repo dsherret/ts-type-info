@@ -9,7 +9,10 @@ describe("export default tests", () => {
 
         runFileDefinitionTests(def, {
             defaultExport: {
-                text: "23"
+                expression: {
+                    text: "23"
+                },
+                definitions: []
             }
         });
     });
@@ -20,9 +23,12 @@ describe("export default tests", () => {
 
         runFileDefinitionTests(def, {
             defaultExport: {
-                name: "MyOnSameLineClass",
-                isExported: true,
-                isDefaultExportOfFile: true
+                expression: null,
+                definitions: [{
+                    name: "MyOnSameLineClass",
+                    isExported: true,
+                    isDefaultExportOfFile: true
+                }]
             }, classes: [{
                 name: "MyOnSameLineClass",
                 isExported: true,
@@ -37,9 +43,12 @@ describe("export default tests", () => {
 
         runFileDefinitionTests(def, {
             defaultExport: {
-                name: "MyOnDifferentLineClass",
-                isExported: true,
-                isDefaultExportOfFile: true
+                expression: null,
+                definitions: [{
+                    name: "MyOnDifferentLineClass",
+                    isExported: true,
+                    isDefaultExportOfFile: true
+                }]
             }, classes: [{
                 name: "MyOnDifferentLineClass",
                 isExported: true,
@@ -54,7 +63,10 @@ describe("export default tests", () => {
 
         runFileDefinitionTests(def, {
             defaultExport: {
-                text: "new MyOnDifferentLineClass()"
+                expression: {
+                    text: "new MyOnDifferentLineClass()"
+                },
+                definitions: []
             },
             classes: [{
                 name: "MyOnDifferentLineClass"

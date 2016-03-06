@@ -28,7 +28,7 @@ export class EnumDefinition extends BaseDefinition
     }
 
     private fillEnumMembers(node: INode) {
-        this.members.push(...node.getSymbol().getEnumMemberSymbols().map(memberSymbol => {
+        this.members.push(...node.getSymbol().getExportSymbols().map(memberSymbol => {
             const memberNode = memberSymbol.getOnlyNode();
             return new EnumMemberDefinition(memberNode, this);
         }));

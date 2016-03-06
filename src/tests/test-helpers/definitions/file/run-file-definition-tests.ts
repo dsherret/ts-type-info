@@ -1,8 +1,6 @@
 ﻿import * as assert from "assert";
-import {FileDefinition, ExportableDefinitions} from "./../../../../definitions";
-import {Expression} from "./../../../../expressions";
-import {ArrayExt} from "./../../../../utils";
-import {FileTestStructure, ExpressionTestStructure, NamedTestStructure, ExportableTestStructure} from "./../../test-structures";
+import {FileDefinition} from "./../../../../definitions";
+import {FileTestStructure} from "./../../test-structures";
 import {runImportDefinitionTests} from "./run-import-definition-tests";
 import {runReExportDefinitionTests} from "./run-re-export-definition-tests";
 import {runModuledDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
@@ -49,17 +47,16 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
         }
         else {
             ensureNotNull(definition.defaultExport, () => {
-                if ((structure.defaultExport as ExpressionTestStructure).text != null) {
-                    runExpressionTests(definition.defaultExport as Expression, structure.defaultExport as ExpressionTestStructure);
-                }
-                else {
-                    const defaultExportDefs = definition.defaultExport as ArrayExt<ExportableDefinitions>;
+                runExpressionTests(definition.defaultExport.expression, structure.defaultExport.expression);
 
-                    defaultExportDefs.forEach(defaultExportDef => {
-                        runNamedDefinitionTests(defaultExportDef, structure.defaultExport as NamedTestStructure);
-                        runExportableDefinitionTests(defaultExportDef, structure.defaultExport as ExportableTestStructure);
-                    });
-                }
+                it(`should have the same number of definitions`, () => {
+                    assert.equal(definition.defaultExport.definitions.length, structure.defaultExport.definitions.length);
+                });
+
+                structure.defaultExport.definitions.forEach((defaultExportStructure, i) => {
+                    runNamedDefinitionTests(definition.defaultExport.definitions[i], defaultExportStructure);
+                    runExportableDefinitionTests(definition.defaultExport.definitions[i], defaultExportStructure);
+                });
             });
         }
     });

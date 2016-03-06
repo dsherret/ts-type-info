@@ -1,11 +1,11 @@
 ﻿import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
-        MainDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition} from "./../definitions";
+        NodeDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions} from "./../definitions";
 import {Expression, Type, TypeExpression} from "./../expressions";
-import {KeyValueCache, Logger, ArrayExt} from "./../utils";
-import {ISourceFile, INode, IType, ITypeExpression, IImportClause, ISymbol} from "./../wrappers";
+import {KeyValueCache, Logger} from "./../utils";
+import {ISourceFile, INode, IType, ITypeExpression, ISymbol} from "./../wrappers";
 
 export class MainFactory {
-    private definitionByNode = new KeyValueCache<INode, MainDefinitions>();
+    private definitionByNode = new KeyValueCache<INode, NodeDefinitions>();
     private files = new KeyValueCache<ISourceFile, FileDefinition>();
     private typeExpressions = new KeyValueCache<ITypeExpression, TypeExpression>();
     private types = new KeyValueCache<IType, Type>();
@@ -28,28 +28,8 @@ export class MainFactory {
         });
     }
 
-    getImportDefinitions(opts: { importClause: IImportClause; parent: FileDefinition; }) {
-        const definitions = this.getAllDefinitionsBySymbol(opts.importClause.getSymbol());
-
-        return (definitions || []).map(definition => new ImportDefinition(
-            opts.importClause,
-            definition,
-            opts.parent
-        ));
-    }
-
-    getReExportDefinitions(opts: { symbol: ISymbol; parent: FileDefinition; }) {
-        const definitions = this.getAllDefinitionsBySymbol(opts.symbol);
-
-        return (definitions || []).map(definition => new ReExportDefinition(
-            this.getFileDefinitionFromSourceFile(opts.symbol.getSourceFile()),
-            definition,
-            opts.parent
-        ));
-    }
-
     getAllDefinitionsBySymbol(symbol: ISymbol) {
-        return (symbol.getNodes() || []).map(node => {
+        return symbol.getNodes().map(node => {
             return this.getDefinitionByNode(node);
         }).filter(d => d != null);
     }
@@ -62,30 +42,29 @@ export class MainFactory {
         return this.files.getOrCreate(file, () => new FileDefinition(this, file));
     }
 
-    getFileDefinitionFromSourceFile(sourceFile: ISourceFile) {
-        return this.files.get(sourceFile);
-    }
+    getDefinitionsOrExpressionFromExportSymbol(symbol: ISymbol) {
+        const obj: { definitions: ExportableDefinitions[]; expression: Expression; } = { definitions: [], expression: null };
 
-    getDefinitionsOrExpressionFromSymbol(symbol: ISymbol): Expression | ArrayExt<MainDefinitions> {
-        if (symbol == null) {
-            return null;
-        }
-        else if (symbol.isAlias()) {
-            return new ArrayExt<MainDefinitions>(...this.getAllDefinitionsBySymbol(symbol.getAliasSymbol()));
-        }
-        else {
-            const node = symbol.getOnlyNode();
+        if (symbol != null) {
+            if (symbol.isAlias()) {
+                symbol = symbol.getAliasSymbol();
+            }
 
-            if (node != null) {
-                const expression = node.getExpression();
+            const nodes = symbol.getNodes();
+
+            if (nodes.length === 1) {
+                const expression = nodes[0].getExpression();
 
                 if (expression != null) {
-                    return new Expression(expression);
+                    obj.expression = new Expression(expression);
+                    return obj;
                 }
             }
+
+            obj.definitions.push(...this.getAllDefinitionsBySymbol(symbol) as ExportableDefinitions[]);
         }
 
-        return new ArrayExt<MainDefinitions>();
+        return obj;
     }
 
     fillAllCachedTypesWithDefinitions() {
@@ -94,13 +73,13 @@ export class MainFactory {
             const symbols = iType.getSymbols();
 
             symbols.forEach(s => {
-                type.addDefinitions(this.getAllDefinitionsBySymbol(s));
+                type.addDefinitions(this.getAllDefinitionsBySymbol(s) as ModuleMemberDefinitions[]);
             });
         });
     }
 
     private createDefinition(node: INode) {
-        let definition: MainDefinitions;
+        let definition: NodeDefinitions;
 
         if (node.isFunction()) {
             definition = new FunctionDefinition(this, node);
@@ -123,7 +102,13 @@ export class MainFactory {
         else if (node.isNamespace()) {
             definition = new NamespaceDefinition(this, node);
         }
-        else if (node.isExportAssignment() || node.isExportDeclaration()) {
+        else if (node.isExportDeclaration()) {
+            definition = new ReExportDefinition(node);
+        }
+        else if (node.isImport()) {
+            definition = new ImportDefinition(node);
+        }
+        else if (node.isExportAssignment()) {
             // ignore exports here, handled in ExportableDefinition
         }
         else if (node.isTypeParameter()) {
@@ -131,9 +116,6 @@ export class MainFactory {
         }
         else if (node.isMethodSignature() || node.isFunctionType()) {
             // ignore
-        }
-        else if (node.isImport()) {
-            // ignore imports here, handled in FileDefinition
         }
         else {
             Logger.warn(`Unknown node kind: ${node.nodeKindToString()}`);

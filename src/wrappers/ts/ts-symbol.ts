@@ -36,11 +36,35 @@ export class TsSymbol extends TsSourceFileChild implements ISymbol {
         return this.createType(this.typeChecker.getDeclaredTypeOfSymbol(this.symbol));
     }
 
-    getEnumMemberSymbols(): ISymbol[] {
+    getExportSymbols() {
         return Object.keys(this.symbol.exports).map(memberName => {
             const memberSymbol = this.symbol.exports[memberName];
             return this.createSymbol(memberSymbol);
         });
+    }
+
+    getExportSymbolsByName() {
+        const exportSymbols: { [name: string]: ISymbol; } = {};
+        Object.keys(this.symbol.exports).forEach(memberName => {
+            exportSymbols[memberName] = this.createSymbol(this.symbol.exports[memberName]);
+        });
+        return exportSymbols;
+    }
+
+    getExportSymbolsOfModuleByName() {
+        const symbolsByName: { [name: string]: ISymbol; } = {};
+
+        this.typeChecker.getExportsOfModule(this.symbol).map(symbol => this.createSymbol(symbol)).forEach(symbol => {
+            const name = symbol.getName();
+
+            if (symbol.isAlias()) {
+                symbol = symbol.getAliasSymbol();
+            }
+
+            symbolsByName[name] = symbol;
+        });
+
+        return symbolsByName;
     }
 
     getExtendsTypeExpressions() {
@@ -82,6 +106,10 @@ export class TsSymbol extends TsSourceFileChild implements ISymbol {
         else {
             return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[this.symbol.name] != null;
         }
+    }
+
+    isExportStar() {
+        return (this.symbol.getFlags() & ts.SymbolFlags.ExportStar) !== 0;
     }
 
     isNamedExport() {

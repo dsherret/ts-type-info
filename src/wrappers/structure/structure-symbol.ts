@@ -25,8 +25,16 @@ export class StructureSymbol extends StructureSourceFileChild implements ISymbol
         return null;
     }
 
-    getEnumMemberSymbols(): ISymbol[] {
+    getExportSymbols(): ISymbol[] {
         return [];
+    }
+
+    getExportSymbolsByName(): { [name: string]: ISymbol; } {
+        return {};
+    }
+
+    getExportSymbolsOfModuleByName(): { [name: string]: ISymbol; } {
+        return {};
     }
 
     getExtendsTypeExpressions(): ITypeExpression[] {
@@ -50,6 +58,10 @@ export class StructureSymbol extends StructureSourceFileChild implements ISymbol
     }
 
     isExported() {
+        return false;
+    }
+
+    isExportStar() {
         return false;
     }
 

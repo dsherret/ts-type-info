@@ -11,98 +11,100 @@ import {runNamedDefinitionTests} from "./run-named-definition-tests";
 import {runExportableDefinitionTests} from "./run-exportable-definition-tests";
 import {ModuledTestStructure} from "./../../test-structures";
 
-export function runModuledDefinitionTests(definition: ModuledDefinitions, expected: ModuledTestStructure) {
-    expected.namespaces = expected.namespaces || [];
-    expected.classes = expected.classes || [];
-    expected.enums = expected.enums || [];
-    expected.functions = expected.functions || [];
-    expected.interfaces = expected.interfaces || [];
-    expected.variables = expected.variables || [];
-    expected.typeAliases = expected.typeAliases || [];
-    expected.exports = expected.exports || [];
+export function runModuledDefinitionTests(definition: ModuledDefinitions, structure: ModuledTestStructure) {
+    structure.namespaces = structure.namespaces || [];
+    structure.classes = structure.classes || [];
+    structure.enums = structure.enums || [];
+    structure.functions = structure.functions || [];
+    structure.interfaces = structure.interfaces || [];
+    structure.variables = structure.variables || [];
+    structure.typeAliases = structure.typeAliases || [];
+    structure.exports = structure.exports || [];
 
     describe("namespaces", () => {
         it("should have the expected number of namespaces", () => {
-            assert.equal(definition.namespaces.length, expected.namespaces.length);
+            assert.equal(definition.namespaces.length, structure.namespaces.length);
         });
 
-        expected.namespaces.forEach((namespaceTestStructure, i) => {
+        structure.namespaces.forEach((namespaceTestStructure, i) => {
             runNamespaceDefinitionTests(definition.namespaces[i], namespaceTestStructure);
         });
     });
 
     describe("classes", () => {
         it("should have the expected number of classes", () => {
-            assert.equal(definition.classes.length, expected.classes.length);
+            assert.equal(definition.classes.length, structure.classes.length);
         });
 
-        expected.classes.forEach((classTestStructure, i) => {
+        structure.classes.forEach((classTestStructure, i) => {
             runClassDefinitionTests(definition.classes[i], classTestStructure);
         });
     });
 
     describe("interfaces", () => {
         it("should have the expected number of interfaces", () => {
-            assert.equal(definition.interfaces.length, expected.interfaces.length);
+            assert.equal(definition.interfaces.length, structure.interfaces.length);
         });
 
-        expected.interfaces.forEach((interfaceTestStructure, i) => {
+        structure.interfaces.forEach((interfaceTestStructure, i) => {
             runInterfaceDefinitionTests(definition.interfaces[i], interfaceTestStructure);
         });
     });
 
     describe("functions", () => {
         it("should have the expected number of functions", () => {
-            assert.equal(definition.functions.length, expected.functions.length);
+            assert.equal(definition.functions.length, structure.functions.length);
         });
 
-        expected.functions.forEach((functionTestStructure, i) => {
+        structure.functions.forEach((functionTestStructure, i) => {
             runFunctionDefinitionTests(definition.functions[i], functionTestStructure);
         });
     });
 
     describe("enums", () => {
         it("should have the expected number of enums", () => {
-            assert.equal(definition.enums.length, expected.enums.length);
+            assert.equal(definition.enums.length, structure.enums.length);
         });
 
-        expected.enums.forEach((enumTestStructure, i) => {
+        structure.enums.forEach((enumTestStructure, i) => {
             runEnumDefinitionTests(definition.enums[i], enumTestStructure);
         });
     });
 
     describe("variables", () => {
         it("should have the expected number of variables", () => {
-            assert.equal(definition.variables.length, expected.variables.length);
+            assert.equal(definition.variables.length, structure.variables.length);
         });
 
-        expected.variables.forEach((variableTestStructure, i) => {
+        structure.variables.forEach((variableTestStructure, i) => {
             runVariableDefinitionTests(definition.variables[i], variableTestStructure);
         });
     });
 
     describe("typeAliases", () => {
         it("should have the expected number of type aliases", () => {
-            assert.equal(definition.typeAliases.length, expected.typeAliases.length);
+            assert.equal(definition.typeAliases.length, structure.typeAliases.length);
         });
 
-        expected.typeAliases.forEach((typeAliasTestStructure, i) => {
+        structure.typeAliases.forEach((typeAliasTestStructure, i) => {
             runTypeAliasDefinitionTests(definition.typeAliases[i], typeAliasTestStructure);
         });
     });
 
     describe("exports", () => {
         it("should have the expected number of exports", () => {
-            assert.equal(definition.exports.length, expected.exports.length);
+            assert.equal(definition.exports.length, structure.exports.length);
         });
 
-        expected.exports.forEach((exportTestStructure, i) => {
+        structure.exports.forEach((exportTestStructure, i) => {
             // defaults
             exportTestStructure.isExported = exportTestStructure.isExported == null ? true : exportTestStructure.isExported;
             exportTestStructure.isNamedExportOfFile = exportTestStructure.isNamedExportOfFile == null ? false : exportTestStructure.isNamedExportOfFile;
 
-            runNamedDefinitionTests(definition.exports[i], exportTestStructure);
-            runExportableDefinitionTests(definition.exports[i], exportTestStructure);
+            describe(`${exportTestStructure.name}`, () => {
+                runNamedDefinitionTests(definition.exports[i], exportTestStructure);
+                runExportableDefinitionTests(definition.exports[i], exportTestStructure);
+            });
         });
     });
 }
