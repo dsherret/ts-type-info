@@ -19,8 +19,8 @@ export interface IModuledDefinition {
     functions: ArrayExt<FunctionDefinition>;
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    exports: ArrayExt<ExportableDefinitions>;
     fillMembersByNode(mainFactory: MainFactory, node: INode, handleCustomDefinition?: (def: NodeDefinitions) => void): void;
+    getExports(): ExportableDefinitions[];
 }
 
 export abstract class ModuledDefinition implements IModuledDefinition {
@@ -31,7 +31,6 @@ export abstract class ModuledDefinition implements IModuledDefinition {
     functions: ArrayExt<FunctionDefinition>;
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    exports: ArrayExt<ExportableDefinitions>;
 
     fillMembersByNode(mainFactory: MainFactory, fileNode: INode, handleCustomDefinition?: (def: NodeDefinitions) => void) {
         this.initializeMD();
@@ -67,10 +66,6 @@ export abstract class ModuledDefinition implements IModuledDefinition {
                 else {
                     Logger.warn(`Not implemented definition: ${node.getName()}`);
                 }
-
-                if (def.isExportableDefinition()) {
-                    this.checkAddToExports(def);
-                }
             }
             else {
                 const symbol = node.getSymbol();
@@ -85,19 +80,32 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         this.fillModuledChildrenWithParent();
     }
 
-    private checkAddToExports(def: ExportableDefinitions) {
-        if (def.isExported && !def.isDefaultExportOfFile) {
-            this.exports.push(def);
-        }
+    getExports() {
+        const exports: ExportableDefinitions[] = [];
+        const addExportedToExports = (e: ExportableDefinitions) => {
+            if (e.isExported && !e.isDefaultExportOfFile) {
+                exports.push(e);
+            }
+        };
+
+        this.namespaces.forEach(addExportedToExports);
+        this.classes.forEach(addExportedToExports);
+        this.interfaces.forEach(addExportedToExports);
+        this.enums.forEach(addExportedToExports);
+        this.functions.forEach(addExportedToExports);
+        this.variables.forEach(addExportedToExports);
+        this.typeAliases.forEach(addExportedToExports);
+
+        return exports;
     }
 
     private fillModuledChildrenWithParent() {
         const fillWithParent = (f: IParentedDefinition<any>) => f.parent = this;
         this.namespaces.forEach(fillWithParent);
         this.classes.forEach(fillWithParent);
+        this.interfaces.forEach(fillWithParent);
         this.enums.forEach(fillWithParent);
         this.functions.forEach(fillWithParent);
-        this.interfaces.forEach(fillWithParent);
         this.variables.forEach(fillWithParent);
         this.typeAliases.forEach(fillWithParent);
     }
@@ -110,6 +118,5 @@ export abstract class ModuledDefinition implements IModuledDefinition {
         this.functions = new ArrayExt<FunctionDefinition>();
         this.variables = new ArrayExt<VariableDefinition>();
         this.typeAliases = new ArrayExt<TypeAliasDefinition>();
-        this.exports = new ArrayExt<ExportableDefinitions>();
     }
 }

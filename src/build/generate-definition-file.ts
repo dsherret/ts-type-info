@@ -5,9 +5,9 @@ import {getFileInfo} from "./../main";
 export function generateDefinitionFile() {
     // todo: better way of doing this
     const fileInfo = getFileInfo([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")], { showDebugMessages: true })
-                        .firstOrDefault(f => f.fileName.indexOf("main.ts") >= 0);
+                        .firstOrDefault(f => f.fileName.indexOf("/main.ts") >= 0);
 
-    fileInfo.exports.forEach(def => {
+    fileInfo.getExports().forEach(def => {
         // todo: once typescript supports it type-wise, this should be merged into one if statement
         if (def.isClassDefinition()) {
             def.methods.removeWhere(m => m.name === "addDefinitions" ||

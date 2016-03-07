@@ -28,6 +28,28 @@ export class MainFactory {
         });
     }
 
+    getAllExportableDefinitionsBySymbol(symbol: ISymbol) {
+        const definitions = this.getAllDefinitionsBySymbol(symbol);
+        const exportableDefinitions: ExportableDefinitions[] = [];
+
+        function handleDefinition(definition: (ExportableDefinitions | ReExportDefinition)) {
+            if (definition.isReExportDefinition()) {
+                handleReExport(definition);
+            }
+            else {
+                exportableDefinitions.push(definition);
+            }
+        }
+
+        function handleReExport(reExportDefinition: ReExportDefinition) {
+            reExportDefinition.getExports().forEach(handleDefinition);
+        }
+
+        definitions.forEach(handleDefinition);
+
+        return exportableDefinitions;
+    }
+
     getAllDefinitionsBySymbol(symbol: ISymbol) {
         return symbol.getNodes().map(node => {
             return this.getDefinitionByNode(node);

@@ -30,6 +30,16 @@ export class ReExportDefinition extends BaseDefinition implements IParentedDefin
         }
     }
 
+    getExports() {
+        const exports: ExportableDefinitions[] = [];
+        const handleDefinition = (definition: ExportableDefinitions) => exports.push(definition);
+
+        this.starExports.forEach(e => e.definitions.forEach(handleDefinition));
+        this.namedExports.forEach(e => e.definitions.forEach(handleDefinition));
+
+        return exports;
+    }
+
     fillExports(mainFactory: MainFactory) {
         this.fillExportsForNamed(mainFactory);
         this.fillExportsForStar(mainFactory);
@@ -53,7 +63,7 @@ export class ReExportDefinition extends BaseDefinition implements IParentedDefin
 
             return {
                 exportName: name,
-                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions),
+                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions as ExportableDefinitions[]),
                 expression: defsOrExpression.expression
             };
         }));
@@ -61,7 +71,7 @@ export class ReExportDefinition extends BaseDefinition implements IParentedDefin
 
     private fillExportsForStar(mainFactory: MainFactory) {
         this.starExports.push(...Object.keys(this.starExportSymbols || {}).filter(name => name !== "default").map(name => {
-            const definitions = mainFactory.getAllDefinitionsBySymbol(this.starExportSymbols[name]) as ExportableDefinitions[];
+            const definitions = mainFactory.getAllExportableDefinitionsBySymbol(this.starExportSymbols[name]);
 
             return {
                 exportName: name,

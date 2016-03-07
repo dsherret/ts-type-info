@@ -1,5 +1,5 @@
 ﻿import {MainFactory} from "./../../factories";
-import {ExportableDefinitions} from "./../../definitions";
+import {ExportableDefinitions, ReExportDefinition} from "./../../definitions";
 import {Expression} from "./../../expressions";
 import {INode, ISymbol} from "./../../wrappers";
 import {ArrayExt} from "./../../utils";
@@ -49,7 +49,7 @@ export class ImportDefinition extends BaseDefinition implements IParentedDefinit
             const starExportSymbols = this.starSymbol.getExportSymbolsOfModuleByName();
 
             this.starImports.push(...Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
-                const definitions = mainFactory.getAllDefinitionsBySymbol(starExportSymbols[name]) as ExportableDefinitions[];
+                const definitions = mainFactory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
 
                 return {
                     importName: name,
@@ -66,7 +66,7 @@ export class ImportDefinition extends BaseDefinition implements IParentedDefinit
 
             return {
                 importName: name,
-                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions),
+                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions as ExportableDefinitions[]),
                 expression: defsOrExpression.expression
             };
         }));
@@ -78,7 +78,7 @@ export class ImportDefinition extends BaseDefinition implements IParentedDefinit
 
             this.defaultImport = {
                 importName: this.defaultImportNameAndSymbol.name,
-                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions),
+                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions as ExportableDefinitions[]),
                 expression: defsOrExpression.expression
             };
         }

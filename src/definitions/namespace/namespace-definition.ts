@@ -48,9 +48,9 @@ export class NamespaceDefinition extends BaseDefinition
     enums: ArrayExt<EnumDefinition>;
     functions: ArrayExt<FunctionDefinition>;
     variables: ArrayExt<VariableDefinition>;
-    exports: ArrayExt<ExportableDefinitions>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
     fillMembersByNode: (mainFactory: MainFactory, node: INode, handleCustomDefinition?: (def: NodeDefinitions) => void) => void;
+    getExports: () => ExportableDefinitions[];
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

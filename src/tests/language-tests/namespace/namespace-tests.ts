@@ -91,17 +91,17 @@ export namespace MyExportedNamespace {
                 }]
             }],
             exports: [{
+                name: "MyInnerExportedModule"
+            }, {
+                name: "MyInnerExportedNamespace"
+            }, {
                 name: "MyExportedModuleClass"
+            }, {
+                name: "MyExportedModuleInterface"
             }, {
                 name: "MyExportedModuleEnum"
             }, {
                 name: "myExportedModuleFunction"
-            }, {
-                name: "MyExportedModuleInterface"
-            }, {
-                name: "MyInnerExportedModule"
-            }, {
-                name: "MyInnerExportedNamespace"
             }]
         }, {
             name: "MyExportedNamespace",

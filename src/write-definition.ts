@@ -26,7 +26,7 @@ export function writeDefinition(definition: WriteableDefinitions, writer: CodeBl
     else if (definition.isTypeAliasDefinition()) {
         new TypeAliasWriter(writer, writeFlags).write(definition);
     }
-    else if (definition.isVariableDefinition) {
+    else if (definition.isVariableDefinition()) {
         new VariableWriter(writer, writeFlags).write(definition);
     }
     else {

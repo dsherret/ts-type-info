@@ -92,8 +92,10 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, struct
     });
 
     describe("exports", () => {
+        const definitionExports = definition.getExports();
+
         it("should have the expected number of exports", () => {
-            assert.equal(definition.exports.length, structure.exports.length);
+            assert.equal(definitionExports.length, structure.exports.length);
         });
 
         structure.exports.forEach((exportTestStructure, i) => {
@@ -102,8 +104,8 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, struct
             exportTestStructure.isNamedExportOfFile = exportTestStructure.isNamedExportOfFile == null ? false : exportTestStructure.isNamedExportOfFile;
 
             describe(`${exportTestStructure.name}`, () => {
-                runNamedDefinitionTests(definition.exports[i], exportTestStructure);
-                runExportableDefinitionTests(definition.exports[i], exportTestStructure);
+                runNamedDefinitionTests(definitionExports[i], exportTestStructure);
+                runExportableDefinitionTests(definitionExports[i], exportTestStructure);
             });
         });
     });

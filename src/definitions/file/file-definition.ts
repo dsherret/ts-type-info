@@ -43,16 +43,12 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         this.fillDefaultExport(mainFactory, sourceFile);
     }
 
-    private fillDefaultExport(mainFactory: MainFactory, sourceFile: ISourceFile) {
-        const symbol = sourceFile.getDefaultExportSymbol();
+    getExports(): ExportableDefinitions[] {
+        const exports = ModuledDefinition.prototype.getExports.call(this) as ExportableDefinitions[];
 
-        if (symbol != null) {
-            const defsOrExpression = mainFactory.getDefinitionsOrExpressionFromExportSymbol(symbol);
-            this.defaultExport = {
-                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions),
-                expression: defsOrExpression.expression
-            };
-        }
+        this.reExports.forEach(reExport => exports.push(...reExport.getExports()));
+
+        return exports;
     }
 
     write() {
@@ -71,7 +67,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         writer.newLine();
 
         writer.write(`declare module ${options.moduleName}`).block(() => {
-            this.exports.forEach((exportDef) => {
+            this.getExports().forEach((exportDef) => {
                 exportDef.isExported = false;
                 exportDef.isNamedExportOfFile = false;
                 exportDef.isDefaultExportOfFile = false;
@@ -90,6 +86,18 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         return writer.toString();
     }
 
+    private fillDefaultExport(mainFactory: MainFactory, sourceFile: ISourceFile) {
+        const symbol = sourceFile.getDefaultExportSymbol();
+
+        if (symbol != null) {
+            const defsOrExpression = mainFactory.getDefinitionsOrExpressionFromExportSymbol(symbol);
+            this.defaultExport = {
+                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions as ExportableDefinitions[]),
+                expression: defsOrExpression.expression
+            };
+        }
+    }
+
     // ModuledDefinition
     namespaces: ArrayExt<NamespaceDefinition>;
     classes: ArrayExt<ClassDefinition>;
@@ -98,7 +106,6 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     functions: ArrayExt<FunctionDefinition>;
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    exports: ArrayExt<ExportableDefinitions>;
     fillMembersByNode: (mainFactory: MainFactory, node: INode, handleCustomDefinition?: (def: NodeDefinitions) => void) => void;
 }
 
