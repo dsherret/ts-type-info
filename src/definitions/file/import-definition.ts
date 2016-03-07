@@ -1,5 +1,5 @@
 ﻿import {MainFactory} from "./../../factories";
-import {ExportableDefinitions, ReExportDefinition} from "./../../definitions";
+import {ExportableDefinitions} from "./../../definitions";
 import {Expression} from "./../../expressions";
 import {INode, ISymbol} from "./../../wrappers";
 import {ArrayExt} from "./../../utils";
