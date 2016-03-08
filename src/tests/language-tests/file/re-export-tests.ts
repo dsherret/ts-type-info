@@ -78,28 +78,35 @@ describe("file re-export tests", () => {
             }],
             starExports: []
         }, {
-            moduleSpecifier: "./re-export3",
-            fileName: "re-export3.ts",
+            moduleSpecifier: "./re-export-combined",
+            fileName: "re-export-combined.ts",
             namedExports: [],
             starExports: [{
-                exportName: "Renamed1",
+                exportName: "RenamedA1",
                 expression: null,
                 definitions: [{
-                    name: "SingleNamedExport",
+                    name: "SingleNamedExportA",
                     type: ClassDefinition
                 }]
             }, {
-                exportName: "Renamed2",
+                exportName: "RenamedA2",
                 expression: null,
                 definitions: [{
-                    name: "SingleNamedExport",
+                    name: "SingleNamedExportA",
                     type: ClassDefinition
                 }]
             }, {
-                exportName: "Renamed3",
+                exportName: "RenamedA3",
                 expression: null,
                 definitions: [{
-                    name: "SingleNamedExport",
+                    name: "SingleNamedExportA",
+                    type: ClassDefinition
+                }]
+            }, {
+                exportName: "SingleNamedExportB",
+                expression: null,
+                definitions: [{
+                    name: "SingleNamedExportB",
                     type: ClassDefinition
                 }]
             }]
@@ -119,11 +126,13 @@ describe("file re-export tests", () => {
         }, {
             name: "ExportStar2Class"
         }, {
-            name: "SingleNamedExport"
+            name: "SingleNamedExportA"
         }, {
-            name: "SingleNamedExport"
+            name: "SingleNamedExportA"
         }, {
-            name: "SingleNamedExport"
+            name: "SingleNamedExportA"
+        }, {
+            name: "SingleNamedExportB"
         }]
     });
 });

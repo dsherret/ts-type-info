@@ -4,4 +4,4 @@ export {default as DefaultExportClass} from "./named-default-exports";
 export * from "./export-star";
 export * from "./export-star2";
 export {default as Expression} from "./expression";
-export * from "./re-export3";
+export * from "./re-export-combined";

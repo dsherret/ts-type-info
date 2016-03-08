@@ -60,6 +60,7 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
 
     writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; referencePaths: string[]; }) {
         const writer = new CodeBlockWriter();
+
         (options.referencePaths || []).forEach(referencePath => {
             writer.writeLine(`/// <reference path="${referencePath}" />`);
         });
