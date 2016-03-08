@@ -4,7 +4,6 @@ import {runFileDefinitionTests} from "./../../test-helpers";
 describe("export default tests", () => {
     describe("expression", () => {
         const code = `export default 23;`;
-
         const def = getStringInfo(code);
 
         runFileDefinitionTests(def, {

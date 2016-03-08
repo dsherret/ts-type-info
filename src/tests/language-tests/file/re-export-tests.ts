@@ -77,6 +77,32 @@ describe("file re-export tests", () => {
                 definitions: []
             }],
             starExports: []
+        }, {
+            moduleSpecifier: "./re-export3",
+            fileName: "re-export3.ts",
+            namedExports: [],
+            starExports: [{
+                exportName: "Renamed1",
+                expression: null,
+                definitions: [{
+                    name: "SingleNamedExport",
+                    type: ClassDefinition
+                }]
+            }, {
+                exportName: "Renamed2",
+                expression: null,
+                definitions: [{
+                    name: "SingleNamedExport",
+                    type: ClassDefinition
+                }]
+            }, {
+                exportName: "Renamed3",
+                expression: null,
+                definitions: [{
+                    name: "SingleNamedExport",
+                    type: ClassDefinition
+                }]
+            }]
         }],
         exports: [{
             name: "NamedExport1"
@@ -92,6 +118,12 @@ describe("file re-export tests", () => {
             name: "NamedExportEnum2"
         }, {
             name: "ExportStar2Class"
+        }, {
+            name: "SingleNamedExport"
+        }, {
+            name: "SingleNamedExport"
+        }, {
+            name: "SingleNamedExport"
         }]
     });
 });

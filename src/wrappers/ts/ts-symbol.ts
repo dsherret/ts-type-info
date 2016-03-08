@@ -45,9 +45,24 @@ export class TsSymbol extends TsSourceFileChild implements ISymbol {
 
     getExportSymbolsByName() {
         const exportSymbols: { [name: string]: ISymbol; } = {};
+
         Object.keys(this.symbol.exports).forEach(memberName => {
-            exportSymbols[memberName] = this.createSymbol(this.symbol.exports[memberName]);
+            const symbol = this.createSymbol(this.symbol.exports[memberName]);
+            const isStarExport = memberName === "__export";
+
+            if (isStarExport) {
+                const moduleSpecifierSymbol = symbol.getOnlyNode().getModuleSpecifierSymbol();
+                const starSymbolsByName = moduleSpecifierSymbol.getExportSymbolsByName();
+
+                Object.keys(starSymbolsByName).forEach(starSymbolMemberName => {
+                    exportSymbols[starSymbolMemberName] = starSymbolsByName[starSymbolMemberName];
+                });
+            }
+            else {
+                exportSymbols[memberName] = this.createSymbol(this.symbol.exports[memberName]);
+            }
         });
+
         return exportSymbols;
     }
 

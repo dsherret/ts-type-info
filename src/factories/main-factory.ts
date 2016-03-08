@@ -29,6 +29,7 @@ export class MainFactory {
     }
 
     getAllExportableDefinitionsBySymbol(symbol: ISymbol) {
+        symbol = symbol.isAlias() ? symbol.getAliasSymbol() : symbol;
         const definitions = this.getAllDefinitionsBySymbol(symbol);
         const exportableDefinitions: ExportableDefinitions[] = [];
 
