@@ -1,1 +1,1 @@
-﻿export * from "./factories/main-factory";
+﻿export * from "./factories/MainFactory";

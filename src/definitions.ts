@@ -1,23 +1,23 @@
 export * from "./definitions/base";
-export * from "./definitions/general";
-export * from "./definitions/function";
+export * from "./definitions/General";
+export * from "./definitions/Function";
 export * from "./definitions/class";
-export * from "./definitions/interface";
-export * from "./definitions/enum";
-export * from "./definitions/namespace";
-export * from "./definitions/file";
-export * from "./definitions/variable";
+export * from "./definitions/Interface";
+export * from "./definitions/Enum";
+export * from "./definitions/Namespace";
+export * from "./definitions/File";
+export * from "./definitions/Variable";
 
-import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/file";
-import {FunctionDefinition, FunctionParameterDefinition, CallSignatureDefinition, CallSignatureParameterDefinition} from "./definitions/function";
+import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/File";
+import {FunctionDefinition, FunctionParameterDefinition, CallSignatureDefinition, CallSignatureParameterDefinition} from "./definitions/Function";
 import {InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition,
-        InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./definitions/interface";
+        InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./definitions/Interface";
 import {ClassDefinition, ClassMethodParameterDefinition, ClassStaticMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition,
         ClassStaticMethodDefinition, ClassStaticPropertyDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./definitions/class";
-import {EnumDefinition, EnumMemberDefinition} from "./definitions/enum";
-import {NamespaceDefinition} from "./definitions/namespace";
-import {VariableDefinition} from "./definitions/variable";
-import {TypeParameterDefinition, TypePropertyDefinition, DecoratorDefinition, TypeAliasDefinition} from "./definitions/general";
+import {EnumDefinition, EnumMemberDefinition} from "./definitions/Enum";
+import {NamespaceDefinition} from "./definitions/Namespace";
+import {VariableDefinition} from "./definitions/Variable";
+import {TypeParameterDefinition, TypePropertyDefinition, DecoratorDefinition, TypeAliasDefinition} from "./definitions/General";
 
 // group types
 export type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition |

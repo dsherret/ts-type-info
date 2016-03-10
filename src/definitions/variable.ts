@@ -1,2 +1,2 @@
-﻿export * from "./variable/variable-definition";
-export * from "./variable/variable-declaration-type";
+﻿export * from "./variable/VariableDefinition";
+export * from "./variable/VariableDeclarationType";

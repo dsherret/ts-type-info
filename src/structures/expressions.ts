@@ -1,1 +1,1 @@
-﻿export * from "./expressions/type-structure";
+﻿export * from "./expressions/TypeStructure";

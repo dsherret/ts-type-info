@@ -1,3 +1,3 @@
-﻿export * from "./file/file-definition";
-export * from "./file/import-definition";
-export * from "./file/re-export-definition";
+﻿export * from "./file/FileDefinition";
+export * from "./file/ImportDefinition";
+export * from "./file/ReExportDefinition";

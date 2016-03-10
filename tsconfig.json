@@ -7,6 +7,11 @@
         "noImplicitAny":  true,
         "removeComments": false,
         "experimentalDecorators": true,
-        "outDir": "dist"
-    }
+        "outDir": "dist",
+        "rootDir": "src"
+    },
+    "exclude": [
+        "typings/browser.d.ts",
+        "typings/browser"
+    ]
 }

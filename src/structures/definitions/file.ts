@@ -1,3 +1,3 @@
-﻿export * from "./file/file-structure";
-export * from "./file/import-structure";
-export * from "./file/re-export-structure";
+﻿export * from "./file/FileStructure";
+export * from "./file/ImportStructure";
+export * from "./file/ReExportStructure";

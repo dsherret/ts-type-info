@@ -17,7 +17,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
         typescript: require("typescript")
     });
 
-    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "!./src/tests/**/test-files/**/*.ts"])
+    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "!./src/typings/browser.d.ts", "!./src/typings/browser/**/*.d.ts", "!./src/tests/**/testFiles/**/*.ts"])
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
         .pipe(replace(/(}\)\()(.*\|\|.*;)/g, '$1/* istanbul ignore next */$2'))
@@ -30,7 +30,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
 });
 
 gulp.task("pre-test", ["typescript"], function () {
-    return gulp.src(["dist/**/*.js", "!dist/tests/**/*.js", "!dist/utils/file-utils.js"])
+    return gulp.src(["dist/**/*.js", "!dist/tests/**/*.js", "!dist/utils/FileUtils.js"])
         .pipe(istanbul())
         .pipe(istanbul.hookRequire());
 });
@@ -60,7 +60,7 @@ gulp.task("tslint", function() {
 });
 
 gulp.task("generate-definition-file", ["typescript"], function(cb) {
-    var generateDefinitionFile = require("./dist/build/generate-definition-file").generateDefinitionFile;
+    var generateDefinitionFile = require("./dist/build/generateDefinitionFile").generateDefinitionFile;
     generateDefinitionFile();
 });
 
@@ -70,7 +70,7 @@ function pad(width, string, padding) {
 
 gulp.task("generate-readme", function(cb) {
     // use this library to generate the readme.md file
-    var readmeCode = fs.readFileSync(path.join(__dirname, "resources/readme-code.ts"), "utf8");
+    var readmeCode = fs.readFileSync(path.join(__dirname, "resources/readmeCode.ts"), "utf8");
     var readmeText = fs.readFileSync(path.join(__dirname, "resources/readme.txt"), "utf8");
     var tsTypeInfo = require("./dist/main");
     var readmeInfo = tsTypeInfo.getStringInfo(readmeCode);
@@ -86,14 +86,14 @@ gulp.task("generate-readme", function(cb) {
 });
 
 gulp.task("ensure-dir-structures-match", function() {
-    var FileUtils = require("./dist/utils/file-utils").FileUtils;
+    var FileUtils = require("./dist/utils/FileUtils").FileUtils;
     var definitionDir = __dirname + "/src/definitions";
     var definitionFileNames = FileUtils.getAllFileNamesFromFolder(definitionDir).map(function(f) {
         return f.replace(definitionDir, "");
     });
-    var testHelperDir = __dirname + "/src/tests/test-helpers";
+    var testHelperDir = __dirname + "/src/tests/testHelpers";
     var testHelperFileNames = FileUtils.getAllFileNamesFromFolder(testHelperDir).map(function(f) {
-        return f.replace(testHelperDir, "").replace("run-", "").replace("-tests", "");
+        return f.replace(testHelperDir, "").replace("run", "").replace("Tests", "");
     });
 
     var onlyInDefinitionFileNames = definitionFileNames.filter(function(f) {
@@ -104,11 +104,11 @@ gulp.task("ensure-dir-structures-match", function() {
     });
 
     if (onlyInDefinitionFileNames.length > 0) {
-        console.log("Add these to test helpers (with run- prefix and -tests suffix):");
+        console.log("Add these to test helpers (with run prefix and Tests suffix):");
         console.log(onlyInDefinitionFileNames);
     }
     if (onlyInTestHelperFileNames.length > 0) {
-        console.log("Add these to definitions or fix test-helpers:");
+        console.log("Add these to definitions or fix testHelpers:");
         console.log(onlyInTestHelperFileNames);
     }
 })

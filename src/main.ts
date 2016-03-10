@@ -3,11 +3,11 @@ import * as fs from "fs";
 import {FileDefinition} from "./definitions";
 import {StringUtils, Logger, ArrayExt} from "./utils";
 import {MainFactory} from "./factories";
-import {TsMain} from "./wrappers/ts/ts-main";
+import {TsMain} from "./wrappers/ts/TsMain";
 import {Options} from "./options";
 
 export * from "./options";
-export * from "./utils/array-ext";
+export * from "./utils/ArrayExt";
 export * from "./definitions";
 export * from "./expressions";
 export * from "./structures";

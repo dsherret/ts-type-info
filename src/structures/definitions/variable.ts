@@ -1,1 +1,1 @@
-﻿export * from "./variable/variable-structure";
+﻿export * from "./variable/VariableStructure";
