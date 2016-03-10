@@ -29,8 +29,7 @@ export function generateDefinitionFile() {
 
     const definitionFileText = fileInfo.writeExportsAsDefinitionFile({
         definitionName: "ts-type-info",
-        moduleName: "TsTypeInfo",
-        referencePaths: ["node_modules/code-block-writer/code-block-writer.d.ts"]
+        moduleName: "TsTypeInfo"
     });
 
     fs.writeFile(path.join(__dirname, "../../ts-type-info.d.ts"), definitionFileText);

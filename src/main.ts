@@ -10,6 +10,7 @@ export * from "./options";
 export * from "./utils/array-ext";
 export * from "./definitions";
 export * from "./expressions";
+export * from "./structures";
 
 export function getFileInfo(fileNames: string[], options?: Options): ArrayExt<FileDefinition> {
     verifyArray(fileNames);

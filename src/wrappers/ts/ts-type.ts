@@ -27,7 +27,12 @@ export class TsType extends TsSourceFileChild implements IType {
     }
 
     getBaseTypeExpressions(): ITypeExpression[] {
-        return (this.type.getBaseTypes() || []).map(baseType => this.createTypeExpression(baseType));
+        // not sure why, but accessing target.resolvedBaseTypes is necessary for getting the info
+        // for BaseParameterDefinition in this library...
+        const typeReference = this.type as ts.TypeReference;
+        const baseTypes = (typeReference.target || {} as any).resolvedBaseTypes as ts.ObjectType[] || this.type.getBaseTypes();
+
+        return (baseTypes || []).map(t => this.createTypeExpression(t));
     }
 
     getProperties(): ISymbol[] {

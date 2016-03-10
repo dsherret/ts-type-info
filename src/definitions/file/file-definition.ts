@@ -58,14 +58,8 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         return writer.toString();
     }
 
-    writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; referencePaths: string[]; }) {
+    writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; }) {
         const writer = new CodeBlockWriter();
-
-        (options.referencePaths || []).forEach(referencePath => {
-            writer.writeLine(`/// <reference path="${referencePath}" />`);
-        });
-
-        writer.newLine();
 
         writer.write(`declare module ${options.moduleName}`).block(() => {
             this.getExports().forEach((exportDef) => {
