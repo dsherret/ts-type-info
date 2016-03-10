@@ -1,7 +1,7 @@
 ﻿import * as ts from "typescript";
 import {Logger} from "./../../utils/Logger";
-import {tryGet} from "./../../utils/TryGet";
-import {TypeGuards} from "./../../utils/typeGuards";
+import {tryGet} from "./../../utils/tryGet";
+import {TypeGuards} from "./../../utils/TypeGuards";
 import {ClassConstructorParameterScope, NamespaceDeclarationType, Scope, VariableDeclarationType} from "./../../definitions";
 import {INode} from "./../INode";
 import {ISymbol} from "./../ISymbol";
