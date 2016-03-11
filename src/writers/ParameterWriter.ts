@@ -2,7 +2,7 @@
 import {ExpressionWriter} from "./ExpressionWriter";
 import {TypeExpressionWriter} from "./TypeExpressionWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
-import {WriteFlags} from "./../writeFlags";
+import {WriteFlags} from "./../WriteFlags";
 
 export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> {
     private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);

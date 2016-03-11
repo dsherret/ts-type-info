@@ -2,7 +2,7 @@
 import {TypeParameteredTestStructure} from "./../../testStructures";
 import {ITypeParameteredDefinition} from "./../../../../definitions";
 import {runTypeParameterDefinitionTests} from "./../general";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runTypeParameteredDefinitionTests(definition: ITypeParameteredDefinition, structure: TypeParameteredTestStructure) {
     describe("type parameters", () => {

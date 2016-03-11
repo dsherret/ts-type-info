@@ -1,7 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {EnumWriter} from "./../../writers";
-import {WriteFlags} from "./../../writeFlags";
+import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {INode} from "./../../wrappers";
 import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,

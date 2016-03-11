@@ -4,7 +4,7 @@ import {INode} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
 import {INamedDefinition, NamedDefinition} from "./NamedDefinition";
 import {IParentedDefinition} from "./ParentedDefinition";
-import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./typeExpressionedDefinition";
+import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
 import {DefinitionType} from "./DefinitionType";
 import {BaseDefinition} from "./BaseDefinition";
 

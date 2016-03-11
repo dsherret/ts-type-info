@@ -1,5 +1,5 @@
 ﻿import {VariableDefinition, VariableDeclarationType} from "./../definitions";
-import {WriteFlags} from "./../writeFlags";
+import {WriteFlags} from "./../WriteFlags";
 import {ExpressionWriter} from "./ExpressionWriter";
 import {TypeExpressionWriter} from "./TypeExpressionWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";

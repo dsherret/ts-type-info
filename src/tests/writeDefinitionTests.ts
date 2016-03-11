@@ -2,9 +2,9 @@
 import CodeBlockWriter from "code-block-writer";
 import {getStringInfo} from "./../main";
 import {WriteableDefinitions} from "./../definitions";
-import {writeDefinition} from "./../WriteDefinition";
+import {writeDefinition} from "./../writeDefinition";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
-import * as testCode from "./writers/TestCode";
+import * as testCode from "./writers/testCode";
 
 function getCodeBlockWriter() {
     return new CodeBlockWriter();

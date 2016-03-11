@@ -1,7 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {WriteableDefinitions} from "./definitions";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter, TypeAliasWriter, VariableWriter} from "./writers";
-import {WriteFlags} from "./writeFlags";
+import {WriteFlags} from "./WriteFlags";
 import {Logger} from "./utils";
 
 export function writeDefinition(definition: WriteableDefinitions, writer: CodeBlockWriter, writeFlags = WriteFlags.Default) {

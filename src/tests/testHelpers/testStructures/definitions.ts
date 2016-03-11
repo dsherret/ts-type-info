@@ -1,22 +1,22 @@
 ﻿export * from "./definitions/base";
-export * from "./definitions/General";
+export * from "./definitions/general";
 export * from "./definitions/class";
-export * from "./definitions/Enum";
-export * from "./definitions/File";
-export * from "./definitions/Function";
-export * from "./definitions/Interface";
-export * from "./definitions/Namespace";
-export * from "./definitions/Variable";
+export * from "./definitions/enum";
+export * from "./definitions/file";
+export * from "./definitions/function";
+export * from "./definitions/interface";
+export * from "./definitions/namespace";
+export * from "./definitions/variable";
 
-import {FileTestStructure} from "./definitions/File";
-import {FunctionTestStructure, FunctionParameterTestStructure, CallSignatureTestStructure, CallSignatureParameterTestStructure} from "./definitions/Function";
+import {FileTestStructure} from "./definitions/file";
+import {FunctionTestStructure, FunctionParameterTestStructure, CallSignatureTestStructure, CallSignatureParameterTestStructure} from "./definitions/function";
 import {InterfaceTestStructure, InterfaceMethodParameterTestStructure, InterfaceMethodTestStructure,
-        InterfaceNewSignatureParameterTestStructure, InterfacePropertyTestStructure, InterfaceNewSignatureTestStructure} from "./definitions/Interface";
+        InterfaceNewSignatureParameterTestStructure, InterfacePropertyTestStructure, InterfaceNewSignatureTestStructure} from "./definitions/interface";
 import {ClassTestStructure, ClassMethodParameterTestStructure, ClassStaticMethodParameterTestStructure, ClassMethodTestStructure, ClassPropertyTestStructure,
         ClassStaticMethodTestStructure, ClassStaticPropertyTestStructure, ClassConstructorTestStructure, ClassConstructorParameterTestStructure} from "./definitions/class";
-import {EnumTestStructure} from "./definitions/Enum";
-import {NamespaceTestStructure} from "./definitions/Namespace";
-import {VariableTestStructure} from "./definitions/Variable";
+import {EnumTestStructure} from "./definitions/enum";
+import {NamespaceTestStructure} from "./definitions/namespace";
+import {VariableTestStructure} from "./definitions/variable";
 
 export type WriteableTestStructures = FileTestStructure | NamespaceTestStructure | ClassTestStructure| InterfaceTestStructure | FunctionTestStructure |
     EnumTestStructure | VariableTestStructure;

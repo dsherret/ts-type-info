@@ -3,7 +3,7 @@ import {ClassConstructorTestStructure} from "./../../testStructures";
 import {ClassConstructorDefinition} from "./../../../../definitions";
 import {runParameteredDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {runClassConstructorParameterDefinitionTests} from "./runClassConstructorParameterDefinitionTests";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassConstructorDefinitionTests(definition: ClassConstructorDefinition, structure: ClassConstructorTestStructure) {
     if (structure == null) {

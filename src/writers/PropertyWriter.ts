@@ -3,7 +3,7 @@ import {TypeExpressionWriter} from "./TypeExpressionWriter";
 import {ExpressionWriter} from "./ExpressionWriter";
 import {ScopeWriter} from "./ScopeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
-import {WriteFlags} from "./../writeFlags";
+import {WriteFlags} from "./../WriteFlags";
 
 export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);

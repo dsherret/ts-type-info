@@ -5,7 +5,7 @@ import {INode} from "./../../wrappers";
 import {ModuledDefinitions} from "./../../definitions";
 import {Expression, TypeExpression} from "./../../expressions";
 import {VariableWriter} from "./../../writers";
-import {WriteFlags} from "./../../writeFlags";
+import {WriteFlags} from "./../../WriteFlags";
 import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition, AmbientableDefinition,
         NamedDefinition, TypeExpressionedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {VariableDeclarationType} from "./VariableDeclarationType";

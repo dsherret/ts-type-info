@@ -2,7 +2,7 @@
 import {NamespaceDefinition} from "./../../../../definitions";
 import {NamespaceTestStructure} from "./../../testStructures";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runModuledDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runNamespaceDefinitionTests(definition: NamespaceDefinition, structure: NamespaceTestStructure) {
     describe(`namespace ${structure.name}`, () => {

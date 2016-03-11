@@ -2,7 +2,7 @@ import {InterfaceNewSignatureTestStructure} from "./../../testStructures";
 import {InterfaceNewSignatureDefinition} from "./../../../../definitions";
 import {runParameteredDefinitionTests, runReturnTypedDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {runInterfaceNewSignatureParameterDefinitionTests} from "./runInterfaceNewSignatureParameterDefinitionTests";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runInterfaceNewSignatureDefinitionTests(definition: InterfaceNewSignatureDefinition, structure: InterfaceNewSignatureTestStructure) {
     describe(`new signature`, () => {

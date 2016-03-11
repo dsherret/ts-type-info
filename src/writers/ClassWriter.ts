@@ -6,7 +6,7 @@ import {TypeParametersWriter} from "./TypeParametersWriter";
 import {PropertyWriter} from "./PropertyWriter";
 import {MethodWriter} from "./MethodWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
-import {WriteFlags} from "./../writeFlags";
+import {WriteFlags} from "./../WriteFlags";
 
 export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     private typeParametersWriter = new TypeParametersWriter(this.writer, this.flags);

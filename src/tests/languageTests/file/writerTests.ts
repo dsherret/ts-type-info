@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {FileWriter} from "./../../../writers";
-import {fileWriterTestCode} from "./../../writers/TestCode";
+import {fileWriterTestCode} from "./../../writers/testCode";
 
 function getWriterString(f: FileDefinition) {
     const codeBlockWriter = new CodeBlockWriter();

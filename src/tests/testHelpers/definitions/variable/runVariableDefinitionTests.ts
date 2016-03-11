@@ -3,7 +3,7 @@ import {VariableTestStructure} from "./../../testStructures";
 import {VariableDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
         runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runVariableDefinitionTests(definition: VariableDefinition, structure: VariableTestStructure) {
     describe(`variable ${structure.name}`, () => {

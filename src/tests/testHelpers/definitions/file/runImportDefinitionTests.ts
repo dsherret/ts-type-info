@@ -5,7 +5,7 @@ import {Expression} from "./../../../../expressions";
 import {ArrayExt} from "./../../../../utils";
 import {runExpressionTests} from "./../../expressions";
 import {runParentedDefinitionTests} from "./../base";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runImportDefinitionTests(definition: ImportDefinition, structure: ImportTestStructure) {
     describe(`import ${structure.moduleSpecifier}`, () => {

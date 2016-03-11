@@ -2,7 +2,7 @@
 import {Type} from "./../../../expressions";
 import {TypeTestStructure} from "./../testStructures";
 import {runNamedDefinitionTests, runCallSignatureDefinitionTests, runBasePropertyDefinitionTests} from "./../definitions";
-import {ensureNotNull} from "./../EnsureNotNull";
+import {ensureNotNull} from "./../ensureNotNull";
 
 export function runTypeTests(type: Type, structure: TypeTestStructure) {
     describe("type", () => {

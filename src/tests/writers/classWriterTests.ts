@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {ClassWriter} from "./../../writers";
-import {classWriterTestCode} from "./TestCode";
+import {classWriterTestCode} from "./testCode";
 
 function getClassAsString(c: ClassDefinition) {
     const codeBlockWriter = new CodeBlockWriter();

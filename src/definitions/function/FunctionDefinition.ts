@@ -5,7 +5,7 @@ import {MainFactory} from "./../../factories";
 import {INode} from "./../../wrappers";
 import {IExportableDefinition, ExportableDefinition, IAmbientableDefinition, AmbientableDefinition, DefinitionType, BaseFunctionDefinition} from "./../base";
 import {FunctionWriter} from "./../../writers";
-import {WriteFlags} from "./../../writeFlags";
+import {WriteFlags} from "./../../WriteFlags";
 import {FunctionParameterDefinition} from "./FunctionParameterDefinition";
 
 export class FunctionDefinition

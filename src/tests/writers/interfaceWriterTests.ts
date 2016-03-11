@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {InterfaceDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {InterfaceWriter} from "./../../writers";
-import {interfaceWriterTestCode} from "./TestCode";
+import {interfaceWriterTestCode} from "./testCode";
 
 function getInterfaceAsString(i: InterfaceDefinition) {
     const codeBlockWriter = new CodeBlockWriter();

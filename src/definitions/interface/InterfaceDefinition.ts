@@ -2,7 +2,7 @@
 import {ModuledDefinitions} from "./../../definitions";
 import {TypeExpression} from "./../../expressions";
 import {InterfaceWriter} from "./../../writers";
-import {WriteFlags} from "./../../writeFlags";
+import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {INode, ISignature} from "./../../wrappers";

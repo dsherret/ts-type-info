@@ -2,7 +2,7 @@
 import {EnumTestStructure} from "./../../testStructures";
 import {EnumDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 import {runEnumMemberDefinitionTests} from "./runEnumMemberDefinitionTests";
 
 export function runEnumDefinitionTests(definition: EnumDefinition, structure: EnumTestStructure) {

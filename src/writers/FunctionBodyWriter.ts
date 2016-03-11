@@ -1,5 +1,5 @@
 ﻿import {FunctionBodyWriteableDefinitions, FunctionDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassConstructorDefinition} from "./../definitions";
-import {WriteFlags} from "./../writeFlags";
+import {WriteFlags} from "./../WriteFlags";
 import {BaseWriter} from "./BaseWriter";
 
 type NotInterfaceMethod = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition;

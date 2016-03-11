@@ -9,7 +9,7 @@ import {runClassStaticPropertyDefinitionTests} from "./runClassStaticPropertyDef
 import {runClassStaticMethodDefinitionTests} from "./runClassStaticMethodDefinitionTests";
 import {runClassConstructorDefinitionTests} from "./runClassConstructorDefinitionTests";
 import {runTypeExpressionTests} from "./../../expressions";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassTestStructure) {
     describe(`class ${structure.name}`, () => {

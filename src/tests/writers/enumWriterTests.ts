@@ -3,8 +3,8 @@ import CodeBlockWriter from "code-block-writer";
 import {EnumWriter} from "./../../writers";
 import {EnumDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
-import {WriteFlags} from "./../../writeFlags";
-import {enumWriterTestCode} from "./TestCode";
+import {WriteFlags} from "./../../WriteFlags";
+import {enumWriterTestCode} from "./testCode";
 
 function getEnumAsString(enumMember: EnumDefinition) {
     const codeBlockWriter = new CodeBlockWriter();

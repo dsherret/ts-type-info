@@ -1,7 +1,7 @@
 ﻿import {InterfacePropertyDefinition} from "./../../../../definitions";
 import {InterfacePropertyTestStructure} from "./../../testStructures";
 import {runBasePropertyDefinitionTests} from "./../base";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runInterfacePropertyDefinitionTests(definition: InterfacePropertyDefinition, structure: InterfacePropertyTestStructure) {
     describe(`property ${structure.name}`, () => {

@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {getStringInfo} from "./../../../main";
-import {functionWriterTestCode} from "./../../writers/TestCode";
+import {functionWriterTestCode} from "./../../writers/testCode";
 
 describe("BaseDefinition", () => {
     const file = getStringInfo(functionWriterTestCode);

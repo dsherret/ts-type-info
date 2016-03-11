@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
-import {WriteFlags} from "./../../writeFlags";
+import {WriteFlags} from "./../../WriteFlags";
 import {ExtendsImplementsClauseWriter} from "./../../writers";
 
 function getStringUsingWriter(writeFuncCallback: (writer: ExtendsImplementsClauseWriter) => void) {

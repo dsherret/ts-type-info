@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {FunctionDefinition} from "./../../definitions";
 import {getStringInfo} from "./../../main";
 import {FunctionWriter} from "./../../writers";
-import {functionWriterTestCode} from "./TestCode";
+import {functionWriterTestCode} from "./testCode";
 
 function getFunctionAsString(i: FunctionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();

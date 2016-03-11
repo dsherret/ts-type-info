@@ -4,7 +4,7 @@ import {applyMixins, ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {INode} from "./../../wrappers";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
-import {WriteFlags} from "./../../writeFlags";
+import {WriteFlags} from "./../../WriteFlags";
 import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
         IAmbientableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";

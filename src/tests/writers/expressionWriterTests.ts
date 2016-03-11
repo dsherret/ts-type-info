@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ExpressionWriter} from "./../../writers";
 import {Expression} from "./../../expressions";
-import {WriteFlags} from "./../../writeFlags";
+import {WriteFlags} from "./../../WriteFlags";
 import {getStringInfo} from "./../../main";
 
 function getExpressionAsString(typeExpression: Expression) {

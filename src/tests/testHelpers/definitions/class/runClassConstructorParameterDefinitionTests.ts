@@ -2,7 +2,7 @@
 import {ClassConstructorParameterTestStructure} from "./../../testStructures";
 import {ClassConstructorParameterDefinition, ClassConstructorParameterScope} from "./../../../../definitions";
 import {runBaseParameterDefinitionTests} from "./../base";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassConstructorParameterDefinitionTests(definition: ClassConstructorParameterDefinition, structure: ClassConstructorParameterTestStructure) {
     describe(`parameter ${structure.name}`, () => {

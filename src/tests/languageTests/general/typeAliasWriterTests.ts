@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {TypeAliasDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {TypeAliasWriter} from "./../../../writers";
-import {typeAliasWriterTestCode} from "./../../writers/TestCode";
+import {typeAliasWriterTestCode} from "./../../writers/testCode";
 
 function getWriterString(i: TypeAliasDefinition) {
     const codeBlockWriter = new CodeBlockWriter();

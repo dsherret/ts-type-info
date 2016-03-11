@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {NamespaceDefinition} from "./../../../definitions";
 import {getStringInfo} from "./../../../main";
 import {NamespaceWriter, ModuledWriter} from "./../../../writers";
-import {namespaceWriterTestCode} from "./../../writers/TestCode";
+import {namespaceWriterTestCode} from "./../../writers/testCode";
 
 function getWriterString(i: NamespaceDefinition) {
     const codeBlockWriter = new CodeBlockWriter();

@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import {TypeExpression} from "./../../../expressions";
 import {TypeExpressionTestStructure} from "./../testStructures";
-import {ensureNotNull} from "./../EnsureNotNull";
+import {ensureNotNull} from "./../ensureNotNull";
 import {runTypeTests} from "./runTypeTests";
 
 export function runTypeExpressionTests(typeExpression: TypeExpression, structure: TypeExpressionTestStructure) {

@@ -9,7 +9,7 @@ import {INamedDefinition, IParentedDefinition, IExportableDefinition, ITypeExpre
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
 import {TypeParameteredDefinition} from "./../base/TypeParameteredDefinition";
-import {TypeExpressionedDefinition} from "./../base/typeExpressionedDefinition";
+import {TypeExpressionedDefinition} from "./../base/TypeExpressionedDefinition";
 import {ExportableDefinition} from "./../base/ExportableDefinition";
 import {AmbientableDefinition} from "./../base/AmbientableDefinition";
 import {TypeParameterDefinition} from "./TypeParameterDefinition";

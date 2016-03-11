@@ -3,7 +3,7 @@ import {ClassMethodDefinition} from "./../../../../definitions";
 import {runBaseClassMethodDefinitionTests} from "./base";
 import {runAbstractableDefinitionTests} from "./../base";
 import {runClassMethodParameterDefinitionTests} from "./runClassMethodParameterDefinitionTests";
-import {ensureNotNull} from "./../../EnsureNotNull";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassMethodDefinitionTests(definition: ClassMethodDefinition, structure: ClassMethodTestStructure) {
     describe(`method ${structure.name}`, () => {
