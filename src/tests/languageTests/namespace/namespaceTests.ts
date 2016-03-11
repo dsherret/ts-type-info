@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 import {NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
 
@@ -28,7 +28,7 @@ namespace MyNamespace {
 export namespace MyExportedNamespace {
 }`;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         namespaces: [{

@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {InterfaceDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {InterfaceWriter} from "./../../writers";
 import {interfaceWriterTestCode} from "./testCode";
 
@@ -15,7 +15,7 @@ function getInterfaceAsString(i: InterfaceDefinition) {
 }
 
 describe("InterfaceWriter", () => {
-    const file = getStringInfo(interfaceWriterTestCode);
+    const file = getInfoFromString(interfaceWriterTestCode);
 
     describe("write()", () => {
         describe("MyInterface", () => {

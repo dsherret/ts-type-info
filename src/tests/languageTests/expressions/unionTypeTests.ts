@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("union type tests", () => {
@@ -11,7 +11,7 @@ class MyOtherClass<T> {
 }
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     // todo: verify this works in testing
     runFileDefinitionTests(def, {

@@ -1,4 +1,4 @@
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class type parameters", () => {
@@ -17,7 +17,7 @@ class MyImplementsClass implements MyClass<number, string> {
 }
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         classes: [{

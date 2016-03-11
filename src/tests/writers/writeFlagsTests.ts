@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 
@@ -16,7 +16,7 @@ function getFileAsString(def: FileDefinition, flags: WriteFlags) {
 
 describe("WriteFlags", () => {
     describe("classes", () => {
-        const file = getStringInfo(`
+        const file = getInfoFromString(`
 class MyClass {
     private myPrivateProp: string;
     protected myProtectedProp: string;
@@ -84,7 +84,7 @@ class MyClass {
     });
 
     describe("variables", () => {
-        const file = getStringInfo(`var myVar = "my string"`);
+        const file = getInfoFromString(`var myVar = "my string"`);
 
         describe("WriteFlags.HideExpressions", () => {
             it("should not write the expression when specifying to", () => {
@@ -100,7 +100,7 @@ class MyClass {
     });
 
     describe("parameters", () => {
-        const file = getStringInfo(`function myFunction(param1 = "text") {}`);
+        const file = getInfoFromString(`function myFunction(param1 = "text") {}`);
 
         it("should contain the default expression", () => {
             const expected = `function myFunction(param1: string = "text") {\n}\n`;

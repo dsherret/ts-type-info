@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("interface exports tests", () => {
@@ -6,7 +6,7 @@ describe("interface exports tests", () => {
 export interface MyExportedInterface {
 }`;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         interfaces: [{

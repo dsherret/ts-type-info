@@ -1,9 +1,9 @@
 ﻿import * as assert from "assert";
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {functionWriterTestCode} from "./../../writers/testCode";
 
 describe("BaseDefinition", () => {
-    const file = getStringInfo(functionWriterTestCode);
+    const file = getInfoFromString(functionWriterTestCode);
     const funcDef = file.functions[0];
 
     describe("onBeforeWrite", () => {

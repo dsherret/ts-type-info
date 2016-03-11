@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class implements class tests", () => {
@@ -13,7 +13,7 @@ class MyClassImplementsClass implements MyBaseClass {
 }
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         classes: [{

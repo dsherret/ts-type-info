@@ -28,7 +28,7 @@ Get the file info:
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
 
-console.log(TsTypeInfo.getFileInfo([ "V:/TestFile.ts" ]));
+console.log(TsTypeInfo.getInfoFromFiles([ "V:/TestFile.ts" ]));
 ```
 
 ### Output

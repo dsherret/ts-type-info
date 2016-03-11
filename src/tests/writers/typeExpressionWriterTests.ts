@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {TypeExpressionWriter} from "./../../writers";
 import {TypeExpression} from "./../../expressions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 
 function getTypeExpressionAsString(typeExpression: TypeExpression) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -24,7 +24,7 @@ interface MyTest<T> {
     name: T;
 }
 `;
-    const myClass = getStringInfo(code).classes[0];
+    const myClass = getInfoFromString(code).classes[0];
 
     describe("write()", () => {
         describe("myProperty1", () => {

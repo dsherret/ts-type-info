@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {NamespaceDeclarationType} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
@@ -13,7 +13,7 @@ class MyModuleWithClass {
 }
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         namespaces: [{

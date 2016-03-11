@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {ModuledWriter} from "./../../writers";
 
 function getModuledAsString(f: ModuledDefinitions) {
@@ -30,7 +30,7 @@ enum MyEnum {
 function myFunction() {
 }
 `;
-    const myFile = getStringInfo(code);
+    const myFile = getInfoFromString(code);
 
     describe("write()", () => {
         it("should contain everything written out", () => {

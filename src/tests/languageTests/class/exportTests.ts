@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class exports tests", () => {
@@ -6,7 +6,7 @@ describe("class exports tests", () => {
 export class MyExportedClass {
 }`;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         classes: [{

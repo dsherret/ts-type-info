@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {WriteFlags} from "./../../WriteFlags";
 import {ExtendsImplementsClauseWriter} from "./../../writers";
 
@@ -31,7 +31,7 @@ class MyClass extends MyBaseClass implements MyInterface {
 class MyClass2 implements MyInterface, MyBaseClass {
 }
 `;
-    const file = getStringInfo(code);
+    const file = getInfoFromString(code);
     const myBaseClass = file.classes[0];
     const myClass = file.classes[1];
     const myClass2 = file.classes[2];

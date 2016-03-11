@@ -12,7 +12,7 @@ export * from "./definitions";
 export * from "./expressions";
 export * from "./structures";
 
-export function getFileInfo(fileNames: string[], options?: Options): ArrayExt<FileDefinition> {
+export function getInfoFromFiles(fileNames: string[], options?: Options): ArrayExt<FileDefinition> {
     verifyArray(fileNames);
     options = options || {};
 
@@ -42,7 +42,7 @@ export function getFileInfo(fileNames: string[], options?: Options): ArrayExt<Fi
     return new ArrayExt(...definitionWithSourceFiles.map(f => f.definition));
 }
 
-export function getStringInfo(code: string, options?: Options): FileDefinition {
+export function getInfoFromString(code: string, options?: Options): FileDefinition {
     verifyString(code);
 
     const tmpFile = tmp.fileSync({ postfix: ".ts" });
@@ -51,7 +51,7 @@ export function getStringInfo(code: string, options?: Options): FileDefinition {
     try {
         code = StringUtils.ensureEndsWithNewline(code);
         fs.writeFileSync(tmpFile.name, code);
-        fileDefinition = getFileInfo([tmpFile.name], options)[0];
+        fileDefinition = getInfoFromFiles([tmpFile.name], options)[0];
     }
     finally {
         tmpFile.removeCallback();
@@ -62,13 +62,13 @@ export function getStringInfo(code: string, options?: Options): FileDefinition {
 
 function verifyArray(fileNames: string[]) {
     if (!(fileNames instanceof Array)) {
-        throw new Error("Please provide an array of file names to getFileInfo.");
+        throw new Error("Please provide an array of file names to getInfoFromFiles.");
     }
 }
 
 function verifyString(code: string) {
     if (typeof code !== "string") {
-        throw new Error("Please provide a string to getStringInfo");
+        throw new Error("Please provide a string to getInfoFromString");
     }
 }
 

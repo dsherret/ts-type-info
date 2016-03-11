@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../../definitions";
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {ClassWriter} from "./../../../writers";
 import {classWriterTestCode} from "./../../writers/testCode";
 
@@ -15,7 +15,7 @@ function getWriterString(c: ClassDefinition) {
 }
 
 describe("ClassDefinition", () => {
-    const file = getStringInfo(classWriterTestCode);
+    const file = getInfoFromString(classWriterTestCode);
 
     describe("write()", () => {
         file.classes.forEach(c => {

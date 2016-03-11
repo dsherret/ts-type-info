@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {EnumDefinition} from "./../../../definitions";
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {EnumWriter} from "./../../../writers";
 import {enumWriterTestCode} from "./../../writers/testCode";
 
@@ -15,7 +15,7 @@ function getWriterString(e: EnumDefinition) {
 }
 
 describe("EnumDefinition", () => {
-    const file = getStringInfo(enumWriterTestCode);
+    const file = getInfoFromString(enumWriterTestCode);
 
     describe("write()", () => {
         file.enums.forEach(e => {

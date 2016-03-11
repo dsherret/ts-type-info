@@ -42,7 +42,7 @@ Get the file info:
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
 
-const files = TsTypeInfo.getFileInfo(["V:/TestFile.ts"]);
+const files = TsTypeInfo.getInfoFromFiles(["V:/TestFile.ts"]);
 const myPropertyName = files[0].classes[0].properties[0].name;
 
 console.log(myPropertyName); // myProperty
@@ -64,7 +64,7 @@ Get the file info and tell it how it should output:
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
 
-const files = TsTypeInfo.getFileInfo(["V:/TestFile2.ts"]);
+const files = TsTypeInfo.getInfoFromFiles(["V:/TestFile2.ts"]);
 const myClass = files[0].classes[0];
 
 myClass.isAbstract = true;

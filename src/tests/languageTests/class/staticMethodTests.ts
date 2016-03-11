@@ -1,4 +1,4 @@
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {Scope} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
@@ -30,7 +30,7 @@ class MyClassWithStaticMethods {
     }
 }`;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         classes: [{

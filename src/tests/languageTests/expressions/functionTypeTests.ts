@@ -1,4 +1,4 @@
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("function type tests", () => {
@@ -6,7 +6,7 @@ describe("function type tests", () => {
 function myFunc(func: <T extends string>(str: T, num?: number) => void) {
 }`;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         functions: [{

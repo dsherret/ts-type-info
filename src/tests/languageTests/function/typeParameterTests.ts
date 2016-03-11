@@ -1,4 +1,4 @@
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("function type parameters", () => {
@@ -6,7 +6,7 @@ describe("function type parameters", () => {
 function myTypeParameterFunction<T, U extends string>(tParam: T, uParam: U) {
 }`;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         functions: [{

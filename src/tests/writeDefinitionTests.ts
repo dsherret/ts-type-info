@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
-import {getStringInfo} from "./../main";
+import {getInfoFromString} from "./../main";
 import {WriteableDefinitions} from "./../definitions";
 import {writeDefinition} from "./../writeDefinition";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
@@ -18,7 +18,7 @@ function writeDefinitionWrapper(def: WriteableDefinitions) {
 
 describe("#writeDefinition()", () => {
     describe("ClassDefinition", () => {
-        const file = getStringInfo(testCode.classWriterTestCode);
+        const file = getInfoFromString(testCode.classWriterTestCode);
         file.classes.forEach(def => {
             it(`should write the same thing as a class writer for the class ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
@@ -30,7 +30,7 @@ describe("#writeDefinition()", () => {
     });
 
     describe("InterfaceDefinition", () => {
-        const file = getStringInfo(testCode.interfaceWriterTestCode);
+        const file = getInfoFromString(testCode.interfaceWriterTestCode);
         file.interfaces.forEach(def => {
             it(`should write the same thing as an interface writer for the interface ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
@@ -42,7 +42,7 @@ describe("#writeDefinition()", () => {
     });
 
     describe("FunctionDefinition", () => {
-        const file = getStringInfo(testCode.functionWriterTestCode);
+        const file = getInfoFromString(testCode.functionWriterTestCode);
         file.functions.forEach(def => {
             it(`should write the same thing as a function writer for the function ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
@@ -54,7 +54,7 @@ describe("#writeDefinition()", () => {
     });
 
     describe("FileDefinition", () => {
-        const def = getStringInfo(testCode.fileWriterTestCode);
+        const def = getInfoFromString(testCode.fileWriterTestCode);
         it(`should write the same thing as an file writer for the file`, () => {
             const writer = getCodeBlockWriter();
             const fileWriter = new FileWriter(writer);
@@ -64,7 +64,7 @@ describe("#writeDefinition()", () => {
     });
 
     describe("NamespaceDefinition", () => {
-        const file = getStringInfo(testCode.namespaceWriterTestCode);
+        const file = getInfoFromString(testCode.namespaceWriterTestCode);
         file.namespaces.forEach(def => {
             it(`should write the same thing as a namespace writer for the namespace ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
@@ -76,7 +76,7 @@ describe("#writeDefinition()", () => {
     });
 
     describe("EnumDefinition", () => {
-        const file = getStringInfo(testCode.enumWriterTestCode);
+        const file = getInfoFromString(testCode.enumWriterTestCode);
         file.enums.forEach(def => {
             it(`should write the same thing as an enum writer for the function ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
@@ -88,7 +88,7 @@ describe("#writeDefinition()", () => {
     });
 
     describe("TypeAliasDefinition", () => {
-        const file = getStringInfo(testCode.typeAliasWriterTestCode);
+        const file = getInfoFromString(testCode.typeAliasWriterTestCode);
         file.typeAliases.forEach(def => {
             it(`should write the same thing as a type alias writer for the type alias ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
@@ -100,7 +100,7 @@ describe("#writeDefinition()", () => {
     });
 
     describe("VariableDefinition", () => {
-        const file = getStringInfo(testCode.variableWriterTestCode);
+        const file = getInfoFromString(testCode.variableWriterTestCode);
         file.variables.forEach(def => {
             it(`should write the same thing as a variable writer for the variable ${def.name}`, () => {
                 const writer = getCodeBlockWriter();

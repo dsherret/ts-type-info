@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {FileWriter} from "./../../writers";
 
 function getFileAsString(f: FileDefinition) {
@@ -31,7 +31,7 @@ declare enum MyEnum {
 }
 declare function myFunction(): void;
 `;
-    const myFile = getStringInfo(code);
+    const myFile = getInfoFromString(code);
 
     describe("write()", () => {
         it("should contain the file written out with declare keywords", () => {

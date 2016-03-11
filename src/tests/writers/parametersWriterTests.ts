@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ParametersWriter} from "./../../writers";
 import {ParameterDefinitions} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 
 function getParametersAsString(params: ParameterDefinitions[]) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -18,7 +18,7 @@ describe("ParametersWriter", () => {
 function myFunction(param1: string, param2 = "text", param3?: number, ...params: string[]) {
 }
 `;
-    const myFunction = getStringInfo(code).functions[0];
+    const myFunction = getInfoFromString(code).functions[0];
 
     describe("write()", () => {
         it("should contain the parameters written out", () => {

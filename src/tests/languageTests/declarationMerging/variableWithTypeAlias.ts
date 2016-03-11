@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {VariableDeclarationType} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
@@ -13,7 +13,7 @@ const VariableDeclarationType = {
 };
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         variables: [{

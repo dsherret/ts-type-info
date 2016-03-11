@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {EnumMemberWriter} from "./../../writers";
 import {EnumMemberDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {WriteFlags} from "./../../WriteFlags";
 
 function getEnumMemberAsString(enumMember: EnumMemberDefinition) {
@@ -20,7 +20,7 @@ enum MyEnum {
     enumMember = 1
 }
 `;
-    const myEnum = getStringInfo(code).enums[0];
+    const myEnum = getInfoFromString(code).enums[0];
 
     describe("write()", () => {
         it("should contain the enum member written out", () => {

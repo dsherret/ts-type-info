@@ -73,7 +73,7 @@ gulp.task("generate-readme", function(cb) {
     var readmeCode = fs.readFileSync(path.join(__dirname, "resources/readmeCode.ts"), "utf8");
     var readmeText = fs.readFileSync(path.join(__dirname, "resources/readme.txt"), "utf8");
     var tsTypeInfo = require("./dist/main");
-    var readmeInfo = tsTypeInfo.getStringInfo(readmeCode);
+    var readmeInfo = tsTypeInfo.getInfoFromString(readmeCode);
 
     readmeText = readmeText
         .replace("{{Code}}", readmeCode)

@@ -1,4 +1,4 @@
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {Scope, ClassConstructorParameterScope} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
@@ -20,7 +20,7 @@ class MyClass4 {
 }
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         classes: [{

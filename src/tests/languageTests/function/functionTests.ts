@@ -1,4 +1,4 @@
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("function name tests", () => {
@@ -9,7 +9,7 @@ function myFunctionWithParameters(str: string, optionalParam?: string, defaultPa
     return new Date();
 }`;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         functions: [{

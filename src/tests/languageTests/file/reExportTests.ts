@@ -1,11 +1,11 @@
 import * as path from "path";
-import {getFileInfo} from "./../../../main";
+import {getInfoFromFiles} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 import {ClassDefinition, EnumDefinition, NamespaceDefinition} from "./../../../definitions";
 
 describe("file re-export tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/languageTests/file/reExportTestFiles/reExport.ts");
-    const fileDef = getFileInfo([fileName]).firstOrDefault(def => /reExport\.ts/.test(def.fileName));
+    const fileDef = getInfoFromFiles([fileName]).firstOrDefault(def => /reExport\.ts/.test(def.fileName));
 
     runFileDefinitionTests(fileDef, {
         reExports: [{

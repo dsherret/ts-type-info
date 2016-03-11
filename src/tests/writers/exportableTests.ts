@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {FileWriter} from "./../../writers";
 
 function getFileAsString(f: FileDefinition) {
@@ -28,7 +28,7 @@ export enum MyEnum {
 }
 export function myFunction(): void;
 `;
-        const myFile = getStringInfo(code);
+        const myFile = getInfoFromString(code);
 
         describe("write()", () => {
             it("should contain the file written out with export keywords", () => {
@@ -60,37 +60,37 @@ export function myFunction() {
         it("should write export default for a namespace", () => {
             const code = `namespace MyNamespace {}\nexport default MyNamespace;`;
             const expected = `namespace MyNamespace {\n}\n\nexport default MyNamespace;\n`;
-            assert.equal(getFileAsString(getStringInfo(code)), expected);
+            assert.equal(getFileAsString(getInfoFromString(code)), expected);
         });
 
         it("should write export default for a module", () => {
             const code = `module MyModule {}\nexport default MyModule;`;
             const expected = `module MyModule {\n}\n\nexport default MyModule;\n`;
-            assert.equal(getFileAsString(getStringInfo(code)), expected);
+            assert.equal(getFileAsString(getInfoFromString(code)), expected);
         });
 
         it("should write export default for an interface", () => {
             const code = `interface MyInterface {}\nexport default MyInterface;`;
             const expected = `interface MyInterface {\n}\n\nexport default MyInterface;\n`;
-            assert.equal(getFileAsString(getStringInfo(code)), expected);
+            assert.equal(getFileAsString(getInfoFromString(code)), expected);
         });
 
         it("should write export default for a class", () => {
             const code = `class MyClass {}\nexport default MyClass;`;
             const expected = `class MyClass {\n}\n\nexport default MyClass;\n`;
-            assert.equal(getFileAsString(getStringInfo(code)), expected);
+            assert.equal(getFileAsString(getInfoFromString(code)), expected);
         });
 
         it("should write export default for an enum", () => {
             const code = `enum MyEnum {}\nexport default MyEnum;`;
             const expected = `enum MyEnum {\n}\n\nexport default MyEnum;\n`;
-            assert.equal(getFileAsString(getStringInfo(code)), expected);
+            assert.equal(getFileAsString(getInfoFromString(code)), expected);
         });
 
         it("should write export default for a function", () => {
             const code = `function MyFunction() {}\nexport default MyFunction;`;
             const expected = `function MyFunction() {\n}\n\nexport default MyFunction;\n`;
-            assert.equal(getFileAsString(getStringInfo(code)), expected);
+            assert.equal(getFileAsString(getInfoFromString(code)), expected);
         });
     });
 });

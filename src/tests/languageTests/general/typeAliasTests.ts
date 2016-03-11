@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 import {VariableDeclarationType} from "./../../../definitions";
 
@@ -13,7 +13,7 @@ type myStringLiteralTypeAlias = "some string" | "other string";
 var myVariableUsingType: myUnionTypeAlias;
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         variables: [{

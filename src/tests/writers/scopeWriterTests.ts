@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ScopeWriter} from "./../../writers";
 import {ScopedDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 
 function getScopeAsString(def: ScopedDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -22,7 +22,7 @@ class MyClass {
     private privateString: string;
 }
 `;
-    const myClass = getStringInfo(code).classes[0];
+    const myClass = getInfoFromString(code).classes[0];
 
     describe("write()", () => {
         it("should be blank for public scopes that are implicit", () => {

@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {FileWriter} from "./../../writers";
 import {fileWriterTestCode} from "./testCode";
 
@@ -15,7 +15,7 @@ function getFileAsString(f: FileDefinition) {
 }
 
 describe("FileWriter", () => {
-    const myFile = getStringInfo(fileWriterTestCode);
+    const myFile = getInfoFromString(fileWriterTestCode);
 
     describe("write()", () => {
         it("should contain the file written out", () => {

@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {NamespaceDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {namespaceWriterTestCode} from "./testCode";
 
@@ -15,7 +15,7 @@ function getNamespaceAsString(f: NamespaceDefinition) {
 }
 
 describe("NamespaceWriter", () => {
-    const myFile = getStringInfo(namespaceWriterTestCode);
+    const myFile = getInfoFromString(namespaceWriterTestCode);
 
     describe("write()", () => {
         describe("MyNamespace", () => {

@@ -1,10 +1,10 @@
 ﻿import * as path from "path";
 import * as fs from "fs";
-import {getFileInfo} from "./../main";
+import {getInfoFromFiles} from "./../main";
 
 export function generateDefinitionFile() {
     // todo: better way of doing this
-    const fileInfo = getFileInfo([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")], { showDebugMessages: true })
+    const fileInfo = getInfoFromFiles([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")], { showDebugMessages: true })
                         .firstOrDefault(f => f.fileName.indexOf("/main.ts") >= 0);
 
     fileInfo.getExports().forEach(def => {

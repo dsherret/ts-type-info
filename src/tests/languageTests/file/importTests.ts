@@ -1,12 +1,12 @@
 ﻿import * as path from "path";
 import * as assert from "assert";
-import {getFileInfo} from "./../../../main";
+import {getInfoFromFiles} from "./../../../main";
 import {runImportDefinitionTests} from "./../../testHelpers";
 import {ClassDefinition, EnumDefinition, InterfaceDefinition, NamespaceDefinition, VariableDefinition} from "./../../../definitions";
 
 describe("file import tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/languageTests/file/testFiles/import.ts");
-    const fileDef = getFileInfo([fileName]).filter(def => /import/.test(def.fileName))[0];
+    const fileDef = getInfoFromFiles([fileName]).filter(def => /import/.test(def.fileName))[0];
     let i = 0;
 
     runImportDefinitionTests(fileDef.imports[i++], {

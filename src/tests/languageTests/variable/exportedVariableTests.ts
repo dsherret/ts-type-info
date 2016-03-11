@@ -1,4 +1,4 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 import {VariableDeclarationType, NamespaceDeclarationType} from "./../../../definitions";
 
@@ -11,7 +11,7 @@ describe("exported variable tests", () => {
     }
     `;
 
-        const def = getStringInfo(code);
+        const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
             namespaces: [{

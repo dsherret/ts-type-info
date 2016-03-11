@@ -1,10 +1,10 @@
-﻿import {getStringInfo} from "./../../../main";
+﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("export default tests", () => {
     describe("expression", () => {
         const code = `export default 23;`;
-        const def = getStringInfo(code);
+        const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
             defaultExport: {
@@ -18,7 +18,7 @@ describe("export default tests", () => {
 
     describe("on same line", () => {
         const code = `export default class MyOnSameLineClass {}`;
-        const def = getStringInfo(code);
+        const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
             defaultExport: {
@@ -38,7 +38,7 @@ describe("export default tests", () => {
 
     describe("on different line", () => {
         const code = `class MyOnDifferentLineClass {}\r\nexport default MyOnDifferentLineClass;`;
-        const def = getStringInfo(code);
+        const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
             defaultExport: {
@@ -58,7 +58,7 @@ describe("export default tests", () => {
 
     describe("expression with class", () => {
         const code = `class MyOnDifferentLineClass {}\r\nexport default new MyOnDifferentLineClass();`;
-        const def = getStringInfo(code);
+        const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
             defaultExport: {

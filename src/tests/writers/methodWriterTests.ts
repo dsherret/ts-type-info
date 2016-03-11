@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {MethodWriter} from "./../../writers";
 import {MethodDefinitions} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 
 function getMethodAsString(method: MethodDefinitions) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -28,7 +28,7 @@ class MyClass {
     }
 }
 `;
-    const myClass = getStringInfo(code).classes[0];
+    const myClass = getInfoFromString(code).classes[0];
 
     describe("write()", () => {
         describe("myMethod", () => {

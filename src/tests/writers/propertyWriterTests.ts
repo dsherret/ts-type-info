@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {PropertyWriter} from "./../../writers";
 import {PropertyDefinitions} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 
 function getPropertyAsString(prop: PropertyDefinitions) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -22,7 +22,7 @@ class MyClass {
     private privateString: string;
 }
 `;
-    const myClass = getStringInfo(code).classes[0];
+    const myClass = getInfoFromString(code).classes[0];
 
     describe("write()", () => {
         describe("nonOptionalString", () => {

@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {VariableDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {VariableWriter} from "./../../writers";
 import {variableWriterTestCode} from "./testCode";
 
@@ -15,7 +15,7 @@ function getVariableAsString(def: VariableDefinition) {
 }
 
 describe("VariableWriter", () => {
-    const myFile = getStringInfo(variableWriterTestCode);
+    const myFile = getInfoFromString(variableWriterTestCode);
 
     describe("write()", () => {
         describe("myImplicitAny", () => {

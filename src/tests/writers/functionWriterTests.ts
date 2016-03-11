@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {FunctionDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 import {FunctionWriter} from "./../../writers";
 import {functionWriterTestCode} from "./testCode";
 
@@ -15,7 +15,7 @@ function getFunctionAsString(i: FunctionDefinition) {
 }
 
 describe("FunctionWriter", () => {
-    const file = getStringInfo(functionWriterTestCode);
+    const file = getInfoFromString(functionWriterTestCode);
 
     describe("write()", () => {
         describe("myFunction", () => {

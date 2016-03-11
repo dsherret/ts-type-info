@@ -1,4 +1,4 @@
-﻿/*import {getStringInfo} from "./../../../main";
+﻿/*import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 import {VariableDeclarationType} from "./../../../definitions";
 
@@ -7,7 +7,7 @@ describe("function type tests", () => {
 var tuple: [number, string] = [5, "a string"];
 `;
 
-    const def = getStringInfo(code);
+    const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
         variables: [{

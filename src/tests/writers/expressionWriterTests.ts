@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {ExpressionWriter} from "./../../writers";
 import {Expression} from "./../../expressions";
 import {WriteFlags} from "./../../WriteFlags";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 
 function getExpressionAsString(typeExpression: Expression) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -20,7 +20,7 @@ class MyClass {
     myProperty1 = "my text";
 }
 `;
-    const myClass = getStringInfo(code).classes[0];
+    const myClass = getInfoFromString(code).classes[0];
 
     describe("writeWithEqualsSign()", () => {
         describe("myProperty1 defaultExpression", () => {

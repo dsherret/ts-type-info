@@ -2,7 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {TypeParametersWriter} from "./../../writers";
 import {TypeParameterDefinition} from "./../../definitions";
-import {getStringInfo} from "./../../main";
+import {getInfoFromString} from "./../../main";
 
 function getTypeParametersAsString(typeParameters: TypeParameterDefinition<any>[]) {
     const codeBlockWriter = new CodeBlockWriter();
@@ -25,7 +25,7 @@ class MyClassTwo<T, S extends string> {
     prop: S;
 }
 `;
-    const file = getStringInfo(code);
+    const file = getInfoFromString(code);
 
     describe("write()", () => {
         describe("MyClass1", () => {

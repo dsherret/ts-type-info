@@ -1,9 +1,9 @@
 /// <reference path="node_modules/code-block-writer/code-block-writer.d.ts" />
 
 declare module TsTypeInfo {
-    function getFileInfo(fileNames: string[], options?: Options): ArrayExt<FileDefinition>;
+    function getInfoFromFiles(fileNames: string[], options?: Options): ArrayExt<FileDefinition>;
 
-    function getStringInfo(code: string, options?: Options): FileDefinition;
+    function getInfoFromString(code: string, options?: Options): FileDefinition;
 
     interface Options {
         compilerOptions?: CompilerOptions;

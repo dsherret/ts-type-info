@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {TypeAliasDefinition} from "./../../../definitions";
-import {getStringInfo} from "./../../../main";
+import {getInfoFromString} from "./../../../main";
 import {TypeAliasWriter} from "./../../../writers";
 import {typeAliasWriterTestCode} from "./../../writers/testCode";
 
@@ -15,7 +15,7 @@ function getWriterString(i: TypeAliasDefinition) {
 }
 
 describe("TypeAliasDefinition", () => {
-    const file = getStringInfo(typeAliasWriterTestCode);
+    const file = getInfoFromString(typeAliasWriterTestCode);
 
     describe("write()", () => {
         file.typeAliases.forEach(typeAlias => {
