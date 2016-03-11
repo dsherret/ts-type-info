@@ -58,24 +58,23 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         return writer.toString();
     }
 
-    writeExportsAsDefinitionFile(options: { definitionName: string; moduleName: string; }) {
+    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string }[]}) {
+        console.warn("writeExportsAsDefinitionFile(...) is not supported. It has not been tested.");
+
         const writer = new CodeBlockWriter();
 
-        writer.write(`declare module ${options.moduleName}`).block(() => {
-            this.getExports().forEach((exportDef) => {
-                exportDef.isExported = false;
-                exportDef.isNamedExportOfFile = false;
-                exportDef.isDefaultExportOfFile = false;
-
-                writeDefinition(exportDef, writer, WriteFlags.HideFunctionBodies | WriteFlags.HideExpressions | WriteFlags.HidePrivateMembers | WriteFlags.HideProtectedMembers);
-                writer.newLine();
+        if (options && options.imports) {
+            // todo: should use an ImportWriter to write this
+            options.imports.forEach(importStructure => {
+                writer.writeLine(`import ${importStructure.defaultImport} from "${importStructure.moduleSpecifier}";`);
             });
-        });
 
-        writer.newLine();
+            writer.newLine();
+        }
 
-        writer.write(`declare module "${options.definitionName}"`).block(() => {
-            writer.write(`export = ${options.moduleName};`);
+        this.getExports().forEach((exportDef) => {
+            writeDefinition(exportDef, writer, WriteFlags.HideFunctionBodies | WriteFlags.HideExpressions | WriteFlags.HidePrivateMembers | WriteFlags.HideProtectedMembers);
+            writer.newLine();
         });
 
         return writer.toString();

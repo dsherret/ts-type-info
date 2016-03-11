@@ -8,10 +8,19 @@ Reflection and code generation in TypeScript.
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get the type and structure information of TypeScript code in an easily usable format.
 
+## Installing
+
 ```
 npm install ts-type-info --save-dev
-tsd link
 ```
+
+Use [typings](https://github.com/typings/typings) to get the definition file:
+
+```
+typings install npm:ts-type-info --save-dev
+```
+
+Use the `--save` flag on both commands if you need this library for more than just development.
 
 ## Reflection
 

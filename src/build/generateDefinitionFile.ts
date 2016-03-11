@@ -4,7 +4,7 @@ import {getInfoFromFiles} from "./../main";
 
 export function generateDefinitionFile() {
     // todo: better way of doing this
-    const fileInfo = getInfoFromFiles([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/tsd.d.ts")], { showDebugMessages: true })
+    const fileInfo = getInfoFromFiles([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/main.d.ts")], { showDebugMessages: true })
                         .firstOrDefault(f => f.fileName.indexOf("/main.ts") >= 0);
 
     fileInfo.getExports().forEach(def => {
@@ -28,8 +28,10 @@ export function generateDefinitionFile() {
     });
 
     const definitionFileText = fileInfo.writeExportsAsDefinitionFile({
-        definitionName: "ts-type-info",
-        moduleName: "TsTypeInfo"
+        imports: [{
+            defaultImport: "CodeBlockWriter",
+            moduleSpecifier: "code-block-writer"
+        }]
     });
 
     fs.writeFile(path.join(__dirname, "../../ts-type-info.d.ts"), definitionFileText);
