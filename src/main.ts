@@ -4,9 +4,9 @@ import {FileDefinition} from "./definitions";
 import {StringUtils, Logger, ArrayExt} from "./utils";
 import {MainFactory} from "./factories";
 import {TsMain} from "./wrappers/ts/TsMain";
-import {Options} from "./options";
+import {Options} from "./Options";
 
-export * from "./options";
+export * from "./Options";
 export * from "./utils/ArrayExt";
 export * from "./definitions";
 export * from "./expressions";
