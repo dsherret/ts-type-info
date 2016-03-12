@@ -1,7 +1,6 @@
 {
     "name": "ts-type-info",
     "main": "ts-type-info.d.ts",
-    "path": "src/typings",
     "ambientDependencies": {
         "mocha": "github:DefinitelyTyped/DefinitelyTyped/mocha/mocha.d.ts#62eedc3121a5e28c50473d2e4a9cefbcb9c3957f",
         "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#3fc1377ce29dd9670975cb68615edf1b819fc4a5",
