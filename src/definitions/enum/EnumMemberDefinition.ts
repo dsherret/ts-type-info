@@ -1,22 +1,17 @@
 ﻿import {applyMixins} from "./../../utils";
-import {INode} from "./../../wrappers";
-import {INamedDefinition, NamedDefinition, IParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {TsNode} from "./../../wrappers";
+import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumDefinition} from "./EnumDefinition";
 
-export class EnumMemberDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<EnumDefinition> {
+export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<EnumDefinition> {
     value: number;
 
-    constructor(node: INode, parent: EnumDefinition) {
+    constructor() {
         super(DefinitionType.EnumMember);
-        this.fillName(node);
-
-        this.value = node.getConstantValue();
-        this.parent = parent;
     }
 
     // NamedDefinition
     name: string;
-    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: EnumDefinition;
 }

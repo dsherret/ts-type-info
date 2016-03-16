@@ -1,33 +1,24 @@
 import {applyMixins} from "./../../utils";
-import {MainFactory} from "./../../factories";
-import {INode} from "./../../wrappers";
 import {TypeExpression} from "./../../expressions";
-import {INamedDefinition, NamedDefinition} from "./NamedDefinition";
-import {IParentedDefinition} from "./ParentedDefinition";
-import {ITypeExpressionedDefinition, TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
+import {NamedDefinition} from "./NamedDefinition";
+import {ParentedDefinition} from "./ParentedDefinition";
+import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
 import {DefinitionType} from "./DefinitionType";
 import {BaseDefinition} from "./BaseDefinition";
 
-export class BasePropertyDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
+export class BasePropertyDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType>, TypeExpressionedDefinition {
     isOptional: boolean;
 
-    constructor(mainFactory: MainFactory, node: INode, parent: ParentType, definitionType: DefinitionType) {
+    constructor(definitionType: DefinitionType) {
         super(definitionType);
-        this.fillName(node);
-        this.fillTypeExpression(mainFactory, node);
-
-        this.isOptional = node.isPropertyOptional();
-        this.parent = parent;
     }
 
     // NamedDefinition
     name: string;
-    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
-    fillTypeExpression: (mainFactory: MainFactory, node: INode) => void;
 }
 
 applyMixins(BasePropertyDefinition, [NamedDefinition, TypeExpressionedDefinition]);

@@ -1,4 +1,4 @@
-﻿import {ExportableDefinitions, IAmbientableDefinition, BaseDefinition} from "./../definitions";
+﻿import {ExportableDefinitions, AmbientableDefinition, BaseDefinition} from "./../definitions";
 import {DefinitionUtils} from "./../utils";
 import {BaseWriter} from "./BaseWriter";
 
@@ -36,7 +36,7 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
         }
     }
 
-    protected writeDeclareClause(def: IAmbientableDefinition) {
+    protected writeDeclareClause(def: AmbientableDefinition) {
         if (def.hasDeclareKeyword) {
             this.writer.write("declare ");
         }

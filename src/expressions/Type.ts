@@ -1,7 +1,8 @@
 ﻿import {CallSignatureDefinition, ModuleMemberDefinitions, TypePropertyDefinition} from "./../definitions";
-import {IType} from "./../wrappers";
+import {TsType} from "./../wrappers";
 import {ArrayExt} from "./../utils";
 import {MainFactory} from "./../factories";
+import {TsCallSignatureBinder, TsTypePropertyBinder} from "./../binders";
 
 export class Type {
     callSignatures = new ArrayExt<CallSignatureDefinition>();
@@ -10,14 +11,26 @@ export class Type {
     typeArguments = new ArrayExt<Type>();
     text: string;
 
-    fillTypeInformation(mainFactory: MainFactory, type: IType) {
+    fillTypeInformation(mainFactory: MainFactory, type: TsType) {
         this.text = type.getText();
 
         if (type.hasCallSignaturesAndProperties()) {
-            this.callSignatures.push(...type.getCallSignatures().map(callSignature => new CallSignatureDefinition(mainFactory, callSignature)));
+            this.callSignatures.push(...type.getCallSignatures().map(callSignature => {
+                const def = new CallSignatureDefinition();
+                const binder = new TsCallSignatureBinder(mainFactory, callSignature);
+
+                binder.bind(def);
+                return def;
+            }));
             this.properties.push(...type.getProperties().map(prop => {
                 const node = prop.getOnlyNode();
-                return new TypePropertyDefinition(mainFactory, node, this);
+                const def = new TypePropertyDefinition();
+                const binder = new TsTypePropertyBinder(mainFactory, node);
+
+                binder.bind(def);
+                def.parent = this;
+
+                return def;
             }));
         }
 

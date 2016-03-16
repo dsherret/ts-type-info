@@ -13,6 +13,10 @@ import {DefinitionType} from "./DefinitionType";
 
 export abstract class BaseDefinition {
     constructor(private _definitionType: DefinitionType) {
+        const mixins = (this.constructor as any)["mixins"] as any[] || [];
+        mixins.forEach(mixin => {
+            mixin.call(this);
+        });
     }
 
     onBeforeWrite: (writer: CodeBlockWriter) => void;

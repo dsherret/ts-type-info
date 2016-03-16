@@ -1,18 +1,18 @@
 import {applyMixins, ArrayExt} from "./../../../utils";
-import {MainFactory} from "./../../../factories";
-import {INode} from "./../../../wrappers";
 import {DecoratorDefinition} from "./../../general";
-import {IDecoratableDefinition, DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../../base";
+import {DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../../base";
+import {Scope} from "./../Scope";
+import {ScopedDefinition} from "./ScopedDefinition";
 
-export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements IDecoratableDefinition {
-    constructor(mainFactory: MainFactory, node: INode, parent: ParentType, definitionType: DefinitionType) {
-        super(mainFactory, node, parent, definitionType);
-        this.fillDecorators(node);
+export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements DecoratableDefinition, ScopedDefinition {
+    constructor(definitionType: DefinitionType) {
+        super(definitionType);
     }
 
     // DecoratableDefinition
     decorators: ArrayExt<DecoratorDefinition<this>>;
-    fillDecorators: (node: INode) => void;
+    // ScopedDefinition
+    scope: Scope;
 }
 
 applyMixins(BaseClassMethodParameterDefinition, [DecoratableDefinition]);

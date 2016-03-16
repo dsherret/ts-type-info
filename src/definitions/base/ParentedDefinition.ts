@@ -1,3 +1,3 @@
-﻿export interface IParentedDefinition<ParentType> {
+﻿export abstract class ParentedDefinition<ParentType> {
     parent: ParentType;
 }

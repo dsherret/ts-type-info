@@ -1,12 +1,12 @@
 import {Type} from "./Type";
-import {ITypeExpression} from "./../wrappers";
+import {TsTypeExpression} from "./../wrappers";
 import {ArrayExt} from "./../utils";
 
 export class TypeExpression {
     text: string;
     types = new ArrayExt<Type>();
 
-    constructor(typeExpression: ITypeExpression) {
+    constructor(typeExpression: TsTypeExpression) {
         this.text = typeExpression.getText();
     }
 

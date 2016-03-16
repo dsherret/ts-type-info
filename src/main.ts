@@ -3,7 +3,7 @@ import * as fs from "fs";
 import {FileDefinition} from "./definitions";
 import {StringUtils, Logger, ArrayExt} from "./utils";
 import {MainFactory} from "./factories";
-import {TsMain} from "./wrappers/ts/TsMain";
+import {TsMain} from "./wrappers/TsMain";
 import {Options} from "./Options";
 
 export * from "./Options";
@@ -28,15 +28,7 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): ArrayE
         };
     });
 
-    definitionWithSourceFiles.forEach(definitionWithSourceFile => {
-        definitionWithSourceFile.definition.reExports.forEach(reExportDefinition => {
-            reExportDefinition.fillExports(mainFactory);
-        });
-        definitionWithSourceFile.definition.imports.forEach(importDefinition => {
-            importDefinition.fillImports(mainFactory);
-        });
-    });
-
+    mainFactory.bindDeferred();
     mainFactory.fillAllCachedTypesWithDefinitions();
 
     return new ArrayExt(...definitionWithSourceFiles.map(f => f.definition));

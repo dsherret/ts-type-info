@@ -1,8 +1,8 @@
 ﻿import * as assert from "assert";
-import {IAbstractableDefinition} from "./../../../../definitions";
+import {AbstractableDefinition} from "./../../../../definitions";
 import {AbstractableTestStructure} from "./../../testStructures";
 
-export function runAbstractableDefinitionTests(definition: IAbstractableDefinition, structure: AbstractableTestStructure) {
+export function runAbstractableDefinitionTests(definition: AbstractableDefinition, structure: AbstractableTestStructure) {
     it(`should ${structure.isAbstract ? "be" : "not be"} abstractable`, () => {
         assert.equal(definition.isAbstract, structure.isAbstract || false);
     });

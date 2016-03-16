@@ -1,13 +1,11 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, ArrayExt, Logger} from "./../../utils";
-import {MainFactory} from "./../../factories";
-import {ISourceFile, INode} from "./../../wrappers";
 import {Expression} from "./../../expressions";
 import {ExportableDefinitions, NodeDefinitions} from "./../../definitions";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {writeDefinition} from "./../../writeDefinition";
-import {IModuledDefinition, ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
@@ -18,29 +16,14 @@ import {TypeAliasDefinition} from "./../general";
 import {ReExportDefinition} from "./ReExportDefinition";
 import {ImportDefinition} from "./ImportDefinition";
 
-export class FileDefinition extends BaseDefinition implements IModuledDefinition {
+export class FileDefinition extends BaseDefinition implements ModuledDefinition {
     fileName: string;
     imports = new ArrayExt<ImportDefinition>();
     reExports = new ArrayExt<ReExportDefinition>();
     defaultExport: { expression: Expression; definitions: ArrayExt<ExportableDefinitions>; };
 
-    constructor(mainFactory: MainFactory, sourceFile: ISourceFile) {
+    constructor() {
         super(DefinitionType.File);
-        this.fileName = sourceFile.getFileName();
-        this.fillMembersByNode(mainFactory, sourceFile.getNode(), def => {
-            if (def.isImportDefinition()) {
-                def.parent = this;
-                this.imports.push(def);
-            }
-            else if (def.isReExportDefinition()) {
-                def.parent = this;
-                this.reExports.push(def);
-            }
-            else {
-                Logger.warn(`Not implemented definition: ${def.name}`);
-            }
-        });
-        this.fillDefaultExport(mainFactory, sourceFile);
     }
 
     getExports(): ExportableDefinitions[] {
@@ -80,18 +63,6 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
         return writer.toString();
     }
 
-    private fillDefaultExport(mainFactory: MainFactory, sourceFile: ISourceFile) {
-        const symbol = sourceFile.getDefaultExportSymbol();
-
-        if (symbol != null) {
-            const defsOrExpression = mainFactory.getDefinitionsOrExpressionFromExportSymbol(symbol);
-            this.defaultExport = {
-                definitions: new ArrayExt<ExportableDefinitions>(...defsOrExpression.definitions as ExportableDefinitions[]),
-                expression: defsOrExpression.expression
-            };
-        }
-    }
-
     // ModuledDefinition
     namespaces: ArrayExt<NamespaceDefinition>;
     classes: ArrayExt<ClassDefinition>;
@@ -100,7 +71,6 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     functions: ArrayExt<FunctionDefinition>;
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    fillMembersByNode: (mainFactory: MainFactory, node: INode, handleCustomDefinition?: (def: NodeDefinitions) => void) => void;
 }
 
 applyMixins(FileDefinition, [ModuledDefinition]);

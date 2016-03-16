@@ -9,4 +9,6 @@ export function applyMixins(derivedCtor: any, baseCtors: any[]) {
             }
         });
     });
+
+    derivedCtor.mixins = baseCtors;
 }

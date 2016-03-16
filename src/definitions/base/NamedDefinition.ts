@@ -1,17 +1,5 @@
-import {INode} from "./../../wrappers";
+import {TsNode} from "./../../wrappers";
 
-export interface IBaseNamedDefinition {
+export abstract class NamedDefinition {
     name: string;
-}
-
-export interface INamedDefinition extends IBaseNamedDefinition {
-    fillName(node: INode): void;
-}
-
-export abstract class NamedDefinition implements INamedDefinition {
-    name: string;
-
-    fillName(node: INode) {
-        this.name = node.getName();
-    }
 }

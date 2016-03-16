@@ -1,8 +1,8 @@
-﻿import {ISymbol, INode} from "./../wrappers";
+﻿import {TsSymbol, TsNode} from "./../wrappers";
 import {logError} from "./logError";
 
 /* istanbul ignore next */
-export function tryGet<T>(objOrString: ISymbol | INode | string, attemptToGet: () => T, onSuccess?: (def: T) => void) {
+export function tryGet<T>(objOrString: TsSymbol | TsNode | string, attemptToGet: () => T, onSuccess?: (def: T) => void) {
     let def: T;
 
     try {

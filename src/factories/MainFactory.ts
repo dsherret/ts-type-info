@@ -1,16 +1,19 @@
 ﻿import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
-        NodeDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions} from "./../definitions";
+        NodeDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions, BaseDefinition} from "./../definitions";
 import {Expression, Type, TypeExpression} from "./../expressions";
 import {KeyValueCache, Logger} from "./../utils";
-import {ISourceFile, INode, IType, ITypeExpression, ISymbol} from "./../wrappers";
+import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder,
+    TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder} from "./../binders";
+import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol} from "./../wrappers";
 
 export class MainFactory {
-    private definitionByNode = new KeyValueCache<INode, NodeDefinitions>();
-    private files = new KeyValueCache<ISourceFile, FileDefinition>();
-    private typeExpressions = new KeyValueCache<ITypeExpression, TypeExpression>();
-    private types = new KeyValueCache<IType, Type>();
+    private definitionByNode = new KeyValueCache<TsNode, NodeDefinitions>();
+    private files = new KeyValueCache<TsSourceFile, FileDefinition>();
+    private typeExpressions = new KeyValueCache<TsTypeExpression, TypeExpression>();
+    private types = new KeyValueCache<TsType, Type>();
+    private deferredBindings: { binder: IBaseBinder, definition: BaseDefinition }[] = [];
 
-    getTypeExpression(typeExpression: ITypeExpression) {
+    getTypeExpression(typeExpression: TsTypeExpression) {
         if (typeExpression == null) {
             return null;
         }
@@ -22,13 +25,13 @@ export class MainFactory {
         });
     }
 
-    getType(type: IType) {
+    getType(type: TsType) {
         return this.types.getOrCreate(type, () => new Type(), createdType => {
             createdType.fillTypeInformation(this, type);
         });
     }
 
-    getAllExportableDefinitionsBySymbol(symbol: ISymbol) {
+    getAllExportableDefinitionsBySymbol(symbol: TsSymbol) {
         symbol = symbol.isAlias() ? symbol.getAliasSymbol() : symbol;
         const definitions = this.getAllDefinitionsBySymbol(symbol);
         const exportableDefinitions: ExportableDefinitions[] = [];
@@ -51,21 +54,28 @@ export class MainFactory {
         return exportableDefinitions;
     }
 
-    getAllDefinitionsBySymbol(symbol: ISymbol) {
+    getAllDefinitionsBySymbol(symbol: TsSymbol) {
         return symbol.getNodes().map(node => {
             return this.getDefinitionByNode(node);
         }).filter(d => d != null);
     }
 
-    getDefinitionByNode(node: INode) {
+    getDefinitionByNode(node: TsNode) {
         return this.definitionByNode.get(node) || this.createDefinition(node);
     }
 
-    getFileDefinition(file: ISourceFile) {
-        return this.files.getOrCreate(file, () => new FileDefinition(this, file));
+    getFileDefinition(file: TsSourceFile) {
+        return this.files.getOrCreate(file, () => {
+            const def = new FileDefinition();
+            const binder = new TsFileBinder(this, file);
+
+            binder.bind(def);
+
+            return def;
+        });
     }
 
-    getDefinitionsOrExpressionFromExportSymbol(symbol: ISymbol) {
+    getDefinitionsOrExpressionFromExportSymbol(symbol: TsSymbol) {
         const obj: { definitions: ExportableDefinitions[]; expression: Expression; } = { definitions: [], expression: null };
 
         if (symbol != null) {
@@ -101,35 +111,82 @@ export class MainFactory {
         });
     }
 
-    private createDefinition(node: INode) {
+    bindDeferred() {
+        this.deferredBindings.forEach(obj => {
+            obj.binder.bind(obj.definition);
+        });
+    }
+
+    private createDefinition(node: TsNode) {
         let definition: NodeDefinitions;
 
+        // todo: all these if statements are very similar. Need to reduce the redundancy
         if (node.isFunction()) {
-            definition = new FunctionDefinition(this, node);
+            const binder = new TsFunctionBinder(this, node);
+            const def = new FunctionDefinition();
+
+            binder.bind(def);
+            definition = def;
         }
         else if (node.isClass()) {
-            definition = new ClassDefinition(this, node);
+            const binder = new TsClassBinder(this, node);
+            const def = new ClassDefinition();
+
+            binder.bind(def);
+            definition = def;
         }
         else if (node.isInterface()) {
-            definition = new InterfaceDefinition(this, node);
+            const binder = new TsInterfaceBinder(this, node);
+            const def = new InterfaceDefinition();
+
+            binder.bind(def);
+            definition = def;
         }
         else if (node.isEnum()) {
-            definition = new EnumDefinition(node);
+            const binder = new TsEnumBinder(node);
+            const def = new EnumDefinition();
+
+            binder.bind(def);
+            definition = def;
         }
         else if (node.isVariable()) {
-            definition = new VariableDefinition(this, node);
+            const binder = new TsVariableBinder(this, node);
+            const def = new VariableDefinition();
+
+            binder.bind(def);
+            definition = def;
         }
         else if (node.isTypeAlias()) {
-            definition = new TypeAliasDefinition(this, node);
+            const binder = new TsTypeAliasBinder(this, node);
+            const def = new TypeAliasDefinition();
+
+            binder.bind(def);
+            definition = def;
         }
         else if (node.isNamespace()) {
-            definition = new NamespaceDefinition(this, node);
+            const binder = new TsNamespaceBinder(this, node);
+            const def = new NamespaceDefinition();
+
+            binder.bind(def);
+            definition = def;
         }
         else if (node.isExportDeclaration()) {
-            definition = new ReExportDefinition(node);
+            const binder = new TsReExportBinder(this, node);
+            definition = new ReExportDefinition();
+
+            this.deferredBindings.push({
+                binder: binder,
+                definition: definition
+            });
         }
         else if (node.isImport()) {
-            definition = new ImportDefinition(node);
+            const binder = new TsImportBinder(this, node);
+            definition = new ImportDefinition();
+
+            this.deferredBindings.push({
+                binder: binder,
+                definition: definition
+            });
         }
         else if (node.isExportAssignment()) {
             // ignore exports here, handled in ExportableDefinition

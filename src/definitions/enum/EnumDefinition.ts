@@ -3,21 +3,16 @@ import {ModuledDefinitions} from "./../../definitions";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, ArrayExt} from "./../../utils";
-import {INode} from "./../../wrappers";
-import {INamedDefinition, NamedDefinition, IParentedDefinition, IAmbientableDefinition, AmbientableDefinition,
-        IExportableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {TsNode} from "./../../wrappers";
+import {NamedDefinition, ParentedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
 export class EnumDefinition extends BaseDefinition
-                            implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IAmbientableDefinition {
+                            implements ParentedDefinition<ModuledDefinitions>, ExportableDefinition, AmbientableDefinition {
     members = new ArrayExt<EnumMemberDefinition>();
 
-    constructor(node: INode) {
+    constructor() {
         super(DefinitionType.Enum);
-        this.fillName(node);
-        this.fillExportable(node);
-        this.fillAmbientable(node);
-        this.fillEnumMembers(node);
     }
 
     write() {
@@ -27,27 +22,17 @@ export class EnumDefinition extends BaseDefinition
         return writer.toString();
     }
 
-    private fillEnumMembers(node: INode) {
-        this.members.push(...node.getSymbol().getExportSymbols().map(memberSymbol => {
-            const memberNode = memberSymbol.getOnlyNode();
-            return new EnumMemberDefinition(memberNode, this);
-        }));
-    }
-
     // NamedDefinition
     name: string;
-    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (node: INode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (node: INode) => void;
 }
 
-applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition]);
+applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, ParentedDefinition]);

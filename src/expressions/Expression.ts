@@ -1,9 +1,9 @@
-﻿import {IExpression} from "./../wrappers";
+﻿import {TsExpression} from "./../wrappers";
 
 export class Expression {
     text: string;
 
-    constructor(expression: IExpression) {
+    constructor(expression: TsExpression) {
         this.text = expression.getText();
     }
 }

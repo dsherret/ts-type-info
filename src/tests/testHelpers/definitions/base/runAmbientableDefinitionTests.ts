@@ -1,8 +1,8 @@
 ﻿import * as assert from "assert";
-import {IAmbientableDefinition} from "./../../../../definitions";
+import {AmbientableDefinition} from "./../../../../definitions";
 import {AmbientableTestStructure} from "./../../testStructures";
 
-export function runAmbientableDefinitionTests(definition: IAmbientableDefinition, structure: AmbientableTestStructure) {
+export function runAmbientableDefinitionTests(definition: AmbientableDefinition, structure: AmbientableTestStructure) {
     it(`should ${structure.isAmbient ? "be" : "not be"} ambient`, () => {
         assert.equal(definition.isAmbient, structure.isAmbient || false);
     });

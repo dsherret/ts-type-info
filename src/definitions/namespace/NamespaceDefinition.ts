@@ -1,12 +1,10 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions, ExportableDefinitions, NodeDefinitions} from "./../../definitions";
 import {applyMixins, ArrayExt} from "./../../utils";
-import {MainFactory} from "./../../factories";
-import {INode} from "./../../wrappers";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {IModuledDefinition, ModuledDefinition, INamedDefinition, NamedDefinition, IParentedDefinition, IExportableDefinition, ExportableDefinition,
-        IAmbientableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, NamedDefinition, ParentedDefinition, ExportableDefinition,
+    AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -16,16 +14,11 @@ import {TypeAliasDefinition} from "./../general";
 import {NamespaceDeclarationType} from "./NamespaceDeclarationType";
 
 export class NamespaceDefinition extends BaseDefinition
-                                 implements INamedDefinition, IParentedDefinition<ModuledDefinitions>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
+                                 implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
-    constructor(mainFactory: MainFactory, node: INode) {
+    constructor() {
         super(DefinitionType.Namespace);
-        this.fillName(node);
-        this.fillExportable(node);
-        this.fillAmbientable(node);
-        this.fillMembersByNode(mainFactory, node);
-        this.declarationType = node.getNamespaceDeclarationType();
     }
 
     write() {
@@ -38,7 +31,6 @@ export class NamespaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    fillName: (node: INode) => void;
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ModuledDefinition
@@ -49,17 +41,14 @@ export class NamespaceDefinition extends BaseDefinition
     functions: ArrayExt<FunctionDefinition>;
     variables: ArrayExt<VariableDefinition>;
     typeAliases: ArrayExt<TypeAliasDefinition>;
-    fillMembersByNode: (mainFactory: MainFactory, node: INode, handleCustomDefinition?: (def: NodeDefinitions) => void) => void;
     getExports: () => ExportableDefinitions[];
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    fillExportable: (node: INode) => void;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    fillAmbientable: (node: INode) => void;
 }
 
 applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

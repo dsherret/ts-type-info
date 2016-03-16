@@ -1,0 +1,16 @@
+﻿import {TypeParameterDefinition} from "./../../../definitions";
+import {TypeExpression} from "./../../../expressions";
+import {TsNode} from "./../../../wrappers";
+import {MainFactory} from "./../../../factories";
+import {TypeParameterBinder} from "./../../base";
+import {TsNamedBinder} from "./../base/TsNamedBinder";
+
+export class TsTypeParameterBinder extends TypeParameterBinder {
+    constructor(private mainFactory: MainFactory, private node: TsNode) {
+        super(new TsNamedBinder(node));
+    }
+
+    getConstraintTypeExpression() {
+        return this.mainFactory.getTypeExpression(this.node.getTypeParameterConstraintTypeExpression());
+    }
+}
