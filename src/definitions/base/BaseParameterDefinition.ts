@@ -1,5 +1,5 @@
 import {applyMixins} from "./../../utils";
-import {TypeExpression} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expressions";
 import {ExpressionDefinition} from "./../expressions";
 import {NamedDefinition} from "./NamedDefinition";
 import {ParentedDefinition} from "./ParentedDefinition";
@@ -26,7 +26,7 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     // IParentedDefinition
     parent: ParentType;
     // TypeExpressionedDefinition
-    typeExpression: TypeExpression;
+    typeExpression: TypeExpressionDefinition;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
 }

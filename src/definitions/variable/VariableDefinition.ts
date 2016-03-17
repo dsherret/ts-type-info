@@ -5,7 +5,7 @@ import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {ParentedDefinition, AmbientableDefinition, NamedDefinition, TypeExpressionedDefinition, ExportableDefinition,
     DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition, TypeExpression} from "./../expressions";
+import {ExpressionDefinition, TypeExpressionDefinition} from "./../expressions";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
@@ -33,7 +33,7 @@ export class VariableDefinition extends BaseDefinition
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     // TypeExpressionedDefinition
-    typeExpression: TypeExpression;
+    typeExpression: TypeExpressionDefinition;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
     // AmbientableDefinition

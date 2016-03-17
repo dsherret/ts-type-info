@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
-import {Type} from "./../../../definitions";
+import {TypeDefinition} from "./../../../definitions";
 import {TypeTestStructure} from "./../testStructures";
 import {runNamedDefinitionTests, runCallSignatureDefinitionTests, runBasePropertyDefinitionTests} from "./../definitions";
 import {ensureNotNull} from "./../ensureNotNull";
 
-export function runTypeTests(type: Type, structure: TypeTestStructure) {
+export function runTypeTests(type: TypeDefinition, structure: TypeTestStructure) {
     describe("type", () => {
         ensureNotNull(type, () => {
             structure.callSignatures = structure.callSignatures || [];

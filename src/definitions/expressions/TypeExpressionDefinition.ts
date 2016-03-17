@@ -1,12 +1,12 @@
 import {TsTypeExpression} from "./../../wrappers";
 import {ArrayExt} from "./../../utils";
-import {Type} from "./TypeDefinition";
+import {TypeDefinition} from "./TypeDefinition";
 import {ExpressionDefinition} from "./ExpressionDefinition";
 
-export class TypeExpression extends ExpressionDefinition {
-    types = new ArrayExt<Type>();
+export class TypeExpressionDefinition extends ExpressionDefinition {
+    types = new ArrayExt<TypeDefinition>();
 
-    addType(type: Type) {
+    addType(type: TypeDefinition) {
         this.types.push(type);
     }
 }

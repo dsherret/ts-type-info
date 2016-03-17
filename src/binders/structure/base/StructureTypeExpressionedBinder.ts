@@ -1,5 +1,5 @@
 import {TypeExpressionedStructure} from "./../../../structures";
-import {TypeExpression} from "./../../../definitions";
+import {TypeExpressionDefinition} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
 import {TypeExpressionedBinder} from "./../../base";
 import {StructureExpressionBinder} from "./../expressions";
@@ -10,7 +10,7 @@ export class StructureTypeExpressionedBinder extends TypeExpressionedBinder {
     }
 
     getTypeExpression() {
-        const def = new TypeExpression();
+        const def = new TypeExpressionDefinition();
         const binder = new StructureExpressionBinder(this.structure.type);
         binder.bind(def);
         return def;

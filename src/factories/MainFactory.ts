@@ -1,6 +1,6 @@
 ﻿import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
         NodeDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions, BaseDefinition,
-        ExpressionDefinition, Type, TypeExpression} from "./../definitions";
+        ExpressionDefinition, TypeDefinition, TypeExpressionDefinition} from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder,
     TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder} from "./../binders";
@@ -9,8 +9,8 @@ import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol} from "./../wra
 export class MainFactory {
     private definitionByNode = new KeyValueCache<TsNode, NodeDefinitions>();
     private files = new KeyValueCache<TsSourceFile, FileDefinition>();
-    private typeExpressions = new KeyValueCache<TsTypeExpression, TypeExpression>();
-    private types = new KeyValueCache<TsType, Type>();
+    private typeExpressions = new KeyValueCache<TsTypeExpression, TypeExpressionDefinition>();
+    private types = new KeyValueCache<TsType, TypeDefinition>();
     private deferredBindings: { binder: IBaseBinder, definition: BaseDefinition }[] = [];
 
     getTypeExpression(tsTypeExpression: TsTypeExpression) {
@@ -21,7 +21,7 @@ export class MainFactory {
         return this.typeExpressions.getOrCreate(
             tsTypeExpression,
             () => {
-                const def = new TypeExpression();
+                const def = new TypeExpressionDefinition();
                 const binder = new TsExpressionBinder(tsTypeExpression);
                 binder.bind(def);
                 return def;
@@ -34,7 +34,7 @@ export class MainFactory {
     }
 
     getType(type: TsType) {
-        return this.types.getOrCreate(type, () => new Type(), createdType => {
+        return this.types.getOrCreate(type, () => new TypeDefinition(), createdType => {
             createdType.fillTypeInformation(this, type);
         });
     }

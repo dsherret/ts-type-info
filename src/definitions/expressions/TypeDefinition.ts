@@ -6,11 +6,11 @@ import {ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {TsCallSignatureBinder, TsTypePropertyBinder} from "./../../binders";
 
-export class Type {
+export class TypeDefinition {
     callSignatures = new ArrayExt<CallSignatureDefinition>();
     definitions = new ArrayExt<ModuleMemberDefinitions>();
     properties = new ArrayExt<TypePropertyDefinition>();
-    typeArguments = new ArrayExt<Type>();
+    typeArguments = new ArrayExt<TypeDefinition>();
     text: string;
 
     fillTypeInformation(mainFactory: MainFactory, type: TsType) {

@@ -6,7 +6,7 @@ import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {NamedDefinition, ParentedDefinition, ExportableDefinition, AmbientableDefinition,
         TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
-import {TypeExpression} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expressions";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 import {InterfaceNewSignatureDefinition} from "./InterfaceNewSignatureDefinition";
@@ -16,7 +16,7 @@ export class InterfaceDefinition extends BaseDefinition
     methods = new ArrayExt<InterfaceMethodDefinition>();
     newSignatures = new ArrayExt<InterfaceNewSignatureDefinition>();
     properties = new ArrayExt<InterfacePropertyDefinition>();
-    extendsTypeExpressions = new ArrayExt<TypeExpression>();
+    extendsTypeExpressions = new ArrayExt<TypeExpressionDefinition>();
 
     constructor() {
         super(DefinitionType.Interface);

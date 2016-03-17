@@ -4,7 +4,7 @@ import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../WriteFlags";
 import {TypeAliasWriter} from "./../../writers";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {TypeExpression} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expressions";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
 import {ParentedDefinition} from "./../base/ParentedDefinition";
@@ -37,7 +37,7 @@ export class TypeAliasDefinition extends BaseDefinition
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     // TypeExpressionedDefinition
-    typeExpression: TypeExpression;
+    typeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     // AmbientableDefinition

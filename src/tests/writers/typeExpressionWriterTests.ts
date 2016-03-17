@@ -1,10 +1,10 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {TypeExpressionWriter} from "./../../writers";
-import {TypeExpression} from "./../../definitions";
+import {TypeExpressionDefinition} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
 
-function getTypeExpressionAsString(typeExpression: TypeExpression) {
+function getTypeExpressionAsString(typeExpression: TypeExpressionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new TypeExpressionWriter(codeBlockWriter);
 

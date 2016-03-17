@@ -1,4 +1,4 @@
-﻿import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition, TypeExpression} from "./../../../definitions";
+﻿import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition, TypeExpressionDefinition} from "./../../../definitions";
 import {Logger} from "./../../../utils";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
@@ -15,7 +15,7 @@ export abstract class InterfaceBinder implements IBaseBinder {
     }
 
     abstract getMembers(): InterfaceMemberDefinitions[];
-    abstract getExtendsTypeExpressions(): TypeExpression[];
+    abstract getExtendsTypeExpressions(): TypeExpressionDefinition[];
 
     bind(def: InterfaceDefinition) {
         this.namedBinder.bind(def);

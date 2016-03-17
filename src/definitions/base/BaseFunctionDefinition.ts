@@ -1,4 +1,4 @@
-import {TypeExpression} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expressions";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {TypeParameterDefinition} from "./../general";
 import {NamedDefinition} from "./NamedDefinition";
@@ -24,7 +24,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType>
     // ParameteredDefinition
     parameters: ArrayExt<ParameterType>;
     // ReturnTyped
-    returnTypeExpression: TypeExpression;
+    returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
 }

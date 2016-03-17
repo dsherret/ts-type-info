@@ -1,5 +1,5 @@
 ﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition,
-    ClassConstructorDefinition, ClassConstructorParameterScope, TypeExpression} from "./../../../definitions";
+    ClassConstructorDefinition, ClassConstructorParameterScope, TypeExpressionDefinition} from "./../../../definitions";
 import {Logger} from "./../../../utils";
 import {IBaseBinder} from "./../IBaseBinder";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, AbstractableBinder, DecoratableBinder} from "./../base";
@@ -18,8 +18,8 @@ export abstract class ClassBinder implements IBaseBinder {
     }
 
     abstract getMembers(): ClassMemberDefinitions[];
-    abstract getExtendsTypeExpressions(): TypeExpression[];
-    abstract getImplementsTypeExpressions(): TypeExpression[];
+    abstract getExtendsTypeExpressions(): TypeExpressionDefinition[];
+    abstract getImplementsTypeExpressions(): TypeExpressionDefinition[];
 
     bind(def: ClassDefinition) {
         this.namedBinder.bind(def);

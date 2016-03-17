@@ -1,5 +1,5 @@
 import {applyMixins} from "./../../utils";
-import {TypeExpression} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expressions";
 import {NamedDefinition} from "./NamedDefinition";
 import {ParentedDefinition} from "./ParentedDefinition";
 import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
@@ -18,7 +18,7 @@ export class BasePropertyDefinition<ParentType> extends BaseDefinition implement
     // IParentedDefinition
     parent: ParentType;
     // TypeExpressionedDefinition
-    typeExpression: TypeExpression;
+    typeExpression: TypeExpressionDefinition;
 }
 
 applyMixins(BasePropertyDefinition, BaseDefinition, [NamedDefinition, TypeExpressionedDefinition]);

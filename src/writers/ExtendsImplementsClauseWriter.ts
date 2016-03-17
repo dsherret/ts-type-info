@@ -1,4 +1,4 @@
-﻿import {ClassDefinition, InterfaceDefinition, TypeExpression} from "./../definitions";
+﻿import {ClassDefinition, InterfaceDefinition, TypeExpressionDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {TypeExpressionWriter} from "./TypeExpressionWriter";
 
@@ -23,14 +23,14 @@ export class ExtendsImplementsClauseWriter extends BaseWriter {
         return this;
     }
 
-    private writeClause(obj: { word: string, typeExpressions: TypeExpression[] }) {
+    private writeClause(obj: { word: string, typeExpressions: TypeExpressionDefinition[] }) {
         if (obj.typeExpressions.length > 0) {
             this.writer.write(` ${obj.word} `);
             this.writeTypeExpressions(obj.typeExpressions);
         }
     }
 
-    private writeTypeExpressions(typeExpressions: TypeExpression[]) {
+    private writeTypeExpressions(typeExpressions: TypeExpressionDefinition[]) {
         typeExpressions.forEach((t, i) => {
             if (i !== 0) {
                 this.writer.write(", ");

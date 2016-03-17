@@ -1,10 +1,10 @@
 import * as assert from "assert";
-import {TypeExpression} from "./../../../definitions";
+import {TypeExpressionDefinition} from "./../../../definitions";
 import {TypeExpressionTestStructure} from "./../testStructures";
 import {ensureNotNull} from "./../ensureNotNull";
 import {runTypeTests} from "./runTypeTests";
 
-export function runTypeExpressionTests(typeExpression: TypeExpression, structure: TypeExpressionTestStructure) {
+export function runTypeExpressionTests(typeExpression: TypeExpressionDefinition, structure: TypeExpressionTestStructure) {
     describe("type expression", () => {
         ensureNotNull(typeExpression, () => {
             it(`should have a type text of ${structure.text}`, () => {

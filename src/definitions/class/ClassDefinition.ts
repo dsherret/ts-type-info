@@ -9,7 +9,7 @@ import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {ClassPropertyStructure} from "./../../structures";
-import {TypeExpression} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 import {ClassMethodDefinition} from "./ClassMethodDefinition";
@@ -26,8 +26,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     staticMethods = new ArrayExt<ClassStaticMethodDefinition>();
     staticProperties = new ArrayExt<ClassStaticPropertyDefinition>();
     constructorDef: ClassConstructorDefinition;
-    extendsTypeExpressions = new ArrayExt<TypeExpression>();
-    implementsTypeExpressions = new ArrayExt<TypeExpression>();
+    extendsTypeExpressions = new ArrayExt<TypeExpressionDefinition>();
+    implementsTypeExpressions = new ArrayExt<TypeExpressionDefinition>();
 
     constructor() {
         super(DefinitionType.Class);
