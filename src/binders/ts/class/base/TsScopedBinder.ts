@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../../wrappers";
+﻿import {TsNode} from "./../../../../compiler"
 import {ScopedBinder} from "./../../../base";
 
 export class TsScopedBinder extends ScopedBinder {

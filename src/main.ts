@@ -3,7 +3,7 @@ import * as fs from "fs";
 import {FileDefinition} from "./definitions";
 import {StringUtils, Logger, ArrayExt} from "./utils";
 import {MainFactory} from "./factories";
-import {TsMain} from "./wrappers/TsMain";
+import {TsMain} from "./compiler/TsMain";
 import {Options} from "./Options";
 
 export * from "./Options";

@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../wrappers";
+﻿import {TsNode} from "./../../../compiler"
 import {MainFactory} from "./../../../factories";
 import {TypeExpressionedBinder} from "./../../base";
 

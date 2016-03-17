@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../wrappers";
+﻿import {TsNode} from "./../../../compiler"
 import {EnumMemberBinder} from "./../../base";
 import {TsNamedBinder} from "./../base";
 

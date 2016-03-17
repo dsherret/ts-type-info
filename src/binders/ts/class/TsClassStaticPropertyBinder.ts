@@ -1,5 +1,5 @@
 ﻿import {MainFactory} from "./../../../factories";
-import {TsNode, TsSymbol} from "./../../../wrappers";
+import {TsNode, TsSymbol} from "./../../../compiler"
 import {ClassStaticPropertyBinder} from "./../../base";
 import {TsBaseClassPropertyBinder} from "./base";
 

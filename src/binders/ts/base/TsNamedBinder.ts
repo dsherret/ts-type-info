@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../wrappers";
+﻿import {TsNode} from "./../../../compiler"
 import {NamedBinder} from "./../../base";
 
 export class TsNamedBinder extends NamedBinder {

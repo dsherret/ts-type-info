@@ -1,6 +1,6 @@
 import {FileDefinition, ExportableDefinitions} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
-import {TsSourceFile} from "./../../../wrappers";
+import {TsSourceFile} from "./../../../compiler"
 import {FileBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsModuledBinder} from "./../base";
 

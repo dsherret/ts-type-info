@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../wrappers";
+﻿import {TsNode} from "./../../compiler"
 
 export abstract class ExportableDefinition {
     isExported: boolean;

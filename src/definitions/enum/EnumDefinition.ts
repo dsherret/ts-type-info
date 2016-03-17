@@ -3,7 +3,7 @@ import {ModuledDefinitions} from "./../../definitions";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, ArrayExt} from "./../../utils";
-import {TsNode} from "./../../wrappers";
+import {TsNode} from "./../../compiler"
 import {NamedDefinition, ParentedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 

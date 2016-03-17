@@ -1,4 +1,4 @@
-import {TsExpression, TsTypeExpression} from "./../../../wrappers";
+import {TsExpression, TsTypeExpression} from "./../../../compiler"
 import {ExpressionBinder} from "./../../base";
 
 export class TsExpressionBinder extends ExpressionBinder {

@@ -1,5 +1,5 @@
 import {DecoratorDefinition} from "./../general";
-import {TsNode} from "./../../wrappers";
+import {TsNode} from "./../../compiler"
 import {ArrayExt} from "./../../utils";
 
 export abstract class DecoratableDefinition {

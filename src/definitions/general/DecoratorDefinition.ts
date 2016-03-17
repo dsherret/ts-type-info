@@ -1,4 +1,4 @@
-import {TsNode} from "./../../wrappers";
+import {TsNode} from "./../../compiler"
 import {ArrayExt} from "./../../utils";
 import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expressions";

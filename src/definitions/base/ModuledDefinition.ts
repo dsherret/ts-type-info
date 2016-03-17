@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../wrappers";
+﻿import {TsNode} from "./../../compiler"
 import {tryGet, Logger, ArrayExt} from "./../../utils";
 import {ExportableDefinitions, NodeDefinitions} from "./../../definitions";
 import {ParentedDefinition} from "./../base";

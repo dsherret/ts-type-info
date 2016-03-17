@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../wrappers";
+﻿import {TsNode} from "./../../../compiler"
 import {BaseParameterDefinitionConstructor, BaseParameterDefinition} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
 import {ParameteredBinder} from "./../../base";

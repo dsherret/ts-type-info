@@ -4,7 +4,7 @@
 import {KeyValueCache, Logger} from "./../utils";
 import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder,
     TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder} from "./../binders";
-import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol} from "./../wrappers";
+import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol} from "./../compiler"
 
 export class MainFactory {
     private definitionByNode = new KeyValueCache<TsNode, NodeDefinitions>();

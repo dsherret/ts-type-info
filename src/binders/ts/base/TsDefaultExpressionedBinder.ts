@@ -1,4 +1,4 @@
-﻿import {TsNode, TsExpression} from "./../../../wrappers";
+﻿import {TsNode, TsExpression} from "./../../../compiler"
 import {ExpressionDefinition} from "./../../../definitions";
 import {DefaultExpressionedBinder} from "./../../base";
 import {TsExpressionBinder} from "./../expressions";

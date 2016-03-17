@@ -1,4 +1,4 @@
-﻿import {TsSignature} from "./../../../wrappers";
+﻿import {TsSignature} from "./../../../compiler"
 import {BaseParameterDefinitionConstructor, BaseParameterDefinition} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
 import {ParameteredBinder} from "./../../base";

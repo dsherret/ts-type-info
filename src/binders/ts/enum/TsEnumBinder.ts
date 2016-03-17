@@ -1,5 +1,5 @@
 ﻿import {EnumMemberDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../wrappers";
+import {TsNode} from "./../../../compiler"
 import {EnumBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder} from "./../base";
 import {TsEnumMemberBinder} from "./TsEnumMemberBinder";

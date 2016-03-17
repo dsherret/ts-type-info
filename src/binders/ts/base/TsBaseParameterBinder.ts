@@ -1,6 +1,6 @@
 ﻿import {BaseParameterDefinition} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
-import {TsNode} from "./../../../wrappers";
+import {TsNode} from "./../../../compiler"
 import {BaseParameterBinder} from "./../../base";
 import {TsDefaultExpressionedBinder} from "./TsDefaultExpressionedBinder";
 import {TsNamedBinder} from "./TsNamedBinder";

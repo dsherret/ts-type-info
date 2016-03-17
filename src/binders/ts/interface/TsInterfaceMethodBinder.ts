@@ -1,6 +1,6 @@
 ﻿import {MainFactory} from "./../../../factories";
 import {InterfaceMethodParameterDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../wrappers";
+import {TsNode} from "./../../../compiler"
 import {InterfaceMethodBinder} from "./../../base";
 import {TsBaseFunctionBinder} from "./../base";
 import {TsInterfaceMethodParameterBinder} from "./TsInterfaceMethodParameterBinder";

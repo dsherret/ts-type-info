@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../wrappers";
+﻿import {TsNode} from "./../../../compiler"
 import {AbstractableBinder} from "./../../base";
 
 export class TsAbstractableBinder extends AbstractableBinder {

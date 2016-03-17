@@ -1,6 +1,6 @@
 ﻿import {MainFactory} from "./../../../factories";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../wrappers";
+import {TsNode} from "./../../../compiler"
 import {tryGet, Logger} from "./../../../utils";
 import {InterfaceBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsTypeParameteredBinderByNode} from "./../base";

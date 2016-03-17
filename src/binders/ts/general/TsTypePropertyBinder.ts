@@ -1,5 +1,5 @@
 ﻿import {InterfacePropertyDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../wrappers";
+import {TsNode} from "./../../../compiler"
 import {MainFactory} from "./../../../factories";
 import {TypePropertyBinder} from "./../../base";
 import {TsBasePropertyBinder} from "./../base/TsBasePropertyBinder";

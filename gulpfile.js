@@ -44,7 +44,7 @@ gulp.task("test", ["pre-test"], function() {
                 global: {
                     statements: 90,
                     branches: 90,
-                    functions: 85, // because of structure wrappers which aren't implemented
+                    functions: 90,
                     lines: 90
                 }
             }

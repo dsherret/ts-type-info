@@ -1,4 +1,4 @@
-﻿import {TsSymbol, TsNode} from "./../wrappers";
+﻿import {TsSymbol, TsNode} from "./../compiler"
 import {logError} from "./logError";
 
 /* istanbul ignore next */

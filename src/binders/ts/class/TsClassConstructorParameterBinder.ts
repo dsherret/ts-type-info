@@ -1,6 +1,6 @@
 ﻿import {ClassConstructorParameterScope} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
-import {TsNode} from "./../../../wrappers";
+import {TsNode} from "./../../../compiler"
 import {ClassConstructorParameterBinder} from "./../../base";
 import {TsBaseParameterBinder, TsDecoratableBinder} from "./../base";
 
