@@ -10,7 +10,7 @@ export class TypeExpressionWriter extends BaseWriter {
     write(typeExpression: TypeExpressionDefinition, formatFlags = TypeFormatFlags.None) {
         let text = typeExpression.text;
 
-        if ((formatFlags & TypeFormatFlags.WriteArrayAsGenericType) != 0 && this.isArrayType(text)) {
+        if ((formatFlags & TypeFormatFlags.WriteArrayAsGenericType) !== 0 && this.isArrayType(text)) {
             text = this.getAsGenericArrayType(text);
         }
 
