@@ -105,6 +105,12 @@ abstract class MyClass {
 }
 ```
 
+### TODO
+
+* Manipulation methods (#50)
+* The majority of basic language features are implemented. There's still a lot that's not though. Right now, this library remains mostly undocumented.
+  If there's something you really want then open up an issue on github or help contribute!
+
 ### Real Life Example
 
-* [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code.
+* [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code (Out of date)

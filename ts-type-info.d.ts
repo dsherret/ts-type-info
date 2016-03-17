@@ -83,76 +83,42 @@ export enum DefinitionType {
     TypeProperty = 1100
 }
 
-export interface IBaseNamedDefinition {
+export abstract class NamedDefinition {
     name: string;
 }
 
-export interface INamedDefinition extends IBaseNamedDefinition {
-}
-
-export abstract class NamedDefinition implements INamedDefinition {
-    name: string;
-}
-
-export interface IParentedDefinition<ParentType> {
+export abstract class ParentedDefinition<ParentType> {
     parent: ParentType;
 }
 
-export interface IAbstractableDefinition {
+export abstract class AbstractableDefinition {
     isAbstract: boolean;
 }
 
-export abstract class AbstractableDefinition implements IAbstractableDefinition {
-    isAbstract: boolean;
-}
-
-export interface IAmbientableDefinition {
+export abstract class AmbientableDefinition {
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 }
 
-export abstract class AmbientableDefinition implements IAmbientableDefinition {
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
+export abstract class TypeExpressionedDefinition {
+    typeExpression: TypeExpressionDefinition;
 }
 
-export interface ITypeExpressionedDefinition {
-    typeExpression: TypeExpression;
+export abstract class DefaultExpressionedDefinition {
+    defaultExpression: ExpressionDefinition;
 }
 
-export abstract class TypeExpressionedDefinition implements ITypeExpressionedDefinition {
-    typeExpression: TypeExpression;
-}
-
-export interface IDefaultExpressionedDefinition {
-    defaultExpression: Expression;
-}
-
-export abstract class DefaultExpressionedDefinition implements IDefaultExpressionedDefinition {
-    defaultExpression: Expression;
-}
-
-export interface IDecoratableDefinition {
+export abstract class DecoratableDefinition {
     decorators: ArrayExt<DecoratorDefinition<this>>;
 }
 
-export abstract class DecoratableDefinition implements IDecoratableDefinition {
-    decorators: ArrayExt<DecoratorDefinition<this>>;
-}
-
-export interface IExportableDefinition {
+export abstract class ExportableDefinition {
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
 }
 
-export abstract class ExportableDefinition implements IExportableDefinition {
-    isExported: boolean;
-    isNamedExportOfFile: boolean;
-    isDefaultExportOfFile: boolean;
-}
-
-export interface IModuledDefinition {
+export abstract class ModuledDefinition {
     namespaces: ArrayExt<NamespaceDefinition>;
     classes: ArrayExt<ClassDefinition>;
     interfaces: ArrayExt<InterfaceDefinition>;
@@ -164,89 +130,65 @@ export interface IModuledDefinition {
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
-export abstract class ModuledDefinition implements IModuledDefinition {
-    namespaces: ArrayExt<NamespaceDefinition>;
-    classes: ArrayExt<ClassDefinition>;
-    interfaces: ArrayExt<InterfaceDefinition>;
-    enums: ArrayExt<EnumDefinition>;
-    functions: ArrayExt<FunctionDefinition>;
-    variables: ArrayExt<VariableDefinition>;
-    typeAliases: ArrayExt<TypeAliasDefinition>;
-
-    getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-}
-
-export class BasePropertyDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition {
+export class BasePropertyDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType>, TypeExpressionedDefinition {
     isOptional: boolean;
     name: string;
     parent: ParentType;
-    typeExpression: TypeExpression;
+    typeExpression: TypeExpressionDefinition;
 }
 
-export interface ITypeParameteredDefinition {
+export abstract class TypeParameteredDefinition {
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
 }
 
-export abstract class TypeParameteredDefinition implements ITypeParameteredDefinition {
-    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
+export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements DefaultExpressionedDefinition {
+    defaultExpression: ExpressionDefinition;
 }
 
-export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements IDefaultExpressionedDefinition {
-    defaultExpression: Expression;
-}
-
-export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeParameteredDefinition, IParameteredDefinition<ParameterType>, IReturnTypedDefinition {
+export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType>, TypeParameteredDefinition, ParameteredDefinition<ParameterType>, ReturnTypedDefinition {
     name: string;
     parent: ParentType;
     parameters: ArrayExt<ParameterType>;
-    returnTypeExpression: TypeExpression;
+    returnTypeExpression: TypeExpressionDefinition;
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
 }
 
-export interface BaseParameterDefinitionConstructor<ParentType, ParameterType> {
+export interface BaseParameterDefinitionConstructor<ParameterType> {
 }
 
-export class BaseParameterDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType>, ITypeExpressionedDefinition, IDefaultExpressionedDefinition {
+export class BaseParameterDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType>, TypeExpressionedDefinition, DefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
     name: string;
     parent: ParentType;
-    typeExpression: TypeExpression;
-    defaultExpression: Expression;
+    typeExpression: TypeExpressionDefinition;
+    defaultExpression: ExpressionDefinition;
 }
 
-export interface IParameteredDefinition<ParameterType> {
+export abstract class ParameteredDefinition<ParameterType> {
     parameters: ArrayExt<ParameterType>;
 }
 
-export abstract class ParameteredDefinition<ParameterType> implements IParameteredDefinition<ParameterType> {
-    parameters: ArrayExt<ParameterType>;
+export abstract class ReturnTypedDefinition {
+    returnTypeExpression: TypeExpressionDefinition;
 }
 
-export interface IReturnTypedDefinition {
-    returnTypeExpression: TypeExpression;
-}
-
-export abstract class ReturnTypedDefinition implements IReturnTypedDefinition {
-    returnTypeExpression: TypeExpression;
-}
-
-export class TypeParameterDefinition<ParentType> extends BaseDefinition implements INamedDefinition, IParentedDefinition<ParentType> {
-    constraintTypeExpression: TypeExpression;
+export class TypeParameterDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType> {
+    constraintTypeExpression: TypeExpressionDefinition;
     name: string;
     parent: ParentType;
 }
 
-export class TypePropertyDefinition extends BasePropertyDefinition<Type> {
+export class TypePropertyDefinition extends BasePropertyDefinition<TypeDefinition> {
 }
 
-export class TypeAliasDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeExpressionedDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition {
     name: string;
     parent: FileDefinition | NamespaceDefinition;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    typeExpression: TypeExpression;
+    typeExpression: TypeExpressionDefinition;
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
@@ -254,23 +196,39 @@ export class TypeAliasDefinition extends BaseDefinition implements INamedDefinit
     write(): string;
 }
 
-export class DecoratorDefinition<ParentType> extends BaseDefinition implements IBaseNamedDefinition, IParentedDefinition<ParentType> {
-    arguments: ArrayExt<Expression>;
+export class DecoratorDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType> {
+    arguments: ArrayExt<ExpressionDefinition>;
     name: string;
     parent: ParentType;
 }
 
-export class CallSignatureDefinition extends BaseDefinition implements ITypeParameteredDefinition, IParameteredDefinition<CallSignatureParameterDefinition>, IReturnTypedDefinition {
+export class ExpressionDefinition {
+    text: string;
+}
+
+export class TypeDefinition {
+    callSignatures: ArrayExt<CallSignatureDefinition>;
+    definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>;
+    properties: ArrayExt<TypePropertyDefinition>;
+    typeArguments: ArrayExt<TypeDefinition>;
+    text: string;
+}
+
+export class TypeExpressionDefinition extends ExpressionDefinition {
+    types: ArrayExt<TypeDefinition>;
+}
+
+export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition>, ReturnTypedDefinition {
     minArgumentCount: number;
     parameters: ArrayExt<CallSignatureParameterDefinition>;
-    returnTypeExpression: TypeExpression;
+    returnTypeExpression: TypeExpressionDefinition;
     typeParameters: ArrayExt<TypeParameterDefinition<this>>;
 }
 
 export class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {
 }
 
-export class FunctionDefinition extends BaseFunctionDefinition<FileDefinition | NamespaceDefinition, FunctionParameterDefinition> implements IExportableDefinition, IAmbientableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<FileDefinition | NamespaceDefinition, FunctionParameterDefinition> implements ExportableDefinition, AmbientableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -284,44 +242,41 @@ export class FunctionDefinition extends BaseFunctionDefinition<FileDefinition | 
 export class FunctionParameterDefinition extends BaseParameterDefinition<FunctionDefinition> {
 }
 
-export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements IDecoratableDefinition {
+export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements DecoratableDefinition, ScopedDefinition {
     decorators: ArrayExt<DecoratorDefinition<this>>;
+    scope: "public" | "protected" | "private";
 }
 
-export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements IDecoratableDefinition, IScopedDefinition {
+export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements DecoratableDefinition, ScopedDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     decorators: ArrayExt<DecoratorDefinition<this>>;
     scope: "public" | "protected" | "private";
 }
 
-export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements IDecoratableDefinition, IScopedDefinition {
+export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements DecoratableDefinition, ScopedDefinition {
     decorators: ArrayExt<DecoratorDefinition<this>>;
     scope: "public" | "protected" | "private";
 }
 
-export interface IScopedDefinition {
+export abstract class ScopedDefinition {
     scope: "public" | "protected" | "private";
 }
 
-export abstract class ScopedDefinition implements IScopedDefinition {
-    scope: "public" | "protected" | "private";
-}
-
-export class ClassDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IDecoratableDefinition, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition, IAbstractableDefinition {
+export class ClassDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
     methods: ArrayExt<ClassMethodDefinition>;
     properties: ArrayExt<ClassPropertyDefinition>;
     staticMethods: ArrayExt<ClassStaticMethodDefinition>;
     staticProperties: ArrayExt<ClassStaticPropertyDefinition>;
     constructorDef: ClassConstructorDefinition;
-    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    extendsTypeExpressions: ArrayExt<TypeExpression>;
-    implementsTypeExpressions: ArrayExt<TypeExpression>;
+    extendsTypeExpressions: ArrayExt<TypeExpressionDefinition>;
+    implementsTypeExpressions: ArrayExt<TypeExpressionDefinition>;
     name: string;
     parent: FileDefinition | NamespaceDefinition;
     decorators: ArrayExt<DecoratorDefinition<this>>;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     isAbstract: boolean;
@@ -330,7 +285,7 @@ export class ClassDefinition extends BaseDefinition implements INamedDefinition,
     addProperty(prop: ClassPropertyStructure): void;
 }
 
-export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethodParameterDefinition> implements IAbstractableDefinition {
+export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethodParameterDefinition> implements AbstractableDefinition {
     isAbstract: boolean;
 }
 
@@ -343,13 +298,13 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isConstructorParameter: boolean;
 }
 
-export class ClassConstructorDefinition extends BaseDefinition implements IParentedDefinition<ClassDefinition>, IParameteredDefinition<ClassConstructorParameterDefinition> {
+export class ClassConstructorDefinition extends BaseDefinition implements ParentedDefinition<ClassDefinition>, ParameteredDefinition<ClassConstructorParameterDefinition> {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     parent: ClassDefinition;
     parameters: ArrayExt<ClassConstructorParameterDefinition>;
 }
 
-export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements IDecoratableDefinition {
+export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements DecoratableDefinition {
     scope: "none" | "public" | "protected" | "private";
     decorators: ArrayExt<DecoratorDefinition<this>>;
 }
@@ -371,17 +326,17 @@ type Scope = "public" | "protected" | "private";
 
 export const Scope: { Public: "public" | "protected" | "private"; Protected: "public" | "protected" | "private"; Private: "public" | "protected" | "private"; };
 
-export class InterfaceDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeParameteredDefinition, IAmbientableDefinition {
+export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: ArrayExt<InterfaceMethodDefinition>;
     newSignatures: ArrayExt<InterfaceNewSignatureDefinition>;
     properties: ArrayExt<InterfacePropertyDefinition>;
-    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
-    extendsTypeExpressions: ArrayExt<TypeExpression>;
+    extendsTypeExpressions: ArrayExt<TypeExpressionDefinition>;
     name: string;
     parent: FileDefinition | NamespaceDefinition;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
@@ -397,16 +352,16 @@ export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceD
 export class InterfacePropertyDefinition extends BasePropertyDefinition<InterfaceDefinition> {
 }
 
-export class InterfaceNewSignatureDefinition extends BaseDefinition implements IParameteredDefinition<InterfaceNewSignatureParameterDefinition>, IReturnTypedDefinition, IParentedDefinition<InterfaceDefinition> {
+export class InterfaceNewSignatureDefinition extends BaseDefinition implements ParameteredDefinition<InterfaceNewSignatureParameterDefinition>, ReturnTypedDefinition, ParentedDefinition<InterfaceDefinition> {
     parent: InterfaceDefinition;
     parameters: ArrayExt<InterfaceNewSignatureParameterDefinition>;
-    returnTypeExpression: TypeExpression;
+    returnTypeExpression: TypeExpressionDefinition;
 }
 
 export class InterfaceNewSignatureParameterDefinition extends BaseParameterDefinition<InterfaceNewSignatureDefinition> {
 }
 
-export class EnumDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, IAmbientableDefinition {
+export class EnumDefinition extends BaseDefinition implements ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, AmbientableDefinition {
     members: ArrayExt<EnumMemberDefinition>;
     name: string;
     parent: FileDefinition | NamespaceDefinition;
@@ -419,7 +374,7 @@ export class EnumDefinition extends BaseDefinition implements INamedDefinition, 
     write(): string;
 }
 
-export class EnumMemberDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<EnumDefinition> {
+export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<EnumDefinition> {
     value: number;
     name: string;
     parent: EnumDefinition;
@@ -429,7 +384,7 @@ type NamespaceDeclarationType = "namespace" | "module";
 
 export const NamespaceDeclarationType: { Namespace: "namespace" | "module"; Module: "namespace" | "module"; };
 
-export class NamespaceDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, IModuledDefinition, IAmbientableDefinition {
+export class NamespaceDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
     declarationType: "namespace" | "module";
     name: string;
     parent: FileDefinition | NamespaceDefinition;
@@ -450,11 +405,11 @@ export class NamespaceDefinition extends BaseDefinition implements INamedDefinit
     write(): string;
 }
 
-export class FileDefinition extends BaseDefinition implements IModuledDefinition {
+export class FileDefinition extends BaseDefinition implements ModuledDefinition {
     fileName: string;
     imports: ArrayExt<ImportDefinition>;
     reExports: ArrayExt<ReExportDefinition>;
-    defaultExport: { expression: Expression; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; };
+    defaultExport: { expression: ExpressionDefinition; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; };
     namespaces: ArrayExt<NamespaceDefinition>;
     classes: ArrayExt<ClassDefinition>;
     interfaces: ArrayExt<InterfaceDefinition>;
@@ -468,35 +423,35 @@ export class FileDefinition extends BaseDefinition implements IModuledDefinition
     writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string; }[]; }): string;
 }
 
-export class ImportDefinition extends BaseDefinition implements IParentedDefinition<FileDefinition> {
-    defaultImport: { importName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: Expression; };
-    namedImports: ArrayExt<{ importName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: Expression; }>;
-    starImports: ArrayExt<{ importName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: Expression; }>;
-    starImportName: string;
-    moduleSpecifier: string;
+export class ImportDefinition extends BaseDefinition implements ParentedDefinition<FileDefinition> {
     fileName: string;
+    moduleSpecifier: string;
+    starImportName: string;
+    defaultImport: { importName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: ExpressionDefinition; };
+    namedImports: ArrayExt<{ importName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: ExpressionDefinition; }>;
+    starImports: ArrayExt<{ importName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: ExpressionDefinition; }>;
     parent: FileDefinition;
 }
 
-export class ReExportDefinition extends BaseDefinition implements IParentedDefinition<FileDefinition> {
-    starExports: ArrayExt<{ exportName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: Expression; }>;
-    namedExports: ArrayExt<{ exportName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: Expression; }>;
+export class ReExportDefinition extends BaseDefinition implements ParentedDefinition<FileDefinition> {
     fileName: string;
     moduleSpecifier: string;
+    starExports: ArrayExt<{ exportName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: ExpressionDefinition; }>;
+    namedExports: ArrayExt<{ exportName: string; definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>; expression: ExpressionDefinition; }>;
     parent: FileDefinition;
 
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
-export class VariableDefinition extends BaseDefinition implements INamedDefinition, IParentedDefinition<FileDefinition | NamespaceDefinition>, IExportableDefinition, ITypeExpressionedDefinition, IDefaultExpressionedDefinition, IAmbientableDefinition {
+export class VariableDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
     declarationType: "var" | "let" | "const";
     name: string;
     parent: FileDefinition | NamespaceDefinition;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    typeExpression: TypeExpression;
-    defaultExpression: Expression;
+    typeExpression: TypeExpressionDefinition;
+    defaultExpression: ExpressionDefinition;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
@@ -554,23 +509,6 @@ type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition
 type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;
 
 type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
-
-export class Expression {
-    text: string;
-}
-
-export class Type {
-    callSignatures: ArrayExt<CallSignatureDefinition>;
-    definitions: ArrayExt<ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition>;
-    properties: ArrayExt<TypePropertyDefinition>;
-    typeArguments: ArrayExt<Type>;
-    text: string;
-}
-
-export class TypeExpression {
-    text: string;
-    types: ArrayExt<Type>;
-}
 
 export interface NamedStructure {
     name: string;
@@ -714,6 +652,14 @@ export interface EnumMemberStructure extends NamedStructure {
     value: number;
 }
 
+export interface TypeStructure {
+    callSignatures?: CallSignatureStructure[];
+    properties?: TypePropertyStructure[];
+    typeArguments?: string[];
+    definitions?: NamedStructure[];
+    text: string;
+}
+
 export interface FileStructure extends ModuledStructure {
     imports?: ImportStructure[];
     reExports?: ReExportStructure[];
@@ -768,12 +714,4 @@ export interface NamespaceStructure extends NamedStructure, ExportableStructure,
 
 export interface VariableStructure extends NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure {
     declarationType: "var" | "let" | "const";
-}
-
-export interface TypeStructure {
-    callSignatures?: CallSignatureStructure[];
-    properties?: TypePropertyStructure[];
-    typeArguments?: string[];
-    definitions?: NamedStructure[];
-    text: string;
 }
