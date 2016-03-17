@@ -15,7 +15,7 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): ArrayE
     verifyArray(fileNames);
     options = options || {};
 
-    Logger.toggleEnabled(true || options.showDebugMessages || false); // TODO: CHANGE BACK
+    Logger.toggleEnabled(options.showDebugMessages || false);
 
     const tsMain = new TsMain(fileNames, options);
     const mainFactory = new MainFactory();
