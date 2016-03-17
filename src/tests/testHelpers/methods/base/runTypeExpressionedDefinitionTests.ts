@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {TypeExpressionedTestStructure} from "./../../testStructures";
 import {TypeExpressionedDefinition} from "./../../../../definitions";
-import {runTypeExpressionTests} from "./../../expressions";
+import {runTypeExpressionTests} from "./../expressions";
 
 export function runTypeExpressionedDefinitionTests(definition: TypeExpressionedDefinition, structure: TypeExpressionedTestStructure) {
     describe("typeExpression", () => {

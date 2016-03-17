@@ -5,7 +5,7 @@ import {runImportDefinitionTests} from "./runImportDefinitionTests";
 import {runReExportDefinitionTests} from "./runReExportDefinitionTests";
 import {runModuledDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
-import {runExpressionTests} from "./../../expressions";
+import {runExpressionTests} from "./../expressions";
 
 export function runFileDefinitionTests(definition: FileDefinition, structure: FileTestStructure) {
     structure.imports = structure.imports || [];

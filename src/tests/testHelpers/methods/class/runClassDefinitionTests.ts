@@ -8,7 +8,7 @@ import {runClassMethodDefinitionTests} from "./runClassMethodDefinitionTests";
 import {runClassStaticPropertyDefinitionTests} from "./runClassStaticPropertyDefinitionTests";
 import {runClassStaticMethodDefinitionTests} from "./runClassStaticMethodDefinitionTests";
 import {runClassConstructorDefinitionTests} from "./runClassConstructorDefinitionTests";
-import {runTypeExpressionTests} from "./../../expressions";
+import {runTypeExpressionTests} from "./../expressions";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassTestStructure) {

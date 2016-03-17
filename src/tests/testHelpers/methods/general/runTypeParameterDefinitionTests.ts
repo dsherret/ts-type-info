@@ -2,7 +2,7 @@
 import {TypeParameterTestStructure} from "./../../testStructures";
 import {TypeParameterDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runParentedDefinitionTests} from "./../base";
-import {runTypeExpressionTests} from "./../../expressions";
+import {runTypeExpressionTests} from "./../expressions";
 
 export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition<any>, structure: TypeParameterTestStructure) {
     describe(`type parameter ${structure.name}`, () => {

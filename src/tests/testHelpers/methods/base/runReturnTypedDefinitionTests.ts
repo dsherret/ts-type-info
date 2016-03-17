@@ -1,6 +1,6 @@
 ﻿import {ReturnTypedTestStructure} from "./../../testStructures";
 import {ReturnTypedDefinition} from "./../../../../definitions";
-import {runTypeExpressionTests} from "./../../expressions";
+import {runTypeExpressionTests} from "./../expressions";
 
 export function runReturnTypedDefinitionTests(definition: ReturnTypedDefinition, structure: ReturnTypedTestStructure) {
     describe("return type", () => {

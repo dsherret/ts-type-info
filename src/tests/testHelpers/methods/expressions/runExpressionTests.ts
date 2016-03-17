@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
-import {ExpressionDefinition} from "./../../../definitions";
-import {ExpressionTestStructure} from "./../testStructures";
+import {ExpressionDefinition} from "./../../../../definitions";
+import {ExpressionTestStructure} from "./../../testStructures";
 
 export function runExpressionTests(expression: ExpressionDefinition, structure: ExpressionTestStructure) {
     if (structure == null) {

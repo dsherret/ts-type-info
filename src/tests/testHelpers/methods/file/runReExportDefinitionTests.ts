@@ -3,7 +3,7 @@ import {ReExportTestStructure, ExpressionTestStructure} from "./../../testStruct
 import {ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
 import {ArrayExt} from "./../../../../utils";
 import {ensureNotNull} from "./../../ensureNotNull";
-import {runExpressionTests} from "./../../expressions";
+import {runExpressionTests} from "./../expressions";
 import {runParentedDefinitionTests} from "./../base";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {

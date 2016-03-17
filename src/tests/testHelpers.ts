@@ -1,2 +1,1 @@
-export * from "./testHelpers/definitions";
-export * from "./testHelpers/expressions";
+export * from "./testHelpers/methods";
