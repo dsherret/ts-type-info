@@ -1,6 +1,6 @@
 ﻿import {ClassDefinition, InterfaceDefinition, TypeExpressionDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
-import {TypeExpressionWriter} from "./TypeExpressionWriter";
+import {TypeExpressionWriter, TypeFormatFlags} from "./TypeExpressionWriter";
 
 export class ExtendsImplementsClauseWriter extends BaseWriter {
     private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
@@ -36,7 +36,7 @@ export class ExtendsImplementsClauseWriter extends BaseWriter {
                 this.writer.write(", ");
             }
 
-            this.typeExpressionWriter.write(t);
+            this.typeExpressionWriter.write(t, TypeFormatFlags.WriteArrayAsGenericType);
         });
     }
 }

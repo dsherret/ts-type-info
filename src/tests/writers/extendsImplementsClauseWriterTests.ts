@@ -30,11 +30,15 @@ class MyClass extends MyBaseClass implements MyInterface {
 
 class MyClass2 implements MyInterface, MyBaseClass {
 }
+
+class ArrayClass extends Array<string> implements Array<string> {
+}
 `;
     const file = getInfoFromString(code);
     const myBaseClass = file.classes[0];
     const myClass = file.classes[1];
     const myClass2 = file.classes[2];
+    const arrayClass = file.classes[3];
 
     describe("writeExtends()", () => {
         describe("0 types", () => {
@@ -71,6 +75,16 @@ class MyClass2 implements MyInterface, MyBaseClass {
                 assert.equal(str, " extends string, number");
             });
         });
+
+        describe("Array type", () => {
+            const str = getStringUsingWriter(writer => {
+                writer.writeExtends(arrayClass);
+            });
+
+            it("should write the array type as a generic type", () => {
+                assert.equal(str, " extends Array<string>");
+            });
+        });
     });
 
     describe("writeImplements()", () => {
@@ -101,6 +115,16 @@ class MyClass2 implements MyInterface, MyBaseClass {
 
             it("should have the two types written out separated by a comma", () => {
                 assert.equal(str, " implements MyInterface, MyBaseClass");
+            });
+        });
+
+        describe("Array type", () => {
+            const str = getStringUsingWriter(writer => {
+                writer.writeImplements(arrayClass);
+            });
+
+            it("should write the array type as a generic type", () => {
+                assert.equal(str, " implements Array<string>");
             });
         });
     });
