@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {StructureClassPropertyBinder} from "./../../binders";
-import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
 import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefinition,
         AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
         AbstractableDefinition, DefinitionType} from "./../base";
@@ -11,7 +11,6 @@ import {WriteFlags} from "./../../WriteFlags";
 import {ClassPropertyStructure} from "./../../structures";
 import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
-import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 import {ClassMethodDefinition} from "./ClassMethodDefinition";
 import {ClassPropertyDefinition} from "./ClassPropertyDefinition";
 import {ClassStaticMethodDefinition} from "./ClassStaticMethodDefinition";

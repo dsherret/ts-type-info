@@ -1,7 +1,5 @@
 ﻿import {TypeParameterDefinition, TypeExpressionDefinition} from "./../../../definitions";
-import {BasePropertyBinder} from "./../base/BasePropertyBinder";
 import {NamedBinder} from "./../base/NamedBinder";
-import {TypeExpressionedBinder} from "./../base/TypeExpressionedBinder";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class TypeParameterBinder implements IBaseBinder {

@@ -1,4 +1,4 @@
-﻿import {DecoratorDefinition, ExpressionDefinition} from "./../../../definitions";
+﻿import {ExpressionDefinition} from "./../../../definitions";
 import {DecoratorStructure} from "./../../../structures";
 import {DecoratorBinder} from "./../../base";
 import {StructureNamedBinder} from "./../base";

@@ -1,4 +1,4 @@
-﻿import {TsSignature} from "./../../../compiler"
+﻿import {TsSignature} from "./../../../compiler";
 import {TypeParameterDefinition, TypeParameteredDefinition} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
 import {TypeParameteredBinder} from "./../../base";

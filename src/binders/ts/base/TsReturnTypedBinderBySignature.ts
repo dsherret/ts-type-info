@@ -1,4 +1,4 @@
-﻿import {TsSignature} from "./../../../compiler"
+﻿import {TsSignature} from "./../../../compiler";
 import {MainFactory} from "./../../../factories";
 import {ReturnTypedBinder} from "./../../base";
 

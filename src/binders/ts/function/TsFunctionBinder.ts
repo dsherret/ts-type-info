@@ -1,6 +1,6 @@
 ﻿import {MainFactory} from "./../../../factories";
 import {FunctionParameterDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../compiler"
+import {TsNode} from "./../../../compiler";
 import {FunctionBinder} from "./../../base";
 import {TsBaseFunctionBinder, TsExportableBinder, TsAmbientableBinder} from "./../base";
 import {TsFunctionParameterBinder} from "./TsFunctionParameterBinder";

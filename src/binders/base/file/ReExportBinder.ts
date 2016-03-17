@@ -3,9 +3,6 @@ import {ArrayExt} from "./../../../utils";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ReExportBinder implements IBaseBinder {
-    constructor() {
-    }
-
     abstract getFileName(): string;
     abstract getModuleSpecifier(): string;
     abstract getIsStarExport(): boolean;

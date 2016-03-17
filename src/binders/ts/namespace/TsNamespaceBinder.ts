@@ -1,6 +1,5 @@
-import {NamespaceDeclarationType, NamespaceDefinition} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
-import {TsNode} from "./../../../compiler"
+import {TsNode} from "./../../../compiler";
 import {NamespaceBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsModuledBinder} from "./../base";
 

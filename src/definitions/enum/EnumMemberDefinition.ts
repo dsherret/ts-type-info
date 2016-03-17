@@ -1,5 +1,4 @@
 ﻿import {applyMixins} from "./../../utils";
-import {TsNode} from "./../../compiler"
 import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumDefinition} from "./EnumDefinition";
 

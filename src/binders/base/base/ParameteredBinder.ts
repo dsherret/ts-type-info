@@ -1,4 +1,4 @@
-﻿import {ParameteredDefinition, BaseParameterDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {ParameteredDefinition, BaseParameterDefinition} from "./../../../definitions";
 
 export abstract class ParameteredBinder<ParameterType extends BaseParameterDefinition<any>> {
     abstract getParameters(): ParameterType[];

@@ -1,7 +1,7 @@
 ﻿import {ModuleMemberDefinitions} from "./../../definitions";
 import {CallSignatureDefinition} from "./../function";
 import {TypePropertyDefinition} from "./../general";
-import {TsType} from "./../../compiler"
+import {TsType} from "./../../compiler";
 import {ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {TsCallSignatureBinder, TsTypePropertyBinder} from "./../../binders";
@@ -13,6 +13,7 @@ export class TypeDefinition {
     typeArguments = new ArrayExt<TypeDefinition>();
     text: string;
 
+    // todo: should be refactored out into a binder
     fillTypeInformation(mainFactory: MainFactory, type: TsType) {
         this.text = type.getText();
 

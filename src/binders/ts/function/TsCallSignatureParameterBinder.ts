@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../compiler"
+﻿import {TsNode} from "./../../../compiler";
 import {MainFactory} from "./../../../factories";
 import {CallSignatureParameterBinder} from "./../../base";
 import {TsBaseParameterBinder} from "./../base";

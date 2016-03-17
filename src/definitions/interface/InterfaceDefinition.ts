@@ -2,7 +2,7 @@
 import {ModuledDefinitions} from "./../../definitions";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
+import {applyMixins, ArrayExt} from "./../../utils";
 import {NamedDefinition, ParentedDefinition, ExportableDefinition, AmbientableDefinition,
         TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";

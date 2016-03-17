@@ -2,7 +2,7 @@ import CodeBlockWriter from "code-block-writer";
 import {Scope} from "./../Scope";
 import {applyMixins, ArrayExt} from "./../../../utils";
 import {DecoratorDefinition} from "./../../../definitions";
-import {DecoratableDefinition, DefinitionType, BaseFunctionDefinition, BaseParameterDefinitionConstructor} from "./../../base";
+import {DecoratableDefinition, DefinitionType, BaseFunctionDefinition} from "./../../base";
 import {ClassDefinition} from "./../ClassDefinition";
 import {ScopedDefinition} from "./ScopedDefinition";
 

@@ -1,4 +1,4 @@
-﻿import {FileDefinition, ImportDefinition, ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
+﻿import {FileDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
 import {ArrayExt} from "./../../../utils";
 import {ModuledBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";

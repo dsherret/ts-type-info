@@ -1,7 +1,5 @@
-﻿import {TsNode} from "./../../compiler"
-import {tryGet, Logger, ArrayExt} from "./../../utils";
-import {ExportableDefinitions, NodeDefinitions} from "./../../definitions";
-import {ParentedDefinition} from "./../base";
+﻿import {ArrayExt} from "./../../utils";
+import {ExportableDefinitions} from "./../../definitions";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";

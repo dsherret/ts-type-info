@@ -3,9 +3,6 @@ import {ArrayExt} from "./../../../utils";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ImportBinder implements IBaseBinder {
-    constructor() {
-    }
-
     abstract getFileName(): string;
     abstract getModuleSpecifier(): string;
     abstract getIsStarImport(): boolean;
@@ -34,7 +31,7 @@ export abstract class ImportBinder implements IBaseBinder {
             const defaultImport = this.getDefaultImport();
 
             if (defaultImport != null) {
-                def.defaultImport = mapToWithArrayExt(defaultImport)
+                def.defaultImport = mapToWithArrayExt(defaultImport);
             }
 
             def.namedImports = new ArrayExt(...this.getNamedImports().map(mapToWithArrayExt));

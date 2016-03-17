@@ -1,7 +1,7 @@
 ﻿import {MainFactory} from "./../../../factories";
-import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
+import {ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
     ClassConstructorDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../compiler"
+import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {ClassBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsAbstractableBinder, TsTypeParameteredBinderByNode, TsDecoratableBinder} from "./../base";

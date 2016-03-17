@@ -1,5 +1,5 @@
 ﻿import {MainFactory} from "./../../../factories";
-import {TsNode} from "./../../../compiler"
+import {TsNode} from "./../../../compiler";
 import {ObjectPropertyBinder} from "./../../base";
 import {TsBasePropertyBinder} from "./TsBasePropertyBinder";
 import {TsDefaultExpressionedBinder} from "./TsDefaultExpressionedBinder";

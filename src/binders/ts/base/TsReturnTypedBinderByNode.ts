@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../compiler"
+﻿import {TsNode} from "./../../../compiler";
 import {MainFactory} from "./../../../factories";
 import {ReturnTypedBinder} from "./../../base";
 

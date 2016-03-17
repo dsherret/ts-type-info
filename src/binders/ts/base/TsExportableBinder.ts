@@ -1,4 +1,4 @@
-﻿import {TsNode, TsSymbol} from "./../../../compiler"
+﻿import {TsNode, TsSymbol} from "./../../../compiler";
 import {ExportableBinder} from "./../../base";
 
 export class TsExportableBinder extends ExportableBinder {

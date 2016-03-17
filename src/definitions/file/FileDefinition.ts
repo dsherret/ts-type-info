@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
-import {applyMixins, ArrayExt, Logger} from "./../../utils";
-import {ExportableDefinitions, NodeDefinitions} from "./../../definitions";
+import {applyMixins, ArrayExt} from "./../../utils";
+import {ExportableDefinitions} from "./../../definitions";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {writeDefinition} from "./../../writeDefinition";

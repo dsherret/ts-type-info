@@ -1,4 +1,4 @@
-﻿import {TsNode} from "./../../../compiler"
+﻿import {TsNode} from "./../../../compiler";
 import {AmbientableBinder} from "./../../base";
 
 export class TsAmbientableBinder extends AmbientableBinder {

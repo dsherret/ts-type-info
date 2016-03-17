@@ -1,4 +1,3 @@
-import {TsTypeExpression} from "./../../compiler"
 import {ArrayExt} from "./../../utils";
 import {TypeDefinition} from "./TypeDefinition";
 import {ExpressionDefinition} from "./ExpressionDefinition";

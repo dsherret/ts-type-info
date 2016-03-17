@@ -1,5 +1,4 @@
-﻿import {BasePropertyDefinition} from "./../../../definitions";
-import {BasePropertyStructure} from "./../../../structures";
+﻿import {BasePropertyStructure} from "./../../../structures";
 import {BasePropertyBinder} from "./../../base";
 import {StructureNamedBinder} from "./StructureNamedBinder";
 import {StructureTypeExpressionedBinder} from "./StructureTypeExpressionedBinder";

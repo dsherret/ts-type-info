@@ -1,4 +1,4 @@
-﻿import {BaseParameterDefinition, BaseFunctionDefinition, FunctionParameterDefinition, FunctionDefinition} from "./../../../definitions";
+﻿import {FunctionParameterDefinition, FunctionDefinition} from "./../../../definitions";
 import {BaseFunctionBinder, ExportableBinder, AmbientableBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 

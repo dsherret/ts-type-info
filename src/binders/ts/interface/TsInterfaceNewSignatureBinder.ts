@@ -1,6 +1,6 @@
 ﻿import {MainFactory} from "./../../../factories";
 import {InterfaceNewSignatureParameterDefinition} from "./../../../definitions";
-import {TsSignature} from "./../../../compiler"
+import {TsSignature} from "./../../../compiler";
 import {InterfaceNewSignatureBinder} from "./../../base";
 import {TsParameteredBinderBySignature, TsReturnTypedBinderBySignature} from "./../base";
 import {TsInterfaceNewSignatureParameterBinder} from "./TsInterfaceNewSignatureParameterBinder";

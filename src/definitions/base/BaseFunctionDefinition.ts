@@ -6,7 +6,6 @@ import {ParentedDefinition} from "./ParentedDefinition";
 import {TypeParameteredDefinition} from "./TypeParameteredDefinition";
 import {BaseDefinition} from "./BaseDefinition";
 import {DefinitionType} from "./DefinitionType";
-import {BaseParameterDefinitionConstructor} from "./BaseParameterDefinition";
 import {ParameteredDefinition} from "./ParameteredDefinition";
 import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 

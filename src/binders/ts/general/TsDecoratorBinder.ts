@@ -1,5 +1,5 @@
-﻿import {DecoratorDefinition, ExpressionDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../compiler"
+﻿import {ExpressionDefinition} from "./../../../definitions";
+import {TsNode} from "./../../../compiler";
 import {TsExpressionBinder} from "./../../../binders";
 import {NamedBinder, DecoratorBinder} from "./../../base";
 

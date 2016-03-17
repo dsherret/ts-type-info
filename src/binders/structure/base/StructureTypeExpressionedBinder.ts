@@ -1,6 +1,5 @@
 import {TypeExpressionedStructure} from "./../../../structures";
 import {TypeExpressionDefinition} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
 import {TypeExpressionedBinder} from "./../../base";
 import {StructureExpressionBinder} from "./../expressions";
 

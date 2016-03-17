@@ -1,5 +1,4 @@
 ﻿import {ClassStaticPropertyDefinition} from "./../../../definitions";
-import {AbstractableBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 import {BaseClassPropertyBinder} from "./base";
 

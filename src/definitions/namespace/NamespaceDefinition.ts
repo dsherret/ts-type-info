@@ -1,5 +1,5 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {ModuledDefinitions, ExportableDefinitions, NodeDefinitions} from "./../../definitions";
+import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
 import {applyMixins, ArrayExt} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";

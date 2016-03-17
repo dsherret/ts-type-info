@@ -1,6 +1,5 @@
-﻿import {BaseClassMethodParameterDefinition} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
-import {TsNode} from "./../../../compiler"
+﻿import {MainFactory} from "./../../../factories";
+import {TsNode} from "./../../../compiler";
 import {ClassMethodParameterBinder} from "./../../base";
 import {TsBaseClassMethodParameterBinder} from "./base";
 

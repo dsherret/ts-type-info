@@ -1,8 +1,8 @@
-import {FileDefinition, ExportableDefinitions} from "./../../../definitions";
+import {ExportableDefinitions} from "./../../../definitions";
 import {MainFactory} from "./../../../factories";
-import {TsSourceFile} from "./../../../compiler"
+import {TsSourceFile} from "./../../../compiler";
 import {FileBinder} from "./../../base";
-import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsModuledBinder} from "./../base";
+import {TsModuledBinder} from "./../base";
 
 export class TsFileBinder extends FileBinder {
     constructor(private mainFactory: MainFactory, private sourceFile: TsSourceFile) {

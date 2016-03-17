@@ -1,4 +1,4 @@
-﻿import {BaseParameterDefinition, BaseFunctionDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition} from "./../../../definitions";
+﻿import {InterfaceMethodParameterDefinition, InterfaceMethodDefinition} from "./../../../definitions";
 import {BaseFunctionBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 

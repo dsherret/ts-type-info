@@ -1,4 +1,4 @@
-﻿import {TypeParameterDefinition, TypeParameteredDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {TypeParameterDefinition, TypeParameteredDefinition} from "./../../../definitions";
 
 export abstract class TypeParameteredBinder {
     abstract getTypeParameters(): TypeParameterDefinition<TypeParameteredDefinition>[];

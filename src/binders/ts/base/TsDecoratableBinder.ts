@@ -1,5 +1,5 @@
 ﻿import {DecoratorDefinition} from "./../../../definitions";
-import {TsNode, TsSymbol} from "./../../../compiler"
+import {TsNode} from "./../../../compiler";
 import {DecoratableBinder} from "./../../base";
 import {TsDecoratorBinder} from "./../general";
 
