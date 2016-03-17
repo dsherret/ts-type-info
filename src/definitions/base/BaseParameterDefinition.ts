@@ -1,5 +1,6 @@
 import {applyMixins} from "./../../utils";
-import {Expression, TypeExpression} from "./../../expressions";
+import {TypeExpression} from "./../expressions";
+import {ExpressionDefinition} from "./../expressions";
 import {NamedDefinition} from "./NamedDefinition";
 import {ParentedDefinition} from "./ParentedDefinition";
 import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
@@ -27,7 +28,7 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
     // DefaultExpressionedDefinition
-    defaultExpression: Expression;
+    defaultExpression: ExpressionDefinition;
 }
 
-applyMixins(BaseParameterDefinition, [NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);
+applyMixins(BaseParameterDefinition, BaseDefinition, [NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);

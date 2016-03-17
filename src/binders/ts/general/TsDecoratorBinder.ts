@@ -1,6 +1,6 @@
-﻿import {DecoratorDefinition} from "./../../../definitions";
-import {Expression} from "./../../../expressions";
+﻿import {DecoratorDefinition, ExpressionDefinition} from "./../../../definitions";
 import {TsNode} from "./../../../wrappers";
+import {TsExpressionBinder} from "./../../../binders";
 import {NamedBinder, DecoratorBinder} from "./../../base";
 
 export class TsDecoratorBinder extends DecoratorBinder {
@@ -9,7 +9,14 @@ export class TsDecoratorBinder extends DecoratorBinder {
     }
 
     getArguments() {
-        return this.node.getDecoratorArguments().map(arg => new Expression(arg));
+        return this.node.getDecoratorArguments().map(arg => {
+            const expression = new ExpressionDefinition();
+            const binder = new TsExpressionBinder(arg);
+
+            binder.bind(expression);
+
+            return expression;
+        });
     }
 }
 

@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {TypeExpressionWriter} from "./../../writers";
-import {TypeExpression} from "./../../expressions";
+import {TypeExpression} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
 
 function getTypeExpressionAsString(typeExpression: TypeExpression) {

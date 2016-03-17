@@ -22,7 +22,7 @@ export class TsReExportBinder extends ReExportBinder {
     }
 
     getNamedExports() {
-        const namedSymbols = this.node.getNamedImportSymbolsByName();
+        const namedSymbols = this.node.getNamedExportSymbolsByName();
 
         return Object.keys(namedSymbols || {}).map(name => {
             const defsOrExpression = this.mainFactory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
@@ -37,7 +37,7 @@ export class TsReExportBinder extends ReExportBinder {
 
     getStarExports() {
         const moduleSymbol = this.node.getModuleSpecifierSymbol();
-        const starExportSymbols = moduleSymbol.getExportSymbolsOfModuleByName();
+        const starExportSymbols = moduleSymbol.getExportSymbolsByName();
 
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
             const definitions = this.mainFactory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);

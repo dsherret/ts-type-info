@@ -19,4 +19,4 @@ export class ClassConstructorDefinition
     parameters: ArrayExt<ClassConstructorParameterDefinition>;
 }
 
-applyMixins(ClassConstructorDefinition, [ParameteredDefinition]);
+applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition]);

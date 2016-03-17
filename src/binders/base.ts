@@ -2,6 +2,7 @@
 export * from "./base/IBaseBinder";
 export * from "./base/class";
 export * from "./base/enum";
+export * from "./base/expressions";
 export * from "./base/file";
 export * from "./base/function";
 export * from "./base/general";

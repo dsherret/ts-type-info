@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {Type} from "./../../../expressions";
+import {Type} from "./../../../definitions";
 import {TypeTestStructure} from "./../testStructures";
 import {runNamedDefinitionTests, runCallSignatureDefinitionTests, runBasePropertyDefinitionTests} from "./../definitions";
 import {ensureNotNull} from "./../ensureNotNull";

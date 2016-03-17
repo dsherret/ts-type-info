@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {TypeExpression} from "./../../../expressions";
+import {TypeExpression} from "./../../../definitions";
 import {TypeExpressionTestStructure} from "./../testStructures";
 import {ensureNotNull} from "./../ensureNotNull";
 import {runTypeTests} from "./runTypeTests";

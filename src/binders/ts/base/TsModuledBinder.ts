@@ -11,19 +11,19 @@ export class TsModuledBinder extends ModuledBinder {
 
     getMembers() {
         return this.node.getChildren()
-            .map(node => tryGet(node, () => this.getMemberDefinition(node)))
+            .map(childNode => tryGet(childNode, () => this.getMemberDefinition(childNode)))
             .filter(n => n != null);
     }
 
     private getMemberDefinition(childNode: TsNode): NodeDefinitions {
-        const def = this.mainFactory.getDefinitionByNode(this.node);
+        const def = this.mainFactory.getDefinitionByNode(childNode);
 
         if (def == null) {
             const symbol = this.node.getSymbol();
-            const isKnownTypeToIgnore = (symbol != null && symbol.isDefaultExport()) || this.node.isExportDeclaration() || this.node.isExportAssignment() || this.node.isImport();
+            const isKnownTypeToIgnore = (symbol != null && symbol.isDefaultExport()) || childNode.isExportDeclaration() || childNode.isExportAssignment() || childNode.isImport();
 
             if (!isKnownTypeToIgnore) {
-                Logger.warn(`Node is not handled for: ${this.node.getName()}`);
+                Logger.warn(`Node is not handled for: ${childNode.getName()}`);
             }
         }
 

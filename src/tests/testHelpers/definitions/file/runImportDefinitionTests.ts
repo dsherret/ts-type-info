@@ -1,7 +1,6 @@
 ﻿import * as assert from "assert";
 import {ImportTestStructure, ExpressionTestStructure} from "./../../testStructures";
-import {ImportDefinition, ExportableDefinitions} from "./../../../../definitions";
-import {Expression} from "./../../../../expressions";
+import {ImportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
 import {ArrayExt} from "./../../../../utils";
 import {runExpressionTests} from "./../../expressions";
 import {runParentedDefinitionTests} from "./../base";
@@ -53,7 +52,7 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
 }
 
 function runImportPartTests(
-    definition: { importName: string; definitions: ArrayExt<ExportableDefinitions>; expression: Expression; },
+    definition: { importName: string; definitions: ArrayExt<ExportableDefinitions>; expression: ExpressionDefinition; },
     structure: { importName: string; definitions: { name: string, type: any }[]; expression: ExpressionTestStructure; }
 ) {
     if (structure == null) {

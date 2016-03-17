@@ -1,8 +1,8 @@
-﻿import {Expression} from "./../expressions";
+﻿import {ExpressionDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 
 export class ExpressionWriter extends BaseWriter {
-    writeWithEqualsSign(expression: Expression) {
+    writeWithEqualsSign(expression: ExpressionDefinition) {
         if (expression != null) {
             this.writer.write(" = ");
             this.writer.write(expression.text);

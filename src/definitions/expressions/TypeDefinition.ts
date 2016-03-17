@@ -1,8 +1,10 @@
-﻿import {CallSignatureDefinition, ModuleMemberDefinitions, TypePropertyDefinition} from "./../definitions";
-import {TsType} from "./../wrappers";
-import {ArrayExt} from "./../utils";
-import {MainFactory} from "./../factories";
-import {TsCallSignatureBinder, TsTypePropertyBinder} from "./../binders";
+﻿import {ModuleMemberDefinitions} from "./../../definitions";
+import {CallSignatureDefinition} from "./../function";
+import {TypePropertyDefinition} from "./../general";
+import {TsType} from "./../../wrappers";
+import {ArrayExt} from "./../../utils";
+import {MainFactory} from "./../../factories";
+import {TsCallSignatureBinder, TsTypePropertyBinder} from "./../../binders";
 
 export class Type {
     callSignatures = new ArrayExt<CallSignatureDefinition>();

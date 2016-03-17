@@ -204,20 +204,23 @@ export class TsNode extends TsSourceFileChild {
     getNamedImportSymbolsByName(): { [name: string]: TsSymbol; } {
         const symbolsByName: { [name: string]: TsSymbol; } = {};
         const importDeclaration = this.node as ts.ImportDeclaration;
-        const namedBindings = importDeclaration.importClause.namedBindings as ts.NamedImportsOrExports;
 
-        if (namedBindings != null) {
-            (namedBindings.elements || []).forEach(element => {
-                const symbol = this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(element));
+        if (importDeclaration.importClause != null) {
+            const namedBindings = importDeclaration.importClause.namedBindings as ts.NamedImportsOrExports;
 
-                /* istanbul ignore else */
-                if (symbol != null) {
-                    symbolsByName[element.name.text] = this.createSymbol(symbol);
-                }
-                else {
-                    Logger.warn(`Unknown symbol: ${element.name.text}`);
-                }
-            });
+            if (namedBindings != null) {
+                (namedBindings.elements || []).forEach(element => {
+                    const symbol = this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(element));
+
+                    /* istanbul ignore else */
+                    if (symbol != null) {
+                        symbolsByName[element.name.text] = this.createSymbol(symbol);
+                    }
+                    else {
+                        Logger.warn(`Unknown symbol: ${element.name.text}`);
+                    }
+                });
+            }
         }
 
         return symbolsByName;

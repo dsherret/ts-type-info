@@ -1,9 +1,9 @@
 ﻿import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
-        NodeDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions, BaseDefinition} from "./../definitions";
-import {Expression, Type, TypeExpression} from "./../expressions";
+        NodeDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions, BaseDefinition,
+        ExpressionDefinition, Type, TypeExpression} from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder,
-    TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder} from "./../binders";
+    TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder} from "./../binders";
 import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol} from "./../wrappers";
 
 export class MainFactory {
@@ -13,16 +13,24 @@ export class MainFactory {
     private types = new KeyValueCache<TsType, Type>();
     private deferredBindings: { binder: IBaseBinder, definition: BaseDefinition }[] = [];
 
-    getTypeExpression(typeExpression: TsTypeExpression) {
-        if (typeExpression == null) {
+    getTypeExpression(tsTypeExpression: TsTypeExpression) {
+        if (tsTypeExpression == null) {
             return null;
         }
 
-        return this.typeExpressions.getOrCreate(typeExpression, () => new TypeExpression(typeExpression), createdTypeExpression => {
-            typeExpression.getTypes().forEach(type => {
-                createdTypeExpression.addType(this.getType(type));
+        return this.typeExpressions.getOrCreate(
+            tsTypeExpression,
+            () => {
+                const def = new TypeExpression();
+                const binder = new TsExpressionBinder(tsTypeExpression);
+                binder.bind(def);
+                return def;
+            },
+            createdTypeExpression => {
+                tsTypeExpression.getTypes().forEach(type => {
+                    createdTypeExpression.addType(this.getType(type));
+                });
             });
-        });
     }
 
     getType(type: TsType) {
@@ -76,7 +84,7 @@ export class MainFactory {
     }
 
     getDefinitionsOrExpressionFromExportSymbol(symbol: TsSymbol) {
-        const obj: { definitions: ExportableDefinitions[]; expression: Expression; } = { definitions: [], expression: null };
+        const obj: { definitions: ExportableDefinitions[]; expression: ExpressionDefinition; } = { definitions: [], expression: null };
 
         if (symbol != null) {
             if (symbol.isAlias()) {
@@ -86,10 +94,15 @@ export class MainFactory {
             const nodes = symbol.getNodes();
 
             if (nodes.length === 1) {
-                const expression = nodes[0].getExpression();
+                const tsExpression = nodes[0].getExpression();
 
-                if (expression != null) {
-                    obj.expression = new Expression(expression);
+                if (tsExpression != null) {
+                    const expression = new ExpressionDefinition();
+                    const binder = new TsExpressionBinder(tsExpression);
+
+                    binder.bind(expression);
+                    obj.expression = expression;
+
                     return obj;
                 }
             }

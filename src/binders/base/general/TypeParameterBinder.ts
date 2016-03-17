@@ -1,5 +1,4 @@
-﻿import {TypeParameterDefinition} from "./../../../definitions";
-import {TypeExpression} from "./../../../expressions";
+﻿import {TypeParameterDefinition, TypeExpression} from "./../../../definitions";
 import {BasePropertyBinder} from "./../base/BasePropertyBinder";
 import {NamedBinder} from "./../base/NamedBinder";
 import {TypeExpressionedBinder} from "./../base/TypeExpressionedBinder";

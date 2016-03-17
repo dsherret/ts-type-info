@@ -1,5 +1,4 @@
-﻿import {TypeExpressionedDefinition} from "./../../../definitions";
-import {TypeExpression} from "./../../../expressions";
+﻿import {TypeExpressionedDefinition, TypeExpression} from "./../../../definitions";
 
 export abstract class TypeExpressionedBinder {
     abstract getTypeExpression(): TypeExpression;

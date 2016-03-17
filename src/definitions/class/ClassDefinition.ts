@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {TypeExpression} from "./../../expressions";
+import {StructureClassPropertyBinder} from "./../../binders";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefinition,
         AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
@@ -9,6 +9,7 @@ import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {ClassPropertyStructure} from "./../../structures";
+import {TypeExpression} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 import {ClassMethodDefinition} from "./ClassMethodDefinition";
@@ -40,8 +41,11 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     }
 
     addProperty(prop: ClassPropertyStructure) {
-        // todo: this
-        //this.properties.push(new ClassPropertyDefinition(new MainFactory(), new StructureNode(prop), this));
+        const def = new ClassPropertyDefinition();
+        const binder = new StructureClassPropertyBinder(prop);
+        binder.bind(def);
+        def.parent = this;
+        this.properties.push(def);
     }
 
     // NamedDefinition
@@ -63,4 +67,4 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isAbstract: boolean;
 }
 
-applyMixins(ClassDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition]);
+applyMixins(ClassDefinition, BaseDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition]);

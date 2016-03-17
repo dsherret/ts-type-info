@@ -15,4 +15,4 @@ export class BaseClassMethodParameterDefinition<ParentType> extends BaseParamete
     scope: Scope;
 }
 
-applyMixins(BaseClassMethodParameterDefinition, [DecoratableDefinition]);
+applyMixins(BaseClassMethodParameterDefinition, BaseParameterDefinition, [DecoratableDefinition]);

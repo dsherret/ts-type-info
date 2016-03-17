@@ -1,8 +1,8 @@
 ﻿import * as assert from "assert";
-import {Expression} from "./../../../expressions";
+import {ExpressionDefinition} from "./../../../definitions";
 import {ExpressionTestStructure} from "./../testStructures";
 
-export function runExpressionTests(expression: Expression, structure: ExpressionTestStructure) {
+export function runExpressionTests(expression: ExpressionDefinition, structure: ExpressionTestStructure) {
     if (structure == null) {
         it(`should be null`, () => {
             assert.equal(expression, null);

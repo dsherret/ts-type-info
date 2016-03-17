@@ -51,4 +51,4 @@ export class NamespaceDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(NamespaceDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);
+applyMixins(NamespaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);

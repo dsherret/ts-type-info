@@ -36,7 +36,7 @@ export class TsClassBinder extends ClassBinder {
     getMembers() {
         return this.node.getChildren()
             .map(node => tryGet(node, () => this.getMemberDefinition(node)))
-            .filter(n => n == null);
+            .filter(n => n != null);
     }
 
     private getMemberDefinition(childNode: TsNode): ClassMemberTypes {

@@ -13,4 +13,4 @@ export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethod
     isAbstract: boolean;
 }
 
-applyMixins(ClassMethodDefinition, [AbstractableDefinition]);
+applyMixins(ClassMethodDefinition, BaseClassMethodDefinition, [AbstractableDefinition]);

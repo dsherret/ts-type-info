@@ -35,4 +35,4 @@ export class EnumDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(EnumDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, ParentedDefinition]);
+applyMixins(EnumDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, ParentedDefinition]);

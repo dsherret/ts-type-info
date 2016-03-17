@@ -1,5 +1,4 @@
-﻿import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./../../../definitions";
-import {TypeExpression} from "./../../../expressions";
+﻿import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition, TypeExpression} from "./../../../definitions";
 import {Logger} from "./../../../utils";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
@@ -39,6 +38,9 @@ export abstract class InterfaceBinder implements IBaseBinder {
         }
         else {
             Logger.warn(`Not implemented interface member.`);
+            return;
         }
+
+        member.parent = def;
     }
 }

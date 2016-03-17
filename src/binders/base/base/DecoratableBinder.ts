@@ -5,5 +5,6 @@ export abstract class DecoratableBinder {
 
     bind(def: DecoratableDefinition) {
         def.decorators.push(...this.getDecorators());
+        def.decorators.forEach(d => d.parent = def);
     }
 }

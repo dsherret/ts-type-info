@@ -1,5 +1,6 @@
 export * from "./definitions/base";
 export * from "./definitions/general";
+export * from "./definitions/expressions";
 export * from "./definitions/function";
 export * from "./definitions/class";
 export * from "./definitions/interface";

@@ -2,7 +2,9 @@
 import {applyMixins, ArrayExt} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../WriteFlags";
+import {TypeAliasWriter} from "./../../writers";
 import {BaseDefinition, DefinitionType} from "./../base";
+import {TypeExpression} from "./../expressions";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
 import {ParentedDefinition} from "./../base/ParentedDefinition";
@@ -11,8 +13,6 @@ import {TypeExpressionedDefinition} from "./../base/TypeExpressionedDefinition";
 import {ExportableDefinition} from "./../base/ExportableDefinition";
 import {AmbientableDefinition} from "./../base/AmbientableDefinition";
 import {TypeParameterDefinition} from "./TypeParameterDefinition";
-import {TypeExpression} from "./../../expressions";
-import {TypeAliasWriter} from "./../../writers";
 
 export class TypeAliasDefinition extends BaseDefinition
                                  implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, TypeExpressionedDefinition,
@@ -45,4 +45,4 @@ export class TypeAliasDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(TypeAliasDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition]);
+applyMixins(TypeAliasDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition]);

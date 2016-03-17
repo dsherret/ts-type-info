@@ -70,7 +70,8 @@ class MyClass4 {
                 typeExpression: { text: "Date" },
                 defaultExpression: { text: "new Date()" },
                 scope: Scope.Private,
-                isConstructorParameter: true
+                isConstructorParameter: true,
+                isOptional: true
             }]
         }]
     });

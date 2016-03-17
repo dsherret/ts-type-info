@@ -27,7 +27,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
     getMembers() {
         return this.node.getChildren()
             .map(node => tryGet(node, () => this.getMemberDefinition(node)))
-            .filter(n => n == null);
+            .filter(n => n != null);
     }
 
     private getMemberDefinition(childNode: TsNode): InterfaceMemberTypes {

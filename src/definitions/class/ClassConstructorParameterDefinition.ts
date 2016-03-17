@@ -15,4 +15,4 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     decorators: ArrayExt<DecoratorDefinition<this>>;
 }
 
-applyMixins(ClassConstructorParameterDefinition, [DecoratableDefinition]);
+applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition]);

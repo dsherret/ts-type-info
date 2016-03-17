@@ -1,12 +1,12 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {TypeExpression} from "./../../expressions";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, tryGet, Logger, ArrayExt} from "./../../utils";
 import {NamedDefinition, ParentedDefinition, ExportableDefinition, AmbientableDefinition,
         TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
+import {TypeExpression} from "./../expressions";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 import {InterfaceNewSignatureDefinition} from "./InterfaceNewSignatureDefinition";
@@ -44,4 +44,4 @@ export class InterfaceDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(InterfaceDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);
+applyMixins(InterfaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);

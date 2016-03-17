@@ -1,6 +1,7 @@
-﻿import {TsNode} from "./../../../wrappers";
-import {Expression} from "./../../../expressions";
+﻿import {TsNode, TsExpression} from "./../../../wrappers";
+import {ExpressionDefinition} from "./../../../definitions";
 import {DefaultExpressionedBinder} from "./../../base";
+import {TsExpressionBinder} from "./../expressions";
 
 export class TsDefaultExpressionedBinder extends DefaultExpressionedBinder {
     constructor(private node: TsNode) {
@@ -8,7 +9,14 @@ export class TsDefaultExpressionedBinder extends DefaultExpressionedBinder {
     }
 
     getDefaultExpression() {
-        const expression = this.node.getDefaultExpression();
-        return (expression == null) ? null : new Expression(expression);
+        const tsExpression = this.node.getDefaultExpression();
+        return (tsExpression == null) ? null : this.getExpression(tsExpression);
+    }
+
+    private getExpression(tsExpression: TsExpression) {
+        const expression = new ExpressionDefinition();
+        const binder = new TsExpressionBinder(tsExpression);
+        binder.bind(expression);
+        return expression;
     }
 }

@@ -1,11 +1,11 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins, ArrayExt, Logger} from "./../../utils";
-import {Expression} from "./../../expressions";
 import {ExportableDefinitions, NodeDefinitions} from "./../../definitions";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {writeDefinition} from "./../../writeDefinition";
 import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ExpressionDefinition} from "./../expressions";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
@@ -20,7 +20,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     fileName: string;
     imports = new ArrayExt<ImportDefinition>();
     reExports = new ArrayExt<ReExportDefinition>();
-    defaultExport: { expression: Expression; definitions: ArrayExt<ExportableDefinitions>; };
+    defaultExport: { expression: ExpressionDefinition; definitions: ArrayExt<ExportableDefinitions>; };
 
     constructor() {
         super(DefinitionType.File);
@@ -73,4 +73,4 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     typeAliases: ArrayExt<TypeAliasDefinition>;
 }
 
-applyMixins(FileDefinition, [ModuledDefinition]);
+applyMixins(FileDefinition, BaseDefinition, [ModuledDefinition]);

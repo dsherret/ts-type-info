@@ -1,5 +1,4 @@
-﻿import {FileDefinition, ImportDefinition, ReExportDefinition, ExportableDefinitions} from "./../../../definitions";
-import {Expression} from "./../../../expressions";
+﻿import {FileDefinition, ImportDefinition, ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
 import {ArrayExt} from "./../../../utils";
 import {ModuledBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
@@ -11,7 +10,7 @@ export abstract class FileBinder implements IBaseBinder {
     }
 
     abstract getFileName(): string;
-    abstract getDefaultExport(): { expression: Expression; definitions: ExportableDefinitions[] };
+    abstract getDefaultExport(): { expression: ExpressionDefinition; definitions: ExportableDefinitions[] };
 
     bind(def: FileDefinition) {
         this.moduledBinder.bind(def, childDef => {

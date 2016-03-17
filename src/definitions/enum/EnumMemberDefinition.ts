@@ -16,4 +16,4 @@ export class EnumMemberDefinition extends BaseDefinition implements NamedDefinit
     parent: EnumDefinition;
 }
 
-applyMixins(EnumMemberDefinition, [NamedDefinition]);
+applyMixins(EnumMemberDefinition, BaseDefinition, [NamedDefinition]);

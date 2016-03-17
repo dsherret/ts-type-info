@@ -9,14 +9,13 @@ import {Options} from "./Options";
 export * from "./Options";
 export * from "./utils/ArrayExt";
 export * from "./definitions";
-export * from "./expressions";
 export * from "./structures";
 
 export function getInfoFromFiles(fileNames: string[], options?: Options): ArrayExt<FileDefinition> {
     verifyArray(fileNames);
     options = options || {};
 
-    Logger.toggleEnabled(options.showDebugMessages || false);
+    Logger.toggleEnabled(true || options.showDebugMessages || false); // TODO: CHANGE BACK
 
     const tsMain = new TsMain(fileNames, options);
     const mainFactory = new MainFactory();

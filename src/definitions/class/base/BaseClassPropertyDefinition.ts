@@ -16,4 +16,4 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassD
     scope: Scope;
 }
 
-applyMixins(BaseClassPropertyDefinition, [DecoratableDefinition, ScopedDefinition]);
+applyMixins(BaseClassPropertyDefinition, ObjectPropertyDefinition, [DecoratableDefinition, ScopedDefinition]);

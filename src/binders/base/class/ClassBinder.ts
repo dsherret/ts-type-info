@@ -1,6 +1,5 @@
 ﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition,
-    ClassConstructorDefinition, ClassConstructorParameterScope} from "./../../../definitions";
-import {TypeExpression} from "./../../../expressions";
+    ClassConstructorDefinition, ClassConstructorParameterScope, TypeExpression} from "./../../../definitions";
 import {Logger} from "./../../../utils";
 import {IBaseBinder} from "./../IBaseBinder";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, AbstractableBinder, DecoratableBinder} from "./../base";
@@ -52,8 +51,11 @@ export abstract class ClassBinder implements IBaseBinder {
             def.constructorDef = member;
         }
         else {
-            Logger.warn(`Unknown member memberinition for class.`);
+            Logger.warn(`Unknown member member for class.`);
+            return;
         }
+
+        member.parent = def;
     }
 
     private fillPropertiesFromConstructorDef(def: ClassDefinition) {

@@ -1,15 +1,15 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
-import {Expression} from "./../../expressions";
 import {ArrayExt} from "./../../utils";
 import {BaseDefinition, DefinitionType, ParentedDefinition} from "./../base";
+import {ExpressionDefinition} from "./../expressions";
 import {FileDefinition} from "./FileDefinition";
 
 export class ReExportDefinition extends BaseDefinition implements ParentedDefinition<FileDefinition> {
     fileName: string;
     moduleSpecifier: string;
     // todo: move the array item types into a ImportPartDefinition class
-    starExports = new ArrayExt<{ exportName: string; definitions: ArrayExt<ExportableDefinitions>; expression: Expression }>();
-    namedExports = new ArrayExt<{ exportName: string; definitions: ArrayExt<ExportableDefinitions>; expression: Expression }>();
+    starExports = new ArrayExt<{ exportName: string; definitions: ArrayExt<ExportableDefinitions>; expression: ExpressionDefinition }>();
+    namedExports = new ArrayExt<{ exportName: string; definitions: ArrayExt<ExportableDefinitions>; expression: ExpressionDefinition }>();
 
     constructor() {
         super(DefinitionType.ReExport);

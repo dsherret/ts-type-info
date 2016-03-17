@@ -1,5 +1,4 @@
-﻿import {TypeAliasDefinition} from "./../../../definitions";
-import {Expression} from "./../../../expressions";
+﻿import {TypeAliasDefinition, ExpressionDefinition} from "./../../../definitions";
 import {NamedBinder} from "./../base/NamedBinder";
 import {ExportableBinder} from "./../base/ExportableBinder";
 import {TypeExpressionedBinder} from "./../base/TypeExpressionedBinder";

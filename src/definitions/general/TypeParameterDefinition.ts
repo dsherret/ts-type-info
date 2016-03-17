@@ -1,6 +1,6 @@
-import {TypeExpression} from "./../../expressions";
 import {applyMixins} from "./../../utils";
 import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {TypeExpression} from "./../expressions";
 
 export class TypeParameterDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType> {
     constraintTypeExpression: TypeExpression;
@@ -15,4 +15,4 @@ export class TypeParameterDefinition<ParentType> extends BaseDefinition implemen
     parent: ParentType;
 }
 
-applyMixins(TypeParameterDefinition, [NamedDefinition]);
+applyMixins(TypeParameterDefinition, BaseDefinition, [NamedDefinition]);

@@ -1,5 +1,4 @@
-﻿import {BaseClassMethodParameterDefinition} from "./../../../../definitions";
-import {MainFactory} from "./../../../../factories";
+﻿import {MainFactory} from "./../../../../factories";
 import {TsNode} from "./../../../../wrappers";
 import {BaseClassPropertyBinder} from "./../../../base";
 import {TsDecoratableBinder, TsObjectPropertyBinder} from "./../../base";

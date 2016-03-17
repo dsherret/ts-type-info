@@ -1,7 +1,6 @@
 ﻿import * as assert from "assert";
 import {ReExportTestStructure, ExpressionTestStructure} from "./../../testStructures";
-import {ReExportDefinition, ExportableDefinitions} from "./../../../../definitions";
-import {Expression} from "./../../../../expressions";
+import {ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
 import {ArrayExt} from "./../../../../utils";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runExpressionTests} from "./../../expressions";
@@ -47,7 +46,7 @@ export function runReExportDefinitionTests(definition: ReExportDefinition, struc
 }
 
 function runImportPartTests(
-    definition: { exportName: string; definitions: ArrayExt<ExportableDefinitions>; expression: Expression; },
+    definition: { exportName: string; definitions: ArrayExt<ExportableDefinitions>; expression: ExpressionDefinition; },
     structure: { exportName: string; definitions: { name: string, type: any }[]; expression: ExpressionTestStructure; }
 ) {
     if (structure == null) {

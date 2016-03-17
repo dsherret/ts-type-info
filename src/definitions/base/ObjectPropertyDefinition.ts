@@ -1,5 +1,5 @@
 ﻿import {applyMixins} from "./../../utils";
-import {Expression} from "./../../expressions";
+import {ExpressionDefinition} from "./../expressions";
 import {DefinitionType} from "./DefinitionType";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
 import {BasePropertyDefinition} from "./BasePropertyDefinition";
@@ -10,7 +10,7 @@ export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyD
     }
 
     // DefaultExpressionedDefinition
-    defaultExpression: Expression;
+    defaultExpression: ExpressionDefinition;
 }
 
-applyMixins(ObjectPropertyDefinition, [DefaultExpressionedDefinition]);
+applyMixins(ObjectPropertyDefinition, BasePropertyDefinition, [DefaultExpressionedDefinition]);

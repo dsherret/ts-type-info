@@ -1,8 +1,7 @@
-﻿import {DefaultExpressionedDefinition} from "./../../../definitions";
-import {Expression} from "./../../../expressions";
+﻿import {DefaultExpressionedDefinition, ExpressionDefinition} from "./../../../definitions";
 
 export abstract class DefaultExpressionedBinder {
-    abstract getDefaultExpression(): Expression;
+    abstract getDefaultExpression(): ExpressionDefinition;
 
     bind(def: DefaultExpressionedDefinition) {
         def.defaultExpression = this.getDefaultExpression();

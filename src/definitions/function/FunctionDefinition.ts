@@ -31,4 +31,4 @@ export class FunctionDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(FunctionDefinition, [ExportableDefinition, AmbientableDefinition]);
+applyMixins(FunctionDefinition, BaseFunctionDefinition, [ExportableDefinition, AmbientableDefinition]);

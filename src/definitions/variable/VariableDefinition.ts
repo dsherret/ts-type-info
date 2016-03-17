@@ -1,11 +1,11 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {applyMixins} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
-import {Expression, TypeExpression} from "./../../expressions";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {ParentedDefinition, AmbientableDefinition, NamedDefinition, TypeExpressionedDefinition, ExportableDefinition,
     DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ExpressionDefinition, TypeExpression} from "./../expressions";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
@@ -35,10 +35,10 @@ export class VariableDefinition extends BaseDefinition
     // TypeExpressionedDefinition
     typeExpression: TypeExpression;
     // DefaultExpressionedDefinition
-    defaultExpression: Expression;
+    defaultExpression: ExpressionDefinition;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(VariableDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);
+applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

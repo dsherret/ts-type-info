@@ -1,4 +1,4 @@
-import {TypeExpression} from "./../../expressions";
+import {TypeExpression} from "./../expressions";
 
 export abstract class TypeExpressionedDefinition {
     typeExpression: TypeExpression;

@@ -1,13 +1,13 @@
-import {ModuledDefinition, NodeDefinitions} from "./../../../definitions";
+import {NodeDefinitions, ModuledDefinitions} from "./../../../definitions";
 
 export abstract class ModuledBinder {
     abstract getMembers(): NodeDefinitions[];
 
-    bind(def: ModuledDefinition, handleCustomDefinition?: (def: NodeDefinitions) => void) {
+    bind(def: ModuledDefinitions, handleCustomDefinition?: (def: NodeDefinitions) => void) {
         this.getMembers().forEach(member => this.bindMember(def, member, handleCustomDefinition));
     }
 
-    private bindMember(def: ModuledDefinition, member: NodeDefinitions, handleCustomDefinition?: (def: NodeDefinitions) => void) {
+    private bindMember(def: ModuledDefinitions, member: NodeDefinitions, handleCustomDefinition?: (def: NodeDefinitions) => void) {
         if (member.isFunctionDefinition()) {
             def.functions.push(member);
         }
@@ -32,5 +32,7 @@ export abstract class ModuledBinder {
         else if (handleCustomDefinition instanceof Function) {
             handleCustomDefinition(member);
         }
+
+        member.parent = def;
     }
 }

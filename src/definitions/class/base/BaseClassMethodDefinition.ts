@@ -21,4 +21,4 @@ export class BaseClassMethodDefinition<ParameterType>
     scope: Scope;
 }
 
-applyMixins(BaseClassMethodDefinition, [DecoratableDefinition, ScopedDefinition]);
+applyMixins(BaseClassMethodDefinition, BaseFunctionDefinition, [DecoratableDefinition, ScopedDefinition]);

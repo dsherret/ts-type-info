@@ -1,6 +1,6 @@
-﻿import {ParentedDefinition, BaseDefinition, DefinitionType, ParameteredDefinition, ReturnTypedDefinition} from "./../base";
-import {TypeExpression} from "./../../expressions";
-import {applyMixins, ArrayExt} from "./../../utils";
+﻿import {applyMixins, ArrayExt} from "./../../utils";
+import {ParentedDefinition, BaseDefinition, DefinitionType, ParameteredDefinition, ReturnTypedDefinition} from "./../base";
+import {TypeExpression} from "./../expressions";
 import {InterfaceNewSignatureParameterDefinition} from "./InterfaceNewSignatureParameterDefinition";
 import {InterfaceDefinition} from "./InterfaceDefinition";
 
@@ -20,4 +20,4 @@ export class InterfaceNewSignatureDefinition
     returnTypeExpression: TypeExpression;
 }
 
-applyMixins(InterfaceNewSignatureDefinition, [ParameteredDefinition, ReturnTypedDefinition]);
+applyMixins(InterfaceNewSignatureDefinition, BaseDefinition, [ParameteredDefinition, ReturnTypedDefinition]);

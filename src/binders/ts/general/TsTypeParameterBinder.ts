@@ -1,6 +1,4 @@
-﻿import {TypeParameterDefinition} from "./../../../definitions";
-import {TypeExpression} from "./../../../expressions";
-import {TsNode} from "./../../../wrappers";
+﻿import {TsNode} from "./../../../wrappers";
 import {MainFactory} from "./../../../factories";
 import {TypeParameterBinder} from "./../../base";
 import {TsNamedBinder} from "./../base/TsNamedBinder";

@@ -1,5 +1,4 @@
-﻿import {ClassDefinition, InterfaceDefinition} from "./../definitions";
-import {TypeExpression} from "./../expressions";
+﻿import {ClassDefinition, InterfaceDefinition, TypeExpression} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {TypeExpressionWriter} from "./TypeExpressionWriter";
 

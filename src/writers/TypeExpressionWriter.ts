@@ -1,4 +1,4 @@
-﻿import {TypeExpression} from "./../expressions";
+﻿import {TypeExpression} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 
 export class TypeExpressionWriter extends BaseWriter {

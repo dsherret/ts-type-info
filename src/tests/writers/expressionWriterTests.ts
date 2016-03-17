@@ -1,11 +1,11 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
 import {ExpressionWriter} from "./../../writers";
-import {Expression} from "./../../expressions";
+import {ExpressionDefinition} from "./../../definitions";
 import {WriteFlags} from "./../../WriteFlags";
 import {getInfoFromString} from "./../../main";
 
-function getExpressionAsString(typeExpression: Expression) {
+function getExpressionAsString(typeExpression: ExpressionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new ExpressionWriter(codeBlockWriter, WriteFlags.Default);
 
