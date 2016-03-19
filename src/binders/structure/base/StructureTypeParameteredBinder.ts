@@ -1,5 +1,5 @@
 ﻿import {TypeParameteredStructure} from "./../../../structures";
-import {TypeParameterDefinition, TypeParameteredDefinition} from "./../../../definitions";
+import {TypeParameterDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {TypeParameteredBinder} from "./../../base";
 import {StructureTypeParameterBinder} from "./../general";
