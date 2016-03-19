@@ -1,4 +1,4 @@
-﻿import {MainFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {CallSignatureParameterDefinition} from "./../../../definitions";
 import {TsSignature} from "./../../../compiler";
 import {CallSignatureBinder} from "./../../base";
@@ -6,11 +6,11 @@ import {TsTypeParameteredBinderBySignature, TsParameteredBinderBySignature, TsRe
 import {TsCallSignatureParameterBinder} from "./TsCallSignatureParameterBinder";
 
 export class TsCallSignatureBinder extends CallSignatureBinder {
-    constructor(mainFactory: MainFactory, private signature: TsSignature) {
+    constructor(tsFactory: TsFactory, private signature: TsSignature) {
         super(
-            new TsTypeParameteredBinderBySignature(mainFactory, signature),
-            new TsParameteredBinderBySignature(mainFactory, signature, CallSignatureParameterDefinition, TsCallSignatureParameterBinder),
-            new TsReturnTypedBinderBySignature(mainFactory, signature)
+            new TsTypeParameteredBinderBySignature(tsFactory, signature),
+            new TsParameteredBinderBySignature(tsFactory, signature, CallSignatureParameterDefinition, TsCallSignatureParameterBinder),
+            new TsReturnTypedBinderBySignature(tsFactory, signature)
         );
     }
 

@@ -2,7 +2,7 @@ import * as tmp from "tmp";
 import * as fs from "fs";
 import {FileDefinition} from "./definitions";
 import {StringUtils, Logger} from "./utils";
-import {MainFactory} from "./factories";
+import {TsFactory} from "./factories";
 import {TsMain} from "./compiler/TsMain";
 import {Options} from "./Options";
 
@@ -17,17 +17,17 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): FileDe
     Logger.toggleEnabled(options.showDebugMessages || false);
 
     const tsMain = new TsMain(fileNames, options);
-    const mainFactory = new MainFactory();
+    const tsFactory = new TsFactory();
 
     const definitionWithSourceFiles = tsMain.getSourceFiles().map(sourceFile => {
         return {
-            definition: mainFactory.getFileDefinition(sourceFile),
+            definition: tsFactory.getFileDefinition(sourceFile),
             sourceFile: sourceFile
         };
     });
 
-    mainFactory.bindDeferred();
-    mainFactory.fillAllCachedTypesWithDefinitions();
+    tsFactory.bindDeferred();
+    tsFactory.fillAllCachedTypesWithDefinitions();
 
     return definitionWithSourceFiles.map(f => f.definition);
 }

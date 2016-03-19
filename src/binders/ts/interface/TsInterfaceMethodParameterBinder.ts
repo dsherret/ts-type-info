@@ -1,10 +1,10 @@
 ﻿import {TsNode} from "./../../../compiler";
-import {MainFactory} from "./../../../factories";
+import {TsFactory} from "./../../../factories";
 import {InterfaceMethodParameterBinder} from "./../../base";
 import {TsBaseParameterBinder} from "./../base";
 
 export class TsInterfaceMethodParameterBinder extends InterfaceMethodParameterBinder {
-    constructor(mainFactory: MainFactory, private node: TsNode) {
-        super(new TsBaseParameterBinder(mainFactory, node));
+    constructor(tsFactory: TsFactory, private node: TsNode) {
+        super(new TsBaseParameterBinder(tsFactory, node));
     }
 }

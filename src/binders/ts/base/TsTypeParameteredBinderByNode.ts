@@ -1,12 +1,12 @@
 ﻿import {TsNode} from "./../../../compiler";
 import {TypeParameterDefinition, TypeParameteredDefinition} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
+import {TsFactory} from "./../../../factories";
 import {TypeParameteredBinder} from "./../../base";
 import {TsTypeParameterBinder} from "./../general";
 
 export class TsTypeParameteredBinderByNode extends TypeParameteredBinder {
     constructor(
-        private mainFactory: MainFactory,
+        private tsFactory: TsFactory,
         private node: TsNode
     ) {
         super();
@@ -15,7 +15,7 @@ export class TsTypeParameteredBinderByNode extends TypeParameteredBinder {
     getTypeParameters() {
         return this.node.getTypeParameters().map(typeParam => {
             const def = new TypeParameterDefinition<TypeParameteredDefinition>();
-            const binder = new TsTypeParameterBinder(this.mainFactory, typeParam);
+            const binder = new TsTypeParameterBinder(this.tsFactory, typeParam);
 
             binder.bind(def);
 

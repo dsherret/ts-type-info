@@ -1,4 +1,4 @@
-﻿import {MainFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
     ClassConstructorDefinition} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
@@ -14,23 +14,23 @@ import {TsClassConstructorBinder} from "./TsClassConstructorBinder";
 export type ClassMemberTypes = ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
 
 export class TsClassBinder extends ClassBinder {
-    constructor(private mainFactory: MainFactory, private node: TsNode) {
+    constructor(private tsFactory: TsFactory, private node: TsNode) {
         super(
             new TsNamedBinder(node),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
-            new TsTypeParameteredBinderByNode(mainFactory, node),
+            new TsTypeParameteredBinderByNode(tsFactory, node),
             new TsAbstractableBinder(node),
             new TsDecoratableBinder(node)
         );
     }
 
     getExtendsTypeExpressions() {
-        return this.node.getSymbol().getExtendsTypeExpressions().map(typeExpression => this.mainFactory.getTypeExpression(typeExpression));
+        return this.node.getSymbol().getExtendsTypeExpressions().map(typeExpression => this.tsFactory.getTypeExpression(typeExpression));
     }
 
     getImplementsTypeExpressions() {
-        return this.node.getImplementsTypeExpressions().map(typeExpression => this.mainFactory.getTypeExpression(typeExpression));
+        return this.node.getImplementsTypeExpressions().map(typeExpression => this.tsFactory.getTypeExpression(typeExpression));
     }
 
     getMembers() {
@@ -43,7 +43,7 @@ export class TsClassBinder extends ClassBinder {
         if (childNode.isMethodDeclaration()) {
             if (childNode.hasStaticKeyword()) {
                 const staticMethodDef = new ClassStaticMethodDefinition();
-                const staticMethodBinder = new TsClassStaticMethodBinder(this.mainFactory, childNode);
+                const staticMethodBinder = new TsClassStaticMethodBinder(this.tsFactory, childNode);
 
                 staticMethodBinder.bind(staticMethodDef);
 
@@ -51,7 +51,7 @@ export class TsClassBinder extends ClassBinder {
             }
             else {
                 const methodDef = new ClassMethodDefinition();
-                const methodBinder = new TsClassMethodBinder(this.mainFactory, childNode);
+                const methodBinder = new TsClassMethodBinder(this.tsFactory, childNode);
 
                 methodBinder.bind(methodDef);
 
@@ -61,7 +61,7 @@ export class TsClassBinder extends ClassBinder {
         else if (childNode.isPropertyDeclaration() || childNode.isGetAccessor()) {
             if (childNode.hasStaticKeyword()) {
                 const staticPropertyDef = new ClassStaticPropertyDefinition();
-                const staticPropertyBinder = new TsClassStaticPropertyBinder(this.mainFactory, childNode);
+                const staticPropertyBinder = new TsClassStaticPropertyBinder(this.tsFactory, childNode);
 
                 staticPropertyBinder.bind(staticPropertyDef);
 
@@ -69,7 +69,7 @@ export class TsClassBinder extends ClassBinder {
             }
             else {
                 const propertyDef = new ClassPropertyDefinition();
-                const propertyBinder = new TsClassPropertyBinder(this.mainFactory, childNode);
+                const propertyBinder = new TsClassPropertyBinder(this.tsFactory, childNode);
 
                 propertyBinder.bind(propertyDef);
 
@@ -78,7 +78,7 @@ export class TsClassBinder extends ClassBinder {
         }
         else if (childNode.isConstructor()) {
             const constructorDef = new ClassConstructorDefinition();
-            const constructorBinder = new TsClassConstructorBinder(this.mainFactory, childNode);
+            const constructorBinder = new TsClassConstructorBinder(this.tsFactory, childNode);
 
             constructorBinder.bind(constructorDef);
 

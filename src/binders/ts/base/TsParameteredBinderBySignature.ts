@@ -1,12 +1,12 @@
 ﻿import {TsSignature} from "./../../../compiler";
 import {BaseParameterDefinitionConstructor, BaseParameterDefinition} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
+import {TsFactory} from "./../../../factories";
 import {ParameteredBinder} from "./../../base";
 import {TsParameterBinderByNodeConstructor} from "./TsParameteredBinderByNode";
 
 export class TsParameteredBinderBySignature<ParameterType extends BaseParameterDefinition<any>> extends ParameteredBinder<ParameterType> {
     constructor(
-        private mainFactory: MainFactory,
+        private tsFactory: TsFactory,
         private signature: TsSignature,
         private paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
         private paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
@@ -17,7 +17,7 @@ export class TsParameteredBinderBySignature<ParameterType extends BaseParameterD
     getParameters() {
         return this.signature.getParameters().map(param => {
             const paramDefinition = new this.paramDefinition();
-            const paramBinder = new this.paramBinder(this.mainFactory, param.getOnlyNode());
+            const paramBinder = new this.paramBinder(this.tsFactory, param.getOnlyNode());
 
             paramBinder.bind(paramDefinition);
 

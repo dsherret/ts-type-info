@@ -1,4 +1,4 @@
-﻿import {MainFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {BaseParameterBinder} from "./../../base";
 import {TsDefaultExpressionedBinder} from "./TsDefaultExpressionedBinder";
@@ -6,10 +6,10 @@ import {TsNamedBinder} from "./TsNamedBinder";
 import {TsTypeExpressionedBinder} from "./TsTypeExpressionedBinder";
 
 export class TsBaseParameterBinder extends BaseParameterBinder {
-    constructor(mainFactory: MainFactory, private node: TsNode) {
+    constructor(tsFactory: TsFactory, private node: TsNode) {
         super(
             new TsNamedBinder(node),
-            new TsTypeExpressionedBinder(mainFactory, node),
+            new TsTypeExpressionedBinder(tsFactory, node),
             new TsDefaultExpressionedBinder(node)
         );
     }

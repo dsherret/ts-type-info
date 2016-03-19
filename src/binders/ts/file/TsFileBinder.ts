@@ -1,12 +1,12 @@
 import {ExportableDefinitions} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
+import {TsFactory} from "./../../../factories";
 import {TsSourceFile} from "./../../../compiler";
 import {FileBinder} from "./../../base";
 import {TsModuledBinder} from "./../base";
 
 export class TsFileBinder extends FileBinder {
-    constructor(private mainFactory: MainFactory, private sourceFile: TsSourceFile) {
-        super(new TsModuledBinder(mainFactory, sourceFile.getNode()));
+    constructor(private tsFactory: TsFactory, private sourceFile: TsSourceFile) {
+        super(new TsModuledBinder(tsFactory, sourceFile.getNode()));
     }
 
     getFileName() {
@@ -17,7 +17,7 @@ export class TsFileBinder extends FileBinder {
         const symbol = this.sourceFile.getDefaultExportSymbol();
 
         if (symbol != null) {
-            const defsOrExpression = this.mainFactory.getDefinitionsOrExpressionFromExportSymbol(symbol);
+            const defsOrExpression = this.tsFactory.getDefinitionsOrExpressionFromExportSymbol(symbol);
             return {
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],
                 expression: defsOrExpression.expression

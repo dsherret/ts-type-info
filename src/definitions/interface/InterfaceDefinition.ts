@@ -1,5 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
+import {StructureFactory} from "./../../factories";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins} from "./../../utils";
@@ -20,6 +21,13 @@ export class InterfaceDefinition extends BaseDefinition
 
     constructor() {
         super(DefinitionType.Interface);
+    }
+
+    addExtends(...texts: string[]) {
+        const factory = new StructureFactory();
+        (texts || []).forEach(text => {
+            this.extendsTypeExpressions.push(factory.getTypeExpressionFromText(text));
+        });
     }
 
     write() {

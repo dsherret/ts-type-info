@@ -1,10 +1,10 @@
 ﻿import {ExportableDefinitions} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
+import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {ImportBinder} from "./../../base";
 
 export class TsImportBinder extends ImportBinder {
-    constructor(private mainFactory: MainFactory, private node: TsNode) {
+    constructor(private tsFactory: TsFactory, private node: TsNode) {
         super();
     }
 
@@ -28,7 +28,7 @@ export class TsImportBinder extends ImportBinder {
         const defaultImportNameAndSymbol = this.node.getDefaultImportNameAndSymbol();
 
         if (defaultImportNameAndSymbol != null) {
-            const defsOrExpression = this.mainFactory.getDefinitionsOrExpressionFromExportSymbol(defaultImportNameAndSymbol.symbol);
+            const defsOrExpression = this.tsFactory.getDefinitionsOrExpressionFromExportSymbol(defaultImportNameAndSymbol.symbol);
 
             return {
                 importName: defaultImportNameAndSymbol.name,
@@ -45,7 +45,7 @@ export class TsImportBinder extends ImportBinder {
         const namedSymbols = this.node.getNamedImportSymbolsByName();
 
         return Object.keys(namedSymbols || {}).map(name => {
-            const defsOrExpression = this.mainFactory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
+            const defsOrExpression = this.tsFactory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
 
             return {
                 importName: name,
@@ -59,7 +59,7 @@ export class TsImportBinder extends ImportBinder {
         const starExportSymbols = this.node.getStarSymbol().getExportSymbolsOfModuleByName();
 
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
-            const definitions = this.mainFactory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
+            const definitions = this.tsFactory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
 
             return {
                 importName: name,

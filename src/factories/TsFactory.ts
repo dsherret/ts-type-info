@@ -6,7 +6,7 @@ import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceB
     TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder} from "./../binders";
 import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol} from "./../compiler";
 
-export class MainFactory {
+export class TsFactory {
     private definitionByNode = new KeyValueCache<TsNode, NodeDefinitions>();
     private files = new KeyValueCache<TsSourceFile, FileDefinition>();
     private typeExpressions = new KeyValueCache<TsTypeExpression, TypeExpressionDefinition>();

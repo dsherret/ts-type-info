@@ -1,4 +1,4 @@
-﻿import {MainFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {TsNode, TsSymbol} from "./../../../compiler";
 import {ClassPropertyBinder} from "./../../base";
 import {TsBaseClassPropertyBinder} from "./base";
@@ -6,8 +6,8 @@ import {TsBaseClassPropertyBinder} from "./base";
 export class TsClassPropertyBinder extends ClassPropertyBinder {
     private symbol: TsSymbol;
 
-    constructor(mainFactory: MainFactory, private node: TsNode) {
-        super(new TsBaseClassPropertyBinder(mainFactory, node));
+    constructor(tsFactory: TsFactory, private node: TsNode) {
+        super(new TsBaseClassPropertyBinder(tsFactory, node));
 
         this.symbol = node.getSymbol();
     }

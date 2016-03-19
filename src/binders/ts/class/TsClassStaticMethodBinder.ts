@@ -1,4 +1,4 @@
-﻿import {MainFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {ClassStaticMethodParameterDefinition} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {ClassStaticMethodBinder} from "./../../base";
@@ -6,10 +6,10 @@ import {TsClassStaticMethodParameterBinder} from "./TsClassStaticMethodParameter
 import {TsBaseClassMethodBinder} from "./base";
 
 export class TsClassStaticMethodBinder extends ClassStaticMethodBinder {
-    constructor(mainFactory: MainFactory, node: TsNode) {
+    constructor(tsFactory: TsFactory, node: TsNode) {
         super(
             new TsBaseClassMethodBinder(
-                mainFactory,
+                tsFactory,
                 node,
                 ClassStaticMethodParameterDefinition,
                 TsClassStaticMethodParameterBinder

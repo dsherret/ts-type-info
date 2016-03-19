@@ -1,10 +1,10 @@
 ﻿import {ExportableDefinitions} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
+import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {ReExportBinder} from "./../../base";
 
 export class TsReExportBinder extends ReExportBinder {
-    constructor(private mainFactory: MainFactory, private node: TsNode) {
+    constructor(private tsFactory: TsFactory, private node: TsNode) {
         super();
     }
 
@@ -25,7 +25,7 @@ export class TsReExportBinder extends ReExportBinder {
         const namedSymbols = this.node.getNamedExportSymbolsByName();
 
         return Object.keys(namedSymbols || {}).map(name => {
-            const defsOrExpression = this.mainFactory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
+            const defsOrExpression = this.tsFactory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
 
             return {
                 exportName: name,
@@ -40,7 +40,7 @@ export class TsReExportBinder extends ReExportBinder {
         const starExportSymbols = moduleSymbol.getExportSymbolsByName();
 
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
-            const definitions = this.mainFactory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
+            const definitions = this.tsFactory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
 
             return {
                 exportName: name,

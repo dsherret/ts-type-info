@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
-import {StructureClassPropertyBinder} from "./../../binders";
+import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefinition,
         AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
@@ -40,11 +40,24 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     }
 
     addProperty(prop: ClassPropertyStructure) {
-        const def = new ClassPropertyDefinition();
-        const binder = new StructureClassPropertyBinder(prop);
-        binder.bind(def);
+        const factory = new StructureFactory();
+        const def = factory.getClassProperty(prop);
         def.parent = this;
         this.properties.push(def);
+    }
+
+    addExtends(...texts: string[]) {
+        const factory = new StructureFactory();
+        (texts || []).forEach(text => {
+            this.extendsTypeExpressions.push(factory.getTypeExpressionFromText(text));
+        });
+    }
+
+    addImplements(...texts: string[]) {
+        const factory = new StructureFactory();
+        (texts || []).forEach(text => {
+            this.implementsTypeExpressions.push(factory.getTypeExpressionFromText(text));
+        });
     }
 
     // NamedDefinition

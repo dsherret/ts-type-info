@@ -1,4 +1,4 @@
-﻿import {MainFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {InterfaceNewSignatureParameterDefinition} from "./../../../definitions";
 import {TsSignature} from "./../../../compiler";
 import {InterfaceNewSignatureBinder} from "./../../base";
@@ -6,10 +6,10 @@ import {TsParameteredBinderBySignature, TsReturnTypedBinderBySignature} from "./
 import {TsInterfaceNewSignatureParameterBinder} from "./TsInterfaceNewSignatureParameterBinder";
 
 export class TsInterfaceNewSignatureBinder extends InterfaceNewSignatureBinder {
-    constructor(mainFactory: MainFactory, private signature: TsSignature) {
+    constructor(tsFactory: TsFactory, private signature: TsSignature) {
         super(
-            new TsParameteredBinderBySignature(mainFactory, signature, InterfaceNewSignatureParameterDefinition, TsInterfaceNewSignatureParameterBinder),
-            new TsReturnTypedBinderBySignature(mainFactory, signature)
+            new TsParameteredBinderBySignature(tsFactory, signature, InterfaceNewSignatureParameterDefinition, TsInterfaceNewSignatureParameterBinder),
+            new TsReturnTypedBinderBySignature(tsFactory, signature)
         );
     }
 }

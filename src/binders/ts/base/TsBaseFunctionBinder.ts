@@ -1,5 +1,5 @@
 ﻿import {BaseParameterDefinition, BaseParameterDefinitionConstructor} from "./../../../definitions";
-import {MainFactory} from "./../../../factories";
+import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {BaseFunctionBinder} from "./../../base";
 import {TsNamedBinder} from "./TsNamedBinder";
@@ -9,16 +9,16 @@ import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 
 export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition<any>> extends BaseFunctionBinder<ParameterType> {
     constructor(
-        private mainFactory: MainFactory,
+        private tsFactory: TsFactory,
         private node: TsNode,
         private paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
         private paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
         super(
             new TsNamedBinder(node),
-            new TsTypeParameteredBinderByNode(mainFactory, node),
-            new TsParameteredBinderByNode(mainFactory, node, paramDefinition, paramBinder),
-            new TsReturnTypedBinderByNode(mainFactory, node)
+            new TsTypeParameteredBinderByNode(tsFactory, node),
+            new TsParameteredBinderByNode(tsFactory, node, paramDefinition, paramBinder),
+            new TsReturnTypedBinderByNode(tsFactory, node)
         );
     }
 }
