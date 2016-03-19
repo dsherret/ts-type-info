@@ -1,7 +1,7 @@
-﻿import {FileDefinition, InterfaceDefinition} from "./../definitions";
+﻿import {FileDefinition, ParentedDefinition} from "./../definitions";
 
 export class DefinitionUtils {
-    static isInterfaceInAmbientContext(definition: InterfaceDefinition) {
+    static isInAmbientContext(definition: ParentedDefinition<any>) {
         const parent = definition.parent;
 
         if (parent.isFileDefinition()) {
