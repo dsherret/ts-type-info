@@ -46,7 +46,7 @@ export class InterfaceDefinition extends BaseDefinition
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

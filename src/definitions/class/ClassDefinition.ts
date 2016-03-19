@@ -78,13 +78,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     // IParentedDefinition
     parent: ModuledDefinitions;
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

@@ -39,7 +39,7 @@ export class TypeAliasDefinition extends BaseDefinition
     // TypeExpressionedDefinition
     typeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

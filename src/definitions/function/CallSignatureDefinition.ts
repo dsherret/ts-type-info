@@ -18,7 +18,7 @@ export class CallSignatureDefinition
     // ReturnTyped
     returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
 }
 
 applyMixins(CallSignatureDefinition, BaseDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

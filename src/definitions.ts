@@ -28,7 +28,7 @@ export type InterfaceDefinitions = InterfaceDefinition | InterfaceMethodParamete
 export type EnumDefinitions = EnumDefinition | EnumMemberDefinition;
 export type FunctionDefinitions = CallSignatureDefinition | CallSignatureParameterDefinition | FunctionDefinition | FunctionParameterDefinition;
 export type NamespaceDefinitions = NamespaceDefinition;
-export type GeneralDefinitions = TypeParameterDefinition<TypeParameteredDefinitions> | TypePropertyDefinition | DecoratorDefinition<DecoratedDefinitions> | TypeAliasDefinition;
+export type GeneralDefinitions = TypeParameterDefinition | TypePropertyDefinition | DecoratorDefinition | TypeAliasDefinition;
 export type VariableDefinitions = VariableDefinition;
 
 // "ed" definitions

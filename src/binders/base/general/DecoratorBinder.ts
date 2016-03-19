@@ -8,7 +8,7 @@ export abstract class DecoratorBinder implements IBaseBinder {
 
     abstract getArguments(): ExpressionDefinition[];
 
-    bind(def: DecoratorDefinition<any>) {
+    bind(def: DecoratorDefinition) {
         this.namedBinder.bind(def);
         def.arguments.push(...this.getArguments());
     }

@@ -1,8 +1,9 @@
 import {applyMixins} from "./../../utils";
+import {TypeParameteredDefinitions} from "./../../definitions";
 import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeExpressionDefinition} from "./../expressions";
 
-export class TypeParameterDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType> {
+export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<TypeParameteredDefinitions> {
     constraintTypeExpression: TypeExpressionDefinition;
 
     constructor() {
@@ -12,7 +13,7 @@ export class TypeParameterDefinition<ParentType> extends BaseDefinition implemen
     // NamedDefinition
     name: string;
     // IParentedDefinition
-    parent: ParentType;
+    parent: TypeParameteredDefinitions;
 }
 
 applyMixins(TypeParameterDefinition, BaseDefinition, [NamedDefinition]);

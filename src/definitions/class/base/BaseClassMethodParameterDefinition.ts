@@ -10,7 +10,7 @@ export class BaseClassMethodParameterDefinition<ParentType> extends BaseParamete
     }
 
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     // ScopedDefinition
     scope: Scope;
 }

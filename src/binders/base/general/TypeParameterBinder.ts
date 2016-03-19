@@ -8,7 +8,7 @@ export abstract class TypeParameterBinder implements IBaseBinder {
 
     abstract getConstraintTypeExpression(): TypeExpressionDefinition;
 
-    bind(def: TypeParameterDefinition<any>) {
+    bind(def: TypeParameterDefinition) {
         this.namedBinder.bind(def);
         def.constraintTypeExpression = this.getConstraintTypeExpression();
     }

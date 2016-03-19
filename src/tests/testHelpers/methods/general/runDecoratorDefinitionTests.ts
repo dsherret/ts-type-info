@@ -5,7 +5,7 @@ import {runNamedDefinitionTests, runParentedDefinitionTests} from "./../base";
 import {runExpressionTests} from "./../expressions";
 import {ensureNotNull} from "./../../ensureNotNull";
 
-export function runDecoratorDefinitionTests(definition: DecoratorDefinition<any>, structure: DecoratorTestStructure) {
+export function runDecoratorDefinitionTests(definition: DecoratorDefinition, structure: DecoratorTestStructure) {
     describe(`decorator ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             structure.arguments = structure.arguments || [];

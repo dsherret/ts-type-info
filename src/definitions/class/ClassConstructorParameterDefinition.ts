@@ -33,7 +33,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     }
 
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
 }
 
 applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition]);

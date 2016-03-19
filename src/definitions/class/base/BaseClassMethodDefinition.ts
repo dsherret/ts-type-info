@@ -16,7 +16,7 @@ export class BaseClassMethodDefinition<ParameterType>
     }
 
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     // ScopeDefinition
     scope: Scope;
 }

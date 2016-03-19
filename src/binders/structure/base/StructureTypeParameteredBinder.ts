@@ -14,7 +14,7 @@ export class StructureTypeParameteredBinder extends TypeParameteredBinder {
 
     getTypeParameters() {
         return (this.structure.typeParameters || []).map(typeParam => {
-            const def = new TypeParameterDefinition<TypeParameteredDefinition>();
+            const def = new TypeParameterDefinition();
             const binder = new StructureTypeParameterBinder(this.factory, typeParam);
 
             binder.bind(def);

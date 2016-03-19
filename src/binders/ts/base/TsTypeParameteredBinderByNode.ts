@@ -14,7 +14,7 @@ export class TsTypeParameteredBinderByNode extends TypeParameteredBinder {
 
     getTypeParameters() {
         return this.node.getTypeParameters().map(typeParam => {
-            const def = new TypeParameterDefinition<TypeParameteredDefinition>();
+            const def = new TypeParameterDefinition();
             const binder = new TsTypeParameterBinder(this.tsFactory, typeParam);
 
             binder.bind(def);

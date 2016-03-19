@@ -11,7 +11,7 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassD
     }
 
     // DecoratableDefinition
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     // ScopeDefinition
     scope: Scope;
 }

@@ -1,7 +1,8 @@
+import {DecoratedDefinitions} from "./../../definitions";
 import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expressions";
 
-export class DecoratorDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType> {
+export class DecoratorDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<DecoratedDefinitions> {
     arguments: ExpressionDefinition[] = [];
 
     constructor() {
@@ -11,5 +12,5 @@ export class DecoratorDefinition<ParentType> extends BaseDefinition implements N
     // NamedDefinition
     name: string;
     // IParentedDefinition
-    parent: ParentType;
+    parent: DecoratedDefinitions;
 }

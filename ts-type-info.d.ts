@@ -102,7 +102,7 @@ export abstract class DefaultExpressionedDefinition {
 }
 
 export abstract class DecoratableDefinition {
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
 }
 
 export abstract class ExportableDefinition {
@@ -131,7 +131,7 @@ export class BasePropertyDefinition<ParentType> extends BaseDefinition implement
 }
 
 export abstract class TypeParameteredDefinition {
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
 }
 
 export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements DefaultExpressionedDefinition {
@@ -143,7 +143,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType> extends BaseDefin
     parent: ParentType;
     parameters: ParameterType[];
     returnTypeExpression: TypeExpressionDefinition;
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
 }
 
 export interface BaseParameterDefinitionConstructor<ParameterType> {
@@ -166,10 +166,10 @@ export abstract class ReturnTypedDefinition {
     returnTypeExpression: TypeExpressionDefinition;
 }
 
-export class TypeParameterDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType> {
+export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition> {
     constraintTypeExpression: TypeExpressionDefinition;
     name: string;
-    parent: ParentType;
+    parent: ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition;
 }
 
 export class TypePropertyDefinition extends BasePropertyDefinition<TypeDefinition> {
@@ -182,17 +182,17 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     typeExpression: TypeExpressionDefinition;
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
     write(): string;
 }
 
-export class DecoratorDefinition<ParentType> extends BaseDefinition implements NamedDefinition, ParentedDefinition<ParentType> {
+export class DecoratorDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition> {
     arguments: ExpressionDefinition[];
     name: string;
-    parent: ParentType;
+    parent: ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
 }
 
 export class ExpressionDefinition {
@@ -215,7 +215,7 @@ export class CallSignatureDefinition extends BaseDefinition implements TypeParam
     minArgumentCount: number;
     parameters: CallSignatureParameterDefinition[];
     returnTypeExpression: TypeExpressionDefinition;
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
 }
 
 export class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {
@@ -236,18 +236,18 @@ export class FunctionParameterDefinition extends BaseParameterDefinition<Functio
 }
 
 export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements DecoratableDefinition, ScopedDefinition {
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     scope: "public" | "protected" | "private";
 }
 
 export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements DecoratableDefinition, ScopedDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     scope: "public" | "protected" | "private";
 }
 
 export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements DecoratableDefinition, ScopedDefinition {
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     scope: "public" | "protected" | "private";
 }
 
@@ -265,17 +265,20 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     implementsTypeExpressions: TypeExpressionDefinition[];
     name: string;
     parent: FileDefinition | NamespaceDefinition;
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     isAbstract: boolean;
 
     write(): string;
     addProperty(prop: ClassPropertyStructure): void;
+    addExtends(...texts: string[]): void;
+    addImplements(...texts: string[]): void;
+    setConstructor(structure: ClassConstructorStructure): void;
 }
 
 export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethodParameterDefinition> implements AbstractableDefinition {
@@ -299,7 +302,9 @@ export class ClassConstructorDefinition extends BaseDefinition implements Parent
 
 export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements DecoratableDefinition {
     scope: "none" | "public" | "protected" | "private";
-    decorators: DecoratorDefinition<this>[];
+    decorators: DecoratorDefinition[];
+
+    toProperty(): ClassPropertyDefinition;
 }
 
 export type ClassConstructorParameterScope = "none" | "public" | "protected" | "private";
@@ -329,10 +334,11 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    addExtends(...texts: string[]): void;
     write(): string;
 }
 
@@ -465,7 +471,7 @@ export type FunctionDefinitions = CallSignatureDefinition | CallSignatureParamet
 
 export type NamespaceDefinitions = NamespaceDefinition;
 
-export type GeneralDefinitions = TypeParameterDefinition<ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition> | TypePropertyDefinition | DecoratorDefinition<ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition> | TypeAliasDefinition;
+export type GeneralDefinitions = TypeParameterDefinition | TypePropertyDefinition | DecoratorDefinition | TypeAliasDefinition;
 
 export type VariableDefinitions = VariableDefinition;
 

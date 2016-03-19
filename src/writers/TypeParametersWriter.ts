@@ -5,7 +5,7 @@ import {TypeParameterWriter} from "./TypeParameterWriter";
 export class TypeParametersWriter extends BaseWriter {
     private typeParameterWriter = new TypeParameterWriter(this.writer, this.flags);
 
-    write(typeParameters: TypeParameterDefinition<any>[]) {
+    write(typeParameters: TypeParameterDefinition[]) {
         if (typeParameters.length > 0) {
             this.writer.write("<");
             this.writeTypeParameters(typeParameters);
@@ -13,7 +13,7 @@ export class TypeParametersWriter extends BaseWriter {
         }
     }
 
-    private writeTypeParameters(typeParameters: TypeParameterDefinition<any>[]) {
+    private writeTypeParameters(typeParameters: TypeParameterDefinition[]) {
         typeParameters.forEach((p, i) => {
             if (i !== 0) {
                 this.writer.write(", ");

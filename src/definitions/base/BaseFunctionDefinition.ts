@@ -25,7 +25,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType>
     // ReturnTyped
     returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
-    typeParameters: TypeParameterDefinition<this>[];
+    typeParameters: TypeParameterDefinition[];
 }
 
 applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);
