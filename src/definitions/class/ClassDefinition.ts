@@ -8,9 +8,10 @@ import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefiniti
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ClassPropertyStructure} from "./../../structures";
+import {ClassPropertyStructure, ClassConstructorStructure} from "./../../structures";
 import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
+import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 import {ClassMethodDefinition} from "./ClassMethodDefinition";
 import {ClassPropertyDefinition} from "./ClassPropertyDefinition";
 import {ClassStaticMethodDefinition} from "./ClassStaticMethodDefinition";
@@ -58,6 +59,18 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         (texts || []).forEach(text => {
             this.implementsTypeExpressions.push(factory.getTypeExpressionFromText(text));
         });
+    }
+
+    setConstructor(structure: ClassConstructorStructure) {
+        const factory = new StructureFactory();
+        this.constructorDef = factory.getClassConstructor(structure);
+        this.constructorDef.parent = this;
+        this.properties = this.properties.filter(p => !p.isConstructorParameter);
+        this.properties.push(...this.constructorDef.parameters.filter(p => p.scope !== ClassConstructorParameterScope.None).map(p => {
+            const prop = p.toProperty();
+            prop.parent = this;
+            return prop;
+        }));
     }
 
     // NamedDefinition

@@ -2,7 +2,7 @@ import * as assert from "assert";
 import {BasePropertyTestStructure} from "./../../testStructures";
 import {BasePropertyDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests} from "./runNamedDefinitionTests";
-import {runTypeExpressionedDefinitionTests} from "./runTypedDefinitionTests";
+import {runTypeExpressionedDefinitionTests} from "./runTypeExpressionedDefinitionTests";
 import {runParentedDefinitionTests} from "./runParentedDefinitionTests";
 
 export function runBasePropertyDefinitionTests(definition: BasePropertyDefinition<any>, structure: BasePropertyTestStructure) {

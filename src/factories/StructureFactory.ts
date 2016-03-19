@@ -1,8 +1,15 @@
-﻿import {StructureClassPropertyBinder, StructureExpressionBinder} from "./../binders";
-import {ClassPropertyDefinition, TypeExpressionDefinition} from "./../definitions";
-import {ClassPropertyStructure} from "./../structures";
+﻿import {StructureClassConstructorBinder, StructureClassPropertyBinder, StructureExpressionBinder} from "./../binders";
+import {ClassConstructorDefinition, ClassPropertyDefinition, TypeExpressionDefinition} from "./../definitions";
+import {ClassConstructorStructure, ClassPropertyStructure} from "./../structures";
 
 export class StructureFactory {
+    getClassConstructor(structure: ClassConstructorStructure) {
+        const def = new ClassConstructorDefinition();
+        const binder = new StructureClassConstructorBinder(this, structure);
+        binder.bind(def);
+        return def;
+    }
+
     getClassProperty(prop: ClassPropertyStructure) {
         const def = new ClassPropertyDefinition();
         const binder = new StructureClassPropertyBinder(prop);

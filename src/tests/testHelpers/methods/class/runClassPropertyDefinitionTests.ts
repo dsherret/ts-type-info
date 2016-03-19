@@ -17,7 +17,7 @@ export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinit
                 assert.equal(definition.isReadonly, structure.isReadonly || false);
             });
 
-            it(`should be ${structure.isConstructorParameter ? "a" : "not a"} constructor parameter"`, () => {
+            it(`should be ${structure.isConstructorParameter ? "a" : "not a"} constructor parameter`, () => {
                 assert.equal(definition.isConstructorParameter, structure.isConstructorParameter || false);
             });
         });

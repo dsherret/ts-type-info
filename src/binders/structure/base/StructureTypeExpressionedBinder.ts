@@ -10,7 +10,7 @@ export class StructureTypeExpressionedBinder extends TypeExpressionedBinder {
 
     getTypeExpression() {
         const def = new TypeExpressionDefinition();
-        const binder = new StructureExpressionBinder(this.structure.type);
+        const binder = new StructureExpressionBinder(this.structure.type || "any");
         binder.bind(def);
         return def;
     }

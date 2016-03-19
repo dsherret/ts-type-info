@@ -21,6 +21,7 @@ export class TsClassPropertyBinder extends ClassPropertyBinder {
     }
 
     getIsConstructorParameter() {
-        return this.node.isConstructorParameter();
+        // this implementation will never be a constructor parameter
+        return false;
     }
 }

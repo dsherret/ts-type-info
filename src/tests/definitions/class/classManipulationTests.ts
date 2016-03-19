@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
-import {ClassDefinition, Scope} from "./../../../definitions";
-import {runClassPropertyDefinitionTests} from "./../../testHelpers";
+import {ClassDefinition, Scope, ClassConstructorParameterScope} from "./../../../definitions";
+import {runClassPropertyDefinitionTests, runClassConstructorDefinitionTests} from "./../../testHelpers";
 
 describe("ClassDefinition", () => {
     describe("addExtends", () => {
@@ -54,6 +54,55 @@ describe("ClassDefinition", () => {
             name: "myProperty",
             scope: Scope.Private,
             typeExpression: { text: "string" }
+        });
+    });
+
+    describe("setConstructor", () => {
+        const c = new ClassDefinition();
+
+        c.setConstructor({
+            parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }]
+        });
+
+        describe("constructor", () => {
+            runClassConstructorDefinitionTests(c.constructorDef, {
+                parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }]
+            });
+        });
+
+        describe("properties", () => {
+            it(`should have 1 property`, () => {
+                assert.equal(c.properties.length, 1);
+            });
+
+            runClassPropertyDefinitionTests(c.properties[0], {
+                name: "param2",
+                scope: Scope.Private,
+                isConstructorParameter: true
+            });
+        });
+
+        // should remove the previous properties set by the last setConstructor
+        c.setConstructor({
+            parameters: [{ name: "param3" }, { name: "param4", scope: ClassConstructorParameterScope.Public }]
+        });
+
+        describe("constructor", () => {
+            runClassConstructorDefinitionTests(c.constructorDef, {
+                parameters: [{ name: "param3" }, { name: "param4", scope: ClassConstructorParameterScope.Public }]
+            });
+        });
+
+        describe("properties", () => {
+            it(`should have 1 property`, () => {
+                assert.equal(c.properties.length, 1);
+            });
+
+            runClassPropertyDefinitionTests(c.properties[0], {
+                name: "param4",
+                scope: Scope.Public,
+                isConstructorParameter: true
+            });
         });
     });
 });

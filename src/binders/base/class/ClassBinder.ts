@@ -62,20 +62,9 @@ export abstract class ClassBinder implements IBaseBinder {
         if (def.constructorDef != null) {
             def.constructorDef.parameters.forEach(param => {
                 if (param.scope !== ClassConstructorParameterScope.None) {
-                    def.addProperty({
-                        name: param.name,
-                        isConstructorParameter: true,
-                        scope: ClassConstructorParameterScope.toScope(param.scope),
-                        type: param.typeExpression.text,
-                        isOptional: param.isOptional,
-                        defaultExpression: param.defaultExpression != null ? param.defaultExpression.text : null,
-                        decorators: param.decorators.map(decorator => {
-                            return {
-                                name: decorator.name,
-                                arguments: decorator.arguments.map(arg => arg.text)
-                            };
-                        })
-                    });
+                    const property = param.toProperty();
+                    property.parent = def;
+                    def.properties.push(property);
                 }
             });
         }

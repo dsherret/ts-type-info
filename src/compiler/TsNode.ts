@@ -355,11 +355,6 @@ export class TsNode extends TsSourceFileChild {
         return this.getKind() === ts.SyntaxKind.Constructor;
     }
 
-    isConstructorParameter() {
-        // this implementation will never be a constructor parameter
-        return false;
-    }
-
     isConstructSignature() {
         return this.getKind() === ts.SyntaxKind.ConstructSignature;
     }

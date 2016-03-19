@@ -9,10 +9,10 @@ import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 
 export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition<any>> extends BaseFunctionBinder<ParameterType> {
     constructor(
-        private tsFactory: TsFactory,
-        private node: TsNode,
-        private paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
-        private paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
+        tsFactory: TsFactory,
+        node: TsNode,
+        paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
+        paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
         super(
             new TsNamedBinder(node),
