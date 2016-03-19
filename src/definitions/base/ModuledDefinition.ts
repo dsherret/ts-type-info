@@ -1,5 +1,4 @@
-﻿import {ArrayExt} from "./../../utils";
-import {ExportableDefinitions} from "./../../definitions";
+﻿import {ExportableDefinitions} from "./../../definitions";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
@@ -9,13 +8,13 @@ import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
 
 export abstract class ModuledDefinition {
-    namespaces = new ArrayExt<NamespaceDefinition>();
-    classes = new ArrayExt<ClassDefinition>();
-    interfaces = new ArrayExt<InterfaceDefinition>();
-    enums = new ArrayExt<EnumDefinition>();
-    functions = new ArrayExt<FunctionDefinition>();
-    variables = new ArrayExt<VariableDefinition>();
-    typeAliases = new ArrayExt<TypeAliasDefinition>();
+    namespaces: NamespaceDefinition[] = [];
+    classes: ClassDefinition[] = [];
+    interfaces: InterfaceDefinition[] = [];
+    enums: EnumDefinition[] = [];
+    functions: FunctionDefinition[] = [];
+    variables: VariableDefinition[] = [];
+    typeAliases: TypeAliasDefinition[] = [];
 
     getExports() {
         const exports: ExportableDefinitions[] = [];

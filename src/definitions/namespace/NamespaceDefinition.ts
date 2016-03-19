@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {ModuledDefinition, NamedDefinition, ParentedDefinition, ExportableDefinition,
@@ -34,13 +34,13 @@ export class NamespaceDefinition extends BaseDefinition
     // IParentedDefinition
     parent: ModuledDefinitions;
     // ModuledDefinition
-    namespaces: ArrayExt<NamespaceDefinition>;
-    classes: ArrayExt<ClassDefinition>;
-    interfaces: ArrayExt<InterfaceDefinition>;
-    enums: ArrayExt<EnumDefinition>;
-    functions: ArrayExt<FunctionDefinition>;
-    variables: ArrayExt<VariableDefinition>;
-    typeAliases: ArrayExt<TypeAliasDefinition>;
+    namespaces: NamespaceDefinition[];
+    classes: ClassDefinition[];
+    interfaces: InterfaceDefinition[];
+    enums: EnumDefinition[];
+    functions: FunctionDefinition[];
+    variables: VariableDefinition[];
+    typeAliases: TypeAliasDefinition[];
     getExports: () => ExportableDefinitions[];
     // ExportableDefinition
     isExported: boolean;

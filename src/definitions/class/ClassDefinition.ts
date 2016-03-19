@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {StructureClassPropertyBinder} from "./../../binders";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefinition,
         AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
         AbstractableDefinition, DefinitionType} from "./../base";
@@ -20,13 +20,13 @@ type ClassMemberDefinitions = ClassMethodDefinition | ClassStaticMethodDefinitio
 
 export class ClassDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, DecoratableDefinition,
                                         ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
-    methods = new ArrayExt<ClassMethodDefinition>();
-    properties = new ArrayExt<ClassPropertyDefinition>();
-    staticMethods = new ArrayExt<ClassStaticMethodDefinition>();
-    staticProperties = new ArrayExt<ClassStaticPropertyDefinition>();
+    methods: ClassMethodDefinition[] = [];
+    properties: ClassPropertyDefinition[] = [];
+    staticMethods: ClassStaticMethodDefinition[] = [];
+    staticProperties: ClassStaticPropertyDefinition[] = [];
     constructorDef: ClassConstructorDefinition;
-    extendsTypeExpressions = new ArrayExt<TypeExpressionDefinition>();
-    implementsTypeExpressions = new ArrayExt<TypeExpressionDefinition>();
+    extendsTypeExpressions: TypeExpressionDefinition[] = [];
+    implementsTypeExpressions: TypeExpressionDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Class);
@@ -52,13 +52,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     // IParentedDefinition
     parent: ModuledDefinitions;
     // DecoratableDefinition
-    decorators: ArrayExt<DecoratorDefinition<this>>;
+    decorators: DecoratorDefinition<this>[];
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
-    typeParameters = new ArrayExt<TypeParameterDefinition<this>>();
+    typeParameters: TypeParameterDefinition<this>[];
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

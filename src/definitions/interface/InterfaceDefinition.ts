@@ -2,7 +2,7 @@
 import {ModuledDefinitions} from "./../../definitions";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {NamedDefinition, ParentedDefinition, ExportableDefinition, AmbientableDefinition,
         TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -13,10 +13,10 @@ import {InterfaceNewSignatureDefinition} from "./InterfaceNewSignatureDefinition
 
 export class InterfaceDefinition extends BaseDefinition
                                  implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
-    methods = new ArrayExt<InterfaceMethodDefinition>();
-    newSignatures = new ArrayExt<InterfaceNewSignatureDefinition>();
-    properties = new ArrayExt<InterfacePropertyDefinition>();
-    extendsTypeExpressions = new ArrayExt<TypeExpressionDefinition>();
+    methods: InterfaceMethodDefinition[] = [];
+    newSignatures: InterfaceNewSignatureDefinition[] = [];
+    properties: InterfacePropertyDefinition[] = [];
+    extendsTypeExpressions: TypeExpressionDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Interface);
@@ -38,7 +38,7 @@ export class InterfaceDefinition extends BaseDefinition
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
-    typeParameters = new ArrayExt<TypeParameterDefinition<this>>();
+    typeParameters: TypeParameterDefinition<this>[];
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

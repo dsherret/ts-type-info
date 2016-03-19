@@ -2,15 +2,14 @@
 import {CallSignatureDefinition} from "./../function";
 import {TypePropertyDefinition} from "./../general";
 import {TsType} from "./../../compiler";
-import {ArrayExt} from "./../../utils";
 import {MainFactory} from "./../../factories";
 import {TsCallSignatureBinder, TsTypePropertyBinder} from "./../../binders";
 
 export class TypeDefinition {
-    callSignatures = new ArrayExt<CallSignatureDefinition>();
-    definitions = new ArrayExt<ModuleMemberDefinitions>();
-    properties = new ArrayExt<TypePropertyDefinition>();
-    typeArguments = new ArrayExt<TypeDefinition>();
+    callSignatures: CallSignatureDefinition[] = [];
+    definitions: ModuleMemberDefinitions[] = [];
+    properties: TypePropertyDefinition[] = [];
+    typeArguments: TypeDefinition[] = [];
     text: string;
 
     // todo: should be refactored out into a binder

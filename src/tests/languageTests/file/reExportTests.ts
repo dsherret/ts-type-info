@@ -5,7 +5,7 @@ import {ClassDefinition, EnumDefinition, NamespaceDefinition} from "./../../../d
 
 describe("file re-export tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/languageTests/file/reExportTestFiles/reExport.ts");
-    const fileDef = getInfoFromFiles([fileName]).firstOrDefault(def => /reExport\.ts/.test(def.fileName));
+    const fileDef = getInfoFromFiles([fileName]).filter(def => /reExport\.ts/.test(def.fileName))[0];
 
     runFileDefinitionTests(fileDef, {
         reExports: [{

@@ -1,4 +1,4 @@
-import {applyMixins, ArrayExt} from "./../../../utils";
+import {applyMixins} from "./../../../utils";
 import {DecoratorDefinition} from "./../../general";
 import {DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../../base";
 import {Scope} from "./../Scope";
@@ -10,7 +10,7 @@ export class BaseClassMethodParameterDefinition<ParentType> extends BaseParamete
     }
 
     // DecoratableDefinition
-    decorators: ArrayExt<DecoratorDefinition<this>>;
+    decorators: DecoratorDefinition<this>[];
     // ScopedDefinition
     scope: Scope;
 }

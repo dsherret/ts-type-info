@@ -1,9 +1,8 @@
-import {ArrayExt} from "./../../utils";
 import {TypeDefinition} from "./TypeDefinition";
 import {ExpressionDefinition} from "./ExpressionDefinition";
 
 export class TypeExpressionDefinition extends ExpressionDefinition {
-    types = new ArrayExt<TypeDefinition>();
+    types: TypeDefinition[] = [];
 
     addType(type: TypeDefinition) {
         this.types.push(type);

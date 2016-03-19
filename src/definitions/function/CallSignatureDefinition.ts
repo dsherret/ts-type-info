@@ -1,4 +1,4 @@
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {TypeParameteredDefinition, BaseDefinition, DefinitionType, ReturnTypedDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpressionDefinition} from "./../expressions";
@@ -14,11 +14,11 @@ export class CallSignatureDefinition
     }
 
     // ParameteredDefinition
-    parameters: ArrayExt<CallSignatureParameterDefinition>;
+    parameters: CallSignatureParameterDefinition[];
     // ReturnTyped
     returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
-    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
+    typeParameters: TypeParameterDefinition<this>[];
 }
 
 applyMixins(CallSignatureDefinition, BaseDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

@@ -5,25 +5,25 @@ import {getInfoFromFiles} from "./../main";
 export function generateDefinitionFile() {
     // todo: better way of doing this
     const fileInfo = getInfoFromFiles([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/main.d.ts")], { showDebugMessages: true })
-                        .firstOrDefault(f => f.fileName.indexOf("/main.ts") >= 0);
+                        .filter(f => f.fileName.indexOf("/main.ts") >= 0)[0];
 
     fileInfo.getExports().forEach(def => {
         // todo: once typescript supports it type-wise, this should be merged into one if statement
         if (def.isClassDefinition()) {
-            def.methods.removeWhere(m => m.name === "addDefinitions" ||
-                                         m.name.indexOf("fill") >= 0 ||
-                                         m.name === "addType");
-            def.properties.removeWhere(p => p.name.indexOf("fill") >= 0 || p.name === "addType");
+            def.methods = def.methods.filter(m => m.name !== "addDefinitions" &&
+                                         m.name.indexOf("fill") === -1 &&
+                                         m.name !== "addType");
+            def.properties = def.properties.filter(p => p.name.indexOf("fill") === -1 && p.name !== "addType");
 
             if (def.name !== "ArrayExt") {
                 def.constructorDef = null;
             }
         }
         else if (def.isInterfaceDefinition()) {
-            def.methods.removeWhere(m => m.name === "addDefinitions" ||
-                                         m.name.indexOf("fill") >= 0 ||
-                                         m.name === "addType");
-            def.properties.removeWhere(p => p.name.indexOf("fill") >= 0 || p.name === "addType");
+            def.methods = def.methods.filter(m => m.name !== "addDefinitions" &&
+                                         m.name.indexOf("fill") === -1 &&
+                                         m.name !== "addType");
+            def.properties = def.properties.filter(p => p.name.indexOf("fill") === -1 && p.name !== "addType");
         }
     });
 

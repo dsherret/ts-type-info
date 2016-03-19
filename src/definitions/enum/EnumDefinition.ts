@@ -2,13 +2,13 @@
 import {ModuledDefinitions} from "./../../definitions";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {NamedDefinition, ParentedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
 export class EnumDefinition extends BaseDefinition
                             implements ParentedDefinition<ModuledDefinitions>, ExportableDefinition, AmbientableDefinition {
-    members = new ArrayExt<EnumMemberDefinition>();
+    members: EnumMemberDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Enum);

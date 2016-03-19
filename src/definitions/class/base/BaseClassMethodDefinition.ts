@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 import {Scope} from "./../Scope";
-import {applyMixins, ArrayExt} from "./../../../utils";
+import {applyMixins} from "./../../../utils";
 import {DecoratorDefinition} from "./../../../definitions";
 import {DecoratableDefinition, DefinitionType, BaseFunctionDefinition} from "./../../base";
 import {ClassDefinition} from "./../ClassDefinition";
@@ -16,7 +16,7 @@ export class BaseClassMethodDefinition<ParameterType>
     }
 
     // DecoratableDefinition
-    decorators: ArrayExt<DecoratorDefinition<this>>;
+    decorators: DecoratorDefinition<this>[];
     // ScopeDefinition
     scope: Scope;
 }

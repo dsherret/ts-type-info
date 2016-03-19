@@ -1,5 +1,4 @@
 ﻿import {FileDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
-import {ArrayExt} from "./../../../utils";
 import {ModuledBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
@@ -21,15 +20,8 @@ export abstract class FileBinder implements IBaseBinder {
                 def.reExports.push(childDef);
             }
         });
+
         def.fileName = this.getFileName();
-
-        const defaultExport = this.getDefaultExport();
-
-        if (defaultExport != null) {
-            def.defaultExport = {
-                expression: defaultExport.expression,
-                definitions: new ArrayExt(...defaultExport.definitions)
-            };
-        }
+        def.defaultExport = this.getDefaultExport();
     }
 }

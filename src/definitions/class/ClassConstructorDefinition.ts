@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 import {ParentedDefinition, BaseDefinition, DefinitionType, ParameteredDefinition} from "./../base";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {ClassConstructorParameterDefinition} from "./ClassConstructorParameterDefinition";
 import {ClassDefinition} from "./ClassDefinition";
 
@@ -16,7 +16,7 @@ export class ClassConstructorDefinition
     // IParentedDefinition
     parent: ClassDefinition;
     // ParameteredDefinition
-    parameters: ArrayExt<ClassConstructorParameterDefinition>;
+    parameters: ClassConstructorParameterDefinition[];
 }
 
 applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition]);

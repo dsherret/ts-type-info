@@ -1,5 +1,5 @@
 import CodeBlockWriter from "code-block-writer";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {ExportableDefinitions} from "./../../definitions";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
@@ -18,9 +18,9 @@ import {ImportDefinition} from "./ImportDefinition";
 
 export class FileDefinition extends BaseDefinition implements ModuledDefinition {
     fileName: string;
-    imports = new ArrayExt<ImportDefinition>();
-    reExports = new ArrayExt<ReExportDefinition>();
-    defaultExport: { expression: ExpressionDefinition; definitions: ArrayExt<ExportableDefinitions>; };
+    imports: ImportDefinition[] = [];
+    reExports: ReExportDefinition[] = [];
+    defaultExport: { expression: ExpressionDefinition; definitions: ExportableDefinitions[]; };
 
     constructor() {
         super(DefinitionType.File);
@@ -64,13 +64,13 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     }
 
     // ModuledDefinition
-    namespaces: ArrayExt<NamespaceDefinition>;
-    classes: ArrayExt<ClassDefinition>;
-    interfaces: ArrayExt<InterfaceDefinition>;
-    enums: ArrayExt<EnumDefinition>;
-    functions: ArrayExt<FunctionDefinition>;
-    variables: ArrayExt<VariableDefinition>;
-    typeAliases: ArrayExt<TypeAliasDefinition>;
+    namespaces: NamespaceDefinition[];
+    classes: ClassDefinition[];
+    interfaces: InterfaceDefinition[];
+    enums: EnumDefinition[];
+    functions: FunctionDefinition[];
+    variables: VariableDefinition[];
+    typeAliases: TypeAliasDefinition[];
 }
 
 applyMixins(FileDefinition, BaseDefinition, [ModuledDefinition]);

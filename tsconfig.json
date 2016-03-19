@@ -11,7 +11,7 @@
         "rootDir": "src"
     },
     "exclude": [
-        "typings/browser.d.ts",
-        "typings/browser"
+        "src/typings/browser.d.ts",
+        "src/typings/browser"
     ]
 }

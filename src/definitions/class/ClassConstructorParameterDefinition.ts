@@ -1,4 +1,4 @@
-﻿import {applyMixins, ArrayExt} from "./../../utils";
+﻿import {applyMixins} from "./../../utils";
 import {DecoratorDefinition} from "./../general";
 import {DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
@@ -12,7 +12,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     }
 
     // DecoratableDefinition
-    decorators: ArrayExt<DecoratorDefinition<this>>;
+    decorators: DecoratorDefinition<this>[];
 }
 
 applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition]);

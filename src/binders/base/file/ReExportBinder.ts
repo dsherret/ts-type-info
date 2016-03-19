@@ -1,5 +1,4 @@
 ﻿import {ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
-import {ArrayExt} from "./../../../utils";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ReExportBinder implements IBaseBinder {
@@ -13,19 +12,11 @@ export abstract class ReExportBinder implements IBaseBinder {
         def.fileName = this.getFileName();
         def.moduleSpecifier = this.getModuleSpecifier();
 
-        const mapToWithArrayExt = (original: { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }) => {
-            return {
-                exportName: original.exportName,
-                definitions: new ArrayExt(...original.definitions),
-                expression: original.expression
-            };
-        };
-
         if (this.getIsStarExport()) {
-            def.starExports = new ArrayExt(...this.getStarExports().map(mapToWithArrayExt));
+            def.starExports = this.getStarExports();
         }
         else {
-            def.namedExports = new ArrayExt(...this.getNamedExports().map(mapToWithArrayExt));
+            def.namedExports = this.getNamedExports();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {applyMixins, ArrayExt} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
 import {WriteFlags} from "./../../WriteFlags";
 import {TypeAliasWriter} from "./../../writers";
@@ -39,7 +39,7 @@ export class TypeAliasDefinition extends BaseDefinition
     // TypeExpressionedDefinition
     typeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
-    typeParameters: ArrayExt<TypeParameterDefinition<this>>;
+    typeParameters: TypeParameterDefinition<this>[];
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

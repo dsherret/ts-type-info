@@ -1,17 +1,16 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 import {FileDefinition} from "./definitions";
-import {StringUtils, Logger, ArrayExt} from "./utils";
+import {StringUtils, Logger} from "./utils";
 import {MainFactory} from "./factories";
 import {TsMain} from "./compiler/TsMain";
 import {Options} from "./Options";
 
 export * from "./Options";
-export * from "./utils/ArrayExt";
 export * from "./definitions";
 export * from "./structures";
 
-export function getInfoFromFiles(fileNames: string[], options?: Options): ArrayExt<FileDefinition> {
+export function getInfoFromFiles(fileNames: string[], options?: Options): FileDefinition[] {
     verifyArray(fileNames);
     options = options || {};
 
@@ -30,7 +29,7 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): ArrayE
     mainFactory.bindDeferred();
     mainFactory.fillAllCachedTypesWithDefinitions();
 
-    return new ArrayExt(...definitionWithSourceFiles.map(f => f.definition));
+    return definitionWithSourceFiles.map(f => f.definition);
 }
 
 export function getInfoFromString(code: string, options?: Options): FileDefinition {
