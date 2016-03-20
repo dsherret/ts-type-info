@@ -177,9 +177,11 @@ export class TsNode extends TsSourceFileChild {
 
         if (importDeclaration.moduleSpecifier != null) {
             const moduleSymbol = this.typeChecker.getSymbolAtLocation(importDeclaration.moduleSpecifier);
-            const sourceFile = this.typeChecker.getDeclarationFromSymbol(moduleSymbol).getSourceFile();
 
-            fileName = sourceFile.fileName;
+            if (moduleSymbol != null) {
+                const sourceFile = this.typeChecker.getDeclarationFromSymbol(moduleSymbol).getSourceFile();
+                fileName = sourceFile.fileName;
+            }
         }
 
         return fileName;

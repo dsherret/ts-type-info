@@ -1,6 +1,6 @@
 {
   "name": "ts-type-info",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Reflection and code generation in TypeScript.",
   "main": "dist/main.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "definition": "ts-type-info.d.ts"
   },
   "dependencies": {
-    "code-block-writer": "^2.0.4",
+    "code-block-writer": "^2.0.5",
     "tmp": "0.0.28",
     "typescript": "^1.8.2"
   },
