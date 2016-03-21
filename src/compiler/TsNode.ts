@@ -139,23 +139,6 @@ export class TsNode extends TsSourceFileChild {
         return expression;
     }
 
-    getHeritageNodes(): TsNode[] {
-        const classDeclaration = this.node as ts.ClassDeclaration;
-        return (classDeclaration.heritageClauses || []).map(heritageClause => this.createNode(heritageClause));
-    }
-
-    getImplementsTypeExpressions() {
-        const symbolType = this.tsSymbol.getDeclaredType();
-        const implementsIndex = symbolType.getBaseTypeExpressions().length > 0 ? 1 : 0;
-        const heritageNodes = this.getHeritageNodes();
-
-        if (heritageNodes.length > implementsIndex) {
-            return heritageNodes[implementsIndex].getTypes();
-        }
-
-        return [];
-    }
-
     getLocalSymbol() {
         return this.createSymbol(this.typeChecker.getLocalSymbolFromNode(this.node));
     }
@@ -288,6 +271,10 @@ export class TsNode extends TsSourceFileChild {
         return this.createSymbol(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(namespaceImport.name)));
     }
 
+    getText() {
+        return this.node.getText();
+    }
+
     getTypeExpression(): TsTypeExpression {
         return tryGet(this, () => this.getTypeExpressionAtLocation(this.node));
     }
@@ -306,12 +293,18 @@ export class TsNode extends TsSourceFileChild {
         return constraint == null ? null : this.getTypeExpressionAtLocation((this.node as ts.TypeParameterDeclaration).constraint);
     }
 
-    getTypes(): TsTypeExpression[] {
+    getHeritageNodes() {
         const clause = this.node as ts.HeritageClause;
         return (clause.types || [])
-            .map(expressionWithTypeArguments => this.typeChecker.getTypeAtLocation(expressionWithTypeArguments))
-            .filter(type => type != null)
-            .map(type => this.createTypeExpression(type));
+            .map(expressionWithTypeArgumentsTypeNode => {
+                return this.createNode(expressionWithTypeArgumentsTypeNode);
+            });
+    }
+
+    getTypeAtLocation() {
+        const tsType = this.typeChecker.getTypeAtLocation(this.node);
+
+        return tsType == null ? null : this.createType(tsType);
     }
 
     getVariableDeclarationType() {
@@ -334,6 +327,14 @@ export class TsNode extends TsSourceFileChild {
 
     hasDeclareKeyword() {
         return this.hasModifierWithSyntaxKind(ts.SyntaxKind.DeclareKeyword);
+    }
+
+    hasExtendsKeyword() {
+        return (this.node as ts.HeritageClause).token === ts.SyntaxKind.ExtendsKeyword;
+    }
+
+    hasImplementsKeyword() {
+        return (this.node as ts.HeritageClause).token === ts.SyntaxKind.ImplementsKeyword;
     }
 
     hasStaticKeyword() {
@@ -391,6 +392,10 @@ export class TsNode extends TsSourceFileChild {
 
     isGetAccessor() {
         return this.getKind() === ts.SyntaxKind.GetAccessor;
+    }
+
+    isHeritageClause() {
+        return this.getKind() === ts.SyntaxKind.HeritageClause;
     }
 
     isIdentifier() {

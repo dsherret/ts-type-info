@@ -26,11 +26,20 @@ export class TsClassBinder extends ClassBinder {
     }
 
     getExtendsTypeExpressions() {
-        return this.node.getSymbol().getExtendsTypeExpressions().map(typeExpression => this.tsFactory.getTypeExpression(typeExpression));
+        // todo: not the most efficient thing to loop through all the children each time
+        return this.node.getChildren()
+            .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
+            .map(node => node.getHeritageNodes())
+            .reduce((a, b) => a.concat(b), [])
+            .map(node => this.tsFactory.getTypeExpressionFromNode(node));
     }
 
     getImplementsTypeExpressions() {
-        return this.node.getImplementsTypeExpressions().map(typeExpression => this.tsFactory.getTypeExpression(typeExpression));
+        return this.node.getChildren()
+            .filter(node => node.isHeritageClause() && node.hasImplementsKeyword())
+            .map(node => node.getHeritageNodes())
+            .reduce((a, b) => a.concat(b), [])
+            .map(node => this.tsFactory.getTypeExpressionFromNode(node));
     }
 
     getMembers() {
@@ -97,6 +106,9 @@ export class TsClassBinder extends ClassBinder {
             // ignore, handled elsewhere
         }
         else if (childNode.isDefaultKeyword()) {
+            // ignore, handled elsewhere
+        }
+        else if (childNode.isHeritageClause()) {
             // ignore, handled elsewhere
         }
         else {

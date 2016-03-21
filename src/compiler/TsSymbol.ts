@@ -81,11 +81,6 @@ export class TsSymbol extends TsSourceFileChild {
         return symbolsByName;
     }
 
-    getExtendsTypeExpressions() {
-        const symbolType = this.getDeclaredType();
-        return symbolType.getBaseTypeExpressions();
-    }
-
     getOnlyNode(): TsNode {
         const nodes = this.getNodes();
 

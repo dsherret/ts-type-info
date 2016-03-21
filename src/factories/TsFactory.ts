@@ -3,15 +3,29 @@
         ExpressionDefinition, TypeDefinition, TypeExpressionDefinition} from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder,
-    TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder} from "./../binders";
-import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol} from "./../compiler";
+    TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder, TsExpressionBinderByNode} from "./../binders";
+import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 
+// todo: Rename to DefinitionFactory
 export class TsFactory {
     private definitionByNode = new KeyValueCache<TsNode, NodeDefinitions>();
     private files = new KeyValueCache<TsSourceFile, FileDefinition>();
     private typeExpressions = new KeyValueCache<TsTypeExpression, TypeExpressionDefinition>();
     private types = new KeyValueCache<TsType, TypeDefinition>();
     private deferredBindings: { binder: IBaseBinder, definition: BaseDefinition }[] = [];
+
+    getTypeExpressionFromNode(node: TsNode) {
+        const tsType = node.getTypeAtLocation();
+        const def = new TypeExpressionDefinition();
+        const binder = new TsExpressionBinderByNode(node);
+        binder.bind(def);
+
+        if (tsType != null) {
+            def.addType(this.getType(tsType));
+        }
+
+        return def;
+    }
 
     getTypeExpression(tsTypeExpression: TsTypeExpression) {
         if (tsTypeExpression == null) {
@@ -97,12 +111,8 @@ export class TsFactory {
                 const tsExpression = nodes[0].getExpression();
 
                 if (tsExpression != null) {
-                    const expression = new ExpressionDefinition();
-                    const binder = new TsExpressionBinder(tsExpression);
-
-                    binder.bind(expression);
+                    const expression = this.getExpressionDefinition(tsExpression);
                     obj.expression = expression;
-
                     return obj;
                 }
             }
@@ -111,6 +121,13 @@ export class TsFactory {
         }
 
         return obj;
+    }
+
+    getExpressionDefinition(tsExpression: TsExpression) {
+        const def = new ExpressionDefinition();
+        const binder = new TsExpressionBinder(tsExpression);
+        binder.bind(def);
+        return def;
     }
 
     fillAllCachedTypesWithDefinitions() {

@@ -21,7 +21,11 @@ export class TsInterfaceBinder extends InterfaceBinder {
     }
 
     getExtendsTypeExpressions() {
-        return this.node.getSymbol().getExtendsTypeExpressions().map(typeExpression => this.tsFactory.getTypeExpression(typeExpression));
+        return this.node.getChildren()
+            .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
+            .map(node => node.getHeritageNodes())
+            .reduce((a, b) => a.concat(b), [])
+            .map(node => this.tsFactory.getTypeExpressionFromNode(node));
     }
 
     getMembers() {
@@ -65,6 +69,9 @@ export class TsInterfaceBinder extends InterfaceBinder {
             // ignore, handled elsewhere
         }
         else if (childNode.isDefaultKeyword()) {
+            // ignore, handled elsewhere
+        }
+        else if (childNode.isHeritageClause()) {
             // ignore, handled elsewhere
         }
         else {

@@ -20,7 +20,7 @@ class MyArrayExt extends Array<string> {
                 }
             }],
             extendsTypeExpressions: [{
-                text: "string[]"
+                text: "Array<string>"
             }]
         }]
     });

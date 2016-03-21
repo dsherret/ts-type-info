@@ -14,6 +14,6 @@ export class TsExpression extends TsBase {
     }
 
     getText() {
-        return (this.expression.getFullText(this.sourceFile) || "").trim();
+        return this.expression.getText(this.sourceFile) || "";
     }
 }
