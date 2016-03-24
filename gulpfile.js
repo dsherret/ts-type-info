@@ -1,4 +1,3 @@
-/// <binding />
 var gulp = require("gulp");
 var del = require("del");
 var mocha = require("gulp-mocha");
@@ -7,7 +6,6 @@ var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
 var replace = require("gulp-replace");
 var sourcemaps = require("gulp-sourcemaps");
-var CodeBlockWriter = require("code-block-writer").default;
 var p = require("./package.json");
 var fs = require("fs");
 var path = require("path");
@@ -63,55 +61,6 @@ gulp.task("generate-definition-file", ["typescript"], function(cb) {
     var generateDefinitionFile = require("./dist/build/generateDefinitionFile").generateDefinitionFile;
     generateDefinitionFile();
 });
-
-function pad(width, string, padding) {
-    return (width <= string.length) ? string : pad(width, string + padding, padding)
-}
-
-gulp.task("generate-readme", function(cb) {
-    // use this library to generate the readme.md file
-    var readmeCode = fs.readFileSync(path.join(__dirname, "resources/readmeCode.ts"), "utf8");
-    var readmeText = fs.readFileSync(path.join(__dirname, "resources/readme.txt"), "utf8");
-    var tsTypeInfo = require("./dist/main");
-    var readmeInfo = tsTypeInfo.getInfoFromString(readmeCode);
-
-    readmeText = readmeText
-        .replace("{{Code}}", readmeCode)
-        .replace("{{CodeOutput}}", JSON.stringify(readmeInfo));
-
-    fs.writeFile(path.join(__dirname, "readme.md"), readmeText, function(err) {
-        if (err) throw err;
-        cb();
-    });
-});
-
-gulp.task("ensure-dir-structures-match", function() {
-    var FileUtils = require("./dist/utils/FileUtils").FileUtils;
-    var definitionDir = __dirname + "/src/definitions";
-    var definitionFileNames = FileUtils.getAllFileNamesFromFolder(definitionDir).map(function(f) {
-        return f.replace(definitionDir, "");
-    });
-    var testHelperDir = __dirname + "/src/tests/testHelpers";
-    var testHelperFileNames = FileUtils.getAllFileNamesFromFolder(testHelperDir).map(function(f) {
-        return f.replace(testHelperDir, "").replace("run", "").replace("Tests", "");
-    });
-
-    var onlyInDefinitionFileNames = definitionFileNames.filter(function(f) {
-        return testHelperFileNames.indexOf(f) === -1;
-    });
-    var onlyInTestHelperFileNames = testHelperFileNames.filter(function(f) {
-        return definitionFileNames.indexOf(f) === -1;
-    });
-
-    if (onlyInDefinitionFileNames.length > 0) {
-        console.log("Add these to test helpers (with run prefix and Tests suffix):");
-        console.log(onlyInDefinitionFileNames);
-    }
-    if (onlyInTestHelperFileNames.length > 0) {
-        console.log("Add these to definitions or fix testHelpers:");
-        console.log(onlyInTestHelperFileNames);
-    }
-})
 
 gulp.task("watch", function() {
     gulp.watch("./src/**/*.ts", ["tslint", "typescript"]);
