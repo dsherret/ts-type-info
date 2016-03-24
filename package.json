@@ -1,6 +1,6 @@
 {
   "name": "ts-type-info",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Reflection and code generation in TypeScript.",
   "main": "dist/main.js",
   "scripts": {
