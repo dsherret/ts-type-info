@@ -8,7 +8,7 @@ import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefiniti
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ClassPropertyStructure, ClassConstructorStructure} from "./../../structures";
+import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure} from "./../../structures";
 import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
@@ -38,6 +38,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         const classWriter = new ClassWriter(writer, WriteFlags.Default);
         classWriter.write(this);
         return writer.toString();
+    }
+
+    addMethod(prop: ClassMethodStructure) {
+        const factory = new StructureFactory();
+        const def = factory.getClassMethod(prop);
+        def.parent = this;
+        this.methods.push(def);
     }
 
     addProperty(prop: ClassPropertyStructure) {

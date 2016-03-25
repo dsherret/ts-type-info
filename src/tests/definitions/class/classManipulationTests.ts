@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {ClassDefinition, Scope, ClassConstructorParameterScope} from "./../../../definitions";
-import {runClassPropertyDefinitionTests, runClassConstructorDefinitionTests} from "./../../testHelpers";
+import {runClassMethodDefinitionTests, runClassPropertyDefinitionTests, runClassConstructorDefinitionTests} from "./../../testHelpers";
 
 describe("ClassDefinition", () => {
     describe("addExtends", () => {
@@ -26,6 +26,44 @@ describe("ClassDefinition", () => {
 
         it("should have a test expression", () => {
             assert.equal(c.implementsTypeExpressions[0].text, "test");
+        });
+    });
+
+    describe("addMethod", () => {
+        const c = new ClassDefinition();
+
+        c.addMethod({
+            decorators: [{ name: "decorator" }],
+            isAbstract: true,
+            returnType: "string",
+            typeParameters: [{ name: "TypeParam", constraintType: "string" }],
+            parameters: [{
+                name: "myParam",
+                decorators: [{ name: "paramDecorator", arguments: [`"test"`] }],
+                defaultExpression: "5",
+                type: "number",
+                isOptional: true,
+                isRestParameter: true
+            }],
+            name: "myMethod",
+            scope: Scope.Private
+        });
+
+        runClassMethodDefinitionTests(c.methods[0], {
+            decorators: [{ name: "decorator" }],
+            isAbstract: true,
+            returnTypeExpression: { text: "string" },
+            typeParameters: [{ name: "TypeParam", constraintTypeExpression: { text: "string" } }],
+            parameters: [{
+                name: "myParam",
+                decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }] }],
+                defaultExpression: { text: "5" },
+                typeExpression: { text: "number" },
+                isOptional: true,
+                isRestParameter: true
+            }],
+            name: "myMethod",
+            scope: Scope.Private
         });
     });
 
