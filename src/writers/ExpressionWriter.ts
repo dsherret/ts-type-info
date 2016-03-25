@@ -2,10 +2,16 @@
 import {BaseWriter} from "./BaseWriter";
 
 export class ExpressionWriter extends BaseWriter {
-    writeWithEqualsSign(expression: ExpressionDefinition) {
-        if (expression != null) {
+    writeWithEqualsSign(def: ExpressionDefinition) {
+        if (def != null) {
             this.writer.write(" = ");
-            this.writer.write(expression.text);
+            this.write(def);
+        }
+    }
+
+    write(def: ExpressionDefinition) {
+        if (def != null) {
+            this.writer.write(def.text);
         }
     }
 }

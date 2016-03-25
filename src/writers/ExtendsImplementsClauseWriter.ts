@@ -1,14 +1,14 @@
-﻿import {ClassDefinition, InterfaceDefinition, TypeExpressionDefinition} from "./../definitions";
+﻿import {ClassDefinition, InterfaceDefinition, ExpressionDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
-import {TypeExpressionWriter, TypeFormatFlags} from "./TypeExpressionWriter";
+import {ExpressionWriter} from "./ExpressionWriter";
 
 export class ExtendsImplementsClauseWriter extends BaseWriter {
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
+    private expressionWriter = new ExpressionWriter(this.writer, this.flags);
 
     writeExtends(def: ClassDefinition | InterfaceDefinition) {
         this.writeClause({
             word: "extends",
-            typeExpressions: def.extendsTypeExpressions
+            expressions: def.extendsTypeExpressions
         });
 
         return this;
@@ -17,26 +17,26 @@ export class ExtendsImplementsClauseWriter extends BaseWriter {
     writeImplements(def: ClassDefinition) {
         this.writeClause({
             word: "implements",
-            typeExpressions: def.implementsTypeExpressions
+            expressions: def.implementsTypeExpressions
         });
 
         return this;
     }
 
-    private writeClause(obj: { word: string, typeExpressions: TypeExpressionDefinition[] }) {
-        if (obj.typeExpressions.length > 0) {
+    private writeClause(obj: { word: string, expressions: ExpressionDefinition[] }) {
+        if (obj.expressions.length > 0) {
             this.writer.write(` ${obj.word} `);
-            this.writeTypeExpressions(obj.typeExpressions);
+            this.writeExpressions(obj.expressions);
         }
     }
 
-    private writeTypeExpressions(typeExpressions: TypeExpressionDefinition[]) {
-        typeExpressions.forEach((t, i) => {
+    private writeExpressions(expressions: ExpressionDefinition[]) {
+        expressions.forEach((t, i) => {
             if (i !== 0) {
                 this.writer.write(", ");
             }
 
-            this.typeExpressionWriter.write(t, TypeFormatFlags.WriteArrayAsGenericType);
+            this.expressionWriter.write(t);
         });
     }
 }

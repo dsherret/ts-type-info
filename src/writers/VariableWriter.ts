@@ -12,8 +12,8 @@ export class VariableWriter extends BaseDefinitionWriter<VariableDefinition> {
         this.writeDeclareClause(def);
         this.writeExportClause(def);
         this.writeDeclarationType(def.declarationType);
-        this.writer.spaceIfLastNotSpace().write(def.name).write(": ");
-        this.typeExpressionWriter.write(def.typeExpression);
+        this.writer.spaceIfLastNotSpace().write(def.name);
+        this.typeExpressionWriter.writeWithColon(def.typeExpression);
         if ((this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
             this.expressionWriter.writeWithEqualsSign(def.defaultExpression);
         }

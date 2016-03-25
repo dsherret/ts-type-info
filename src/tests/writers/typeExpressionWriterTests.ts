@@ -8,7 +8,7 @@ function getTypeExpressionAsString(typeExpression: TypeExpressionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new TypeExpressionWriter(codeBlockWriter);
 
-    writer.write(typeExpression);
+    writer.writeWithColon(typeExpression);
 
     return codeBlockWriter.toString();
 }
@@ -26,17 +26,21 @@ interface MyTest<T> {
 `;
     const myClass = getInfoFromString(code).classes[0];
 
-    describe("write()", () => {
+    describe("writeWithColon()", () => {
         describe("myProperty1", () => {
             it("should contain the property written out", () => {
-                assert.equal(getTypeExpressionAsString(myClass.properties[0].typeExpression), "string");
+                assert.equal(getTypeExpressionAsString(myClass.properties[0].typeExpression), ": string");
             });
         });
 
         describe("myProperty2", () => {
             it("should contain the property written out", () => {
-                assert.equal(getTypeExpressionAsString(myClass.properties[1].typeExpression), "MyTest<string>");
+                assert.equal(getTypeExpressionAsString(myClass.properties[1].typeExpression), ": MyTest<string>");
             });
+        });
+
+        it("should not write anything when providing null", () => {
+            assert.equal(getTypeExpressionAsString(null), "");
         });
     });
 });

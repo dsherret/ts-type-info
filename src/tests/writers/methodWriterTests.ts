@@ -26,6 +26,8 @@ class MyClass {
     private myPrivateMethod() {
         return "";
     }
+
+    abstract myAbstractMethod(): string;
 }
 `;
     const myClass = getInfoFromString(code).classes[0];
@@ -33,19 +35,30 @@ class MyClass {
     describe("write()", () => {
         describe("myMethod", () => {
             it("should contain the method written out with the function body", () => {
-                assert.equal(getMethodAsString(myClass.methods[0]), "myMethod<T extends string, U>(t: T, u: U): void {\n}\n");
+                assert.equal(getMethodAsString(myClass.methods[0]), "myMethod<T extends string, U>(t: T, u: U) {\n}\n");
             });
         });
 
         describe("myProtectedMethod", () => {
             it("should contain the method written out", () => {
-                assert.equal(getMethodAsString(myClass.methods[1]), "protected myProtectedMethod(myParam: string): number {\n}\n");
+                assert.equal(getMethodAsString(myClass.methods[1]), "protected myProtectedMethod(myParam: string) {\n}\n");
             });
         });
 
         describe("myPrivateMethod", () => {
             it("should contain the method written out", () => {
-                assert.equal(getMethodAsString(myClass.methods[2]), "private myPrivateMethod(): string {\n}\n");
+                assert.equal(getMethodAsString(myClass.methods[2]), "private myPrivateMethod() {\n}\n");
+            });
+
+            it("should contain the method written out but ignore the return type when specifying onWriteFunctionBody", () => {
+                myClass.methods[2].onWriteFunctionBody = writer => { writer.write("return 'test';"); };
+                assert.equal(getMethodAsString(myClass.methods[2]), "private myPrivateMethod() {\n    return 'test';\n}\n");
+            });
+        });
+
+        describe("myAbstractMethod", () => {
+            it("should be written out as-is", () => {
+                assert.equal(getMethodAsString(myClass.methods[3]), "abstract myAbstractMethod(): string;\n");
             });
         });
     });

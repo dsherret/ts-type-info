@@ -31,10 +31,10 @@ describe("ClassWriter", () => {
     abstract myAbstractMethod(): string;
     abstract myAbstractMethod2(): string;
 
-    myMethod(): void {
+    myMethod() {
     }
 
-    private myPrivateMethod(): void {
+    private myPrivateMethod() {
     }
 }
 `;

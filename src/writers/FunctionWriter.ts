@@ -24,8 +24,7 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
 
     private writeReturnType(def: FunctionWriteableDefinitions) {
         if (!FunctionBodyWriter.willWriteFunctionBody(def, this.flags)) {
-            this.writer.write(": ");
-            this.typeExpressionWriter.write(def.returnTypeExpression);
+            this.typeExpressionWriter.writeWithColon(def.returnTypeExpression);
         }
     }
 }

@@ -11,7 +11,9 @@ export class FunctionBodyWriter extends BaseWriter {
         }
         else {
             const isOnWriteFunctionBodyDefined = typeof def.onWriteFunctionBody === "function";
-            const suggestedToHideFunctionBody = (flags & WriteFlags.HideFunctionBodies) || (def as FunctionDefinition).isAmbient || (def as ClassMethodDefinition).parent.isAmbient;
+            const shouldHideFunctionBodies = (flags & WriteFlags.HideFunctionBodies) !== 0;
+            const isAmbient = (def.isFunctionDefinition() && def.isAmbient) || (def.isClassMethodDefinition() && def.parent.isAmbient);
+            const suggestedToHideFunctionBody = shouldHideFunctionBodies || isAmbient;
 
             return isOnWriteFunctionBodyDefined || !suggestedToHideFunctionBody;
         }

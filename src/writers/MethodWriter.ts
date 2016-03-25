@@ -20,14 +20,19 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         this.writer.write(def.name);
         this.typeParametersWriter.write(def.typeParameters);
         this.parametersWriter.write(def.parameters);
-        this.writer.write(": ");
-        this.typeExpressionWriter.write(def.returnTypeExpression);
+        this.writeReturnType(def);
         this.functionBodyWriter.write(def);
     }
 
     private writeAbstract(def: ClassMethodDefinition) {
         if (def.isAbstract) {
             this.writer.write("abstract ");
+        }
+    }
+
+    private writeReturnType(def: MethodDefinitions) {
+        if (!FunctionBodyWriter.willWriteFunctionBody(def, this.flags)) {
+            this.typeExpressionWriter.writeWithColon(def.returnTypeExpression);
         }
     }
 }

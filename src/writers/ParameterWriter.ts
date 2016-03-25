@@ -12,8 +12,7 @@ export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> 
         this.writeRestParameter(param);
         this.writer.write(param.name);
         this.writeIsOptional(param);
-        this.writer.write(": ");
-        this.typeExpressionWriter.write(param.typeExpression);
+        this.typeExpressionWriter.writeWithColon(param.typeExpression);
 
         if ((this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
             this.expressionWriter.writeWithEqualsSign(param.defaultExpression);
