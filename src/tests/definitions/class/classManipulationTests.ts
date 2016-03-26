@@ -29,10 +29,10 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("addMethod", () => {
+    describe("addMethods", () => {
         const c = new ClassDefinition();
 
-        c.addMethod({
+        c.addMethods({
             decorators: [{ name: "decorator" }],
             isAbstract: true,
             returnType: "string",
@@ -67,10 +67,10 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("addProperty", () => {
+    describe("addProperties", () => {
         const c = new ClassDefinition();
 
-        c.addProperty({
+        c.addProperties({
             decorators: [{ name: "decorator" }],
             defaultExpression: "4",
             isAccessor: true,

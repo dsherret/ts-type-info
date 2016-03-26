@@ -40,32 +40,40 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return writer.toString();
     }
 
-    addMethod(prop: ClassMethodStructure) {
+    addMethods(...methods: ClassMethodStructure[]) {
         const factory = new StructureFactory();
-        const def = factory.getClassMethod(prop);
-        def.parent = this;
-        this.methods.push(def);
+        methods.forEach(method => {
+            const def = factory.getClassMethod(method);
+            def.parent = this;
+            this.methods.push(def);
+        });
+        return this;
     }
 
-    addProperty(prop: ClassPropertyStructure) {
+    addProperties(...properties: ClassPropertyStructure[]) {
         const factory = new StructureFactory();
-        const def = factory.getClassProperty(prop);
-        def.parent = this;
-        this.properties.push(def);
+        properties.forEach(prop => {
+            const def = factory.getClassProperty(prop);
+            def.parent = this;
+            this.properties.push(def);
+        });
+        return this;
     }
 
     addExtends(...texts: string[]) {
         const factory = new StructureFactory();
-        (texts || []).forEach(text => {
+        texts.forEach(text => {
             this.extendsTypeExpressions.push(factory.getTypeExpressionFromText(text));
         });
+        return this;
     }
 
     addImplements(...texts: string[]) {
         const factory = new StructureFactory();
-        (texts || []).forEach(text => {
+        texts.forEach(text => {
             this.implementsTypeExpressions.push(factory.getTypeExpressionFromText(text));
         });
+        return this;
     }
 
     setConstructor(structure: ClassConstructorStructure) {
@@ -78,6 +86,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
             prop.parent = this;
             return prop;
         }));
+        return this;
     }
 
     // NamedDefinition

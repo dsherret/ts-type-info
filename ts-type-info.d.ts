@@ -166,7 +166,7 @@ export abstract class ReturnTypedDefinition {
     returnTypeExpression: TypeExpressionDefinition;
 }
 
-export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition> {
+export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<TypeParameteredDefinitions> {
     constraintTypeExpression: TypeExpressionDefinition;
     name: string;
     parent: ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition;
@@ -175,7 +175,7 @@ export class TypeParameterDefinition extends BaseDefinition implements NamedDefi
 export class TypePropertyDefinition extends BasePropertyDefinition<TypeDefinition> {
 }
 
-export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition {
+export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition {
     name: string;
     parent: FileDefinition | NamespaceDefinition;
     isExported: boolean;
@@ -189,7 +189,7 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     write(): string;
 }
 
-export class DecoratorDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition> {
+export class DecoratorDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<DecoratedDefinitions> {
     arguments: ExpressionDefinition[];
     name: string;
     parent: ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
@@ -221,7 +221,7 @@ export class CallSignatureDefinition extends BaseDefinition implements TypeParam
 export class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {
 }
 
-export class FunctionDefinition extends BaseFunctionDefinition<FileDefinition | NamespaceDefinition, FunctionParameterDefinition> implements ExportableDefinition, AmbientableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<ModuledDefinitions, FunctionParameterDefinition> implements ExportableDefinition, AmbientableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -255,7 +255,7 @@ export abstract class ScopedDefinition {
     scope: "public" | "protected" | "private";
 }
 
-export class ClassDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
+export class ClassDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
     methods: ClassMethodDefinition[];
     properties: ClassPropertyDefinition[];
     staticMethods: ClassStaticMethodDefinition[];
@@ -275,10 +275,11 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isAbstract: boolean;
 
     write(): string;
-    addProperty(prop: ClassPropertyStructure): void;
-    addExtends(...texts: string[]): void;
-    addImplements(...texts: string[]): void;
-    setConstructor(structure: ClassConstructorStructure): void;
+    addMethods(...methods: ClassMethodStructure[]): this;
+    addProperties(...properties: ClassPropertyStructure[]): this;
+    addExtends(...texts: string[]): this;
+    addImplements(...texts: string[]): this;
+    setConstructor(structure: ClassConstructorStructure): this;
 }
 
 export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethodParameterDefinition> implements AbstractableDefinition {
@@ -324,7 +325,7 @@ export type Scope = "public" | "protected" | "private";
 
 export const Scope: { Public: "public" | "protected" | "private"; Protected: "public" | "protected" | "private"; Private: "public" | "protected" | "private"; };
 
-export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
+export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: InterfaceMethodDefinition[];
     newSignatures: InterfaceNewSignatureDefinition[];
     properties: InterfacePropertyDefinition[];
@@ -338,7 +339,7 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
-    addExtends(...texts: string[]): void;
+    addExtends(...texts: string[]): this;
     write(): string;
 }
 
@@ -360,7 +361,7 @@ export class InterfaceNewSignatureDefinition extends BaseDefinition implements P
 export class InterfaceNewSignatureParameterDefinition extends BaseParameterDefinition<InterfaceNewSignatureDefinition> {
 }
 
-export class EnumDefinition extends BaseDefinition implements ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, AmbientableDefinition {
+export class EnumDefinition extends BaseDefinition implements ParentedDefinition<ModuledDefinitions>, ExportableDefinition, AmbientableDefinition {
     members: EnumMemberDefinition[];
     name: string;
     parent: FileDefinition | NamespaceDefinition;
@@ -370,6 +371,7 @@ export class EnumDefinition extends BaseDefinition implements ParentedDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    addMembers(...members: EnumMemberStructure[]): this;
     write(): string;
 }
 
@@ -383,7 +385,7 @@ export type NamespaceDeclarationType = "namespace" | "module";
 
 export const NamespaceDeclarationType: { Namespace: "namespace" | "module"; Module: "namespace" | "module"; };
 
-export class NamespaceDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
+export class NamespaceDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
     declarationType: "namespace" | "module";
     name: string;
     parent: FileDefinition | NamespaceDefinition;
@@ -442,7 +444,7 @@ export class ReExportDefinition extends BaseDefinition implements ParentedDefini
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
-export class VariableDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<FileDefinition | NamespaceDefinition>, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
+export class VariableDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
     declarationType: "var" | "let" | "const";
     name: string;
     parent: FileDefinition | NamespaceDefinition;

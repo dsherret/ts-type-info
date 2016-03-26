@@ -25,9 +25,10 @@ export class InterfaceDefinition extends BaseDefinition
 
     addExtends(...texts: string[]) {
         const factory = new StructureFactory();
-        (texts || []).forEach(text => {
+        texts.forEach(text => {
             this.extendsTypeExpressions.push(factory.getTypeExpressionFromText(text));
         });
+        return this;
     }
 
     write() {

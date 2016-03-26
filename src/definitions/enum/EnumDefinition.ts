@@ -1,5 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
+import {StructureFactory} from "./../../factories";
+import {EnumMemberStructure} from "./../../structures";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins} from "./../../utils";
@@ -12,6 +14,16 @@ export class EnumDefinition extends BaseDefinition
 
     constructor() {
         super(DefinitionType.Enum);
+    }
+
+    addMembers(...members: EnumMemberStructure[]) {
+        const factory = new StructureFactory();
+        members.forEach(member => {
+            const def = factory.getEnumMember(member);
+            def.parent = this;
+            this.members.push(def);
+        });
+        return this;
     }
 
     write() {

@@ -1,6 +1,8 @@
-﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureExpressionBinder} from "./../binders";
-import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, TypeExpressionDefinition} from "./../definitions";
-import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure} from "./../structures";
+﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureExpressionBinder,
+    StructureEnumMemberBinder} from "./../binders";
+import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, TypeExpressionDefinition,
+    EnumMemberDefinition} from "./../definitions";
+import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, EnumMemberStructure} from "./../structures";
 
 export class StructureFactory {
     getClassConstructor(structure: ClassConstructorStructure) {
@@ -20,6 +22,13 @@ export class StructureFactory {
     getClassProperty(structure: ClassPropertyStructure) {
         const def = new ClassPropertyDefinition();
         const binder = new StructureClassPropertyBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getEnumMember(structure: EnumMemberStructure) {
+        const def = new EnumMemberDefinition();
+        const binder = new StructureEnumMemberBinder(structure);
         binder.bind(def);
         return def;
     }
