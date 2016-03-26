@@ -1,8 +1,8 @@
 ﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureExpressionBinder,
-    StructureEnumMemberBinder} from "./../binders";
+    StructureDecoratorBinder, StructureEnumMemberBinder} from "./../binders";
 import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, TypeExpressionDefinition,
-    EnumMemberDefinition} from "./../definitions";
-import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, EnumMemberStructure} from "./../structures";
+    DecoratorDefinition, EnumMemberDefinition} from "./../definitions";
+import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, DecoratorStructure, EnumMemberStructure} from "./../structures";
 
 export class StructureFactory {
     getClassConstructor(structure: ClassConstructorStructure) {
@@ -22,6 +22,13 @@ export class StructureFactory {
     getClassProperty(structure: ClassPropertyStructure) {
         const def = new ClassPropertyDefinition();
         const binder = new StructureClassPropertyBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getDecorator(structure: DecoratorStructure) {
+        const def = new DecoratorDefinition();
+        const binder = new StructureDecoratorBinder(structure);
         binder.bind(def);
         return def;
     }

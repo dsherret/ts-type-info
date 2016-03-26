@@ -1,5 +1,6 @@
 ﻿import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
+import {DecoratorStructure} from "./../../structures";
 import {DecoratorDefinition} from "./../general";
 import {DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
@@ -34,6 +35,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
 
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
 }
 
 applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition]);

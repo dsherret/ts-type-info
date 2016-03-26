@@ -1,4 +1,5 @@
 import {applyMixins} from "./../../../utils";
+import {DecoratorStructure} from "./../../../structures";
 import {DecoratableDefinition, DefinitionType, ObjectPropertyDefinition} from "./../../base";
 import {DecoratorDefinition} from "./../../general";
 import {Scope} from "./../Scope";
@@ -12,6 +13,7 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassD
 
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
     // ScopeDefinition
     scope: Scope;
 }

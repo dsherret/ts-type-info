@@ -8,7 +8,7 @@ import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefiniti
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure} from "./../../structures";
+import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure} from "./../../structures";
 import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
@@ -95,6 +95,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     parent: ModuledDefinitions;
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

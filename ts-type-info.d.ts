@@ -103,6 +103,8 @@ export abstract class DefaultExpressionedDefinition {
 
 export abstract class DecoratableDefinition {
     decorators: DecoratorDefinition[];
+
+    addDecorators(...decorators: DecoratorStructure[]): this;
 }
 
 export abstract class ExportableDefinition {
@@ -237,17 +239,20 @@ export class FunctionParameterDefinition extends BaseParameterDefinition<Functio
 
 export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements DecoratableDefinition, ScopedDefinition {
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
     scope: "public" | "protected" | "private";
 }
 
 export class BaseClassMethodDefinition<ParameterType> extends BaseFunctionDefinition<ClassDefinition, ParameterType> implements DecoratableDefinition, ScopedDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
     scope: "public" | "protected" | "private";
 }
 
 export class BaseClassPropertyDefinition extends ObjectPropertyDefinition<ClassDefinition> implements DecoratableDefinition, ScopedDefinition {
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
     scope: "public" | "protected" | "private";
 }
 
@@ -266,6 +271,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     name: string;
     parent: FileDefinition | NamespaceDefinition;
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
@@ -304,6 +310,7 @@ export class ClassConstructorDefinition extends BaseDefinition implements Parent
 export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements DecoratableDefinition {
     scope: "none" | "public" | "protected" | "private";
     decorators: DecoratorDefinition[];
+    addDecorators: (...decorators: DecoratorStructure[]) => this;
 
     toProperty(): ClassPropertyDefinition;
 }
