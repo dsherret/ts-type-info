@@ -1,8 +1,9 @@
 ﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureExpressionBinder,
-    StructureDecoratorBinder, StructureEnumMemberBinder} from "./../binders";
+    StructureDecoratorBinder, StructureEnumMemberBinder, StructureTypeParameterBinder} from "./../binders";
 import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, TypeExpressionDefinition,
-    DecoratorDefinition, EnumMemberDefinition} from "./../definitions";
-import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, DecoratorStructure, EnumMemberStructure} from "./../structures";
+    DecoratorDefinition, EnumMemberDefinition, TypeParameterDefinition} from "./../definitions";
+import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, DecoratorStructure, EnumMemberStructure,
+    TypeParameterStructure} from "./../structures";
 
 export class StructureFactory {
     getClassConstructor(structure: ClassConstructorStructure) {
@@ -41,8 +42,17 @@ export class StructureFactory {
     }
 
     getTypeExpressionFromText(text: string) {
-        const def = new TypeExpressionDefinition();
-        const binder = new StructureExpressionBinder(text);
+        if (typeof text === "string" && text.length > 0) {
+            const def = new TypeExpressionDefinition();
+            const binder = new StructureExpressionBinder(text);
+            binder.bind(def);
+            return def;
+        }
+    }
+
+    getTypeParameter(structure: TypeParameterStructure) {
+        const def = new TypeParameterDefinition();
+        const binder = new StructureTypeParameterBinder(this, structure);
         binder.bind(def);
         return def;
     }

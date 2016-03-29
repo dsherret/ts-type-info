@@ -1,8 +1,9 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {applyMixins} from "./../../utils";
 import {ModuledDefinitions} from "./../../definitions";
+import {TypeParameterStructure} from "./../../structures";
 import {WriteFlags} from "./../../WriteFlags";
 import {TypeAliasWriter} from "./../../writers";
+import {applyMixins} from "./../../utils";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {TypeExpressionDefinition} from "./../expressions";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
@@ -40,6 +41,7 @@ export class TypeAliasDefinition extends BaseDefinition
     typeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
+    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

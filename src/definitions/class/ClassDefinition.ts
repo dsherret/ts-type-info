@@ -8,7 +8,7 @@ import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefiniti
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure} from "./../../structures";
+import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure} from "./../../structures";
 import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
@@ -102,6 +102,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
+    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

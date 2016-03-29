@@ -1,4 +1,5 @@
 import {TypeExpressionDefinition} from "./../expressions";
+import {TypeParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {TypeParameterDefinition} from "./../general";
 import {NamedDefinition} from "./NamedDefinition";
@@ -26,6 +27,7 @@ export class BaseFunctionDefinition<ParentType, ParameterType>
     returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
+    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
 }
 
 applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

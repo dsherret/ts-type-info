@@ -1,3 +1,4 @@
+import {TypeParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {TypeParameteredDefinition, BaseDefinition, DefinitionType, ReturnTypedDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -19,6 +20,7 @@ export class CallSignatureDefinition
     returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
+    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
 }
 
 applyMixins(CallSignatureDefinition, BaseDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);

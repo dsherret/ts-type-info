@@ -1,6 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
+import {TypeParameterStructure} from "./../../structures";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins} from "./../../utils";
@@ -48,6 +49,7 @@ export class InterfaceDefinition extends BaseDefinition
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
+    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
