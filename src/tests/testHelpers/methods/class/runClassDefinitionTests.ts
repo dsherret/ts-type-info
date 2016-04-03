@@ -8,7 +8,7 @@ import {runClassMethodDefinitionTests} from "./runClassMethodDefinitionTests";
 import {runClassStaticPropertyDefinitionTests} from "./runClassStaticPropertyDefinitionTests";
 import {runClassStaticMethodDefinitionTests} from "./runClassStaticMethodDefinitionTests";
 import {runClassConstructorDefinitionTests} from "./runClassConstructorDefinitionTests";
-import {runTypeExpressionTests} from "./../expressions";
+import {runTypeExpressionDefinitionTests} from "./../expressions";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassTestStructure) {
@@ -80,7 +80,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                 });
 
                 structure.extendsTypeExpressions.forEach((extendTestStructure, i) => {
-                    runTypeExpressionTests(definition.extendsTypeExpressions[i], extendTestStructure);
+                    runTypeExpressionDefinitionTests(definition.extendsTypeExpressions[i], extendTestStructure);
                 });
             });
 
@@ -90,7 +90,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                 });
 
                 structure.implementsTypeExpressions.forEach((implementTestStructure, i) => {
-                    runTypeExpressionTests(definition.implementsTypeExpressions[i], implementTestStructure);
+                    runTypeExpressionDefinitionTests(definition.implementsTypeExpressions[i], implementTestStructure);
                 });
             });
         });

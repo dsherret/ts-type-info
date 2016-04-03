@@ -1,7 +1,7 @@
 ﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureExpressionBinder,
     StructureDecoratorBinder, StructureEnumMemberBinder, StructureTypeParameterBinder} from "./../binders";
 import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, TypeExpressionDefinition,
-    DecoratorDefinition, EnumMemberDefinition, TypeParameterDefinition} from "./../definitions";
+    DecoratorDefinition, EnumMemberDefinition, ExpressionDefinition, TypeParameterDefinition} from "./../definitions";
 import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, DecoratorStructure, EnumMemberStructure,
     TypeParameterStructure} from "./../structures";
 
@@ -39,6 +39,15 @@ export class StructureFactory {
         const binder = new StructureEnumMemberBinder(structure);
         binder.bind(def);
         return def;
+    }
+
+    getExpressionFromText(text: string) {
+        if (typeof text === "string" && text.length > 0) {
+            const def = new ExpressionDefinition();
+            const binder = new StructureExpressionBinder(text);
+            binder.bind(def);
+            return def;
+        }
     }
 
     getTypeExpressionFromText(text: string) {

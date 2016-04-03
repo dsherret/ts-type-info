@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {ImportTestStructure, ExpressionTestStructure} from "./../../testStructures";
 import {ImportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
-import {runExpressionTests} from "./../expressions";
+import {runExpressionDefinitionTests} from "./../expressions";
 import {runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -86,7 +86,7 @@ function runImportPartTests(
             });
 
             describe("expression", () => {
-                runExpressionTests(definition.expression, structure.expression);
+                runExpressionDefinitionTests(definition.expression, structure.expression);
             });
         });
     }

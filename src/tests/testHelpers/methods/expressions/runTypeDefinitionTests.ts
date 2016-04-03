@@ -5,7 +5,7 @@ import {runNamedDefinitionTests, runBasePropertyDefinitionTests} from "./../base
 import {runCallSignatureDefinitionTests} from "./../function";
 import {ensureNotNull} from "./../../ensureNotNull";
 
-export function runTypeTests(type: TypeDefinition, structure: TypeTestStructure) {
+export function runTypeDefinitionTests(type: TypeDefinition, structure: TypeTestStructure) {
     describe("type", () => {
         ensureNotNull(type, () => {
             structure.callSignatures = structure.callSignatures || [];
@@ -34,7 +34,7 @@ export function runTypeTests(type: TypeDefinition, structure: TypeTestStructure)
             });
 
             structure.typeArguments.forEach((typeTestStructure, i) => {
-                runTypeTests(type.typeArguments[i], typeTestStructure);
+                runTypeDefinitionTests(type.typeArguments[i], typeTestStructure);
             });
 
             it(`should have the same number of properties`, () => {

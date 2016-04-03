@@ -2,7 +2,7 @@
 import {TypeParameterTestStructure} from "./../../testStructures";
 import {TypeParameterDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runParentedDefinitionTests} from "./../base";
-import {runTypeExpressionTests} from "./../expressions";
+import {runTypeExpressionDefinitionTests} from "./../expressions";
 
 export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition, structure: TypeParameterTestStructure) {
     describe(`type parameter ${structure.name}`, () => {
@@ -16,7 +16,7 @@ export function runTypeParameterDefinitionTests(definition: TypeParameterDefinit
                 });
             }
             else {
-                runTypeExpressionTests(definition.constraintTypeExpression, structure.constraintTypeExpression);
+                runTypeExpressionDefinitionTests(definition.constraintTypeExpression, structure.constraintTypeExpression);
             }
         });
     });

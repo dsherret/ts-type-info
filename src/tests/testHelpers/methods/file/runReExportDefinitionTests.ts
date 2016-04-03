@@ -2,7 +2,7 @@
 import {ReExportTestStructure, ExpressionTestStructure} from "./../../testStructures";
 import {ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
-import {runExpressionTests} from "./../expressions";
+import {runExpressionDefinitionTests} from "./../expressions";
 import {runParentedDefinitionTests} from "./../base";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {
@@ -80,7 +80,7 @@ function runImportPartTests(
             });
 
             describe("expression", () => {
-                runExpressionTests(definition.expression, structure.expression);
+                runExpressionDefinitionTests(definition.expression, structure.expression);
             });
         });
     }

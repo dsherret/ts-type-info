@@ -2,6 +2,7 @@
 export * from "./methods/general";
 export * from "./methods/class";
 export * from "./methods/enum";
+export * from "./methods/expressions";
 export * from "./methods/file";
 export * from "./methods/function";
 export * from "./methods/interface";

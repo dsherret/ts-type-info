@@ -5,7 +5,7 @@ import {runImportDefinitionTests} from "./runImportDefinitionTests";
 import {runReExportDefinitionTests} from "./runReExportDefinitionTests";
 import {runModuledDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
-import {runExpressionTests} from "./../expressions";
+import {runExpressionDefinitionTests} from "./../expressions";
 
 export function runFileDefinitionTests(definition: FileDefinition, structure: FileTestStructure) {
     structure.imports = structure.imports || [];
@@ -47,7 +47,7 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
         }
         else {
             ensureNotNull(definition.defaultExport, () => {
-                runExpressionTests(definition.defaultExport.expression, structure.defaultExport.expression);
+                runExpressionDefinitionTests(definition.defaultExport.expression, structure.defaultExport.expression);
 
                 it(`should have the same number of definitions`, () => {
                     assert.equal(definition.defaultExport.definitions.length, structure.defaultExport.definitions.length);

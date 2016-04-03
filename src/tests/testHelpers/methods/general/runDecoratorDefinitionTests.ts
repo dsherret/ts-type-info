@@ -2,7 +2,7 @@ import * as assert from "assert";
 import {DecoratorTestStructure} from "./../../testStructures";
 import {DecoratorDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runParentedDefinitionTests} from "./../base";
-import {runExpressionTests} from "./../expressions";
+import {runExpressionDefinitionTests} from "./../expressions";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runDecoratorDefinitionTests(definition: DecoratorDefinition, structure: DecoratorTestStructure) {
@@ -19,7 +19,7 @@ export function runDecoratorDefinitionTests(definition: DecoratorDefinition, str
 
             structure.arguments.forEach((argumentTestStructure, i) => {
                 describe(`argument ${argumentTestStructure.text}`, () => {
-                    runExpressionTests(definition.arguments[i], argumentTestStructure);
+                    runExpressionDefinitionTests(definition.arguments[i], argumentTestStructure);
                 });
             });
         });

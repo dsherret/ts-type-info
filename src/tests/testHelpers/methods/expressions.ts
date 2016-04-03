@@ -1,3 +1,3 @@
-﻿export * from "./expressions/runExpressionTests";
-export * from "./expressions/runTypeExpressionTests";
-export * from "./expressions/runTypeTests";
+﻿export * from "./expressions/runExpressionDefinitionTests";
+export * from "./expressions/runTypeExpressionDefinitionTests";
+export * from "./expressions/runTypeDefinitionTests";
