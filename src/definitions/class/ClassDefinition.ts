@@ -6,7 +6,8 @@ import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefin
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure} from "./../../structures";
+import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure,
+    ClassStaticMethodStructure, ClassStaticPropertyStructure} from "./../../structures";
 import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
@@ -50,6 +51,22 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         const factory = new StructureFactory();
         properties.forEach(prop => {
             this.properties.push(factory.getClassProperty(prop));
+        });
+        return this;
+    }
+
+    addStaticMethods(...staticMethods: ClassStaticMethodStructure[]) {
+        const factory = new StructureFactory();
+        staticMethods.forEach(method => {
+            this.staticMethods.push(factory.getClassStaticMethod(method));
+        });
+        return this;
+    }
+
+    addStaticProperties(...staticProperties: ClassStaticPropertyStructure[]) {
+        const factory = new StructureFactory();
+        staticProperties.forEach(prop => {
+            this.staticProperties.push(factory.getClassStaticProperty(prop));
         });
         return this;
     }

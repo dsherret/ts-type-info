@@ -1,6 +1,7 @@
 ﻿import * as assert from "assert";
 import {ClassDefinition, Scope, ClassConstructorParameterScope} from "./../../../definitions";
-import {runClassMethodDefinitionTests, runClassPropertyDefinitionTests, runClassConstructorDefinitionTests} from "./../../testHelpers";
+import {runClassMethodDefinitionTests, runClassPropertyDefinitionTests, runClassConstructorDefinitionTests, runClassStaticMethodDefinitionTests,
+    runClassStaticPropertyDefinitionTests} from "./../../testHelpers";
 
 describe("ClassDefinition", () => {
     describe("addExtends", () => {
@@ -47,6 +48,8 @@ describe("ClassDefinition", () => {
             }],
             name: "myMethod",
             scope: Scope.Private
+        }, {
+            name: "mySecondMethod"
         });
 
         runClassMethodDefinitionTests(c.methods[0], {
@@ -65,6 +68,10 @@ describe("ClassDefinition", () => {
             name: "myMethod",
             scope: Scope.Private
         });
+
+        runClassMethodDefinitionTests(c.methods[1], {
+            name: "mySecondMethod"
+        });
     });
 
     describe("addProperties", () => {
@@ -80,6 +87,8 @@ describe("ClassDefinition", () => {
             name: "myProperty",
             scope: Scope.Private,
             type: "string"
+        }, {
+            name: "mySecondProperty"
         });
 
         runClassPropertyDefinitionTests(c.properties[0], {
@@ -92,6 +101,78 @@ describe("ClassDefinition", () => {
             name: "myProperty",
             scope: Scope.Private,
             typeExpression: { text: "string" }
+        });
+        runClassPropertyDefinitionTests(c.properties[1], {
+            name: "mySecondProperty"
+        });
+    });
+
+    describe("addStaticMethods", () => {
+        const c = new ClassDefinition();
+
+        c.addStaticMethods({
+            decorators: [{ name: "decorator" }],
+            returnType: "string",
+            typeParameters: [{ name: "TypeParam", constraintType: "string" }],
+            parameters: [{
+                name: "myParam",
+                decorators: [{ name: "paramDecorator", arguments: [`"test"`] }],
+                defaultExpression: "5",
+                type: "number",
+                isOptional: true,
+                isRestParameter: true
+            }],
+            name: "myStaticMethod",
+            scope: Scope.Private
+        }, {
+            name: "mySecondStaticMethod"
+        });
+
+        runClassStaticMethodDefinitionTests(c.staticMethods[0], {
+            decorators: [{ name: "decorator" }],
+            returnTypeExpression: { text: "string" },
+            typeParameters: [{ name: "TypeParam", constraintTypeExpression: { text: "string" } }],
+            parameters: [{
+                name: "myParam",
+                decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }] }],
+                defaultExpression: { text: "5" },
+                typeExpression: { text: "number" },
+                isOptional: true,
+                isRestParameter: true
+            }],
+            name: "myStaticMethod",
+            scope: Scope.Private
+        });
+
+        runClassStaticMethodDefinitionTests(c.staticMethods[1], {
+            name: "mySecondStaticMethod"
+        });
+    });
+
+    describe("addStaticProperties", () => {
+        const c = new ClassDefinition();
+
+        c.addStaticProperties({
+            decorators: [{ name: "decorator" }],
+            defaultExpression: "4",
+            isOptional: true,
+            name: "myStaticProperty",
+            scope: Scope.Private,
+            type: "string"
+        }, {
+            name: "mySecondStaticProperty"
+        });
+
+        runClassStaticPropertyDefinitionTests(c.staticProperties[0], {
+            decorators: [{ name: "decorator" }],
+            defaultExpression: { text: "4" },
+            isOptional: true,
+            name: "myStaticProperty",
+            scope: Scope.Private,
+            typeExpression: { text: "string" }
+        });
+        runClassStaticPropertyDefinitionTests(c.staticProperties[1], {
+            name: "mySecondStaticProperty"
         });
     });
 

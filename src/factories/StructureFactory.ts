@@ -1,9 +1,10 @@
-﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureExpressionBinder,
-    StructureDecoratorBinder, StructureEnumMemberBinder, StructureTypeParameterBinder} from "./../binders";
-import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, TypeExpressionDefinition,
-    DecoratorDefinition, EnumMemberDefinition, ExpressionDefinition, TypeParameterDefinition} from "./../definitions";
-import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, DecoratorStructure, EnumMemberStructure,
-    TypeParameterStructure} from "./../structures";
+﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder,
+    StructureClassStaticPropertyBinder, StructureExpressionBinder, StructureDecoratorBinder, StructureEnumMemberBinder,
+    StructureTypeParameterBinder} from "./../binders";
+import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
+    TypeExpressionDefinition, DecoratorDefinition, EnumMemberDefinition, ExpressionDefinition, TypeParameterDefinition} from "./../definitions";
+import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticPropertyStructure,
+    DecoratorStructure, EnumMemberStructure, TypeParameterStructure} from "./../structures";
 
 export class StructureFactory {
     getClassConstructor(structure: ClassConstructorStructure) {
@@ -23,6 +24,20 @@ export class StructureFactory {
     getClassProperty(structure: ClassPropertyStructure) {
         const def = new ClassPropertyDefinition();
         const binder = new StructureClassPropertyBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getClassStaticMethod(structure: ClassStaticMethodStructure) {
+        const def = new ClassStaticMethodDefinition();
+        const binder = new StructureClassStaticMethodBinder(this, structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getClassStaticProperty(structure: ClassStaticPropertyStructure) {
+        const def = new ClassStaticPropertyDefinition();
+        const binder = new StructureClassStaticPropertyBinder(structure);
         binder.bind(def);
         return def;
     }

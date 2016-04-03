@@ -4,3 +4,6 @@ export * from "./class/StructureClassConstructorParameterBinder";
 export * from "./class/StructureClassMethodBinder";
 export * from "./class/StructureClassMethodParameterBinder";
 export * from "./class/StructureClassPropertyBinder";
+export * from "./class/StructureClassStaticMethodBinder";
+export * from "./class/StructureClassStaticMethodParameterBinder";
+export * from "./class/StructureClassStaticPropertyBinder";
