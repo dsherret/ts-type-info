@@ -1,7 +1,6 @@
 ﻿import {BasePropertyDefinition, DefinitionType} from "./../base";
-import {InterfaceDefinition} from "./InterfaceDefinition";
 
-export class InterfacePropertyDefinition extends BasePropertyDefinition<InterfaceDefinition> {
+export class InterfacePropertyDefinition extends BasePropertyDefinition {
     constructor() {
         super(DefinitionType.InterfaceProperty);
     }

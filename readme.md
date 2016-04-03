@@ -113,4 +113,4 @@ abstract class MyClass {
 
 ### Real Life Example
 
-* [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code (Out of date)
+* [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code

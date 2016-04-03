@@ -3,13 +3,14 @@ import CodeBlockWriter from "code-block-writer";
 import {InterfaceDefinition} from "./../../../definitions";
 import {getInfoFromString} from "./../../../main";
 import {InterfaceWriter} from "./../../../writers";
+import {WriteFlags} from "./../../../WriteFlags";
 import {interfaceWriterTestCode} from "./../../writers/testCode";
 
 function getWriterString(i: InterfaceDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new InterfaceWriter(codeBlockWriter);
 
-    writer.write(i);
+    writer.write(i, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

@@ -2,11 +2,11 @@
 import {BaseParameterDefinitionConstructor, BaseParameterDefinition} from "./../../../definitions";
 import {ParameteredBinder} from "./../../base";
 
-export interface StructureParameterBinderConstructor<ParameterType extends BaseParameterDefinition<any>> {
+export interface StructureParameterBinderConstructor<ParameterType extends BaseParameterDefinition> {
     new(structure: BaseParameterStructure): { bind(def: ParameterType): void; };
 }
 
-export class StructureParameteredBinder<ParameterType extends BaseParameterDefinition<any>, StructureParameterType extends BaseParameterStructure>
+export class StructureParameteredBinder<ParameterType extends BaseParameterDefinition, StructureParameterType extends BaseParameterStructure>
         extends ParameteredBinder<ParameterType> {
     constructor(
         private structure: ParameteredStructure<StructureParameterType>,

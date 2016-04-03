@@ -4,13 +4,11 @@ import {BaseParameterDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests} from "./runNamedDefinitionTests";
 import {runTypeExpressionedDefinitionTests} from "./runTypeExpressionedDefinitionTests";
 import {runDefaultExpressionedDefinitionTests} from "./runDefaultExpressionedDefinitionTests";
-import {runParentedDefinitionTests} from "./runParentedDefinitionTests";
 
-export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition<any>, structure: BaseParameterTestStructure) {
+export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition, structure: BaseParameterTestStructure) {
     runNamedDefinitionTests(definition, structure);
     runTypeExpressionedDefinitionTests(definition, structure);
     runDefaultExpressionedDefinitionTests(definition, structure);
-    runParentedDefinitionTests(definition);
 
     it(`should be ${structure.isOptional ? "optional" : "not optional"}`, () => {
         assert.equal(definition.isOptional, typeof structure.isOptional === "boolean" ? structure.isOptional : false);

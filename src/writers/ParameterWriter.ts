@@ -1,20 +1,20 @@
 ﻿import {ParameterDefinitions} from "./../definitions";
+import {WriteFlags} from "./../WriteFlags";
 import {ExpressionWriter} from "./ExpressionWriter";
 import {TypeExpressionWriter} from "./TypeExpressionWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
-import {WriteFlags} from "./../WriteFlags";
 
 export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> {
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer, this.flags);
-    private expressionWriter = new ExpressionWriter(this.writer, this.flags);
+    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
+    private expressionWriter = new ExpressionWriter(this.writer);
 
-    protected writeDefault(param: ParameterDefinitions) {
+    protected writeDefault(param: ParameterDefinitions, flags: WriteFlags) {
         this.writeRestParameter(param);
         this.writer.write(param.name);
-        this.writeIsOptional(param);
+        this.writeIsOptional(param, flags);
         this.typeExpressionWriter.writeWithColon(param.typeExpression);
 
-        if ((this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
+        if ((flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
             this.expressionWriter.writeWithEqualsSign(param.defaultExpression);
         }
     }
@@ -25,10 +25,9 @@ export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> 
         }
     }
 
-    private writeIsOptional(param: ParameterDefinitions) {
+    private writeIsOptional(param: ParameterDefinitions, flags: WriteFlags) {
         const isOptionalNotRest = param.isOptional && !param.isRestParameter;
-        const willWriteDefaultExpression = param.defaultExpression != null &&
-                                           (this.flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions;
+        const willWriteDefaultExpression = param.defaultExpression != null && (flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions;
 
         if (isOptionalNotRest && !willWriteDefaultExpression) {
             this.writer.write("?");

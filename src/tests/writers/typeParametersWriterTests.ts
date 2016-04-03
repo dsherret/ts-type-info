@@ -3,12 +3,13 @@ import CodeBlockWriter from "code-block-writer";
 import {TypeParametersWriter} from "./../../writers";
 import {TypeParameterDefinition} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
+import {WriteFlags} from "./../../WriteFlags";
 
 function getTypeParametersAsString(typeParameters: TypeParameterDefinition[]) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new TypeParametersWriter(codeBlockWriter);
 
-    writer.write(typeParameters);
+    writer.write(typeParameters, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

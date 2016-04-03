@@ -4,12 +4,13 @@ import {ClassDefinition} from "./../../../definitions";
 import {getInfoFromString} from "./../../../main";
 import {ClassWriter} from "./../../../writers";
 import {classWriterTestCode} from "./../../writers/testCode";
+import {WriteFlags} from "./../../../WriteFlags";
 
 function getWriterString(c: ClassDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new ClassWriter(codeBlockWriter);
 
-    writer.write(c);
+    writer.write(c, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

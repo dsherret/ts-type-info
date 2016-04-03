@@ -2,6 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {FunctionDefinition} from "./../../../definitions";
 import {getInfoFromString} from "./../../../main";
+import {WriteFlags} from "./../../../WriteFlags";
 import {FunctionWriter} from "./../../../writers";
 import {functionWriterTestCode} from "./../../writers/testCode";
 
@@ -9,7 +10,7 @@ function getWriterString(i: FunctionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new FunctionWriter(codeBlockWriter);
 
-    writer.write(i);
+    writer.write(i, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

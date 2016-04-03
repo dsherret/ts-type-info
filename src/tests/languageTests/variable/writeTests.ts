@@ -3,13 +3,14 @@ import CodeBlockWriter from "code-block-writer";
 import {VariableDefinition} from "./../../../definitions";
 import {getInfoFromString} from "./../../../main";
 import {VariableWriter} from "./../../../writers";
+import {WriteFlags} from "./../../../WriteFlags";
 import {variableWriterTestCode} from "./../../writers/testCode";
 
 function getWriterString(def: VariableDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new VariableWriter(codeBlockWriter);
 
-    writer.write(def);
+    writer.write(def, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

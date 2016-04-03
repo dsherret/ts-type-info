@@ -1,12 +1,10 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {ModuledDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
 import {TypeParameterStructure} from "./../../structures";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins} from "./../../utils";
-import {NamedDefinition, ParentedDefinition, ExportableDefinition, AmbientableDefinition,
-        TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {NamedDefinition, ExportableDefinition, AmbientableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpressionDefinition} from "./../expressions";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
@@ -14,7 +12,7 @@ import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 import {InterfaceNewSignatureDefinition} from "./InterfaceNewSignatureDefinition";
 
 export class InterfaceDefinition extends BaseDefinition
-                                 implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
+                                 implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
@@ -34,15 +32,13 @@ export class InterfaceDefinition extends BaseDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const interfaceWriter = new InterfaceWriter(writer, WriteFlags.Default);
-        interfaceWriter.write(this);
+        const interfaceWriter = new InterfaceWriter(writer);
+        interfaceWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

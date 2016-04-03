@@ -5,11 +5,7 @@ import {TypeParameterDefinition} from "./../general";
 export abstract class TypeParameteredDefinition {
     addTypeParameters(...typeParameters: TypeParameterStructure[]) {
         const factory = new StructureFactory();
-        typeParameters.forEach(typeParameter => {
-            const def = factory.getTypeParameter(typeParameter);
-            def.parent = this as any;
-            this.typeParameters.push(def);
-        });
+        typeParameters.forEach(typeParameter => this.typeParameters.push(factory.getTypeParameter(typeParameter)));
         return this;
     }
 

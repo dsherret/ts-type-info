@@ -1,9 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
-import {ModuledDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
-import {BaseDefinition, NamedDefinition, ParentedDefinition, DecoratableDefinition,
-        AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
+import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
         AbstractableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {ClassWriter} from "./../../writers";
@@ -19,7 +17,7 @@ import {ClassStaticPropertyDefinition} from "./ClassStaticPropertyDefinition";
 
 type ClassMemberDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
 
-export class ClassDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, DecoratableDefinition,
+export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition,
                                         ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
@@ -35,17 +33,15 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 
     write() {
         const writer = new CodeBlockWriter();
-        const classWriter = new ClassWriter(writer, WriteFlags.Default);
-        classWriter.write(this);
+        const classWriter = new ClassWriter(writer);
+        classWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
     addMethods(...methods: ClassMethodStructure[]) {
         const factory = new StructureFactory();
         methods.forEach(method => {
-            const def = factory.getClassMethod(method);
-            def.parent = this;
-            this.methods.push(def);
+            this.methods.push(factory.getClassMethod(method));
         });
         return this;
     }
@@ -53,9 +49,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addProperties(...properties: ClassPropertyStructure[]) {
         const factory = new StructureFactory();
         properties.forEach(prop => {
-            const def = factory.getClassProperty(prop);
-            def.parent = this;
-            this.properties.push(def);
+            this.properties.push(factory.getClassProperty(prop));
         });
         return this;
     }
@@ -79,20 +73,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     setConstructor(structure: ClassConstructorStructure) {
         const factory = new StructureFactory();
         this.constructorDef = factory.getClassConstructor(structure);
-        this.constructorDef.parent = this;
         this.properties = this.properties.filter(p => !p.isConstructorParameter);
-        this.properties.push(...this.constructorDef.parameters.filter(p => p.scope !== ClassConstructorParameterScope.None).map(p => {
-            const prop = p.toProperty();
-            prop.parent = this;
-            return prop;
-        }));
+        this.properties.push(...this.constructorDef.parameters.filter(p => p.scope !== ClassConstructorParameterScope.None).map(p => p.toProperty()));
         return this;
     }
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: ModuledDefinitions;
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;

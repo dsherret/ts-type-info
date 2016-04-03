@@ -1,11 +1,12 @@
-﻿import {ParameterDefinitions, ClassConstructorParameterScope} from "./../definitions";
+﻿import {WriteFlags} from "./../WriteFlags";
+import {ParameterDefinitions, ClassConstructorParameterScope} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {ParameterWriter} from "./ParameterWriter";
 
 export class ParametersWriter extends BaseWriter {
-    private parameterWriter = new ParameterWriter(this.writer, this.flags);
+    private parameterWriter = new ParameterWriter(this.writer);
 
-    write(parameters: ParameterDefinitions[]) {
+    write(parameters: ParameterDefinitions[], flags: WriteFlags) {
         this.writer.write("(");
         parameters.forEach((param, i) => {
             if (i !== 0) {
@@ -16,7 +17,7 @@ export class ParametersWriter extends BaseWriter {
                 this.writeScope(param.scope);
             }
 
-            this.parameterWriter.write(param);
+            this.parameterWriter.write(param, flags);
         });
         this.writer.write(")");
     }

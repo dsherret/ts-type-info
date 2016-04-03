@@ -40,7 +40,5 @@ export abstract class InterfaceBinder implements IBaseBinder {
             Logger.warn(`Not implemented interface member.`);
             return;
         }
-
-        member.parent = def;
     }
 }

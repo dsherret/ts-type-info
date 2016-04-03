@@ -54,17 +54,13 @@ export abstract class ClassBinder implements IBaseBinder {
             Logger.warn(`Unknown member member for class.`);
             return;
         }
-
-        member.parent = def;
     }
 
     private fillPropertiesFromConstructorDef(def: ClassDefinition) {
         if (def.constructorDef != null) {
             def.constructorDef.parameters.forEach(param => {
                 if (param.scope !== ClassConstructorParameterScope.None) {
-                    const property = param.toProperty();
-                    property.parent = def;
-                    def.properties.push(property);
+                    def.properties.push(param.toProperty());
                 }
             });
         }

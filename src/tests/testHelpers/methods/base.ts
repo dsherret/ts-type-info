@@ -7,7 +7,6 @@ export * from "./base/runExportableDefinitionTests";
 export * from "./base/runModuledDefinitionTests";
 export * from "./base/runNamedDefinitionTests";
 export * from "./base/runObjectPropertyDefinitionTests";
-export * from "./base/runParentedDefinitionTests";
 export * from "./base/runTypeExpressionedDefinitionTests";
 export * from "./base/runTypeParameteredDefinitionTests";
 export * from "./base/runBaseFunctionDefinitionTests";

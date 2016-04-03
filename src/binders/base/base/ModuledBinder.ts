@@ -32,7 +32,5 @@ export abstract class ModuledBinder {
         else if (handleCustomDefinition instanceof Function) {
             handleCustomDefinition(member);
         }
-
-        member.parent = def;
     }
 }

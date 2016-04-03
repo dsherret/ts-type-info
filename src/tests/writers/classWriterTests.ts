@@ -3,13 +3,14 @@ import CodeBlockWriter from "code-block-writer";
 import {ClassDefinition} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
 import {ClassWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
 import {classWriterTestCode} from "./testCode";
 
 function getClassAsString(c: ClassDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new ClassWriter(codeBlockWriter);
 
-    writer.write(c);
+    writer.write(c, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

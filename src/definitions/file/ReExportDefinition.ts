@@ -1,9 +1,8 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
-import {BaseDefinition, DefinitionType, ParentedDefinition} from "./../base";
+import {BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expressions";
-import {FileDefinition} from "./FileDefinition";
 
-export class ReExportDefinition extends BaseDefinition implements ParentedDefinition<FileDefinition> {
+export class ReExportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
     // todo: move the array item types into a ImportPartDefinition class
@@ -23,7 +22,4 @@ export class ReExportDefinition extends BaseDefinition implements ParentedDefini
 
         return exports;
     }
-
-    // IParentedDefinition
-    parent: FileDefinition;
 }

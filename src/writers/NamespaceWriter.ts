@@ -5,15 +5,15 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ModuledWriter} from "./ModuledWriter";
 
 export class NamespaceWriter extends BaseDefinitionWriter<NamespaceDefinition> {
-    constructor(writer: CodeBlockWriter, private moduledWriter: ModuledWriter, flags = WriteFlags.Default) {
-        super(writer, flags);
+    constructor(writer: CodeBlockWriter, private moduledWriter: ModuledWriter) {
+        super(writer);
     }
 
-    protected writeDefault(def: NamespaceDefinition) {
-        this.writeExportClause(def);
+    protected writeDefault(def: NamespaceDefinition, flags: WriteFlags) {
+        this.writeExportClause(def, flags);
         this.writeDeclareClause(def);
         this.writer.write(this.getDeclarationTypeAsString(def.declarationType)).write(` ${def.name}`).block(() => {
-            this.moduledWriter.write(def);
+            this.moduledWriter.write(def, flags);
         });
     }
 

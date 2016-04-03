@@ -4,7 +4,7 @@ import {TsFactory} from "./../../../factories";
 import {ParameteredBinder} from "./../../base";
 import {TsParameterBinderByNodeConstructor} from "./TsParameteredBinderByNode";
 
-export class TsParameteredBinderBySignature<ParameterType extends BaseParameterDefinition<any>> extends ParameteredBinder<ParameterType> {
+export class TsParameteredBinderBySignature<ParameterType extends BaseParameterDefinition> extends ParameteredBinder<ParameterType> {
     constructor(
         private tsFactory: TsFactory,
         private signature: TsSignature,

@@ -4,7 +4,7 @@ import {DefinitionType} from "./DefinitionType";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
 import {BasePropertyDefinition} from "./BasePropertyDefinition";
 
-export abstract class ObjectPropertyDefinition<ParentType> extends BasePropertyDefinition<ParentType> implements DefaultExpressionedDefinition {
+export abstract class ObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
     constructor(definitionType: DefinitionType) {
         super(definitionType);
     }

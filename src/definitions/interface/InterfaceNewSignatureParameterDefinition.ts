@@ -1,7 +1,6 @@
 ﻿import {DefinitionType, BaseParameterDefinition} from "./../base";
-import {InterfaceNewSignatureDefinition} from "./InterfaceNewSignatureDefinition";
 
-export class InterfaceNewSignatureParameterDefinition extends BaseParameterDefinition<InterfaceNewSignatureDefinition> {
+export class InterfaceNewSignatureParameterDefinition extends BaseParameterDefinition {
     constructor() {
         super(DefinitionType.InterfaceNewSignatureParameter);
     }

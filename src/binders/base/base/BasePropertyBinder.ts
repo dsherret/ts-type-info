@@ -11,7 +11,7 @@ export abstract class BasePropertyBinder {
     ) {
     }
 
-    bind(def: BasePropertyDefinition<any>) {
+    bind(def: BasePropertyDefinition) {
         this.namedBinder.bind(def);
         this.typeExpressionedBinder.bind(def);
         def.isOptional = this.getIsOptional();

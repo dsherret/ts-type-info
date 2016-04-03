@@ -3,13 +3,14 @@ import CodeBlockWriter from "code-block-writer";
 import {FileDefinition} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
 import {FileWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
 import {fileWriterTestCode} from "./testCode";
 
 function getFileAsString(f: FileDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new FileWriter(codeBlockWriter);
 
-    writer.write(f);
+    writer.write(f, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

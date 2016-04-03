@@ -3,13 +3,14 @@ import CodeBlockWriter from "code-block-writer";
 import {FunctionDefinition} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
 import {FunctionWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
 import {functionWriterTestCode} from "./testCode";
 
 function getFunctionAsString(i: FunctionDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new FunctionWriter(codeBlockWriter);
 
-    writer.write(i);
+    writer.write(i, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

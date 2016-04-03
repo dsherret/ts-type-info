@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {EnumTestStructure} from "./../../testStructures";
 import {EnumDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
+import {runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runEnumMemberDefinitionTests} from "./runEnumMemberDefinitionTests";
 
@@ -13,7 +13,6 @@ export function runEnumDefinitionTests(definition: EnumDefinition, structure: En
             runNamedDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
-            runParentedDefinitionTests(definition);
 
             it(`should have ${structure.members.length} member(s)`, () => {
                 assert.equal(definition.members.length, structure.members.length);

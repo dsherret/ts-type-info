@@ -1,9 +1,8 @@
-import {DecoratedDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
-import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {NamedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expressions";
 
-export class DecoratorDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<DecoratedDefinitions> {
+export class DecoratorDefinition extends BaseDefinition implements NamedDefinition {
     arguments: ExpressionDefinition[] = [];
 
     constructor() {
@@ -20,6 +19,4 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: DecoratedDefinitions;
 }

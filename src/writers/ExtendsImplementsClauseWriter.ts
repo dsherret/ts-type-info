@@ -3,7 +3,7 @@ import {BaseWriter} from "./BaseWriter";
 import {ExpressionWriter} from "./ExpressionWriter";
 
 export class ExtendsImplementsClauseWriter extends BaseWriter {
-    private expressionWriter = new ExpressionWriter(this.writer, this.flags);
+    private expressionWriter = new ExpressionWriter(this.writer);
 
     writeExtends(def: ClassDefinition | InterfaceDefinition) {
         this.writeClause({

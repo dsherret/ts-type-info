@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import {ClassConstructorTestStructure} from "./../../testStructures";
 import {ClassConstructorDefinition} from "./../../../../definitions";
-import {runParameteredDefinitionTests, runParentedDefinitionTests} from "./../base";
+import {runParameteredDefinitionTests} from "./../base";
 import {runClassConstructorParameterDefinitionTests} from "./runClassConstructorParameterDefinitionTests";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -14,7 +14,6 @@ export function runClassConstructorDefinitionTests(definition: ClassConstructorD
     else {
         ensureNotNull(definition, () => {
             runParameteredDefinitionTests(runClassConstructorParameterDefinitionTests, definition, structure);
-            runParentedDefinitionTests(definition);
         });
     }
 }

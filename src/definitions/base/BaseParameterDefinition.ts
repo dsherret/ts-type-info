@@ -1,7 +1,6 @@
 import {applyMixins} from "./../../utils";
 import {TypeExpressionDefinition, ExpressionDefinition} from "./../expressions";
 import {NamedDefinition} from "./NamedDefinition";
-import {ParentedDefinition} from "./ParentedDefinition";
 import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
 import {BaseDefinition} from "./BaseDefinition";
@@ -11,8 +10,7 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export class BaseParameterDefinition<ParentType> extends BaseDefinition
-                                                 implements NamedDefinition, ParentedDefinition<ParentType>, TypeExpressionedDefinition, DefaultExpressionedDefinition {
+export class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
 
@@ -22,8 +20,6 @@ export class BaseParameterDefinition<ParentType> extends BaseDefinition
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: ParentType;
     // TypeExpressionedDefinition
     typeExpression: TypeExpressionDefinition;
     // DefaultExpressionedDefinition

@@ -8,9 +8,9 @@ import {enumWriterTestCode} from "./testCode";
 
 function getEnumAsString(enumMember: EnumDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new EnumWriter(codeBlockWriter, WriteFlags.Default);
+    const writer = new EnumWriter(codeBlockWriter);
 
-    writer.write(enumMember);
+    writer.write(enumMember, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

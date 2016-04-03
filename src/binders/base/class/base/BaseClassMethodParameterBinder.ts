@@ -10,7 +10,7 @@ export abstract class BaseClassMethodParameterBinder {
     ) {
     }
 
-    bind(def: BaseClassMethodParameterDefinition<any>) {
+    bind(def: BaseClassMethodParameterDefinition) {
         this.baseParameterBinder.bind(def);
         this.decoratableBinder.bind(def);
         this.scopedBinder.bind(def);

@@ -1,15 +1,15 @@
 ﻿import {ExportableDefinitions, AmbientableDefinition, BaseDefinition} from "./../definitions";
-import {DefinitionUtils} from "./../utils";
+import {WriteFlags} from "./../WriteFlags";
 import {BaseWriter} from "./BaseWriter";
 
 export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition> extends BaseWriter {
-    write(def: DefinitionType) {
+    write(def: DefinitionType, flags: WriteFlags) {
         if (typeof def.onBeforeWrite === "function") {
             def.onBeforeWrite(this.writer);
             this.writer.newLineIfLastCharNotNewLine();
         }
 
-        this.writeDefault(def);
+        this.writeDefault(def, flags);
 
         if (typeof def.onAfterWrite === "function") {
             def.onAfterWrite(this.writer);
@@ -17,14 +17,14 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
         }
     }
 
-    protected abstract writeDefault(def: DefinitionType): void;
+    protected abstract writeDefault(def: DefinitionType, flags: WriteFlags): void;
 
-    protected writeExportClause(def: ExportableDefinitions) {
+    protected writeExportClause(def: ExportableDefinitions, flags: WriteFlags) {
         if (def.isExported && !def.isDefaultExportOfFile) {
             let shouldWrite = false;
 
             if (def.isInterfaceDefinition() || def.isTypeAliasDefinition()) {
-                shouldWrite = !DefinitionUtils.isInAmbientContext(def);
+                shouldWrite = (flags & WriteFlags.IsInAmbientContext) === 0;
             }
             else {
                 shouldWrite = !def.isAmbient;

@@ -5,7 +5,7 @@ import {BaseClassMethodBinder} from "./../../../base";
 import {TsDecoratableBinder, TsBaseFunctionBinder, TsParameterBinderByNodeConstructor} from "./../../base";
 import {TsScopedBinder} from "./TsScopedBinder";
 
-export class TsBaseClassMethodBinder<ParameterType extends BaseClassMethodParameterDefinition<any>> extends BaseClassMethodBinder<ParameterType> {
+export class TsBaseClassMethodBinder<ParameterType extends BaseClassMethodParameterDefinition> extends BaseClassMethodBinder<ParameterType> {
     constructor(
         tsFactory: TsFactory,
         node: TsNode,

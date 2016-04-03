@@ -1,8 +1,7 @@
 ﻿import {applyMixins} from "./../../utils";
-import {NamedDefinition, ParentedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {EnumDefinition} from "./EnumDefinition";
+import {NamedDefinition, BaseDefinition, DefinitionType} from "./../base";
 
-export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition, ParentedDefinition<EnumDefinition> {
+export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition {
     value: number;
 
     constructor() {
@@ -11,8 +10,6 @@ export class EnumMemberDefinition extends BaseDefinition implements NamedDefinit
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: EnumDefinition;
 }
 
 applyMixins(EnumMemberDefinition, BaseDefinition, [NamedDefinition]);

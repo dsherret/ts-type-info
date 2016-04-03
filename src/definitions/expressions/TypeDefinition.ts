@@ -30,7 +30,6 @@ export class TypeDefinition {
                 const binder = new TsTypePropertyBinder(tsFactory, node);
 
                 binder.bind(def);
-                def.parent = this;
 
                 return def;
             }));

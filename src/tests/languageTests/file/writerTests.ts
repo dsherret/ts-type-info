@@ -4,12 +4,13 @@ import {FileDefinition} from "./../../../definitions";
 import {getInfoFromString} from "./../../../main";
 import {FileWriter} from "./../../../writers";
 import {fileWriterTestCode} from "./../../writers/testCode";
+import {WriteFlags} from "./../../../WriteFlags";
 
 function getWriterString(f: FileDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new FileWriter(codeBlockWriter);
 
-    writer.write(f);
+    writer.write(f, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

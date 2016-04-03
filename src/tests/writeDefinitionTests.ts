@@ -4,6 +4,7 @@ import {getInfoFromString} from "./../main";
 import {WriteableDefinitions} from "./../definitions";
 import {writeDefinition} from "./../writeDefinition";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
+import {WriteFlags} from "./../WriteFlags";
 import * as testCode from "./writers/testCode";
 
 function getCodeBlockWriter() {
@@ -23,7 +24,7 @@ describe("#writeDefinition()", () => {
             it(`should write the same thing as a class writer for the class ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
                 const classWriter = new ClassWriter(writer);
-                classWriter.write(def);
+                classWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });
@@ -35,7 +36,7 @@ describe("#writeDefinition()", () => {
             it(`should write the same thing as an interface writer for the interface ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
                 const interfaceWriter = new InterfaceWriter(writer);
-                interfaceWriter.write(def);
+                interfaceWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });
@@ -47,7 +48,7 @@ describe("#writeDefinition()", () => {
             it(`should write the same thing as a function writer for the function ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
                 const functionWriter = new FunctionWriter(writer);
-                functionWriter.write(def);
+                functionWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });
@@ -58,7 +59,7 @@ describe("#writeDefinition()", () => {
         it(`should write the same thing as an file writer for the file`, () => {
             const writer = getCodeBlockWriter();
             const fileWriter = new FileWriter(writer);
-            fileWriter.write(def);
+            fileWriter.write(def, WriteFlags.Default);
             assert.equal(writeDefinitionWrapper(def), writer.toString());
         });
     });
@@ -69,7 +70,7 @@ describe("#writeDefinition()", () => {
             it(`should write the same thing as a namespace writer for the namespace ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
                 const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
-                namespaceWriter.write(def);
+                namespaceWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });
@@ -81,7 +82,7 @@ describe("#writeDefinition()", () => {
             it(`should write the same thing as an enum writer for the function ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
                 const enumWriter = new EnumWriter(writer);
-                enumWriter.write(def);
+                enumWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });
@@ -93,7 +94,7 @@ describe("#writeDefinition()", () => {
             it(`should write the same thing as a type alias writer for the type alias ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
                 const typeAliasWriter = new TypeAliasWriter(writer);
-                typeAliasWriter.write(def);
+                typeAliasWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });
@@ -105,7 +106,7 @@ describe("#writeDefinition()", () => {
             it(`should write the same thing as a variable writer for the variable ${def.name}`, () => {
                 const writer = getCodeBlockWriter();
                 const variableWriter = new VariableWriter(writer);
-                variableWriter.write(def);
+                variableWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });

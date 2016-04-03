@@ -7,7 +7,7 @@ import {TsTypeParameteredBinderByNode} from "./TsTypeParameteredBinderByNode";
 import {TsParameteredBinderByNode, TsParameterBinderByNodeConstructor} from "./TsParameteredBinderByNode";
 import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 
-export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition<any>> extends BaseFunctionBinder<ParameterType> {
+export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
     constructor(
         tsFactory: TsFactory,
         node: TsNode,

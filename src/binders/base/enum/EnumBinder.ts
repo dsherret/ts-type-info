@@ -1,10 +1,8 @@
 ﻿import {EnumDefinition, EnumMemberDefinition} from "./../../../definitions";
-import {NamedBinder, ExportableBinder, AmbientableBinder, ParentedBinder} from "./../base";
+import {NamedBinder, ExportableBinder, AmbientableBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class EnumBinder implements IBaseBinder {
-    private parentedBinder = new ParentedBinder();
-
     constructor(
         private namedBinder: NamedBinder,
         private exportableBinder: ExportableBinder,
@@ -19,8 +17,5 @@ export abstract class EnumBinder implements IBaseBinder {
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);
         def.members.push(...this.getMembers());
-        def.members.forEach(m => {
-            this.parentedBinder.bindParentToChild(def, m);
-        });
     }
 }

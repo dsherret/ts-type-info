@@ -1,16 +1,14 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {applyMixins} from "./../../utils";
-import {ModuledDefinitions} from "./../../definitions";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ParentedDefinition, AmbientableDefinition, NamedDefinition, TypeExpressionedDefinition, ExportableDefinition,
+import {AmbientableDefinition, NamedDefinition, TypeExpressionedDefinition, ExportableDefinition,
     DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition, TypeExpressionDefinition} from "./../expressions";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
-                                implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, TypeExpressionedDefinition,
-                                           DefaultExpressionedDefinition, AmbientableDefinition {
+                                implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
     declarationType: VariableDeclarationType;
 
     constructor() {
@@ -19,15 +17,13 @@ export class VariableDefinition extends BaseDefinition
 
     write() {
         const writer = new CodeBlockWriter();
-        const variableWriter = new VariableWriter(writer, WriteFlags.Default);
-        variableWriter.write(this);
+        const variableWriter = new VariableWriter(writer);
+        variableWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

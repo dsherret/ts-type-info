@@ -5,7 +5,7 @@ import {BaseClassMethodBinder} from "./../../../base";
 import {StructureDecoratableBinder, StructureBaseFunctionBinder, StructureParameterBinderConstructor} from "./../../base";
 import {StructureScopedBinder} from "./StructureScopedBinder";
 
-export class StructureBaseClassMethodBinder<ParameterType extends BaseClassMethodParameterDefinition<any>, StructureParameterType extends BaseClassMethodParameterStructure>
+export class StructureBaseClassMethodBinder<ParameterType extends BaseClassMethodParameterDefinition, StructureParameterType extends BaseClassMethodParameterStructure>
         extends BaseClassMethodBinder<ParameterType> {
     constructor(
         factory: StructureFactory,

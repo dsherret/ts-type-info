@@ -7,7 +7,7 @@ import {StructureTypeParameteredBinder} from "./StructureTypeParameteredBinder";
 import {StructureParameteredBinder, StructureParameterBinderConstructor} from "./StructureParameteredBinder";
 import {StructureReturnTypedBinder} from "./StructureReturnTypedBinder";
 
-export class StructureBaseFunctionBinder<ParameterType extends BaseParameterDefinition<any>, StructureParameterType extends BaseParameterStructure>
+export class StructureBaseFunctionBinder<ParameterType extends BaseParameterDefinition, StructureParameterType extends BaseParameterStructure>
         extends BaseFunctionBinder<ParameterType> {
     constructor(
         factory: StructureFactory,

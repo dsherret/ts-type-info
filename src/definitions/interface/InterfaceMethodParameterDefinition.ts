@@ -1,7 +1,6 @@
 ﻿import {DefinitionType, BaseParameterDefinition} from "./../base";
-import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 
-export class InterfaceMethodParameterDefinition extends BaseParameterDefinition<InterfaceMethodDefinition> {
+export class InterfaceMethodParameterDefinition extends BaseParameterDefinition {
     constructor() {
         super(DefinitionType.InterfaceMethodParameter);
     }

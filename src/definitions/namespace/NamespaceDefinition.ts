@@ -1,10 +1,9 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {ModuledDefinitions, ExportableDefinitions} from "./../../definitions";
+import {ExportableDefinitions} from "./../../definitions";
 import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ModuledDefinition, NamedDefinition, ParentedDefinition, ExportableDefinition,
-    AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -14,7 +13,7 @@ import {TypeAliasDefinition} from "./../general";
 import {NamespaceDeclarationType} from "./NamespaceDeclarationType";
 
 export class NamespaceDefinition extends BaseDefinition
-                                 implements NamedDefinition, ParentedDefinition<ModuledDefinitions>, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
+                                 implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
     declarationType: NamespaceDeclarationType;
 
     constructor() {
@@ -24,15 +23,13 @@ export class NamespaceDefinition extends BaseDefinition
     write() {
         const writer = new CodeBlockWriter();
         const flags = WriteFlags.Default;
-        const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer, flags), flags);
-        namespaceWriter.write(this);
+        const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
+        namespaceWriter.write(this, flags);
         return writer.toString();
     }
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: ModuledDefinitions;
     // ModuledDefinition
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];

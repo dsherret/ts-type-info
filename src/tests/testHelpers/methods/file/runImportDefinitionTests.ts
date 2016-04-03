@@ -2,14 +2,11 @@
 import {ImportTestStructure, ExpressionTestStructure} from "./../../testStructures";
 import {ImportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
 import {runExpressionDefinitionTests} from "./../expressions";
-import {runParentedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runImportDefinitionTests(definition: ImportDefinition, structure: ImportTestStructure) {
     describe(`import ${structure.moduleSpecifier}`, () => {
         ensureNotNull(definition, () => {
-            runParentedDefinitionTests(definition);
-
             it(`should have module specifier text ${structure.moduleSpecifier}`, () => {
                 assert.equal(definition.moduleSpecifier, structure.moduleSpecifier);
             });

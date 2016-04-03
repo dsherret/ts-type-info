@@ -1,7 +1,6 @@
 ﻿export * from "./base/BaseDefinition";
 export * from "./base/DefinitionType";
 export * from "./base/NamedDefinition";
-export * from "./base/ParentedDefinition";
 export * from "./base/AbstractableDefinition";
 export * from "./base/AmbientableDefinition";
 export * from "./base/TypeExpressionedDefinition";

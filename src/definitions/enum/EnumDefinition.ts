@@ -1,15 +1,13 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {ModuledDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
 import {EnumMemberStructure} from "./../../structures";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins} from "./../../utils";
-import {NamedDefinition, ParentedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {NamedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
-export class EnumDefinition extends BaseDefinition
-                            implements ParentedDefinition<ModuledDefinitions>, ExportableDefinition, AmbientableDefinition {
+export class EnumDefinition extends BaseDefinition implements ExportableDefinition, AmbientableDefinition {
     members: EnumMemberDefinition[] = [];
 
     constructor() {
@@ -18,25 +16,19 @@ export class EnumDefinition extends BaseDefinition
 
     addMembers(...members: EnumMemberStructure[]) {
         const factory = new StructureFactory();
-        members.forEach(member => {
-            const def = factory.getEnumMember(member);
-            def.parent = this;
-            this.members.push(def);
-        });
+        members.forEach(member => this.members.push(factory.getEnumMember(member)));
         return this;
     }
 
     write() {
         const writer = new CodeBlockWriter();
-        const enumWriter = new EnumWriter(writer, WriteFlags.Default);
-        enumWriter.write(this);
+        const enumWriter = new EnumWriter(writer);
+        enumWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
     // NamedDefinition
     name: string;
-    // IParentedDefinition
-    parent: ModuledDefinitions;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -46,4 +38,4 @@ export class EnumDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(EnumDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, ParentedDefinition]);
+applyMixins(EnumDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition]);

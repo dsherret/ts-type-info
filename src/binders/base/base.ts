@@ -10,7 +10,6 @@ export * from "./base/ModuledBinder";
 export * from "./base/NamedBinder";
 export * from "./base/ObjectPropertyBinder";
 export * from "./base/ParameteredBinder";
-export * from "./base/ParentedBinder";
 export * from "./base/ReturnTypedBinder";
 export * from "./base/TypeExpressionedBinder";
 export * from "./base/TypeParameteredBinder";

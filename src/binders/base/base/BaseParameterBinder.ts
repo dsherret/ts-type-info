@@ -14,7 +14,7 @@ export abstract class BaseParameterBinder {
     ) {
     }
 
-    bind(def: BaseParameterDefinition<any>) {
+    bind(def: BaseParameterDefinition) {
         this.namedBinder.bind(def);
         this.typeExpressionedBinder.bind(def);
         this.defaultExpressionedBinder.bind(def);

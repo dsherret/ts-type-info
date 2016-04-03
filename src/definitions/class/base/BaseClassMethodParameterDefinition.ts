@@ -5,7 +5,7 @@ import {DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./
 import {Scope} from "./../Scope";
 import {ScopedDefinition} from "./ScopedDefinition";
 
-export class BaseClassMethodParameterDefinition<ParentType> extends BaseParameterDefinition<ParentType> implements DecoratableDefinition, ScopedDefinition {
+export class BaseClassMethodParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ScopedDefinition {
     constructor(definitionType: DefinitionType) {
         super(definitionType);
     }

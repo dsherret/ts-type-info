@@ -3,10 +3,9 @@ import {applyMixins} from "./../../utils";
 import {DecoratorStructure} from "./../../structures";
 import {DecoratorDefinition} from "./../general";
 import {DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
-import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 
-export class ClassConstructorParameterDefinition extends BaseParameterDefinition<ClassConstructorDefinition> implements DecoratableDefinition {
+export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition {
     scope: ClassConstructorParameterScope;
 
     constructor() {

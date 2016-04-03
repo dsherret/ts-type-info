@@ -2,7 +2,7 @@
 import {DecoratableBinder, BaseFunctionBinder} from "./../../base";
 import {ScopedBinder} from "./ScopedBinder";
 
-export abstract class BaseClassMethodBinder<ParameterType extends BaseClassMethodParameterDefinition<any>> {
+export abstract class BaseClassMethodBinder<ParameterType extends BaseClassMethodParameterDefinition> {
     constructor(
         private baseFunctionBinder: BaseFunctionBinder<ParameterType>,
         private decoratableBinder: DecoratableBinder,

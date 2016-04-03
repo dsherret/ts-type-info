@@ -7,7 +7,6 @@ export abstract class DecoratableDefinition {
         const factory = new StructureFactory();
         decorators.forEach(decorator => {
             const def = factory.getDecorator(decorator);
-            def.parent = this as any;
             this.decorators.push(def);
         });
         return this;

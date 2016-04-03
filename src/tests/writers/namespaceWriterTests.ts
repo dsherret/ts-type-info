@@ -3,13 +3,14 @@ import CodeBlockWriter from "code-block-writer";
 import {NamespaceDefinition} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
 import {namespaceWriterTestCode} from "./testCode";
 
 function getNamespaceAsString(f: NamespaceDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new NamespaceWriter(codeBlockWriter, new ModuledWriter(codeBlockWriter));
 
-    writer.write(f);
+    writer.write(f, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

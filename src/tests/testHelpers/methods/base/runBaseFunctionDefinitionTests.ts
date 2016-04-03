@@ -3,7 +3,6 @@ import {BaseFunctionDefinitions, ParameterDefinitions} from "./../../../../defin
 import {runNamedDefinitionTests} from "./runNamedDefinitionTests";
 import {runReturnTypedDefinitionTests} from "./runReturnTypedDefinitionTests";
 import {runParameteredDefinitionTests} from "./runParameteredDefinitionTests";
-import {runParentedDefinitionTests} from "./runParentedDefinitionTests";
 
 export function runBaseFunctionDefinitionTests(
     runParameterDefinitionTests: (definition: ParameterDefinitions, structure: ParameterTestStructures) => void,
@@ -13,5 +12,4 @@ export function runBaseFunctionDefinitionTests(
     runNamedDefinitionTests(definition, structure);
     runReturnTypedDefinitionTests(definition, structure);
     runParameteredDefinitionTests(runParameterDefinitionTests, definition, structure);
-    runParentedDefinitionTests(definition);
 }

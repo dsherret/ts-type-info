@@ -1,9 +1,8 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
-import {BaseDefinition, DefinitionType, ParentedDefinition} from "./../base";
+import {BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expressions";
-import {FileDefinition} from "./FileDefinition";
 
-export class ImportDefinition extends BaseDefinition implements ParentedDefinition<FileDefinition> {
+export class ImportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
     starImportName: string;
@@ -15,7 +14,4 @@ export class ImportDefinition extends BaseDefinition implements ParentedDefiniti
     constructor() {
         super(DefinitionType.Import);
     }
-
-    // IParentedDefinition
-    parent: FileDefinition;
 }

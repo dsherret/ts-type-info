@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {InterfaceTestStructure} from "./../../testStructures";
 import {InterfaceDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests, runParentedDefinitionTests} from "./../base";
+import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";
@@ -22,7 +22,6 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
             runExportableDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
             runTypeParameteredDefinitionTests(definition, structure);
-            runParentedDefinitionTests(definition);
 
             describe("methods", () => {
                 it("should have the expected number of methods", () => {

@@ -10,7 +10,7 @@ export abstract class ObjectPropertyBinder implements IBaseBinder {
     ) {
     }
 
-    bind(def: ObjectPropertyDefinition<any>) {
+    bind(def: ObjectPropertyDefinition) {
         this.basePropertyBinder.bind(def);
         this.defaultExpressionedBinder.bind(def);
     }

@@ -1,14 +1,15 @@
 ﻿import * as assert from "assert";
 import CodeBlockWriter from "code-block-writer";
-import {MethodWriter} from "./../../writers";
 import {MethodDefinitions} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
+import {MethodWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
 
 function getMethodAsString(method: MethodDefinitions) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new MethodWriter(codeBlockWriter);
 
-    writer.write(method);
+    writer.write(method, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

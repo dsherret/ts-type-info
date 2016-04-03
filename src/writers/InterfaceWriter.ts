@@ -1,4 +1,5 @@
 ﻿import {InterfaceDefinition} from "./../definitions";
+import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ExtendsImplementsClauseWriter} from "./ExtendsImplementsClauseWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
@@ -6,38 +7,38 @@ import {PropertyWriter} from "./PropertyWriter";
 import {MethodWriter} from "./MethodWriter";
 
 export class InterfaceWriter extends BaseDefinitionWriter<InterfaceDefinition> {
-    private typeParametersWriter = new TypeParametersWriter(this.writer, this.flags);
-    private propertyWriter = new PropertyWriter(this.writer, this.flags);
-    private methodWriter = new MethodWriter(this.writer, this.flags);
+    private typeParametersWriter = new TypeParametersWriter(this.writer);
+    private propertyWriter = new PropertyWriter(this.writer);
+    private methodWriter = new MethodWriter(this.writer);
 
-    protected writeDefault(def: InterfaceDefinition) {
-        this.writeHeader(def);
+    protected writeDefault(def: InterfaceDefinition, flags: WriteFlags) {
+        this.writeHeader(def, flags);
         this.writer.block(() => {
-            this.writeProperties(def);
+            this.writeProperties(def, flags);
             this.writer.newLine();
-            this.writeMethods(def);
+            this.writeMethods(def, flags);
         });
     }
 
-    private writeHeader(def: InterfaceDefinition) {
-        this.writeExportClause(def);
+    private writeHeader(def: InterfaceDefinition, flags: WriteFlags) {
+        this.writeExportClause(def, flags);
         this.writeDeclareClause(def);
         this.writer.write("interface ").write(def.name);
-        this.typeParametersWriter.write(def.typeParameters);
+        this.typeParametersWriter.write(def.typeParameters, flags);
 
-        const extendsImplementsWriter = new ExtendsImplementsClauseWriter(this.writer, this.flags);
+        const extendsImplementsWriter = new ExtendsImplementsClauseWriter(this.writer);
         extendsImplementsWriter.writeExtends(def);
     }
 
-    private writeProperties(def: InterfaceDefinition) {
+    private writeProperties(def: InterfaceDefinition, flags: WriteFlags) {
         def.properties.forEach(p => {
-            this.propertyWriter.write(p);
+            this.propertyWriter.write(p, flags);
         });
     }
 
-    private writeMethods(def: InterfaceDefinition) {
+    private writeMethods(def: InterfaceDefinition, flags: WriteFlags) {
         def.methods.forEach(m => {
-            this.methodWriter.write(m);
+            this.methodWriter.write(m, flags);
         });
     }
 }

@@ -3,15 +3,10 @@ import {ReExportTestStructure, ExpressionTestStructure} from "./../../testStruct
 import {ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runExpressionDefinitionTests} from "./../expressions";
-import {runParentedDefinitionTests} from "./../base";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {
     describe(`re-export ${structure.moduleSpecifier}`, () => {
-        runParentedDefinitionTests(definition);
-
         ensureNotNull(definition, () => {
-            runParentedDefinitionTests(definition);
-
             it(`should have a module specifier text of ${structure.moduleSpecifier}`, () => {
                 assert.equal(definition.moduleSpecifier, structure.moduleSpecifier);
             });

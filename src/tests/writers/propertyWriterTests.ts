@@ -3,12 +3,13 @@ import CodeBlockWriter from "code-block-writer";
 import {PropertyWriter} from "./../../writers";
 import {PropertyDefinitions} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
+import {WriteFlags} from "./../../WriteFlags";
 
 function getPropertyAsString(prop: PropertyDefinitions) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new PropertyWriter(codeBlockWriter);
 
-    writer.write(prop);
+    writer.write(prop, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

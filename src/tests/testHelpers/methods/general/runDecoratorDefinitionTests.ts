@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import {DecoratorTestStructure} from "./../../testStructures";
 import {DecoratorDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runParentedDefinitionTests} from "./../base";
+import {runNamedDefinitionTests} from "./../base";
 import {runExpressionDefinitionTests} from "./../expressions";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -11,7 +11,6 @@ export function runDecoratorDefinitionTests(definition: DecoratorDefinition, str
             structure.arguments = structure.arguments || [];
 
             runNamedDefinitionTests(definition, structure);
-            runParentedDefinitionTests(definition);
 
             it(`should have ${structure.arguments.length} argument(s)`, () => {
                 assert.equal(definition.arguments.length, structure.arguments.length);

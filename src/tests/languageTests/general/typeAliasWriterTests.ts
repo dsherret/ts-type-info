@@ -2,6 +2,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {TypeAliasDefinition} from "./../../../definitions";
 import {getInfoFromString} from "./../../../main";
+import {WriteFlags} from "./../../../WriteFlags";
 import {TypeAliasWriter} from "./../../../writers";
 import {typeAliasWriterTestCode} from "./../../writers/testCode";
 
@@ -9,7 +10,7 @@ function getWriterString(i: TypeAliasDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new TypeAliasWriter(codeBlockWriter);
 
-    writer.write(i);
+    writer.write(i, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

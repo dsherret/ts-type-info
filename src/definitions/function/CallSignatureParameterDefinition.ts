@@ -1,7 +1,6 @@
 ﻿import {DefinitionType, BaseParameterDefinition} from "./../base";
-import {CallSignatureDefinition} from "./CallSignatureDefinition";
 
-export class CallSignatureParameterDefinition extends BaseParameterDefinition<CallSignatureDefinition> {
+export class CallSignatureParameterDefinition extends BaseParameterDefinition {
     constructor() {
         super(DefinitionType.CallSignatureParameter);
     }

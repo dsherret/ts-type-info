@@ -7,9 +7,9 @@ import {WriteFlags} from "./../../WriteFlags";
 
 function getEnumMemberAsString(enumMember: EnumMemberDefinition) {
     const codeBlockWriter = new CodeBlockWriter();
-    const writer = new EnumMemberWriter(codeBlockWriter, WriteFlags.Default);
+    const writer = new EnumMemberWriter(codeBlockWriter);
 
-    writer.write(enumMember);
+    writer.write(enumMember, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

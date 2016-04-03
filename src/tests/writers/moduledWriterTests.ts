@@ -3,12 +3,13 @@ import CodeBlockWriter from "code-block-writer";
 import {ModuledDefinitions} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
 import {ModuledWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
 
 function getModuledAsString(f: ModuledDefinitions) {
     const codeBlockWriter = new CodeBlockWriter();
     const writer = new ModuledWriter(codeBlockWriter);
 
-    writer.write(f);
+    writer.write(f, WriteFlags.Default);
 
     return codeBlockWriter.toString();
 }

@@ -1,6 +1,6 @@
 import {InterfaceNewSignatureTestStructure} from "./../../testStructures";
 import {InterfaceNewSignatureDefinition} from "./../../../../definitions";
-import {runParameteredDefinitionTests, runReturnTypedDefinitionTests, runParentedDefinitionTests} from "./../base";
+import {runParameteredDefinitionTests, runReturnTypedDefinitionTests} from "./../base";
 import {runInterfaceNewSignatureParameterDefinitionTests} from "./runInterfaceNewSignatureParameterDefinitionTests";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -9,7 +9,6 @@ export function runInterfaceNewSignatureDefinitionTests(definition: InterfaceNew
         ensureNotNull(definition, () => {
             runParameteredDefinitionTests(runInterfaceNewSignatureParameterDefinitionTests, definition, structure);
             runReturnTypedDefinitionTests(definition, structure);
-            runParentedDefinitionTests(definition);
         });
     });
 }

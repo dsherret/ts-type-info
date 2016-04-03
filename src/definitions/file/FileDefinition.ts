@@ -36,8 +36,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
 
     write() {
         const writer = new CodeBlockWriter();
-        const fileWriter = new FileWriter(writer, WriteFlags.Default);
-        fileWriter.write(this);
+        const fileWriter = new FileWriter(writer);
+        fileWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
