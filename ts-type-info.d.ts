@@ -280,6 +280,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     write(): string;
     addMethods(...methods: ClassMethodStructure[]): this;
     addProperties(...properties: ClassPropertyStructure[]): this;
+    addStaticMethods(...staticMethods: ClassStaticMethodStructure[]): this;
+    addStaticProperties(...staticProperties: ClassStaticPropertyStructure[]): this;
     addExtends(...texts: string[]): this;
     addImplements(...texts: string[]): this;
     setConstructor(structure: ClassConstructorStructure): this;

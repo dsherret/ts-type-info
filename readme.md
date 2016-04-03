@@ -85,6 +85,15 @@ myClass.methods[0].onWriteFunctionBody = writer => {
     });
     writer.newLine().write("return str;");
 };
+myClass.addProperties({
+    name: "myProperty1"
+    type: "string"
+}, {
+    name: "myProperty2",
+    type: "number",
+    defaultExpression: "4",
+    isOptional: true
+})
 
 console.log(myClass.write());
 ```
@@ -94,6 +103,9 @@ Outputs:
 ```typeScript
 @MyDecorator
 abstract class MyClass {
+    myProperty1: string;
+    myProperty2?: number = 4;
+
     // myMethod is here
     myMethod(str: string) {
         if (str != null && str.length > 40) {
