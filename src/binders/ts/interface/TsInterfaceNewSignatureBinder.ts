@@ -6,7 +6,7 @@ import {TsParameteredBinderBySignature, TsReturnTypedBinderBySignature} from "./
 import {TsInterfaceNewSignatureParameterBinder} from "./TsInterfaceNewSignatureParameterBinder";
 
 export class TsInterfaceNewSignatureBinder extends InterfaceNewSignatureBinder {
-    constructor(tsFactory: TsFactory, private signature: TsSignature) {
+    constructor(tsFactory: TsFactory, signature: TsSignature) {
         super(
             new TsParameteredBinderBySignature(tsFactory, signature, InterfaceNewSignatureParameterDefinition, TsInterfaceNewSignatureParameterBinder),
             new TsReturnTypedBinderBySignature(tsFactory, signature)

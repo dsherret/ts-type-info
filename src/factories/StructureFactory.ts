@@ -1,12 +1,23 @@
-﻿import {StructureClassConstructorBinder, StructureClassMethodBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder,
-    StructureClassStaticPropertyBinder, StructureExpressionBinder, StructureDecoratorBinder, StructureEnumMemberBinder,
-    StructureTypeParameterBinder} from "./../binders";
-import {ClassConstructorDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
-    TypeExpressionDefinition, DecoratorDefinition, EnumMemberDefinition, ExpressionDefinition, TypeParameterDefinition} from "./../definitions";
-import {ClassMethodStructure, ClassConstructorStructure, ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticPropertyStructure,
-    DecoratorStructure, EnumMemberStructure, TypeParameterStructure} from "./../structures";
+﻿import {StructureCallSignatureParameterBinder, StructureClassConstructorBinder, StructureClassConstructorParameterBinder, StructureClassMethodBinder,
+    StructureClassMethodParameterBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder, StructureClassStaticMethodParameterBinder, StructureClassStaticPropertyBinder,
+    StructureDecoratorBinder, StructureEnumMemberBinder, StructureExpressionBinder, StructureFunctionParameterBinder, StructureInterfaceMethodParameterBinder,
+    StructureInterfaceNewSignatureParameterBinder, StructureTypeParameterBinder} from "./../binders";
+import {CallSignatureParameterDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition, ClassMethodDefinition, ClassMethodParameterDefinition,
+    ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticMethodParameterDefinition, ClassStaticPropertyDefinition, DecoratorDefinition, EnumMemberDefinition,
+    ExpressionDefinition, FunctionParameterDefinition, InterfaceMethodParameterDefinition, InterfaceNewSignatureParameterDefinition, TypeExpressionDefinition,
+    TypeParameterDefinition} from "./../definitions";
+import {CallSignatureParameterStructure, ClassConstructorStructure, ClassConstructorParameterStructure, ClassMethodStructure, ClassMethodParameterStructure,
+    ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticMethodParameterStructure, ClassStaticPropertyStructure, DecoratorStructure, EnumMemberStructure,
+    InterfaceMethodParameterStructure, InterfaceNewSignatureParameterStructure, FunctionParameterStructure, TypeParameterStructure} from "./../structures";
 
 export class StructureFactory {
+    getCallSignatureParameter(structure: CallSignatureParameterStructure) {
+        const def = new CallSignatureParameterDefinition();
+        const binder = new StructureCallSignatureParameterBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
     getClassConstructor(structure: ClassConstructorStructure) {
         const def = new ClassConstructorDefinition();
         const binder = new StructureClassConstructorBinder(this, structure);
@@ -14,9 +25,23 @@ export class StructureFactory {
         return def;
     }
 
+    getClassConstructorParameter(structure: ClassConstructorParameterStructure) {
+        const def = new ClassConstructorParameterDefinition();
+        const binder = new StructureClassConstructorParameterBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
     getClassMethod(structure: ClassMethodStructure) {
         const def = new ClassMethodDefinition();
         const binder = new StructureClassMethodBinder(this, structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getClassMethodParameter(structure: ClassMethodParameterStructure) {
+        const def = new ClassMethodParameterDefinition();
+        const binder = new StructureClassMethodParameterBinder(structure);
         binder.bind(def);
         return def;
     }
@@ -31,6 +56,13 @@ export class StructureFactory {
     getClassStaticMethod(structure: ClassStaticMethodStructure) {
         const def = new ClassStaticMethodDefinition();
         const binder = new StructureClassStaticMethodBinder(this, structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getClassStaticMethodParameter(structure: ClassStaticMethodParameterStructure) {
+        const def = new ClassStaticMethodParameterDefinition();
+        const binder = new StructureClassStaticMethodParameterBinder(structure);
         binder.bind(def);
         return def;
     }
@@ -63,6 +95,27 @@ export class StructureFactory {
             binder.bind(def);
             return def;
         }
+    }
+
+    getFunctionParameter(structure: FunctionParameterStructure) {
+        const def = new FunctionParameterDefinition();
+        const binder = new StructureFunctionParameterBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getInterfaceMethodParameter(structure: InterfaceMethodParameterStructure) {
+        const def = new InterfaceMethodParameterDefinition();
+        const binder = new StructureInterfaceMethodParameterBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getInterfaceNewSignatureParameter(structure: InterfaceNewSignatureParameterStructure) {
+        const def = new InterfaceNewSignatureParameterDefinition();
+        const binder = new StructureInterfaceNewSignatureParameterBinder(structure);
+        binder.bind(def);
+        return def;
     }
 
     getTypeExpressionFromText(text: string) {

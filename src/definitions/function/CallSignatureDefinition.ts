@@ -1,4 +1,5 @@
-import {TypeParameterStructure} from "./../../structures";
+import {TypeParameterStructure, CallSignatureParameterStructure} from "./../../structures";
+import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {TypeParameteredDefinition, BaseDefinition, DefinitionType, ReturnTypedDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -7,11 +8,19 @@ import {CallSignatureParameterDefinition} from "./CallSignatureParameterDefiniti
 
 export class CallSignatureDefinition
         extends BaseDefinition
-        implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition>, ReturnTypedDefinition {
+        implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
     minArgumentCount: number;
 
     constructor() {
         super(DefinitionType.CallSignature);
+    }
+
+    addParameters(...parameters: CallSignatureParameterStructure[]) {
+        const factory = new StructureFactory();
+        parameters.forEach(parameter => {
+            this.parameters.push(factory.getCallSignatureParameter(parameter));
+        });
+        return this;
     }
 
     // ParameteredDefinition

@@ -6,8 +6,8 @@ import {DecoratorStructure} from "./../../../structures";
 import {DecoratableDefinition, DefinitionType, BaseFunctionDefinition} from "./../../base";
 import {ScopedDefinition} from "./ScopedDefinition";
 
-export class BaseClassMethodDefinition<ParameterType>
-        extends BaseFunctionDefinition<ParameterType>
+export abstract class BaseClassMethodDefinition<ParameterType, ParameterStructureType>
+        extends BaseFunctionDefinition<ParameterType, ParameterStructureType>
         implements DecoratableDefinition, ScopedDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
 
@@ -15,6 +15,8 @@ export class BaseClassMethodDefinition<ParameterType>
         super(definitionType);
     }
 
+    // ParameteredDefinition
+    abstract addParameters(...parameters: ParameterStructureType[]): this;
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;

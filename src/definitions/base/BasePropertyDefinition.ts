@@ -5,7 +5,7 @@ import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
 import {DefinitionType} from "./DefinitionType";
 import {BaseDefinition} from "./BaseDefinition";
 
-export class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition {
+export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition {
     isOptional: boolean;
 
     constructor(definitionType: DefinitionType) {

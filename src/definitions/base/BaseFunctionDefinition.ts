@@ -9,9 +9,9 @@ import {DefinitionType} from "./DefinitionType";
 import {ParameteredDefinition} from "./ParameteredDefinition";
 import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 
-export class BaseFunctionDefinition<ParameterType>
+export abstract class BaseFunctionDefinition<ParameterType, ParameterStructureType>
         extends BaseDefinition
-        implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType>, ReturnTypedDefinition {
+        implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
     constructor(definitionType: DefinitionType) {
         super(definitionType);
     }
@@ -20,6 +20,7 @@ export class BaseFunctionDefinition<ParameterType>
     name: string;
     // ParameteredDefinition
     parameters: ParameterType[];
+    abstract addParameters(...parameters: ParameterStructureType[]): this;
     // ReturnTyped
     returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition

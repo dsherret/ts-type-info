@@ -4,7 +4,7 @@ import {CallSignatureParameterBinder} from "./../../base";
 import {TsBaseParameterBinder} from "./../base";
 
 export class TsCallSignatureParameterBinder extends CallSignatureParameterBinder {
-    constructor(tsFactory: TsFactory, private node: TsNode) {
+    constructor(tsFactory: TsFactory, node: TsNode) {
         super(new TsBaseParameterBinder(tsFactory, node));
     }
 }

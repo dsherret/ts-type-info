@@ -10,7 +10,7 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition {
+export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
 

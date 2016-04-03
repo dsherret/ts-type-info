@@ -4,7 +4,7 @@ import {InterfaceNewSignatureParameterBinder} from "./../../base";
 import {TsBaseParameterBinder} from "./../base";
 
 export class TsInterfaceNewSignatureParameterBinder extends InterfaceNewSignatureParameterBinder {
-    constructor(tsFactory: TsFactory, private node: TsNode) {
+    constructor(tsFactory: TsFactory, node: TsNode) {
         super(new TsBaseParameterBinder(tsFactory, node));
     }
 }

@@ -13,7 +13,7 @@ export abstract class BaseFunctionBinder<ParameterType extends BaseParameterDefi
     ) {
     }
 
-    bind(def: BaseFunctionDefinition<ParameterType>) {
+    bind(def: BaseFunctionDefinition<ParameterType, any>) {
         this.namedBinder.bind(def);
         this.typeParameterBinder.bind(def);
         this.parameterBinder.bind(def);
