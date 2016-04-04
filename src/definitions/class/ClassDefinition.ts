@@ -41,49 +41,37 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 
     addMethods(...methods: ClassMethodStructure[]) {
         const factory = new StructureFactory();
-        methods.forEach(method => {
-            this.methods.push(factory.getClassMethod(method));
-        });
+        this.methods.push(...methods.map(m => factory.getClassMethod(m)));
         return this;
     }
 
     addProperties(...properties: ClassPropertyStructure[]) {
         const factory = new StructureFactory();
-        properties.forEach(prop => {
-            this.properties.push(factory.getClassProperty(prop));
-        });
+        this.properties.push(...properties.map(p => factory.getClassProperty(p)));
         return this;
     }
 
     addStaticMethods(...staticMethods: ClassStaticMethodStructure[]) {
         const factory = new StructureFactory();
-        staticMethods.forEach(method => {
-            this.staticMethods.push(factory.getClassStaticMethod(method));
-        });
+        this.staticMethods.push(...staticMethods.map(m => factory.getClassStaticMethod(m)));
         return this;
     }
 
     addStaticProperties(...staticProperties: ClassStaticPropertyStructure[]) {
         const factory = new StructureFactory();
-        staticProperties.forEach(prop => {
-            this.staticProperties.push(factory.getClassStaticProperty(prop));
-        });
+        this.staticProperties.push(...staticProperties.map(p => factory.getClassStaticProperty(p)));
         return this;
     }
 
     addExtends(...texts: string[]) {
         const factory = new StructureFactory();
-        texts.forEach(text => {
-            this.extendsTypeExpressions.push(factory.getTypeExpressionFromText(text));
-        });
+        this.extendsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
         return this;
     }
 
     addImplements(...texts: string[]) {
         const factory = new StructureFactory();
-        texts.forEach(text => {
-            this.implementsTypeExpressions.push(factory.getTypeExpressionFromText(text));
-        });
+        this.implementsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
         return this;
     }
 

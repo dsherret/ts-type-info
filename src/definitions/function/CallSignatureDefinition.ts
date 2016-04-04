@@ -17,9 +17,7 @@ export class CallSignatureDefinition
 
     addParameters(...parameters: CallSignatureParameterStructure[]) {
         const factory = new StructureFactory();
-        parameters.forEach(parameter => {
-            this.parameters.push(factory.getCallSignatureParameter(parameter));
-        });
+        this.parameters.push(...parameters.map(p => factory.getCallSignatureParameter(p)));
         return this;
     }
 

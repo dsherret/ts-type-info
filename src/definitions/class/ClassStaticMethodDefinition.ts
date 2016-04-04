@@ -11,9 +11,7 @@ export class ClassStaticMethodDefinition extends BaseClassMethodDefinition<Class
 
     addParameters(...parameters: ClassStaticMethodParameterStructure[]) {
         const factory = new StructureFactory();
-        parameters.forEach(parameter => {
-            this.parameters.push(factory.getClassStaticMethodParameter(parameter));
-        });
+        this.parameters.push(...parameters.map(p => factory.getClassStaticMethodParameter(p)));
         return this;
     }
 }

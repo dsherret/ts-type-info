@@ -14,9 +14,7 @@ export class InterfaceNewSignatureDefinition
 
     addParameters(...parameters: InterfaceNewSignatureParameterStructure[]) {
         const factory = new StructureFactory();
-        parameters.forEach(parameter => {
-            this.parameters.push(factory.getInterfaceNewSignatureParameter(parameter));
-        });
+        this.parameters.push(...parameters.map(p => factory.getInterfaceNewSignatureParameter(p)));
         return this;
     }
 

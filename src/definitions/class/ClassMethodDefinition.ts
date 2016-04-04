@@ -12,9 +12,7 @@ export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethod
 
     addParameters(...parameters: ClassMethodParameterStructure[]) {
         const factory = new StructureFactory();
-        parameters.forEach(parameter => {
-            this.parameters.push(factory.getClassMethodParameter(parameter));
-        });
+        this.parameters.push(...parameters.map(p => factory.getClassMethodParameter(p)));
         return this;
     }
 

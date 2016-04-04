@@ -14,9 +14,7 @@ export class ClassConstructorDefinition extends BaseDefinition implements Parame
 
     addParameters(...parameters: ClassConstructorParameterStructure[]) {
         const factory = new StructureFactory();
-        parameters.forEach(parameter => {
-            this.parameters.push(factory.getClassConstructorParameter(parameter));
-        });
+        this.parameters.push(...parameters.map(p => factory.getClassConstructorParameter(p)));
         return this;
     }
 

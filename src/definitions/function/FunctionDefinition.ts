@@ -18,9 +18,7 @@ export class FunctionDefinition
 
     addParameters(...parameters: FunctionParameterStructure[]) {
         const factory = new StructureFactory();
-        parameters.forEach(parameter => {
-            this.parameters.push(factory.getFunctionParameter(parameter));
-        });
+        this.parameters.push(...parameters.map(p => factory.getFunctionParameter(p)));
         return this;
     }
 

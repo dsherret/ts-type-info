@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
-import {TypeParameterStructure} from "./../../structures";
+import {TypeParameterStructure, InterfaceMethodStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure} from "./../../structures";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins} from "./../../utils";
@@ -24,9 +24,25 @@ export class InterfaceDefinition extends BaseDefinition
 
     addExtends(...texts: string[]) {
         const factory = new StructureFactory();
-        texts.forEach(text => {
-            this.extendsTypeExpressions.push(factory.getTypeExpressionFromText(text));
-        });
+        this.extendsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
+        return this;
+    }
+
+    addMethods(...methods: InterfaceMethodStructure[]) {
+        const factory = new StructureFactory();
+        this.methods.push(...methods.map(m => factory.getInterfaceMethod(m)));
+        return this;
+    }
+
+    addNewSignatures(...newSignatures: InterfaceNewSignatureStructure[]) {
+        const factory = new StructureFactory();
+        this.newSignatures.push(...newSignatures.map(n => factory.getInterfaceNewSignature(n)));
+        return this;
+    }
+
+    addProperties(...properties: InterfacePropertyStructure[]) {
+        const factory = new StructureFactory();
+        this.properties.push(...properties.map(p => factory.getInterfaceProperty(p)));
         return this;
     }
 

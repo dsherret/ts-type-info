@@ -11,9 +11,7 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
 
     addArguments(...args: string[]) {
         const factory = new StructureFactory();
-        args.forEach(arg => {
-            this.arguments.push(factory.getTypeExpressionFromText(arg));
-        });
+        this.arguments.push(...args.map(arg => factory.getTypeExpressionFromText(arg)));
         return this;
     }
 

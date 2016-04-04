@@ -16,7 +16,7 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
 
     addMembers(...members: EnumMemberStructure[]) {
         const factory = new StructureFactory();
-        members.forEach(member => this.members.push(factory.getEnumMember(member)));
+        this.members.push(...members.map(m => factory.getEnumMember(m)));
         return this;
     }
 
