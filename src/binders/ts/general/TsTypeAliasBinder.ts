@@ -8,12 +8,12 @@ import {TsTypeParameteredBinderByNode} from "./../base/TsTypeParameteredBinderBy
 import {TsAmbientableBinder} from "./../base/TsAmbientableBinder";
 
 export class TsTypeAliasBinder extends TypeAliasBinder {
-    constructor(private tsFactory: TsFactory, private node: TsNode) {
+    constructor(private factory: TsFactory, private node: TsNode) {
         super(
             new TsNamedBinder(node),
             new TsExportableBinder(node),
-            new TsTypeExpressionedBinder(tsFactory, node),
-            new TsTypeParameteredBinderByNode(tsFactory, node),
+            new TsTypeExpressionedBinder(factory, node),
+            new TsTypeParameteredBinderByNode(factory, node),
             new TsAmbientableBinder(node)
         );
     }

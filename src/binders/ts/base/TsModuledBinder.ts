@@ -5,7 +5,7 @@ import {TsNode} from "./../../../compiler";
 import {ModuledBinder} from "./../../base";
 
 export class TsModuledBinder extends ModuledBinder {
-    constructor(private tsFactory: TsFactory, private node: TsNode) {
+    constructor(private factory: TsFactory, private node: TsNode) {
         super();
     }
 
@@ -16,7 +16,7 @@ export class TsModuledBinder extends ModuledBinder {
     }
 
     private getMemberDefinition(childNode: TsNode): NodeDefinitions {
-        const def = this.tsFactory.getDefinitionByNode(childNode);
+        const def = this.factory.getDefinitionByNode(childNode);
 
         if (def == null) {
             const symbol = this.node.getSymbol();

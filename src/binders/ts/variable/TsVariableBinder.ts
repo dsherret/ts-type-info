@@ -4,12 +4,12 @@ import {VariableBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsDefaultExpressionedBinder, TsTypeExpressionedBinder} from "./../base";
 
 export class TsVariableBinder extends VariableBinder {
-    constructor(tsFactory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, private node: TsNode) {
         super(
             new TsNamedBinder(node),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
-            new TsTypeExpressionedBinder(tsFactory, node),
+            new TsTypeExpressionedBinder(factory, node),
             new TsDefaultExpressionedBinder(node)
         );
     }

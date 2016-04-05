@@ -4,12 +4,12 @@ import {TsFactory} from "./../../../factories";
 import {ParameteredBinder} from "./../../base";
 
 export interface TsParameterBinderByNodeConstructor<ParameterType extends BaseParameterDefinition> {
-    new(tsFactory: TsFactory, node: TsNode): { bind(def: ParameterType): void; };
+    new(factory: TsFactory, node: TsNode): { bind(def: ParameterType): void; };
 }
 
 export class TsParameteredBinderByNode<ParameterType extends BaseParameterDefinition> extends ParameteredBinder<ParameterType> {
     constructor(
-        private tsFactory: TsFactory,
+        private factory: TsFactory,
         private node: TsNode,
         private paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
         private paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
@@ -20,7 +20,7 @@ export class TsParameteredBinderByNode<ParameterType extends BaseParameterDefini
     getParameters() {
         return this.node.getParameters().map(param => {
             const paramDefinition = new this.paramDefinition();
-            const paramBinder = new this.paramBinder(this.tsFactory, param);
+            const paramBinder = new this.paramBinder(this.factory, param);
 
             paramBinder.bind(paramDefinition);
 

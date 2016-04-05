@@ -6,7 +6,7 @@ import {TsTypeParameterBinder} from "./../general";
 
 export class TsTypeParameteredBinderBySignature extends TypeParameteredBinder {
     constructor(
-        private tsFactory: TsFactory,
+        private factory: TsFactory,
         private signature: TsSignature
     ) {
         super();
@@ -15,7 +15,7 @@ export class TsTypeParameteredBinderBySignature extends TypeParameteredBinder {
     getTypeParameters() {
         return this.signature.getTypeParameters().map(typeParamSymbol => {
             const def = new TypeParameterDefinition();
-            const binder = new TsTypeParameterBinder(this.tsFactory, typeParamSymbol.getOnlyNode());
+            const binder = new TsTypeParameterBinder(this.factory, typeParamSymbol.getOnlyNode());
 
             binder.bind(def);
 

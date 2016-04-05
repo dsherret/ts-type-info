@@ -5,10 +5,10 @@ import {TsNamedBinder} from "./TsNamedBinder";
 import {TsTypeExpressionedBinder} from "./TsTypeExpressionedBinder";
 
 export class TsBasePropertyBinder extends BasePropertyBinder {
-    constructor(tsFactory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, private node: TsNode) {
         super(
             new TsNamedBinder(node),
-            new TsTypeExpressionedBinder(tsFactory, node)
+            new TsTypeExpressionedBinder(factory, node)
         );
     }
 

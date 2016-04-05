@@ -4,7 +4,7 @@ import {InterfacePropertyBinder} from "./../../base";
 import {TsBasePropertyBinder} from "./../base";
 
 export class TsInterfacePropertyBinder extends InterfacePropertyBinder {
-    constructor(tsFactory: TsFactory, node: TsNode) {
-        super(new TsBasePropertyBinder(tsFactory, node));
+    constructor(factory: TsFactory, node: TsNode) {
+        super(new TsBasePropertyBinder(factory, node));
     }
 }

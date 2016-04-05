@@ -6,8 +6,8 @@ import {TsBaseClassPropertyBinder} from "./base";
 export class TsClassPropertyBinder extends ClassPropertyBinder {
     private symbol: TsSymbol;
 
-    constructor(tsFactory: TsFactory, private node: TsNode) {
-        super(new TsBaseClassPropertyBinder(tsFactory, node));
+    constructor(factory: TsFactory, private node: TsNode) {
+        super(new TsBaseClassPropertyBinder(factory, node));
 
         this.symbol = node.getSymbol();
     }

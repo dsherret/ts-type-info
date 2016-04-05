@@ -5,9 +5,9 @@ import {TsDecoratableBinder, TsObjectPropertyBinder} from "./../../base";
 import {TsScopedBinder} from "./TsScopedBinder";
 
 export class TsBaseClassPropertyBinder extends BaseClassPropertyBinder {
-    constructor(tsFactory: TsFactory, node: TsNode) {
+    constructor(factory: TsFactory, node: TsNode) {
         super(
-            new TsObjectPropertyBinder(tsFactory, node),
+            new TsObjectPropertyBinder(factory, node),
             new TsDecoratableBinder(node),
             new TsScopedBinder(node)
         );

@@ -13,13 +13,13 @@ export class TypeDefinition {
     text: string;
 
     // todo: should be refactored out into a binder
-    fillTypeInformation(tsFactory: TsFactory, type: TsType) {
+    fillTypeInformation(factory: TsFactory, type: TsType) {
         this.text = type.getText();
 
         if (type.hasCallSignaturesAndProperties()) {
             this.callSignatures.push(...type.getCallSignatures().map(callSignature => {
                 const def = new CallSignatureDefinition();
-                const binder = new TsCallSignatureBinder(tsFactory, callSignature);
+                const binder = new TsCallSignatureBinder(factory, callSignature);
 
                 binder.bind(def);
                 return def;
@@ -27,7 +27,7 @@ export class TypeDefinition {
             this.properties.push(...type.getProperties().map(prop => {
                 const node = prop.getOnlyNode();
                 const def = new TypePropertyDefinition();
-                const binder = new TsTypePropertyBinder(tsFactory, node);
+                const binder = new TsTypePropertyBinder(factory, node);
 
                 binder.bind(def);
 
@@ -35,7 +35,7 @@ export class TypeDefinition {
             }));
         }
 
-        this.typeArguments.push(...type.getTypeArguments().map(arg => tsFactory.getType(arg)));
+        this.typeArguments.push(...type.getTypeArguments().map(arg => factory.getType(arg)));
     }
 
     addDefinitions(definitions: ModuleMemberDefinitions[]) {

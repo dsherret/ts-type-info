@@ -4,9 +4,9 @@ import {ClassConstructorParameterBinder} from "./../../base";
 import {TsBaseParameterBinder, TsDecoratableBinder} from "./../base";
 
 export class TsClassConstructorParameterBinder extends ClassConstructorParameterBinder {
-    constructor(tsFactory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, private node: TsNode) {
         super(
-            new TsBaseParameterBinder(tsFactory, node),
+            new TsBaseParameterBinder(factory, node),
             new TsDecoratableBinder(node)
         );
     }

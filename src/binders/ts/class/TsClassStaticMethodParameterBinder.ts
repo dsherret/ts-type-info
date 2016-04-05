@@ -4,7 +4,7 @@ import {ClassStaticMethodParameterBinder} from "./../../base";
 import {TsBaseClassMethodParameterBinder} from "./base";
 
 export class TsClassStaticMethodParameterBinder extends ClassStaticMethodParameterBinder {
-    constructor(tsFactory: TsFactory, node: TsNode) {
-        super(new TsBaseClassMethodParameterBinder(tsFactory, node));
+    constructor(factory: TsFactory, node: TsNode) {
+        super(new TsBaseClassMethodParameterBinder(factory, node));
     }
 }

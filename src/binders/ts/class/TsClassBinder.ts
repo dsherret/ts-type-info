@@ -14,12 +14,12 @@ import {TsClassConstructorBinder} from "./TsClassConstructorBinder";
 export type ClassMemberTypes = ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
 
 export class TsClassBinder extends ClassBinder {
-    constructor(private tsFactory: TsFactory, private node: TsNode) {
+    constructor(private factory: TsFactory, private node: TsNode) {
         super(
             new TsNamedBinder(node),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
-            new TsTypeParameteredBinderByNode(tsFactory, node),
+            new TsTypeParameteredBinderByNode(factory, node),
             new TsAbstractableBinder(node),
             new TsDecoratableBinder(node)
         );
@@ -31,7 +31,7 @@ export class TsClassBinder extends ClassBinder {
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.tsFactory.getTypeExpressionFromNode(node));
+            .map(node => this.factory.getTypeExpressionFromNode(node));
     }
 
     getImplementsTypeExpressions() {
@@ -39,7 +39,7 @@ export class TsClassBinder extends ClassBinder {
             .filter(node => node.isHeritageClause() && node.hasImplementsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.tsFactory.getTypeExpressionFromNode(node));
+            .map(node => this.factory.getTypeExpressionFromNode(node));
     }
 
     getMembers() {
@@ -52,7 +52,7 @@ export class TsClassBinder extends ClassBinder {
         if (childNode.isMethodDeclaration()) {
             if (childNode.hasStaticKeyword()) {
                 const staticMethodDef = new ClassStaticMethodDefinition();
-                const staticMethodBinder = new TsClassStaticMethodBinder(this.tsFactory, childNode);
+                const staticMethodBinder = new TsClassStaticMethodBinder(this.factory, childNode);
 
                 staticMethodBinder.bind(staticMethodDef);
 
@@ -60,7 +60,7 @@ export class TsClassBinder extends ClassBinder {
             }
             else {
                 const methodDef = new ClassMethodDefinition();
-                const methodBinder = new TsClassMethodBinder(this.tsFactory, childNode);
+                const methodBinder = new TsClassMethodBinder(this.factory, childNode);
 
                 methodBinder.bind(methodDef);
 
@@ -70,7 +70,7 @@ export class TsClassBinder extends ClassBinder {
         else if (childNode.isPropertyDeclaration() || childNode.isGetAccessor()) {
             if (childNode.hasStaticKeyword()) {
                 const staticPropertyDef = new ClassStaticPropertyDefinition();
-                const staticPropertyBinder = new TsClassStaticPropertyBinder(this.tsFactory, childNode);
+                const staticPropertyBinder = new TsClassStaticPropertyBinder(this.factory, childNode);
 
                 staticPropertyBinder.bind(staticPropertyDef);
 
@@ -78,7 +78,7 @@ export class TsClassBinder extends ClassBinder {
             }
             else {
                 const propertyDef = new ClassPropertyDefinition();
-                const propertyBinder = new TsClassPropertyBinder(this.tsFactory, childNode);
+                const propertyBinder = new TsClassPropertyBinder(this.factory, childNode);
 
                 propertyBinder.bind(propertyDef);
 
@@ -87,7 +87,7 @@ export class TsClassBinder extends ClassBinder {
         }
         else if (childNode.isConstructor()) {
             const constructorDef = new ClassConstructorDefinition();
-            const constructorBinder = new TsClassConstructorBinder(this.tsFactory, childNode);
+            const constructorBinder = new TsClassConstructorBinder(this.factory, childNode);
 
             constructorBinder.bind(constructorDef);
 

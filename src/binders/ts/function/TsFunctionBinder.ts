@@ -6,9 +6,9 @@ import {TsBaseFunctionBinder, TsExportableBinder, TsAmbientableBinder} from "./.
 import {TsFunctionParameterBinder} from "./TsFunctionParameterBinder";
 
 export class TsFunctionBinder extends FunctionBinder {
-    constructor(tsFactory: TsFactory, node: TsNode) {
+    constructor(factory: TsFactory, node: TsNode) {
         super(
-            new TsBaseFunctionBinder(tsFactory, node, FunctionParameterDefinition, TsFunctionParameterBinder),
+            new TsBaseFunctionBinder(factory, node, FunctionParameterDefinition, TsFunctionParameterBinder),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node)
         );

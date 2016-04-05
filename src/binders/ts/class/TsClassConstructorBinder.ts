@@ -6,10 +6,10 @@ import {TsParameteredBinderByNode} from "./../base";
 import {TsClassConstructorParameterBinder} from "./TsClassConstructorParameterBinder";
 
 export class TsClassConstructorBinder extends ClassConstructorBinder {
-    constructor(tsFactory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, private node: TsNode) {
         super(
             new TsParameteredBinderByNode(
-                tsFactory,
+                factory,
                 node,
                 ClassConstructorParameterDefinition,
                 TsClassConstructorParameterBinder

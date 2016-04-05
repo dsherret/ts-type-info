@@ -5,8 +5,8 @@ import {FileBinder} from "./../../base";
 import {TsModuledBinder} from "./../base";
 
 export class TsFileBinder extends FileBinder {
-    constructor(private tsFactory: TsFactory, private sourceFile: TsSourceFile) {
-        super(new TsModuledBinder(tsFactory, sourceFile.getNode()));
+    constructor(private factory: TsFactory, private sourceFile: TsSourceFile) {
+        super(new TsModuledBinder(factory, sourceFile.getNode()));
     }
 
     getFileName() {
@@ -17,7 +17,7 @@ export class TsFileBinder extends FileBinder {
         const symbol = this.sourceFile.getDefaultExportSymbol();
 
         if (symbol != null) {
-            const defsOrExpression = this.tsFactory.getDefinitionsOrExpressionFromExportSymbol(symbol);
+            const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(symbol);
             return {
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],
                 expression: defsOrExpression.expression

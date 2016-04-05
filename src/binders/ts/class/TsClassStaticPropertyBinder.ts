@@ -4,7 +4,7 @@ import {ClassStaticPropertyBinder} from "./../../base";
 import {TsBaseClassPropertyBinder} from "./base";
 
 export class TsClassStaticPropertyBinder extends ClassStaticPropertyBinder {
-    constructor(tsFactory: TsFactory, node: TsNode) {
-        super(new TsBaseClassPropertyBinder(tsFactory, node));
+    constructor(factory: TsFactory, node: TsNode) {
+        super(new TsBaseClassPropertyBinder(factory, node));
     }
 }

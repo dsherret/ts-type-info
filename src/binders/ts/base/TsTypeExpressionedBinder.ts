@@ -3,11 +3,11 @@ import {TsFactory} from "./../../../factories";
 import {TypeExpressionedBinder} from "./../../base";
 
 export class TsTypeExpressionedBinder extends TypeExpressionedBinder {
-    constructor(private tsFactory: TsFactory, private node: TsNode) {
+    constructor(private factory: TsFactory, private node: TsNode) {
         super();
     }
 
     getTypeExpression() {
-        return this.tsFactory.getTypeExpression(this.node.getTypeExpression());
+        return this.factory.getTypeExpression(this.node.getTypeExpression());
     }
 }

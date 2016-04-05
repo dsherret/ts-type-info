@@ -9,12 +9,12 @@ import {TsInterfaceNewSignatureBinder} from "./TsInterfaceNewSignatureBinder";
 import {TsInterfacePropertyBinder} from "./TsInterfacePropertyBinder";
 
 export class TsInterfaceBinder extends InterfaceBinder {
-    constructor(private tsFactory: TsFactory, private node: TsNode) {
+    constructor(private factory: TsFactory, private node: TsNode) {
         super(
             new TsNamedBinder(node),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
-            new TsTypeParameteredBinderByNode(tsFactory, node)
+            new TsTypeParameteredBinderByNode(factory, node)
         );
     }
 
@@ -23,7 +23,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.tsFactory.getTypeExpressionFromNode(node));
+            .map(node => this.factory.getTypeExpressionFromNode(node));
     }
 
     getMembers() {
@@ -36,7 +36,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
         // todo: move these into the TsFactory
         if (childNode.isMethodSignature()) {
             const methodDef = new InterfaceMethodDefinition();
-            const methodBinder = new TsInterfaceMethodBinder(this.tsFactory, childNode);
+            const methodBinder = new TsInterfaceMethodBinder(this.factory, childNode);
 
             methodBinder.bind(methodDef);
 
@@ -44,7 +44,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
         }
         else if (childNode.isPropertySignature()) {
             const propDef = new InterfacePropertyDefinition();
-            const propBinder = new TsInterfacePropertyBinder(this.tsFactory, childNode);
+            const propBinder = new TsInterfacePropertyBinder(this.factory, childNode);
 
             propBinder.bind(propDef);
 
@@ -52,7 +52,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
         }
         else if (childNode.isConstructSignature()) {
             const newSignatureDef = new InterfaceNewSignatureDefinition();
-            const newSignatureBinder = new TsInterfaceNewSignatureBinder(this.tsFactory, childNode.getSignatureFromThis());
+            const newSignatureBinder = new TsInterfaceNewSignatureBinder(this.factory, childNode.getSignatureFromThis());
 
             newSignatureBinder.bind(newSignatureDef);
 
