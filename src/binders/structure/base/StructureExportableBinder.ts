@@ -7,14 +7,14 @@ export class StructureExportableBinder extends ExportableBinder {
     }
 
     getIsExported() {
-        return this.structure.isExported;
+        return this.structure.isExported || false;
     }
 
     getIsDefaultExportOfFile() {
-        return this.structure.isDefaultExportOfFile;
+        return this.structure.isDefaultExportOfFile || false;
     }
 
     getIsNamedExportOfFile() {
-        return this.structure.isNamedExportOfFile;
+        return this.structure.isNamedExportOfFile || false;
     }
 }

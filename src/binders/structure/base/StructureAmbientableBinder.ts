@@ -7,10 +7,10 @@ export class StructureAmbientableBinder extends AmbientableBinder {
     }
 
     getIsAmbient() {
-        return this.structure.isAmbient;
+        return this.structure.isAmbient || false;
     }
 
     getHasDeclareKeyword() {
-        return this.structure.hasDeclareKeyword;
+        return this.structure.hasDeclareKeyword || false;
     }
 }

@@ -1,5 +1,5 @@
 ﻿import {TsFactory} from "./../../../factories";
-import {InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./../../../definitions";
+import {InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition, InterfaceMemberDefinitions} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {InterfaceBinder} from "./../../base";
@@ -7,8 +7,6 @@ import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsTypeParametere
 import {TsInterfaceMethodBinder} from "./TsInterfaceMethodBinder";
 import {TsInterfaceNewSignatureBinder} from "./TsInterfaceNewSignatureBinder";
 import {TsInterfacePropertyBinder} from "./TsInterfacePropertyBinder";
-
-export type InterfaceMemberTypes = InterfaceMethodDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition;
 
 export class TsInterfaceBinder extends InterfaceBinder {
     constructor(private tsFactory: TsFactory, private node: TsNode) {
@@ -34,7 +32,8 @@ export class TsInterfaceBinder extends InterfaceBinder {
             .filter(n => n != null);
     }
 
-    private getMemberDefinition(childNode: TsNode): InterfaceMemberTypes {
+    private getMemberDefinition(childNode: TsNode): InterfaceMemberDefinitions {
+        // todo: move these into the TsFactory
         if (childNode.isMethodSignature()) {
             const methodDef = new InterfaceMethodDefinition();
             const methodBinder = new TsInterfaceMethodBinder(this.tsFactory, childNode);

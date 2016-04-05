@@ -1,5 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ExportableDefinitions} from "./../../definitions";
+import {InterfaceStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
@@ -39,6 +40,7 @@ export class NamespaceDefinition extends BaseDefinition
     variables: VariableDefinition[];
     typeAliases: TypeAliasDefinition[];
     getExports: () => ExportableDefinitions[];
+    addInterfaces: (...interfaces: InterfaceStructure[]) => this;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

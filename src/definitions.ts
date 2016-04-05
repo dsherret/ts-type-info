@@ -30,6 +30,7 @@ export type FunctionDefinitions = CallSignatureDefinition | CallSignatureParamet
 export type NamespaceDefinitions = NamespaceDefinition;
 export type GeneralDefinitions = TypeParameterDefinition | TypePropertyDefinition | DecoratorDefinition | TypeAliasDefinition;
 export type VariableDefinitions = VariableDefinition;
+export type InterfaceMemberDefinitions = InterfaceMethodDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition;
 
 // "ed" definitions
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition |
