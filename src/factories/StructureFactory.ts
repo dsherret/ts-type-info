@@ -97,6 +97,9 @@ export class StructureFactory {
             binder.bind(def);
             return def;
         }
+        else {
+            return null;
+        }
     }
 
     getFunctionParameter(structure: FunctionParameterStructure) {
@@ -161,6 +164,9 @@ export class StructureFactory {
             const binder = new StructureExpressionBinder(text);
             binder.bind(def);
             return def;
+        }
+        else {
+            return null;
         }
     }
 

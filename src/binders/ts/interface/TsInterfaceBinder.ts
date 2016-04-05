@@ -76,5 +76,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
         else {
             Logger.warn(`Unknown interface child kind: ${childNode.nodeKindToString()}`);
         }
+
+        return null;
     }
 }

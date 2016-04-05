@@ -114,5 +114,7 @@ export class TsClassBinder extends ClassBinder {
         else {
             Logger.warn(`Unknown class child kind: ${childNode.nodeKindToString()}`);
         }
+
+        return null;
     }
 }

@@ -604,6 +604,7 @@ export class TsNode extends TsSourceFileChild {
         }
         else {
             Logger.warn("The expression was null");
+            return null;
         }
     }
 
