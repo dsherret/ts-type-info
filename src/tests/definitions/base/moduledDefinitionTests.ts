@@ -1,5 +1,5 @@
 ﻿import {NamespaceDefinition} from "./../../../definitions";
-import {runInterfaceDefinitionTests} from "./../../testHelpers";
+import {runInterfaceDefinitionTests, runTypeAliasDefinitionTests} from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
     describe("addInterfaces", () => {
@@ -51,6 +51,38 @@ describe("ModuledDefinitionTests", () => {
         });
         runInterfaceDefinitionTests(n.interfaces[1], {
             name: "Interface2"
+        });
+    });
+
+    describe("addTypeAliases", () => {
+        const n = new NamespaceDefinition();
+        n.addTypeAliases({
+            name: "typeAlias1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            type: "string",
+            typeParameters: [{ name: "T" }]
+        }, {
+            name: "typeAlias2",
+            type: "string"
+        });
+
+        runTypeAliasDefinitionTests(n.typeAliases[0], {
+            name: "typeAlias1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            typeExpression: { text: "string" },
+            typeParameters: [{ name: "T" }]
+        });
+        runTypeAliasDefinitionTests(n.typeAliases[1], {
+            name: "typeAlias2",
+            typeExpression: { text: "string" }
         });
     });
 });
