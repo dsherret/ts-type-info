@@ -1,5 +1,5 @@
-﻿import {NamespaceDefinition} from "./../../../definitions";
-import {runInterfaceDefinitionTests, runTypeAliasDefinitionTests} from "./../../testHelpers";
+﻿import {NamespaceDefinition, VariableDeclarationType} from "./../../../definitions";
+import {runInterfaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
     describe("addInterfaces", () => {
@@ -83,6 +83,39 @@ describe("ModuledDefinitionTests", () => {
         runTypeAliasDefinitionTests(n.typeAliases[1], {
             name: "typeAlias2",
             typeExpression: { text: "string" }
+        });
+    });
+
+    describe("addVariables", () => {
+        const n = new NamespaceDefinition();
+        n.addVariables({
+            name: "myVar1",
+            declarationType: VariableDeclarationType.Const,
+            defaultExpression: "5",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            type: "number"
+        }, {
+            name: "myVar2"
+        });
+
+        runVariableDefinitionTests(n.variables[0], {
+            name: "myVar1",
+            declarationType: VariableDeclarationType.Const,
+            defaultExpression: { text: "5" },
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            typeExpression: { text: "number" }
+        });
+        runVariableDefinitionTests(n.variables[1], {
+            name: "myVar2",
+            declarationType: VariableDeclarationType.Let // should default to let
         });
     });
 });

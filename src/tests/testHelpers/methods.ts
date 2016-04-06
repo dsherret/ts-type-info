@@ -7,3 +7,4 @@ export * from "./methods/file";
 export * from "./methods/function";
 export * from "./methods/interface";
 export * from "./methods/namespace";
+export * from "./methods/variable";
