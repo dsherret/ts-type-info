@@ -1,1 +1,2 @@
-﻿export * from "./enum/StructureEnumMemberBinder";
+﻿export * from "./enum/StructureEnumBinder";
+export * from "./enum/StructureEnumMemberBinder";

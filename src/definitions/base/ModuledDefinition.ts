@@ -1,6 +1,6 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
-import {InterfaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
+import {EnumStructure, InterfaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
@@ -17,6 +17,12 @@ export abstract class ModuledDefinition {
     functions: FunctionDefinition[] = [];
     variables: VariableDefinition[] = [];
     typeAliases: TypeAliasDefinition[] = [];
+
+    addEnums(...enums: EnumStructure[]) {
+        const factory = new StructureFactory();
+        this.enums.push(...enums.map(e => factory.getEnum(e)));
+        return this;
+    }
 
     addInterfaces(...interfaces: InterfaceStructure[]) {
         const factory = new StructureFactory();

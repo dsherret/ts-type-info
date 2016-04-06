@@ -1,5 +1,5 @@
 ﻿import {NamespaceDefinition, VariableDeclarationType} from "./../../../definitions";
-import {runInterfaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
+import {runEnumDefinitionTests, runInterfaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
     describe("addInterfaces", () => {
@@ -116,6 +116,34 @@ describe("ModuledDefinitionTests", () => {
         runVariableDefinitionTests(n.variables[1], {
             name: "myVar2",
             declarationType: VariableDeclarationType.Let // should default to let
+        });
+    });
+
+    describe("addEnums", () => {
+        const n = new NamespaceDefinition();
+        n.addEnums({
+            name: "enum1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
+        }, {
+            name: "enum2"
+        });
+
+        runEnumDefinitionTests(n.enums[0], {
+            name: "enum1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
+        });
+        runEnumDefinitionTests(n.enums[1], {
+            name: "enum2"
         });
     });
 });
