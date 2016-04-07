@@ -5,8 +5,6 @@ import {FunctionStructure} from "./../function";
 import {EnumStructure} from "./../enum";
 import {VariableStructure} from "./../variable";
 import {TypeAliasStructure} from "./../general";
-import {NamedStructure} from "./NamedStructure";
-import {ExportableStructure} from "./ExportableStructure";
 
 export interface ModuledStructure {
     namespaces?: NamespaceStructure[];
@@ -16,5 +14,4 @@ export interface ModuledStructure {
     enums?: EnumStructure[];
     variables?: VariableStructure[];
     typeAliases?: TypeAliasStructure[];
-    exports?: (NamedStructure & ExportableStructure)[];
 }

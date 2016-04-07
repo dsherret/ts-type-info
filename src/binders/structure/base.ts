@@ -6,6 +6,7 @@ export * from "./base/StructureBasePropertyBinder";
 export * from "./base/StructureDecoratableBinder";
 export * from "./base/StructureDefaultExpressionedBinder";
 export * from "./base/StructureExportableBinder";
+export * from "./base/StructureModuledBinder";
 export * from "./base/StructureNamedBinder";
 export * from "./base/StructureObjectPropertyBinder";
 export * from "./base/StructureParameteredBinder";

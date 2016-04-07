@@ -1,9 +1,9 @@
-﻿import {NamespaceDefinition, VariableDeclarationType} from "./../../../definitions";
-import {runClassDefinitionTests, runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runTypeAliasDefinitionTests,
-    runVariableDefinitionTests} from "./../../testHelpers";
+﻿import {NamespaceDefinition, NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
+import {runClassDefinitionTests, runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runNamespaceDefinitionTests,
+    runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
-    describe("addEnums", () => {
+    describe("addClasses", () => {
         const n = new NamespaceDefinition();
         n.addClasses({
             name: "class1",
@@ -158,6 +158,49 @@ describe("ModuledDefinitionTests", () => {
         });
         runInterfaceDefinitionTests(n.interfaces[1], {
             name: "Interface2"
+        });
+    });
+
+    describe("addNamespaces", () => {
+        const n = new NamespaceDefinition();
+        n.addNamespaces({
+            name: "namespace1",
+            declarationType: NamespaceDeclarationType.Module,
+            classes: [{ name: "class1" }],
+            enums: [{ name: "enum1" }],
+            functions: [{ name: "function1" }],
+            hasDeclareKeyword: true,
+            interfaces: [{ name: "interface1" }],
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            namespaces: [{ name: "namespace1" }],
+            typeAliases: [{ name: "typeAlias1", type: "string" }],
+            variables: [{ name: "variable1" }]
+        }, {
+            name: "namespace2"
+        });
+
+        runNamespaceDefinitionTests(n.namespaces[0], {
+            name: "namespace1",
+            declarationType: NamespaceDeclarationType.Module,
+            classes: [{ name: "class1" }],
+            enums: [{ name: "enum1" }],
+            functions: [{ name: "function1" }],
+            hasDeclareKeyword: true,
+            interfaces: [{ name: "interface1" }],
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            namespaces: [{ name: "namespace1", declarationType: NamespaceDeclarationType.Namespace }],
+            typeAliases: [{ name: "typeAlias1", typeExpression: { text: "string" }}],
+            variables: [{ name: "variable1", declarationType: VariableDeclarationType.Let }]
+        });
+        runNamespaceDefinitionTests(n.namespaces[1], {
+            name: "namespace2",
+            declarationType: NamespaceDeclarationType.Namespace // should default to namespace
         });
     });
 

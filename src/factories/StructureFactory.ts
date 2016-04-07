@@ -2,16 +2,17 @@
     StructureClassMethodParameterBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder, StructureClassStaticMethodParameterBinder, StructureClassStaticPropertyBinder,
     StructureDecoratorBinder, StructureEnumBinder, StructureEnumMemberBinder, StructureExpressionBinder, StructureFunctionBinder, StructureFunctionParameterBinder,
     StructureInterfaceBinder, StructureInterfaceMethodBinder, StructureInterfaceMethodParameterBinder, StructureInterfaceNewSignatureParameterBinder,
-    StructureInterfaceNewSignatureBinder, StructureInterfacePropertyBinder, StructureTypeAliasBinder, StructureTypeParameterBinder, StructureVariableBinder} from "./../binders";
+    StructureInterfaceNewSignatureBinder, StructureInterfacePropertyBinder, StructureNamespaceBinder, StructureTypeAliasBinder, StructureTypeParameterBinder,
+    StructureVariableBinder} from "./../binders";
 import {CallSignatureParameterDefinition, ClassDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition, ClassMethodDefinition, ClassMethodParameterDefinition,
     ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticMethodParameterDefinition, ClassStaticPropertyDefinition, DecoratorDefinition, EnumDefinition, EnumMemberDefinition,
     ExpressionDefinition, FunctionDefinition, FunctionParameterDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfaceMethodParameterDefinition,
-    InterfaceNewSignatureDefinition, InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, TypeAliasDefinition, TypeExpressionDefinition, TypeParameterDefinition,
-    VariableDefinition} from "./../definitions";
+    InterfaceNewSignatureDefinition, InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, NamespaceDefinition, TypeAliasDefinition, TypeExpressionDefinition,
+    TypeParameterDefinition, VariableDefinition} from "./../definitions";
 import {CallSignatureParameterStructure, ClassStructure, ClassConstructorStructure, ClassConstructorParameterStructure, ClassMethodStructure, ClassMethodParameterStructure,
     ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticMethodParameterStructure, ClassStaticPropertyStructure, DecoratorStructure, EnumStructure,
     EnumMemberStructure, FunctionStructure, FunctionParameterStructure, InterfaceStructure, InterfaceMethodStructure, InterfaceMethodParameterStructure,
-    InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, TypeAliasStructure, TypeParameterStructure,
+    InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, NamespaceStructure, TypeAliasStructure, TypeParameterStructure,
     VariableStructure} from "./../structures";
 
 export class StructureFactory {
@@ -170,6 +171,13 @@ export class StructureFactory {
     getInterfaceNewSignatureParameter(structure: InterfaceNewSignatureParameterStructure) {
         const def = new InterfaceNewSignatureParameterDefinition();
         const binder = new StructureInterfaceNewSignatureParameterBinder(structure);
+        binder.bind(def);
+        return def;
+    }
+
+    getNamespace(structure: NamespaceStructure) {
+        const def = new NamespaceDefinition();
+        const binder = new StructureNamespaceBinder(this, structure);
         binder.bind(def);
         return def;
     }

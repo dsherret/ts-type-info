@@ -1,6 +1,6 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
-import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
+import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, NamespaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
@@ -42,6 +42,12 @@ export abstract class ModuledDefinition {
         return this;
     }
 
+    addNamespaces(...namespaces: NamespaceStructure[]) {
+        const factory = new StructureFactory();
+        this.namespaces.push(...namespaces.map(n => factory.getNamespace(n)));
+        return this;
+    }
+
     addTypeAliases(...typeAliases: TypeAliasStructure[]) {
         const factory = new StructureFactory();
         this.typeAliases.push(...typeAliases.map(t => factory.getTypeAlias(t)));
@@ -50,7 +56,7 @@ export abstract class ModuledDefinition {
 
     addVariables(...variables: VariableStructure[]) {
         const factory = new StructureFactory();
-        this.variables.push(...variables.map(t => factory.getVariable(t)));
+        this.variables.push(...variables.map(v => factory.getVariable(v)));
         return this;
     }
 
