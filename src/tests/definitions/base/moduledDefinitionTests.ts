@@ -1,7 +1,67 @@
 ﻿import {NamespaceDefinition, VariableDeclarationType} from "./../../../definitions";
-import {runEnumDefinitionTests, runInterfaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
+import {runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
+    describe("addEnums", () => {
+        const n = new NamespaceDefinition();
+        n.addEnums({
+            name: "enum1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
+        }, {
+            name: "enum2"
+        });
+
+        runEnumDefinitionTests(n.enums[0], {
+            name: "enum1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
+        });
+        runEnumDefinitionTests(n.enums[1], {
+            name: "enum2"
+        });
+    });
+
+    describe("addFunctions", () => {
+        const n = new NamespaceDefinition();
+        n.addFunctions({
+            name: "function1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            parameters: [{ name: "param1" }, { name: "param2" }],
+            returnType: "string",
+            typeParameters: [{ name: "T" }, { name: "U" }]
+        }, {
+            name: "function2"
+        });
+
+        runFunctionDefinitionTests(n.functions[0], {
+            name: "function1",
+            hasDeclareKeyword: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            parameters: [{ name: "param1" }, { name: "param2" }],
+            returnTypeExpression: { text: "string" },
+            typeParameters: [{ name: "T" }, { name: "U" }]
+        });
+        runFunctionDefinitionTests(n.functions[1], {
+            name: "function2"
+        });
+    });
+
     describe("addInterfaces", () => {
         const n = new NamespaceDefinition();
         n.addInterfaces({
@@ -116,34 +176,6 @@ describe("ModuledDefinitionTests", () => {
         runVariableDefinitionTests(n.variables[1], {
             name: "myVar2",
             declarationType: VariableDeclarationType.Let // should default to let
-        });
-    });
-
-    describe("addEnums", () => {
-        const n = new NamespaceDefinition();
-        n.addEnums({
-            name: "enum1",
-            hasDeclareKeyword: true,
-            isAmbient: true,
-            isDefaultExportOfFile: true,
-            isExported: true,
-            isNamedExportOfFile: true,
-            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
-        }, {
-            name: "enum2"
-        });
-
-        runEnumDefinitionTests(n.enums[0], {
-            name: "enum1",
-            hasDeclareKeyword: true,
-            isAmbient: true,
-            isDefaultExportOfFile: true,
-            isExported: true,
-            isNamedExportOfFile: true,
-            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
-        });
-        runEnumDefinitionTests(n.enums[1], {
-            name: "enum2"
         });
     });
 });

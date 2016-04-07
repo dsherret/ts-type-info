@@ -1,7 +1,7 @@
 import CodeBlockWriter from "code-block-writer";
 import {applyMixins} from "./../../utils";
 import {ExportableDefinitions} from "./../../definitions";
-import {EnumStructure, InterfaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
+import {EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {writeDefinition} from "./../../writeDefinition";
@@ -73,6 +73,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     variables: VariableDefinition[];
     typeAliases: TypeAliasDefinition[];
     addEnums: (...enums: EnumStructure[]) => this;
+    addFunctions: (...functions: FunctionStructure[]) => this;
     addInterfaces: (...interfaces: InterfaceStructure[]) => this;
     addTypeAliases: (...typeAliases: TypeAliasStructure[]) => this;
     addVariables: (...variables: VariableStructure[]) => this;
