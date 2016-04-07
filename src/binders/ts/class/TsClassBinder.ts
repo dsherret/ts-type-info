@@ -1,6 +1,6 @@
 ﻿import {TsFactory} from "./../../../factories";
 import {ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
-    ClassConstructorDefinition} from "./../../../definitions";
+    ClassConstructorDefinition, ClassMemberDefinitions} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {ClassBinder} from "./../../base";
@@ -10,8 +10,6 @@ import {TsClassPropertyBinder} from "./TsClassPropertyBinder";
 import {TsClassStaticMethodBinder} from "./TsClassStaticMethodBinder";
 import {TsClassStaticPropertyBinder} from "./TsClassStaticPropertyBinder";
 import {TsClassConstructorBinder} from "./TsClassConstructorBinder";
-
-export type ClassMemberTypes = ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
 
 export class TsClassBinder extends ClassBinder {
     constructor(private factory: TsFactory, private node: TsNode) {
@@ -48,7 +46,7 @@ export class TsClassBinder extends ClassBinder {
             .filter(n => n != null);
     }
 
-    private getMemberDefinition(childNode: TsNode): ClassMemberTypes {
+    private getMemberDefinition(childNode: TsNode): ClassMemberDefinitions {
         if (childNode.isMethodDeclaration()) {
             if (childNode.hasStaticKeyword()) {
                 const staticMethodDef = new ClassStaticMethodDefinition();

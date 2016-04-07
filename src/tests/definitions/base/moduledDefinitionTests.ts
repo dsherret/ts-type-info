@@ -1,7 +1,54 @@
 ﻿import {NamespaceDefinition, VariableDeclarationType} from "./../../../definitions";
-import {runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
+import {runClassDefinitionTests, runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runTypeAliasDefinitionTests,
+    runVariableDefinitionTests} from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
+    describe("addEnums", () => {
+        const n = new NamespaceDefinition();
+        n.addClasses({
+            name: "class1",
+            constructorDef: { parameters: [{ name: "param1" }] },
+            decorators: [{ name: "dec1" }],
+            extendsTypes: ["class2"],
+            implementsTypes: ["interface1"],
+            hasDeclareKeyword: true,
+            isAbstract: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            methods: [{ name: "method1" }],
+            properties: [{ name: "prop1" }],
+            staticMethods: [{ name: "staticMethod1" }],
+            staticProperties: [{ name: "staticProp1" }],
+            typeParameters: [{ name: "T" }]
+        }, {
+            name: "class2"
+        });
+
+        runClassDefinitionTests(n.classes[0], {
+            name: "class1",
+            constructorDef: { parameters: [{ name: "param1" }] },
+            decorators: [{ name: "dec1" }],
+            extendsTypeExpressions: [{ text: "class2" }],
+            implementsTypeExpressions: [{ text: "interface1" }],
+            hasDeclareKeyword: true,
+            isAbstract: true,
+            isAmbient: true,
+            isDefaultExportOfFile: true,
+            isExported: true,
+            isNamedExportOfFile: true,
+            methods: [{ name: "method1" }],
+            properties: [{ name: "prop1" }],
+            staticMethods: [{ name: "staticMethod1" }],
+            staticProperties: [{ name: "staticProp1" }],
+            typeParameters: [{ name: "T" }]
+        });
+        runClassDefinitionTests(n.classes[1], {
+            name: "class2"
+        });
+    });
+
     describe("addEnums", () => {
         const n = new NamespaceDefinition();
         n.addEnums({

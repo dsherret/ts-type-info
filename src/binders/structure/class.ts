@@ -1,4 +1,5 @@
 ﻿export * from "./class/base";
+export * from "./class/StructureClassBinder";
 export * from "./class/StructureClassConstructorBinder";
 export * from "./class/StructureClassConstructorParameterBinder";
 export * from "./class/StructureClassMethodBinder";

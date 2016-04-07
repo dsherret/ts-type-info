@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ExportableDefinitions} from "./../../definitions";
-import {EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
+import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
@@ -40,6 +40,7 @@ export class NamespaceDefinition extends BaseDefinition
     variables: VariableDefinition[];
     typeAliases: TypeAliasDefinition[];
     getExports: () => ExportableDefinitions[];
+    addClasses: (...classes: ClassStructure[]) => this;
     addEnums: (...enums: EnumStructure[]) => this;
     addFunctions: (...functions: FunctionStructure[]) => this;
     addInterfaces: (...interfaces: InterfaceStructure[]) => this;
