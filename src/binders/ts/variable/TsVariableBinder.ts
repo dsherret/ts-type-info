@@ -10,7 +10,7 @@ export class TsVariableBinder extends VariableBinder {
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
             new TsTypeExpressionedBinder(factory, node),
-            new TsDefaultExpressionedBinder(node)
+            new TsDefaultExpressionedBinder(factory, node)
         );
     }
 

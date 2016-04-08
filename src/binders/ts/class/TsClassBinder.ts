@@ -1,15 +1,9 @@
 ﻿import {TsFactory} from "./../../../factories";
-import {ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
-    ClassConstructorDefinition, ClassMemberDefinitions} from "./../../../definitions";
+import {ClassMemberDefinitions} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {ClassBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsAbstractableBinder, TsTypeParameteredBinderByNode, TsDecoratableBinder} from "./../base";
-import {TsClassMethodBinder} from "./TsClassMethodBinder";
-import {TsClassPropertyBinder} from "./TsClassPropertyBinder";
-import {TsClassStaticMethodBinder} from "./TsClassStaticMethodBinder";
-import {TsClassStaticPropertyBinder} from "./TsClassStaticPropertyBinder";
-import {TsClassConstructorBinder} from "./TsClassConstructorBinder";
 
 export class TsClassBinder extends ClassBinder {
     constructor(private factory: TsFactory, private node: TsNode) {
@@ -19,7 +13,7 @@ export class TsClassBinder extends ClassBinder {
             new TsAmbientableBinder(node),
             new TsTypeParameteredBinderByNode(factory, node),
             new TsAbstractableBinder(node),
-            new TsDecoratableBinder(node)
+            new TsDecoratableBinder(factory, node)
         );
     }
 
@@ -49,47 +43,22 @@ export class TsClassBinder extends ClassBinder {
     private getMemberDefinition(childNode: TsNode): ClassMemberDefinitions {
         if (childNode.isMethodDeclaration()) {
             if (childNode.hasStaticKeyword()) {
-                const staticMethodDef = new ClassStaticMethodDefinition();
-                const staticMethodBinder = new TsClassStaticMethodBinder(this.factory, childNode);
-
-                staticMethodBinder.bind(staticMethodDef);
-
-                return staticMethodDef;
+                return this.factory.getClassStaticMethod(childNode);
             }
             else {
-                const methodDef = new ClassMethodDefinition();
-                const methodBinder = new TsClassMethodBinder(this.factory, childNode);
-
-                methodBinder.bind(methodDef);
-
-                return methodDef;
+                return this.factory.getClassMethod(childNode);
             }
         }
         else if (childNode.isPropertyDeclaration() || childNode.isGetAccessor()) {
             if (childNode.hasStaticKeyword()) {
-                const staticPropertyDef = new ClassStaticPropertyDefinition();
-                const staticPropertyBinder = new TsClassStaticPropertyBinder(this.factory, childNode);
-
-                staticPropertyBinder.bind(staticPropertyDef);
-
-                return staticPropertyDef;
+                return this.factory.getClassStaticProperty(childNode);
             }
             else {
-                const propertyDef = new ClassPropertyDefinition();
-                const propertyBinder = new TsClassPropertyBinder(this.factory, childNode);
-
-                propertyBinder.bind(propertyDef);
-
-                return propertyDef;
+                return this.factory.getClassProperty(childNode);
             }
         }
         else if (childNode.isConstructor()) {
-            const constructorDef = new ClassConstructorDefinition();
-            const constructorBinder = new TsClassConstructorBinder(this.factory, childNode);
-
-            constructorBinder.bind(constructorDef);
-
-            return constructorDef;
+            return this.factory.getClassConstructor(childNode);
         }
         else if (childNode.isSetAccessor()) {
             // ignore, GetAccessor is the one that will be handled

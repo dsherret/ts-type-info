@@ -14,7 +14,7 @@ export class TsBaseClassMethodBinder<ParameterType extends BaseClassMethodParame
     ) {
         super(
             new TsBaseFunctionBinder(factory, node, paramDefinition, paramBinder),
-            new TsDecoratableBinder(node),
+            new TsDecoratableBinder(factory, node),
             new TsScopedBinder(node)
         );
     }

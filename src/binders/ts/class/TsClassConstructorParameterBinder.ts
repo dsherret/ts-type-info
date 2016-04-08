@@ -7,7 +7,7 @@ export class TsClassConstructorParameterBinder extends ClassConstructorParameter
     constructor(factory: TsFactory, private node: TsNode) {
         super(
             new TsBaseParameterBinder(factory, node),
-            new TsDecoratableBinder(node)
+            new TsDecoratableBinder(factory, node)
         );
     }
 

@@ -8,7 +8,7 @@ export class TsObjectPropertyBinder extends ObjectPropertyBinder {
     constructor(factory: TsFactory, node: TsNode) {
         super(
             new TsBasePropertyBinder(factory, node),
-            new TsDefaultExpressionedBinder(node)
+            new TsDefaultExpressionedBinder(factory, node)
         );
     }
 }

@@ -8,7 +8,7 @@ export class TsBaseClassMethodParameterBinder extends BaseClassMethodParameterBi
     constructor(factory: TsFactory, node: TsNode) {
         super(
             new TsBaseParameterBinder(factory, node),
-            new TsDecoratableBinder(node),
+            new TsDecoratableBinder(factory, node),
             new TsScopedBinder(node)
         );
     }

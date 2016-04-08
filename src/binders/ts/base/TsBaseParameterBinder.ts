@@ -10,7 +10,7 @@ export class TsBaseParameterBinder extends BaseParameterBinder {
         super(
             new TsNamedBinder(node),
             new TsTypeExpressionedBinder(factory, node),
-            new TsDefaultExpressionedBinder(node)
+            new TsDefaultExpressionedBinder(factory, node)
         );
     }
 

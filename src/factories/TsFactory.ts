@@ -1,9 +1,11 @@
-﻿import {ClassDefinition, NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition,
-        NodeDefinitions, TypeAliasDefinition, ImportDefinition, ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions, BaseDefinition,
-        ExpressionDefinition, TypeDefinition, TypeExpressionDefinition} from "./../definitions";
+﻿import {ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition, DecoratorDefinition,
+    NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition, NodeDefinitions, TypeAliasDefinition, ImportDefinition,
+    ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions, BaseDefinition, ExpressionDefinition, TypeDefinition, TypeExpressionDefinition,
+    TypeParameterDefinition} from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
-import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder,
-    TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder, TsExpressionBinderByNode} from "./../binders";
+import {IBaseBinder, TsClassBinder, TsClassConstructorBinder, TsClassMethodBinder, TsClassStaticMethodBinder, TsClassPropertyBinder, TsClassStaticPropertyBinder, TsDecoratorBinder,
+    TsFileBinder, TsFunctionBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder, TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder,
+    TsExpressionBinderByNode, TsTypeParameterBinder} from "./../binders";
 import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 
 function bindToDefinition<DefType extends BaseDefinition>(binder: IBaseBinder, def: DefType) {
@@ -17,6 +19,38 @@ export class TsFactory {
     private typeExpressions = new KeyValueCache<TsTypeExpression, TypeExpressionDefinition>();
     private types = new KeyValueCache<TsType, TypeDefinition>();
     private deferredBindings: { binder: IBaseBinder, definition: BaseDefinition }[] = [];
+
+    getClassConstructor(node: TsNode) {
+        return bindToDefinition(new TsClassConstructorBinder(this, node), new ClassConstructorDefinition());
+    }
+
+    getClassMethod(node: TsNode) {
+        return bindToDefinition(new TsClassMethodBinder(this, node), new ClassMethodDefinition());
+    }
+
+    getClassStaticMethod(node: TsNode) {
+        return bindToDefinition(new TsClassStaticMethodBinder(this, node), new ClassStaticMethodDefinition());
+    }
+
+    getClassProperty(node: TsNode) {
+        return bindToDefinition(new TsClassPropertyBinder(this, node), new ClassPropertyDefinition());
+    }
+
+    getClassStaticProperty(node: TsNode) {
+        return bindToDefinition(new TsClassStaticPropertyBinder(this, node), new ClassStaticPropertyDefinition());
+    }
+
+    getDecorator(node: TsNode) {
+        return bindToDefinition(new TsDecoratorBinder(node), new DecoratorDefinition());
+    }
+
+    getExpression(tsExpression: TsExpression) {
+        return bindToDefinition(new TsExpressionBinder(tsExpression), new ExpressionDefinition());
+    }
+
+    getTypeParameter(node: TsNode) {
+        return bindToDefinition(new TsTypeParameterBinder(this, node), new TypeParameterDefinition());
+    }
 
     getTypeExpressionFromNode(node: TsNode) {
         const tsType = node.getTypeAtLocation();
@@ -110,7 +144,7 @@ export class TsFactory {
                 const tsExpression = nodes[0].getExpression();
 
                 if (tsExpression != null) {
-                    const expression = this.getExpressionDefinition(tsExpression);
+                    const expression = this.getExpression(tsExpression);
                     obj.expression = expression;
                     return obj;
                 }
@@ -120,10 +154,6 @@ export class TsFactory {
         }
 
         return obj;
-    }
-
-    getExpressionDefinition(tsExpression: TsExpression) {
-        return bindToDefinition(new TsExpressionBinder(tsExpression), new ExpressionDefinition());
     }
 
     fillAllCachedTypesWithDefinitions() {
