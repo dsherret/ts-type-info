@@ -1,118 +1,81 @@
-﻿import {StructureCallSignatureParameterBinder, StructureClassBinder, StructureClassConstructorBinder, StructureClassConstructorParameterBinder, StructureClassMethodBinder,
+﻿import {IBaseBinder, StructureCallSignatureParameterBinder, StructureClassBinder, StructureClassConstructorBinder, StructureClassConstructorParameterBinder, StructureClassMethodBinder,
     StructureClassMethodParameterBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder, StructureClassStaticMethodParameterBinder, StructureClassStaticPropertyBinder,
     StructureDecoratorBinder, StructureEnumBinder, StructureEnumMemberBinder, StructureExpressionBinder, StructureFunctionBinder, StructureFunctionParameterBinder,
     StructureInterfaceBinder, StructureInterfaceMethodBinder, StructureInterfaceMethodParameterBinder, StructureInterfaceNewSignatureParameterBinder,
     StructureInterfaceNewSignatureBinder, StructureInterfacePropertyBinder, StructureNamespaceBinder, StructureTypeAliasBinder, StructureTypeParameterBinder,
     StructureVariableBinder} from "./../binders";
-import {CallSignatureParameterDefinition, ClassDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition, ClassMethodDefinition, ClassMethodParameterDefinition,
-    ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticMethodParameterDefinition, ClassStaticPropertyDefinition, DecoratorDefinition, EnumDefinition, EnumMemberDefinition,
-    ExpressionDefinition, FunctionDefinition, FunctionParameterDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfaceMethodParameterDefinition,
-    InterfaceNewSignatureDefinition, InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, NamespaceDefinition, TypeAliasDefinition, TypeExpressionDefinition,
-    TypeParameterDefinition, VariableDefinition} from "./../definitions";
+import {BaseDefinition, CallSignatureParameterDefinition, ClassDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition, ClassMethodDefinition,
+    ClassMethodParameterDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticMethodParameterDefinition, ClassStaticPropertyDefinition, DecoratorDefinition,
+    EnumDefinition, EnumMemberDefinition, ExpressionDefinition, FunctionDefinition, FunctionParameterDefinition, InterfaceDefinition, InterfaceMethodDefinition,
+    InterfaceMethodParameterDefinition, InterfaceNewSignatureDefinition, InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, NamespaceDefinition,
+    TypeAliasDefinition, TypeExpressionDefinition, TypeParameterDefinition, VariableDefinition} from "./../definitions";
 import {CallSignatureParameterStructure, ClassStructure, ClassConstructorStructure, ClassConstructorParameterStructure, ClassMethodStructure, ClassMethodParameterStructure,
     ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticMethodParameterStructure, ClassStaticPropertyStructure, DecoratorStructure, EnumStructure,
     EnumMemberStructure, FunctionStructure, FunctionParameterStructure, InterfaceStructure, InterfaceMethodStructure, InterfaceMethodParameterStructure,
     InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, NamespaceStructure, TypeAliasStructure, TypeParameterStructure,
     VariableStructure} from "./../structures";
 
+function bindToDefinition<DefType extends BaseDefinition>(binder: IBaseBinder, def: DefType) {
+    binder.bind(def);
+    return def;
+}
+
 export class StructureFactory {
     getCallSignatureParameter(structure: CallSignatureParameterStructure) {
-        const def = new CallSignatureParameterDefinition();
-        const binder = new StructureCallSignatureParameterBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureCallSignatureParameterBinder(structure), new CallSignatureParameterDefinition());
     }
 
     getClass(structure: ClassStructure) {
-        const def = new ClassDefinition();
-        const binder = new StructureClassBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassBinder(this, structure), new ClassDefinition());
     }
 
     getClassConstructor(structure: ClassConstructorStructure) {
-        const def = new ClassConstructorDefinition();
-        const binder = new StructureClassConstructorBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassConstructorBinder(this, structure), new ClassConstructorDefinition());
     }
 
     getClassConstructorParameter(structure: ClassConstructorParameterStructure) {
-        const def = new ClassConstructorParameterDefinition();
-        const binder = new StructureClassConstructorParameterBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassConstructorParameterBinder(structure), new ClassConstructorParameterDefinition());
     }
 
     getClassMethod(structure: ClassMethodStructure) {
-        const def = new ClassMethodDefinition();
-        const binder = new StructureClassMethodBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassMethodBinder(this, structure), new ClassMethodDefinition());
     }
 
     getClassMethodParameter(structure: ClassMethodParameterStructure) {
-        const def = new ClassMethodParameterDefinition();
-        const binder = new StructureClassMethodParameterBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassMethodParameterBinder(structure), new ClassMethodParameterDefinition());
     }
 
     getClassProperty(structure: ClassPropertyStructure) {
-        const def = new ClassPropertyDefinition();
-        const binder = new StructureClassPropertyBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassPropertyBinder(structure), new ClassPropertyDefinition());
     }
 
     getClassStaticMethod(structure: ClassStaticMethodStructure) {
-        const def = new ClassStaticMethodDefinition();
-        const binder = new StructureClassStaticMethodBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassStaticMethodBinder(this, structure), new ClassStaticMethodDefinition());
     }
 
     getClassStaticMethodParameter(structure: ClassStaticMethodParameterStructure) {
-        const def = new ClassStaticMethodParameterDefinition();
-        const binder = new StructureClassStaticMethodParameterBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassStaticMethodParameterBinder(structure), new ClassStaticMethodParameterDefinition());
     }
 
     getClassStaticProperty(structure: ClassStaticPropertyStructure) {
-        const def = new ClassStaticPropertyDefinition();
-        const binder = new StructureClassStaticPropertyBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureClassStaticPropertyBinder(structure), new ClassStaticPropertyDefinition());
     }
 
     getDecorator(structure: DecoratorStructure) {
-        const def = new DecoratorDefinition();
-        const binder = new StructureDecoratorBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureDecoratorBinder(structure), new DecoratorDefinition());
     }
 
     getEnum(structure: EnumStructure) {
-        const def = new EnumDefinition();
-        const binder = new StructureEnumBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureEnumBinder(this, structure), new EnumDefinition());
     }
 
     getEnumMember(structure: EnumMemberStructure) {
-        const def = new EnumMemberDefinition();
-        const binder = new StructureEnumMemberBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureEnumMemberBinder(structure), new EnumMemberDefinition());
     }
 
     getExpressionFromText(text: string) {
         if (typeof text === "string" && text.length > 0) {
-            const def = new ExpressionDefinition();
-            const binder = new StructureExpressionBinder(text);
-            binder.bind(def);
-            return def;
+            return bindToDefinition(new StructureExpressionBinder(text), new ExpressionDefinition());
         }
         else {
             return null;
@@ -120,81 +83,48 @@ export class StructureFactory {
     }
 
     getFunction(structure: FunctionStructure) {
-        const def = new FunctionDefinition();
-        const binder = new StructureFunctionBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureFunctionBinder(this, structure), new FunctionDefinition());
     }
 
     getFunctionParameter(structure: FunctionParameterStructure) {
-        const def = new FunctionParameterDefinition();
-        const binder = new StructureFunctionParameterBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureFunctionParameterBinder(structure), new FunctionParameterDefinition());
     }
 
     getInterface(structure: InterfaceStructure) {
-        const def = new InterfaceDefinition();
-        const binder = new StructureInterfaceBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureInterfaceBinder(this, structure), new InterfaceDefinition());
     }
 
     getInterfaceMethod(structure: InterfaceMethodStructure) {
-        const def = new InterfaceMethodDefinition();
-        const binder = new StructureInterfaceMethodBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureInterfaceMethodBinder(this, structure), new InterfaceMethodDefinition());
     }
 
     getInterfaceNewSignature(structure: InterfaceNewSignatureStructure) {
-        const def = new InterfaceNewSignatureDefinition();
-        const binder = new StructureInterfaceNewSignatureBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureInterfaceNewSignatureBinder(this, structure), new InterfaceNewSignatureDefinition());
     }
 
     getInterfaceProperty(structure: InterfacePropertyStructure) {
-        const def = new InterfacePropertyDefinition();
-        const binder = new StructureInterfacePropertyBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureInterfacePropertyBinder(structure), new InterfacePropertyDefinition());
     }
 
     getInterfaceMethodParameter(structure: InterfaceMethodParameterStructure) {
-        const def = new InterfaceMethodParameterDefinition();
-        const binder = new StructureInterfaceMethodParameterBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureInterfaceMethodParameterBinder(structure), new InterfaceMethodParameterDefinition());
     }
 
     getInterfaceNewSignatureParameter(structure: InterfaceNewSignatureParameterStructure) {
-        const def = new InterfaceNewSignatureParameterDefinition();
-        const binder = new StructureInterfaceNewSignatureParameterBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureInterfaceNewSignatureParameterBinder(structure), new InterfaceNewSignatureParameterDefinition());
     }
 
     getNamespace(structure: NamespaceStructure) {
-        const def = new NamespaceDefinition();
-        const binder = new StructureNamespaceBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureNamespaceBinder(this, structure), new NamespaceDefinition());
     }
 
     getTypeAlias(structure: TypeAliasStructure) {
-        const def = new TypeAliasDefinition();
-        const binder = new StructureTypeAliasBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureTypeAliasBinder(this, structure), new TypeAliasDefinition());
     }
 
     getTypeExpressionFromText(text: string) {
         if (typeof text === "string" && text.length > 0) {
-            const def = new TypeExpressionDefinition();
-            const binder = new StructureExpressionBinder(text);
-            binder.bind(def);
-            return def;
+            return bindToDefinition(new StructureExpressionBinder(text), new TypeExpressionDefinition());
         }
         else {
             return null;
@@ -202,16 +132,10 @@ export class StructureFactory {
     }
 
     getTypeParameter(structure: TypeParameterStructure) {
-        const def = new TypeParameterDefinition();
-        const binder = new StructureTypeParameterBinder(this, structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureTypeParameterBinder(this, structure), new TypeParameterDefinition());
     }
 
     getVariable(structure: VariableStructure) {
-        const def = new VariableDefinition();
-        const binder = new StructureVariableBinder(structure);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new StructureVariableBinder(structure), new VariableDefinition());
     }
 }

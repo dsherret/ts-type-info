@@ -6,7 +6,11 @@ import {IBaseBinder, TsFileBinder, TsFunctionBinder, TsClassBinder, TsInterfaceB
     TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder, TsExpressionBinderByNode} from "./../binders";
 import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 
-// todo: Rename to DefinitionFactory
+function bindToDefinition<DefType extends BaseDefinition>(binder: IBaseBinder, def: DefType) {
+    binder.bind(def);
+    return def;
+}
+
 export class TsFactory {
     private definitionByNode = new KeyValueCache<TsNode, NodeDefinitions>();
     private files = new KeyValueCache<TsSourceFile, FileDefinition>();
@@ -16,9 +20,7 @@ export class TsFactory {
 
     getTypeExpressionFromNode(node: TsNode) {
         const tsType = node.getTypeAtLocation();
-        const def = new TypeExpressionDefinition();
-        const binder = new TsExpressionBinderByNode(node);
-        binder.bind(def);
+        const def = bindToDefinition(new TsExpressionBinderByNode(node), new TypeExpressionDefinition());
 
         if (tsType != null) {
             def.addType(this.getType(tsType));
@@ -35,10 +37,7 @@ export class TsFactory {
         return this.typeExpressions.getOrCreate(
             tsTypeExpression,
             () => {
-                const def = new TypeExpressionDefinition();
-                const binder = new TsExpressionBinder(tsTypeExpression);
-                binder.bind(def);
-                return def;
+                return bindToDefinition(new TsExpressionBinder(tsTypeExpression), new TypeExpressionDefinition());
             },
             createdTypeExpression => {
                 tsTypeExpression.getTypes().forEach(type => {
@@ -124,10 +123,7 @@ export class TsFactory {
     }
 
     getExpressionDefinition(tsExpression: TsExpression) {
-        const def = new ExpressionDefinition();
-        const binder = new TsExpressionBinder(tsExpression);
-        binder.bind(def);
-        return def;
+        return bindToDefinition(new TsExpressionBinder(tsExpression), new ExpressionDefinition());
     }
 
     fillAllCachedTypesWithDefinitions() {
@@ -152,53 +148,25 @@ export class TsFactory {
 
         // todo: all these if statements are very similar. Need to reduce the redundancy
         if (node.isFunction()) {
-            const binder = new TsFunctionBinder(this, node);
-            const def = new FunctionDefinition();
-
-            binder.bind(def);
-            definition = def;
+            definition = bindToDefinition(new TsFunctionBinder(this, node), new FunctionDefinition());
         }
         else if (node.isClass()) {
-            const binder = new TsClassBinder(this, node);
-            const def = new ClassDefinition();
-
-            binder.bind(def);
-            definition = def;
+            definition = bindToDefinition(new TsClassBinder(this, node), new ClassDefinition());
         }
         else if (node.isInterface()) {
-            const binder = new TsInterfaceBinder(this, node);
-            const def = new InterfaceDefinition();
-
-            binder.bind(def);
-            definition = def;
+            definition = bindToDefinition(new TsInterfaceBinder(this, node), new InterfaceDefinition());
         }
         else if (node.isEnum()) {
-            const binder = new TsEnumBinder(node);
-            const def = new EnumDefinition();
-
-            binder.bind(def);
-            definition = def;
+            definition = bindToDefinition(new TsEnumBinder(node), new EnumDefinition());
         }
         else if (node.isVariable()) {
-            const binder = new TsVariableBinder(this, node);
-            const def = new VariableDefinition();
-
-            binder.bind(def);
-            definition = def;
+            definition = bindToDefinition(new TsVariableBinder(this, node), new VariableDefinition());
         }
         else if (node.isTypeAlias()) {
-            const binder = new TsTypeAliasBinder(this, node);
-            const def = new TypeAliasDefinition();
-
-            binder.bind(def);
-            definition = def;
+            definition = bindToDefinition(new TsTypeAliasBinder(this, node), new TypeAliasDefinition());
         }
         else if (node.isNamespace()) {
-            const binder = new TsNamespaceBinder(this, node);
-            const def = new NamespaceDefinition();
-
-            binder.bind(def);
-            definition = def;
+            definition = bindToDefinition(new TsNamespaceBinder(this, node), new NamespaceDefinition());
         }
         else if (node.isExportDeclaration()) {
             const binder = new TsReExportBinder(this, node);

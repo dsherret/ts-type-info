@@ -1,4 +1,4 @@
-﻿// DO NOT change these numbers because they need to be maintained for serialization
+﻿// STOP! DO NOT change these numbers because they need to be maintained for serialization
 export const enum DefinitionType {
     File = 1,
     Import = 2,
@@ -29,5 +29,6 @@ export const enum DefinitionType {
     Decorator = 800,
     TypeAlias = 900,
     TypeParameter = 1000,
-    TypeProperty = 1100
+    TypeProperty = 1100,
+    Expression = 1200
 }
