@@ -8,6 +8,10 @@ Reflection and code generation in TypeScript.
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get the type and structure information of TypeScript code in an easily usable format.
 
+## Info
+
+* [Implemented features](https://github.com/dsherret/ts-type-info/wiki/Implemented-Features)
+
 ## Installing
 
 ```
@@ -116,12 +120,6 @@ abstract class MyClass {
     }
 }
 ```
-
-### TODO
-
-* Manipulation methods (#50)
-* The majority of basic language features are implemented. There's still a lot that's not though. Right now, this library remains mostly undocumented.
-  If there's something you really want then open up an issue on github or help contribute!
 
 ### Real Life Example
 
