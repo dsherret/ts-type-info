@@ -1,14 +1,14 @@
-﻿import {ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition, DecoratorDefinition,
-    NamespaceDefinition, EnumDefinition, FileDefinition, FunctionDefinition, InterfaceDefinition, VariableDefinition, NodeDefinitions, TypeAliasDefinition, ImportDefinition,
-    ReExportDefinition, ModuleMemberDefinitions, ExportableDefinitions, BaseDefinition, ExpressionDefinition, TypeDefinition, TypeExpressionDefinition,
-    TypeParameterDefinition} from "./../definitions";
-import {KeyValueCache, Logger} from "./../utils";
-import {IBaseBinder, TsClassBinder, TsClassConstructorBinder, TsClassMethodBinder, TsClassStaticMethodBinder, TsClassPropertyBinder, TsClassStaticPropertyBinder, TsDecoratorBinder,
-    TsFileBinder, TsFunctionBinder, TsInterfaceBinder, TsNamespaceBinder, TsEnumBinder, TsVariableBinder, TsTypeAliasBinder, TsImportBinder, TsReExportBinder, TsExpressionBinder,
-    TsExpressionBinderByNode, TsTypeParameterBinder} from "./../binders";
+﻿import {IBaseBinder, TsClassBinder, TsClassConstructorBinder, TsClassMethodBinder, TsClassStaticMethodBinder, TsClassPropertyBinder, TsClassStaticPropertyBinder, TsDecoratorBinder,
+    TsEnumBinder, TsEnumMemberBinder, TsExpressionBinder, TsExpressionBinderByNode, TsImportBinder, TsInterfaceMethodBinder, TsInterfaceNewSignatureBinder, TsInterfacePropertyBinder,
+    TsFileBinder, TsFunctionBinder, TsInterfaceBinder, TsNamespaceBinder, TsVariableBinder, TsTypeAliasBinder, TsReExportBinder, TsTypeParameterBinder} from "./../binders";
 import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
+import {ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition, DecoratorDefinition,
+    EnumDefinition, EnumMemberDefinition, ExportableDefinitions, ExpressionDefinition, FileDefinition, FunctionDefinition, ImportDefinition, InterfaceDefinition,
+    InterfaceMethodDefinition, InterfaceNewSignatureDefinition, InterfacePropertyDefinition, NamespaceDefinition, VariableDefinition, NodeDefinitions, TypeAliasDefinition,
+    ReExportDefinition, ModuleMemberDefinitions, BaseDefinition, TypeDefinition, TypeExpressionDefinition, TypeParameterDefinition} from "./../definitions";
+import {KeyValueCache, Logger} from "./../utils";
 
-function bindToDefinition<DefType extends BaseDefinition>(binder: IBaseBinder, def: DefType) {
+function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
     return def;
 }
@@ -41,11 +41,27 @@ export class TsFactory {
     }
 
     getDecorator(node: TsNode) {
-        return bindToDefinition(new TsDecoratorBinder(node), new DecoratorDefinition());
+        return bindToDefinition(new TsDecoratorBinder(this, node), new DecoratorDefinition());
+    }
+
+    getEnumMember(node: TsNode) {
+        return bindToDefinition(new TsEnumMemberBinder(node), new EnumMemberDefinition());
     }
 
     getExpression(tsExpression: TsExpression) {
         return bindToDefinition(new TsExpressionBinder(tsExpression), new ExpressionDefinition());
+    }
+
+    getInterfaceMethodDefinition(node: TsNode) {
+        return bindToDefinition(new TsInterfaceMethodBinder(this, node), new InterfaceMethodDefinition());
+    }
+
+    getInterfaceNewSignatureDefinition(node: TsNode) {
+        return bindToDefinition(new TsInterfaceNewSignatureBinder(this, node.getSignatureFromThis()), new InterfaceNewSignatureDefinition());
+    }
+
+    getInterfacePropertyDefinition(node: TsNode) {
+        return bindToDefinition(new TsInterfacePropertyBinder(this, node), new InterfacePropertyDefinition());
     }
 
     getTypeParameter(node: TsNode) {
@@ -54,7 +70,7 @@ export class TsFactory {
 
     getTypeExpressionFromNode(node: TsNode) {
         const tsType = node.getTypeAtLocation();
-        const def = bindToDefinition(new TsExpressionBinderByNode(node), new TypeExpressionDefinition());
+        const def = bindToDefinition<TypeExpressionDefinition>(new TsExpressionBinderByNode(node), new TypeExpressionDefinition());
 
         if (tsType != null) {
             def.addType(this.getType(tsType));
@@ -70,9 +86,7 @@ export class TsFactory {
 
         return this.typeExpressions.getOrCreate(
             tsTypeExpression,
-            () => {
-                return bindToDefinition(new TsExpressionBinder(tsTypeExpression), new TypeExpressionDefinition());
-            },
+            () => bindToDefinition<TypeExpressionDefinition>(new TsExpressionBinder(tsTypeExpression), new TypeExpressionDefinition()),
             createdTypeExpression => {
                 tsTypeExpression.getTypes().forEach(type => {
                     createdTypeExpression.addType(this.getType(type));
@@ -187,7 +201,7 @@ export class TsFactory {
             definition = bindToDefinition(new TsInterfaceBinder(this, node), new InterfaceDefinition());
         }
         else if (node.isEnum()) {
-            definition = bindToDefinition(new TsEnumBinder(node), new EnumDefinition());
+            definition = bindToDefinition(new TsEnumBinder(this, node), new EnumDefinition());
         }
         else if (node.isVariable()) {
             definition = bindToDefinition(new TsVariableBinder(this, node), new VariableDefinition());

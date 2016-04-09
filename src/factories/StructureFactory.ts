@@ -1,4 +1,4 @@
-﻿import {IBaseBinder, StructureCallSignatureParameterBinder, StructureClassBinder, StructureClassConstructorBinder, StructureClassConstructorParameterBinder, StructureClassMethodBinder,
+﻿import {StructureCallSignatureParameterBinder, StructureClassBinder, StructureClassConstructorBinder, StructureClassConstructorParameterBinder, StructureClassMethodBinder,
     StructureClassMethodParameterBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder, StructureClassStaticMethodParameterBinder, StructureClassStaticPropertyBinder,
     StructureDecoratorBinder, StructureEnumBinder, StructureEnumMemberBinder, StructureExpressionBinder, StructureFunctionBinder, StructureFunctionParameterBinder,
     StructureInterfaceBinder, StructureInterfaceMethodBinder, StructureInterfaceMethodParameterBinder, StructureInterfaceNewSignatureParameterBinder,
@@ -15,7 +15,7 @@ import {CallSignatureParameterStructure, ClassStructure, ClassConstructorStructu
     InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, NamespaceStructure, TypeAliasStructure, TypeParameterStructure,
     VariableStructure} from "./../structures";
 
-function bindToDefinition<DefType extends BaseDefinition>(binder: IBaseBinder, def: DefType) {
+function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
     return def;
 }
@@ -124,7 +124,7 @@ export class StructureFactory {
 
     getTypeExpressionFromText(text: string) {
         if (typeof text === "string" && text.length > 0) {
-            return bindToDefinition(new StructureExpressionBinder(text), new TypeExpressionDefinition());
+            return bindToDefinition<TypeExpressionDefinition>(new StructureExpressionBinder(text), new TypeExpressionDefinition());
         }
         else {
             return null;

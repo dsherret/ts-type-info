@@ -7,8 +7,6 @@ import {TsInterfaceMethodParameterBinder} from "./TsInterfaceMethodParameterBind
 
 export class TsInterfaceMethodBinder extends InterfaceMethodBinder {
     constructor(factory: TsFactory, node: TsNode) {
-        super(
-            new TsBaseFunctionBinder(factory, node, InterfaceMethodParameterDefinition, TsInterfaceMethodParameterBinder)
-        );
+        super(new TsBaseFunctionBinder(factory, node, InterfaceMethodParameterDefinition, TsInterfaceMethodParameterBinder));
     }
 }

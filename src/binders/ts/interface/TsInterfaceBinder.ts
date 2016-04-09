@@ -1,12 +1,9 @@
 ﻿import {TsFactory} from "./../../../factories";
-import {InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition, InterfaceMemberDefinitions} from "./../../../definitions";
+import {InterfaceMemberDefinitions} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {InterfaceBinder} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsTypeParameteredBinderByNode} from "./../base";
-import {TsInterfaceMethodBinder} from "./TsInterfaceMethodBinder";
-import {TsInterfaceNewSignatureBinder} from "./TsInterfaceNewSignatureBinder";
-import {TsInterfacePropertyBinder} from "./TsInterfacePropertyBinder";
 
 export class TsInterfaceBinder extends InterfaceBinder {
     constructor(private factory: TsFactory, private node: TsNode) {
@@ -33,30 +30,14 @@ export class TsInterfaceBinder extends InterfaceBinder {
     }
 
     private getMemberDefinition(childNode: TsNode): InterfaceMemberDefinitions {
-        // todo: move these into the TsFactory
         if (childNode.isMethodSignature()) {
-            const methodDef = new InterfaceMethodDefinition();
-            const methodBinder = new TsInterfaceMethodBinder(this.factory, childNode);
-
-            methodBinder.bind(methodDef);
-
-            return methodDef;
+            return this.factory.getInterfaceMethodDefinition(childNode);
         }
         else if (childNode.isPropertySignature()) {
-            const propDef = new InterfacePropertyDefinition();
-            const propBinder = new TsInterfacePropertyBinder(this.factory, childNode);
-
-            propBinder.bind(propDef);
-
-            return propDef;
+            return this.factory.getInterfacePropertyDefinition(childNode);
         }
         else if (childNode.isConstructSignature()) {
-            const newSignatureDef = new InterfaceNewSignatureDefinition();
-            const newSignatureBinder = new TsInterfaceNewSignatureBinder(this.factory, childNode.getSignatureFromThis());
-
-            newSignatureBinder.bind(newSignatureDef);
-
-            return newSignatureDef;
+            return this.factory.getInterfaceNewSignatureDefinition(childNode);
         }
         else if (childNode.isIdentifier()) {
             // ignore, it's the interface identifier

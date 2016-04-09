@@ -1,22 +1,14 @@
-﻿import {ExpressionDefinition} from "./../../../definitions";
-import {TsNode} from "./../../../compiler";
-import {TsExpressionBinder} from "./../../../binders";
+﻿import {TsNode} from "./../../../compiler";
+import {TsFactory} from "./../../../factories";
 import {NamedBinder, DecoratorBinder} from "./../../base";
 
 export class TsDecoratorBinder extends DecoratorBinder {
-    constructor(private node: TsNode) {
+    constructor(private factory: TsFactory, private node: TsNode) {
         super(new TsDecoratorNameBinder(node));
     }
 
     getArguments() {
-        return this.node.getDecoratorArguments().map(arg => {
-            const expression = new ExpressionDefinition();
-            const binder = new TsExpressionBinder(arg);
-
-            binder.bind(expression);
-
-            return expression;
-        });
+        return this.node.getDecoratorArguments().map(arg => this.factory.getExpression(arg));
     }
 }
 
