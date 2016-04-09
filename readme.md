@@ -10,7 +10,7 @@ Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/
 
 ## Info
 
-* [Implemented features](https://github.com/dsherret/ts-type-info/wiki/Implemented-Features)
+* [Language support](https://github.com/dsherret/ts-type-info/wiki/Language-Support)
 
 ## Installing
 
