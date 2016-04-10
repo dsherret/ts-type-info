@@ -3,6 +3,8 @@ export const enum DefinitionType {
     File = 1,
     Import = 2,
     ReExport = 3,
+    ImportPart = 4,
+    ReExportPart = 5,
     Class = 100,
     ClassConstructor = 101,
     ClassConstructorParameter = 102,

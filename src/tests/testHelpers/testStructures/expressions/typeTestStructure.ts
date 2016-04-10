@@ -1,4 +1,6 @@
-﻿import {NamedTestStructure, CallSignatureTestStructure, TypePropertyTestStructure} from "./../definitions";
+﻿import {NamedTestStructure} from "./../base";
+import {CallSignatureTestStructure} from "./../function";
+import {TypePropertyTestStructure} from "./../general";
 
 export interface TypeTestStructure {
     callSignatures?: CallSignatureTestStructure[];

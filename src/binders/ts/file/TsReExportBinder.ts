@@ -27,11 +27,11 @@ export class TsReExportBinder extends ReExportBinder {
         return Object.keys(namedSymbols || {}).map(name => {
             const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
 
-            return {
+            return this.factory.getReExportPart({
                 exportName: name,
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],
                 expression: defsOrExpression.expression
-            };
+            });
         });
     }
 
@@ -42,11 +42,11 @@ export class TsReExportBinder extends ReExportBinder {
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
             const definitions = this.factory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
 
-            return {
+            return this.factory.getReExportPart({
                 exportName: name,
                 definitions: definitions,
                 expression: null
-            };
+            });
         });
     }
 }

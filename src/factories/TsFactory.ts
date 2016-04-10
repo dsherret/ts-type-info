@@ -3,9 +3,9 @@
     TsFileBinder, TsFunctionBinder, TsInterfaceBinder, TsNamespaceBinder, TsVariableBinder, TsTypeAliasBinder, TsReExportBinder, TsTypeParameterBinder} from "./../binders";
 import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 import {ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition, DecoratorDefinition,
-    EnumDefinition, EnumMemberDefinition, ExportableDefinitions, ExpressionDefinition, FileDefinition, FunctionDefinition, ImportDefinition, InterfaceDefinition,
+    EnumDefinition, EnumMemberDefinition, ExportableDefinitions, ExpressionDefinition, FileDefinition, FunctionDefinition, ImportDefinition, ImportPartDefinition, InterfaceDefinition,
     InterfaceMethodDefinition, InterfaceNewSignatureDefinition, InterfacePropertyDefinition, NamespaceDefinition, VariableDefinition, NodeDefinitions, TypeAliasDefinition,
-    ReExportDefinition, ModuleMemberDefinitions, BaseDefinition, TypeDefinition, TypeExpressionDefinition, TypeParameterDefinition} from "./../definitions";
+    ReExportDefinition, ReExportPartDefinition, ModuleMemberDefinitions, BaseDefinition, TypeDefinition, TypeExpressionDefinition, TypeParameterDefinition} from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 
 function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
@@ -52,16 +52,32 @@ export class TsFactory {
         return bindToDefinition(new TsExpressionBinder(tsExpression), new ExpressionDefinition());
     }
 
-    getInterfaceMethodDefinition(node: TsNode) {
+    getImportPart(obj: { importName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }) {
+        const def = new ImportPartDefinition();
+        def.importName = obj.importName;
+        def.definitions = obj.definitions;
+        def.expression = obj.expression;
+        return def;
+    }
+
+    getInterfaceMethod(node: TsNode) {
         return bindToDefinition(new TsInterfaceMethodBinder(this, node), new InterfaceMethodDefinition());
     }
 
-    getInterfaceNewSignatureDefinition(node: TsNode) {
+    getInterfaceNewSignature(node: TsNode) {
         return bindToDefinition(new TsInterfaceNewSignatureBinder(this, node.getSignatureFromThis()), new InterfaceNewSignatureDefinition());
     }
 
-    getInterfacePropertyDefinition(node: TsNode) {
+    getInterfaceProperty(node: TsNode) {
         return bindToDefinition(new TsInterfacePropertyBinder(this, node), new InterfacePropertyDefinition());
+    }
+
+    getReExportPart(obj: { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }) {
+        const def = new ReExportPartDefinition();
+        def.exportName = obj.exportName;
+        def.definitions = obj.definitions;
+        def.expression = obj.expression;
+        return def;
     }
 
     getTypeParameter(node: TsNode) {

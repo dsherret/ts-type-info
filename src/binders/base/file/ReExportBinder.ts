@@ -1,12 +1,12 @@
-﻿import {ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
+﻿import {ReExportDefinition, ReExportPartDefinition} from "./../../../definitions";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ReExportBinder implements IBaseBinder {
     abstract getFileName(): string;
     abstract getModuleSpecifier(): string;
     abstract getIsStarExport(): boolean;
-    abstract getNamedExports(): { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }[];
-    abstract getStarExports(): { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }[];
+    abstract getNamedExports(): ReExportPartDefinition[];
+    abstract getStarExports(): ReExportPartDefinition[];
 
     bind(def: ReExportDefinition) {
         def.fileName = this.getFileName();

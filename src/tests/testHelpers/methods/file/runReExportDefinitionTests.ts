@@ -1,8 +1,8 @@
 ﻿import * as assert from "assert";
-import {ReExportTestStructure, ExpressionTestStructure} from "./../../testStructures";
-import {ReExportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
+import {ReExportTestStructure} from "./../../testStructures";
+import {ReExportDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
-import {runExpressionDefinitionTests} from "./../expressions";
+import {runReExportPartDefinitionTests} from "./runReExportPartDefinitionTests";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {
     describe(`re-export ${structure.moduleSpecifier}`, () => {
@@ -22,7 +22,7 @@ export function runReExportDefinitionTests(definition: ReExportDefinition, struc
                 });
 
                 structure.starExports.forEach((exportPartStructure, i) => {
-                    runImportPartTests(definition.starExports[i], exportPartStructure);
+                    runReExportPartDefinitionTests(definition.starExports[i], exportPartStructure);
                 });
             });
 
@@ -32,51 +32,9 @@ export function runReExportDefinitionTests(definition: ReExportDefinition, struc
                 });
 
                 structure.namedExports.forEach((exportPartStructure, i) => {
-                    runImportPartTests(definition.namedExports[i], exportPartStructure);
+                    runReExportPartDefinitionTests(definition.namedExports[i], exportPartStructure);
                 });
             });
         });
     });
-}
-
-function runImportPartTests(
-    definition: { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; },
-    structure: { exportName: string; definitions: { name: string, type: any }[]; expression: ExpressionTestStructure; }
-) {
-    if (structure == null) {
-        it(`should be null`, () => {
-            assert.equal(definition, null);
-        });
-    }
-    else {
-        ensureNotNull(definition, () => {
-            it(`should have export name ${structure.exportName}`, () => {
-                assert.equal(definition.exportName, structure.exportName);
-            });
-
-            describe("definitions", () => {
-                it(`should have the expected number of definitions`, () => {
-                    assert.equal(definition.definitions.length, structure.definitions.length);
-                });
-
-                structure.definitions.forEach((structureDefinition, j) => {
-                    const definitionDefinition = definition.definitions[j];
-
-                    ensureNotNull(definitionDefinition, () => {
-                        it(`should have the name ${structureDefinition.name}`, () => {
-                            assert.equal(definitionDefinition.name, structureDefinition.name);
-                        });
-
-                        it(`should have a matching type`, () => {
-                            assert.equal(definitionDefinition instanceof structureDefinition.type, true);
-                        });
-                    });
-                });
-            });
-
-            describe("expression", () => {
-                runExpressionDefinitionTests(definition.expression, structure.expression);
-            });
-        });
-    }
 }

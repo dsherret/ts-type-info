@@ -1,13 +1,12 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition} from "./../expressions";
+import {ReExportPartDefinition} from "./ReExportPartDefinition";
 
 export class ReExportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
-    // todo: move the array item types into a ImportPartDefinition class
-    starExports: { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition }[] = [];
-    namedExports: { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition }[] = [];
+    starExports: ReExportPartDefinition[] = [];
+    namedExports: ReExportPartDefinition[] = [];
 
     constructor() {
         super(DefinitionType.ReExport);

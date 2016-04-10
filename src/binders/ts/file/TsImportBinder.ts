@@ -30,11 +30,11 @@ export class TsImportBinder extends ImportBinder {
         if (defaultImportNameAndSymbol != null) {
             const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(defaultImportNameAndSymbol.symbol);
 
-            return {
+            return this.factory.getImportPart({
                 importName: defaultImportNameAndSymbol.name,
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],
                 expression: defsOrExpression.expression
-            };
+            });
         }
         else {
             return null;
@@ -47,11 +47,11 @@ export class TsImportBinder extends ImportBinder {
         return Object.keys(namedSymbols || {}).map(name => {
             const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
 
-            return {
+            return this.factory.getImportPart({
                 importName: name,
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],
                 expression: defsOrExpression.expression
-            };
+            });
         });
     }
 
@@ -61,11 +61,11 @@ export class TsImportBinder extends ImportBinder {
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
             const definitions = this.factory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
 
-            return {
+            return this.factory.getImportPart({
                 importName: name,
                 definitions: definitions,
                 expression: null
-            };
+            });
         });
     }
 }

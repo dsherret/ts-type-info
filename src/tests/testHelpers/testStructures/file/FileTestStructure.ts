@@ -1,7 +1,7 @@
 ﻿import {NamedTestStructure, ExportableTestStructure, ModuledTestStructure} from "./../base";
 import {ImportTestStructure} from "./ImportTestStructure";
 import {ReExportTestStructure} from "./ReExportTestStructure";
-import {ExpressionTestStructure} from "./../../expressions";
+import {ExpressionTestStructure} from "./../expressions";
 
 export interface FileTestStructure extends ModuledTestStructure {
     imports?: ImportTestStructure[];

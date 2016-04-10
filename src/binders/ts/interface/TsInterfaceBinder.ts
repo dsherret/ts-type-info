@@ -31,13 +31,13 @@ export class TsInterfaceBinder extends InterfaceBinder {
 
     private getMemberDefinition(childNode: TsNode): InterfaceMemberDefinitions {
         if (childNode.isMethodSignature()) {
-            return this.factory.getInterfaceMethodDefinition(childNode);
+            return this.factory.getInterfaceMethod(childNode);
         }
         else if (childNode.isPropertySignature()) {
-            return this.factory.getInterfacePropertyDefinition(childNode);
+            return this.factory.getInterfaceProperty(childNode);
         }
         else if (childNode.isConstructSignature()) {
-            return this.factory.getInterfaceNewSignatureDefinition(childNode);
+            return this.factory.getInterfaceNewSignature(childNode);
         }
         else if (childNode.isIdentifier()) {
             // ignore, it's the interface identifier

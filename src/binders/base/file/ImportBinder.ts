@@ -1,4 +1,4 @@
-﻿import {ImportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
+﻿import {ImportDefinition, ImportPartDefinition} from "./../../../definitions";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ImportBinder implements IBaseBinder {
@@ -6,9 +6,9 @@ export abstract class ImportBinder implements IBaseBinder {
     abstract getModuleSpecifier(): string;
     abstract getIsStarImport(): boolean;
     abstract getStarImportName(): string;
-    abstract getDefaultImport(): { importName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; };
-    abstract getNamedImports(): { importName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }[];
-    abstract getStarImports(): { importName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }[];
+    abstract getDefaultImport(): ImportPartDefinition;
+    abstract getNamedImports(): ImportPartDefinition[];
+    abstract getStarImports(): ImportPartDefinition[];
 
     bind(def: ImportDefinition) {
         def.fileName = this.getFileName();

@@ -1,8 +1,8 @@
 ﻿import * as assert from "assert";
-import {ImportTestStructure, ExpressionTestStructure} from "./../../testStructures";
-import {ImportDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../../definitions";
-import {runExpressionDefinitionTests} from "./../expressions";
+import {ImportTestStructure} from "./../../testStructures";
+import {ImportDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
+import {runImportPartDefinitionTests} from "./runImportPartDefinitionTests";
 
 export function runImportDefinitionTests(definition: ImportDefinition, structure: ImportTestStructure) {
     describe(`import ${structure.moduleSpecifier}`, () => {
@@ -21,7 +21,7 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
             });
 
             describe(`default import`, () => {
-                runImportPartTests(definition.defaultImport, structure.defaultImport);
+                runImportPartDefinitionTests(definition.defaultImport, structure.defaultImport);
             });
 
             describe("named imports", () => {
@@ -30,7 +30,7 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
                 });
 
                 structure.namedImports.forEach((namedImportStructure, i) => {
-                    runImportPartTests(definition.namedImports[i], namedImportStructure);
+                    runImportPartDefinitionTests(definition.namedImports[i], namedImportStructure);
                 });
             });
 
@@ -40,51 +40,9 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
                 });
 
                 structure.starImports.forEach((starImportStructure, i) => {
-                    runImportPartTests(definition.starImports[i], starImportStructure);
+                    runImportPartDefinitionTests(definition.starImports[i], starImportStructure);
                 });
             });
         });
     });
-}
-
-function runImportPartTests(
-    definition: { importName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; },
-    structure: { importName: string; definitions: { name: string, type: any }[]; expression: ExpressionTestStructure; }
-) {
-    if (structure == null) {
-        it(`should be null`, () => {
-            assert.equal(definition, null);
-        });
-    }
-    else {
-        ensureNotNull(definition, () => {
-            it(`should have import name ${structure.importName}`, () => {
-                assert.equal(definition.importName, structure.importName);
-            });
-
-            describe("definitions", () => {
-                it(`should have the expected number of definitions`, () => {
-                    assert.equal(definition.definitions.length, structure.definitions.length);
-                });
-
-                structure.definitions.forEach((structureDefinition, j) => {
-                    const definitionDefinition = definition.definitions[j];
-
-                    ensureNotNull(definitionDefinition, () => {
-                        it(`should have the name ${structureDefinition.name}`, () => {
-                            assert.equal(definitionDefinition.name, structureDefinition.name);
-                        });
-
-                        it(`should have a matching type`, () => {
-                            assert.equal(definitionDefinition instanceof structureDefinition.type, true);
-                        });
-                    });
-                });
-            });
-
-            describe("expression", () => {
-                runExpressionDefinitionTests(definition.expression, structure.expression);
-            });
-        });
-    }
 }

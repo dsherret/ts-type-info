@@ -1,4 +1,4 @@
-import {ExpressionTestStructure} from "./../../expressions";
+import {ExpressionTestStructure} from "./../expressions";
 import {NamedTestStructure} from "./../base";
 
 export interface DecoratorTestStructure extends NamedTestStructure {

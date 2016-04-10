@@ -1,5 +1,5 @@
 ﻿import {NamedTestStructure, DecoratableTestStructure, ExportableTestStructure, TypeParameteredTestStructure, AmbientableTestStructure, AbstractableTestStructure} from "./../base";
-import {TypeExpressionTestStructure} from "./../../expressions";
+import {TypeExpressionTestStructure} from "./../expressions";
 import {ClassMethodTestStructure} from "./ClassMethodTestStructure";
 import {ClassPropertyTestStructure} from "./ClassPropertyTestStructure";
 import {ClassStaticMethodTestStructure} from "./ClassStaticMethodTestStructure";

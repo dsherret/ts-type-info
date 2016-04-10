@@ -1,4 +1,4 @@
-﻿import {Scope} from "./../../../../../../definitions";
+﻿import {Scope} from "./../../../../../definitions";
 
 export interface ScopedTestStructure {
     scope?: Scope;
