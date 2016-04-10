@@ -2,6 +2,6 @@
 
 export interface ReExportPartTestStructure {
     exportName: string;
-    expression: ExpressionTestStructure;
-    definitions: { name: string, type: any }[];
+    expression?: ExpressionTestStructure;
+    definitions?: { name: string, type: any }[];
 }

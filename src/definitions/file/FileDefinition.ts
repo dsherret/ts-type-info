@@ -39,6 +39,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     }
 
     addReExports(...reExports: ReExportStructure[]) {
+        const factory = new StructureFactory();
+        this.reExports.push(...reExports.map(r => factory.getReExport(r)));
         return this;
     }
 

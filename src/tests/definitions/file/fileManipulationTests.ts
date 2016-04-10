@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {FileDefinition} from "./../../../definitions";
-import {runImportDefinitionTests} from "./../../testHelpers";
+import {runImportDefinitionTests, runReExportDefinitionTests} from "./../../testHelpers";
 
 describe("FileDefinition", () => {
     describe("addImports", () => {
@@ -57,7 +57,7 @@ describe("FileDefinition", () => {
                 f.addImports({
                     moduleSpecifier: "./test1"
                 });
-            });
+            }, /specify either a starImport/);
         });
 
         it("should error when a star import and named import are specified", () => {
@@ -68,7 +68,7 @@ describe("FileDefinition", () => {
                     starImport: "test",
                     namedImports: ["test2"]
                 });
-            });
+            }, /specify namedImports/);
         });
 
         it("should error when a star import and default import are specified", () => {
@@ -79,6 +79,29 @@ describe("FileDefinition", () => {
                     starImport: "test",
                     defaultImport: "test2"
                 });
+            }, /specify a defaultImport/);
+        });
+    });
+
+    describe("addReExports", () => {
+        const f = new FileDefinition();
+        f.addReExports({
+            moduleSpecifier: "./test1"
+        }, {
+            moduleSpecifier: "./test2",
+            namedExports: ["namedImport1", "namedImport2"]
+        });
+
+        describe("import star", () => {
+            runReExportDefinitionTests(f.reExports[0], {
+                moduleSpecifier: "./test1"
+            });
+        });
+
+        describe("named import", () => {
+            runReExportDefinitionTests(f.reExports[1], {
+                moduleSpecifier: "./test2",
+                namedExports: [{ exportName: "namedImport1" }, { exportName: "namedImport2" }]
             });
         });
     });

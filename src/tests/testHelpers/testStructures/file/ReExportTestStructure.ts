@@ -2,7 +2,7 @@
 
 export interface ReExportTestStructure {
     moduleSpecifier: string;
-    fileName: string;
-    starExports: ReExportPartTestStructure[];
-    namedExports: ReExportPartTestStructure[];
+    fileName?: string;
+    starExports?: ReExportPartTestStructure[];
+    namedExports?: ReExportPartTestStructure[];
 }

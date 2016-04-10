@@ -14,7 +14,7 @@ export class StructureImportBinder extends ImportBinder {
     }
 
     getModuleSpecifier() {
-        return this.structure.moduleSpecifier;
+        return this.structure.moduleSpecifier || "";
     }
 
     getIsStarImport() {
