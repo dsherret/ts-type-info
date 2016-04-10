@@ -1,3 +1,6 @@
 ﻿export interface ImportStructure {
-    // todo
+    moduleSpecifier: string;
+    starImport?: string;
+    defaultImport?: string;
+    namedImports?: string[];
 }

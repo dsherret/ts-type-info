@@ -11,6 +11,7 @@ export function runReExportPartDefinitionTests(definition: ReExportPartDefinitio
         });
     }
     else {
+        structure.definitions = structure.definitions || [];
         ensureNotNull(definition, () => {
             it(`should have export name ${structure.exportName}`, () => {
                 assert.equal(definition.exportName, structure.exportName);

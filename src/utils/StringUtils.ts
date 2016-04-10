@@ -6,4 +6,8 @@ export module StringUtils {
 
         return code;
     }
+
+    export function isNullOrWhiteSpace(str: string) {
+        return typeof str !== "string" || str.trim().length === 0;
+    }
 }

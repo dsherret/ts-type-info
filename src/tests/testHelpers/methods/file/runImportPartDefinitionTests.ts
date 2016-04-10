@@ -11,6 +11,7 @@ export function runImportPartDefinitionTests(definition: ImportPartDefinition, s
         });
     }
     else {
+        structure.definitions = structure.definitions || [];
         ensureNotNull(definition, () => {
             it(`should have import name ${structure.importName}`, () => {
                 assert.equal(definition.importName, structure.importName);

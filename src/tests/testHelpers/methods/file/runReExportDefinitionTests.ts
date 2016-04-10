@@ -6,6 +6,9 @@ import {runReExportPartDefinitionTests} from "./runReExportPartDefinitionTests";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {
     describe(`re-export ${structure.moduleSpecifier}`, () => {
+        structure.namedExports = structure.namedExports || [];
+        structure.starExports = structure.starExports || [];
+        structure.fileName = "";
         ensureNotNull(definition, () => {
             it(`should have a module specifier text of ${structure.moduleSpecifier}`, () => {
                 assert.equal(definition.moduleSpecifier, structure.moduleSpecifier);

@@ -6,6 +6,9 @@ import {runImportPartDefinitionTests} from "./runImportPartDefinitionTests";
 
 export function runImportDefinitionTests(definition: ImportDefinition, structure: ImportTestStructure) {
     describe(`import ${structure.moduleSpecifier}`, () => {
+        structure.namedImports = structure.namedImports || [];
+        structure.starImports = structure.starImports || [];
+        structure.fileName = "";
         ensureNotNull(definition, () => {
             it(`should have module specifier text ${structure.moduleSpecifier}`, () => {
                 assert.equal(definition.moduleSpecifier, structure.moduleSpecifier);

@@ -1,9 +1,11 @@
 import CodeBlockWriter from "code-block-writer";
-import {applyMixins} from "./../../utils";
 import {ExportableDefinitions} from "./../../definitions";
-import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, NamespaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
+import {StructureFactory} from "./../../factories";
+import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, InterfaceStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
+    VariableStructure} from "./../../structures";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
+import {applyMixins, validateImportStructure} from "./../../utils";
 import {writeDefinition} from "./../../writeDefinition";
 import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expressions";
@@ -25,6 +27,19 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
 
     constructor() {
         super(DefinitionType.File);
+    }
+
+    addImports(...imports: ImportStructure[]) {
+        const factory = new StructureFactory();
+        this.imports.push(...imports.map(i => {
+            validateImportStructure(i);
+            return factory.getImport(i);
+        }));
+        return this;
+    }
+
+    addReExports(...reExports: ReExportStructure[]) {
+        return this;
     }
 
     getExports(): ExportableDefinitions[] {

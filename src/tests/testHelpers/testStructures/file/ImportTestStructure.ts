@@ -2,9 +2,9 @@
 
 export interface ImportTestStructure {
     moduleSpecifier: string;
-    fileName: string;
-    defaultImport: ImportPartTestStructure;
-    namedImports: ImportPartTestStructure[];
-    starImportName: string;
-    starImports: ImportPartTestStructure[];
+    fileName?: string;
+    defaultImport?: ImportPartTestStructure;
+    namedImports?: ImportPartTestStructure[];
+    starImportName?: string;
+    starImports?: ImportPartTestStructure[];
 }

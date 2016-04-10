@@ -2,6 +2,6 @@
 
 export interface ImportPartTestStructure {
     importName: string;
-    expression: ExpressionTestStructure;
-    definitions: { name: string, type: any }[];
+    expression?: ExpressionTestStructure;
+    definitions?: { name: string, type: any }[];
 }

@@ -1,3 +1,4 @@
 ﻿export interface ReExportStructure {
-    // todo
+    moduleSpecifier: string;
+    namedExports?: string[];
 }

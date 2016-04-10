@@ -7,4 +7,5 @@ export * from "./utils/logError";
 export * from "./utils/Logger";
 export * from "./utils/tryGet";
 export * from "./utils/objectAssign";
+export * from "./utils/structureValidators";
 export * from "./utils/TypeGuards";
