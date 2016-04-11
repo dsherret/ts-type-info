@@ -1,6 +1,6 @@
 ﻿export interface ImportStructure {
     moduleSpecifier: string;
-    starImport?: string;
-    defaultImport?: string;
+    starImportName?: string;
+    defaultImportName?: string;
     namedImports?: string[];
 }

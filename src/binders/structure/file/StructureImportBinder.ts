@@ -18,16 +18,16 @@ export class StructureImportBinder extends ImportBinder {
     }
 
     getIsStarImport() {
-        return !StringUtils.isNullOrWhiteSpace(this.structure.starImport);
+        return !StringUtils.isNullOrWhiteSpace(this.structure.starImportName);
     }
 
     getStarImportName() {
-        return this.structure.starImport || "";
+        return this.structure.starImportName || "";
     }
 
     getDefaultImport() {
-        if (!StringUtils.isNullOrWhiteSpace(this.structure.defaultImport)) {
-            return this.factory.getImportPart(this.structure.defaultImport);
+        if (!StringUtils.isNullOrWhiteSpace(this.structure.defaultImportName)) {
+            return this.factory.getImportPart(this.structure.defaultImportName);
         }
         else {
             return null;

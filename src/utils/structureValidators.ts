@@ -3,9 +3,9 @@ import {ArrayUtils} from "./ArrayUtils";
 import {StringUtils} from "./StringUtils";
 
 export function validateImportStructure(structure: ImportStructure) {
-    const isStarImportSet = !StringUtils.isNullOrWhiteSpace(structure.starImport);
+    const isStarImportSet = !StringUtils.isNullOrWhiteSpace(structure.starImportName);
     const isNamedImportSet = !ArrayUtils.isNullOrEmpty(structure.namedImports);
-    const isDefaultImportSet = !StringUtils.isNullOrWhiteSpace(structure.defaultImport);
+    const isDefaultImportSet = !StringUtils.isNullOrWhiteSpace(structure.defaultImportName);
 
     if (isStarImportSet) {
         if (isNamedImportSet) {

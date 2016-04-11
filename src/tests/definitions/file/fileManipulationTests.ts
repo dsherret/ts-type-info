@@ -8,17 +8,17 @@ describe("FileDefinition", () => {
             const f = new FileDefinition();
             f.addImports({
                 moduleSpecifier: "./test1",
-                starImport: "myStarImport1"
+                starImportName: "myStarImport1"
             }, {
                 moduleSpecifier: "./test2",
-                defaultImport: "defaultImport1"
+                defaultImportName: "defaultImport1"
             }, {
                 moduleSpecifier: "./test3",
                 namedImports: ["namedImport1", "namedImport2"]
             }, {
                 moduleSpecifier: "./test4",
                 namedImports: ["namedImport3", "namedImport4"],
-                defaultImport: "defaultImport2"
+                defaultImportName: "defaultImport2"
             });
 
             describe("import star", () => {
@@ -65,7 +65,7 @@ describe("FileDefinition", () => {
             assert.throws(() => {
                 f.addImports({
                     moduleSpecifier: "./test1",
-                    starImport: "test",
+                    starImportName: "test",
                     namedImports: ["test2"]
                 });
             }, /specify namedImports/);
@@ -76,8 +76,8 @@ describe("FileDefinition", () => {
             assert.throws(() => {
                 f.addImports({
                     moduleSpecifier: "./test1",
-                    starImport: "test",
-                    defaultImport: "test2"
+                    starImportName: "test",
+                    defaultImportName: "test2"
                 });
             }, /specify a defaultImport/);
         });

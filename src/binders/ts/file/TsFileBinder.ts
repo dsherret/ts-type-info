@@ -1,3 +1,4 @@
+import {ImportDefinition, ReExportDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TsSourceFile} from "./../../../compiler";
 import {FileBinder} from "./../../base";
@@ -21,5 +22,15 @@ export class TsFileBinder extends FileBinder {
         else {
             return null;
         }
+    }
+
+    getImports() {
+        // binding handled in FileBinder
+        return [] as ImportDefinition[];
+    }
+
+    getReExports() {
+        // binding handled in FileBinder
+        return [] as ReExportDefinition[];
     }
 }

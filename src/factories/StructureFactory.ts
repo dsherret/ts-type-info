@@ -1,20 +1,20 @@
 ﻿import {StructureCallSignatureParameterBinder, StructureClassBinder, StructureClassConstructorBinder, StructureClassConstructorParameterBinder, StructureClassMethodBinder,
     StructureClassMethodParameterBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder, StructureClassStaticMethodParameterBinder, StructureClassStaticPropertyBinder,
-    StructureDecoratorBinder, StructureEnumBinder, StructureEnumMemberBinder, StructureExpressionBinder, StructureFunctionBinder, StructureFunctionParameterBinder,
-    StructureImportBinder, StructureInterfaceBinder, StructureInterfaceMethodBinder, StructureInterfaceMethodParameterBinder, StructureInterfaceNewSignatureParameterBinder,
-    StructureInterfaceNewSignatureBinder, StructureInterfacePropertyBinder, StructureNamespaceBinder, StructureReExportBinder, StructureTypeAliasBinder,
-    StructureTypeParameterBinder, StructureVariableBinder} from "./../binders";
+    StructureDecoratorBinder, StructureEnumBinder, StructureEnumMemberBinder, StructureExpressionBinder, StructureFileBinder, StructureFunctionBinder,
+    StructureFunctionParameterBinder, StructureImportBinder, StructureInterfaceBinder, StructureInterfaceMethodBinder, StructureInterfaceMethodParameterBinder,
+    StructureInterfaceNewSignatureParameterBinder, StructureInterfaceNewSignatureBinder, StructureInterfacePropertyBinder, StructureNamespaceBinder, StructureReExportBinder,
+    StructureTypeAliasBinder, StructureTypeParameterBinder, StructureVariableBinder} from "./../binders";
 import {BaseDefinition, CallSignatureParameterDefinition, ClassDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition, ClassMethodDefinition,
     ClassMethodParameterDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticMethodParameterDefinition, ClassStaticPropertyDefinition, DecoratorDefinition,
-    EnumDefinition, EnumMemberDefinition, ExpressionDefinition, FunctionDefinition, FunctionParameterDefinition, ImportDefinition, ImportPartDefinition, InterfaceDefinition,
-    InterfaceMethodDefinition, InterfaceMethodParameterDefinition, InterfaceNewSignatureDefinition, InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition,
-    NamespaceDefinition, ReExportDefinition, ReExportPartDefinition, TypeAliasDefinition, TypeExpressionDefinition, TypeParameterDefinition,
+    EnumDefinition, EnumMemberDefinition, ExpressionDefinition, FileDefinition, FunctionDefinition, FunctionParameterDefinition, ImportDefinition, ImportPartDefinition,
+    InterfaceDefinition, InterfaceMethodDefinition, InterfaceMethodParameterDefinition, InterfaceNewSignatureDefinition, InterfaceNewSignatureParameterDefinition,
+    InterfacePropertyDefinition, NamespaceDefinition, ReExportDefinition, ReExportPartDefinition, TypeAliasDefinition, TypeExpressionDefinition, TypeParameterDefinition,
     VariableDefinition} from "./../definitions";
 import {CallSignatureParameterStructure, ClassStructure, ClassConstructorStructure, ClassConstructorParameterStructure, ClassMethodStructure, ClassMethodParameterStructure,
     ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticMethodParameterStructure, ClassStaticPropertyStructure, DecoratorStructure, EnumStructure,
-    EnumMemberStructure, FunctionStructure, FunctionParameterStructure, ImportStructure, InterfaceStructure, InterfaceMethodStructure, InterfaceMethodParameterStructure,
-    InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
-    TypeParameterStructure, VariableStructure} from "./../structures";
+    EnumMemberStructure, FileStructure, FunctionStructure, FunctionParameterStructure, ImportStructure, InterfaceStructure, InterfaceMethodStructure,
+    InterfaceMethodParameterStructure, InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, NamespaceStructure,
+    ReExportStructure, TypeAliasStructure, TypeParameterStructure, VariableStructure} from "./../structures";
 
 function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
@@ -81,6 +81,10 @@ export class StructureFactory {
         else {
             return null;
         }
+    }
+
+    getFile(structure: FileStructure) {
+        return bindToDefinition(new StructureFileBinder(this, structure), new FileDefinition());
     }
 
     getFunction(structure: FunctionStructure) {

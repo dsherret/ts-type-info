@@ -1,8 +1,28 @@
-import * as tsTypeInfo from "./../main";
 import * as assert from "assert";
 import * as path from "path";
+import {VariableDeclarationType} from "./../definitions";
+import * as tsTypeInfo from "./../main";
+import {runFileDefinitionTests} from "./testHelpers";
 
 describe("Main", () => {
+    describe("#createFile()", () => {
+        const file = tsTypeInfo.createFile({
+            fileName: "test.ts",
+            defaultExportExpression: "5",
+            imports: [{ moduleSpecifier: "./test", starImportName: "test" }],
+            reExports: [{ moduleSpecifier: "./test2" }],
+            variables: [{ name: "myVar" }]
+        });
+
+        runFileDefinitionTests(file, {
+            fileName: "test.ts",
+            defaultExportExpression: { text: "5" },
+            imports: [{ moduleSpecifier: "./test", starImportName: "test" }],
+            reExports: [{ moduleSpecifier: "./test2" }],
+            variables: [{ name: "myVar", declarationType: VariableDeclarationType.Let }]
+        });
+    });
+
     describe("#getInfoFromFiles()", () => {
         it("should throw an error when not providing an array", () => {
             assert.throws(() => tsTypeInfo.getInfoFromFiles("" as any), Error);

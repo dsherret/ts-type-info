@@ -2,5 +2,5 @@
 import {VariableDeclarationType} from "./../../../../definitions";
 
 export interface VariableTestStructure extends NamedTestStructure, ExportableTestStructure, TypeExpressionedTestStructure, DefaultExpressionedTestStructure, AmbientableTestStructure {
-    declarationType: VariableDeclarationType;
+    declarationType?: VariableDeclarationType;
 }
