@@ -11,8 +11,7 @@ export class TsMain {
 
     constructor(fileNames: string[], private options: Options) {
         const compilerOptions = this.getTsCompilerOptions(options.compilerOptions);
-        const host = ts.createCompilerHost(compilerOptions);
-        const program = ts.createProgram(fileNames, compilerOptions, host);
+        const program = ts.createProgram(fileNames, compilerOptions);
         const typeChecker = new TsTypeChecker(program.getTypeChecker());
 
         this.tsSourceFiles = program.getSourceFiles().filter(file => {
