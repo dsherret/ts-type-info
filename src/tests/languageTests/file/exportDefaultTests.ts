@@ -7,12 +7,7 @@ describe("export default tests", () => {
         const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
-            defaultExport: {
-                expression: {
-                    text: "23"
-                },
-                definitions: []
-            }
+            defaultExportExpression: { text: "23" }
         });
     });
 
@@ -21,14 +16,7 @@ describe("export default tests", () => {
         const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
-            defaultExport: {
-                expression: null,
-                definitions: [{
-                    name: "MyOnSameLineClass",
-                    isExported: true,
-                    isDefaultExportOfFile: true
-                }]
-            }, classes: [{
+            classes: [{
                 name: "MyOnSameLineClass",
                 isExported: true,
                 isDefaultExportOfFile: true
@@ -41,14 +29,8 @@ describe("export default tests", () => {
         const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
-            defaultExport: {
-                expression: null,
-                definitions: [{
-                    name: "MyOnDifferentLineClass",
-                    isExported: true,
-                    isDefaultExportOfFile: true
-                }]
-            }, classes: [{
+            defaultExportExpression: { text: "MyOnDifferentLineClass" },
+            classes: [{
                 name: "MyOnDifferentLineClass",
                 isExported: true,
                 isDefaultExportOfFile: true
@@ -61,12 +43,7 @@ describe("export default tests", () => {
         const def = getInfoFromString(code);
 
         runFileDefinitionTests(def, {
-            defaultExport: {
-                expression: {
-                    text: "new MyOnDifferentLineClass()"
-                },
-                definitions: []
-            },
+            defaultExportExpression: { text: "new MyOnDifferentLineClass()" },
             classes: [{
                 name: "MyOnDifferentLineClass"
             }]

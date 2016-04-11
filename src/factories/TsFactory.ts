@@ -168,22 +168,31 @@ export class TsFactory {
                 symbol = symbol.getAliasSymbol();
             }
 
-            const nodes = symbol.getNodes();
+            const expression = this.getExpressionFromExportSymbol(symbol);
 
-            if (nodes.length === 1) {
-                const tsExpression = nodes[0].getExpression();
-
-                if (tsExpression != null) {
-                    const expression = this.getExpression(tsExpression);
-                    obj.expression = expression;
-                    return obj;
-                }
+            if (expression != null) {
+                obj.expression = expression;
+                return obj;
             }
 
             obj.definitions.push(...this.getAllDefinitionsBySymbol(symbol) as ExportableDefinitions[]);
         }
 
         return obj;
+    }
+
+    getExpressionFromExportSymbol(symbol: TsSymbol) {
+        const nodes = symbol.getNodes();
+
+        if (nodes.length === 1) {
+            const tsExpression = nodes[0].getExpression();
+
+            if (tsExpression != null) {
+                return this.getExpression(tsExpression);
+            }
+        }
+
+        return null;
     }
 
     fillAllCachedTypesWithDefinitions() {

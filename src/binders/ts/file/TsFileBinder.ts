@@ -1,4 +1,3 @@
-import {ExportableDefinitions} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TsSourceFile} from "./../../../compiler";
 import {FileBinder} from "./../../base";
@@ -13,15 +12,11 @@ export class TsFileBinder extends FileBinder {
         return this.sourceFile.getFileName();
     }
 
-    getDefaultExport() {
+    getDefaultExportExpression() {
         const symbol = this.sourceFile.getDefaultExportSymbol();
 
         if (symbol != null) {
-            const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(symbol);
-            return {
-                definitions: defsOrExpression.definitions as ExportableDefinitions[],
-                expression: defsOrExpression.expression
-            };
+            return this.factory.getExpressionFromExportSymbol(symbol);
         }
         else {
             return null;

@@ -1,4 +1,4 @@
-﻿import {FileDefinition} from "./../definitions";
+﻿import {FileDefinition, ExpressionDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ModuledWriter} from "./ModuledWriter";
@@ -11,7 +11,7 @@ export class FileWriter extends BaseDefinitionWriter<FileDefinition> {
     protected writeDefault(def: FileDefinition, flags: WriteFlags) {
         this.writeVariables(def, flags);
         this.moduledWriter.write(def, flags);
-        this.writeDefaultExport(def);
+        this.writeDefaultExportExpression(def.defaultExportExpression);
     }
 
     private writeVariables(fileDef: FileDefinition, flags: WriteFlags) {
@@ -20,21 +20,13 @@ export class FileWriter extends BaseDefinitionWriter<FileDefinition> {
         });
     }
 
-    private writeDefaultExport(fileDef: FileDefinition) {
-        const defaultExport = fileDef.defaultExport;
-
-        if (defaultExport != null) {
+    private writeDefaultExportExpression(expression: ExpressionDefinition) {
+        if (expression != null) {
             this.writer.newLine();
-            this.writer.write("export default ");
-
-            if (defaultExport.expression != null) {
-                this.writer.write(defaultExport.expression.text);
-            }
-            else {
-                this.writer.write(defaultExport.definitions[0].name);
-            }
-
-            this.writer.write(";").newLine();
+            this.writer.write("export default ")
+                .write(expression.text)
+                .write(";")
+                .newLine();
         }
     }
 }

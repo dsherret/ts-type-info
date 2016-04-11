@@ -23,7 +23,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     fileName: string;
     imports: ImportDefinition[] = [];
     reExports: ReExportDefinition[] = [];
-    defaultExport: { expression: ExpressionDefinition; definitions: ExportableDefinitions[]; };
+    defaultExportExpression: ExpressionDefinition;
 
     constructor() {
         super(DefinitionType.File);

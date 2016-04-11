@@ -1,15 +1,13 @@
-﻿import {FileDefinition, ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
+﻿import {FileDefinition, ExpressionDefinition} from "./../../../definitions";
 import {ModuledBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class FileBinder implements IBaseBinder {
-    constructor(
-        private moduledBinder: ModuledBinder
-    ) {
+    constructor(private moduledBinder: ModuledBinder) {
     }
 
     abstract getFileName(): string;
-    abstract getDefaultExport(): { expression: ExpressionDefinition; definitions: ExportableDefinitions[] };
+    abstract getDefaultExportExpression(): ExpressionDefinition;
 
     bind(def: FileDefinition) {
         this.moduledBinder.bind(def, childDef => {
@@ -22,6 +20,6 @@ export abstract class FileBinder implements IBaseBinder {
         });
 
         def.fileName = this.getFileName();
-        def.defaultExport = this.getDefaultExport();
+        def.defaultExportExpression = this.getDefaultExportExpression();
     }
 }

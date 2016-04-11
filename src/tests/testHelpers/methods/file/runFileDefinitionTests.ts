@@ -3,7 +3,7 @@ import {FileDefinition} from "./../../../../definitions";
 import {FileTestStructure} from "./../../testStructures";
 import {runImportDefinitionTests} from "./runImportDefinitionTests";
 import {runReExportDefinitionTests} from "./runReExportDefinitionTests";
-import {runModuledDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests} from "./../base";
+import {runModuledDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runExpressionDefinitionTests} from "./../expressions";
 
@@ -39,24 +39,15 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
         });
     });
 
-    describe("defaultExport", () => {
-        if (structure.defaultExport == null) {
-            it("should not have a default export", () => {
-                assert.equal(definition.defaultExport, null);
+    describe("defaultExportExpression", () => {
+        if (structure.defaultExportExpression == null) {
+            it("should not have a default export expression", () => {
+                assert.equal(definition.defaultExportExpression, null);
             });
         }
         else {
-            ensureNotNull(definition.defaultExport, () => {
-                runExpressionDefinitionTests(definition.defaultExport.expression, structure.defaultExport.expression);
-
-                it(`should have the same number of definitions`, () => {
-                    assert.equal(definition.defaultExport.definitions.length, structure.defaultExport.definitions.length);
-                });
-
-                structure.defaultExport.definitions.forEach((defaultExportStructure, i) => {
-                    runNamedDefinitionTests(definition.defaultExport.definitions[i], defaultExportStructure);
-                    runExportableDefinitionTests(definition.defaultExport.definitions[i], defaultExportStructure);
-                });
+            ensureNotNull(definition.defaultExportExpression, () => {
+                runExpressionDefinitionTests(definition.defaultExportExpression, structure.defaultExportExpression);
             });
         }
     });
