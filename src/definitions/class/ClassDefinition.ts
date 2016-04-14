@@ -79,7 +79,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return DefinitionUtils.getDefinitionFromList(this.methods, nameOrSearchFunction);
     }
 
-    getStaticMethod(nameOrSearchFunction: string | ((method: ClassStaticMethodDefinition) => boolean)) {
+    getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)) {
         return DefinitionUtils.getDefinitionFromList(this.staticMethods, nameOrSearchFunction);
     }
 
@@ -87,7 +87,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return DefinitionUtils.getDefinitionFromList(this.properties, nameOrSearchFunction);
     }
 
-    getStaticProperty(nameOrSearchFunction: string | ((property: ClassStaticPropertyDefinition) => boolean)) {
+    getStaticProperty(nameOrSearchFunction: string | ((staticProperty: ClassStaticPropertyDefinition) => boolean)) {
         return DefinitionUtils.getDefinitionFromList(this.staticProperties, nameOrSearchFunction);
     }
 

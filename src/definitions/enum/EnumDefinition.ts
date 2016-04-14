@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../factories";
 import {EnumMemberStructure} from "./../../structures";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins} from "./../../utils";
+import {applyMixins, DefinitionUtils} from "./../../utils";
 import {NamedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
@@ -18,6 +18,10 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
         const factory = new StructureFactory();
         this.members.push(...members.map(m => factory.getEnumMember(m)));
         return this;
+    }
+
+    getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.members, nameOrSearchFunction);
     }
 
     write() {
