@@ -76,19 +76,19 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     }
 
     getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.methods, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.methods, nameOrSearchFunction);
     }
 
     getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.staticMethods, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.staticMethods, nameOrSearchFunction);
     }
 
     getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.properties, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.properties, nameOrSearchFunction);
     }
 
     getStaticProperty(nameOrSearchFunction: string | ((staticProperty: ClassStaticPropertyDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.staticProperties, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.staticProperties, nameOrSearchFunction);
     }
 
     setConstructor(structure: ClassConstructorStructure) {

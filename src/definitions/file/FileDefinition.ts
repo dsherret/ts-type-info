@@ -5,7 +5,7 @@ import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, Inter
     VariableStructure} from "./../../structures";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, validateImportStructure} from "./../../utils";
+import {applyMixins, DefinitionUtils, validateImportStructure} from "./../../utils";
 import {writeDefinition} from "./../../writeDefinition";
 import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expressions";
@@ -42,6 +42,14 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
         const factory = new StructureFactory();
         this.reExports.push(...reExports.map(r => factory.getReExport(r)));
         return this;
+    }
+
+    getImport(searchFunction: (importDef: ImportDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.imports, searchFunction);
+    }
+
+    getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.reExports, searchFunction);
     }
 
     getExports(): ExportableDefinitions[] {

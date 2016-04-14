@@ -6,6 +6,6 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
     abstract addParameters(...parameters: ParameterStructureType[]): this;
 
     getParameter(nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.parameters, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.parameters, nameOrSearchFunction);
     }
 }

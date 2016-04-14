@@ -62,31 +62,31 @@ export abstract class ModuledDefinition {
     }
 
     getClass(nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.classes, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.classes, nameOrSearchFunction);
     }
 
     getEnum(nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.enums, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.enums, nameOrSearchFunction);
     }
 
     getFunction(nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.functions, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.functions, nameOrSearchFunction);
     }
 
     getInterface(nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.interfaces, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.interfaces, nameOrSearchFunction);
     }
 
     getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.namespaces, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.namespaces, nameOrSearchFunction);
     }
 
     getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.typeAliases, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.typeAliases, nameOrSearchFunction);
     }
 
     getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.variables, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.variables, nameOrSearchFunction);
     }
 
     getExports() {

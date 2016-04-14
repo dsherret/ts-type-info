@@ -6,8 +6,12 @@ export class DefinitionUtils {
         return def.fileName.lastIndexOf(definitionFileExt) === def.fileName.length - definitionFileExt.length;
     }
 
-    static getDefinitionFromList<T extends NamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T {
-        let func = DefinitionUtils.getFuncFromNameOrFunc(nameOrFunc);
+    static getDefinitionFromListByStrOrFunc<T extends NamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T {
+        const func = DefinitionUtils.getFuncFromNameOrFunc(nameOrFunc);
+        return DefinitionUtils.getDefinitionFromListByFunc(list, func);
+    }
+
+    static getDefinitionFromListByFunc<T>(list: T[], func: ((item: T) => boolean)): T {
         let def: T = null;
 
         for (let i = 0, l = list.length; i < l; i++) {

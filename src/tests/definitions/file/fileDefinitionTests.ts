@@ -105,4 +105,32 @@ describe("FileDefinition", () => {
             });
         });
     });
+
+    describe("getImport", () => {
+        const f = new FileDefinition();
+        f.addImports({
+            moduleSpecifier: "./test1",
+            starImportName: "myStarImport1"
+        }, {
+            moduleSpecifier: "./test2",
+            starImportName: "myStarImport2"
+        });
+
+        it("should have the correct module specifier", () => {
+            assert.equal(f.getImport(i => i.moduleSpecifier === "./test2").moduleSpecifier, "./test2");
+        });
+    });
+
+    describe("getReExport", () => {
+        const f = new FileDefinition();
+        f.addReExports({
+            moduleSpecifier: "./test1"
+        }, {
+            moduleSpecifier: "./test2"
+        });
+
+        it("should have the correct module specifier", () => {
+            assert.equal(f.getReExport(i => i.moduleSpecifier === "./test2").moduleSpecifier, "./test2");
+        });
+    });
 });

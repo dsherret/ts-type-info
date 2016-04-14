@@ -13,6 +13,6 @@ export abstract class TypeParameteredDefinition {
     }
 
     getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.typeParameters, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.typeParameters, nameOrSearchFunction);
     }
 }

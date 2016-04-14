@@ -13,6 +13,6 @@ export abstract class DecoratableDefinition {
     decorators: DecoratorDefinition[] = [];
 
     getDecorator(nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromList(this.decorators, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.decorators, nameOrSearchFunction);
     }
 }
