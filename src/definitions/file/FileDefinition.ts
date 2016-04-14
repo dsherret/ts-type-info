@@ -46,9 +46,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
 
     getExports(): ExportableDefinitions[] {
         const exports = ModuledDefinition.prototype.getExports.call(this) as ExportableDefinitions[];
-
         this.reExports.forEach(reExport => exports.push(...reExport.getExports()));
-
         return exports;
     }
 
@@ -96,6 +94,13 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     addNamespaces: (...namespaces: NamespaceStructure[]) => this;
     addTypeAliases: (...typeAliases: TypeAliasStructure[]) => this;
     addVariables: (...variables: VariableStructure[]) => this;
+    getClass: (nameOrSearchFunction: string | ((decorator: ClassDefinition) => boolean)) => ClassDefinition;
+    getEnum: (nameOrSearchFunction: string | ((decorator: EnumDefinition) => boolean)) => EnumDefinition;
+    getFunction: (nameOrSearchFunction: string | ((decorator: FunctionDefinition) => boolean)) => FunctionDefinition;
+    getInterface: (nameOrSearchFunction: string | ((decorator: InterfaceDefinition) => boolean)) => InterfaceDefinition;
+    getNamespace: (nameOrSearchFunction: string | ((decorator: NamespaceDefinition) => boolean)) => NamespaceDefinition;
+    getTypeAlias: (nameOrSearchFunction: string | ((decorator: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
+    getVariable: (nameOrSearchFunction: string | ((decorator: VariableDefinition) => boolean)) => VariableDefinition;
 }
 
 applyMixins(FileDefinition, BaseDefinition, [ModuledDefinition]);

@@ -1,6 +1,6 @@
 ﻿import {NamespaceDefinition, NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
-import {runClassDefinitionTests, runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runNamespaceDefinitionTests,
-    runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
+import {runClassDefinitionTests, runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runNamedDefinitionTests,
+    runNamespaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
     describe("addClasses", () => {
@@ -267,5 +267,54 @@ describe("ModuledDefinitionTests", () => {
             name: "myVar2",
             declarationType: VariableDeclarationType.Let // should default to let
         });
+    });
+
+    describe("getClass", () => {
+        const n = new NamespaceDefinition();
+        n.addClasses({ name: "name1" }, { name: "name2" });
+        runNamedDefinitionTests(n.getClass("name2"), { name: "name2" });
+        runNamedDefinitionTests(n.getClass(d => d.name === "name2"), { name: "name2" });
+    });
+
+    describe("getEnum", () => {
+        const n = new NamespaceDefinition();
+        n.addEnums({ name: "name1" }, { name: "name2" });
+        runNamedDefinitionTests(n.getEnum("name2"), { name: "name2" });
+        runNamedDefinitionTests(n.getEnum(d => d.name === "name2"), { name: "name2" });
+    });
+
+    describe("getFunction", () => {
+        const n = new NamespaceDefinition();
+        n.addFunctions({ name: "name1" }, { name: "name2" });
+        runNamedDefinitionTests(n.getFunction("name2"), { name: "name2" });
+        runNamedDefinitionTests(n.getFunction(d => d.name === "name2"), { name: "name2" });
+    });
+
+    describe("getInterface", () => {
+        const n = new NamespaceDefinition();
+        n.addInterfaces({ name: "name1" }, { name: "name2" });
+        runNamedDefinitionTests(n.getInterface("name2"), { name: "name2" });
+        runNamedDefinitionTests(n.getInterface(d => d.name === "name2"), { name: "name2" });
+    });
+
+    describe("getNamespace", () => {
+        const n = new NamespaceDefinition();
+        n.addNamespaces({ name: "name1" }, { name: "name2" });
+        runNamedDefinitionTests(n.getNamespace("name2"), { name: "name2" });
+        runNamedDefinitionTests(n.getNamespace(d => d.name === "name2"), { name: "name2" });
+    });
+
+    describe("getTypeAlias", () => {
+        const n = new NamespaceDefinition();
+        n.addTypeAliases({ name: "name1", type: "string" }, { name: "name2", type: "string" });
+        runNamedDefinitionTests(n.getTypeAlias("name2"), { name: "name2" });
+        runNamedDefinitionTests(n.getTypeAlias(d => d.name === "name2"), { name: "name2" });
+    });
+
+    describe("getVariable", () => {
+        const n = new NamespaceDefinition();
+        n.addVariables({ name: "name1" }, { name: "name2" });
+        runNamedDefinitionTests(n.getVariable("name2"), { name: "name2" });
+        runNamedDefinitionTests(n.getVariable(d => d.name === "name2"), { name: "name2" });
     });
 });

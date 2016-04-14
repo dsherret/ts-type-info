@@ -1,6 +1,7 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, NamespaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
+import {DefinitionUtils} from "./../../utils";
 import {EnumDefinition} from "./../enum";
 import {ClassDefinition} from "./../class";
 import {FunctionDefinition} from "./../function";
@@ -58,6 +59,34 @@ export abstract class ModuledDefinition {
         const factory = new StructureFactory();
         this.variables.push(...variables.map(v => factory.getVariable(v)));
         return this;
+    }
+
+    getClass(nameOrSearchFunction: string | ((decorator: ClassDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.classes, nameOrSearchFunction);
+    }
+
+    getEnum(nameOrSearchFunction: string | ((decorator: EnumDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.enums, nameOrSearchFunction);
+    }
+
+    getFunction(nameOrSearchFunction: string | ((decorator: FunctionDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.functions, nameOrSearchFunction);
+    }
+
+    getInterface(nameOrSearchFunction: string | ((decorator: InterfaceDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.interfaces, nameOrSearchFunction);
+    }
+
+    getNamespace(nameOrSearchFunction: string | ((decorator: NamespaceDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.namespaces, nameOrSearchFunction);
+    }
+
+    getTypeAlias(nameOrSearchFunction: string | ((decorator: TypeAliasDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.typeAliases, nameOrSearchFunction);
+    }
+
+    getVariable(nameOrSearchFunction: string | ((decorator: VariableDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.variables, nameOrSearchFunction);
     }
 
     getExports() {
