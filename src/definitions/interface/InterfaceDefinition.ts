@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../factories";
 import {TypeParameterStructure, InterfaceMethodStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure} from "./../../structures";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins} from "./../../utils";
+import {applyMixins, DefinitionUtils} from "./../../utils";
 import {NamedDefinition, ExportableDefinition, AmbientableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeExpressionDefinition} from "./../expressions";
@@ -44,6 +44,18 @@ export class InterfaceDefinition extends BaseDefinition
         const factory = new StructureFactory();
         this.properties.push(...properties.map(p => factory.getInterfaceProperty(p)));
         return this;
+    }
+
+    getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.methods, nameOrSearchFunction);
+    }
+
+    getNewSignature(searchFunction: (newSignature: InterfaceNewSignatureDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.newSignatures, searchFunction);
+    }
+
+    getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.properties, nameOrSearchFunction);
     }
 
     write() {

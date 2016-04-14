@@ -326,9 +326,9 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addExtends(...texts: string[]): this;
     addImplements(...texts: string[]): this;
     getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): ClassMethodDefinition;
-    getStaticMethod(nameOrSearchFunction: string | ((method: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition;
+    getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition;
     getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): ClassPropertyDefinition;
-    getStaticProperty(nameOrSearchFunction: string | ((property: ClassStaticPropertyDefinition) => boolean)): ClassStaticPropertyDefinition;
+    getStaticProperty(nameOrSearchFunction: string | ((staticProperty: ClassStaticPropertyDefinition) => boolean)): ClassStaticPropertyDefinition;
     setConstructor(structure: ClassConstructorStructure): this;
 }
 
@@ -401,6 +401,9 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     addMethods(...methods: InterfaceMethodStructure[]): this;
     addNewSignatures(...newSignatures: InterfaceNewSignatureStructure[]): this;
     addProperties(...properties: InterfacePropertyStructure[]): this;
+    getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)): InterfaceMethodDefinition;
+    getNewSignature(searchFunction: (newSignature: InterfaceNewSignatureDefinition) => boolean): InterfaceNewSignatureDefinition;
+    getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)): InterfacePropertyDefinition;
     write(): string;
 }
 
@@ -435,6 +438,7 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
     hasDeclareKeyword: boolean;
 
     addMembers(...members: EnumMemberStructure[]): this;
+    getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): EnumMemberDefinition;
     write(): string;
 }
 
@@ -510,6 +514,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
 
     addImports(...imports: ImportStructure[]): this;
     addReExports(...reExports: ReExportStructure[]): this;
+    getImport(searchFunction: (importDef: ImportDefinition) => boolean): ImportDefinition;
+    getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): ReExportDefinition;
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     write(): string;
     writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string; }[]; }): string;

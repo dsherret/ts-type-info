@@ -67,8 +67,7 @@ describe("InterfaceDefinition", () => {
             returnType: "string",
             parameters: [{ name: "myParam" }]
         }, {
-            returnType: "number",
-            parameters: [{ name: "myParam" }]
+            returnType: "number"
         });
 
         runInterfaceNewSignatureDefinitionTests(i.newSignatures[0], {
@@ -77,8 +76,7 @@ describe("InterfaceDefinition", () => {
         });
 
         runInterfaceNewSignatureDefinitionTests(i.newSignatures[1], {
-            returnTypeExpression: { text: "number" },
-            parameters: [{ name: "myParam" }]
+            returnTypeExpression: { text: "number" }
         });
     });
 });
