@@ -56,39 +56,43 @@ Get the file info:
 import * as TsTypeInfo from "ts-type-info";
 
 const files = TsTypeInfo.getInfoFromFiles(["V:/TestFile.ts"]);
-const myPropertyName = files[0].classes[0].properties[0].name;
+const myPropertyName = files[0].getClass("MyClass").properties[0].name;
 
 console.log(myPropertyName); // myProperty
 ```
 
 ## Code Generation
 
-```typeScript
-// V:/TestFile2.ts
-
-class MyClass {
-    myMethod(str: string) {
-    }
-}
-```
-
-Get the file info and tell it how it should output:
+You can work with objects retrieved from "reflection" or start with your own new file definition:
 
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
 
-const files = TsTypeInfo.getInfoFromFiles(["V:/TestFile2.ts"]);
-const myClass = files[0].classes[0];
+// create whatever you like at the start
+const file = TsTypeInfo.createFile({
+    classes: [{
+        name: "MyClass",
+        methods: [{
+            name: "myMethod",
+            parameters: [{ name: "str", type: "string" }]
+        }]
+    }]
+});
 
+// add to it later
+const myClass = file.getClass("MyClass");
 myClass.isAbstract = true;
 myClass.onBeforeWrite = writer => writer.write("@MyDecorator");
-myClass.methods[0].onBeforeWrite = writer => writer.write("// myMethod is here");
-myClass.methods[0].onWriteFunctionBody = writer => {
+
+const myMethod = myClass.getMethod("myMethod");
+myMethod.onBeforeWrite = writer => writer.write("// myMethod is here");
+myMethod.onWriteFunctionBody = writer => {
     writer.write(`if (str != null && str.length > 40)`).block(() => {
         writer.write("alert(str)");
     });
     writer.newLine().write("return str;");
 };
+
 myClass.addProperties({
     name: "myProperty1"
     type: "string"
