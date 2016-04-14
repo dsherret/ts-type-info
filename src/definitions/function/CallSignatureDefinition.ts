@@ -23,6 +23,7 @@ export class CallSignatureDefinition
 
     // ParameteredDefinition
     parameters: CallSignatureParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
     // ReturnTyped
     returnTypeExpression: TypeExpressionDefinition;
     // TypeParameteredDefinition

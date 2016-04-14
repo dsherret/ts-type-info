@@ -20,6 +20,7 @@ export class InterfaceNewSignatureDefinition
 
     // ParameteredDefinition
     parameters: InterfaceNewSignatureParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: InterfaceNewSignatureParameterDefinition) => boolean)) => InterfaceNewSignatureParameterDefinition;
     // ReturnTyped
     returnTypeExpression: TypeExpressionDefinition;
 }

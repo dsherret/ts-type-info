@@ -4,9 +4,10 @@ import {applyMixins} from "./../../../utils";
 import {DecoratorDefinition} from "./../../../definitions";
 import {DecoratorStructure} from "./../../../structures";
 import {DecoratableDefinition, DefinitionType, BaseFunctionDefinition} from "./../../base";
+import {BaseClassMethodParameterDefinition} from "./BaseClassMethodParameterDefinition";
 import {ScopedDefinition} from "./ScopedDefinition";
 
-export abstract class BaseClassMethodDefinition<ParameterType, ParameterStructureType>
+export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType>
         extends BaseFunctionDefinition<ParameterType, ParameterStructureType>
         implements DecoratableDefinition, ScopedDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;

@@ -47,13 +47,13 @@ export class NamespaceDefinition extends BaseDefinition
     addNamespaces: (...namespaces: NamespaceStructure[]) => this;
     addTypeAliases: (...typeAliases: TypeAliasStructure[]) => this;
     addVariables: (...variables: VariableStructure[]) => this;
-    getClass: (nameOrSearchFunction: string | ((decorator: ClassDefinition) => boolean)) => ClassDefinition;
-    getEnum: (nameOrSearchFunction: string | ((decorator: EnumDefinition) => boolean)) => EnumDefinition;
-    getFunction: (nameOrSearchFunction: string | ((decorator: FunctionDefinition) => boolean)) => FunctionDefinition;
-    getInterface: (nameOrSearchFunction: string | ((decorator: InterfaceDefinition) => boolean)) => InterfaceDefinition;
-    getNamespace: (nameOrSearchFunction: string | ((decorator: NamespaceDefinition) => boolean)) => NamespaceDefinition;
-    getTypeAlias: (nameOrSearchFunction: string | ((decorator: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
-    getVariable: (nameOrSearchFunction: string | ((decorator: VariableDefinition) => boolean)) => VariableDefinition;
+    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition;
+    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition;
+    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition;
+    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition;
+    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
+    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
+    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

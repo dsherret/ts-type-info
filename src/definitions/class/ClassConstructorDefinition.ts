@@ -20,6 +20,7 @@ export class ClassConstructorDefinition extends BaseDefinition implements Parame
 
     // ParameteredDefinition
     parameters: ClassConstructorParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
 }
 
 applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition]);
