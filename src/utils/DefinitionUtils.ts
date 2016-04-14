@@ -8,19 +8,20 @@ export class DefinitionUtils {
 
     static getDefinitionFromList<T extends NamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T {
         let func = DefinitionUtils.getFuncFromNameOrFunc(nameOrFunc);
-        let decorator: T = null;
+        let def: T = null;
 
         for (let i = 0, l = list.length; i < l; i++) {
             if (func(list[i])) {
-                decorator = list[i];
+                def = list[i];
+                break;
             }
         }
 
-        return decorator;
+        return def;
     }
 
     private static getFuncFromNameOrFunc<T extends NamedDefinition>(nameOrFunc: string | ((item: T) => boolean)) {
-        let func = nameOrFunc as (decorator: T) => boolean;
+        let func = nameOrFunc as (def: T) => boolean;
 
         if (typeof nameOrFunc === "string") {
             func = (d) => d.name === nameOrFunc;
