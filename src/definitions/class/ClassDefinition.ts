@@ -1,13 +1,13 @@
 import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
-import {applyMixins} from "./../../utils";
+import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure,
+    ClassStaticMethodStructure, ClassStaticPropertyStructure} from "./../../structures";
+import {applyMixins, DefinitionUtils} from "./../../utils";
+import {ClassWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
         AbstractableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
-import {ClassWriter} from "./../../writers";
-import {WriteFlags} from "./../../WriteFlags";
-import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure,
-    ClassStaticMethodStructure, ClassStaticPropertyStructure} from "./../../structures";
 import {TypeExpressionDefinition} from "./../expressions";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
@@ -73,6 +73,22 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         const factory = new StructureFactory();
         this.implementsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
         return this;
+    }
+
+    getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.methods, nameOrSearchFunction);
+    }
+
+    getStaticMethod(nameOrSearchFunction: string | ((method: ClassStaticMethodDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.staticMethods, nameOrSearchFunction);
+    }
+
+    getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.properties, nameOrSearchFunction);
+    }
+
+    getStaticProperty(nameOrSearchFunction: string | ((property: ClassStaticPropertyDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromList(this.staticProperties, nameOrSearchFunction);
     }
 
     setConstructor(structure: ClassConstructorStructure) {
