@@ -35,6 +35,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
 }
 
 applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition]);

@@ -20,6 +20,7 @@ export abstract class BaseClassMethodDefinition<ParameterType, ParameterStructur
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     // ScopeDefinition
     scope: Scope;
 }

@@ -1,5 +1,6 @@
 import {StructureFactory} from "./../../factories";
 import {DecoratorStructure} from "./../../structures";
+import {DefinitionUtils} from "./../../utils";
 import {DecoratorDefinition} from "./../general";
 
 export abstract class DecoratableDefinition {
@@ -10,4 +11,8 @@ export abstract class DecoratableDefinition {
     }
 
     decorators: DecoratorDefinition[] = [];
+
+    getDecorator(nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)): DecoratorDefinition {
+        return DefinitionUtils.getDefinitionFromList(this.decorators, nameOrSearchFunction);
+    }
 }

@@ -1,5 +1,5 @@
 ﻿import {ClassDefinition} from "./../../../definitions";
-import {runDecoratableDefinitionTests} from "./../../testHelpers";
+import {runNamedDefinitionTests, runDecoratableDefinitionTests} from "./../../testHelpers";
 
 describe("DecoratableDefinition", () => {
     describe("addDecorators", () => {
@@ -23,5 +23,12 @@ describe("DecoratableDefinition", () => {
                 name: "decorator2"
             }]
         });
+    });
+
+    describe("getDecorator", () => {
+        const d = new ClassDefinition();
+        d.addDecorators({ name: "dec1" }, { name: "dec2" });
+        runNamedDefinitionTests(d.getDecorator("dec2"), { name: "dec2" });
+        runNamedDefinitionTests(d.getDecorator(d => d.name === "dec2"), { name: "dec2" });
     });
 });

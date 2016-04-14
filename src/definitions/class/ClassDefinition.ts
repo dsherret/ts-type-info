@@ -88,6 +88,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

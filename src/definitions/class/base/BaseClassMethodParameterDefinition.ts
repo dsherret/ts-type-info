@@ -13,6 +13,7 @@ export class BaseClassMethodParameterDefinition extends BaseParameterDefinition 
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     // ScopedDefinition
     scope: Scope;
 }
