@@ -106,6 +106,7 @@ export abstract class DecoratableDefinition {
     decorators: DecoratorDefinition[];
 
     addDecorators(...decorators: DecoratorStructure[]): this;
+    getDecorator(nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)): DecoratorDefinition;
 }
 
 export abstract class ExportableDefinition {
@@ -130,6 +131,13 @@ export abstract class ModuledDefinition {
     addNamespaces(...namespaces: NamespaceStructure[]): this;
     addTypeAliases(...typeAliases: TypeAliasStructure[]): this;
     addVariables(...variables: VariableStructure[]): this;
+    getClass(nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)): ClassDefinition;
+    getEnum(nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)): EnumDefinition;
+    getFunction(nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)): FunctionDefinition;
+    getInterface(nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)): InterfaceDefinition;
+    getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)): NamespaceDefinition;
+    getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)): TypeAliasDefinition;
+    getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)): VariableDefinition;
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
@@ -143,18 +151,21 @@ export abstract class TypeParameteredDefinition {
     typeParameters: TypeParameterDefinition[];
 
     addTypeParameters(...typeParameters: TypeParameterStructure[]): this;
+    getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)): TypeParameterDefinition;
 }
 
 export abstract class ObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition;
 }
 
-export abstract class BaseFunctionDefinition<ParameterType, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
+export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
     name: string;
     parameters: ParameterType[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
     returnTypeExpression: TypeExpressionDefinition;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
 
     abstract addParameters(...parameters: ParameterStructureType[]): this;
 }
@@ -170,10 +181,11 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     defaultExpression: ExpressionDefinition;
 }
 
-export abstract class ParameteredDefinition<ParameterType, ParameterStructureType> {
+export abstract class ParameteredDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> {
     parameters: ParameterType[];
 
     abstract addParameters(...parameters: ParameterStructureType[]): this;
+    getParameter(nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)): ParameterType;
 }
 
 export abstract class ReturnTypedDefinition {
@@ -196,6 +208,7 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     typeExpression: TypeExpressionDefinition;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
@@ -228,9 +241,11 @@ export class TypeExpressionDefinition extends ExpressionDefinition {
 export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
     minArgumentCount: number;
     parameters: CallSignatureParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
     returnTypeExpression: TypeExpressionDefinition;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
 
     addParameters(...parameters: CallSignatureParameterStructure[]): this;
 }
@@ -256,13 +271,15 @@ export class FunctionParameterDefinition extends BaseParameterDefinition {
 export class BaseClassMethodParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ScopedDefinition {
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     scope: "public" | "protected" | "private";
 }
 
-export abstract class BaseClassMethodDefinition<ParameterType, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements DecoratableDefinition, ScopedDefinition {
+export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements DecoratableDefinition, ScopedDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     scope: "public" | "protected" | "private";
 
     abstract addParameters(...parameters: ParameterStructureType[]): this;
@@ -271,6 +288,7 @@ export abstract class BaseClassMethodDefinition<ParameterType, ParameterStructur
 export class BaseClassPropertyDefinition extends ObjectPropertyDefinition implements DecoratableDefinition, ScopedDefinition {
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     scope: "public" | "protected" | "private";
 }
 
@@ -289,11 +307,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     name: string;
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     isAbstract: boolean;
@@ -326,6 +346,7 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
 export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure> {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     parameters: ClassConstructorParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
 
     addParameters(...parameters: ClassConstructorParameterStructure[]): this;
 }
@@ -334,6 +355,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     scope: "none" | "public" | "protected" | "private";
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
 
     toProperty(): ClassPropertyDefinition;
 }
@@ -367,6 +389,7 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     isDefaultExportOfFile: boolean;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
@@ -389,6 +412,7 @@ export class InterfacePropertyDefinition extends BasePropertyDefinition {
 
 export class InterfaceNewSignatureDefinition extends BaseDefinition implements ParameteredDefinition<InterfaceNewSignatureParameterDefinition, InterfaceNewSignatureParameterStructure>, ReturnTypedDefinition {
     parameters: InterfaceNewSignatureParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: InterfaceNewSignatureParameterDefinition) => boolean)) => InterfaceNewSignatureParameterDefinition;
     returnTypeExpression: TypeExpressionDefinition;
 
     addParameters(...parameters: InterfaceNewSignatureParameterStructure[]): this;
@@ -437,6 +461,13 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     addNamespaces: (...namespaces: NamespaceStructure[]) => this;
     addTypeAliases: (...typeAliases: TypeAliasStructure[]) => this;
     addVariables: (...variables: VariableStructure[]) => this;
+    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition;
+    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition;
+    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition;
+    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition;
+    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
+    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
+    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
@@ -465,6 +496,13 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     addNamespaces: (...namespaces: NamespaceStructure[]) => this;
     addTypeAliases: (...typeAliases: TypeAliasStructure[]) => this;
     addVariables: (...variables: VariableStructure[]) => this;
+    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition;
+    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition;
+    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition;
+    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition;
+    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
+    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
+    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
 
     addImports(...imports: ImportStructure[]): this;
     addReExports(...reExports: ReExportStructure[]): this;

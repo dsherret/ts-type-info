@@ -62,6 +62,7 @@ export class InterfaceDefinition extends BaseDefinition
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
