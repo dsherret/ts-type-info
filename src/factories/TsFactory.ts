@@ -55,7 +55,7 @@ export class TsFactory {
     getImportPart(obj: { importName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }) {
         const def = new ImportPartDefinition();
         def.importName = obj.importName;
-        def.definitions = obj.definitions;
+        def.definitions.push(...obj.definitions);
         def.expression = obj.expression;
         return def;
     }
@@ -75,7 +75,7 @@ export class TsFactory {
     getReExportPart(obj: { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }) {
         const def = new ReExportPartDefinition();
         def.exportName = obj.exportName;
-        def.definitions = obj.definitions;
+        def.definitions.push(...obj.definitions);
         def.expression = obj.expression;
         return def;
     }

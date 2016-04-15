@@ -1,7 +1,5 @@
-﻿import {ExpressionTestStructure} from "./../expressions";
+﻿import {BaseImportPartTestStructure} from "./BaseImportPartTestStructure";
 
-export interface ReExportPartTestStructure {
+export interface ReExportPartTestStructure extends BaseImportPartTestStructure {
     exportName: string;
-    expression?: ExpressionTestStructure;
-    definitions?: { name: string, type: any }[];
 }

@@ -1,6 +1,8 @@
-﻿export interface ImportStructure {
+﻿import {NamedImportStructure} from "./NamedImportStructure";
+
+export interface ImportStructure {
     moduleSpecifier: string;
     starImportName?: string;
     defaultImportName?: string;
-    namedImports?: string[];
+    namedImports?: NamedImportStructure[];
 }

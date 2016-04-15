@@ -1,13 +1,10 @@
-﻿import {ExportableDefinitions} from "./../../definitions";
-import {BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition} from "./../expressions";
+﻿import {DefinitionType} from "./../base";
+import {BaseImportPartDefinition} from "./BaseImportPartDefinition";
 
-export class ImportPartDefinition extends BaseDefinition {
+export class ImportPartDefinition extends BaseImportPartDefinition {
     constructor() {
         super(DefinitionType.ImportPart);
     }
 
     importName: string;
-    definitions: ExportableDefinitions[];
-    expression: ExpressionDefinition;
 }

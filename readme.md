@@ -74,7 +74,7 @@ const file = TsTypeInfo.createFile({
         name: "MyClass",
         methods: [{
             name: "myMethod",
-            parameters: [{ name: "str", type: "string" }]
+            parameters: [{ name: "myParam", type: "string" }]
         }]
     }]
 });
@@ -87,10 +87,10 @@ myClass.onBeforeWrite = writer => writer.write("@MyDecorator");
 const myMethod = myClass.getMethod("myMethod");
 myMethod.onBeforeWrite = writer => writer.write("// myMethod is here");
 myMethod.onWriteFunctionBody = writer => {
-    writer.write(`if (str != null && str.length > 40)`).block(() => {
-        writer.write("alert(str)");
+    writer.write(`if (myParam != null && myParam.length > 40)`).block(() => {
+        writer.write("alert(myParam)");
     });
-    writer.newLine().write("return str;");
+    writer.newLine().write("return myParam;");
 };
 
 myClass.addProperties({

@@ -12,9 +12,10 @@ import {BaseDefinition, CallSignatureParameterDefinition, ClassDefinition, Class
     VariableDefinition} from "./../definitions";
 import {CallSignatureParameterStructure, ClassStructure, ClassConstructorStructure, ClassConstructorParameterStructure, ClassMethodStructure, ClassMethodParameterStructure,
     ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticMethodParameterStructure, ClassStaticPropertyStructure, DecoratorStructure, EnumStructure,
-    EnumMemberStructure, FileStructure, FunctionStructure, FunctionParameterStructure, ImportStructure, InterfaceStructure, InterfaceMethodStructure,
+    EnumMemberStructure, FileStructure, FunctionStructure, FunctionParameterStructure, ImportStructure, NamedImportStructure, InterfaceStructure, InterfaceMethodStructure,
     InterfaceMethodParameterStructure, InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, NamespaceStructure,
     ReExportStructure, TypeAliasStructure, TypeParameterStructure, VariableStructure} from "./../structures";
+import {StringUtils} from "./../utils";
 
 function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
@@ -100,10 +101,24 @@ export class StructureFactory {
     }
 
     getImportPart(importName: string) {
+        return this.getImportPartByNamedImport({ name: importName });
+    }
+
+    getImportPartByNamedImport(namedImport: NamedImportStructure) {
         const def = new ImportPartDefinition();
-        def.importName = importName;
-        def.definitions = [];
+
+        if (StringUtils.isNullOrWhiteSpace(namedImport.alias)) {
+            def.importName = namedImport.name;
+        }
+        else {
+            def.importName = namedImport.alias;
+            def.definitions.push({
+                name: namedImport.name
+            } as ClassDefinition); // this is a bit of a hack
+        }
+
         def.expression = null;
+
         return def;
     }
 
@@ -114,8 +129,22 @@ export class StructureFactory {
     getReExportPart(exportName: string) {
         const def = new ReExportPartDefinition();
         def.exportName = exportName;
-        def.definitions = [];
-        def.expression = null;
+        return def;
+    }
+
+    getReExportPartByNamedImport(namedImport: NamedImportStructure) {
+        const def = new ReExportPartDefinition();
+
+        if (StringUtils.isNullOrWhiteSpace(namedImport.alias)) {
+            def.exportName = namedImport.name;
+        }
+        else {
+            def.exportName = namedImport.alias;
+            def.definitions.push({
+                name: namedImport.name
+            } as ClassDefinition); // this is a bit of a hack
+        }
+
         return def;
     }
 

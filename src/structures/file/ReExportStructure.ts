@@ -1,4 +1,6 @@
-﻿export interface ReExportStructure {
+﻿import {NamedImportStructure} from "./NamedImportStructure";
+
+export interface ReExportStructure {
     moduleSpecifier: string;
-    namedExports?: string[];
+    namedExports?: NamedImportStructure[];
 }
