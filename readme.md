@@ -4,12 +4,11 @@
 [![npm version](https://badge.fury.io/js/ts-type-info.svg)](https://badge.fury.io/js/ts-type-info) [![Build Status](https://travis-ci.org/dsherret/ts-type-info.svg?branch=master)](https://travis-ci.org/dsherret/ts-type-info?branch=master)
 [![Coverage Status](https://coveralls.io/repos/dsherret/ts-type-info/badge.svg?branch=master&service=github)](https://coveralls.io/github/dsherret/ts-type-info?branch=master)
 
-Reflection and code generation in TypeScript.
+"Reflection" and code generation in TypeScript.
 
-Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get the type and structure information of TypeScript code in an easily usable format.
+Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easily usable format.
 
-## Info
-
+* [Version 2.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
 * [Language support](https://github.com/dsherret/ts-type-info/wiki/Language-Support)
 
 ## Installing
@@ -41,7 +40,8 @@ function myDecorator(str: string) {
 export class MyClass {
     static myStaticProperty: string | number;
 
-    myProperty = 253;
+    myStringProperty?: string;
+    myNumberProperty = 253;
 
     myMethod(myParameter: string) {
         return `Test: ${myParameter}`;
@@ -56,9 +56,17 @@ Get the file info:
 import * as TsTypeInfo from "ts-type-info";
 
 const files = TsTypeInfo.getInfoFromFiles(["V:/TestFile.ts"]);
-const myPropertyName = files[0].getClass("MyClass").properties[0].name;
+const property = files[0]
+    .getClass("MyClass")                            // get first by name
+    .getProperty(p => p.defaultExpression != null); // or first by what matches
 
-console.log(myPropertyName); // myProperty
+console.log(property.name); // myNumberProperty
+console.log(property.defaultExpression.text); // 253
+
+// or access the arrays directly
+const myMethod = files[0].classes[0].methods[0];
+
+console.log(myMethod.name); // myMethod
 ```
 
 ## Code Generation
@@ -103,7 +111,7 @@ myClass.addProperties({
     isOptional: true
 })
 
-console.log(myClass.write());
+console.log(file.write());
 ```
 
 Outputs:
@@ -125,6 +133,6 @@ abstract class MyClass {
 }
 ```
 
-### Real Life Example
+### Detailed Example
 
-* [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code
+* [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code (out of date)
