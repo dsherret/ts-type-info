@@ -15,8 +15,14 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.writer.spaceIfLastNotSpace();
         this.writer.write(property.name);
         this.writeOptionalFlag(property);
-        this.typeExpressionWriter.writeWithColon(property.typeExpression);
-        if ((flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
+
+        const willWriteDefaultExpression = ExpressionWriter.willWriteDefaultExpression(property, flags);
+
+        if (!willWriteDefaultExpression || property.isOptional === true) {
+            this.typeExpressionWriter.writeWithColon(property.typeExpression);
+        }
+
+        if (willWriteDefaultExpression) {
             this.expressionWriter.writeWithEqualsSign((property as ObjectPropertyDefinition).defaultExpression);
         }
         this.writer.write(";").newLine();

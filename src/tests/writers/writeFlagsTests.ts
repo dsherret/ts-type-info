@@ -14,17 +14,25 @@ function getFileAsString(def: FileDefinition, flags: WriteFlags) {
     return codeBlockWriter.toString();
 }
 
+// todo: this file should be moved into the other test files. For example, properties should be moved to propertyWriterTests.ts
+
 describe("WriteFlags", () => {
     describe("classes", () => {
         const file = getInfoFromString(`
 class MyClass {
     private myPrivateProp: string;
     protected myProtectedProp: string;
-    public myPublicProp: string = "text";
+    public myPublicProp: string;
+    private static myPrivateStaticProp: string;
+    protected static myProtectedStaticProp: string;
+    public static myPublicStaticProp: string;
 
     private myPrivateMethod() {}
     protected myProtectedMethod() {}
     public myPublicMethod() {}
+    private static myPrivateStaticMethod() {}
+    protected static myProtectedStaticMethod() {}
+    public static myPublicStaticMethod() {}
 }
 `);
 
@@ -71,14 +79,35 @@ class MyClass {
 
             doPublicPrivateProtectedAssertions(result, { hasPrivate: false, hasProtected: false, hasPublic: true });
         });
+    });
+
+    describe("properties", () => {
+        const file = getInfoFromString(`
+class MyClass {
+    myPublicProp: string = "text";
+    myPublicProp2?: string = "text";
+}
+`);
 
         describe("WriteFlags.HideExpressions", () => {
-            it("should contain the expression", () => {
-                assert.equal(/text/.exec(getFileAsString(file, WriteFlags.Default)) != null, true);
+            it("it should write properly when hiding", () => {
+                const expected =
+`class MyClass {
+    myPublicProp: string;
+    myPublicProp2?: string;
+}
+`;
+                assert.equal(getFileAsString(file, WriteFlags.HideExpressions), expected);
             });
 
-            it("should contain the property written without the default expression", () => {
-                assert.equal(/text/.exec(getFileAsString(file, WriteFlags.HideExpressions)) != null, false);
+            it("it should write properly when not hiding", () => {
+                const expected =
+`class MyClass {
+    myPublicProp = "text";
+    myPublicProp2?: string = "text";
+}
+`;
+                assert.equal(getFileAsString(file, WriteFlags.None), expected);
             });
         });
     });
@@ -103,7 +132,7 @@ class MyClass {
         const file = getInfoFromString(`function myFunction(param1 = "text") {}`);
 
         it("should contain the default expression", () => {
-            const expected = `function myFunction(param1: string = "text") {\n}\n`;
+            const expected = `function myFunction(param1 = "text") {\n}\n`;
             assert.equal(getFileAsString(file, WriteFlags.None), expected);
         });
 

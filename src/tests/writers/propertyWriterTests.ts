@@ -28,7 +28,7 @@ class MyClass {
     describe("write()", () => {
         describe("nonOptionalString", () => {
             it("should contain the property written out with the default expression", () => {
-                assert.equal(getPropertyAsString(myClass.properties[0]), `nonOptionalString: string = "text";\n`);
+                assert.equal(getPropertyAsString(myClass.properties[0]), `nonOptionalString = "text";\n`);
             });
         });
 
