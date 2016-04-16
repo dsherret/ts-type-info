@@ -123,12 +123,12 @@ abstract class MyClass {
     myProperty2?: number = 4;
 
     // myMethod is here
-    myMethod(str: string) {
-        if (str != null && str.length > 40) {
-            alert(str);
+    myMethod(myParam: string) {
+        if (myParam != null && myParam.length > 40) {
+            alert(myParam);
         }
 
-        return str;
+        return myParam;
     }
 }
 ```
