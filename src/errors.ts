@@ -1,1 +1,2 @@
-﻿export * from "./errors/FileNotFoundError";
+﻿export * from "./errors/ArgumentTypeError";
+export * from "./errors/FileNotFoundError";

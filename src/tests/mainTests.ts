@@ -2,7 +2,7 @@ import * as assert from "assert";
 import * as path from "path";
 import {VariableDeclarationType} from "./../definitions";
 import * as tsTypeInfo from "./../main";
-import {FileNotFoundError} from "./../errors";
+import {ArgumentTypeError, FileNotFoundError} from "./../errors";
 import {runFileDefinitionTests} from "./testHelpers";
 
 describe("Main", () => {
@@ -26,7 +26,7 @@ describe("Main", () => {
 
     describe("#getInfoFromFiles()", () => {
         it("should throw an error when not providing an array", () => {
-            assert.throws(() => tsTypeInfo.getInfoFromFiles("" as any), Error);
+            assert.throws(() => tsTypeInfo.getInfoFromFiles("" as any), ArgumentTypeError);
         });
 
         it("should not handle a non ts file when specifying not to allow them", () => {
@@ -52,7 +52,7 @@ describe("Main", () => {
 
     describe("#getInfoFromString()", () => {
         it("should throw an error when not providing a string", () => {
-            assert.throws(() => tsTypeInfo.getInfoFromString([] as any), Error);
+            assert.throws(() => tsTypeInfo.getInfoFromString([] as any), ArgumentTypeError);
         });
 
         it("should allow changing the compiler options", () => {

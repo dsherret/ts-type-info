@@ -1,6 +1,7 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 import {FileDefinition} from "./definitions";
+import {ArgumentTypeError} from "./errors";
 import {FileStructure} from "./structures";
 import {StringUtils, Logger} from "./utils";
 import {StructureFactory, TsFactory} from "./factories";
@@ -18,7 +19,10 @@ export function createFile(structure?: FileStructure) {
 }
 
 export function getInfoFromFiles(fileNames: string[], options?: Options): FileDefinition[] {
-    verifyArray(fileNames);
+    if (!(fileNames instanceof Array)) {
+        throw new ArgumentTypeError("fileNames", "array");
+    }
+
     options = options || {};
 
     Logger.toggleEnabled(options.showDebugMessages || false);
@@ -40,7 +44,9 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): FileDe
 }
 
 export function getInfoFromString(code: string, options?: Options): FileDefinition {
-    verifyString(code);
+    if (typeof code !== "string") {
+        throw new ArgumentTypeError("code", "string");
+    }
 
     const tmpFile = tmp.fileSync({ postfix: ".ts" });
     let fileDefinition: FileDefinition;
@@ -56,16 +62,3 @@ export function getInfoFromString(code: string, options?: Options): FileDefiniti
 
     return fileDefinition;
 }
-
-function verifyArray(fileNames: string[]) {
-    if (!(fileNames instanceof Array)) {
-        throw new Error("Please provide an array of file names to getInfoFromFiles.");
-    }
-}
-
-function verifyString(code: string) {
-    if (typeof code !== "string") {
-        throw new Error("Please provide a string to getInfoFromString");
-    }
-}
-
