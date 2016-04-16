@@ -530,10 +530,13 @@ export class ImportDefinition extends BaseDefinition {
     starImports: ImportPartDefinition[];
 }
 
-export class ImportPartDefinition extends BaseDefinition {
-    importName: string;
+export abstract class BaseImportPartDefinition extends BaseDefinition {
     definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     expression: ExpressionDefinition;
+}
+
+export class ImportPartDefinition extends BaseImportPartDefinition {
+    importName: string;
 }
 
 export class ReExportDefinition extends BaseDefinition {
@@ -545,10 +548,8 @@ export class ReExportDefinition extends BaseDefinition {
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
-export class ReExportPartDefinition extends BaseDefinition {
+export class ReExportPartDefinition extends BaseImportPartDefinition {
     exportName: string;
-    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    expression: ExpressionDefinition;
 }
 
 export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
@@ -620,6 +621,12 @@ export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDef
 export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;
 
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
+
+export class ArgumentTypeError extends Error {
+}
+
+export class FileNotFoundError extends Error {
+}
 
 export interface NamedStructure {
     name: string;
@@ -778,16 +785,21 @@ export interface FileStructure extends ModuledStructure {
     defaultExportExpression?: string;
 }
 
+export interface NamedImportStructure {
+    name: string;
+    alias?: string;
+}
+
 export interface ImportStructure {
     moduleSpecifier: string;
     starImportName?: string;
     defaultImportName?: string;
-    namedImports?: string[];
+    namedImports?: NamedImportStructure[];
 }
 
 export interface ReExportStructure {
     moduleSpecifier: string;
-    namedExports?: string[];
+    namedExports?: NamedImportStructure[];
 }
 
 export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, ExportableStructure, AmbientableStructure {
