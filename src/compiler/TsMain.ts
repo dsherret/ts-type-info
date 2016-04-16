@@ -1,6 +1,8 @@
 ﻿import * as ts from "typescript";
 import * as path from "path";
 import {Options, CompilerOptions} from "./../options";
+import {FileNotFoundError} from "./../errors";
+import {FileUtils} from "./../utils";
 import {TsTypeChecker} from "./utils/TsTypeChecker";
 import {TsCache} from "./utils/TsCache";
 import {TsSourceFile} from "./TsSourceFile";
@@ -10,6 +12,8 @@ export class TsMain {
     private tsCache = new TsCache();
 
     constructor(fileNames: string[], private options: Options) {
+        this.verifyFilesExist(fileNames);
+
         const compilerOptions = this.getTsCompilerOptions(options.compilerOptions);
         const program = ts.createProgram(fileNames, compilerOptions);
         const typeChecker = new TsTypeChecker(program.getTypeChecker());
@@ -47,5 +51,14 @@ export class TsMain {
         combinedOptions.noImplicitAny = getValue(combinedOptions.noImplicitAny, false);
 
         return combinedOptions;
+    }
+
+    private verifyFilesExist(fileNames: string[]) {
+        fileNames.forEach(fileName => {
+            // unfortunately the ts compiler doesn't do things asynchronously so for now we won't either
+            if (!FileUtils.fileExistsSync(fileName)) {
+                throw new FileNotFoundError(fileName);
+            }
+        });
     }
 }

@@ -1,6 +1,14 @@
 import * as fs from "fs";
 
 export module FileUtils {
+    export function fileExistsSync(filePath: string) {
+        try {
+            return fs.statSync(filePath).isFile();
+        } catch (err) {
+            return false;
+        }
+    }
+
     export function getAllFileNamesFromFolder(dir: string) {
         const fileNames: string[] = [];
 

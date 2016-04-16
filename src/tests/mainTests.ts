@@ -2,6 +2,7 @@ import * as assert from "assert";
 import * as path from "path";
 import {VariableDeclarationType} from "./../definitions";
 import * as tsTypeInfo from "./../main";
+import {FileNotFoundError} from "./../errors";
 import {runFileDefinitionTests} from "./testHelpers";
 
 describe("Main", () => {
@@ -40,6 +41,12 @@ describe("Main", () => {
                 compilerOptions: { allowNonTsExtensions: true }
             });
             assert.equal(result[0].classes[0].name, "MyClass");
+        });
+
+        it("should throw an error when a file isn't found", () => {
+            assert.throws(() => {
+                tsTypeInfo.getInfoFromFiles(["nonExistentFile.txt"]);
+            }, FileNotFoundError, "File not found: nonExistentFile.txt");
         });
     });
 

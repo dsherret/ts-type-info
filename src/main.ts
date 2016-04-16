@@ -9,6 +9,7 @@ import {Options} from "./Options";
 
 export * from "./Options";
 export * from "./definitions";
+export * from "./errors";
 export * from "./structures";
 
 export function createFile(structure?: FileStructure) {
