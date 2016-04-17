@@ -30,13 +30,6 @@ Use the `--save` flag on both commands if you need this library for more than ju
 ```typescript
 // V:/TestFile.ts
 ﻿
-function myDecorator(str: string) {
-    return (target: typeof MyClass) => {
-        target.myStaticProperty = str;
-    };
-}
-
-@myDecorator("My decorator value")
 export class MyClass {
     static myStaticProperty: string | number;
 
