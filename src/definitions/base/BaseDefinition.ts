@@ -2,7 +2,7 @@
 import {ExportableDefinitions, ExportableDefinition} from "./../../definitions";
 import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
-import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./../interface";
+import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./../interface";
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./../File";
 import {CallSignatureDefinition, FunctionDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
@@ -80,10 +80,6 @@ export abstract class BaseDefinition {
 
     isInterfaceMethodDefinition(): this is InterfaceMethodDefinition {
         return this._definitionType === DefinitionType.InterfaceMethod;
-    }
-
-    isInterfaceNewSignatureDefinition(): this is InterfaceNewSignatureDefinition {
-        return this._definitionType === DefinitionType.InterfaceNewSignature;
     }
 
     isInterfacePropertyDefinition(): this is InterfacePropertyDefinition {

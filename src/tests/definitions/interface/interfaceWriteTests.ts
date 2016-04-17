@@ -42,7 +42,6 @@ describe("InterfaceWriter", () => {
             });
         });
 
-        /* todo
         describe("NewSignatureInterface", () => {
             it("should contain the interface written out", () => {
                 const expected =
@@ -54,7 +53,6 @@ describe("InterfaceWriter", () => {
                 assert.equal(file.interfaces[1].write(), expected);
             });
         });
-        */
 
         describe("CallSignatureInterface", () => {
             it("should contain the interface written out", () => {

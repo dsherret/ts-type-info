@@ -22,7 +22,7 @@ export class StructureInterfaceBinder extends InterfaceBinder {
         const container = new InterfaceMemberContainer();
         container.methods.push(...(this.structure.methods || []).map(m => this.factory.getInterfaceMethod(m)));
         container.properties.push(...(this.structure.properties || []).map(p => this.factory.getInterfaceProperty(p)));
-        container.newSignatures.push(...(this.structure.newSignatures || []).map(s => this.factory.getInterfaceNewSignature(s)));
+        container.newSignatures.push(...(this.structure.newSignatures || []).map(s => this.factory.getCallSignature(s)));
         container.callSignatures.push(...(this.structure.callSignatures || []).map(s => this.factory.getCallSignature(s)));
         return container;
     }

@@ -16,7 +16,7 @@ export class InterfaceWriter extends BaseDefinitionWriter<InterfaceDefinition> {
     protected writeDefault(def: InterfaceDefinition, flags: WriteFlags) {
         this.writeHeader(def, flags);
         this.writer.block(() => {
-            // this.writeNewSignatures(def, flags); // todo
+            this.writeNewSignatures(def, flags);
             this.writeCallSignatures(def, flags);
             this.writeProperties(def, flags);
             this.writer.newLine();
@@ -34,14 +34,12 @@ export class InterfaceWriter extends BaseDefinitionWriter<InterfaceDefinition> {
         extendsImplementsWriter.writeExtends(def);
     }
 
-    /* todo:
     private writeNewSignatures(def: InterfaceDefinition, flags: WriteFlags) {
         def.newSignatures.forEach(n => {
             this.writer.write("new");
             this.callSignatureWriter.write(n, flags);
         });
     }
-    */
 
     private writeCallSignatures(def: InterfaceDefinition, flags: WriteFlags) {
         def.callSignatures.forEach(c => {

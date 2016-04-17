@@ -154,7 +154,8 @@ describe("ModuledDefinitionTests", () => {
                 minArgumentCount: 1
             }],
             newSignatures: [{
-                parameters: [{ name: "param1" }]
+                parameters: [{ name: "param1" }],
+                minArgumentCount: 1
             }],
             properties: [{
                 name: "prop1"

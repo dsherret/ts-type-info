@@ -2,19 +2,18 @@
     StructureClassMethodBinder, StructureClassMethodParameterBinder, StructureClassPropertyBinder, StructureClassStaticMethodBinder, StructureClassStaticMethodParameterBinder,
     StructureClassStaticPropertyBinder, StructureDecoratorBinder, StructureEnumBinder, StructureEnumMemberBinder, StructureExpressionBinder, StructureFileBinder,
     StructureFunctionBinder, StructureFunctionParameterBinder, StructureImportBinder, StructureInterfaceBinder, StructureInterfaceMethodBinder,
-    StructureInterfaceMethodParameterBinder, StructureInterfaceNewSignatureParameterBinder, StructureInterfaceNewSignatureBinder, StructureInterfacePropertyBinder,
-    StructureNamespaceBinder, StructureReExportBinder, StructureTypeAliasBinder, StructureTypeParameterBinder, StructureVariableBinder} from "./../binders";
+    StructureInterfaceMethodParameterBinder, StructureInterfacePropertyBinder, StructureNamespaceBinder, StructureReExportBinder, StructureTypeAliasBinder,
+    StructureTypeParameterBinder, StructureVariableBinder} from "./../binders";
 import {BaseDefinition, CallSignatureDefinition, CallSignatureParameterDefinition, ClassDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition,
     ClassMethodDefinition, ClassMethodParameterDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticMethodParameterDefinition, ClassStaticPropertyDefinition,
     DecoratorDefinition, EnumDefinition, EnumMemberDefinition, ExpressionDefinition, FileDefinition, FunctionDefinition, FunctionParameterDefinition, ImportDefinition,
-    ImportPartDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfaceMethodParameterDefinition, InterfaceNewSignatureDefinition,
-    InterfaceNewSignatureParameterDefinition, InterfacePropertyDefinition, NamespaceDefinition, ReExportDefinition, ReExportPartDefinition, TypeAliasDefinition,
-    TypeExpressionDefinition, TypeParameterDefinition, VariableDefinition} from "./../definitions";
+    ImportPartDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfaceMethodParameterDefinition, InterfacePropertyDefinition, NamespaceDefinition, ReExportDefinition,
+    ReExportPartDefinition, TypeAliasDefinition, TypeExpressionDefinition, TypeParameterDefinition, VariableDefinition} from "./../definitions";
 import {CallSignatureStructure, CallSignatureParameterStructure, ClassStructure, ClassConstructorStructure, ClassConstructorParameterStructure, ClassMethodStructure,
     ClassMethodParameterStructure, ClassPropertyStructure, ClassStaticMethodStructure, ClassStaticMethodParameterStructure, ClassStaticPropertyStructure, DecoratorStructure,
     EnumStructure, EnumMemberStructure, FileStructure, FunctionStructure, FunctionParameterStructure, ImportStructure, NamedImportStructure, InterfaceStructure,
-    InterfaceMethodStructure, InterfaceMethodParameterStructure, InterfaceNewSignatureParameterStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure,
-    NamespaceStructure, ReExportStructure, TypeAliasStructure, TypeParameterStructure, VariableStructure} from "./../structures";
+    InterfaceMethodStructure, InterfaceMethodParameterStructure, InterfacePropertyStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure, TypeParameterStructure,
+    VariableStructure} from "./../structures";
 import {StringUtils} from "./../utils";
 
 function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
@@ -160,20 +159,12 @@ export class StructureFactory {
         return bindToDefinition(new StructureInterfaceMethodBinder(this, structure), new InterfaceMethodDefinition());
     }
 
-    getInterfaceNewSignature(structure: InterfaceNewSignatureStructure) {
-        return bindToDefinition(new StructureInterfaceNewSignatureBinder(this, structure), new InterfaceNewSignatureDefinition());
-    }
-
     getInterfaceProperty(structure: InterfacePropertyStructure) {
         return bindToDefinition(new StructureInterfacePropertyBinder(structure), new InterfacePropertyDefinition());
     }
 
     getInterfaceMethodParameter(structure: InterfaceMethodParameterStructure) {
         return bindToDefinition(new StructureInterfaceMethodParameterBinder(structure), new InterfaceMethodParameterDefinition());
-    }
-
-    getInterfaceNewSignatureParameter(structure: InterfaceNewSignatureParameterStructure) {
-        return bindToDefinition(new StructureInterfaceNewSignatureParameterBinder(structure), new InterfaceNewSignatureParameterDefinition());
     }
 
     getNamespace(structure: NamespaceStructure) {

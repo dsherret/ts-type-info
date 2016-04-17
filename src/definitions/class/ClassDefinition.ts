@@ -16,8 +16,6 @@ import {ClassPropertyDefinition} from "./ClassPropertyDefinition";
 import {ClassStaticMethodDefinition} from "./ClassStaticMethodDefinition";
 import {ClassStaticPropertyDefinition} from "./ClassStaticPropertyDefinition";
 
-type ClassMemberDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
-
 export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition,
                                         ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
     methods: ClassMethodDefinition[] = [];

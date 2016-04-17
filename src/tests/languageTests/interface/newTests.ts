@@ -1,7 +1,7 @@
 ﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
-describe("interface name tests", () => {
+describe("interface new tests", () => {
     const code = `
 interface MyInterface {
     new(): MyInterface;
@@ -36,7 +36,8 @@ interface MyInterfaceWithMultipleNew {
                     name: "t",
                     typeExpression: { text: "T" }
                 }],
-                returnTypeExpression: { text: "MyInterface" }
+                returnTypeExpression: { text: "MyInterface" },
+                minArgumentCount: 2
             }]
         }]
     });

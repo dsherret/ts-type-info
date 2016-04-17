@@ -1,5 +1,4 @@
-﻿import {ClassMemberDefinitions} from "./../../../definitions";
-import {StructureFactory} from "./../../../factories";
+﻿import {StructureFactory} from "./../../../factories";
 import {ClassStructure} from "./../../../structures";
 import {ClassBinder, ClassMemberContainer} from "./../../base";
 import {StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureAbstractableBinder, StructureTypeParameteredBinder,

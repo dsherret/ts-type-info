@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
-import {CallSignatureStructure, InterfaceMethodStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
+import {CallSignatureStructure, InterfaceMethodStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, DefinitionUtils} from "./../../utils";
@@ -10,13 +10,12 @@ import {CallSignatureDefinition} from "./../function";
 import {TypeExpressionDefinition} from "./../expressions";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
-import {InterfaceNewSignatureDefinition} from "./InterfaceNewSignatureDefinition";
 
 export class InterfaceDefinition extends BaseDefinition
                                  implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];
-    newSignatures: InterfaceNewSignatureDefinition[] = [];
+    newSignatures: CallSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
     extendsTypeExpressions: TypeExpressionDefinition[] = [];
 
@@ -42,9 +41,9 @@ export class InterfaceDefinition extends BaseDefinition
         return this;
     }
 
-    addNewSignatures(...newSignatures: InterfaceNewSignatureStructure[]) {
+    addNewSignatures(...newSignatures: CallSignatureStructure[]) {
         const factory = new StructureFactory();
-        this.newSignatures.push(...newSignatures.map(n => factory.getInterfaceNewSignature(n)));
+        this.newSignatures.push(...newSignatures.map(n => factory.getCallSignature(n)));
         return this;
     }
 
@@ -62,7 +61,7 @@ export class InterfaceDefinition extends BaseDefinition
         return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.methods, nameOrSearchFunction);
     }
 
-    getNewSignature(searchFunction: (newSignature: InterfaceNewSignatureDefinition) => boolean) {
+    getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.newSignatures, searchFunction);
     }
 

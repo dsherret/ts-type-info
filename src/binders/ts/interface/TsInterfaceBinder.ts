@@ -33,7 +33,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
                     container.properties.push(this.factory.getInterfaceProperty(childNode));
                 }
                 else if (childNode.isConstructSignature()) {
-                    container.newSignatures.push(this.factory.getInterfaceNewSignature(childNode));
+                    container.newSignatures.push(this.factory.getCallSignature(childNode));
                 }
                 else if (childNode.isCallSignature()) {
                     container.callSignatures.push(this.factory.getCallSignature(childNode));

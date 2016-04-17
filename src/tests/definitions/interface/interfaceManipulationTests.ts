@@ -1,7 +1,6 @@
 ﻿import * as assert from "assert";
 import {InterfaceDefinition} from "./../../../definitions";
-import {runCallSignatureDefinitionTests, runInterfaceMethodDefinitionTests, runInterfacePropertyDefinitionTests,
-    runInterfaceNewSignatureDefinitionTests} from "./../../testHelpers";
+import {runCallSignatureDefinitionTests, runInterfaceMethodDefinitionTests, runInterfacePropertyDefinitionTests} from "./../../testHelpers";
 
 describe("InterfaceDefinition", () => {
     describe("addCallSignatures()", () => {
@@ -94,12 +93,14 @@ describe("InterfaceDefinition", () => {
             returnType: "number"
         });
 
-        runInterfaceNewSignatureDefinitionTests(i.newSignatures[0], {
+        runCallSignatureDefinitionTests(i.newSignatures[0], {
             returnTypeExpression: { text: "string" },
-            parameters: [{ name: "myParam" }]
+            parameters: [{ name: "myParam" }],
+            typeParameters: [{ name: "T" }],
+            minArgumentCount: 1
         });
 
-        runInterfaceNewSignatureDefinitionTests(i.newSignatures[1], {
+        runCallSignatureDefinitionTests(i.newSignatures[1], {
             returnTypeExpression: { text: "number" }
         });
     });

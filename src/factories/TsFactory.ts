@@ -1,13 +1,12 @@
 ﻿import {IBaseBinder, TsCallSignatureBinder, TsClassBinder, TsClassConstructorBinder, TsClassMethodBinder, TsClassStaticMethodBinder, TsClassPropertyBinder, TsClassStaticPropertyBinder,
-    TsDecoratorBinder, TsEnumBinder, TsEnumMemberBinder, TsExpressionBinder, TsExpressionBinderByNode, TsImportBinder, TsInterfaceMethodBinder, TsInterfaceNewSignatureBinder,
-    TsInterfacePropertyBinder, TsFileBinder, TsFunctionBinder, TsInterfaceBinder, TsNamespaceBinder, TsVariableBinder, TsTypeAliasBinder, TsReExportBinder,
-    TsTypeParameterBinder} from "./../binders";
+    TsDecoratorBinder, TsEnumBinder, TsEnumMemberBinder, TsExpressionBinder, TsExpressionBinderByNode, TsImportBinder, TsInterfaceMethodBinder, TsInterfacePropertyBinder,
+    TsFileBinder, TsFunctionBinder, TsInterfaceBinder, TsNamespaceBinder, TsVariableBinder, TsTypeAliasBinder, TsReExportBinder, TsTypeParameterBinder} from "./../binders";
 import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 import {CallSignatureDefinition, ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition,
     ClassStaticPropertyDefinition, DecoratorDefinition, EnumDefinition, EnumMemberDefinition, ExportableDefinitions, ExpressionDefinition, FileDefinition, FunctionDefinition,
-    ImportDefinition, ImportPartDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfaceNewSignatureDefinition, InterfacePropertyDefinition, NamespaceDefinition,
-    VariableDefinition, NodeDefinitions, TypeAliasDefinition, ReExportDefinition, ReExportPartDefinition, ModuleMemberDefinitions, BaseDefinition, TypeDefinition,
-    TypeExpressionDefinition, TypeParameterDefinition} from "./../definitions";
+    ImportDefinition, ImportPartDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, NamespaceDefinition, VariableDefinition, NodeDefinitions,
+    TypeAliasDefinition, ReExportDefinition, ReExportPartDefinition, ModuleMemberDefinitions, BaseDefinition, TypeDefinition, TypeExpressionDefinition,
+    TypeParameterDefinition} from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 
 function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
@@ -68,10 +67,6 @@ export class TsFactory {
 
     getInterfaceMethod(node: TsNode) {
         return bindToDefinition(new TsInterfaceMethodBinder(this, node), new InterfaceMethodDefinition());
-    }
-
-    getInterfaceNewSignature(node: TsNode) {
-        return bindToDefinition(new TsInterfaceNewSignatureBinder(this, node.getSignatureFromThis()), new InterfaceNewSignatureDefinition());
     }
 
     getInterfaceProperty(node: TsNode) {

@@ -11,10 +11,9 @@ export * from "./testStructures/variable";
 
 import {FileTestStructure} from "./testStructures/file";
 import {FunctionTestStructure, FunctionParameterTestStructure, CallSignatureTestStructure, CallSignatureParameterTestStructure} from "./testStructures/function";
-import {InterfaceTestStructure, InterfaceMethodParameterTestStructure, InterfaceMethodTestStructure,
-        InterfaceNewSignatureParameterTestStructure, InterfacePropertyTestStructure, InterfaceNewSignatureTestStructure} from "./testStructures/interface";
+import {InterfaceTestStructure, InterfaceMethodParameterTestStructure, InterfaceMethodTestStructure, InterfacePropertyTestStructure} from "./testStructures/interface";
 import {ClassTestStructure, ClassMethodParameterTestStructure, ClassStaticMethodParameterTestStructure, ClassMethodTestStructure, ClassPropertyTestStructure,
-        ClassStaticMethodTestStructure, ClassStaticPropertyTestStructure, ClassConstructorTestStructure, ClassConstructorParameterTestStructure} from "./testStructures/class";
+    ClassStaticMethodTestStructure, ClassStaticPropertyTestStructure, ClassConstructorTestStructure, ClassConstructorParameterTestStructure} from "./testStructures/class";
 import {EnumTestStructure} from "./testStructures/enum";
 import {NamespaceTestStructure} from "./testStructures/namespace";
 import {VariableTestStructure} from "./testStructures/variable";
@@ -25,9 +24,8 @@ export type FunctionTestStructures = FunctionTestStructure | InterfaceMethodTest
 export type ClassMethodTestStructures = ClassMethodTestStructure | ClassStaticMethodTestStructure;
 export type ClassMethodParameterTestStructures = ClassMethodParameterTestStructure | ClassStaticMethodParameterTestStructure;
 export type ParameterTestStructures = FunctionParameterTestStructure | InterfaceMethodParameterTestStructure | ClassMethodParameterTestStructure |
-    ClassStaticMethodParameterTestStructure | InterfaceNewSignatureParameterTestStructure | ClassConstructorParameterTestStructure | CallSignatureParameterTestStructure;
-export type ParameteredTestStructures = FunctionTestStructure | InterfaceMethodTestStructure | ClassMethodTestStructure | InterfaceNewSignatureTestStructure |
-    ClassConstructorTestStructure | CallSignatureTestStructure;
+    ClassStaticMethodParameterTestStructure | ClassConstructorParameterTestStructure | CallSignatureParameterTestStructure;
+export type ParameteredTestStructures = FunctionTestStructure | InterfaceMethodTestStructure | ClassMethodTestStructure | ClassConstructorTestStructure | CallSignatureTestStructure;
 export type PropertyTestStructures = InterfacePropertyTestStructure | ClassPropertyTestStructure | ClassStaticPropertyTestStructure;
 export type MethodTestStructures = InterfaceMethodTestStructure | ClassMethodTestStructure;
 export type MethodParameterTestStructures = InterfaceMethodParameterTestStructure | ClassMethodParameterTestStructure;

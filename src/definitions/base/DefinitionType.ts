@@ -18,8 +18,6 @@ export const enum DefinitionType {
     InterfaceMethod = 201,
     InterfaceMethodParameter = 202,
     InterfaceProperty = 203,
-    InterfaceNewSignature = 204,
-    InterfaceNewSignatureParameter = 205,
     Namespace = 300,
     Function = 400,
     FunctionParameter = 401,

@@ -1,5 +1,4 @@
 ﻿import {TsFactory} from "./../../../factories";
-import {ClassMemberDefinitions} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {ClassBinder, ClassMemberContainer} from "./../../base";

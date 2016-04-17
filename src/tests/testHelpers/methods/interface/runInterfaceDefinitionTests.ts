@@ -6,7 +6,6 @@ import {runCallSignatureDefinitionTests} from "./../function";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";
-import {runInterfaceNewSignatureDefinitionTests} from "./runInterfaceNewSignatureDefinitionTests";
 import {runTypeExpressionDefinitionTests} from "./../expressions";
 
 export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: InterfaceTestStructure) {
@@ -25,6 +24,16 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
             runAmbientableDefinitionTests(definition, structure);
             runTypeParameteredDefinitionTests(definition, structure);
 
+            describe("callSignatures", () => {
+                it("should have the expected number of callSignatures", () => {
+                    assert.equal(definition.callSignatures.length, structure.callSignatures.length);
+                });
+
+                structure.callSignatures.forEach((callSignatureTestStructure, i) => {
+                    runCallSignatureDefinitionTests(definition.callSignatures[i], callSignatureTestStructure);
+                });
+            });
+
             describe("methods", () => {
                 it("should have the expected number of methods", () => {
                     assert.equal(definition.methods.length, structure.methods.length);
@@ -41,17 +50,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
                 });
 
                 structure.newSignatures.forEach((newSignatureTestStructure, i) => {
-                    runInterfaceNewSignatureDefinitionTests(definition.newSignatures[i], newSignatureTestStructure);
-                });
-            });
-
-            describe("callSignatures", () => {
-                it("should have the expected number of callSignatures", () => {
-                    assert.equal(definition.callSignatures.length, structure.callSignatures.length);
-                });
-
-                structure.callSignatures.forEach((newSignatureTestStructure, i) => {
-                    runCallSignatureDefinitionTests(definition.callSignatures[i], newSignatureTestStructure);
+                    runCallSignatureDefinitionTests(definition.newSignatures[i], newSignatureTestStructure);
                 });
             });
 
