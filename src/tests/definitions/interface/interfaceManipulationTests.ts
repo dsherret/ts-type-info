@@ -4,11 +4,12 @@ import {runCallSignatureDefinitionTests, runInterfaceMethodDefinitionTests, runI
     runInterfaceNewSignatureDefinitionTests} from "./../../testHelpers";
 
 describe("InterfaceDefinition", () => {
-    describe("addNewSignatures()", () => {
+    describe("addCallSignatures()", () => {
         const i = new InterfaceDefinition();
         i.addCallSignatures({
             returnType: "string",
-            parameters: [{ name: "myParam" }]
+            parameters: [{ name: "myParam" }],
+            typeParameters: [{ name: "T" }]
         }, {
             returnType: "number"
         });
@@ -16,6 +17,7 @@ describe("InterfaceDefinition", () => {
         runCallSignatureDefinitionTests(i.callSignatures[0], {
             returnTypeExpression: { text: "string" },
             parameters: [{ name: "myParam" }],
+            typeParameters: [{ name: "T" }],
             minArgumentCount: 1
         });
 
@@ -86,7 +88,8 @@ describe("InterfaceDefinition", () => {
         const i = new InterfaceDefinition();
         i.addNewSignatures({
             returnType: "string",
-            parameters: [{ name: "myParam" }]
+            parameters: [{ name: "myParam" }],
+            typeParameters: [{ name: "T" }]
         }, {
             returnType: "number"
         });

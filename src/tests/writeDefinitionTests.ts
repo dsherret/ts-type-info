@@ -7,6 +7,8 @@ import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWrite
 import {WriteFlags} from "./../WriteFlags";
 import * as testCode from "./writers/testCode";
 
+// todo: this file should be removed in favour of what was done with interfaceWriteTests
+
 function getCodeBlockWriter() {
     return new CodeBlockWriter();
 }
@@ -25,18 +27,6 @@ describe("#writeDefinition()", () => {
                 const writer = getCodeBlockWriter();
                 const classWriter = new ClassWriter(writer);
                 classWriter.write(def, WriteFlags.Default);
-                assert.equal(writeDefinitionWrapper(def), writer.toString());
-            });
-        });
-    });
-
-    describe("InterfaceDefinition", () => {
-        const file = getInfoFromString(testCode.interfaceWriterTestCode);
-        file.interfaces.forEach(def => {
-            it(`should write the same thing as an interface writer for the interface ${def.name}`, () => {
-                const writer = getCodeBlockWriter();
-                const interfaceWriter = new InterfaceWriter(writer);
-                interfaceWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });

@@ -9,7 +9,7 @@ interface MyInterface {
 
 interface MyInterfaceWithMultipleNew {
     new(): MyInterface;
-    new(str: string): MyInterface;
+    new<T>(str: string, t: T): MyInterface;
 }
 `;
 
@@ -26,9 +26,15 @@ interface MyInterfaceWithMultipleNew {
             newSignatures: [{
                 returnTypeExpression: { text: "MyInterface" }
             }, {
+                typeParameters: [{
+                    name: "T"
+                }],
                 parameters: [{
                     name: "str",
                     typeExpression: { text: "string" }
+                }, {
+                    name: "t",
+                    typeExpression: { text: "T" }
                 }],
                 returnTypeExpression: { text: "MyInterface" }
             }]

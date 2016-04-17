@@ -1,4 +1,5 @@
-﻿export * from "./writers/ClassWriter";
+﻿export * from "./writers/CallSignatureWriter";
+export * from "./writers/ClassWriter";
 export * from "./writers/ExpressionWriter";
 export * from "./writers/EnumMemberWriter";
 export * from "./writers/EnumWriter";
