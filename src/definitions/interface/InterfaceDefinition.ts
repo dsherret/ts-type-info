@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
-import {TypeParameterStructure, InterfaceMethodStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure} from "./../../structures";
+import {CallSignatureStructure, InterfaceMethodStructure, InterfaceNewSignatureStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, DefinitionUtils} from "./../../utils";
@@ -22,6 +22,12 @@ export class InterfaceDefinition extends BaseDefinition
 
     constructor() {
         super(DefinitionType.Interface);
+    }
+
+    addCallSignatures(...callSignatures: CallSignatureStructure[]) {
+        const factory = new StructureFactory();
+        this.callSignatures.push(...callSignatures.map(n => factory.getCallSignature(n)));
+        return this;
     }
 
     addExtends(...texts: string[]) {
@@ -46,6 +52,10 @@ export class InterfaceDefinition extends BaseDefinition
         const factory = new StructureFactory();
         this.properties.push(...properties.map(p => factory.getInterfaceProperty(p)));
         return this;
+    }
+
+    getCallSignature(searchFunction: (callSignature: CallSignatureDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.callSignatures, searchFunction);
     }
 
     getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)) {

@@ -3,6 +3,15 @@ import {InterfaceDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests} from "./../../testHelpers";
 
 describe("InterfaceDefinition", () => {
+    describe("getCallSignature", () => {
+        const i = new InterfaceDefinition();
+        i.addCallSignatures({ returnType: "string" }, { returnType: "number" });
+
+        it("should equal the second definition", () => {
+            assert.equal(i.getCallSignature(n => n.returnTypeExpression.text === "number"), i.callSignatures[1]);
+        });
+    });
+
     describe("getMethod", () => {
         const i = new InterfaceDefinition();
         i.addMethods({ name: "name1" }, { name: "name2" });

@@ -3,7 +3,6 @@ import {Logger} from "./../../../utils";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
-
 export abstract class InterfaceBinder implements IBaseBinder {
     constructor(
         private namedBinder: NamedBinder,

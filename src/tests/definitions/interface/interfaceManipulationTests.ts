@@ -1,8 +1,29 @@
 ﻿import * as assert from "assert";
 import {InterfaceDefinition} from "./../../../definitions";
-import {runInterfaceMethodDefinitionTests, runInterfacePropertyDefinitionTests, runInterfaceNewSignatureDefinitionTests} from "./../../testHelpers";
+import {runCallSignatureDefinitionTests, runInterfaceMethodDefinitionTests, runInterfacePropertyDefinitionTests,
+    runInterfaceNewSignatureDefinitionTests} from "./../../testHelpers";
 
 describe("InterfaceDefinition", () => {
+    describe("addNewSignatures()", () => {
+        const i = new InterfaceDefinition();
+        i.addCallSignatures({
+            returnType: "string",
+            parameters: [{ name: "myParam" }]
+        }, {
+            returnType: "number"
+        });
+
+        runCallSignatureDefinitionTests(i.callSignatures[0], {
+            returnTypeExpression: { text: "string" },
+            parameters: [{ name: "myParam" }],
+            minArgumentCount: 1
+        });
+
+        runCallSignatureDefinitionTests(i.callSignatures[1], {
+            returnTypeExpression: { text: "number" }
+        });
+    });
+
     describe("addExtends()", () => {
         const i = new InterfaceDefinition();
         i.addExtends("test", "test2");
