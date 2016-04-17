@@ -1,9 +1,13 @@
 ﻿import * as assert from "assert";
 import {getInfoFromString} from "./../../../main";
-import {functionWriterTestCode} from "./../../writers/testCode";
+
+const code = `
+function myFunction() {
+}
+`;
 
 describe("BaseDefinition", () => {
-    const file = getInfoFromString(functionWriterTestCode);
+    const file = getInfoFromString(code);
     const funcDef = file.functions[0];
 
     describe("onBeforeWrite", () => {
@@ -13,7 +17,7 @@ describe("BaseDefinition", () => {
             };
             funcDef.onAfterWrite = null;
 
-            const expected = `@MyEnumerable\nfunction myFunction(str: string) {\n}\n`;
+            const expected = `@MyEnumerable\nfunction myFunction() {\n}\n`;
             assert.equal(funcDef.write(), expected);
         });
     });
@@ -25,7 +29,7 @@ describe("BaseDefinition", () => {
                 writer.write(`// something`);
             };
 
-            const expected = `function myFunction(str: string) {\n}\n// something\n`;
+            const expected = `function myFunction() {\n}\n// something\n`;
             assert.equal(funcDef.write(), expected);
         });
     });

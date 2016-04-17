@@ -27,7 +27,8 @@ export class MyClass {
 }
 export enum MyEnum {
 }
-export function myFunction(): void;
+export function myFunction() {
+}
 `;
         const myFile = getInfoFromString(code);
 

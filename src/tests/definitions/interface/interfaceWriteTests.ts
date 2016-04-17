@@ -25,7 +25,7 @@ interface MyExtenedInterface extends MyTypeParameterInterface<string> {
 }
 `;
 
-describe("InterfaceWriter", () => {
+describe("InterfaceDefinition", () => {
     const file = getInfoFromString(code);
 
     describe("write()", () => {

@@ -32,18 +32,6 @@ describe("#writeDefinition()", () => {
         });
     });
 
-    describe("FunctionDefinition", () => {
-        const file = getInfoFromString(testCode.functionWriterTestCode);
-        file.functions.forEach(def => {
-            it(`should write the same thing as a function writer for the function ${def.name}`, () => {
-                const writer = getCodeBlockWriter();
-                const functionWriter = new FunctionWriter(writer);
-                functionWriter.write(def, WriteFlags.Default);
-                assert.equal(writeDefinitionWrapper(def), writer.toString());
-            });
-        });
-    });
-
     describe("FileDefinition", () => {
         const def = getInfoFromString(testCode.fileWriterTestCode);
         it(`should write the same thing as an file writer for the file`, () => {
