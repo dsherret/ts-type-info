@@ -5,6 +5,7 @@ describe("class abstract tests", () => {
     const code = `
 abstract class MyAbstractClass {
     abstract myAbstractMethod(): string;
+    abstract myAbstractMethod(str?: string): string;
 }`;
 
     const def = getInfoFromString(code);
@@ -16,7 +17,15 @@ abstract class MyAbstractClass {
             methods: [{
                 name: "myAbstractMethod",
                 isAbstract: true,
-                returnTypeExpression: { text: "string" }
+                returnTypeExpression: { text: "string" },
+                parameters: [{
+                    name: "str",
+                    typeExpression: { text: "string" },
+                    isOptional: true
+                }],
+                overloadSignatures: [{
+                    returnTypeExpression: { text: "string" }
+                }]
             }]
         }]
     });

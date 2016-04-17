@@ -2,7 +2,7 @@
 import {InterfaceTestStructure} from "./../../testStructures";
 import {InterfaceDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
-import {runCallSignatureDefinitionTests} from "./../function";
+import {runCallSignatureDefinitionTests} from "./../general";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";

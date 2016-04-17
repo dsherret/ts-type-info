@@ -1,6 +1,6 @@
 ﻿import {NamedTestStructure, ExportableTestStructure, TypeParameteredTestStructure, AmbientableTestStructure} from "./../base";
 import {TypeExpressionTestStructure} from "./../expressions";
-import {CallSignatureTestStructure} from "./../function";
+import {CallSignatureTestStructure} from "./../general";
 import {InterfaceMethodTestStructure} from "./InterfaceMethodTestStructure";
 import {InterfacePropertyTestStructure} from "./InterfacePropertyTestStructure";
 

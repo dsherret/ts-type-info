@@ -10,23 +10,43 @@ export class TsModuledBinder extends ModuledBinder {
     }
 
     getMembers() {
-        return this.node.getChildren()
-            .map(childNode => tryGet(childNode, () => this.getMemberDefinition(childNode)))
-            .filter(n => n != null);
-    }
+        const members: NodeDefinitions[] = [];
+        // because there can be multiple function signatures, the last one needs to be used
+        const functions: { [name: string]: TsNode } = {};
 
-    private getMemberDefinition(childNode: TsNode): NodeDefinitions {
-        const def = this.factory.getDefinitionByNode(childNode);
+        this.node.getChildren().forEach(childNode => {
+            tryGet(childNode, () => {
+                if (childNode.isFunction()) {
+                    functions[childNode.getName()] = childNode;
+                    return;
+                }
 
-        if (def == null) {
-            const symbol = this.node.getSymbol();
-            const isKnownTypeToIgnore = (symbol != null && symbol.isDefaultExport()) || childNode.isExportDeclaration() || childNode.isExportAssignment() || childNode.isImport();
+                const def = this.factory.getDefinitionByNode(childNode);
 
-            if (!isKnownTypeToIgnore) {
-                Logger.warn(`Node is not handled for: ${childNode.getName()}`);
-            }
-        }
+                if (def == null) {
+                    const symbol = this.node.getSymbol();
+                    const isKnownTypeToIgnore = (symbol != null && symbol.isDefaultExport()) ||
+                        childNode.isExportDeclaration() ||
+                        childNode.isExportAssignment() ||
+                        childNode.isImport();
 
-        return def;
+                    if (!isKnownTypeToIgnore) {
+                        Logger.warn(`Node is not handled for: ${childNode.getName()}`);
+                    }
+                }
+                else {
+                    members.push(def);
+                }
+            });
+        });
+
+        Object.keys(functions).forEach(name => {
+            const childNode = functions[name];
+            tryGet(childNode, () => {
+                members.push(this.factory.getDefinitionByNode(childNode));
+            });
+        });
+
+        return members;
     }
 }

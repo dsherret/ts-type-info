@@ -9,27 +9,14 @@ export * from "./testStructures/interface";
 export * from "./testStructures/namespace";
 export * from "./testStructures/variable";
 
-import {FileTestStructure} from "./testStructures/file";
-import {FunctionTestStructure, FunctionParameterTestStructure, CallSignatureTestStructure, CallSignatureParameterTestStructure} from "./testStructures/function";
-import {InterfaceTestStructure, InterfaceMethodParameterTestStructure, InterfaceMethodTestStructure, InterfacePropertyTestStructure} from "./testStructures/interface";
-import {ClassTestStructure, ClassMethodParameterTestStructure, ClassStaticMethodParameterTestStructure, ClassMethodTestStructure, ClassPropertyTestStructure,
-    ClassStaticMethodTestStructure, ClassStaticPropertyTestStructure, ClassConstructorTestStructure, ClassConstructorParameterTestStructure} from "./testStructures/class";
-import {EnumTestStructure} from "./testStructures/enum";
-import {NamespaceTestStructure} from "./testStructures/namespace";
-import {VariableTestStructure} from "./testStructures/variable";
+import {FunctionTestStructure, FunctionParameterTestStructure} from "./testStructures/function";
+import {InterfaceMethodParameterTestStructure, InterfaceMethodTestStructure} from "./testStructures/interface";
+import {ClassMethodParameterTestStructure, ClassStaticMethodParameterTestStructure, ClassMethodTestStructure,
+    ClassStaticMethodTestStructure, ClassConstructorTestStructure, ClassConstructorParameterTestStructure} from "./testStructures/class";
+import {CallSignatureTestStructure, CallSignatureParameterTestStructure} from "./testStructures/general";
 
-export type WriteableTestStructures = FileTestStructure | NamespaceTestStructure | ClassTestStructure| InterfaceTestStructure | FunctionTestStructure |
-    EnumTestStructure | VariableTestStructure;
-export type FunctionTestStructures = FunctionTestStructure | InterfaceMethodTestStructure | ClassMethodTestStructure;
 export type ClassMethodTestStructures = ClassMethodTestStructure | ClassStaticMethodTestStructure;
 export type ClassMethodParameterTestStructures = ClassMethodParameterTestStructure | ClassStaticMethodParameterTestStructure;
 export type ParameterTestStructures = FunctionParameterTestStructure | InterfaceMethodParameterTestStructure | ClassMethodParameterTestStructure |
     ClassStaticMethodParameterTestStructure | ClassConstructorParameterTestStructure | CallSignatureParameterTestStructure;
 export type ParameteredTestStructures = FunctionTestStructure | InterfaceMethodTestStructure | ClassMethodTestStructure | ClassConstructorTestStructure | CallSignatureTestStructure;
-export type PropertyTestStructures = InterfacePropertyTestStructure | ClassPropertyTestStructure | ClassStaticPropertyTestStructure;
-export type MethodTestStructures = InterfaceMethodTestStructure | ClassMethodTestStructure;
-export type MethodParameterTestStructures = InterfaceMethodParameterTestStructure | ClassMethodParameterTestStructure;
-export type MainTestStructures = ClassTestStructure | FunctionTestStructure | InterfaceTestStructure | EnumTestStructure | NamespaceTestStructure | VariableTestStructure;
-export type ExportedTestStructures = ClassTestStructure | FunctionTestStructure | InterfaceTestStructure | EnumTestStructure | NamespaceTestStructure | VariableTestStructure;
-export type DecoratedTestStructures = ClassTestStructure | ClassMethodTestStructure | ClassPropertyTestStructure | ClassStaticMethodTestStructure | ClassStaticPropertyTestStructure |
-    ClassMethodParameterTestStructure;

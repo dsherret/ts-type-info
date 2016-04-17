@@ -4,10 +4,10 @@ import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassSt
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./../interface";
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./../File";
-import {CallSignatureDefinition, FunctionDefinition} from "./../function";
+import {FunctionDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
 import {EnumDefinition} from "./../enum";
-import {TypeAliasDefinition} from "./../general";
+import {CallSignatureDefinition, TypeAliasDefinition} from "./../general";
 import {VariableDefinition} from "./../variable";
 import {DefinitionType} from "./DefinitionType";
 

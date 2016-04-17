@@ -9,8 +9,8 @@ import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 
 export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
     constructor(
-        factory: TsFactory,
-        node: TsNode,
+        private factory: TsFactory,
+        private node: TsNode,
         paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
         paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
@@ -20,5 +20,16 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
             new TsParameteredBinderByNode(factory, node, paramDefinition, paramBinder),
             new TsReturnTypedBinderByNode(factory, node)
         );
+    }
+
+    protected getOverloadSignatures() {
+        const callSignatures = this.node.getTypeAtLocation().getCallSignatures().filter(c => !c.getDeclaration().hasFunctionBody());
+
+        // we need to ignore the implementation signature in these cases
+        if (this.node.isMethodSignature() || this.node.isAmbient() || this.node.hasAbstractKeyword()) {
+            callSignatures.pop();
+        }
+
+        return callSignatures.map(s => this.factory.getCallSignatureFromSignature(s));
     }
 }

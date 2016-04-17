@@ -7,6 +7,7 @@ describe("ambientable tests", () => {
 declare class MyAmbientClass {}
 declare interface MyAmbientInterface {}
 declare function MyAmbientFunction(): void;
+declare function MyAmbientFunction(str?: string): void;
 declare var MyAmbientVariable;
 declare enum MyAmbientEnum {};
 declare type MyType = string;
@@ -33,7 +34,15 @@ declare module MyAmbientModule {
         functions: [{
             name: "MyAmbientFunction",
             isAmbient: true,
-            hasDeclareKeyword: true
+            hasDeclareKeyword: true,
+            overloadSignatures: [{
+                parameters: []
+            }],
+            parameters: [{
+                name: "str",
+                isOptional: true,
+                typeExpression: { text: "string" }
+            }]
         }],
         variables: [{
             name: "MyAmbientVariable",

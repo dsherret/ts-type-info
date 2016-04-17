@@ -333,6 +333,10 @@ export class TsNode extends TsSourceFileChild {
         return (this.node as ts.HeritageClause).token === ts.SyntaxKind.ExtendsKeyword;
     }
 
+    hasFunctionBody() {
+        return (this.node as any).body != null;
+    }
+
     hasImplementsKeyword() {
         return (this.node as ts.HeritageClause).token === ts.SyntaxKind.ImplementsKeyword;
     }

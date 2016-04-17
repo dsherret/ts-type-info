@@ -3,7 +3,9 @@ import {NamedTestStructure} from "./NamedTestStructure";
 import {TypeParameteredTestStructure} from "./TypeParameteredTestStructure";
 import {ParameteredTestStructure} from "./ParameteredTestStructure";
 import {ReturnTypedTestStructure} from "./ReturnTypedTestStructure";
+import {CallSignatureTestStructure} from "./../general";
 
 export interface BaseFunctionTestStructure<T extends BaseParameterTestStructure>
         extends NamedTestStructure, TypeParameteredTestStructure, ParameteredTestStructure<T>, ReturnTypedTestStructure {
+    overloadSignatures?: CallSignatureTestStructure[];
 }

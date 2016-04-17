@@ -2,6 +2,7 @@
 import {TsSourceFileChild, TsSourceFileChildOptions} from "./TsSourceFileChild";
 import {TsTypeExpression} from "./TsTypeExpression";
 import {TsType} from "./TsType";
+import {TsNode} from "./TsNode";
 import {TsSymbol} from "./TsSymbol";
 
 interface TsSignatureOptions extends TsSourceFileChildOptions {
@@ -14,6 +15,10 @@ export class TsSignature extends TsSourceFileChild {
     constructor(opts: TsSignatureOptions) {
         super(opts);
         this.signature = opts.signature;
+    }
+
+    getDeclaration() {
+        return this.createNode(this.signature.declaration);
     }
 
     getReturnTypeExpression() {
@@ -54,7 +59,17 @@ export class TsSignature extends TsSourceFileChild {
         });
     }
 
-    private createTypeExpression(tsType: ts.Type): TsTypeExpression {
+    private createNode(node: ts.Node) {
+        return this.tsCache.getNode(node, () => new TsNode({
+            sourceFile: this.sourceFile,
+            typeChecker: this.typeChecker,
+            tsCache: this.tsCache,
+            node: node,
+            tsSourceFile: this.tsSourceFile
+        }));
+    }
+
+    private createTypeExpression(tsType: ts.Type) {
         return new TsTypeExpression({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
@@ -63,7 +78,7 @@ export class TsSignature extends TsSourceFileChild {
         });
     }
 
-    private createSymbol(symbol: ts.Symbol): TsSymbol {
+    private createSymbol(symbol: ts.Symbol) {
         return new TsSymbol({
             sourceFile: this.sourceFile,
             tsSourceFile: this.tsSourceFile,

@@ -10,24 +10,14 @@ export * from "./definitions/file";
 export * from "./definitions/variable";
 
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/file";
-import {FunctionDefinition, FunctionParameterDefinition, CallSignatureDefinition, CallSignatureParameterDefinition} from "./definitions/function";
+import {FunctionDefinition, FunctionParameterDefinition} from "./definitions/function";
 import {InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./definitions/interface";
 import {ClassDefinition, ClassMethodParameterDefinition, ClassStaticMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition,
     ClassStaticMethodDefinition, ClassStaticPropertyDefinition, ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./definitions/class";
-import {EnumDefinition, EnumMemberDefinition} from "./definitions/enum";
+import {EnumDefinition} from "./definitions/enum";
 import {NamespaceDefinition} from "./definitions/namespace";
 import {VariableDefinition} from "./definitions/variable";
-import {TypeParameterDefinition, TypePropertyDefinition, DecoratorDefinition, TypeAliasDefinition} from "./definitions/general";
-
-// group types
-export type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition |
-    ClassConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition;
-export type InterfaceDefinitions = InterfaceDefinition | InterfaceMethodParameterDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition;
-export type EnumDefinitions = EnumDefinition | EnumMemberDefinition;
-export type FunctionDefinitions = CallSignatureDefinition | CallSignatureParameterDefinition | FunctionDefinition | FunctionParameterDefinition;
-export type NamespaceDefinitions = NamespaceDefinition;
-export type GeneralDefinitions = TypeParameterDefinition | TypePropertyDefinition | DecoratorDefinition | TypeAliasDefinition;
-export type VariableDefinitions = VariableDefinition;
+import {TypeAliasDefinition, CallSignatureDefinition, CallSignatureParameterDefinition} from "./definitions/general";
 
 // "ed" definitions
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition |

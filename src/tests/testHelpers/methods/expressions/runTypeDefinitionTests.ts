@@ -2,7 +2,7 @@
 import {TypeDefinition} from "./../../../../definitions";
 import {TypeTestStructure} from "./../../testStructures";
 import {runNamedDefinitionTests, runBasePropertyDefinitionTests} from "./../base";
-import {runCallSignatureDefinitionTests} from "./../function";
+import {runCallSignatureDefinitionTests} from "./../general";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runTypeDefinitionTests(type: TypeDefinition, structure: TypeTestStructure) {

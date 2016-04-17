@@ -1,7 +1,7 @@
 import {TypeExpressionDefinition} from "./../expressions";
 import {TypeParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
-import {TypeParameterDefinition} from "./../general";
+import {TypeParameterDefinition, CallSignatureDefinition} from "./../general";
 import {BaseParameterDefinition} from "./BaseParameterDefinition";
 import {NamedDefinition} from "./NamedDefinition";
 import {TypeParameteredDefinition} from "./TypeParameteredDefinition";
@@ -16,6 +16,10 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     constructor(definitionType: DefinitionType) {
         super(definitionType);
     }
+
+    overloadSignatures: CallSignatureDefinition[] = [];
+    // todo: getOverloadSignature
+    // todo: addOverloadSignatures
 
     // NamedDefinition
     name: string;

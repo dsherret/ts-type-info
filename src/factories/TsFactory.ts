@@ -1,7 +1,7 @@
 ﻿import {IBaseBinder, TsCallSignatureBinder, TsClassBinder, TsClassConstructorBinder, TsClassMethodBinder, TsClassStaticMethodBinder, TsClassPropertyBinder, TsClassStaticPropertyBinder,
     TsDecoratorBinder, TsEnumBinder, TsEnumMemberBinder, TsExpressionBinder, TsExpressionBinderByNode, TsImportBinder, TsInterfaceMethodBinder, TsInterfacePropertyBinder,
     TsFileBinder, TsFunctionBinder, TsInterfaceBinder, TsNamespaceBinder, TsVariableBinder, TsTypeAliasBinder, TsReExportBinder, TsTypeParameterBinder} from "./../binders";
-import {TsSourceFile, TsNode, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
+import {TsSourceFile, TsNode, TsSignature, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 import {CallSignatureDefinition, ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition,
     ClassStaticPropertyDefinition, DecoratorDefinition, EnumDefinition, EnumMemberDefinition, ExportableDefinitions, ExpressionDefinition, FileDefinition, FunctionDefinition,
     ImportDefinition, ImportPartDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, NamespaceDefinition, VariableDefinition, NodeDefinitions,
@@ -21,8 +21,12 @@ export class TsFactory {
     private types = new KeyValueCache<TsType, TypeDefinition>();
     private deferredBindings: { binder: IBaseBinder, definition: BaseDefinition }[] = [];
 
-    getCallSignature(node: TsNode) {
-        return bindToDefinition(new TsCallSignatureBinder(this, node.getSignatureFromThis()), new CallSignatureDefinition());
+    getCallSignatureFromNode(node: TsNode) {
+        return this.getCallSignatureFromSignature(node.getSignatureFromThis());
+    }
+
+    getCallSignatureFromSignature(signature: TsSignature) {
+        return bindToDefinition(new TsCallSignatureBinder(this, signature), new CallSignatureDefinition());
     }
 
     getClassConstructor(node: TsNode) {

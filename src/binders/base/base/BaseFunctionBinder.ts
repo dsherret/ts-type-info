@@ -1,4 +1,4 @@
-﻿import {BaseParameterDefinition, BaseFunctionDefinition} from "./../../../definitions";
+﻿import {BaseParameterDefinition, BaseFunctionDefinition, CallSignatureDefinition} from "./../../../definitions";
 import {NamedBinder} from "./NamedBinder";
 import {ParameteredBinder} from "./ParameteredBinder";
 import {TypeParameteredBinder} from "./TypeParameteredBinder";
@@ -13,10 +13,14 @@ export abstract class BaseFunctionBinder<ParameterType extends BaseParameterDefi
     ) {
     }
 
+    protected abstract getOverloadSignatures(): CallSignatureDefinition[];
+
     bind(def: BaseFunctionDefinition<ParameterType, any>) {
         this.namedBinder.bind(def);
         this.typeParameterBinder.bind(def);
         this.parameterBinder.bind(def);
         this.returnTypedBinder.bind(def);
+
+        def.overloadSignatures.push(...this.getOverloadSignatures());
     }
 }

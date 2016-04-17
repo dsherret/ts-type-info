@@ -1,6 +1,5 @@
 ﻿import {ModuleMemberDefinitions} from "./../../definitions";
-import {CallSignatureDefinition} from "./../function";
-import {TypePropertyDefinition} from "./../general";
+import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
 import {TsType} from "./../../compiler";
 import {TsFactory} from "./../../factories";
 import {TsCallSignatureBinder, TsTypePropertyBinder} from "./../../binders";
