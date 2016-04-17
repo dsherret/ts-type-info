@@ -1,6 +1,7 @@
 import {TypeExpressionDefinition} from "./../expressions";
-import {TypeParameterStructure} from "./../../structures";
-import {applyMixins} from "./../../utils";
+import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
+import {StructureFactory} from "./../../factories";
+import {applyMixins, DefinitionUtils} from "./../../utils";
 import {TypeParameterDefinition, CallSignatureDefinition} from "./../general";
 import {BaseParameterDefinition} from "./BaseParameterDefinition";
 import {NamedDefinition} from "./NamedDefinition";
@@ -13,13 +14,22 @@ import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
+
+    overloadSignatures: CallSignatureDefinition[] = [];
+
     constructor(definitionType: DefinitionType) {
         super(definitionType);
     }
 
-    overloadSignatures: CallSignatureDefinition[] = [];
-    // todo: getOverloadSignature
-    // todo: addOverloadSignatures
+    addOverloadSignatures(...overloadSignatures: CallSignatureStructure[]) {
+        const factory = new StructureFactory();
+        this.overloadSignatures.push(...overloadSignatures.map(s => factory.getCallSignature(s)));
+        return this;
+    }
+
+    getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.overloadSignatures, searchFunction);
+    }
 
     // NamedDefinition
     name: string;
