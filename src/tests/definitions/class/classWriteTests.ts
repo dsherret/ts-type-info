@@ -1,22 +1,45 @@
 ﻿import * as assert from "assert";
-import CodeBlockWriter from "code-block-writer";
-import {ClassDefinition} from "./../../definitions";
-import {getInfoFromString} from "./../../main";
-import {ClassWriter} from "./../../writers";
-import {WriteFlags} from "./../../WriteFlags";
-import {classWriterTestCode} from "./testCode";
+import {getInfoFromString} from "./../../../main";
 
-function getClassAsString(c: ClassDefinition) {
-    const codeBlockWriter = new CodeBlockWriter();
-    const writer = new ClassWriter(codeBlockWriter);
+const code = `
+abstract class MyClass {
+    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
+    }
 
-    writer.write(c, WriteFlags.Default);
+    myString: string;
+    private myPrivateString: string;
 
-    return codeBlockWriter.toString();
+    abstract myAbstractMethod(): string;
+    abstract myAbstractMethod2(): string;
+    abstract myAbstractMethod2(str?: string): string;
+
+    myMethod() {
+    }
+
+    private myMethodWithOverloadSignatures<T>(): string;
+    private myMethodWithOverloadSignatures<T>(str?: string) {
+        return "";
+    }
+
+    private myPrivateMethod() {
+    }
 }
 
-describe("ClassWriter", () => {
-    const file = getInfoFromString(classWriterTestCode);
+class MyTypeParameterClass<T> {
+}
+
+class MyChildClass extends MyTypeParameterClass<string> {
+}
+
+class MyImplementsClass implements MyChildClass {
+}
+
+class MyExtendsImplementsClass extends MyChildClass implements MyImplementsClass {
+}
+`;
+
+describe("ClassDefinition", () => {
+    const file = getInfoFromString(code);
 
     describe("write()", () => {
         describe("MyClass", () => {
@@ -31,15 +54,20 @@ describe("ClassWriter", () => {
 
     abstract myAbstractMethod(): string;
     abstract myAbstractMethod2(): string;
+    abstract myAbstractMethod2(str?: string): string;
 
     myMethod() {
+    }
+
+    private myMethodWithOverloadSignatures<T>(): string;
+    private myMethodWithOverloadSignatures<T>(str?: string): string {
     }
 
     private myPrivateMethod() {
     }
 }
 `;
-                assert.equal(getClassAsString(file.classes[0]), expected);
+                assert.equal(file.classes[0].write(), expected);
             });
         });
 
@@ -49,7 +77,7 @@ describe("ClassWriter", () => {
 `class MyTypeParameterClass<T> {
 }
 `;
-                assert.equal(getClassAsString(file.classes[1]), expected);
+                assert.equal(file.classes[1].write(), expected);
             });
         });
 
@@ -59,7 +87,7 @@ describe("ClassWriter", () => {
 `class MyChildClass extends MyTypeParameterClass<string> {
 }
 `;
-                assert.equal(getClassAsString(file.classes[2]), expected);
+                assert.equal(file.classes[2].write(), expected);
             });
         });
 
@@ -69,7 +97,7 @@ describe("ClassWriter", () => {
 `class MyImplementsClass implements MyChildClass {
 }
 `;
-                assert.equal(getClassAsString(file.classes[3]), expected);
+                assert.equal(file.classes[3].write(), expected);
             });
         });
 
@@ -79,7 +107,7 @@ describe("ClassWriter", () => {
 `class MyExtendsImplementsClass extends MyChildClass implements MyImplementsClass {
 }
 `;
-                assert.equal(getClassAsString(file.classes[4]), expected);
+                assert.equal(file.classes[4].write(), expected);
             });
         });
     });

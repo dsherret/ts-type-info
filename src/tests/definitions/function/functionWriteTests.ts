@@ -7,8 +7,8 @@ function myFunction(str: string) {
 }
 function myFunction2<T extends string, U>(str: T, num: U) {
 }
-export function myMultipleSignatures(): string;
-export function myMultipleSignatures(str?: string) {
+export function myMultipleSignatures<T>(): string;
+export function myMultipleSignatures<T>(str?: string) {
     return "";
 }
 declare function myDeclareMultipleSignatures(): string;
@@ -45,8 +45,8 @@ describe("FunctionDefinition", () => {
         describe("myMultipleSignatures", () => {
             it("should contain the function written out", () => {
                 const expected =
-`export function myMultipleSignatures(): string;
-export function myMultipleSignatures(str?: string): string {
+`export function myMultipleSignatures<T>(): string;
+export function myMultipleSignatures<T>(str?: string): string {
 }
 `;
                 assert.equal(file.functions[2].write(), expected);
@@ -73,6 +73,6 @@ declare function myDeclareMultipleSignatures(str?: string): string;
                 const expected = `function myFunctionBodyWriter() {\n    return "text";\n}\n`;
                 assert.equal(funcDef.write(), expected);
             });
-        })
+        });
     });
 });

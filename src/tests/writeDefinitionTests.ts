@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {getInfoFromString} from "./../main";
 import {WriteableDefinitions} from "./../definitions";
 import {writeDefinition} from "./../writeDefinition";
-import {ClassWriter, FunctionWriter, FileWriter, NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
+import {FileWriter, NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
 import {WriteFlags} from "./../WriteFlags";
 import * as testCode from "./writers/testCode";
 
@@ -20,18 +20,6 @@ function writeDefinitionWrapper(def: WriteableDefinitions) {
 }
 
 describe("#writeDefinition()", () => {
-    describe("ClassDefinition", () => {
-        const file = getInfoFromString(testCode.classWriterTestCode);
-        file.classes.forEach(def => {
-            it(`should write the same thing as a class writer for the class ${def.name}`, () => {
-                const writer = getCodeBlockWriter();
-                const classWriter = new ClassWriter(writer);
-                classWriter.write(def, WriteFlags.Default);
-                assert.equal(writeDefinitionWrapper(def), writer.toString());
-            });
-        });
-    });
-
     describe("FileDefinition", () => {
         const def = getInfoFromString(testCode.fileWriterTestCode);
         it(`should write the same thing as an file writer for the file`, () => {

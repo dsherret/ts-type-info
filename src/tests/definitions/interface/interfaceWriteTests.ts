@@ -4,7 +4,11 @@ import {getInfoFromString} from "./../../../main";
 const code = `
 interface MyInterface {
     myString: string;
+    mySecond: number;
     myMethod(): void;
+    myMethodWithTypeParameter<T>(): void;
+    myMethod2<T>(): string;
+    myMethod2<T>(str?: string): string;
 }
 
 interface NewSignatureInterface {
@@ -34,8 +38,12 @@ describe("InterfaceDefinition", () => {
                 const expected =
 `interface MyInterface {
     myString: string;
+    mySecond: number;
 
     myMethod(): void;
+    myMethodWithTypeParameter<T>(): void;
+    myMethod2<T>(): string;
+    myMethod2<T>(str?: string): string;
 }
 `;
                 assert.equal(file.interfaces[0].write(), expected);

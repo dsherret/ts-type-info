@@ -1,5 +1,6 @@
 ﻿import {MethodDefinitions, ClassMethodDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
+import {CallSignatureWriter} from "./CallSignatureWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
 import {TypeExpressionWriter} from "./TypeExpressionWriter";
 import {ParametersWriter} from "./ParametersWriter";
@@ -8,6 +9,7 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
 
 export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
+    private callSignatureWriter = new CallSignatureWriter(this.writer);
     private typeParametersWriter = new TypeParametersWriter(this.writer);
     private typeExpressionWriter = new TypeExpressionWriter(this.writer);
     private parametersWriter = new ParametersWriter(this.writer);
@@ -15,6 +17,13 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     private functionBodyWriter = new FunctionBodyWriter(this.writer);
 
     protected writeDefault(def: MethodDefinitions, flags: WriteFlags) {
+        def.overloadSignatures.forEach(s => {
+            this.scopeWriter.write((def as ClassMethodDefinition).scope);
+            this.writer.spaceIfLastNotSpace();
+            this.writeAbstract(def as ClassMethodDefinition);
+            this.writer.write(def.name);
+            this.callSignatureWriter.write(s, flags);
+        });
         this.scopeWriter.write((def as ClassMethodDefinition).scope);
         this.writer.spaceIfLastNotSpace();
         this.writeAbstract(def as ClassMethodDefinition);
@@ -32,7 +41,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     }
 
     private writeReturnType(def: MethodDefinitions, flags: WriteFlags) {
-        if (!FunctionBodyWriter.willWriteFunctionBody(def, flags)) {
+        if (!FunctionBodyWriter.willWriteFunctionBody(def, flags) || def.overloadSignatures.length > 0) {
             this.typeExpressionWriter.writeWithColon(def.returnTypeExpression);
         }
     }
