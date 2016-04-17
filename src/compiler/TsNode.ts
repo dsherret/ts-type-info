@@ -358,6 +358,10 @@ export class TsNode extends TsSourceFileChild {
         return this.getKind() === ts.SyntaxKind.Constructor;
     }
 
+    isCallSignature() {
+        return this.getKind() === ts.SyntaxKind.CallSignature;
+    }
+
     isConstructSignature() {
         return this.getKind() === ts.SyntaxKind.ConstructSignature;
     }

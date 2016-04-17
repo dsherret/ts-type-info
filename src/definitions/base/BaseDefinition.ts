@@ -4,7 +4,7 @@ import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassSt
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition} from "./../interface";
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./../File";
-import {FunctionDefinition} from "./../function";
+import {CallSignatureDefinition, FunctionDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
 import {EnumDefinition} from "./../enum";
 import {TypeAliasDefinition} from "./../general";
@@ -21,6 +21,10 @@ export abstract class BaseDefinition {
 
     onBeforeWrite: (writer: CodeBlockWriter) => void;
     onAfterWrite: (writer: CodeBlockWriter) => void;
+
+    isCallSignatureDefinition(): this is CallSignatureDefinition {
+        return this._definitionType === DefinitionType.CallSignature;
+    }
 
     isClassDefinition(): this is ClassDefinition {
         return this._definitionType === DefinitionType.Class;

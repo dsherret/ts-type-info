@@ -6,6 +6,7 @@ import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {NamedDefinition, ExportableDefinition, AmbientableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition} from "./../general";
+import {CallSignatureDefinition} from "./../function";
 import {TypeExpressionDefinition} from "./../expressions";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
@@ -14,6 +15,7 @@ import {InterfaceNewSignatureDefinition} from "./InterfaceNewSignatureDefinition
 export class InterfaceDefinition extends BaseDefinition
                                  implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
+    callSignatures: CallSignatureDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
     extendsTypeExpressions: TypeExpressionDefinition[] = [];

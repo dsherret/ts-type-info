@@ -39,6 +39,9 @@ export class TsInterfaceBinder extends InterfaceBinder {
         else if (childNode.isConstructSignature()) {
             return this.factory.getInterfaceNewSignature(childNode);
         }
+        else if (childNode.isCallSignature()) {
+            return this.factory.getCallSignature(childNode);
+        }
         else if (childNode.isIdentifier()) {
             // ignore, it's the interface identifier
         }

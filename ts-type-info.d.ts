@@ -23,6 +23,7 @@ export abstract class BaseDefinition {
     onBeforeWrite: (writer: CodeBlockWriter) => void;
     onAfterWrite: (writer: CodeBlockWriter) => void;
 
+    isCallSignatureDefinition(): boolean;
     isClassDefinition(): boolean;
     isClassMethodDefinition(): boolean;
     isClassPropertyDefinition(): boolean;
@@ -384,6 +385,7 @@ export const Scope: { Public: "public" | "protected" | "private"; Protected: "pu
 
 export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: InterfaceMethodDefinition[];
+    callSignatures: CallSignatureDefinition[];
     newSignatures: InterfaceNewSignatureDefinition[];
     properties: InterfacePropertyDefinition[];
     extendsTypeExpressions: TypeExpressionDefinition[];
@@ -586,7 +588,7 @@ export type VariableDefinitions = VariableDefinition;
 
 export type ClassMemberDefinitions = ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
 
-export type InterfaceMemberDefinitions = InterfaceMethodDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition;
+export type InterfaceMemberDefinitions = InterfaceMethodDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition | CallSignatureDefinition;
 
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
 

@@ -1,9 +1,8 @@
-﻿import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceNewSignatureDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {InterfaceDefinition, InterfaceMemberDefinitions, TypeExpressionDefinition} from "./../../../definitions";
 import {Logger} from "./../../../utils";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
-type InterfaceMemberDefinitions = InterfaceMethodDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition;
 
 export abstract class InterfaceBinder implements IBaseBinder {
     constructor(
@@ -35,6 +34,9 @@ export abstract class InterfaceBinder implements IBaseBinder {
         }
         else if (member.isInterfaceNewSignatureDefinition()) {
             def.newSignatures.push(member);
+        }
+        else if (member.isCallSignatureDefinition()) {
+            def.callSignatures.push(member);
         }
         else {
             Logger.warn(`Not implemented interface member.`);

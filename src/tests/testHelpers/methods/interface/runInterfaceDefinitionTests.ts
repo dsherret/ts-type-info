@@ -2,6 +2,7 @@
 import {InterfaceTestStructure} from "./../../testStructures";
 import {InterfaceDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+import {runCallSignatureDefinitionTests} from "./../function";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";
@@ -13,6 +14,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
         ensureNotNull(definition, () => {
             structure.methods = structure.methods || [];
             structure.newSignatures = structure.newSignatures || [];
+            structure.callSignatures = structure.callSignatures || [];
             structure.properties = structure.properties || [];
             structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
             // interfaces should always be ambient
@@ -40,6 +42,16 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
 
                 structure.newSignatures.forEach((newSignatureTestStructure, i) => {
                     runInterfaceNewSignatureDefinitionTests(definition.newSignatures[i], newSignatureTestStructure);
+                });
+            });
+
+            describe("callSignatures", () => {
+                it("should have the expected number of callSignatures", () => {
+                    assert.equal(definition.callSignatures.length, structure.callSignatures.length);
+                });
+
+                structure.callSignatures.forEach((newSignatureTestStructure, i) => {
+                    runCallSignatureDefinitionTests(definition.callSignatures[i], newSignatureTestStructure);
                 });
             });
 
