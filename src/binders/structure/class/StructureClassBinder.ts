@@ -1,7 +1,7 @@
 ﻿import {ClassMemberDefinitions} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {ClassStructure} from "./../../../structures";
-import {ClassBinder} from "./../../base";
+import {ClassBinder, ClassMemberContainer} from "./../../base";
 import {StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureAbstractableBinder, StructureTypeParameteredBinder,
     StructureDecoratableBinder} from "./../base";
 
@@ -26,16 +26,14 @@ export class StructureClassBinder extends ClassBinder {
     }
 
     getMembers() {
-        const methods = (this.structure.methods || []).map(m => this.factory.getClassMethod(m));
-        const staticMethods = (this.structure.staticMethods || []).map(m => this.factory.getClassStaticMethod(m));
-        const properties = (this.structure.properties || []).map(p => this.factory.getClassProperty(p));
-        const staticProperties = (this.structure.staticProperties || []).map(p => this.factory.getClassStaticProperty(p));
-        const members: ClassMemberDefinitions[] = [...methods, ...staticMethods, ...properties, ...staticProperties];
-
+        const container = new ClassMemberContainer();
+        container.methods.push(...(this.structure.methods || []).map(m => this.factory.getClassMethod(m)));
+        container.staticMethods.push(...(this.structure.staticMethods || []).map(m => this.factory.getClassStaticMethod(m)));
+        container.properties.push(...(this.structure.properties || []).map(p => this.factory.getClassProperty(p)));
+        container.staticProperties.push(...(this.structure.staticProperties || []).map(p => this.factory.getClassStaticProperty(p)));
         if (this.structure.constructorDef != null) {
-            members.push(this.factory.getClassConstructor(this.structure.constructorDef));
+            container.constructorDef = this.factory.getClassConstructor(this.structure.constructorDef);
         }
-
-        return members;
+        return container;
     }
 }

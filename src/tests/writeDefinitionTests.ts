@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {getInfoFromString} from "./../main";
 import {WriteableDefinitions} from "./../definitions";
 import {writeDefinition} from "./../writeDefinition";
-import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
+import {ClassWriter, FunctionWriter, FileWriter, NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
 import {WriteFlags} from "./../WriteFlags";
 import * as testCode from "./writers/testCode";
 

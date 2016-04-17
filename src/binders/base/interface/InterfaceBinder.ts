@@ -1,14 +1,13 @@
 ﻿import {InterfaceDefinition, InterfacePropertyDefinition, InterfaceMethodDefinition, CallSignatureDefinition, InterfaceNewSignatureDefinition,
     TypeExpressionDefinition} from "./../../../definitions";
-import {Logger} from "./../../../utils";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export class InterfaceMemberContainer {
-    properties: InterfacePropertyDefinition[] = [];
+    callSignatures: CallSignatureDefinition[] = [];
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: InterfaceNewSignatureDefinition[] = [];
-    callSignatures: CallSignatureDefinition[] = [];
+    properties: InterfacePropertyDefinition[] = [];
 }
 
 export abstract class InterfaceBinder implements IBaseBinder {

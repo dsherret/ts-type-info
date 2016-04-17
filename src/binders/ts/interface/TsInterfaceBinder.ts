@@ -1,5 +1,4 @@
 ﻿import {TsFactory} from "./../../../factories";
-import {InterfaceMemberDefinitions} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
