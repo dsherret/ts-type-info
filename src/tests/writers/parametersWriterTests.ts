@@ -23,7 +23,7 @@ function myFunction(param1: string, param2 = "text", param3?: number, ...params:
 
     describe("write()", () => {
         it("should contain the parameters written out", () => {
-            const expected = `(param1: string, param2: string = "text", param3?: number, ...params: string[])`;
+            const expected = `(param1: string, param2 = "text", param3?: number, ...params: string[])`;
             assert.equal(getParametersAsString(myFunction.parameters), expected);
         });
     });
