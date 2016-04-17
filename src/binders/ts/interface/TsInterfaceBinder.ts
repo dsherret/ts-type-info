@@ -2,7 +2,7 @@
 import {InterfaceMemberDefinitions} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
-import {InterfaceBinder} from "./../../base";
+import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
 import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsTypeParameteredBinderByNode} from "./../base";
 
 export class TsInterfaceBinder extends InterfaceBinder {
@@ -24,43 +24,41 @@ export class TsInterfaceBinder extends InterfaceBinder {
     }
 
     getMembers() {
-        return this.node.getChildren()
-            .map(node => tryGet(node, () => this.getMemberDefinition(node)))
-            .filter(n => n != null);
-    }
-
-    private getMemberDefinition(childNode: TsNode): InterfaceMemberDefinitions {
-        if (childNode.isMethodSignature()) {
-            return this.factory.getInterfaceMethod(childNode);
-        }
-        else if (childNode.isPropertySignature()) {
-            return this.factory.getInterfaceProperty(childNode);
-        }
-        else if (childNode.isConstructSignature()) {
-            return this.factory.getInterfaceNewSignature(childNode);
-        }
-        else if (childNode.isCallSignature()) {
-            return this.factory.getCallSignature(childNode);
-        }
-        else if (childNode.isIdentifier()) {
-            // ignore, it's the interface identifier
-        }
-        else if (childNode.isTypeParameter()) {
-            // ignore, handled elsewhere
-        }
-        else if (childNode.isExportKeyword()) {
-            // ignore, handled elsewhere
-        }
-        else if (childNode.isDefaultKeyword()) {
-            // ignore, handled elsewhere
-        }
-        else if (childNode.isHeritageClause()) {
-            // ignore, handled elsewhere
-        }
-        else {
-            Logger.warn(`Unknown interface child kind: ${childNode.nodeKindToString()}`);
-        }
-
-        return null;
+        const container = new InterfaceMemberContainer();
+        this.node.getChildren().forEach(childNode => {
+            tryGet(childNode, () => {
+                if (childNode.isMethodSignature()) {
+                    container.methods.push(this.factory.getInterfaceMethod(childNode));
+                }
+                else if (childNode.isPropertySignature()) {
+                    container.properties.push(this.factory.getInterfaceProperty(childNode));
+                }
+                else if (childNode.isConstructSignature()) {
+                    container.newSignatures.push(this.factory.getInterfaceNewSignature(childNode));
+                }
+                else if (childNode.isCallSignature()) {
+                    container.callSignatures.push(this.factory.getCallSignature(childNode));
+                }
+                else if (childNode.isIdentifier()) {
+                    // ignore, it's the interface identifier
+                }
+                else if (childNode.isTypeParameter()) {
+                    // ignore, handled elsewhere
+                }
+                else if (childNode.isExportKeyword()) {
+                    // ignore, handled elsewhere
+                }
+                else if (childNode.isDefaultKeyword()) {
+                    // ignore, handled elsewhere
+                }
+                else if (childNode.isHeritageClause()) {
+                    // ignore, handled elsewhere
+                }
+                else {
+                    Logger.warn(`Unknown interface child kind: ${childNode.nodeKindToString()}`);
+                }
+            });
+        });
+        return container;
     }
 }

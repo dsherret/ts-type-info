@@ -1,7 +1,7 @@
 ﻿import {StructureFactory} from "./../../../factories";
 import {InterfaceStructure} from "./../../../structures";
 import {objectAssign} from "./../../../utils";
-import {InterfaceBinder} from "./../../base";
+import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
 import {StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureTypeParameteredBinder} from "./../base";
 
 export class StructureInterfaceBinder extends InterfaceBinder {
@@ -19,10 +19,11 @@ export class StructureInterfaceBinder extends InterfaceBinder {
     }
 
     getMembers() {
-        const methods = (this.structure.methods || []).map(m => this.factory.getInterfaceMethod(m));
-        const properties = (this.structure.properties || []).map(p => this.factory.getInterfaceProperty(p));
-        const newSignatures = (this.structure.newSignatures || []).map(s => this.factory.getInterfaceNewSignature(s));
-
-        return [...methods, ...properties, ...newSignatures];
+        const container = new InterfaceMemberContainer();
+        container.methods.push(...(this.structure.methods || []).map(m => this.factory.getInterfaceMethod(m)));
+        container.properties.push(...(this.structure.properties || []).map(p => this.factory.getInterfaceProperty(p)));
+        container.newSignatures.push(...(this.structure.newSignatures || []).map(s => this.factory.getInterfaceNewSignature(s)));
+        container.callSignatures.push(...(this.structure.callSignatures || []).map(s => this.factory.getCallSignature(s)));
+        return container;
     }
 }

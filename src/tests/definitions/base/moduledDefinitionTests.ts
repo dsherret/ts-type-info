@@ -122,6 +122,9 @@ describe("ModuledDefinitionTests", () => {
             methods: [{
                 name: "method1"
             }],
+            callSignatures: [{
+                parameters: [{ name: "param1" }]
+            }],
             newSignatures: [{
                 parameters: [{ name: "param1" }]
             }],
@@ -145,6 +148,10 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             methods: [{
                 name: "method1"
+            }],
+            callSignatures: [{
+                parameters: [{ name: "param1" }],
+                minArgumentCount: 1
             }],
             newSignatures: [{
                 parameters: [{ name: "param1" }]

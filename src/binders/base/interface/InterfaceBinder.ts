@@ -1,7 +1,15 @@
-﻿import {InterfaceDefinition, InterfaceMemberDefinitions, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {InterfaceDefinition, InterfacePropertyDefinition, InterfaceMethodDefinition, CallSignatureDefinition, InterfaceNewSignatureDefinition,
+    TypeExpressionDefinition} from "./../../../definitions";
 import {Logger} from "./../../../utils";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
+
+export class InterfaceMemberContainer {
+    properties: InterfacePropertyDefinition[] = [];
+    methods: InterfaceMethodDefinition[] = [];
+    newSignatures: InterfaceNewSignatureDefinition[] = [];
+    callSignatures: CallSignatureDefinition[] = [];
+}
 
 export abstract class InterfaceBinder implements IBaseBinder {
     constructor(
@@ -12,7 +20,8 @@ export abstract class InterfaceBinder implements IBaseBinder {
     ) {
     }
 
-    abstract getMembers(): InterfaceMemberDefinitions[];
+    abstract getMembers(): InterfaceMemberContainer;
+
     abstract getExtendsTypeExpressions(): TypeExpressionDefinition[];
 
     bind(def: InterfaceDefinition) {
@@ -20,26 +29,15 @@ export abstract class InterfaceBinder implements IBaseBinder {
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);
         this.typeParameteredBinder.bind(def);
-        this.getMembers().forEach(memberDef => this.bindMember(def, memberDef));
+        this.bindMembers(def);
         def.extendsTypeExpressions.push(...this.getExtendsTypeExpressions());
     }
 
-    private bindMember(def: InterfaceDefinition, member: InterfaceMemberDefinitions) {
-        if (member.isInterfacePropertyDefinition()) {
-            def.properties.push(member);
-        }
-        else if (member.isInterfaceMethodDefinition()) {
-            def.methods.push(member);
-        }
-        else if (member.isInterfaceNewSignatureDefinition()) {
-            def.newSignatures.push(member);
-        }
-        else if (member.isCallSignatureDefinition()) {
-            def.callSignatures.push(member);
-        }
-        else {
-            Logger.warn(`Not implemented interface member.`);
-            return;
-        }
+    private bindMembers(def: InterfaceDefinition) {
+        const memberContainer = this.getMembers();
+        def.properties.push(...memberContainer.properties);
+        def.methods.push(...memberContainer.methods);
+        def.newSignatures.push(...memberContainer.newSignatures);
+        def.callSignatures.push(...memberContainer.callSignatures);
     }
 }
