@@ -2,7 +2,7 @@
 import {InterfaceTestStructure} from "./../../testStructures";
 import {InterfaceDefinition} from "./../../../../definitions";
 import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
-import {runCallSignatureDefinitionTests} from "./../general";
+import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests} from "./../general";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";
@@ -14,6 +14,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
             structure.methods = structure.methods || [];
             structure.newSignatures = structure.newSignatures || [];
             structure.callSignatures = structure.callSignatures || [];
+            structure.indexSignatures = structure.indexSignatures || [];
             structure.properties = structure.properties || [];
             structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
             // interfaces should always be ambient
@@ -31,6 +32,16 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
 
                 structure.callSignatures.forEach((callSignatureTestStructure, i) => {
                     runCallSignatureDefinitionTests(definition.callSignatures[i], callSignatureTestStructure);
+                });
+            });
+
+            describe("indexSignatures", () => {
+                it("should have the expected number of indexSignatures", () => {
+                    assert.equal(definition.indexSignatures.length, structure.indexSignatures.length);
+                });
+
+                structure.indexSignatures.forEach((indexSignatureTestStructure, i) => {
+                    runIndexSignatureDefinitionTests(definition.indexSignatures[i], indexSignatureTestStructure);
                 });
             });
 

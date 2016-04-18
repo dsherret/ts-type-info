@@ -41,6 +41,9 @@ export class TsInterfaceBinder extends InterfaceBinder {
                 else if (childNode.isCallSignature()) {
                     container.callSignatures.push(this.factory.getCallSignatureFromNode(childNode));
                 }
+                else if (childNode.isIndexSignature()) {
+                    container.indexSignatures.push(this.factory.getIndexSignatureFromNode(childNode));
+                }
                 else if (childNode.isIdentifier()) {
                     // ignore, it's the interface identifier
                 }

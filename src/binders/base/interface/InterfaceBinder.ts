@@ -1,9 +1,11 @@
-﻿import {InterfaceDefinition, InterfacePropertyDefinition, InterfaceMethodDefinition, CallSignatureDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {CallSignatureDefinition, IndexSignatureDefinition, InterfaceDefinition, InterfacePropertyDefinition, InterfaceMethodDefinition,
+    TypeExpressionDefinition} from "./../../../definitions";
 import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export class InterfaceMemberContainer {
     callSignatures: CallSignatureDefinition[] = [];
+    indexSignatures: IndexSignatureDefinition[] = [];
     methods: InterfaceMethodDefinition[] = [];
     newSignatures: CallSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
@@ -37,5 +39,6 @@ export abstract class InterfaceBinder implements IBaseBinder {
         def.methods.push(...memberContainer.methods);
         def.newSignatures.push(...memberContainer.newSignatures);
         def.callSignatures.push(...memberContainer.callSignatures);
+        def.indexSignatures.push(...memberContainer.indexSignatures);
     }
 }

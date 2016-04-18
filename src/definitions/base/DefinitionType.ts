@@ -30,5 +30,6 @@ export const enum DefinitionType {
     TypeAlias = 900,
     TypeParameter = 1000,
     TypeProperty = 1100,
-    Expression = 1200
+    Expression = 1200,
+    IndexSignature = 1300
 }

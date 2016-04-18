@@ -414,6 +414,10 @@ export class TsNode extends TsSourceFileChild {
         return this.getKind() === ts.SyntaxKind.ImportDeclaration;
     }
 
+    isIndexSignature() {
+        return this.getKind() === ts.SyntaxKind.IndexSignature;
+    }
+
     isInterface() {
         return this.getKind() === ts.SyntaxKind.InterfaceDeclaration;
     }
