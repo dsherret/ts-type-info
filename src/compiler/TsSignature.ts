@@ -41,10 +41,6 @@ export class TsSignature extends TsSourceFileChild {
         });
     }
 
-    getMinArgumentCount(): number {
-        return (this.signature as any)["minArgumentCount"];
-    }
-
     private getTypeExpressionFromType(tsType: ts.Type) {
         return this.tsCache.getTypeExpression(this.typeChecker, this.sourceFile, tsType, () => this.createTypeExpression(tsType), type => this.createType(type));
     }

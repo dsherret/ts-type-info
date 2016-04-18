@@ -7,8 +7,7 @@ describe("BaseFunctionDefinition", () => {
         f.addOverloadSignatures({
             returnType: "string",
             typeParameters: [{ name: "T" }],
-            parameters: [{ name: "myParam" }],
-            minArgumentCount: 1
+            parameters: [{ name: "myParam" }]
         }, {
             returnType: "number"
         });

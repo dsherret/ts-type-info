@@ -13,8 +13,4 @@ export class StructureCallSignatureBinder extends CallSignatureBinder {
             new StructureReturnTypedBinder(factory, structure)
         );
     }
-
-    getMinArgumentCount() {
-        return this.structure.minArgumentCount || (this.structure.parameters || []).filter(p => !p.isOptional).length;
-    }
 }

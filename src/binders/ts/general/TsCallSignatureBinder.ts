@@ -13,8 +13,4 @@ export class TsCallSignatureBinder extends CallSignatureBinder {
             new TsReturnTypedBinderBySignature(factory, signature)
         );
     }
-
-    getMinArgumentCount() {
-        return this.signature.getMinArgumentCount();
-    }
 }

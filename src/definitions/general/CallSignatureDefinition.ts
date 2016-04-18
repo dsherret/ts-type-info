@@ -9,7 +9,6 @@ import {CallSignatureParameterDefinition} from "./CallSignatureParameterDefiniti
 export class CallSignatureDefinition
         extends BaseDefinition
         implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
-    minArgumentCount: number;
 
     constructor() {
         super(DefinitionType.CallSignature);
@@ -19,6 +18,10 @@ export class CallSignatureDefinition
         const factory = new StructureFactory();
         this.parameters.push(...parameters.map(p => factory.getCallSignatureParameter(p)));
         return this;
+    }
+
+    getMinArgumentCount() {
+        return this.parameters.filter(p => !p.isOptional && !p.isRestParameter).length;
     }
 
     // ParameteredDefinition

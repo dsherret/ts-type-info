@@ -10,12 +10,9 @@ export abstract class CallSignatureBinder implements IBaseBinder {
     ) {
     }
 
-    abstract getMinArgumentCount(): number;
-
     bind(def: CallSignatureDefinition) {
         this.typeParameterBinder.bind(def);
         this.parameterBinder.bind(def);
         this.returnTypedBinder.bind(def);
-        def.minArgumentCount = this.getMinArgumentCount();
     }
 }

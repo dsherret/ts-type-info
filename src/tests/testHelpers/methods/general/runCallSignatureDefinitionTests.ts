@@ -11,8 +11,8 @@ export function runCallSignatureDefinitionTests(definition: CallSignatureDefinit
         runParameteredDefinitionTests(runCallSignatureParameterDefinitionTests, definition, structure);
         runReturnTypedDefinitionTests(definition, structure);
 
-        it(`should have a minimum argument count of ${structure.minArgumentCount || 0}`, () => {
-            assert.equal(definition.minArgumentCount, structure.minArgumentCount || 0);
+        it(`should have the same minArgumentCount`, () => {
+            assert.equal(definition.getMinArgumentCount(), structure.minArgumentCount || 0);
         });
     });
 }
