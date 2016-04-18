@@ -1,4 +1,4 @@
-﻿import {ClassDefinition, Scope, ScopedDefinition} from "./../definitions";
+﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, Scope, ScopedDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ExtendsImplementsClauseWriter} from "./ExtendsImplementsClauseWriter";
@@ -63,7 +63,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
             flags = flags | WriteFlags.HideFunctionBodies;
         }
 
-        def.methods.forEach(m => {
+        const writeMethod = (m: ClassMethodDefinition | ClassStaticMethodDefinition) => {
             const thisHasBlankLine = FunctionBodyWriter.willWriteFunctionBody(m, flags);
 
             if (!lastHadBlankLine && thisHasBlankLine) {
@@ -79,7 +79,10 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
             }
 
             lastHadBlankLine = thisHasBlankLine;
-        });
+        }
+
+        def.staticMethods.forEach(writeMethod);
+        def.methods.forEach(writeMethod);
     }
 
     private shouldInclude(def: ScopedDefinition, flags: WriteFlags) {

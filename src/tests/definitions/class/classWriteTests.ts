@@ -9,6 +9,9 @@ abstract class MyClass {
     myString: string;
     private myPrivateString: string;
 
+    static myStaticMethod() {
+    }
+
     abstract myAbstractMethod(): string;
     abstract myAbstractMethod2(): string;
     abstract myAbstractMethod2(str?: string): string;
@@ -51,6 +54,9 @@ describe("ClassDefinition", () => {
 
     myString: string;
     private myPrivateString: string;
+
+    static myStaticMethod() {
+    }
 
     abstract myAbstractMethod(): string;
     abstract myAbstractMethod2(): string;

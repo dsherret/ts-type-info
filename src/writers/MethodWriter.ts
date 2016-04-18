@@ -26,12 +26,19 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         });
         this.scopeWriter.write((def as ClassMethodDefinition).scope);
         this.writer.spaceIfLastNotSpace();
+        this.writeStatic(def);
         this.writeAbstract(def as ClassMethodDefinition);
         this.writer.write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);
         this.parametersWriter.write(def.parameters, flags);
         this.writeReturnType(def, flags);
         this.functionBodyWriter.write(def, flags);
+    }
+
+    private writeStatic(def: MethodDefinitions) {
+        if (def.isClassStaticMethodDefinition()) {
+            this.writer.write("static ");
+        }
     }
 
     private writeAbstract(def: ClassMethodDefinition) {
