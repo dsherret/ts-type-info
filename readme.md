@@ -102,7 +102,7 @@ myClass.addProperties({
     type: "number",
     defaultExpression: "4",
     isOptional: true
-})
+});
 
 console.log(file.write());
 ```
