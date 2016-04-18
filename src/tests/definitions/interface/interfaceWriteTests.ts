@@ -22,6 +22,11 @@ interface CallSignatureInterface {
     (any: any): any;
 }
 
+interface IndexSignatureInterface {
+    [str: string]: Date;
+    [num: number]: Date;
+}
+
 interface MyTypeParameterInterface<T> {
 }
 
@@ -33,6 +38,8 @@ describe("InterfaceDefinition", () => {
     const file = getInfoFromString(code);
 
     describe("write()", () => {
+        let i = 0;
+
         describe("MyInterface", () => {
             it("should contain the interface written out", () => {
                 const expected =
@@ -46,7 +53,7 @@ describe("InterfaceDefinition", () => {
     myMethod2<T>(str?: string): string;
 }
 `;
-                assert.equal(file.interfaces[0].write(), expected);
+                assert.equal(file.interfaces[i++].write(), expected);
             });
         });
 
@@ -58,7 +65,7 @@ describe("InterfaceDefinition", () => {
     new(any: any): string;
 }
 `;
-                assert.equal(file.interfaces[1].write(), expected);
+                assert.equal(file.interfaces[i++].write(), expected);
             });
         });
 
@@ -71,7 +78,19 @@ describe("InterfaceDefinition", () => {
     (any: any): any;
 }
 `;
-                assert.equal(file.interfaces[2].write(), expected);
+                assert.equal(file.interfaces[i++].write(), expected);
+            });
+        });
+
+        describe("IndexSignatureInterface", () => {
+            it("should contain the interface written out", () => {
+                const expected =
+`interface IndexSignatureInterface {
+    [str: string]: Date;
+    [num: number]: Date;
+}
+`;
+                assert.equal(file.interfaces[i++].write(), expected);
             });
         });
 
@@ -81,7 +100,7 @@ describe("InterfaceDefinition", () => {
 `interface MyTypeParameterInterface<T> {
 }
 `;
-                assert.equal(file.interfaces[3].write(), expected);
+                assert.equal(file.interfaces[i++].write(), expected);
             });
         });
 
@@ -91,7 +110,7 @@ describe("InterfaceDefinition", () => {
 `interface MyExtenedInterface extends MyTypeParameterInterface<string> {
 }
 `;
-                assert.equal(file.interfaces[4].write(), expected);
+                assert.equal(file.interfaces[i++].write(), expected);
             });
         });
     });

@@ -6,6 +6,7 @@ export * from "./writers/EnumWriter";
 export * from "./writers/ExtendsImplementsClauseWriter";
 export * from "./writers/FileWriter";
 export * from "./writers/FunctionWriter";
+export * from "./writers/IndexSignatureWriter";
 export * from "./writers/InterfaceWriter";
 export * from "./writers/MethodWriter";
 export * from "./writers/ModuledWriter";

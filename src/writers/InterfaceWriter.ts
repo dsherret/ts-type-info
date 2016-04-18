@@ -2,6 +2,7 @@
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {CallSignatureWriter} from "./CallSignatureWriter";
+import {IndexSignatureWriter} from "./IndexSignatureWriter";
 import {ExtendsImplementsClauseWriter} from "./ExtendsImplementsClauseWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
 import {PropertyWriter} from "./PropertyWriter";
@@ -12,12 +13,14 @@ export class InterfaceWriter extends BaseDefinitionWriter<InterfaceDefinition> {
     private propertyWriter = new PropertyWriter(this.writer);
     private methodWriter = new MethodWriter(this.writer);
     private callSignatureWriter = new CallSignatureWriter(this.writer);
+    private indexSignatureWriter = new IndexSignatureWriter(this.writer);
 
     protected writeDefault(def: InterfaceDefinition, flags: WriteFlags) {
         this.writeHeader(def, flags);
         this.writer.block(() => {
             this.writeNewSignatures(def, flags);
             this.writeCallSignatures(def, flags);
+            this.writeIndexSignatures(def, flags);
             this.writeProperties(def, flags);
             this.writer.newLine();
             this.writeMethods(def, flags);
@@ -44,6 +47,12 @@ export class InterfaceWriter extends BaseDefinitionWriter<InterfaceDefinition> {
     private writeCallSignatures(def: InterfaceDefinition, flags: WriteFlags) {
         def.callSignatures.forEach(c => {
             this.callSignatureWriter.write(c, flags);
+        });
+    }
+
+    private writeIndexSignatures(def: InterfaceDefinition, flags: WriteFlags) {
+        def.indexSignatures.forEach(s => {
+            this.indexSignatureWriter.write(s, flags);
         });
     }
 
