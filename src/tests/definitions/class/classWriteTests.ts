@@ -3,13 +3,15 @@ import {getInfoFromString} from "./../../../main";
 
 const code = `
 abstract class MyClass {
-    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
+    static myStaticString: string;
+
+    static myStaticMethod() {
     }
 
     myString: string;
     private myPrivateString: string;
 
-    static myStaticMethod() {
+    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
     abstract myAbstractMethod(): string;
@@ -49,13 +51,15 @@ describe("ClassDefinition", () => {
             it("should contain the class written out", () => {
                 const expected =
 `abstract class MyClass {
-    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
+    static myStaticString: string;
+
+    static myStaticMethod() {
     }
 
     myString: string;
     private myPrivateString: string;
 
-    static myStaticMethod() {
+    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
     abstract myAbstractMethod(): string;

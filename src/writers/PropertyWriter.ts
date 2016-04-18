@@ -10,22 +10,29 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     private expressionWriter = new ExpressionWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
 
-    protected writeDefault(property: PropertyDefinitions, flags: WriteFlags) {
-        this.scopeWriter.write((property as ClassPropertyDefinition).scope);
+    protected writeDefault(def: PropertyDefinitions, flags: WriteFlags) {
+        this.scopeWriter.write((def as ClassPropertyDefinition).scope);
         this.writer.spaceIfLastNotSpace();
-        this.writer.write(property.name);
-        this.writeOptionalFlag(property);
+        this.writeStatic(def);
+        this.writer.write(def.name);
+        this.writeOptionalFlag(def);
 
-        const willWriteDefaultExpression = ExpressionWriter.willWriteDefaultExpression(property, flags);
+        const willWriteDefaultExpression = ExpressionWriter.willWriteDefaultExpression(def, flags);
 
-        if (!willWriteDefaultExpression || property.isOptional === true) {
-            this.typeExpressionWriter.writeWithColon(property.typeExpression);
+        if (!willWriteDefaultExpression || def.isOptional === true) {
+            this.typeExpressionWriter.writeWithColon(def.typeExpression);
         }
 
         if (willWriteDefaultExpression) {
-            this.expressionWriter.writeWithEqualsSign((property as ObjectPropertyDefinition).defaultExpression);
+            this.expressionWriter.writeWithEqualsSign((def as ObjectPropertyDefinition).defaultExpression);
         }
         this.writer.write(";").newLine();
+    }
+
+    private writeStatic(def: PropertyDefinitions) {
+        if (def.isClassStaticPropertyDefinition()) {
+            this.writer.write("static ");
+        }
     }
 
     private writeOptionalFlag(property: PropertyDefinitions) {

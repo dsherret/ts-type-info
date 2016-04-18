@@ -17,8 +17,13 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     protected writeDefault(def: ClassDefinition, flags: WriteFlags) {
         this.writeHeader(def, flags);
         this.writer.block(() => {
-            this.writeConstructor(def, flags);
+            this.writeStaticProperties(def, flags);
+            this.writer.newLine();
+            this.writeStaticMethods(def, flags);
+            this.writer.newLine();
             this.writeProperties(def, flags);
+            this.writer.newLine();
+            this.writeConstructor(def, flags);
             this.writer.newLine();
             this.writeMethods(def, flags);
         });
@@ -48,6 +53,14 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         }
     }
 
+    private writeStaticProperties(def: ClassDefinition, flags: WriteFlags) {
+        def.staticProperties.forEach(p => {
+            if (this.shouldInclude(p, flags)) {
+                this.propertyWriter.write(p, flags);
+            }
+        });
+    }
+
     private writeProperties(def: ClassDefinition, flags: WriteFlags) {
         def.properties.forEach(p => {
             if (this.shouldInclude(p, flags) && !p.isConstructorParameter) {
@@ -56,33 +69,45 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         });
     }
 
-    private writeMethods(def: ClassDefinition, flags: WriteFlags) {
-        let lastHadBlankLine = true;
+    private lastHadBlankLine = true;
+
+    private writeStaticMethods(def: ClassDefinition, flags: WriteFlags) {
+        this.lastHadBlankLine = true;
 
         if (def.isAmbient) {
             flags = flags | WriteFlags.HideFunctionBodies;
         }
 
-        const writeMethod = (m: ClassMethodDefinition | ClassStaticMethodDefinition) => {
-            const thisHasBlankLine = FunctionBodyWriter.willWriteFunctionBody(m, flags);
+        def.staticMethods.forEach(m => this.writeMethod(m, flags));
+    }
 
-            if (!lastHadBlankLine && thisHasBlankLine) {
-                this.writer.newLine();
-            }
+    private writeMethods(def: ClassDefinition, flags: WriteFlags) {
+        this.lastHadBlankLine = true;
 
-            if (this.shouldInclude(m, flags)) {
-                this.methodWriter.write(m, flags);
-            }
-
-            if (thisHasBlankLine) {
-                this.writer.newLine();
-            }
-
-            lastHadBlankLine = thisHasBlankLine;
+        if (def.isAmbient) {
+            flags = flags | WriteFlags.HideFunctionBodies;
         }
 
-        def.staticMethods.forEach(writeMethod);
-        def.methods.forEach(writeMethod);
+        def.methods.forEach(m => this.writeMethod(m, flags));
+    }
+
+    private writeMethod(def: ClassMethodDefinition | ClassStaticMethodDefinition, flags: WriteFlags) {
+        // todo: improve this by moving writing blank lines into code-block-writer (See #69)
+        const thisHasBlankLine = FunctionBodyWriter.willWriteFunctionBody(def, flags);
+
+        if (!this.lastHadBlankLine && thisHasBlankLine) {
+            this.writer.newLine();
+        }
+
+        if (this.shouldInclude(def, flags)) {
+            this.methodWriter.write(def, flags);
+        }
+
+        if (thisHasBlankLine) {
+            this.writer.newLine();
+        }
+
+        this.lastHadBlankLine = thisHasBlankLine;
     }
 
     private shouldInclude(def: ScopedDefinition, flags: WriteFlags) {
