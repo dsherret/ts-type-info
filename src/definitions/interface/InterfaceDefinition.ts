@@ -63,6 +63,10 @@ export class InterfaceDefinition extends BaseDefinition
         return DefinitionUtils.getDefinitionFromListByFunc(this.callSignatures, searchFunction);
     }
 
+    getIndexSignature(searchFunction: (indexSignature: IndexSignatureDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.indexSignatures, searchFunction);
+    }
+
     getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)) {
         return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.methods, nameOrSearchFunction);
     }

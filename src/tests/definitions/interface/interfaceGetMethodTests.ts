@@ -12,6 +12,15 @@ describe("InterfaceDefinition", () => {
         });
     });
 
+    describe("getIndexSignature", () => {
+        const i = new InterfaceDefinition();
+        i.addIndexSignatures({ keyName: "str", returnType: "string" }, { keyName: "num", returnType: "number" });
+
+        it("should equal the second definition", () => {
+            assert.equal(i.getIndexSignature(n => n.returnTypeExpression.text === "number"), i.indexSignatures[1]);
+        });
+    });
+
     describe("getMethod", () => {
         const i = new InterfaceDefinition();
         i.addMethods({ name: "name1" }, { name: "name2" });
