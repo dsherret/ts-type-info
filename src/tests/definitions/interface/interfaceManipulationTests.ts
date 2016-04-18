@@ -1,6 +1,7 @@
 ﻿import * as assert from "assert";
 import {InterfaceDefinition} from "./../../../definitions";
-import {runCallSignatureDefinitionTests, runInterfaceMethodDefinitionTests, runInterfacePropertyDefinitionTests} from "./../../testHelpers";
+import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests, runInterfaceMethodDefinitionTests,
+    runInterfacePropertyDefinitionTests} from "./../../testHelpers";
 
 describe("InterfaceDefinition", () => {
     describe("addCallSignatures()", () => {
@@ -35,6 +36,30 @@ describe("InterfaceDefinition", () => {
 
         it("should have a test expression", () => {
             assert.equal(i.extendsTypeExpressions[0].text, "test");
+        });
+    });
+
+    describe("addIndexSignatures()", () => {
+        const i = new InterfaceDefinition();
+        i.addIndexSignatures({
+            keyName: "num",
+            keyType: "number",
+            returnType: "Date"
+        }, {
+            keyName: "str",
+            returnType: "number"
+        });
+
+        runIndexSignatureDefinitionTests(i.indexSignatures[0], {
+            keyName: "num",
+            keyTypeExpression: { text: "number" },
+            returnTypeExpression: { text: "Date" }
+        });
+
+        runIndexSignatureDefinitionTests(i.indexSignatures[1], {
+            keyName: "str",
+            keyTypeExpression: { text: "string" }, // defaults to string
+            returnTypeExpression: { text: "number" }
         });
     });
 

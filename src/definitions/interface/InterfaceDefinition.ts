@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
-import {CallSignatureStructure, InterfaceMethodStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
+import {CallSignatureStructure, IndexSignatureStructure, InterfaceMethodStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, DefinitionUtils} from "./../../utils";
@@ -32,6 +32,12 @@ export class InterfaceDefinition extends BaseDefinition
     addExtends(...texts: string[]) {
         const factory = new StructureFactory();
         this.extendsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
+        return this;
+    }
+
+    addIndexSignatures(...indexSignatures: IndexSignatureStructure[]) {
+        const factory = new StructureFactory();
+        this.indexSignatures.push(...indexSignatures.map(n => factory.getIndexSignature(n)));
         return this;
     }
 
