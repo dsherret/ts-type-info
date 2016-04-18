@@ -31,8 +31,6 @@ Use the `--save` flag on both commands if you need this library for more than ju
 // V:/TestFile.ts
 ﻿
 export class MyClass {
-    static myStaticProperty: string | number;
-
     myStringProperty?: string;
     myNumberProperty = 253;
 
