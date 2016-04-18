@@ -12,6 +12,7 @@ export interface Options {
 }
 
 export interface CompilerOptions {
+    [option: string]: string | number | boolean;
     allowNonTsExtensions?: boolean;
     charset?: string;
     locale?: string;
@@ -38,7 +39,6 @@ export abstract class BaseDefinition {
     isImportDefinition(): boolean;
     isInterfaceDefinition(): boolean;
     isInterfaceMethodDefinition(): boolean;
-    isInterfaceNewSignatureDefinition(): boolean;
     isInterfacePropertyDefinition(): boolean;
     isNamespaceDefinition(): boolean;
     isReExportDefinition(): boolean;
@@ -65,8 +65,6 @@ export enum DefinitionType {
     InterfaceMethod = 201,
     InterfaceMethodParameter = 202,
     InterfaceProperty = 203,
-    InterfaceNewSignature = 204,
-    InterfaceNewSignatureParameter = 205,
     Namespace = 300,
     Function = 400,
     FunctionParameter = 401,
@@ -79,7 +77,8 @@ export enum DefinitionType {
     TypeAlias = 900,
     TypeParameter = 1000,
     TypeProperty = 1100,
-    Expression = 1200
+    Expression = 1200,
+    IndexSignature = 1300
 }
 
 export abstract class NamedDefinition {
@@ -160,6 +159,7 @@ export abstract class ObjectPropertyDefinition extends BasePropertyDefinition im
 }
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
+    overloadSignatures: CallSignatureDefinition[];
     name: string;
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
@@ -168,10 +168,13 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
 
+    addOverloadSignatures(...overloadSignatures: CallSignatureStructure[]): this;
+    getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean): CallSignatureDefinition;
     abstract addParameters(...parameters: ParameterStructureType[]): this;
 }
 
 export interface BaseParameterDefinitionConstructor<ParameterType> {
+    new(): ParameterType;
 }
 
 export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition {
@@ -190,6 +193,27 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
 }
 
 export abstract class ReturnTypedDefinition {
+    returnTypeExpression: TypeExpressionDefinition;
+}
+
+export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
+    parameters: CallSignatureParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
+    returnTypeExpression: TypeExpressionDefinition;
+    typeParameters: TypeParameterDefinition[];
+    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+
+    addParameters(...parameters: CallSignatureParameterStructure[]): this;
+    getMinArgumentCount(): number;
+}
+
+export class CallSignatureParameterDefinition extends BaseParameterDefinition {
+}
+
+export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition {
+    keyName: string;
+    keyTypeExpression: TypeExpressionDefinition;
     returnTypeExpression: TypeExpressionDefinition;
 }
 
@@ -237,21 +261,6 @@ export class TypeDefinition {
 
 export class TypeExpressionDefinition extends ExpressionDefinition {
     types: TypeDefinition[];
-}
-
-export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
-    minArgumentCount: number;
-    parameters: CallSignatureParameterDefinition[];
-    getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
-    returnTypeExpression: TypeExpressionDefinition;
-    typeParameters: TypeParameterDefinition[];
-    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
-    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
-
-    addParameters(...parameters: CallSignatureParameterStructure[]): this;
-}
-
-export class CallSignatureParameterDefinition extends BaseParameterDefinition {
 }
 
 export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition {
@@ -386,7 +395,8 @@ export const Scope: { Public: "public" | "protected" | "private"; Protected: "pu
 export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: InterfaceMethodDefinition[];
     callSignatures: CallSignatureDefinition[];
-    newSignatures: InterfaceNewSignatureDefinition[];
+    indexSignatures: IndexSignatureDefinition[];
+    newSignatures: CallSignatureDefinition[];
     properties: InterfacePropertyDefinition[];
     extendsTypeExpressions: TypeExpressionDefinition[];
     name: string;
@@ -399,12 +409,16 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    addCallSignatures(...callSignatures: CallSignatureStructure[]): this;
     addExtends(...texts: string[]): this;
+    addIndexSignatures(...indexSignatures: IndexSignatureStructure[]): this;
     addMethods(...methods: InterfaceMethodStructure[]): this;
-    addNewSignatures(...newSignatures: InterfaceNewSignatureStructure[]): this;
+    addNewSignatures(...newSignatures: CallSignatureStructure[]): this;
     addProperties(...properties: InterfacePropertyStructure[]): this;
+    getCallSignature(searchFunction: (callSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition;
+    getIndexSignature(searchFunction: (indexSignature: IndexSignatureDefinition) => boolean): IndexSignatureDefinition;
     getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)): InterfaceMethodDefinition;
-    getNewSignature(searchFunction: (newSignature: InterfaceNewSignatureDefinition) => boolean): InterfaceNewSignatureDefinition;
+    getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition;
     getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)): InterfacePropertyDefinition;
     write(): string;
 }
@@ -417,17 +431,6 @@ export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceM
 }
 
 export class InterfacePropertyDefinition extends BasePropertyDefinition {
-}
-
-export class InterfaceNewSignatureDefinition extends BaseDefinition implements ParameteredDefinition<InterfaceNewSignatureParameterDefinition, InterfaceNewSignatureParameterStructure>, ReturnTypedDefinition {
-    parameters: InterfaceNewSignatureParameterDefinition[];
-    getParameter: (nameOrSearchFunction: string | ((parameter: InterfaceNewSignatureParameterDefinition) => boolean)) => InterfaceNewSignatureParameterDefinition;
-    returnTypeExpression: TypeExpressionDefinition;
-
-    addParameters(...parameters: InterfaceNewSignatureParameterStructure[]): this;
-}
-
-export class InterfaceNewSignatureParameterDefinition extends BaseParameterDefinition {
 }
 
 export class EnumDefinition extends BaseDefinition implements ExportableDefinition, AmbientableDefinition {
@@ -572,22 +575,6 @@ export type VariableDeclarationType = "var" | "let" | "const";
 
 export const VariableDeclarationType: { Var: "var" | "let" | "const"; Let: "var" | "let" | "const"; Const: "var" | "let" | "const"; };
 
-export type ClassDefinitions = ClassDefinition | ClassMethodDefinition | ClassMethodParameterDefinition | ClassPropertyDefinition | ClassConstructorDefinition | ClassConstructorParameterDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassStaticMethodParameterDefinition;
-
-export type InterfaceDefinitions = InterfaceDefinition | InterfaceMethodParameterDefinition | InterfacePropertyDefinition | InterfaceNewSignatureDefinition | InterfaceNewSignatureParameterDefinition;
-
-export type EnumDefinitions = EnumDefinition | EnumMemberDefinition;
-
-export type FunctionDefinitions = CallSignatureDefinition | CallSignatureParameterDefinition | FunctionDefinition | FunctionParameterDefinition;
-
-export type NamespaceDefinitions = NamespaceDefinition;
-
-export type GeneralDefinitions = TypeParameterDefinition | TypePropertyDefinition | DecoratorDefinition | TypeAliasDefinition;
-
-export type VariableDefinitions = VariableDefinition;
-
-export type ClassMemberDefinitions = ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassConstructorDefinition;
-
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
 
 export type TypeParameteredDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeAliasDefinition;
@@ -604,17 +591,15 @@ export type ModuleMemberDefinitions = ClassDefinition | FunctionDefinition | Int
 
 export type BaseFunctionDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
 
-export type FunctionWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition;
-
 export type FunctionBodyWriteableDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition;
 
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
 
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
 
-export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition | InterfaceNewSignatureParameterDefinition | ClassConstructorParameterDefinition | CallSignatureParameterDefinition;
+export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition | ClassConstructorParameterDefinition | CallSignatureParameterDefinition;
 
-export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | InterfaceNewSignatureDefinition | ClassConstructorDefinition | CallSignatureDefinition;
+export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition | CallSignatureDefinition;
 
 export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 
@@ -681,6 +666,7 @@ export interface TypeParameteredStructure {
 }
 
 export interface BaseFunctionStructure<T extends BaseParameterStructure> extends NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure {
+    overloadSignatures?: CallSignatureStructure[];
 }
 
 export interface BaseParameterStructure extends NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure {
@@ -696,8 +682,20 @@ export interface ReturnTypedStructure {
     returnType?: string;
 }
 
+export interface CallSignatureStructure extends TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
+}
+
+export interface CallSignatureParameterStructure extends BaseParameterStructure {
+}
+
 export interface DecoratorStructure extends NamedStructure {
     arguments?: string[];
+}
+
+export interface IndexSignatureStructure extends ReturnTypedStructure {
+    keyName: string;
+    keyType?: string;
+    returnType: string;
 }
 
 export interface TypeAliasStructure extends NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure {
@@ -808,13 +806,6 @@ export interface FunctionStructure extends BaseFunctionStructure<FunctionParamet
 export interface FunctionParameterStructure extends BaseParameterStructure {
 }
 
-export interface CallSignatureStructure extends TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
-    minArgumentCount?: number;
-}
-
-export interface CallSignatureParameterStructure extends BaseParameterStructure {
-}
-
 export interface InterfaceMethodStructure extends BaseFunctionStructure<InterfaceMethodParameterStructure> {
 }
 
@@ -824,17 +815,12 @@ export interface InterfaceMethodParameterStructure extends BaseParameterStructur
 export interface InterfacePropertyStructure extends BasePropertyStructure {
 }
 
-export interface InterfaceNewSignatureStructure extends ParameteredStructure<InterfaceNewSignatureParameterStructure>, ReturnTypedStructure {
-}
-
-export interface InterfaceNewSignatureParameterStructure extends BaseParameterStructure {
-}
-
 export interface InterfaceStructure extends NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure {
-    methods?: InterfaceMethodStructure[];
-    newSignatures?: InterfaceNewSignatureStructure[];
-    properties?: InterfacePropertyStructure[];
+    callSignatures?: CallSignatureStructure[];
     extendsTypes?: string[];
+    methods?: InterfaceMethodStructure[];
+    newSignatures?: CallSignatureStructure[];
+    properties?: InterfacePropertyStructure[];
 }
 
 export interface NamespaceStructure extends NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure {
