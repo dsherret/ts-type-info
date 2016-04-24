@@ -88,7 +88,8 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             parameters: [{ name: "param1" }, { name: "param2" }],
             returnType: "string",
-            typeParameters: [{ name: "T" }, { name: "U" }]
+            typeParameters: [{ name: "T" }, { name: "U" }],
+            onWriteFunctionBody: (writer) => writer.write("")
         }, {
             name: "function2"
         });
@@ -102,7 +103,8 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             parameters: [{ name: "param1" }, { name: "param2" }],
             returnTypeExpression: { text: "string" },
-            typeParameters: [{ name: "T" }, { name: "U" }]
+            typeParameters: [{ name: "T" }, { name: "U" }],
+            hasOnWriteFunctionBody: true
         });
         runFunctionDefinitionTests(n.functions[1], {
             name: "function2"

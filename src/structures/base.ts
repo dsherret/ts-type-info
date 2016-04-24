@@ -5,6 +5,7 @@ export * from "./base/AmbientableStructure";
 export * from "./base/DefaultExpressionedStructure";
 export * from "./base/DecoratableStructure";
 export * from "./base/ExportableStructure";
+export * from "./base/FunctionBodyWriteableStructure";
 export * from "./base/ModuledStructure";
 export * from "./base/ObjectPropertyStructure";
 export * from "./base/TypeExpressionedStructure";

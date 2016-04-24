@@ -5,6 +5,7 @@ export * from "./base/AmbientableTestStructure";
 export * from "./base/DefaultExpressionedTestStructure";
 export * from "./base/DecoratableTestStructure";
 export * from "./base/ExportableTestStructure";
+export * from "./base/FunctionBodyWriteableTestStructure";
 export * from "./base/ModuledTestStructure";
 export * from "./base/ObjectPropertyTestStructure";
 export * from "./base/TypeExpressionedTestStructure";

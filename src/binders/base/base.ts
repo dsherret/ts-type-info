@@ -7,6 +7,7 @@ export * from "./base/BasePropertyBinder";
 export * from "./base/DecoratableBinder";
 export * from "./base/DefaultExpressionedBinder";
 export * from "./base/ExportableBinder";
+export * from "./base/FunctionBodyWriteableBinder";
 export * from "./base/ModuledBinder";
 export * from "./base/NamedBinder";
 export * from "./base/ObjectPropertyBinder";

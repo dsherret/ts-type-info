@@ -2,7 +2,7 @@
 import {FunctionParameterDefinition} from "./../../../definitions";
 import {FunctionStructure} from "./../../../structures";
 import {FunctionBinder} from "./../../base";
-import {StructureBaseFunctionBinder, StructureExportableBinder, StructureAmbientableBinder} from "./../base";
+import {StructureBaseFunctionBinder, StructureExportableBinder, StructureAmbientableBinder, StructureFunctionBodyWriteableBinder} from "./../base";
 import {StructureFunctionParameterBinder} from "./StructureFunctionParameterBinder";
 
 export class StructureFunctionBinder extends FunctionBinder {
@@ -10,7 +10,8 @@ export class StructureFunctionBinder extends FunctionBinder {
         super(
             new StructureBaseFunctionBinder(factory, structure, FunctionParameterDefinition, StructureFunctionParameterBinder),
             new StructureExportableBinder(structure),
-            new StructureAmbientableBinder(structure)
+            new StructureAmbientableBinder(structure),
+            new StructureFunctionBodyWriteableBinder(structure)
         );
     }
 }

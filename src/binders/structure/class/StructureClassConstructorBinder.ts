@@ -2,7 +2,7 @@
 import {ClassConstructorParameterDefinition} from "./../../../definitions";
 import {ClassConstructorStructure} from "./../../../structures";
 import {ClassConstructorBinder} from "./../../base";
-import {StructureBaseDefinitionBinder, StructureParameteredBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureParameteredBinder, StructureFunctionBodyWriteableBinder} from "./../base";
 import {StructureClassConstructorParameterBinder} from "./StructureClassConstructorParameterBinder";
 
 export class StructureClassConstructorBinder extends ClassConstructorBinder {
@@ -13,7 +13,8 @@ export class StructureClassConstructorBinder extends ClassConstructorBinder {
                 structure,
                 ClassConstructorParameterDefinition,
                 StructureClassConstructorParameterBinder
-            )
+            ),
+            new StructureFunctionBodyWriteableBinder(structure)
         );
     }
 }

@@ -1,12 +1,13 @@
 ﻿import {BaseClassMethodDefinition, BaseClassMethodParameterDefinition} from "./../../../../definitions";
-import {DecoratableBinder, BaseFunctionBinder} from "./../../base";
+import {DecoratableBinder, BaseFunctionBinder, FunctionBodyWriteableBinder} from "./../../base";
 import {ScopedBinder} from "./ScopedBinder";
 
 export abstract class BaseClassMethodBinder<ParameterType extends BaseClassMethodParameterDefinition> {
     constructor(
         private baseFunctionBinder: BaseFunctionBinder<ParameterType>,
         private decoratableBinder: DecoratableBinder,
-        private scopedBinder: ScopedBinder
+        private scopedBinder: ScopedBinder,
+        private functionBodyWriteableBinder: FunctionBodyWriteableBinder
     ) {
     }
 
@@ -14,5 +15,6 @@ export abstract class BaseClassMethodBinder<ParameterType extends BaseClassMetho
         this.baseFunctionBinder.bind(def);
         this.decoratableBinder.bind(def);
         this.scopedBinder.bind(def);
+        this.functionBodyWriteableBinder.bind(def);
     }
 }

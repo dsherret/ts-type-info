@@ -81,6 +81,10 @@ export enum DefinitionType {
     IndexSignature = 1300
 }
 
+export class FunctionBodyWriteableDefinition {
+    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+}
+
 export abstract class NamedDefinition {
     name: string;
 }
@@ -263,7 +267,7 @@ export class TypeExpressionDefinition extends ExpressionDefinition {
     types: TypeDefinition[];
 }
 
-export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, FunctionBodyWriteableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -285,7 +289,7 @@ export class BaseClassMethodParameterDefinition extends BaseParameterDefinition 
     scope: "public" | "protected" | "private";
 }
 
-export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements DecoratableDefinition, ScopedDefinition {
+export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements DecoratableDefinition, ScopedDefinition, FunctionBodyWriteableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
@@ -357,7 +361,7 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isConstructorParameter: boolean;
 }
 
-export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure> {
+export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
@@ -645,6 +649,10 @@ export interface ExportableStructure {
     isDefaultExportOfFile?: boolean;
 }
 
+export interface FunctionBodyWriteableStructure {
+    onWriteFunctionBody?: (writer: CodeBlockWriter) => void;
+}
+
 export interface ModuledStructure {
     namespaces?: NamespaceStructure[];
     classes?: ClassStructure[];
@@ -714,7 +722,7 @@ export interface TypeParameterStructure extends BaseStructure, NamedStructure {
 export interface TypePropertyStructure extends BasePropertyStructure {
 }
 
-export interface BaseClassMethodStructure<ParameterType extends BaseClassMethodParameterStructure> extends BaseFunctionStructure<ParameterType>, DecoratableStructure, ScopedStructure {
+export interface BaseClassMethodStructure<ParameterType extends BaseClassMethodParameterStructure> extends BaseFunctionStructure<ParameterType>, DecoratableStructure, ScopedStructure, FunctionBodyWriteableStructure {
 }
 
 export interface BaseClassMethodParameterStructure extends BaseParameterStructure, DecoratableStructure {
@@ -739,7 +747,7 @@ export interface ClassPropertyStructure extends BaseClassPropertyStructure {
     isConstructorParameter?: boolean;
 }
 
-export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure> {
+export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure {
 }
 
 export interface ClassConstructorParameterStructure extends BaseParameterStructure {
@@ -805,7 +813,7 @@ export interface ReExportStructure extends BaseStructure {
     namedExports?: NamedImportStructure[];
 }
 
-export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, ExportableStructure, AmbientableStructure {
+export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, ExportableStructure, AmbientableStructure, FunctionBodyWriteableStructure {
 }
 
 export interface FunctionParameterStructure extends BaseParameterStructure {

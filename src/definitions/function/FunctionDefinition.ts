@@ -2,15 +2,14 @@ import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
 import {FunctionParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
-import {ExportableDefinition, AmbientableDefinition, DefinitionType, BaseFunctionDefinition} from "./../base";
+import {ExportableDefinition, AmbientableDefinition, DefinitionType, BaseFunctionDefinition, FunctionBodyWriteableDefinition} from "./../base";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {FunctionParameterDefinition} from "./FunctionParameterDefinition";
 
 export class FunctionDefinition
         extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure>
-        implements ExportableDefinition, AmbientableDefinition {
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+        implements ExportableDefinition, AmbientableDefinition, FunctionBodyWriteableDefinition {
 
     constructor() {
         super(DefinitionType.Function);
@@ -29,6 +28,8 @@ export class FunctionDefinition
         return writer.toString();
     }
 
+    // FunctionBodyWriteableDefinition
+    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -38,4 +39,4 @@ export class FunctionDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(FunctionDefinition, BaseFunctionDefinition, [ExportableDefinition, AmbientableDefinition]);
+applyMixins(FunctionDefinition, BaseFunctionDefinition, [ExportableDefinition, AmbientableDefinition, FunctionBodyWriteableDefinition]);

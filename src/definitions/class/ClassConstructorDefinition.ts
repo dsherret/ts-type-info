@@ -1,12 +1,13 @@
 import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
 import {ClassConstructorParameterStructure} from "./../../structures";
-import {BaseDefinition, DefinitionType, ParameteredDefinition} from "./../base";
+import {BaseDefinition, DefinitionType, ParameteredDefinition, FunctionBodyWriteableDefinition} from "./../base";
 import {applyMixins} from "./../../utils";
 import {ClassConstructorParameterDefinition} from "./ClassConstructorParameterDefinition";
 
-export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure> {
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+export class ClassConstructorDefinition
+        extends BaseDefinition
+        implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition {
 
     constructor() {
         super(DefinitionType.ClassConstructor);
@@ -18,9 +19,11 @@ export class ClassConstructorDefinition extends BaseDefinition implements Parame
         return this;
     }
 
+    // FunctionBodyWriteableDefinition
+    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     // ParameteredDefinition
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
 }
 
-applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition]);
+applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition, FunctionBodyWriteableDefinition]);

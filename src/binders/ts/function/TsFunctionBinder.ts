@@ -2,7 +2,7 @@
 import {FunctionParameterDefinition} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {FunctionBinder} from "./../../base";
-import {TsBaseFunctionBinder, TsExportableBinder, TsAmbientableBinder} from "./../base";
+import {TsBaseFunctionBinder, TsExportableBinder, TsAmbientableBinder, TsFunctionBodyWriteableBinder} from "./../base";
 import {TsFunctionParameterBinder} from "./TsFunctionParameterBinder";
 
 export class TsFunctionBinder extends FunctionBinder {
@@ -10,7 +10,8 @@ export class TsFunctionBinder extends FunctionBinder {
         super(
             new TsBaseFunctionBinder(factory, node, FunctionParameterDefinition, TsFunctionParameterBinder),
             new TsExportableBinder(node),
-            new TsAmbientableBinder(node)
+            new TsAmbientableBinder(node),
+            new TsFunctionBodyWriteableBinder()
         );
     }
 }

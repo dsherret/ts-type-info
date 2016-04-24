@@ -47,7 +47,8 @@ describe("ClassDefinition", () => {
                 isRestParameter: true
             }],
             name: "myMethod",
-            scope: Scope.Private
+            scope: Scope.Private,
+            onWriteFunctionBody: (writer) => writer.write("")
         }, {
             name: "mySecondMethod"
         });
@@ -66,7 +67,8 @@ describe("ClassDefinition", () => {
                 isRestParameter: true
             }],
             name: "myMethod",
-            scope: Scope.Private
+            scope: Scope.Private,
+            hasOnWriteFunctionBody: true
         });
 
         runClassMethodDefinitionTests(c.methods[1], {
@@ -180,12 +182,14 @@ describe("ClassDefinition", () => {
         const c = new ClassDefinition();
 
         c.setConstructor({
-            parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }]
+            parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
+            onWriteFunctionBody: (writer) => writer.write("")
         });
 
         describe("constructor", () => {
             runClassConstructorDefinitionTests(c.constructorDef, {
-                parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }]
+                parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
+                hasOnWriteFunctionBody: true
             });
         });
 

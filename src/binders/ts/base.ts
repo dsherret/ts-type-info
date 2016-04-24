@@ -7,6 +7,7 @@ export * from "./base/TsBasePropertyBinder";
 export * from "./base/TsDecoratableBinder";
 export * from "./base/TsDefaultExpressionedBinder";
 export * from "./base/TsExportableBinder";
+export * from "./base/TsFunctionBodyWriteableBinder";
 export * from "./base/TsModuledBinder";
 export * from "./base/TsNamedBinder";
 export * from "./base/TsObjectPropertyBinder";
