@@ -1,6 +1,6 @@
 ﻿import {TypeExpressionTestStructure} from "./../expressions";
-import {NamedTestStructure} from "./../base";
+import {BaseTestStructure, NamedTestStructure} from "./../base";
 
-export interface TypeParameterTestStructure extends NamedTestStructure {
+export interface TypeParameterTestStructure extends BaseTestStructure, NamedTestStructure {
     constraintTypeExpression?: TypeExpressionTestStructure;
 }

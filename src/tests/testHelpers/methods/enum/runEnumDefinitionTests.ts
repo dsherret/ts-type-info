@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {EnumTestStructure} from "./../../testStructures";
 import {EnumDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runEnumMemberDefinitionTests} from "./runEnumMemberDefinitionTests";
 
@@ -10,6 +10,7 @@ export function runEnumDefinitionTests(definition: EnumDefinition, structure: En
         ensureNotNull(definition, () => {
             structure.members = structure.members || [];
 
+            runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);

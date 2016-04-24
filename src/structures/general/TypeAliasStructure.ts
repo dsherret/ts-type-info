@@ -1,5 +1,6 @@
-﻿import {NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure} from "./../base";
+﻿import {BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure} from "./../base";
 
-export interface TypeAliasStructure extends NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure {
-    type: string; // type should be required
+export interface TypeAliasStructure
+        extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure {
+    type: string; // make it required (from TypeExpressionedStructure)
 }

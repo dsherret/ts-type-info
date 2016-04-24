@@ -3,9 +3,12 @@ import {BaseImportPartDefinition} from "./../../../../definitions";
 import {BaseImportPartTestStructure} from "./../../testStructures";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runExpressionDefinitionTests} from "./../expressions";
+import {runBaseDefinitionTests} from "./../base";
 
 export function runBaseImportPartDefinitionTests(definition: BaseImportPartDefinition, structure: BaseImportPartTestStructure) {
     structure.definitions = structure.definitions || [];
+
+    runBaseDefinitionTests(definition, structure);
 
     describe("definitions", () => {
         it(`should have the expected number of definitions`, () => {

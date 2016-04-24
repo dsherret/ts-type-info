@@ -2,6 +2,7 @@
 import {StructureFactory} from "./../../../factories";
 import {BaseFunctionStructure, BaseParameterStructure} from "./../../../structures";
 import {BaseFunctionBinder} from "./../../base";
+import {StructureBaseDefinitionBinder} from "./StructureBaseDefinitionBinder";
 import {StructureNamedBinder} from "./StructureNamedBinder";
 import {StructureTypeParameteredBinder} from "./StructureTypeParameteredBinder";
 import {StructureParameteredBinder, StructureParameterBinderConstructor} from "./StructureParameteredBinder";
@@ -16,6 +17,7 @@ export class StructureBaseFunctionBinder<ParameterType extends BaseParameterDefi
         paramBinder: StructureParameterBinderConstructor<ParameterType>
     ) {
         super(
+            new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
             new StructureTypeParameteredBinder(factory, structure),
             new StructureParameteredBinder(structure, paramDefinition, paramBinder),

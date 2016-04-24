@@ -1,4 +1,5 @@
 ﻿import {TypeAliasDefinition} from "./../../../definitions";
+import {BaseDefinitionBinder} from "./../base/BaseDefinitionBinder";
 import {NamedBinder} from "./../base/NamedBinder";
 import {ExportableBinder} from "./../base/ExportableBinder";
 import {TypeExpressionedBinder} from "./../base/TypeExpressionedBinder";
@@ -8,6 +9,7 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class TypeAliasBinder implements IBaseBinder {
     constructor(
+        private baseDefinitionBinder: BaseDefinitionBinder,
         private namedBinder: NamedBinder,
         private exportableBinder: ExportableBinder,
         private typeExpressionedBinder: TypeExpressionedBinder,
@@ -17,6 +19,7 @@ export abstract class TypeAliasBinder implements IBaseBinder {
     }
 
     bind(def: TypeAliasDefinition) {
+        this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.exportableBinder.bind(def);
         this.typeExpressionedBinder.bind(def);

@@ -613,6 +613,11 @@ export class ArgumentTypeError extends Error {
 export class FileNotFoundError extends Error {
 }
 
+export interface BaseStructure {
+    onBeforeWrite?: (writer: CodeBlockWriter) => void;
+    onAfterWrite?: (writer: CodeBlockWriter) => void;
+}
+
 export interface NamedStructure {
     name: string;
 }
@@ -657,7 +662,7 @@ export interface TypeExpressionedStructure {
     type?: string;
 }
 
-export interface BasePropertyStructure extends NamedStructure, TypeExpressionedStructure {
+export interface BasePropertyStructure extends BaseStructure, NamedStructure, TypeExpressionedStructure {
     isOptional?: boolean;
 }
 
@@ -665,11 +670,11 @@ export interface TypeParameteredStructure {
     typeParameters?: TypeParameterStructure[];
 }
 
-export interface BaseFunctionStructure<T extends BaseParameterStructure> extends NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure {
+export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure {
     overloadSignatures?: CallSignatureStructure[];
 }
 
-export interface BaseParameterStructure extends NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure {
+export interface BaseParameterStructure extends BaseStructure, NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure {
     isOptional?: boolean;
     isRestParameter?: boolean;
 }
@@ -682,27 +687,27 @@ export interface ReturnTypedStructure {
     returnType?: string;
 }
 
-export interface CallSignatureStructure extends TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
+export interface CallSignatureStructure extends BaseStructure, TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
 }
 
 export interface CallSignatureParameterStructure extends BaseParameterStructure {
 }
 
-export interface DecoratorStructure extends NamedStructure {
+export interface DecoratorStructure extends BaseStructure, NamedStructure {
     arguments?: string[];
 }
 
-export interface IndexSignatureStructure extends ReturnTypedStructure {
+export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStructure {
     keyName: string;
     keyType?: string;
     returnType: string;
 }
 
-export interface TypeAliasStructure extends NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure {
+export interface TypeAliasStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure {
     type: string;
 }
 
-export interface TypeParameterStructure extends NamedStructure {
+export interface TypeParameterStructure extends BaseStructure, NamedStructure {
     constraintType?: string;
 }
 
@@ -734,7 +739,7 @@ export interface ClassPropertyStructure extends BaseClassPropertyStructure {
     isConstructorParameter?: boolean;
 }
 
-export interface ClassConstructorStructure extends ParameteredStructure<ClassConstructorParameterStructure> {
+export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure> {
 }
 
 export interface ClassConstructorParameterStructure extends BaseParameterStructure {
@@ -750,7 +755,7 @@ export interface ClassStaticMethodStructure extends BaseClassMethodStructure<Cla
 export interface ClassStaticPropertyStructure extends BaseClassPropertyStructure {
 }
 
-export interface ClassStructure extends NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, AbstractableStructure {
+export interface ClassStructure extends BaseStructure, NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, AbstractableStructure {
     methods?: ClassMethodStructure[];
     properties?: ClassPropertyStructure[];
     staticMethods?: ClassStaticMethodStructure[];
@@ -760,11 +765,11 @@ export interface ClassStructure extends NamedStructure, DecoratableStructure, Ex
     implementsTypes?: string[];
 }
 
-export interface EnumStructure extends NamedStructure, ExportableStructure, AmbientableStructure {
+export interface EnumStructure extends BaseStructure, NamedStructure, ExportableStructure, AmbientableStructure {
     members?: EnumMemberStructure[];
 }
 
-export interface EnumMemberStructure extends NamedStructure {
+export interface EnumMemberStructure extends BaseStructure, NamedStructure {
     value: number;
 }
 
@@ -776,7 +781,7 @@ export interface TypeStructure {
     text: string;
 }
 
-export interface FileStructure extends ModuledStructure {
+export interface FileStructure extends BaseStructure, ModuledStructure {
     imports?: ImportStructure[];
     reExports?: ReExportStructure[];
     fileName?: string;
@@ -788,14 +793,14 @@ export interface NamedImportStructure {
     alias?: string;
 }
 
-export interface ImportStructure {
+export interface ImportStructure extends BaseStructure {
     moduleSpecifier: string;
     starImportName?: string;
     defaultImportName?: string;
     namedImports?: NamedImportStructure[];
 }
 
-export interface ReExportStructure {
+export interface ReExportStructure extends BaseStructure {
     moduleSpecifier: string;
     namedExports?: NamedImportStructure[];
 }
@@ -815,7 +820,7 @@ export interface InterfaceMethodParameterStructure extends BaseParameterStructur
 export interface InterfacePropertyStructure extends BasePropertyStructure {
 }
 
-export interface InterfaceStructure extends NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure {
+export interface InterfaceStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure {
     callSignatures?: CallSignatureStructure[];
     extendsTypes?: string[];
     methods?: InterfaceMethodStructure[];
@@ -823,10 +828,10 @@ export interface InterfaceStructure extends NamedStructure, ExportableStructure,
     properties?: InterfacePropertyStructure[];
 }
 
-export interface NamespaceStructure extends NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure {
+export interface NamespaceStructure extends BaseStructure, NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure {
     declarationType?: "namespace" | "module";
 }
 
-export interface VariableStructure extends NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure {
+export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure {
     declarationType?: "var" | "let" | "const";
 }

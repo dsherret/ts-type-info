@@ -1,12 +1,15 @@
 ﻿import {ExpressionDefinition} from "./../../../definitions";
 import {DecoratorStructure} from "./../../../structures";
 import {DecoratorBinder} from "./../../base";
-import {StructureNamedBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNamedBinder} from "./../base";
 import {StructureExpressionBinder} from "./../expressions";
 
 export class StructureDecoratorBinder extends DecoratorBinder {
     constructor(private structure: DecoratorStructure) {
-        super(new StructureNamedBinder(structure));
+        super(
+            new StructureBaseDefinitionBinder(structure),
+            new StructureNamedBinder(structure)
+        );
     }
 
     getArguments() {

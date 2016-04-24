@@ -1,12 +1,16 @@
 ﻿import {ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../../../definitions";
-import {ParameteredBinder} from "./../base";
+import {BaseDefinitionBinder, ParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ClassConstructorBinder implements IBaseBinder {
-    constructor(private parameteredBinder: ParameteredBinder<ClassConstructorParameterDefinition>) {
+    constructor(
+        private baseDefinitionBinder: BaseDefinitionBinder,
+        private parameteredBinder: ParameteredBinder<ClassConstructorParameterDefinition>
+    ) {
     }
 
     bind(def: ClassConstructorDefinition) {
+        this.baseDefinitionBinder.bind(def);
         this.parameteredBinder.bind(def);
     }
 }

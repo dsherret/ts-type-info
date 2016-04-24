@@ -1,6 +1,7 @@
-﻿import {NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure} from "./../base";
+﻿import {BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure} from "./../base";
 import {VariableDeclarationType} from "./../../definitions";
 
-export interface VariableStructure extends NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure {
+export interface VariableStructure
+        extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure {
     declarationType?: VariableDeclarationType;
 }

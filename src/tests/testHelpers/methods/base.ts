@@ -1,4 +1,5 @@
-﻿export * from "./base/runBasePropertyDefinitionTests";
+﻿export * from "./base/runBaseDefinitionTests";
+export * from "./base/runBasePropertyDefinitionTests";
 export * from "./base/runAbstractableDefinitionTests";
 export * from "./base/runAmbientableDefinitionTests";
 export * from "./base/runDecoratableDefinitionTests";

@@ -2,10 +2,11 @@
 import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {ImportBinder} from "./../../base";
+import {TsBaseDefinitionBinder} from "./../base";
 
 export class TsImportBinder extends ImportBinder {
     constructor(private factory: TsFactory, private node: TsNode) {
-        super();
+        super(new TsBaseDefinitionBinder());
     }
 
     getFileName() {

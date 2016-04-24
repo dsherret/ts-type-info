@@ -1,6 +1,7 @@
-﻿import {ImportPartTestStructure} from "./ImportPartTestStructure";
+﻿import {BaseTestStructure} from "./../base";
+import {ImportPartTestStructure} from "./ImportPartTestStructure";
 
-export interface ImportTestStructure {
+export interface ImportTestStructure extends BaseTestStructure {
     moduleSpecifier: string;
     fileName?: string;
     defaultImport?: ImportPartTestStructure;

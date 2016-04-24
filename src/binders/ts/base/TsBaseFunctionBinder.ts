@@ -2,6 +2,7 @@
 import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {BaseFunctionBinder} from "./../../base";
+import {TsBaseDefinitionBinder} from "./TsBaseDefinitionBinder";
 import {TsNamedBinder} from "./TsNamedBinder";
 import {TsTypeParameteredBinderByNode} from "./TsTypeParameteredBinderByNode";
 import {TsParameteredBinderByNode, TsParameterBinderByNodeConstructor} from "./TsParameteredBinderByNode";
@@ -15,6 +16,7 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
         paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
         super(
+            new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),
             new TsTypeParameteredBinderByNode(factory, node),
             new TsParameteredBinderByNode(factory, node, paramDefinition, paramBinder),

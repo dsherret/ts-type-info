@@ -1,5 +1,5 @@
-import {ParameteredTestStructure} from "./../base";
+import {BaseTestStructure, ParameteredTestStructure} from "./../base";
 import {ClassConstructorParameterTestStructure} from "./ClassConstructorParameterTestStructure";
 
-export interface ClassConstructorTestStructure extends ParameteredTestStructure<ClassConstructorParameterTestStructure> {
+export interface ClassConstructorTestStructure extends BaseTestStructure, ParameteredTestStructure<ClassConstructorParameterTestStructure> {
 }

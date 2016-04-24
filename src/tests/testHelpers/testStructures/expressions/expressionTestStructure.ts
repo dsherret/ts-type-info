@@ -1,3 +1,5 @@
-﻿export interface ExpressionTestStructure {
+﻿import {BaseTestStructure} from "./../base";
+
+export interface ExpressionTestStructure extends BaseTestStructure {
     text: string;
 }

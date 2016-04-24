@@ -2,6 +2,7 @@
 import {ReExportTestStructure} from "./../../testStructures";
 import {ReExportDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
+import {runBaseDefinitionTests} from "./../base";
 import {runReExportPartDefinitionTests} from "./runReExportPartDefinitionTests";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {
@@ -9,7 +10,10 @@ export function runReExportDefinitionTests(definition: ReExportDefinition, struc
         structure.namedExports = structure.namedExports || [];
         structure.starExports = structure.starExports || [];
         structure.fileName = "";
+
         ensureNotNull(definition, () => {
+            runBaseDefinitionTests(definition, structure);
+
             it(`should have a module specifier text of ${structure.moduleSpecifier}`, () => {
                 assert.equal(definition.moduleSpecifier, structure.moduleSpecifier);
             });

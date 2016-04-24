@@ -1,6 +1,6 @@
 ﻿import {TypeAliasTestStructure} from "./../../testStructures";
 import {TypeAliasDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
+import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
         runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -13,6 +13,7 @@ export function runTypeAliasDefinitionTests(definition: TypeAliasDefinition, str
                 structure.typeExpression = { text: "string" };
             }
 
+            runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runTypeExpressionedDefinitionTests(definition, structure);

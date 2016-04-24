@@ -2,11 +2,12 @@
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
-import {TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsTypeParameteredBinderByNode} from "./../base";
+import {TsBaseDefinitionBinder, TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsTypeParameteredBinderByNode} from "./../base";
 
 export class TsInterfaceBinder extends InterfaceBinder {
     constructor(private factory: TsFactory, private node: TsNode) {
         super(
+            new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),

@@ -1,10 +1,14 @@
 ﻿import {TsNode} from "./../../../compiler";
 import {TsFactory} from "./../../../factories";
 import {NamedBinder, DecoratorBinder} from "./../../base";
+import {TsBaseDefinitionBinder} from "./../base";
 
 export class TsDecoratorBinder extends DecoratorBinder {
     constructor(private factory: TsFactory, private node: TsNode) {
-        super(new TsDecoratorNameBinder(node));
+        super(
+            new TsBaseDefinitionBinder(),
+            new TsDecoratorNameBinder(node)
+        );
     }
 
     getArguments() {

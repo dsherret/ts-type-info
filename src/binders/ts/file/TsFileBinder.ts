@@ -2,11 +2,14 @@ import {ImportDefinition, ReExportDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TsSourceFile} from "./../../../compiler";
 import {FileBinder} from "./../../base";
-import {TsModuledBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsModuledBinder} from "./../base";
 
 export class TsFileBinder extends FileBinder {
     constructor(private factory: TsFactory, private sourceFile: TsSourceFile) {
-        super(new TsModuledBinder(factory, sourceFile.getNode()));
+        super(
+            new TsBaseDefinitionBinder(),
+            new TsModuledBinder(factory, sourceFile.getNode())
+        );
     }
 
     getFileName() {

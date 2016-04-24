@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {InterfaceTestStructure} from "./../../testStructures";
 import {InterfaceDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
+import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests} from "./../base";
 import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests} from "./../general";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
@@ -20,6 +20,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
             // interfaces should always be ambient
             structure.isAmbient = structure.isAmbient == null ? true : structure.isAmbient;
 
+            runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);

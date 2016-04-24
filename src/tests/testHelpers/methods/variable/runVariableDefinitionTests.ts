@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {VariableTestStructure} from "./../../testStructures";
 import {VariableDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
+import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
         runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -12,6 +12,7 @@ export function runVariableDefinitionTests(definition: VariableDefinition, struc
                 structure.typeExpression = { text: "any" };
             }
 
+            runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runTypeExpressionedDefinitionTests(definition, structure);

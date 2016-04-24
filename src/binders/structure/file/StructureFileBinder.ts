@@ -1,11 +1,14 @@
 import {StructureFactory} from "./../../../factories";
 import {FileStructure} from "./../../../structures";
 import {FileBinder} from "./../../base";
-import {StructureModuledBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureModuledBinder} from "./../base";
 
 export class StructureFileBinder extends FileBinder {
     constructor(private factory: StructureFactory, private structure: FileStructure) {
-        super(new StructureModuledBinder(factory, structure));
+        super(
+            new StructureBaseDefinitionBinder(structure),
+            new StructureModuledBinder(factory, structure)
+        );
     }
 
     getFileName() {

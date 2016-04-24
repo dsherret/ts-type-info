@@ -1,5 +1,5 @@
-import {NamedStructure} from "./../base";
+import {BaseStructure, NamedStructure} from "./../base";
 
-export interface DecoratorStructure extends NamedStructure {
+export interface DecoratorStructure extends BaseStructure, NamedStructure {
     arguments?: string[];
 }

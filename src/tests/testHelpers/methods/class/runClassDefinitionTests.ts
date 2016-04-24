@@ -1,8 +1,8 @@
 ﻿import * as assert from "assert";
 import {ClassTestStructure} from "./../../testStructures";
 import {ClassDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests,
-        runAbstractableDefinitionTests} from "./../base";
+import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests,
+    runAmbientableDefinitionTests, runAbstractableDefinitionTests} from "./../base";
 import {runClassPropertyDefinitionTests} from "./runClassPropertyDefinitionTests";
 import {runClassMethodDefinitionTests} from "./runClassMethodDefinitionTests";
 import {runClassStaticPropertyDefinitionTests} from "./runClassStaticPropertyDefinitionTests";
@@ -21,6 +21,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
             structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
             structure.implementsTypeExpressions = structure.implementsTypeExpressions || [];
 
+            runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runDecoratableDefinitionTests(definition, structure);

@@ -1,11 +1,13 @@
 ﻿import {VariableDeclarationType} from "./../../../definitions";
 import {VariableStructure} from "./../../../structures";
 import {VariableBinder} from "./../../base";
-import {StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureDefaultExpressionedBinder, StructureTypeExpressionedBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureDefaultExpressionedBinder,
+    StructureTypeExpressionedBinder} from "./../base";
 
 export class StructureVariableBinder extends VariableBinder {
     constructor(private structure: VariableStructure) {
         super(
+            new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
             new StructureExportableBinder(structure),
             new StructureAmbientableBinder(structure),

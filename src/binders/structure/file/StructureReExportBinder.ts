@@ -3,10 +3,11 @@ import {StructureFactory} from "./../../../factories";
 import {ReExportStructure} from "./../../../structures";
 import {ArrayUtils} from "./../../../utils";
 import {ReExportBinder} from "./../../base";
+import {StructureBaseDefinitionBinder} from "./../base";
 
 export class StructureReExportBinder extends ReExportBinder {
     constructor(private factory: StructureFactory, private structure: ReExportStructure) {
-        super();
+        super(new StructureBaseDefinitionBinder(structure));
     }
 
     getFileName() {

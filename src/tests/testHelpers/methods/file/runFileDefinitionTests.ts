@@ -3,7 +3,7 @@ import {FileDefinition} from "./../../../../definitions";
 import {FileTestStructure} from "./../../testStructures";
 import {runImportDefinitionTests} from "./runImportDefinitionTests";
 import {runReExportDefinitionTests} from "./runReExportDefinitionTests";
-import {runModuledDefinitionTests} from "./../base";
+import {runBaseDefinitionTests, runModuledDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runExpressionDefinitionTests} from "./../expressions";
 
@@ -17,6 +17,7 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
         exportTestStructure.isNamedExportOfFile = exportTestStructure.isNamedExportOfFile == null ? true : exportTestStructure.isNamedExportOfFile;
     });
 
+    runBaseDefinitionTests(definition, structure);
     runModuledDefinitionTests(definition, structure);
 
     describe("imports", () => {

@@ -1,5 +1,6 @@
 ﻿export * from "./base/StructureAbstractableBinder";
 export * from "./base/StructureAmbientableBinder";
+export * from "./base/StructureBaseDefinitionBinder";
 export * from "./base/StructureBaseFunctionBinder";
 export * from "./base/StructureBaseParameterBinder";
 export * from "./base/StructureBasePropertyBinder";

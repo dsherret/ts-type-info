@@ -2,11 +2,12 @@
 import {InterfaceStructure} from "./../../../structures";
 import {objectAssign} from "./../../../utils";
 import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
-import {StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureTypeParameteredBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureTypeParameteredBinder} from "./../base";
 
 export class StructureInterfaceBinder extends InterfaceBinder {
     constructor(private factory: StructureFactory, private structure: InterfaceStructure) {
         super(
+            new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
             new StructureExportableBinder(structure),
             new StructureAmbientableBinder(objectAssign(structure, { isAmbient: true })),

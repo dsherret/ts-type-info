@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import {DecoratorTestStructure} from "./../../testStructures";
 import {DecoratorDefinition} from "./../../../../definitions";
-import {runNamedDefinitionTests} from "./../base";
+import {runBaseDefinitionTests, runNamedDefinitionTests} from "./../base";
 import {runExpressionDefinitionTests} from "./../expressions";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -10,6 +10,7 @@ export function runDecoratorDefinitionTests(definition: DecoratorDefinition, str
         ensureNotNull(definition, () => {
             structure.arguments = structure.arguments || [];
 
+            runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
 
             it(`should have ${structure.arguments.length} argument(s)`, () => {

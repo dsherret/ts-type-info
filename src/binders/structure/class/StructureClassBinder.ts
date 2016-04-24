@@ -1,12 +1,13 @@
 ﻿import {StructureFactory} from "./../../../factories";
 import {ClassStructure} from "./../../../structures";
 import {ClassBinder, ClassMemberContainer} from "./../../base";
-import {StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureAbstractableBinder, StructureTypeParameteredBinder,
-    StructureDecoratableBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureAbstractableBinder,
+    StructureTypeParameteredBinder, StructureDecoratableBinder} from "./../base";
 
 export class StructureClassBinder extends ClassBinder {
     constructor(private factory: StructureFactory, private structure: ClassStructure) {
         super(
+            new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
             new StructureExportableBinder(structure),
             new StructureAmbientableBinder(structure),

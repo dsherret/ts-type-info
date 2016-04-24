@@ -1,6 +1,6 @@
 ﻿import {CallSignatureDefinition, IndexSignatureDefinition, InterfaceDefinition, InterfacePropertyDefinition, InterfaceMethodDefinition,
     TypeExpressionDefinition} from "./../../../definitions";
-import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
+import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export class InterfaceMemberContainer {
@@ -13,6 +13,7 @@ export class InterfaceMemberContainer {
 
 export abstract class InterfaceBinder implements IBaseBinder {
     constructor(
+        private baseDefinitionBinder: BaseDefinitionBinder,
         private namedBinder: NamedBinder,
         private exportableBinder: ExportableBinder,
         private ambientableBinder: AmbientableBinder,
@@ -21,10 +22,10 @@ export abstract class InterfaceBinder implements IBaseBinder {
     }
 
     abstract getMembers(): InterfaceMemberContainer;
-
     abstract getExtendsTypeExpressions(): TypeExpressionDefinition[];
 
     bind(def: InterfaceDefinition) {
+        this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);

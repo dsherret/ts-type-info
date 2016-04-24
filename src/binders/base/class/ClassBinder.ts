@@ -1,7 +1,7 @@
 ﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition,
     ClassConstructorDefinition, ClassConstructorParameterScope, TypeExpressionDefinition} from "./../../../definitions";
 import {IBaseBinder} from "./../IBaseBinder";
-import {NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, AbstractableBinder, DecoratableBinder} from "./../base";
+import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, AbstractableBinder, DecoratableBinder} from "./../base";
 
 export class ClassMemberContainer {
     constructorDef: ClassConstructorDefinition;
@@ -13,6 +13,7 @@ export class ClassMemberContainer {
 
 export abstract class ClassBinder implements IBaseBinder {
     constructor(
+        private baseDefinitionBinder: BaseDefinitionBinder,
         private namedBinder: NamedBinder,
         private exportableBinder: ExportableBinder,
         private ambientableBinder: AmbientableBinder,
@@ -27,6 +28,7 @@ export abstract class ClassBinder implements IBaseBinder {
     abstract getImplementsTypeExpressions(): TypeExpressionDefinition[];
 
     bind(def: ClassDefinition) {
+        this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);

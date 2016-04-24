@@ -1,6 +1,6 @@
+import {BaseTestStructure, NamedTestStructure} from "./../base";
 import {ExpressionTestStructure} from "./../expressions";
-import {NamedTestStructure} from "./../base";
 
-export interface DecoratorTestStructure extends NamedTestStructure {
+export interface DecoratorTestStructure extends BaseTestStructure, NamedTestStructure {
     arguments?: ExpressionTestStructure[];
 }

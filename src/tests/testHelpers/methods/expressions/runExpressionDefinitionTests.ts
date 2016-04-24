@@ -1,16 +1,19 @@
 ﻿import * as assert from "assert";
 import {ExpressionDefinition} from "./../../../../definitions";
 import {ExpressionTestStructure} from "./../../testStructures";
+import {runBaseDefinitionTests} from "./../base";
 
-export function runExpressionDefinitionTests(expression: ExpressionDefinition, structure: ExpressionTestStructure) {
+export function runExpressionDefinitionTests(definition: ExpressionDefinition, structure: ExpressionTestStructure) {
     if (structure == null) {
         it(`should be null`, () => {
-            assert.equal(expression, null);
+            assert.equal(definition, null);
         });
     }
     else {
+        runBaseDefinitionTests(definition, structure);
+
         it(`should have the text ${structure.text}`, () => {
-            assert.equal(expression.text, structure.text);
+            assert.equal(definition.text, structure.text);
         });
     }
 }
