@@ -28,6 +28,10 @@ class MyClassWithStaticMethods {
 
     private static myPrivateMethod() {
     }
+
+    // async
+    static async myAsyncMethod(): any {
+    }
 }`;
 
     const def = getInfoFromString(code);
@@ -71,6 +75,10 @@ class MyClassWithStaticMethods {
             }, {
                 name: "myPrivateMethod",
                 scope: Scope.Private
+            }, {
+                name: "myAsyncMethod",
+                isAsync: true,
+                returnTypeExpression: { text: "any" }
             }]
         }]
     });

@@ -1,5 +1,6 @@
 ﻿export * from "./base/TsAbstractableBinder";
 export * from "./base/TsAmbientableBinder";
+export * from "./base/TsAsyncableBinder";
 export * from "./base/TsBaseDefinitionBinder";
 export * from "./base/TsBaseFunctionBinder";
 export * from "./base/TsBaseParameterBinder";

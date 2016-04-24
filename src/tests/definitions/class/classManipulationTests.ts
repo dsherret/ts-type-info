@@ -36,6 +36,7 @@ describe("ClassDefinition", () => {
         c.addMethods({
             decorators: [{ name: "decorator" }],
             isAbstract: true,
+            isAsync: true,
             returnType: "string",
             typeParameters: [{ name: "TypeParam", constraintType: "string" }],
             parameters: [{
@@ -56,6 +57,7 @@ describe("ClassDefinition", () => {
         runClassMethodDefinitionTests(c.methods[0], {
             decorators: [{ name: "decorator" }],
             isAbstract: true,
+            isAsync: true,
             returnTypeExpression: { text: "string" },
             typeParameters: [{ name: "TypeParam", constraintTypeExpression: { text: "string" } }],
             parameters: [{
@@ -114,6 +116,7 @@ describe("ClassDefinition", () => {
 
         c.addStaticMethods({
             decorators: [{ name: "decorator" }],
+            isAsync: true,
             returnType: "string",
             typeParameters: [{ name: "TypeParam", constraintType: "string" }],
             parameters: [{
@@ -132,6 +135,7 @@ describe("ClassDefinition", () => {
 
         runClassStaticMethodDefinitionTests(c.staticMethods[0], {
             decorators: [{ name: "decorator" }],
+            isAsync: true,
             returnTypeExpression: { text: "string" },
             typeParameters: [{ name: "TypeParam", constraintTypeExpression: { text: "string" } }],
             parameters: [{

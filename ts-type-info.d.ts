@@ -98,6 +98,10 @@ export abstract class AmbientableDefinition {
     hasDeclareKeyword: boolean;
 }
 
+export abstract class AsyncableDefinition {
+    isAsync: boolean;
+}
+
 export abstract class TypeExpressionedDefinition {
     typeExpression: TypeExpressionDefinition;
 }
@@ -267,7 +271,8 @@ export class TypeExpressionDefinition extends ExpressionDefinition {
     types: TypeDefinition[];
 }
 
-export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, FunctionBodyWriteableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition {
+    isAsync: boolean;
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -289,7 +294,8 @@ export class BaseClassMethodParameterDefinition extends BaseParameterDefinition 
     scope: "public" | "protected" | "private";
 }
 
-export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements DecoratableDefinition, ScopedDefinition, FunctionBodyWriteableDefinition {
+export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements AsyncableDefinition, DecoratableDefinition, ScopedDefinition, FunctionBodyWriteableDefinition {
+    isAsync: boolean;
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
@@ -635,6 +641,10 @@ export interface AmbientableStructure {
     hasDeclareKeyword?: boolean;
 }
 
+export interface AsyncableStructure {
+    isAsync?: boolean;
+}
+
 export interface DefaultExpressionedStructure {
     defaultExpression?: string;
 }
@@ -722,7 +732,7 @@ export interface TypeParameterStructure extends BaseStructure, NamedStructure {
 export interface TypePropertyStructure extends BasePropertyStructure {
 }
 
-export interface BaseClassMethodStructure<ParameterType extends BaseClassMethodParameterStructure> extends BaseFunctionStructure<ParameterType>, DecoratableStructure, ScopedStructure, FunctionBodyWriteableStructure {
+export interface BaseClassMethodStructure<ParameterType extends BaseClassMethodParameterStructure> extends BaseFunctionStructure<ParameterType>, AsyncableStructure, DecoratableStructure, ScopedStructure, FunctionBodyWriteableStructure {
 }
 
 export interface BaseClassMethodParameterStructure extends BaseParameterStructure, DecoratableStructure {
@@ -813,7 +823,7 @@ export interface ReExportStructure extends BaseStructure {
     namedExports?: NamedImportStructure[];
 }
 
-export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, ExportableStructure, AmbientableStructure, FunctionBodyWriteableStructure {
+export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, AmbientableStructure, AsyncableStructure, ExportableStructure, FunctionBodyWriteableStructure {
 }
 
 export interface FunctionParameterStructure extends BaseParameterStructure {

@@ -1,5 +1,6 @@
 ﻿export * from "./base/BaseTestStructure";
 export * from "./base/NamedTestStructure";
+export * from "./base/AsyncableTestStructure";
 export * from "./base/AbstractableTestStructure";
 export * from "./base/AmbientableTestStructure";
 export * from "./base/DefaultExpressionedTestStructure";

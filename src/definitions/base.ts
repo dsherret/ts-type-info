@@ -4,6 +4,7 @@ export * from "./base/FunctionBodyWriteableDefinition";
 export * from "./base/NamedDefinition";
 export * from "./base/AbstractableDefinition";
 export * from "./base/AmbientableDefinition";
+export * from "./base/AsyncableDefinition";
 export * from "./base/TypeExpressionedDefinition";
 export * from "./base/DefaultExpressionedDefinition";
 export * from "./base/DecoratableDefinition";

@@ -7,7 +7,10 @@ function myFunction() {
 }
 function myFunctionWithParameters(str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: string[]) {
     return new Date();
-}`;
+}
+async function myAsyncFunction(): any {
+}
+`;
 
     const def = getInfoFromString(code);
 
@@ -37,6 +40,10 @@ function myFunctionWithParameters(str: string, optionalParam?: string, defaultPa
             returnTypeExpression: {
                 text: "Date"
             }
+        }, {
+            name: "myAsyncFunction",
+            isAsync: true,
+            returnTypeExpression: { text: "any" }
         }]
     });
 });

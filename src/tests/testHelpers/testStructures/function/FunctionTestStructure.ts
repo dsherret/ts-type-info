@@ -1,6 +1,7 @@
 import {FunctionParameterTestStructure} from "./FunctionParameterTestStructure";
-import {ExportableTestStructure, AmbientableTestStructure, BaseFunctionTestStructure, FunctionBodyWriteableTestStructure} from "./../base";
+import {AsyncableTestStructure, ExportableTestStructure, AmbientableTestStructure, BaseFunctionTestStructure, FunctionBodyWriteableTestStructure} from "./../base";
 
 export interface FunctionTestStructure
-        extends BaseFunctionTestStructure<FunctionParameterTestStructure>, ExportableTestStructure, FunctionBodyWriteableTestStructure, AmbientableTestStructure {
+        extends BaseFunctionTestStructure<FunctionParameterTestStructure>, AsyncableTestStructure, ExportableTestStructure, FunctionBodyWriteableTestStructure,
+            AmbientableTestStructure {
 }

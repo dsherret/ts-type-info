@@ -2,6 +2,7 @@
 export * from "./base/NamedStructure";
 export * from "./base/AbstractableStructure";
 export * from "./base/AmbientableStructure";
+export * from "./base/AsyncableStructure";
 export * from "./base/DefaultExpressionedStructure";
 export * from "./base/DecoratableStructure";
 export * from "./base/ExportableStructure";
