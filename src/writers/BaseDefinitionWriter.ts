@@ -1,4 +1,4 @@
-﻿import {ExportableDefinitions, AmbientableDefinition, BaseDefinition} from "./../definitions";
+﻿import {ExportableDefinitions, AmbientableDefinition, AsyncableDefinition, BaseDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseWriter} from "./BaseWriter";
 
@@ -39,6 +39,12 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
     protected writeDeclareClause(def: AmbientableDefinition) {
         if (def.hasDeclareKeyword) {
             this.writer.write("declare ");
+        }
+    }
+
+    protected writeAsyncKeyword(def: AsyncableDefinition) {
+        if (def.isAsync) {
+            this.writer.write("async ");
         }
     }
 }

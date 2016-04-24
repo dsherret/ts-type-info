@@ -8,6 +8,9 @@ abstract class MyClass {
     static myStaticMethod() {
     }
 
+    static async myAsyncStaticMethod() {
+    }
+
     myString: string;
     private myPrivateString: string;
 
@@ -28,6 +31,11 @@ abstract class MyClass {
 
     private myPrivateMethod() {
     }
+
+    async myAsyncMethod() {
+    }
+
+    abstract async myAbstractAsyncMethod();
 }
 
 class MyTypeParameterClass<T> {
@@ -56,6 +64,9 @@ describe("ClassDefinition", () => {
     static myStaticMethod() {
     }
 
+    static async myAsyncStaticMethod() {
+    }
+
     myString: string;
     private myPrivateString: string;
 
@@ -75,6 +86,11 @@ describe("ClassDefinition", () => {
 
     private myPrivateMethod() {
     }
+
+    async myAsyncMethod() {
+    }
+
+    abstract async myAbstractAsyncMethod(): any;
 }
 `;
                 assert.equal(file.classes[0].write(), expected);

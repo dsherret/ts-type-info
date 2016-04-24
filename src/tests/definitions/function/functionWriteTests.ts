@@ -16,6 +16,9 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 function myFunctionBodyWriter() {
     return "";
 }
+declare async function myDeclareAsyncFunction();
+export async function myExportAsyncFunction() {
+}
 `;
 
 describe("FunctionDefinition", () => {
@@ -52,6 +55,7 @@ export function myMultipleSignatures<T>(str?: string): string {
                 assert.equal(file.functions[2].write(), expected);
             });
         });
+
         describe("myDeclareMultipleSignatures", () => {
             it("should contain the function written out", () => {
                 const expected =
@@ -72,6 +76,25 @@ declare function myDeclareMultipleSignatures(str?: string): string;
             it(`should write the function with a body`, () => {
                 const expected = `function myFunctionBodyWriter() {\n    return "text";\n}\n`;
                 assert.equal(funcDef.write(), expected);
+            });
+        });
+
+        describe("myDeclareAsyncFunction", () => {
+            it("should contain the function written out", () => {
+                const expected =
+`declare async function myDeclareAsyncFunction(): any;
+`;
+                assert.equal(file.functions[5].write(), expected);
+            });
+        });
+
+        describe("myExportAsyncFunction", () => {
+            it("should contain the function written out", () => {
+                const expected =
+`export async function myExportAsyncFunction() {
+}
+`;
+                assert.equal(file.functions[6].write(), expected);
             });
         });
     });
