@@ -13,7 +13,7 @@ export * from "./definitions";
 export * from "./errors";
 export * from "./structures";
 
-export function createFile(structure?: FileStructure) {
+export function createFile(structure: FileStructure = {}) {
     const factory = new StructureFactory();
     return factory.getFile(structure);
 }

@@ -7,20 +7,28 @@ import {runFileDefinitionTests} from "./testHelpers";
 
 describe("Main", () => {
     describe("#createFile()", () => {
-        const file = tsTypeInfo.createFile({
-            fileName: "test.ts",
-            defaultExportExpression: "5",
-            imports: [{ moduleSpecifier: "./test", starImportName: "test" }],
-            reExports: [{ moduleSpecifier: "./test2" }],
-            variables: [{ name: "myVar" }]
+        describe("has options", () => {
+            const file = tsTypeInfo.createFile({
+                fileName: "test.ts",
+                defaultExportExpression: "5",
+                imports: [{ moduleSpecifier: "./test", starImportName: "test" }],
+                reExports: [{ moduleSpecifier: "./test2" }],
+                variables: [{ name: "myVar" }]
+            });
+
+            runFileDefinitionTests(file, {
+                fileName: "test.ts",
+                defaultExportExpression: { text: "5" },
+                imports: [{ moduleSpecifier: "./test", starImportName: "test" }],
+                reExports: [{ moduleSpecifier: "./test2" }],
+                variables: [{ name: "myVar", declarationType: VariableDeclarationType.Let }]
+            });
         });
 
-        runFileDefinitionTests(file, {
-            fileName: "test.ts",
-            defaultExportExpression: { text: "5" },
-            imports: [{ moduleSpecifier: "./test", starImportName: "test" }],
-            reExports: [{ moduleSpecifier: "./test2" }],
-            variables: [{ name: "myVar", declarationType: VariableDeclarationType.Let }]
+        describe("has no options", () => {
+            const file = tsTypeInfo.createFile();
+
+            runFileDefinitionTests(file, {});
         });
     });
 
