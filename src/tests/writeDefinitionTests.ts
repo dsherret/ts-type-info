@@ -20,16 +20,6 @@ function writeDefinitionWrapper(def: WriteableDefinitions) {
 }
 
 describe("#writeDefinition()", () => {
-    describe("FileDefinition", () => {
-        const def = getInfoFromString(testCode.fileWriterTestCode);
-        it(`should write the same thing as an file writer for the file`, () => {
-            const writer = getCodeBlockWriter();
-            const fileWriter = new FileWriter(writer);
-            fileWriter.write(def, WriteFlags.Default);
-            assert.equal(writeDefinitionWrapper(def), writer.toString());
-        });
-    });
-
     describe("NamespaceDefinition", () => {
         const file = getInfoFromString(testCode.namespaceWriterTestCode);
         file.namespaces.forEach(def => {
