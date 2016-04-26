@@ -13,6 +13,26 @@ abstract class MyClass {
 
     myString: string;
     private myPrivateString: string;
+    nonOptionalString = "text";
+    optionalNumber?: number;
+
+    get myGet(): string {
+        return "";
+    }
+
+    get myGetSet(): string {
+        return "";
+    }
+
+    set myGetSet(value: string) {
+    }
+
+    get myGetSetWithWriteDefined(): string {
+        return "";
+    }
+
+    set myGetSetWithWriteDefined(value: string) {
+    }
 
     constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
@@ -69,6 +89,18 @@ describe("ClassDefinition", () => {
 
     myString: string;
     private myPrivateString: string;
+    nonOptionalString = "text";
+    optionalNumber?: number;
+    myGet: string;
+    myGetSet: string;
+
+    get myGetSetWithWriteDefined(): string {
+        return "";
+    }
+
+    set myGetSetWithWriteDefined(value: string) {
+        console.log(value);
+    }
 
     constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
@@ -93,7 +125,13 @@ describe("ClassDefinition", () => {
     abstract async myAbstractAsyncMethod(): any;
 }
 `;
-                assert.equal(file.classes[0].write(), expected);
+                const classDef = file.classes[0];
+                const property = classDef.getProperty("myGetSetWithWriteDefined");
+
+                property.onWriteGetAccessorBody = writer => writer.write(`return "";`);
+                property.onWriteSetAccessorBody = writer => writer.write(`console.log(value);`);
+
+                assert.equal(classDef.write(), expected);
             });
         });
 

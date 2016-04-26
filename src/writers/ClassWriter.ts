@@ -64,7 +64,17 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
     private writeProperties(def: ClassDefinition, flags: WriteFlags) {
         def.properties.forEach(p => {
             if (this.shouldInclude(p, flags) && !p.isConstructorParameter) {
+                // todo: improve this by moving writing blank lines into code-block-writer (See #69)
+                const willWriteAccessorBody = PropertyWriter.willWriteAccessorBody(p);
+                if (willWriteAccessorBody) {
+                    this.writer.newLine();
+                }
+
                 this.propertyWriter.write(p, flags);
+
+                if (willWriteAccessorBody) {
+                    this.writer.newLine();
+                }
             }
         });
     }
