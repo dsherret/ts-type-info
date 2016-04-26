@@ -66,15 +66,6 @@ describe("FileDefinition", () => {
             });
         });
 
-        it("should error when nothing but a moduleSpecifier is specified", () => {
-            const f = new FileDefinition();
-            assert.throws(() => {
-                f.addImports({
-                    moduleSpecifier: "./test1"
-                });
-            }, /specify either a starImport/);
-        });
-
         it("should error when a star import and named import are specified", () => {
             const f = new FileDefinition();
             assert.throws(() => {

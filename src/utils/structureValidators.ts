@@ -15,8 +15,4 @@ export function validateImportStructure(structure: ImportStructure) {
             throw new Error("You cannot specify a defaultImport when specifying a starImport.");
         }
     }
-
-    if (!isStarImportSet && !isNamedImportSet && !isDefaultImportSet) {
-        throw new Error("You must specify either a starImport, defaultImport or namedImports.");
-    }
 }
