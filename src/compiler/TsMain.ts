@@ -57,7 +57,7 @@ export class TsMain {
         fileNames.forEach(fileName => {
             // unfortunately the ts compiler doesn't do things asynchronously so for now we won't either
             if (!FileUtils.fileExistsSync(fileName)) {
-                throw new FileNotFoundError(fileName);
+                throw new FileNotFoundError(FileUtils.getAbsolutePath(fileName));
             }
         });
     }
