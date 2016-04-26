@@ -11,7 +11,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     private scopeWriter = new ScopeWriter(this.writer);
 
     static willWriteAccessorBody(def: PropertyDefinitions) {
-        return def.isClassPropertyDefinition() && def.isAccessor && (def.onWriteGetAccessorBody != null || def.onWriteSetAccessorBody != null);
+        return def.isClassPropertyDefinition() && def.isAccessor && (def.onWriteGetBody != null || def.onWriteSetBody != null);
     }
 
     protected writeDefault(def: PropertyDefinitions, flags: WriteFlags) {
@@ -33,7 +33,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     }
 
     private writeGetAccessor(def: ClassPropertyDefinition) {
-        const isWriteBodyFunctionDefined = typeof def.onWriteGetAccessorBody === "function";
+        const isWriteBodyFunctionDefined = typeof def.onWriteGetBody === "function";
         this.writer.write("get ");
         this.writeHeader(def);
         this.writer.write("()");
@@ -41,13 +41,13 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
 
         this.writer.block(() => {
             if (isWriteBodyFunctionDefined) {
-                def.onWriteGetAccessorBody(this.writer);
+                def.onWriteGetBody(this.writer);
             }
         });
     }
 
     private writeSetAccessor(def: ClassPropertyDefinition) {
-        const isWriteBodyFunctionDefined = typeof def.onWriteSetAccessorBody === "function";
+        const isWriteBodyFunctionDefined = typeof def.onWriteSetBody === "function";
         this.writer.write("set ");
         this.writeHeader(def);
         this.writer.write("(value"); // default to value for now
@@ -56,7 +56,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
 
         this.writer.block(() => {
             if (isWriteBodyFunctionDefined) {
-                def.onWriteSetAccessorBody(this.writer);
+                def.onWriteSetBody(this.writer);
             }
         });
     }

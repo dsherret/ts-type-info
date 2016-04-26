@@ -128,8 +128,8 @@ describe("ClassDefinition", () => {
                 const classDef = file.classes[0];
                 const property = classDef.getProperty("myGetSetWithWriteDefined");
 
-                property.onWriteGetAccessorBody = writer => writer.write(`return "";`);
-                property.onWriteSetAccessorBody = writer => writer.write(`console.log(value);`);
+                property.onWriteGetBody = writer => writer.write(`return "";`);
+                property.onWriteSetBody = writer => writer.write(`console.log(value);`);
 
                 assert.equal(classDef.write(), expected);
             });
