@@ -8,6 +8,7 @@ export default class CodeBlockWriter {
     private _lastWasNewLine;
     constructor(opts?: { newLine: string });
     block(block: () => void): CodeBlockWriter;
+    conditionalWrite(condition: boolean, str: string): CodeBlockWriter;
     getLength(): number;
     writeLine(str: string): CodeBlockWriter;
     newLineIfLastCharNotNewLine(): CodeBlockWriter;
