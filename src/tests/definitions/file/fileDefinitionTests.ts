@@ -26,6 +26,8 @@ describe("FileDefinition", () => {
                     name: "namedImport3"
                 }],
                 defaultImportName: "defaultImport2"
+            }, {
+                moduleSpecifier: "./test5"
             });
 
             describe("import star", () => {
@@ -62,6 +64,12 @@ describe("FileDefinition", () => {
                     moduleSpecifier: "./test4",
                     defaultImport: { importName: "defaultImport2" },
                     namedImports: [{ importName: "namedImport3" }]
+                });
+            });
+
+            describe("only module specifier", () => {
+                runImportDefinitionTests(f.imports[4], {
+                    moduleSpecifier: "./test5"
                 });
             });
         });

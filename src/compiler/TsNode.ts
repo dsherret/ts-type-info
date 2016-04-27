@@ -117,7 +117,7 @@ export class TsNode extends TsSourceFileChild {
         const importDeclaration = this.node as ts.ImportDeclaration;
         const clause = importDeclaration.importClause;
 
-        if (clause.name != null) {
+        if (clause != null && clause.name != null) {
             return {
                 name: clause.name.getText(),
                 symbol: this.createSymbol(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(clause.name)))
@@ -467,7 +467,7 @@ export class TsNode extends TsSourceFileChild {
 
     isStarImport() {
         const importDeclaration = this.node as ts.ImportDeclaration;
-        const namespaceImport = importDeclaration.importClause.namedBindings as ts.NamespaceImport;
+        const namespaceImport = (importDeclaration.importClause == null) ? null : importDeclaration.importClause.namedBindings as ts.NamespaceImport;
 
         return namespaceImport != null && namespaceImport.name != null;
     }

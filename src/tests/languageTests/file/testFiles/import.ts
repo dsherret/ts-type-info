@@ -10,6 +10,7 @@ import * as NamedExports from "./namedExports";
 import DefaultExportClassLocalName1, {NamedExportEnum as NamedExportLocalName} from "./namedWithDefaultExport";
 import DefaultExportClassLocalName2, * as NamedWithDefaultExportStarImport from "./namedWithDefaultExport";
 import Expression from "./expression";
+import "./expression";
 
 import * as reexports from "./reExport";
 import * as definitionLocal from "definition";
@@ -22,7 +23,7 @@ function dummyFunction(...t: any[]) {
 }
 
 dummyFunction(DefaultExportSeparate, NamedExport1, NamedExport2, NamedExports.NamedExport1, NamedExports.NamedExport2,
-    DefaultExportClassLocalName, NamedExportLocalName, reexports.RenamedExport, reexports.NamedExport1, reexports.NamedExport2, Expression);
+    DefaultExportClassLocalName1, NamedExportLocalName, reexports.RenamedExport, reexports.NamedExport1, reexports.NamedExport2, Expression);
 
 let myVar1: definitionLocal.DefinitionInterface;
 dummyFunction(myVar1);

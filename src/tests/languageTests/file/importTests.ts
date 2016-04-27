@@ -153,6 +153,15 @@ describe("file import tests", () => {
     });
 
     runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./expression",
+        fileName: "expression.ts",
+        defaultImport: null,
+        namedImports: [],
+        starImportName: null,
+        starImports: []
+    });
+
+    runImportDefinitionTests(fileDef.imports[i++], {
         moduleSpecifier: "./reExport",
         fileName: "reExport.ts",
         defaultImport: null,
