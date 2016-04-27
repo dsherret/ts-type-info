@@ -7,7 +7,8 @@ import DefaultExport from "./defaultExport";
 import DefaultExportSeparate from "./defaultExportSeparate";
 import {NamedExport1, NamedExport2} from "./namedExports";
 import * as NamedExports from "./namedExports";
-import DefaultExportClassLocalName, {NamedExportEnum as NamedExportLocalName} from "./namedWithDefaultExport";
+import DefaultExportClassLocalName1, {NamedExportEnum as NamedExportLocalName} from "./namedWithDefaultExport";
+import DefaultExportClassLocalName2, * as NamedWithDefaultExportStarImport from "./namedWithDefaultExport";
 import Expression from "./expression";
 
 import * as reexports from "./reExport";

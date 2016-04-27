@@ -4,25 +4,29 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class ImportWriter extends BaseDefinitionWriter<ImportDefinition> {
     protected writeDefault(def: ImportDefinition, flags: WriteFlags) {
+        const hasDefaultImport = def.defaultImport != null;
+        const hasStarImport = def.starImportName != null && def.starImportName.length > 0;
+        const hasNamedImports = (def.namedImports || []).length > 0;
+
         this.writer.write("import ");
 
-        if (def.starImportName) {
+        if (hasDefaultImport) {
+            this.writeDefaultImport(def);
+            this.writer.conditionalWrite(hasStarImport || hasNamedImports, ", ");
+        }
+
+        if (hasStarImport) {
             this.writeStarImport(def);
         }
-        else {
-            const hasDefaultImport = def.defaultImport != null;
-
-            if (hasDefaultImport) {
-                this.writeDefaultImport(def);
-            }
-
-            if ((def.namedImports || []).length > 0) {
-                this.writer.conditionalWrite(hasDefaultImport, ", ");
-                this.writeNamedImports(def);
-            }
+        else if (hasNamedImports) {
+            this.writeNamedImports(def);
         }
 
-        this.writeModuleSpecifier(def);
+        if (hasDefaultImport || hasStarImport || hasNamedImports) {
+            this.writer.write(" from ");
+        }
+
+        this.writer.write(`"${def.moduleSpecifier}";`);
         this.writer.newLine();
     }
 
@@ -55,9 +59,5 @@ export class ImportWriter extends BaseDefinitionWriter<ImportDefinition> {
             }
         });
         this.writer.write("}");
-    }
-
-    private writeModuleSpecifier(def: ImportDefinition) {
-        this.writer.write(` from "${def.moduleSpecifier}";`);
     }
 }

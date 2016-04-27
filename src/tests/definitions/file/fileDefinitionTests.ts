@@ -76,17 +76,6 @@ describe("FileDefinition", () => {
                 });
             }, /specify namedImports/);
         });
-
-        it("should error when a star import and default import are specified", () => {
-            const f = new FileDefinition();
-            assert.throws(() => {
-                f.addImports({
-                    moduleSpecifier: "./test1",
-                    starImportName: "test",
-                    defaultImportName: "test2"
-                });
-            }, /specify a defaultImport/);
-        });
     });
 
     describe("addReExports", () => {

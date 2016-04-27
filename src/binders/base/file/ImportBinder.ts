@@ -18,13 +18,13 @@ export abstract class ImportBinder implements IBaseBinder {
         this.baseDefinitionBinder.bind(def);
         def.fileName = this.getFileName();
         def.moduleSpecifier = this.getModuleSpecifier();
+        def.defaultImport = this.getDefaultImport();
 
         if (this.getIsStarImport()) {
             def.starImports = this.getStarImports();
             def.starImportName = this.getStarImportName();
         }
         else {
-            def.defaultImport = this.getDefaultImport();
             def.namedImports = this.getNamedImports();
         }
     }

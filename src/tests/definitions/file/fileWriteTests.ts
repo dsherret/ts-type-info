@@ -7,6 +7,7 @@ import myDefaultImport from "./test";
 import * as myStarImport from "./test";
 import {myFirstNamedImport, mySecondNamedImport} from "./test";
 import myDefaultImport2, {myAlias} from "./test";
+import myDefaultImport3, * as myStarImport2 from "./test";
 
 var myVariable: string;
 namespace MyNamespace {
@@ -38,6 +39,7 @@ describe("FileDefinition", () => {
 import * as myStarImport from "./test";
 import {myFirstNamedImport, mySecondNamedImport} from "./test";
 import myDefaultImport2, {MyActualName as myAlias} from "./test";
+import myDefaultImport3, * as myStarImport2 from "./test";
 
 var myVariable: string;
 

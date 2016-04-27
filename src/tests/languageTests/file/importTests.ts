@@ -97,7 +97,7 @@ describe("file import tests", () => {
         moduleSpecifier: "./namedWithDefaultExport",
         fileName: "namedWithDefaultExport.ts",
         defaultImport: {
-            importName: "DefaultExportClassLocalName",
+            importName: "DefaultExportClassLocalName1",
             definitions: [{
                 name: "DefaultExportClass",
                 type: ClassDefinition
@@ -114,6 +114,29 @@ describe("file import tests", () => {
         }],
         starImportName: null,
         starImports: []
+    });
+
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./namedWithDefaultExport",
+        fileName: "namedWithDefaultExport.ts",
+        defaultImport: {
+            importName: "DefaultExportClassLocalName2",
+            definitions: [{
+                name: "DefaultExportClass",
+                type: ClassDefinition
+            }],
+            expression: null
+        },
+        namedImports: [],
+        starImportName: "NamedWithDefaultExportStarImport",
+        starImports: [{
+            importName: "NamedExportEnum",
+            definitions: [{
+                name: "NamedExportEnum",
+                type: EnumDefinition
+            }],
+            expression: null
+        }]
     });
 
     runImportDefinitionTests(fileDef.imports[i++], {
