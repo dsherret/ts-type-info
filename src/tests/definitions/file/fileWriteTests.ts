@@ -26,6 +26,8 @@ enum MyEnum {
 }
 function myFunction() {
 }
+
+export default MyEnum;
 `;
 
 describe("FileDefinition", () => {
@@ -69,6 +71,8 @@ enum MyEnum {
 
 function myFunction() {
 }
+
+export default MyEnum;
 `;
             assert.equal(file.write(), expected);
         });
