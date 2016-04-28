@@ -71,6 +71,10 @@ export class TsType extends TsSourceFileChild {
         }
     }
 
+    isTupleType() {
+        return (this.type.flags & ts.TypeFlags.Tuple) !== 0;
+    }
+
     hasCallSignaturesAndProperties() {
         return (this.type.flags & (
             ts.TypeFlags.ObjectType |

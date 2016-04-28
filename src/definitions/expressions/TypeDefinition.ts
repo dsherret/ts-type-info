@@ -15,7 +15,7 @@ export class TypeDefinition {
     fillTypeInformation(factory: TsFactory, type: TsType) {
         this.text = type.getText();
 
-        if (type.hasCallSignaturesAndProperties()) {
+        if (!type.isTupleType() && type.hasCallSignaturesAndProperties()) {
             this.callSignatures.push(...type.getCallSignatures().map(callSignature => {
                 const def = new CallSignatureDefinition();
                 const binder = new TsCallSignatureBinder(factory, callSignature);
