@@ -365,6 +365,8 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isAccessor: boolean;
     isReadonly: boolean;
     isConstructorParameter: boolean;
+    onWriteGetBody: (writer: CodeBlockWriter) => void;
+    onWriteSetBody: (writer: CodeBlockWriter) => void;
 }
 
 export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition {
@@ -543,6 +545,8 @@ export class ImportDefinition extends BaseDefinition {
     defaultImport: ImportPartDefinition;
     namedImports: ImportPartDefinition[];
     starImports: ImportPartDefinition[];
+
+    write(): string;
 }
 
 export abstract class BaseImportPartDefinition extends BaseDefinition {
@@ -561,6 +565,7 @@ export class ReExportDefinition extends BaseDefinition {
     namedExports: ReExportPartDefinition[];
 
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    write(): string;
 }
 
 export class ReExportPartDefinition extends BaseImportPartDefinition {
@@ -617,10 +622,10 @@ export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinitio
 
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
 
-export class ArgumentTypeError extends Error {
+export class ArgumentTypeError extends BaseError {
 }
 
-export class FileNotFoundError extends Error {
+export class FileNotFoundError extends BaseError {
 }
 
 export interface BaseStructure {
