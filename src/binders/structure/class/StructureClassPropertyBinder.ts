@@ -18,4 +18,12 @@ export class StructureClassPropertyBinder extends ClassPropertyBinder {
     getIsConstructorParameter() {
         return this.structure.isConstructorParameter || false;
     }
+
+    getOnWriteGetBody() {
+        return this.structure.onWriteGetBody;
+    }
+
+    getOnWriteSetBody() {
+        return this.structure.onWriteSetBody;
+    }
 }

@@ -1,4 +1,5 @@
-﻿import {TsFactory} from "./../../../factories";
+﻿import CodeBlockWriter from "code-block-writer";
+import {TsFactory} from "./../../../factories";
 import {TsNode, TsSymbol} from "./../../../compiler";
 import {ClassPropertyBinder} from "./../../base";
 import {TsBaseClassPropertyBinder} from "./base";
@@ -23,5 +24,13 @@ export class TsClassPropertyBinder extends ClassPropertyBinder {
     getIsConstructorParameter() {
         // this implementation will never be a constructor parameter
         return false;
+    }
+
+    getOnWriteGetBody() {
+        return null as (writer: CodeBlockWriter) => void;
+    }
+
+    getOnWriteSetBody() {
+        return null as (writer: CodeBlockWriter) => void;
     }
 }

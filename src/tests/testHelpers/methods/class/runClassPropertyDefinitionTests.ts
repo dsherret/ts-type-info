@@ -20,6 +20,14 @@ export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinit
             it(`should be ${structure.isConstructorParameter ? "a" : "not a"} constructor parameter`, () => {
                 assert.equal(definition.isConstructorParameter, structure.isConstructorParameter || false);
             });
+
+            it(`should ${structure.hasOnWriteGetBody ? "have" : "not have"} a writeGetBody`, () => {
+                assert.equal(definition.onWriteGetBody != null, structure.hasOnWriteGetBody || false);
+            });
+
+            it(`should ${structure.hasOnWriteSetBody ? "have" : "not have"} a writeSetBody`, () => {
+                assert.equal(definition.onWriteSetBody != null, structure.hasOnWriteSetBody || false);
+            });
         });
     });
 }

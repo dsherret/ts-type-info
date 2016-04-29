@@ -4,4 +4,6 @@ export interface ClassPropertyTestStructure extends BaseClassPropertyTestStructu
     isAccessor?: boolean;
     isReadonly?: boolean;
     isConstructorParameter?: boolean;
+    hasOnWriteGetBody?: boolean;
+    hasOnWriteSetBody?: boolean;
 }

@@ -90,7 +90,9 @@ describe("ClassDefinition", () => {
             isReadonly: true,
             name: "myProperty",
             scope: Scope.Private,
-            type: "string"
+            type: "string",
+            onWriteGetBody: (writer) => writer.write(""),
+            onWriteSetBody: (writer) => writer.write("")
         }, {
             name: "mySecondProperty"
         });
@@ -104,7 +106,9 @@ describe("ClassDefinition", () => {
             isReadonly: true,
             name: "myProperty",
             scope: Scope.Private,
-            typeExpression: { text: "string" }
+            typeExpression: { text: "string" },
+            hasOnWriteGetBody: true,
+            hasOnWriteSetBody: true
         });
         runClassPropertyDefinitionTests(c.properties[1], {
             name: "mySecondProperty"
