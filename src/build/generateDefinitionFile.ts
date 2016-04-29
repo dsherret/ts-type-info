@@ -14,10 +14,6 @@ export function generateDefinitionFile() {
                                          m.name.indexOf("fill") === -1 &&
                                          m.name !== "addType");
             def.properties = def.properties.filter(p => p.name.indexOf("fill") === -1 && p.name !== "addType");
-
-            if (def.name !== "ArrayExt") {
-                def.constructorDef = null;
-            }
         }
         else if (def.isInterfaceDefinition()) {
             def.methods = def.methods.filter(m => m.name !== "addDefinitions" &&

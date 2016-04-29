@@ -8,6 +8,10 @@ export class ClassConstructorWriter extends BaseDefinitionWriter<ClassConstructo
     private parametersWriter = new ParametersWriter(this.writer);
     private functionBodyWriter = new FunctionBodyWriter(this.writer);
 
+    static shouldWriteConstructor(def: ClassConstructorDefinition, flags: WriteFlags) {
+        return (def.parameters.length > 0 || FunctionBodyWriter.willWriteFunctionBody(def, flags));
+    }
+
     protected writeDefault(def: ClassConstructorDefinition, flags: WriteFlags) {
         this.writer.write("constructor");
         this.parametersWriter.write(def.parameters, flags);

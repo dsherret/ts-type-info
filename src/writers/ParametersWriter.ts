@@ -14,7 +14,7 @@ export class ParametersWriter extends BaseWriter {
             }
 
             if (param.isClassConstructorParameterDefinition()) {
-                this.writeScope(param.scope);
+                this.writeScope(param.scope, flags);
             }
 
             this.parameterWriter.write(param, flags);
@@ -22,15 +22,17 @@ export class ParametersWriter extends BaseWriter {
         this.writer.write(")");
     }
 
-    private writeScope(scope: ClassConstructorParameterScope) {
-        if (scope === ClassConstructorParameterScope.Private) {
-            this.writer.write("private ");
-        }
-        else if (scope === ClassConstructorParameterScope.Protected) {
-            this.writer.write("protected ");
-        }
-        else if (scope === ClassConstructorParameterScope.Public) {
-            this.writer.write("public ");
+    private writeScope(scope: ClassConstructorParameterScope, flags: WriteFlags) {
+        if ((flags & WriteFlags.HideScopeOnParameters) === 0) {
+            if (scope === ClassConstructorParameterScope.Private) {
+                this.writer.write("private ");
+            }
+            else if (scope === ClassConstructorParameterScope.Protected) {
+                this.writer.write("protected ");
+            }
+            else if (scope === ClassConstructorParameterScope.Public) {
+                this.writer.write("public ");
+            }
         }
     }
 }
