@@ -24,6 +24,10 @@ export abstract class BaseDefinition {
     onBeforeWrite: (writer: CodeBlockWriter) => void;
     onAfterWrite: (writer: CodeBlockWriter) => void;
 
+    constructor(_definitionType: DefinitionType);
+
+    private _definitionType: DefinitionType;
+
     isCallSignatureDefinition(): boolean;
     isClassDefinition(): boolean;
     isClassMethodDefinition(): boolean;
@@ -153,6 +157,8 @@ export abstract class BasePropertyDefinition extends BaseDefinition implements N
     isOptional: boolean;
     name: string;
     typeExpression: TypeExpressionDefinition;
+
+    constructor(definitionType: DefinitionType);
 }
 
 export abstract class TypeParameteredDefinition {
@@ -164,6 +170,8 @@ export abstract class TypeParameteredDefinition {
 
 export abstract class ObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition;
+
+    constructor(definitionType: DefinitionType);
 }
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
@@ -175,6 +183,8 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+
+    constructor(definitionType: DefinitionType);
 
     addOverloadSignatures(...overloadSignatures: CallSignatureStructure[]): this;
     getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean): CallSignatureDefinition;
@@ -191,6 +201,8 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     name: string;
     typeExpression: TypeExpressionDefinition;
     defaultExpression: ExpressionDefinition;
+
+    constructor(definitionType: DefinitionType);
 }
 
 export abstract class ParameteredDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> {
@@ -292,6 +304,8 @@ export class BaseClassMethodParameterDefinition extends BaseParameterDefinition 
     addDecorators: (...decorators: DecoratorStructure[]) => this;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     scope: "public" | "protected" | "private";
+
+    constructor(definitionType: DefinitionType);
 }
 
 export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements AsyncableDefinition, DecoratableDefinition, ScopedDefinition, FunctionBodyWriteableDefinition {
@@ -302,6 +316,8 @@ export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassM
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     scope: "public" | "protected" | "private";
 
+    constructor(definitionType: DefinitionType);
+
     abstract addParameters(...parameters: ParameterStructureType[]): this;
 }
 
@@ -310,6 +326,8 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition implem
     addDecorators: (...decorators: DecoratorStructure[]) => this;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     scope: "public" | "protected" | "private";
+
+    constructor(definitionType: DefinitionType);
 }
 
 export abstract class ScopedDefinition {
@@ -552,6 +570,8 @@ export class ImportDefinition extends BaseDefinition {
 export abstract class BaseImportPartDefinition extends BaseDefinition {
     definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     expression: ExpressionDefinition;
+
+    constructor(definitionType: DefinitionType);
 }
 
 export class ImportPartDefinition extends BaseImportPartDefinition {
@@ -622,10 +642,21 @@ export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinitio
 
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
 
+export class BaseError extends Error {
+    constructor(message: string);
+}
+
 export class ArgumentTypeError extends BaseError {
+    constructor(argName: string, expectedType: string);
+
+    argName: string;
+    expectedType: string;
 }
 
 export class FileNotFoundError extends BaseError {
+    constructor(fileName: string);
+
+    fileName: string;
 }
 
 export interface BaseStructure {

@@ -1,4 +1,5 @@
-﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, Scope, ScopedDefinition} from "./../definitions";
+﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, Scope, ScopedDefinition, ClassConstructorDefinition,
+    ClassConstructorParameterScope} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ExtendsImplementsClauseWriter} from "./ExtendsImplementsClauseWriter";
@@ -23,7 +24,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
             this.writer.newLine();
             this.writeProperties(def, flags);
             this.writer.newLine();
-            this.writeConstructor(def, flags);
+            this.writeConstructor(def.constructorDef, flags);
             this.writer.newLine();
             this.writeMethods(def, flags);
         });
@@ -46,10 +47,23 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         }
     }
 
-    private writeConstructor(def: ClassDefinition, flags: WriteFlags) {
-        if (def.constructorDef != null) {
-            this.classConstructorWriter.write(def.constructorDef, flags);
+    private writeConstructor(constructorDef: ClassConstructorDefinition, flags: WriteFlags) {
+        if (constructorDef != null && ClassConstructorWriter.shouldWriteConstructor(constructorDef, flags)) {
+            const willWriteFunctionBody = FunctionBodyWriter.willWriteFunctionBody(constructorDef, flags);
+
+            if (!willWriteFunctionBody) {
+                flags |= WriteFlags.HideScopeOnParameters;
+            }
+
+            this.classConstructorWriter.write(constructorDef, flags);
             this.writer.newLine();
+
+            // if the function body won't be written, the scoped constructor parameters need to be written out as properties
+            if (!willWriteFunctionBody) {
+                (constructorDef.parameters || []).filter(p => p.scope !== ClassConstructorParameterScope.None).forEach(p => {
+                    this.propertyWriter.write(p.toProperty(), flags);
+                });
+            }
         }
     }
 

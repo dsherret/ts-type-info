@@ -4,6 +4,7 @@
     HideFunctionBodies = 1 << 1,
     HidePrivateMembers = 1 << 2,
     HideProtectedMembers = 1 << 3,
-    IsInAmbientContext = 1 << 4,
+    HideScopeOnParameters = 1 << 4,
+    IsInAmbientContext = 1 << 5,
     Default = None
 }
