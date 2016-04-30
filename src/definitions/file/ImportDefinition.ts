@@ -1,6 +1,9 @@
 ﻿import CodeBlockWriter from "code-block-writer";
+import {StructureFactory} from "./../../factories";
+import {NamedImportStructure} from "./../../structures";
 import {ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
+import {DefinitionUtils} from "./../../utils";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ImportPartDefinition} from "./ImportPartDefinition";
 
@@ -14,6 +17,26 @@ export class ImportDefinition extends BaseDefinition {
 
     constructor() {
         super(DefinitionType.Import);
+    }
+
+    addNamedImports(...namedImports: NamedImportStructure[]) {
+        const factory = new StructureFactory();
+        this.namedImports.push(...namedImports.map(n => factory.getImportPartByNamedImport(n)));
+        return this;
+    }
+
+    getNamedImport(searchFunction: (importDef: ImportPartDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.namedImports, searchFunction);
+    }
+
+    getStarImport(searchFunction: (importDef: ImportPartDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.starImports, searchFunction);
+    }
+
+    setDefaultImport(importName: string) {
+        const factory = new StructureFactory();
+        this.defaultImport = factory.getImportPart(importName);
+        return this;
     }
 
     write() {

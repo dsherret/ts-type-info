@@ -3,7 +3,7 @@ import {FileDefinition} from "./../../../definitions";
 import {runImportDefinitionTests, runReExportDefinitionTests} from "./../../testHelpers";
 
 describe("FileDefinition", () => {
-    describe("addImports", () => {
+    describe("#addImports()", () => {
         describe("multiple imports", () => {
             const f = new FileDefinition();
             f.addImports({
@@ -86,7 +86,7 @@ describe("FileDefinition", () => {
         });
     });
 
-    describe("addReExports", () => {
+    describe("#addReExports()", () => {
         const f = new FileDefinition();
         f.addReExports({
             moduleSpecifier: "./test1"
@@ -117,7 +117,7 @@ describe("FileDefinition", () => {
         });
     });
 
-    describe("getImport", () => {
+    describe("#getImport()", () => {
         const f = new FileDefinition();
         f.addImports({
             moduleSpecifier: "./test1",
@@ -132,7 +132,7 @@ describe("FileDefinition", () => {
         });
     });
 
-    describe("getReExport", () => {
+    describe("#getReExport()", () => {
         const f = new FileDefinition();
         f.addReExports({
             moduleSpecifier: "./test1"
