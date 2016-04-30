@@ -1,4 +1,4 @@
-﻿import {ExpressionDefinition} from "./../expressions";
+﻿import {ExpressionDefinition} from "./../expression";
 
 export abstract class DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition;

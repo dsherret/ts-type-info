@@ -2,7 +2,7 @@
 import {BaseImportPartDefinition} from "./../../../../definitions";
 import {BaseImportPartTestStructure} from "./../../testStructures";
 import {ensureNotNull} from "./../../ensureNotNull";
-import {runExpressionDefinitionTests} from "./../expressions";
+import {runExpressionDefinitionTests} from "./../expression";
 import {runBaseDefinitionTests} from "./../base";
 
 export function runBaseImportPartDefinitionTests(definition: BaseImportPartDefinition, structure: BaseImportPartTestStructure) {

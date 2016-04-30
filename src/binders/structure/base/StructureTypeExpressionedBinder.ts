@@ -1,7 +1,7 @@
 import {TypeExpressionedStructure} from "./../../../structures";
 import {TypeExpressionDefinition} from "./../../../definitions";
 import {TypeExpressionedBinder} from "./../../base";
-import {StructureExpressionBinder} from "./../expressions";
+import {StructureExpressionBinder} from "./../expression";
 
 export class StructureTypeExpressionedBinder extends TypeExpressionedBinder {
     constructor(private structure: TypeExpressionedStructure) {

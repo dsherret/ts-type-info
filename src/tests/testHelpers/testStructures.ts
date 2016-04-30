@@ -1,4 +1,4 @@
-export * from "./testStructures/expressions";
+export * from "./testStructures/expression";
 export * from "./testStructures/base";
 export * from "./testStructures/general";
 export * from "./testStructures/class";

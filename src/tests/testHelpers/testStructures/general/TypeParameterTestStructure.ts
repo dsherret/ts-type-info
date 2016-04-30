@@ -1,4 +1,4 @@
-﻿import {TypeExpressionTestStructure} from "./../expressions";
+﻿import {TypeExpressionTestStructure} from "./../expression";
 import {BaseTestStructure, NamedTestStructure} from "./../base";
 
 export interface TypeParameterTestStructure extends BaseTestStructure, NamedTestStructure {

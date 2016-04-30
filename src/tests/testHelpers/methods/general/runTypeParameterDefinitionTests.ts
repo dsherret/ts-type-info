@@ -2,7 +2,7 @@
 import {TypeParameterTestStructure} from "./../../testStructures";
 import {TypeParameterDefinition} from "./../../../../definitions";
 import {runBaseDefinitionTests, runNamedDefinitionTests} from "./../base";
-import {runTypeExpressionDefinitionTests} from "./../expressions";
+import {runTypeExpressionDefinitionTests} from "./../expression";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition, structure: TypeParameterTestStructure) {

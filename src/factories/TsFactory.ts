@@ -103,7 +103,7 @@ export class TsFactory {
         const def = bindToDefinition<TypeExpressionDefinition>(new TsExpressionBinderByNode(node), new TypeExpressionDefinition());
 
         if (tsType != null) {
-            def.addType(this.getType(tsType));
+            def.types.push(this.getType(tsType));
         }
 
         return def;
@@ -119,7 +119,7 @@ export class TsFactory {
             () => bindToDefinition<TypeExpressionDefinition>(new TsExpressionBinder(tsTypeExpression), new TypeExpressionDefinition()),
             createdTypeExpression => {
                 tsTypeExpression.getTypes().forEach(type => {
-                    createdTypeExpression.addType(this.getType(type));
+                    createdTypeExpression.types.push(this.getType(type));
                 });
             });
     }

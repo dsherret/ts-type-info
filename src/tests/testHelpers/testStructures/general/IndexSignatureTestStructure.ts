@@ -1,5 +1,5 @@
 ﻿import {BaseTestStructure, ReturnTypedTestStructure} from "./../base";
-import {TypeExpressionTestStructure} from "./../expressions";
+import {TypeExpressionTestStructure} from "./../expression";
 
 export interface IndexSignatureTestStructure extends BaseTestStructure, ReturnTypedTestStructure {
     keyName: string;

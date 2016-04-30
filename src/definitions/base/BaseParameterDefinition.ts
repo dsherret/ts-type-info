@@ -1,5 +1,5 @@
 import {applyMixins} from "./../../utils";
-import {TypeExpressionDefinition, ExpressionDefinition} from "./../expressions";
+import {TypeExpressionDefinition, ExpressionDefinition} from "./../expression";
 import {NamedDefinition} from "./NamedDefinition";
 import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";

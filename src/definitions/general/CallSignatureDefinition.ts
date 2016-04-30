@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {TypeParameteredDefinition, BaseDefinition, DefinitionType, ReturnTypedDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
-import {TypeExpressionDefinition} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expression";
 import {CallSignatureParameterDefinition} from "./CallSignatureParameterDefinition";
 
 export class CallSignatureDefinition

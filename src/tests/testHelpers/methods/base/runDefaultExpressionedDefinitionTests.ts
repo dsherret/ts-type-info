@@ -1,6 +1,6 @@
 ﻿import {DefaultExpressionedTestStructure} from "./../../testStructures";
 import {DefaultExpressionedDefinition} from "./../../../../definitions";
-import {runExpressionDefinitionTests} from "./../expressions";
+import {runExpressionDefinitionTests} from "./../expression";
 
 export function runDefaultExpressionedDefinitionTests(definition: DefaultExpressionedDefinition, structure: DefaultExpressionedTestStructure) {
     describe("defaultExpression", () => {

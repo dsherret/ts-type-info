@@ -4,7 +4,7 @@ import {WriteFlags} from "./../../WriteFlags";
 import {TypeAliasWriter} from "./../../writers";
 import {applyMixins} from "./../../utils";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {TypeExpressionDefinition} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
 import {TypeParameteredDefinition} from "./../base/TypeParameteredDefinition";

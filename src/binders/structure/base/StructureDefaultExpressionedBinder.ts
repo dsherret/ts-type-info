@@ -1,6 +1,6 @@
 ﻿import {DefaultExpressionedStructure} from "./../../../structures";
 import {ExpressionDefinition} from "./../../../definitions";
-import {StructureExpressionBinder} from "./../expressions";
+import {StructureExpressionBinder} from "./../expression";
 import {DefaultExpressionedBinder} from "./../../base";
 
 export class StructureDefaultExpressionedBinder extends DefaultExpressionedBinder {

@@ -6,7 +6,7 @@ import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests} from 
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";
-import {runTypeExpressionDefinitionTests} from "./../expressions";
+import {runTypeExpressionDefinitionTests} from "./../expression";
 
 export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: InterfaceTestStructure) {
     describe(`interface ${structure.name}`, () => {

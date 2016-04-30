@@ -2,7 +2,7 @@
 import {IndexSignatureTestStructure} from "./../../testStructures";
 import {IndexSignatureDefinition} from "./../../../../definitions";
 import {runBaseDefinitionTests, runReturnTypedDefinitionTests} from "./../base";
-import {runTypeExpressionDefinitionTests} from "./../expressions";
+import {runTypeExpressionDefinitionTests} from "./../expression";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runIndexSignatureDefinitionTests(definition: IndexSignatureDefinition, structure: IndexSignatureTestStructure) {

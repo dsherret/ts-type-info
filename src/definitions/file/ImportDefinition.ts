@@ -25,11 +25,11 @@ export class ImportDefinition extends BaseDefinition {
         return this;
     }
 
-    getNamedImport(searchFunction: (importDef: ImportPartDefinition) => boolean) {
+    getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.namedImports, searchFunction);
     }
 
-    getStarImport(searchFunction: (importDef: ImportPartDefinition) => boolean) {
+    getStarImport(searchFunction: (importPart: ImportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.starImports, searchFunction);
     }
 

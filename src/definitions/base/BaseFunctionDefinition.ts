@@ -1,4 +1,4 @@
-import {TypeExpressionDefinition} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expression";
 import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
 import {StructureFactory} from "./../../factories";
 import {applyMixins, DefinitionUtils} from "./../../utils";

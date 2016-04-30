@@ -34,11 +34,11 @@ export class ReExportDefinition extends BaseDefinition {
         return this;
     }
 
-    getNamedExport(searchFunction: (importDef: ReExportPartDefinition) => boolean) {
+    getNamedExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.namedExports, searchFunction);
     }
 
-    getStarExport(searchFunction: (importDef: ReExportPartDefinition) => boolean) {
+    getStarExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.starExports, searchFunction);
     }
 

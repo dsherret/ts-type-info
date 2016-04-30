@@ -2,7 +2,7 @@ import * as assert from "assert";
 import {DecoratorTestStructure} from "./../../testStructures";
 import {DecoratorDefinition} from "./../../../../definitions";
 import {runBaseDefinitionTests, runNamedDefinitionTests} from "./../base";
-import {runExpressionDefinitionTests} from "./../expressions";
+import {runExpressionDefinitionTests} from "./../expression";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runDecoratorDefinitionTests(definition: DecoratorDefinition, structure: DecoratorTestStructure) {

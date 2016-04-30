@@ -1,5 +1,5 @@
 ﻿import {BaseTestStructure} from "./../base";
-import {ExpressionTestStructure} from "./../expressions";
+import {ExpressionTestStructure} from "./../expression";
 
 export interface BaseImportPartTestStructure extends BaseTestStructure {
     expression?: ExpressionTestStructure;

@@ -1,6 +1,6 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition} from "./../expressions";
+import {ExpressionDefinition} from "./../expression";
 
 export abstract class BaseImportPartDefinition extends BaseDefinition {
     constructor(definitionType: DefinitionType) {

@@ -8,7 +8,7 @@ import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, DefinitionUtils, validateImportStructure} from "./../../utils";
 import {writeDefinition} from "./../../writeDefinition";
 import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition} from "./../expressions";
+import {ExpressionDefinition} from "./../expression";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";

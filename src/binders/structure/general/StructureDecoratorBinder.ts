@@ -2,7 +2,7 @@
 import {DecoratorStructure} from "./../../../structures";
 import {DecoratorBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder} from "./../base";
-import {StructureExpressionBinder} from "./../expressions";
+import {StructureExpressionBinder} from "./../expression";
 
 export class StructureDecoratorBinder extends DecoratorBinder {
     constructor(private structure: DecoratorStructure) {

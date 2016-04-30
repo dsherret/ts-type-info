@@ -281,6 +281,8 @@ export class TypeDefinition {
 
 export class TypeExpressionDefinition extends ExpressionDefinition {
     types: TypeDefinition[];
+
+    getType(searchFunction: (typeDefinition: TypeDefinition) => boolean): TypeDefinition;
 }
 
 export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition {
@@ -564,6 +566,10 @@ export class ImportDefinition extends BaseDefinition {
     namedImports: ImportPartDefinition[];
     starImports: ImportPartDefinition[];
 
+    addNamedImports(...namedImports: NamedImportStructure[]): this;
+    getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
+    getStarImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
+    setDefaultImport(importName: string): this;
     write(): string;
 }
 
@@ -585,6 +591,9 @@ export class ReExportDefinition extends BaseDefinition {
     namedExports: ReExportPartDefinition[];
 
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    addNamedExports(...namedExports: NamedImportStructure[]): this;
+    getNamedExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
+    getStarExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
     write(): string;
 }
 
@@ -791,6 +800,8 @@ export interface ClassPropertyStructure extends BaseClassPropertyStructure {
     isAccessor?: boolean;
     isReadonly?: boolean;
     isConstructorParameter?: boolean;
+    onWriteGetBody?: (writer: CodeBlockWriter) => void;
+    onWriteSetBody?: (writer: CodeBlockWriter) => void;
 }
 
 export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure {

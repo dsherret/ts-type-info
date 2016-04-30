@@ -1,6 +1,6 @@
 import {StructureFactory} from "./../../factories";
 import {NamedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition} from "./../expressions";
+import {ExpressionDefinition} from "./../expression";
 
 export class DecoratorDefinition extends BaseDefinition implements NamedDefinition {
     arguments: ExpressionDefinition[] = [];

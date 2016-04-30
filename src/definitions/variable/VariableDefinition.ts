@@ -4,7 +4,7 @@ import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {AmbientableDefinition, NamedDefinition, TypeExpressionedDefinition, ExportableDefinition,
     DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition, TypeExpressionDefinition} from "./../expressions";
+import {ExpressionDefinition, TypeExpressionDefinition} from "./../expression";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition

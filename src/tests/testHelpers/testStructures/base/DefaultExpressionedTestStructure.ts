@@ -1,4 +1,4 @@
-﻿import {ExpressionTestStructure} from "./../expressions";
+﻿import {ExpressionTestStructure} from "./../expression";
 
 export interface DefaultExpressionedTestStructure {
     defaultExpression?: ExpressionTestStructure;

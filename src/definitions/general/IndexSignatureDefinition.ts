@@ -1,6 +1,6 @@
 ﻿import {applyMixins} from "./../../utils";
 import {BaseDefinition, DefinitionType, ReturnTypedDefinition} from "./../base";
-import {TypeExpressionDefinition} from "./../expressions";
+import {TypeExpressionDefinition} from "./../expression";
 
 export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition {
     keyName: string;
