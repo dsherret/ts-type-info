@@ -1,7 +1,10 @@
 ﻿import CodeBlockWriter from "code-block-writer";
+import {ExportableDefinitions} from "./../../definitions";
+import {StructureFactory} from "./../../factories";
+import {NamedImportStructure} from "./../../structures";
 import {ReExportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ExportableDefinitions} from "./../../definitions";
+import {DefinitionUtils} from "./../../utils";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ReExportPartDefinition} from "./ReExportPartDefinition";
 
@@ -23,6 +26,20 @@ export class ReExportDefinition extends BaseDefinition {
         this.namedExports.forEach(e => e.definitions.forEach(handleDefinition));
 
         return exports;
+    }
+
+    addNamedExports(...namedExports: NamedImportStructure[]) {
+        const factory = new StructureFactory();
+        this.namedExports.push(...namedExports.map(n => factory.getReExportPartByNamedImport(n)));
+        return this;
+    }
+
+    getNamedExport(searchFunction: (importDef: ReExportPartDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.namedExports, searchFunction);
+    }
+
+    getStarExport(searchFunction: (importDef: ReExportPartDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.starExports, searchFunction);
     }
 
     write() {
