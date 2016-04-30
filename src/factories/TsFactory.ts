@@ -1,16 +1,16 @@
 ﻿import {IBaseBinder, TsCallSignatureBinder, TsClassBinder, TsClassConstructorBinder, TsClassMethodBinder, TsClassStaticMethodBinder, TsClassPropertyBinder, TsClassStaticPropertyBinder,
     TsDecoratorBinder, TsEnumBinder, TsEnumMemberBinder, TsExpressionBinder, TsExpressionBinderByNode, TsFileBinder, TsFunctionBinder, TsImportBinder, TsIndexSignatureBinder,
-    TsInterfaceMethodBinder, TsInterfacePropertyBinder, TsInterfaceBinder, TsNamespaceBinder, TsVariableBinder, TsTypeAliasBinder, TsReExportBinder,
-    TsTypeParameterBinder} from "./../binders";
+    TsInterfaceMethodBinder, TsInterfacePropertyBinder, TsInterfaceBinder, TsNamespaceBinder, TsTypeBinder, TsTypePropertyBinder, TsVariableBinder, TsTypeAliasBinder,
+    TsReExportBinder, TsTypeParameterBinder} from "./../binders";
 import {TsSourceFile, TsNode, TsSignature, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 import {CallSignatureDefinition, ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition,
     ClassStaticPropertyDefinition, DecoratorDefinition, EnumDefinition, EnumMemberDefinition, ExportableDefinitions, ExpressionDefinition, FileDefinition, FunctionDefinition,
     ImportDefinition, ImportPartDefinition, IndexSignatureDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, NamespaceDefinition,
     VariableDefinition, NodeDefinitions, TypeAliasDefinition, ReExportDefinition, ReExportPartDefinition, ModuleMemberDefinitions, BaseDefinition, TypeDefinition,
-    TypeExpressionDefinition, TypeParameterDefinition} from "./../definitions";
+    TypeExpressionDefinition, TypeParameterDefinition, TypePropertyDefinition} from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 
-function bindToDefinition<DefType extends BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
+function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
     return def;
 }
@@ -124,10 +124,16 @@ export class TsFactory {
             });
     }
 
+    getTypePropertyFromSymbol(symbol: TsSymbol) {
+        return this.getTypePropertyFromNode(symbol.getOnlyNode());
+    }
+
+    getTypePropertyFromNode(node: TsNode) {
+        return bindToDefinition(new TsTypePropertyBinder(this, node), new TypePropertyDefinition());
+    }
+
     getType(type: TsType) {
-        return this.types.getOrCreate(type, () => new TypeDefinition(), createdType => {
-            createdType.fillTypeInformation(this, type);
-        });
+        return this.types.getOrCreate(type, () => bindToDefinition(new TsTypeBinder(this, type), new TypeDefinition()));
     }
 
     getAllExportableDefinitionsBySymbol(symbol: TsSymbol) {
@@ -215,7 +221,7 @@ export class TsFactory {
             const symbols = iType.getSymbols();
 
             symbols.forEach(s => {
-                type.addDefinitions(this.getAllDefinitionsBySymbol(s) as ModuleMemberDefinitions[]);
+                type.definitions.push(...this.getAllDefinitionsBySymbol(s) as ModuleMemberDefinitions[]);
             });
         });
     }
