@@ -277,6 +277,11 @@ export class TypeDefinition {
     properties: TypePropertyDefinition[];
     typeArguments: TypeDefinition[];
     text: string;
+
+    getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean): CallSignatureDefinition;
+    getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+    getProperty(searchFunction: (property: TypePropertyDefinition) => boolean): TypePropertyDefinition;
+    getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): TypeDefinition;
 }
 
 export class TypeExpressionDefinition extends ExpressionDefinition {
