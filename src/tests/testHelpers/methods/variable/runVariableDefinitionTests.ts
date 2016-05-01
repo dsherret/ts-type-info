@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {VariableTestStructure} from "./../../testStructures";
-import {VariableDefinition} from "./../../../../definitions";
+import {VariableDefinition, VariableDeclarationType} from "./../../../../definitions";
 import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runTypeExpressionedDefinitionTests,
         runDefaultExpressionedDefinitionTests, runAmbientableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
@@ -11,6 +11,7 @@ export function runVariableDefinitionTests(definition: VariableDefinition, struc
             if (structure.typeExpression == null) {
                 structure.typeExpression = { text: "any" };
             }
+            structure.declarationType = structure.declarationType || VariableDeclarationType.Let;
 
             runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);

@@ -1,7 +1,5 @@
 import CodeBlockWriter from "code-block-writer";
 
-export function createFile(structure?: FileStructure): FileDefinition;
-
 export function getInfoFromFiles(fileNames: string[], options?: Options): FileDefinition[];
 
 export function getInfoFromString(code: string, options?: Options): FileDefinition;
@@ -905,3 +903,57 @@ export interface NamespaceStructure extends BaseStructure, NamedStructure, Expor
 export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure {
     declarationType?: "var" | "let" | "const";
 }
+
+export function createCallSignature(structure?: CallSignatureStructure): CallSignatureDefinition;
+
+export function createCallSignatureParameter(structure: CallSignatureParameterStructure): CallSignatureParameterDefinition;
+
+export function createClass(structure: ClassStructure): ClassDefinition;
+
+export function createClassConstructor(structure?: ClassConstructorStructure): ClassConstructorDefinition;
+
+export function createClassConstructorParameter(structure: ClassConstructorParameterStructure): ClassConstructorParameterDefinition;
+
+export function createClassMethod(structure: ClassMethodStructure): ClassMethodDefinition;
+
+export function createClassMethodParameter(structure: ClassMethodParameterStructure): ClassMethodParameterDefinition;
+
+export function createClassProperty(structure: ClassPropertyStructure): ClassPropertyDefinition;
+
+export function createClassStaticMethod(structure: ClassStaticMethodStructure): ClassStaticMethodDefinition;
+
+export function createClassStaticMethodParameter(structure: ClassStaticMethodParameterStructure): ClassStaticMethodParameterDefinition;
+
+export function createClassStaticProperty(structure: ClassStaticPropertyStructure): ClassStaticPropertyDefinition;
+
+export function createDecorator(structure: DecoratorStructure): DecoratorDefinition;
+
+export function createEnum(structure: EnumStructure): EnumDefinition;
+
+export function createEnumMember(structure: EnumMemberStructure): EnumMemberDefinition;
+
+export function createFile(structure?: FileStructure): FileDefinition;
+
+export function createFunction(structure: FunctionStructure): FunctionDefinition;
+
+export function createFunctionParameter(structure: FunctionParameterStructure): FunctionParameterDefinition;
+
+export function createImport(structure: ImportStructure): ImportDefinition;
+
+export function createIndexSignature(structure: IndexSignatureStructure): IndexSignatureDefinition;
+
+export function createInterface(structure: InterfaceStructure): InterfaceDefinition;
+
+export function createInterfaceMethod(structure: InterfaceMethodStructure): InterfaceMethodDefinition;
+
+export function createInterfaceMethodParameter(structure: InterfaceMethodParameterStructure): InterfaceMethodParameterDefinition;
+
+export function createInterfaceProperty(structure: InterfacePropertyStructure): InterfacePropertyDefinition;
+
+export function createNamespace(structure: NamespaceStructure): NamespaceDefinition;
+
+export function createReExport(structure: ReExportStructure): ReExportDefinition;
+
+export function createTypeAlias(structure: TypeAliasStructure): TypeAliasDefinition;
+
+export function createVariable(structure: VariableStructure): VariableDefinition;
