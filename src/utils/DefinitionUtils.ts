@@ -3,7 +3,8 @@
 export class DefinitionUtils {
     static isDefinitionFile(def: FileDefinition) {
         const definitionFileExt = ".d.ts";
-        return def.fileName.lastIndexOf(definitionFileExt) === def.fileName.length - definitionFileExt.length;
+        const fileName = def.fileName || "";
+        return fileName.lastIndexOf(definitionFileExt) === fileName.length - definitionFileExt.length;
     }
 
     static getDefinitionFromListByStrOrFunc<T extends NamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T {
