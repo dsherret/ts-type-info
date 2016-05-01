@@ -17,8 +17,8 @@ export class TypeDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.definitions, searchFunction);
     }
 
-    getProperty(searchFunction: (property: TypePropertyDefinition) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.properties, searchFunction);
+    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.properties, searchFunctionOrName);
     }
 
     getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean) {

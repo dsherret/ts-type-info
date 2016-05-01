@@ -280,7 +280,7 @@ export class TypeDefinition {
 
     getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean): CallSignatureDefinition;
     getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
-    getProperty(searchFunction: (property: TypePropertyDefinition) => boolean): TypePropertyDefinition;
+    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): TypePropertyDefinition;
     getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): TypeDefinition;
 }
 
