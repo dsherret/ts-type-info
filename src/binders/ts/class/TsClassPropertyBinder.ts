@@ -21,11 +21,6 @@ export class TsClassPropertyBinder extends ClassPropertyBinder {
         return this.symbol.isPropertyReadonly();
     }
 
-    getIsConstructorParameter() {
-        // this implementation will never be a constructor parameter
-        return false;
-    }
-
     getOnWriteGetBody() {
         return null as (writer: CodeBlockWriter) => void;
     }

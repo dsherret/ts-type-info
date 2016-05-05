@@ -61,7 +61,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
             // if the function body won't be written, the scoped constructor parameters need to be written out as properties
             if (!willWriteFunctionBody) {
                 (constructorDef.parameters || []).filter(p => p.scope !== ClassConstructorParameterScope.None).forEach(p => {
-                    this.propertyWriter.write(p.toProperty(), flags);
+                    this.propertyWriter.write(p.toClassProperty(), flags);
                 });
             }
         }

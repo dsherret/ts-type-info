@@ -12,11 +12,10 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
         super(DefinitionType.ClassConstructorParameter);
     }
 
-    toProperty() {
+    toClassProperty() {
         const factory = new StructureFactory();
         const def = factory.getClassProperty({
             name: this.name,
-            isConstructorParameter: true,
             scope: ClassConstructorParameterScope.toScope(this.scope),
             type: this.typeExpression.text,
             isOptional: this.isOptional,

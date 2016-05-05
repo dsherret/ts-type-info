@@ -15,10 +15,6 @@ export class StructureClassPropertyBinder extends ClassPropertyBinder {
         return this.structure.isReadonly || false;
     }
 
-    getIsConstructorParameter() {
-        return this.structure.isConstructorParameter || false;
-    }
-
     getOnWriteGetBody() {
         return this.structure.onWriteGetBody;
     }

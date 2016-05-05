@@ -368,6 +368,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addStaticProperties(...staticProperties: ClassStaticPropertyStructure[]): this;
     addExtends(...texts: string[]): this;
     addImplements(...texts: string[]): this;
+    getAllInstanceProperties(): (ClassConstructorParameterDefinition | ClassPropertyDefinition)[];
     getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): ClassMethodDefinition;
     getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition;
     getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): ClassPropertyDefinition;
@@ -406,7 +407,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     addDecorators: (...decorators: DecoratorStructure[]) => this;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
 
-    toProperty(): ClassPropertyDefinition;
+    toClassProperty(): ClassPropertyDefinition;
 }
 
 export type ClassConstructorParameterScope = "none" | "public" | "protected" | "private";
@@ -802,7 +803,6 @@ export interface ClassMethodStructure extends BaseClassMethodStructure<ClassMeth
 export interface ClassPropertyStructure extends BaseClassPropertyStructure {
     isAccessor?: boolean;
     isReadonly?: boolean;
-    isConstructorParameter?: boolean;
     onWriteGetBody?: (writer: CodeBlockWriter) => void;
     onWriteSetBody?: (writer: CodeBlockWriter) => void;
 }

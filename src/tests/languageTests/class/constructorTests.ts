@@ -1,5 +1,5 @@
 import {getInfoFromString} from "./../../../main";
-import {Scope, ClassConstructorParameterScope} from "./../../../definitions";
+import {ClassConstructorParameterScope} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class constructor tests", () => {
@@ -54,25 +54,7 @@ class MyClass4 {
                     scope: ClassConstructorParameterScope.Private,
                     isOptional: true
                 }]
-            },
-            properties: [{
-                name: "param1",
-                typeExpression: { text: "string" },
-                scope: Scope.Public,
-                isConstructorParameter: true
-            }, {
-                name: "param2",
-                typeExpression: { text: "number" },
-                scope: Scope.Protected,
-                isConstructorParameter: true
-            }, {
-                name: "param3",
-                typeExpression: { text: "Date" },
-                defaultExpression: { text: "new Date()" },
-                scope: Scope.Private,
-                isConstructorParameter: true,
-                isOptional: true
-            }]
+            }
         }]
     });
 });

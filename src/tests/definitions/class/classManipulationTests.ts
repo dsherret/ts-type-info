@@ -85,7 +85,6 @@ describe("ClassDefinition", () => {
             decorators: [{ name: "decorator" }],
             defaultExpression: "4",
             isAccessor: true,
-            isConstructorParameter: true,
             isOptional: true,
             isReadonly: true,
             name: "myProperty",
@@ -101,7 +100,6 @@ describe("ClassDefinition", () => {
             decorators: [{ name: "decorator" }],
             defaultExpression: { text: "4" },
             isAccessor: true,
-            isConstructorParameter: true,
             isOptional: true,
             isReadonly: true,
             name: "myProperty",
@@ -198,41 +196,6 @@ describe("ClassDefinition", () => {
             runClassConstructorDefinitionTests(c.constructorDef, {
                 parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
                 hasOnWriteFunctionBody: true
-            });
-        });
-
-        describe("properties", () => {
-            it(`should have 1 property`, () => {
-                assert.equal(c.properties.length, 1);
-            });
-
-            runClassPropertyDefinitionTests(c.properties[0], {
-                name: "param2",
-                scope: Scope.Private,
-                isConstructorParameter: true
-            });
-        });
-
-        // should remove the previous properties set by the last setConstructor
-        c.setConstructor({
-            parameters: [{ name: "param3" }, { name: "param4", scope: ClassConstructorParameterScope.Public }]
-        });
-
-        describe("constructor", () => {
-            runClassConstructorDefinitionTests(c.constructorDef, {
-                parameters: [{ name: "param3" }, { name: "param4", scope: ClassConstructorParameterScope.Public }]
-            });
-        });
-
-        describe("properties", () => {
-            it(`should have 1 property`, () => {
-                assert.equal(c.properties.length, 1);
-            });
-
-            runClassPropertyDefinitionTests(c.properties[0], {
-                name: "param4",
-                scope: Scope.Public,
-                isConstructorParameter: true
             });
         });
     });

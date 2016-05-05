@@ -73,6 +73,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return this;
     }
 
+    getAllInstanceProperties() {
+        return [
+            ...(this.constructorDef == null ? [] : this.constructorDef.parameters.filter(p => p.scope !== ClassConstructorParameterScope.None)),
+            ...this.properties
+        ];
+    }
+
     getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)) {
         return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.methods, nameOrSearchFunction);
     }
@@ -90,10 +97,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     }
 
     setConstructor(structure: ClassConstructorStructure) {
-        const factory = new StructureFactory();
-        this.constructorDef = factory.getClassConstructor(structure);
-        this.properties = this.properties.filter(p => !p.isConstructorParameter);
-        this.properties.push(...this.constructorDef.parameters.filter(p => p.scope !== ClassConstructorParameterScope.None).map(p => p.toProperty()));
+        this.constructorDef = new StructureFactory().getClassConstructor(structure);
         return this;
     }
 
