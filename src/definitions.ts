@@ -8,6 +8,7 @@ export * from "./definitions/enum";
 export * from "./definitions/namespace";
 export * from "./definitions/file";
 export * from "./definitions/variable";
+export * from "./definitions/GlobalDefinition";
 
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/file";
 import {FunctionDefinition, FunctionParameterDefinition} from "./definitions/function";

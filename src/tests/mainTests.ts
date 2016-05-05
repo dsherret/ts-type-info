@@ -13,14 +13,14 @@ describe("Main", () => {
             const result = tsTypeInfo.getInfoFromFiles([path.join(__dirname, "../../src/tests/testFiles/nonTsFile.txt")], {
                 compilerOptions: { allowNonTsExtensions: false }
             });
-            assert.equal(result.length, 0);
+            assert.equal(result.files.length, 0);
         });
 
         it("should get the class definition when specifying the compiler option to allow non ts extensions", () => {
             const result = tsTypeInfo.getInfoFromFiles([path.join(__dirname, "../../src/tests/testFiles/nonTsFile.txt")], {
                 compilerOptions: { allowNonTsExtensions: true }
             });
-            assert.equal(result[0].classes[0].name, "MyClass");
+            assert.equal(result.files[0].classes[0].name, "MyClass");
         });
 
         it("should throw an error when a file isn't found", () => {

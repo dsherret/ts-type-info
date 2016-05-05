@@ -3,9 +3,10 @@ import * as fs from "fs";
 import {getInfoFromFiles} from "./../main";
 
 export function generateDefinitionFile() {
-    // todo: better way of doing this
-    const fileInfo = getInfoFromFiles([path.join(__dirname, "../../src/main.ts"), path.join(__dirname, "../../src/typings/main.d.ts")], { showDebugMessages: true })
-                        .filter(f => f.fileName.indexOf("/main.ts") >= 0)[0];
+    const fileInfo = getInfoFromFiles([
+        path.join(__dirname, "../../src/main.ts"),
+        path.join(__dirname, "../../src/typings/main.d.ts")
+    ], { showDebugMessages: true }).getFile("main.ts");
 
     fileInfo.getExports().forEach(def => {
         // todo: once typescript supports it type-wise, this should be merged into one if statement

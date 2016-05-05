@@ -6,7 +6,7 @@ import {ClassDefinition, EnumDefinition, InterfaceDefinition, NamespaceDefinitio
 
 describe("file import tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/languageTests/file/testFiles/import.ts");
-    const fileDef = getInfoFromFiles([fileName]).filter(def => /import/.test(def.fileName))[0];
+    const fileDef = getInfoFromFiles([fileName]).getFile("import.ts");
     let i = 0;
 
     runImportDefinitionTests(fileDef.imports[i++], {
