@@ -7,7 +7,7 @@ export class DefinitionUtils {
         return fileName.lastIndexOf(definitionFileExt) === fileName.length - definitionFileExt.length;
     }
 
-    static getDefinitionFromListByStrOrFunc<T extends NamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T {
+    static getDefinitionFromListByNameOrFunc<T extends NamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T {
         const func = DefinitionUtils.getFuncFromNameOrFunc(nameOrFunc);
         return DefinitionUtils.getDefinitionFromListByFunc(list, func);
     }

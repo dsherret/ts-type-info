@@ -68,7 +68,7 @@ export class InterfaceDefinition extends BaseDefinition
     }
 
     getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.methods, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.methods, nameOrSearchFunction);
     }
 
     getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean) {
@@ -76,7 +76,7 @@ export class InterfaceDefinition extends BaseDefinition
     }
 
     getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.properties, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.properties, nameOrSearchFunction);
     }
 
     write() {

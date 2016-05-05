@@ -21,7 +21,7 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
     }
 
     getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromListByStrOrFunc(this.members, nameOrSearchFunction);
+        return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.members, nameOrSearchFunction);
     }
 
     write() {
