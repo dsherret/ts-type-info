@@ -8,7 +8,7 @@
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easily usable format.
 
-* [Version 2.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
+* [Version 3.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
 * [Language support](https://github.com/dsherret/ts-type-info/wiki/Language-Support)
 
 ## Installing
