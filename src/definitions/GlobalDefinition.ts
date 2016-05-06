@@ -25,6 +25,11 @@ export class GlobalDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.files, searchFunction);
     }
 
+    getFileOfDefinition(def: SearchDefinitions) {
+        const result = this.getFileAndNamespacesToDefinition(def);
+        return result == null ? null : result.file;
+    }
+
     getFileAndNamespacesToDefinition(def: SearchDefinitions) {
         for (let i = 0; i < this.files.length; i++) {
             let namespaces = this.files[i].getNamespacesToDefinition(def);

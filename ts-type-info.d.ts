@@ -636,6 +636,7 @@ export class GlobalDefinition {
 
     addFiles(...files: FileStructure[]): this;
     getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): FileDefinition;
+    getFileOfDefinition(def: ClassDefinition | EnumDefinition | FunctionDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): FileDefinition;
     getFileAndNamespacesToDefinition(def: ClassDefinition | EnumDefinition | FunctionDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): { file: FileDefinition; namespaces: NamespaceDefinition[]; };
 }
 

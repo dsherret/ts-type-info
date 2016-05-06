@@ -27,6 +27,29 @@ describe("GlobalDefinition", () => {
         });
     });
 
+    describe("#getFileOfDefinition()", () => {
+        // no need to test anything extravagant in here because this method calls getNamespacesToDefinition()
+        const def = new GlobalDefinition();
+        def.addFiles({
+            fileName: "dummy.ts"
+        }, {
+            namespaces: [{
+                name: "n",
+                variables: [{
+                    name: "v"
+                }]
+            }]
+        });
+
+        it("should get the correct file when specifying something in a file", () => {
+            assert.equal(def.getFileOfDefinition(def.files[1].namespaces[0].variables[0]), def.files[1]);
+        });
+
+        it("should return null when specifying something not in a file", () => {
+            assert.equal(def.getFileOfDefinition(createVariable({ name: "v" })), null);
+        });
+    });
+
     describe("#getNamespacesToDefinition()", () => {
         const def = new GlobalDefinition();
         def.addFiles({
