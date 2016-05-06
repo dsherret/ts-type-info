@@ -10,6 +10,8 @@ import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
 
+type SearchDefinitions = ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition;
+
 export abstract class ModuledDefinition {
     namespaces: NamespaceDefinition[] = [];
     classes: ClassDefinition[] = [];
@@ -87,6 +89,33 @@ export abstract class ModuledDefinition {
 
     getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) {
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.variables, nameOrSearchFunction);
+    }
+
+    contains(def: SearchDefinitions): boolean {
+        if (def.isClassDefinition()) {
+            return this.getClass(d => d === def) != null;
+        }
+        else if (def.isFunctionDefinition()) {
+            return this.getFunction(d => d === def) != null;
+        }
+        else if (def.isInterfaceDefinition()) {
+            return this.getInterface(d => d === def) != null;
+        }
+        else if (def.isNamespaceDefinition()) {
+            return this.getNamespace(d => d === def) != null;
+        }
+        else if (def.isEnumDefinition()) {
+            return this.getEnum(d => d === def) != null;
+        }
+        else if (def.isTypeAliasDefinition()) {
+            return this.getTypeAlias(d => d === def) != null;
+        }
+        else if (def.isVariableDefinition()) {
+            return this.getVariable(d => d === def) != null;
+        }
+        else {
+            return null;
+        }
     }
 
     getExports() {

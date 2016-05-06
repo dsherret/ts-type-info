@@ -1,4 +1,6 @@
-﻿import {NamespaceDefinition, NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {createVariable} from "./../../../createFunctions";
+import {NamespaceDefinition, NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
 import {runClassDefinitionTests, runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runNamedDefinitionTests,
     runNamespaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
 
@@ -328,5 +330,48 @@ describe("ModuledDefinitionTests", () => {
         n.addVariables({ name: "name1" }, { name: "name2" });
         runNamedDefinitionTests(n.getVariable("name2"), { name: "name2" });
         runNamedDefinitionTests(n.getVariable(d => d.name === "name2"), { name: "name2" });
+    });
+
+    describe("contains", () => {
+        const n = new NamespaceDefinition();
+        n.addClasses({ name: "c" })
+            .addEnums({ name: "e" })
+            .addFunctions({ name: "f" })
+            .addInterfaces({ name: "i" })
+            .addNamespaces({ name: "n" })
+            .addTypeAliases({ name: "t", type: "string" })
+            .addVariables({ name: "v" });
+
+        it("should contain the class", () => {
+            assert.equal(n.contains(n.classes[0]), true);
+        });
+
+        it("should contain the enum", () => {
+            assert.equal(n.contains(n.enums[0]), true);
+        });
+
+        it("should contain the function", () => {
+            assert.equal(n.contains(n.functions[0]), true);
+        });
+
+        it("should contain the interface", () => {
+            assert.equal(n.contains(n.interfaces[0]), true);
+        });
+
+        it("should contain the namespace", () => {
+            assert.equal(n.contains(n.namespaces[0]), true);
+        });
+
+        it("should contain the type alias", () => {
+            assert.equal(n.contains(n.typeAliases[0]), true);
+        });
+
+        it("should contain the variable", () => {
+            assert.equal(n.contains(n.variables[0]), true);
+        });
+
+        it("should not contain a definition not in the module", () => {
+            assert.equal(n.contains(createVariable({ name: "t" })), false);
+        });
     });
 });
