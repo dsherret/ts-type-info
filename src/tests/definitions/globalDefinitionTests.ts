@@ -27,9 +27,10 @@ describe("GlobalDefinition", () => {
         });
     });
 
-    describe("#getPathToDefinition()", () => {
+    describe("#getNamespacesToDefinition()", () => {
         const def = new GlobalDefinition();
         def.addFiles({
+            fileName: "dummy.ts"
         }, {
             namespaces: [{
                 name: "n1"
@@ -44,43 +45,43 @@ describe("GlobalDefinition", () => {
             variables: [{ name: "v" }]
         });
 
-        describe("getting the path to a variable in a file", () => {
-            const path = def.getPathToDefinition(def.files[2].variables[0]);
+        describe("getting the file and namespaces to a variable in a file", () => {
+            const result = def.getFileAndNamespacesToDefinition(def.files[2].variables[0]);
 
             it("should have the correct file", () => {
-                assert.equal(path.file, def.files[2]);
+                assert.equal(result.file, def.files[2]);
             });
 
             it("the array should have the correct namespace length", () => {
-                assert.equal(path.namespaces.length, 0);
+                assert.equal(result.namespaces.length, 0);
             });
         });
 
-        describe("getting the path to a variable in a file within a namespace", () => {
-            const path = def.getPathToDefinition(def.files[1].namespaces[1].namespaces[0].variables[1]);
+        describe("getting the file and namespaces to a variable in a file within a namespace", () => {
+            const result = def.getFileAndNamespacesToDefinition(def.files[1].namespaces[1].namespaces[0].variables[1]);
 
             it("should have the correct file", () => {
-                assert.equal(path.file, def.files[1]);
+                assert.equal(result.file, def.files[1]);
             });
 
             it("the array should have the correct namespace length", () => {
-                assert.equal(path.namespaces.length, 2);
+                assert.equal(result.namespaces.length, 2);
             });
 
             it("should have the first namespace as the first item in the array", () => {
-                assert.equal(path.namespaces[0], def.files[1].namespaces[1]);
+                assert.equal(result.namespaces[0], def.files[1].namespaces[1]);
             });
 
             it("should have the second namespace as the second item in the array", () => {
-                assert.equal(path.namespaces[1], def.files[1].namespaces[1].namespaces[0]);
+                assert.equal(result.namespaces[1], def.files[1].namespaces[1].namespaces[0]);
             });
         });
 
-        describe("getting the path to a variable not in any file", () => {
-            const path = def.getPathToDefinition(createVariable({ name: "v" }));
+        describe("getting the file and namespaces to a variable not in any file", () => {
+            const result = def.getFileAndNamespacesToDefinition(createVariable({ name: "v" }));
 
-            it("path should be null", () => {
-                assert.equal(path, null);
+            it("result should be null", () => {
+                assert.equal(result, null);
             });
         });
     });

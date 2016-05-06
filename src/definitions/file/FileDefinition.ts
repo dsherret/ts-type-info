@@ -7,7 +7,7 @@ import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {applyMixins, DefinitionUtils, validateImportStructure} from "./../../utils";
 import {writeDefinition} from "./../../writeDefinition";
-import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, ModuleSearchDefinitions, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expression";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
@@ -109,7 +109,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
     getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
-    contains: (def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => boolean;
+    directlyContains: (def: ModuleSearchDefinitions) => boolean;
+    getNamespacesToDefinition: (searchDef: ModuleSearchDefinitions) => NamespaceDefinition[];
 }
 
 applyMixins(FileDefinition, BaseDefinition, [ModuledDefinition]);

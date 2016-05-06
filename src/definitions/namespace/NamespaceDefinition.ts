@@ -4,7 +4,7 @@ import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, Ty
 import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, ModuleSearchDefinitions, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -54,7 +54,8 @@ export class NamespaceDefinition extends BaseDefinition
     getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
     getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
-    contains: (def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => boolean;
+    directlyContains: (def: ModuleSearchDefinitions) => boolean;
+    getNamespacesToDefinition: (searchDef: ModuleSearchDefinitions) => NamespaceDefinition[];
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

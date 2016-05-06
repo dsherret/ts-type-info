@@ -332,7 +332,7 @@ describe("ModuledDefinitionTests", () => {
         runNamedDefinitionTests(n.getVariable(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("contains", () => {
+    describe("directlyContains", () => {
         const n = new NamespaceDefinition();
         n.addClasses({ name: "c" })
             .addEnums({ name: "e" })
@@ -343,35 +343,81 @@ describe("ModuledDefinitionTests", () => {
             .addVariables({ name: "v" });
 
         it("should contain the class", () => {
-            assert.equal(n.contains(n.classes[0]), true);
+            assert.equal(n.directlyContains(n.classes[0]), true);
         });
 
         it("should contain the enum", () => {
-            assert.equal(n.contains(n.enums[0]), true);
+            assert.equal(n.directlyContains(n.enums[0]), true);
         });
 
         it("should contain the function", () => {
-            assert.equal(n.contains(n.functions[0]), true);
+            assert.equal(n.directlyContains(n.functions[0]), true);
         });
 
         it("should contain the interface", () => {
-            assert.equal(n.contains(n.interfaces[0]), true);
+            assert.equal(n.directlyContains(n.interfaces[0]), true);
         });
 
         it("should contain the namespace", () => {
-            assert.equal(n.contains(n.namespaces[0]), true);
+            assert.equal(n.directlyContains(n.namespaces[0]), true);
         });
 
         it("should contain the type alias", () => {
-            assert.equal(n.contains(n.typeAliases[0]), true);
+            assert.equal(n.directlyContains(n.typeAliases[0]), true);
         });
 
         it("should contain the variable", () => {
-            assert.equal(n.contains(n.variables[0]), true);
+            assert.equal(n.directlyContains(n.variables[0]), true);
         });
 
         it("should not contain a definition not in the module", () => {
-            assert.equal(n.contains(createVariable({ name: "t" })), false);
+            assert.equal(n.directlyContains(createVariable({ name: "t" })), false);
+        });
+    });
+
+    describe("#getNamespacesToDefinition()", () => {
+        const def = new NamespaceDefinition();
+        def.addVariables({ name: "v" });
+        def.addNamespaces({
+            name: "n1"
+        }, {
+            name: "n2",
+            namespaces: [{
+                name: "n3",
+                variables: [{ name: "v1" }, { name: "v2" }]
+            }]
+        });
+
+        describe("getting the namesapces to a variable directly in the namespace", () => {
+            const namespaces = def.getNamespacesToDefinition(def.variables[0]);
+
+            it("the array should have the correct length", () => {
+                assert.equal(namespaces.length, 0);
+            });
+        });
+
+        describe("getting the namesapces to a variable in a namespace within a namespace", () => {
+            const namespaces = def.getNamespacesToDefinition(def.namespaces[1].namespaces[0].variables[1]);
+
+            it("the array should have the correct length", () => {
+                assert.equal(namespaces.length, 2);
+            });
+
+            it("should have the first namespace as the first item in the array", () => {
+                assert.equal(namespaces[0], def.namespaces[1]);
+            });
+
+            it("should have the second namespace as the second item in the array", () => {
+                assert.equal(namespaces[1], def.namespaces[1].namespaces[0]);
+            });
+        });
+
+        describe("getting the namespaces to a variable not existing in any namespace", () => {
+            const path = def.getNamespacesToDefinition(createVariable({ name: "v" }));
+
+            it("path should be null", () => {
+                assert.equal(path, null);
+            });
         });
     });
 });

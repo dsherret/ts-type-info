@@ -10,7 +10,7 @@ import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
 
-type SearchDefinitions = ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition;
+export type ModuleSearchDefinitions = ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition;
 
 export abstract class ModuledDefinition {
     namespaces: NamespaceDefinition[] = [];
@@ -91,7 +91,7 @@ export abstract class ModuledDefinition {
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.variables, nameOrSearchFunction);
     }
 
-    contains(def: SearchDefinitions): boolean {
+    directlyContains(def: ModuleSearchDefinitions): boolean {
         if (def.isClassDefinition()) {
             return this.getClass(d => d === def) != null;
         }
@@ -114,6 +114,24 @@ export abstract class ModuledDefinition {
             return this.getVariable(d => d === def) != null;
         }
         else {
+            return null;
+        }
+    }
+
+    getNamespacesToDefinition(searchDef: ModuleSearchDefinitions): NamespaceDefinition[] {
+        const foundInModule = this.directlyContains(searchDef);
+
+        if (foundInModule) {
+            return [];
+        }
+        else {
+            for (let i = 0; i < this.namespaces.length; i++) {
+                let path = this.namespaces[i].getNamespacesToDefinition(searchDef);
+                if (path != null) {
+                    return [this.namespaces[i], ...path];
+                }
+            }
+
             return null;
         }
     }

@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 
-export function getInfoFromFiles(fileNames: string[], options?: Options): FileDefinition[];
+export function getInfoFromFiles(fileNames: string[], options?: Options): GlobalDefinition;
 
 export function getInfoFromString(code: string, options?: Options): FileDefinition;
 
@@ -125,6 +125,8 @@ export abstract class ExportableDefinition {
     isDefaultExportOfFile: boolean;
 }
 
+export type ModuleSearchDefinitions = ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition;
+
 export abstract class ModuledDefinition {
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
@@ -148,6 +150,8 @@ export abstract class ModuledDefinition {
     getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)): NamespaceDefinition;
     getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)): TypeAliasDefinition;
     getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)): VariableDefinition;
+    directlyContains(def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): boolean;
+    getNamespacesToDefinition(searchDef: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): NamespaceDefinition[];
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
@@ -517,6 +521,8 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
     getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
+    directlyContains: (def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => boolean;
+    getNamespacesToDefinition: (searchDef: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => NamespaceDefinition[];
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
@@ -552,6 +558,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
     getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
+    directlyContains: (def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => boolean;
+    getNamespacesToDefinition: (searchDef: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => NamespaceDefinition[];
 
     addImports(...imports: ImportStructure[]): this;
     addReExports(...reExports: ReExportStructure[]): this;
@@ -622,6 +630,14 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
 export type VariableDeclarationType = "var" | "let" | "const";
 
 export const VariableDeclarationType: { Var: "var" | "let" | "const"; Let: "var" | "let" | "const"; Const: "var" | "let" | "const"; };
+
+export class GlobalDefinition {
+    files: FileDefinition[];
+
+    addFiles(...files: FileStructure[]): this;
+    getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): FileDefinition;
+    getFileAndNamespacesToDefinition(def: ClassDefinition | EnumDefinition | FunctionDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): { file: FileDefinition; namespaces: NamespaceDefinition[]; };
+}
 
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
 
