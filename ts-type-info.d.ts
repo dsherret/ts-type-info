@@ -372,7 +372,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addStaticProperties(...staticProperties: ClassStaticPropertyStructure[]): this;
     addExtends(...texts: string[]): this;
     addImplements(...texts: string[]): this;
-    getAllInstanceProperties(): (ClassConstructorParameterDefinition | ClassPropertyDefinition)[];
+    getPropertiesAndConstructorParameters(): (ClassConstructorParameterDefinition | ClassPropertyDefinition)[];
     getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): ClassMethodDefinition;
     getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition;
     getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): ClassPropertyDefinition;

@@ -73,7 +73,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return this;
     }
 
-    getAllInstanceProperties() {
+    getPropertiesAndConstructorParameters() {
         return [
             ...(this.constructorDef == null ? [] : this.constructorDef.parameters.filter(p => p.scope !== ClassConstructorParameterScope.None)),
             ...this.properties

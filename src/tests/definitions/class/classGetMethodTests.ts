@@ -31,7 +31,7 @@ describe("ClassDefinition", () => {
         runNamedDefinitionTests(c.getStaticProperty(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("#getAllInstanceProperties()", () => {
+    describe("#getPropertiesAndConstructorParameters()", () => {
         describe("with constructor", () => {
             const c = new ClassDefinition();
             c.addProperties({ name: "name1" }, { name: "name2" });
@@ -44,7 +44,7 @@ describe("ClassDefinition", () => {
                 }]
             });
 
-            const allProps = c.getAllInstanceProperties();
+            const allProps = c.getPropertiesAndConstructorParameters();
 
             it("should be a length of 3", () => {
                 assert.equal(allProps.length, 3);
@@ -66,7 +66,7 @@ describe("ClassDefinition", () => {
         describe("without constructor", () => {
             const c = new ClassDefinition();
             c.addProperties({ name: "name1" }, { name: "name2" });
-            const allProps = c.getAllInstanceProperties();
+            const allProps = c.getPropertiesAndConstructorParameters();
 
             it("should be a length of 2", () => {
                 assert.equal(allProps.length, 2);
