@@ -46,8 +46,8 @@ Get the file info:
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
 
-const info = TsTypeInfo.getInfoFromFiles(["V:/TestFile.ts"]);
-const property = info.getFile("TestFile.ts")
+const result = TsTypeInfo.getInfoFromFiles(["V:/TestFile.ts"]);
+const property = result.getFile("TestFile.ts")
     .getClass("MyClass")                            // get first by name
     .getProperty(p => p.defaultExpression != null); // or first by what matches
 
@@ -55,7 +55,7 @@ console.log(property.name); // myNumberProperty
 console.log(property.defaultExpression.text); // 253
 
 // or access the arrays directly
-const myMethod = info.files[0].classes[0].methods[0];
+const myMethod = result.files[0].classes[0].methods[0];
 
 console.log(myMethod.name); // myMethod
 ```
