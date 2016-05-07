@@ -1,4 +1,4 @@
-﻿import {ClassDefinition, FunctionDefinition, NamespaceDefinition, EnumDefinition, TypeAliasDefinition, VariableDefinition, ModuleSearchDefinitions} from "./../definitions";
+﻿import {ModuleSearchDefinitions} from "./../definitions";
 import {StructureFactory} from "./../factories";
 import {FileStructure} from "./../structures";
 import {DefinitionUtils, StringUtils} from "./../utils";
