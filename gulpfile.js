@@ -28,13 +28,13 @@ gulp.task("typescript", ["clean-scripts"], function() {
 });
 
 gulp.task("pre-test", ["typescript"], function () {
-    return gulp.src(["dist/**/*.js", "!dist/tests/**/*.js", "!dist/utils/FileUtils.js"])
+    return gulp.src(["./dist/**/*.js", "!./dist/tests/**/*.js"])
         .pipe(istanbul())
         .pipe(istanbul.hookRequire());
 });
 
 gulp.task("test", ["pre-test"], function() {
-    return gulp.src(["dist/tests/**/*.js"])
+    return gulp.src(["./dist/tests/**/*.js"])
         .pipe(mocha({ reporter: "progress" }))
         .pipe(istanbul.writeReports())
         .pipe(istanbul.enforceThresholds({
