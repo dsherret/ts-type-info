@@ -31,7 +31,7 @@ Use the `--save` flag on both commands if you need this library for more than ju
 // V:/TestFile.ts
 ﻿
 export class MyClass {
-    myStringProperty?: string;
+    myStringProperty: string;
     myNumberProperty = 253;
 
     myMethod(myParameter: string) {
@@ -98,8 +98,7 @@ myClass.addProperties({
 }, {
     name: "myProperty2",
     type: "number",
-    defaultExpression: "4",
-    isOptional: true
+    defaultExpression: "4"
 });
 
 console.log(file.write());
@@ -111,7 +110,7 @@ Outputs:
 @MyDecorator
 abstract class MyClass {
     myProperty1: string;
-    myProperty2?: number = 4;
+    myProperty2 = 4;
 
     // myMethod is here
     myMethod(myParam: string) {
