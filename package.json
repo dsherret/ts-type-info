@@ -3,6 +3,7 @@
   "version": "3.0.1",
   "description": "Reflection and code generation in TypeScript.",
   "main": "dist/main.js",
+  "typings": "ts-type-info.d.ts",
   "scripts": {
     "test": "gulp tslint && gulp test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "gulp typescript"
@@ -26,7 +27,7 @@
     "definition": "ts-type-info.d.ts"
   },
   "dependencies": {
-    "code-block-writer": "^3.1.0",
+    "code-block-writer": "^3.1.1",
     "tmp": "0.0.28",
     "typescript": "^1.8.10"
   },

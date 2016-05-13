@@ -11,19 +11,9 @@ Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/
 * [Version 3.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
 * [Language support](https://github.com/dsherret/ts-type-info/wiki/Language-Support)
 
-## Installing
-
 ```
 npm install ts-type-info --save-dev
 ```
-
-Use [typings](https://github.com/typings/typings) to get the definition file:
-
-```
-typings install npm:ts-type-info --save-dev
-```
-
-Use the `--save` flag on both commands if you need this library for more than just development.
 
 ## Reflection
 
