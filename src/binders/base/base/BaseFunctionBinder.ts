@@ -1,11 +1,11 @@
-﻿import {BaseParameterDefinition, BaseFunctionDefinition, CallSignatureDefinition} from "./../../../definitions";
+﻿import * as definitions from "./../../../definitions";
 import {BaseDefinitionBinder} from "./BaseDefinitionBinder";
 import {NamedBinder} from "./NamedBinder";
 import {ParameteredBinder} from "./ParameteredBinder";
 import {TypeParameteredBinder} from "./TypeParameteredBinder";
 import {ReturnTypedBinder} from "./ReturnTypedBinder";
 
-export abstract class BaseFunctionBinder<ParameterType extends BaseParameterDefinition> {
+export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition> {
     constructor(
         private baseDefinitionBinder: BaseDefinitionBinder,
         private namedBinder: NamedBinder,
@@ -15,9 +15,10 @@ export abstract class BaseFunctionBinder<ParameterType extends BaseParameterDefi
     ) {
     }
 
-    protected abstract getOverloadSignatures(): CallSignatureDefinition[];
+    protected abstract getOverloadSignatures(): definitions.CallSignatureDefinition[];
+    protected abstract getUserDefinedTypeGuard(): definitions.UserDefinedTypeGuardDefinition;
 
-    bind(def: BaseFunctionDefinition<ParameterType, any>) {
+    bind(def: definitions.BaseFunctionDefinition<ParameterType, any>) {
         this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.typeParameterBinder.bind(def);
@@ -25,5 +26,10 @@ export abstract class BaseFunctionBinder<ParameterType extends BaseParameterDefi
         this.returnTypedBinder.bind(def);
 
         def.overloadSignatures.push(...this.getOverloadSignatures());
+        def.userDefinedTypeGuard = this.getUserDefinedTypeGuard();
+
+        if (def.userDefinedTypeGuard != null) {
+            def.returnTypeExpression.text = (def.userDefinedTypeGuard.parameterName || "this") + " is " + def.userDefinedTypeGuard.type.text;
+        }
     }
 }

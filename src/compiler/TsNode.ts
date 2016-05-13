@@ -222,6 +222,16 @@ export class TsNode extends TsSourceFileChild {
         }
     }
 
+    getUserDefinedTypeGuardParameterName() {
+        const typePredicateNode = (this.node as ts.TypePredicateNode);
+        return (typePredicateNode.parameterName as ts.Identifier).text;
+    }
+
+    getUserDefinedTypeGuardType() {
+        const typeNode = (this.node as ts.TypePredicateNode).type;
+        return typeNode == null ? null : this.createNode(typeNode).getTypeAtLocation();
+    }
+
     getParameters() {
         const parameters = (this.node as ts.SignatureDeclaration).parameters;
         return parameters.filter(p => p != null).map(p => this.createNode(p));
@@ -482,6 +492,10 @@ export class TsNode extends TsSourceFileChild {
 
     isVariable() {
         return this.getKind() === ts.SyntaxKind.VariableDeclaration;
+    }
+
+    isUserDefinedTypeGuard() {
+        return this.getKind() === ts.SyntaxKind.TypePredicate;
     }
 
     nodeKindToString() {

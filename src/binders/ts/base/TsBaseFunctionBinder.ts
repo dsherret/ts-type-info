@@ -1,4 +1,4 @@
-﻿import {BaseParameterDefinition, BaseParameterDefinitionConstructor} from "./../../../definitions";
+﻿import {BaseParameterDefinition, BaseParameterDefinitionConstructor, UserDefinedTypeGuardDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {BaseFunctionBinder} from "./../../base";
@@ -33,5 +33,17 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
         }
 
         return callSignatures.map(s => this.factory.getCallSignatureFromSignature(s));
+    }
+
+    protected getUserDefinedTypeGuard() {
+        let userDefinedTypeGuard: UserDefinedTypeGuardDefinition = null;
+
+        this.node.getChildren().forEach(node => {
+            if (node.isUserDefinedTypeGuard()) {
+                userDefinedTypeGuard = this.factory.getUserDefinedTypeGuardFromNode(node);
+            }
+        });
+
+        return userDefinedTypeGuard;
     }
 }

@@ -1,13 +1,6 @@
-﻿import {IBaseBinder, TsCallSignatureBinder, TsClassBinder, TsClassConstructorBinder, TsClassMethodBinder, TsClassStaticMethodBinder, TsClassPropertyBinder, TsClassStaticPropertyBinder,
-    TsDecoratorBinder, TsEnumBinder, TsEnumMemberBinder, TsExpressionBinder, TsExpressionBinderByNode, TsFileBinder, TsFunctionBinder, TsImportBinder, TsIndexSignatureBinder,
-    TsInterfaceMethodBinder, TsInterfacePropertyBinder, TsInterfaceBinder, TsNamespaceBinder, TsTypeBinder, TsTypePropertyBinder, TsVariableBinder, TsTypeAliasBinder,
-    TsReExportBinder, TsTypeParameterBinder} from "./../binders";
+﻿import * as binders from "./../binders";
 import {TsSourceFile, TsNode, TsSignature, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
-import {CallSignatureDefinition, ClassDefinition, ClassConstructorDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition,
-    ClassStaticPropertyDefinition, DecoratorDefinition, EnumDefinition, EnumMemberDefinition, ExportableDefinitions, ExpressionDefinition, FileDefinition, FunctionDefinition,
-    ImportDefinition, ImportPartDefinition, IndexSignatureDefinition, InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, NamespaceDefinition,
-    VariableDefinition, NodeDefinitions, TypeAliasDefinition, ReExportDefinition, ReExportPartDefinition, ModuleMemberDefinitions, BaseDefinition, TypeDefinition,
-    TypeExpressionDefinition, TypeParameterDefinition, TypePropertyDefinition} from "./../definitions";
+import * as definitions from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 
 function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: DefType) {
@@ -16,54 +9,54 @@ function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: D
 }
 
 export class TsFactory {
-    private definitionByNode = new KeyValueCache<TsNode, NodeDefinitions>();
-    private files = new KeyValueCache<TsSourceFile, FileDefinition>();
-    private typeExpressions = new KeyValueCache<TsTypeExpression, TypeExpressionDefinition>();
-    private types = new KeyValueCache<TsType, TypeDefinition>();
-    private deferredBindings: { binder: IBaseBinder, definition: BaseDefinition }[] = [];
+    private definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
+    private files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
+    private types = new KeyValueCache<TsType, definitions.TypeDefinition>();
+    private typeExpressions = new KeyValueCache<TsTypeExpression, definitions.TypeExpressionDefinition[]>();
+    private deferredBindings: { binder: binders.IBaseBinder, definition: definitions.BaseDefinition }[] = [];
 
     getCallSignatureFromNode(node: TsNode) {
         return this.getCallSignatureFromSignature(node.getSignatureFromThis());
     }
 
     getCallSignatureFromSignature(signature: TsSignature) {
-        return bindToDefinition(new TsCallSignatureBinder(this, signature), new CallSignatureDefinition());
+        return bindToDefinition(new binders.TsCallSignatureBinder(this, signature), new definitions.CallSignatureDefinition());
     }
 
     getClassConstructor(node: TsNode) {
-        return bindToDefinition(new TsClassConstructorBinder(this, node), new ClassConstructorDefinition());
+        return bindToDefinition(new binders.TsClassConstructorBinder(this, node), new definitions.ClassConstructorDefinition());
     }
 
     getClassMethod(node: TsNode) {
-        return bindToDefinition(new TsClassMethodBinder(this, node), new ClassMethodDefinition());
+        return bindToDefinition(new binders.TsClassMethodBinder(this, node), new definitions.ClassMethodDefinition());
     }
 
     getClassStaticMethod(node: TsNode) {
-        return bindToDefinition(new TsClassStaticMethodBinder(this, node), new ClassStaticMethodDefinition());
+        return bindToDefinition(new binders.TsClassStaticMethodBinder(this, node), new definitions.ClassStaticMethodDefinition());
     }
 
     getClassProperty(node: TsNode) {
-        return bindToDefinition(new TsClassPropertyBinder(this, node), new ClassPropertyDefinition());
+        return bindToDefinition(new binders.TsClassPropertyBinder(this, node), new definitions.ClassPropertyDefinition());
     }
 
     getClassStaticProperty(node: TsNode) {
-        return bindToDefinition(new TsClassStaticPropertyBinder(this, node), new ClassStaticPropertyDefinition());
+        return bindToDefinition(new binders.TsClassStaticPropertyBinder(this, node), new definitions.ClassStaticPropertyDefinition());
     }
 
     getDecorator(node: TsNode) {
-        return bindToDefinition(new TsDecoratorBinder(this, node), new DecoratorDefinition());
+        return bindToDefinition(new binders.TsDecoratorBinder(this, node), new definitions.DecoratorDefinition());
     }
 
     getEnumMember(node: TsNode) {
-        return bindToDefinition(new TsEnumMemberBinder(node), new EnumMemberDefinition());
+        return bindToDefinition(new binders.TsEnumMemberBinder(node), new definitions.EnumMemberDefinition());
     }
 
     getExpression(tsExpression: TsExpression) {
-        return bindToDefinition(new TsExpressionBinder(tsExpression), new ExpressionDefinition());
+        return bindToDefinition(new binders.TsExpressionBinder(tsExpression), new definitions.ExpressionDefinition());
     }
 
-    getImportPart(obj: { importName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }) {
-        const def = new ImportPartDefinition();
+    getImportPart(obj: { importName: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; }) {
+        const def = new definitions.ImportPartDefinition();
         def.importName = obj.importName;
         def.definitions.push(...obj.definitions);
         def.expression = obj.expression;
@@ -75,19 +68,19 @@ export class TsFactory {
     }
 
     getIndexSignatureFromSignature(signature: TsSignature) {
-        return bindToDefinition(new TsIndexSignatureBinder(this, signature), new IndexSignatureDefinition());
+        return bindToDefinition(new binders.TsIndexSignatureBinder(this, signature), new definitions.IndexSignatureDefinition());
     }
 
     getInterfaceMethod(node: TsNode) {
-        return bindToDefinition(new TsInterfaceMethodBinder(this, node), new InterfaceMethodDefinition());
+        return bindToDefinition(new binders.TsInterfaceMethodBinder(this, node), new definitions.InterfaceMethodDefinition());
     }
 
     getInterfaceProperty(node: TsNode) {
-        return bindToDefinition(new TsInterfacePropertyBinder(this, node), new InterfacePropertyDefinition());
+        return bindToDefinition(new binders.TsInterfacePropertyBinder(this, node), new definitions.InterfacePropertyDefinition());
     }
 
-    getReExportPart(obj: { exportName: string; definitions: ExportableDefinitions[]; expression: ExpressionDefinition; }) {
-        const def = new ReExportPartDefinition();
+    getReExportPart(obj: { exportName: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; }) {
+        const def = new definitions.ReExportPartDefinition();
         def.exportName = obj.exportName;
         def.definitions.push(...obj.definitions);
         def.expression = obj.expression;
@@ -95,12 +88,12 @@ export class TsFactory {
     }
 
     getTypeParameter(node: TsNode) {
-        return bindToDefinition(new TsTypeParameterBinder(this, node), new TypeParameterDefinition());
+        return bindToDefinition(new binders.TsTypeParameterBinder(this, node), new definitions.TypeParameterDefinition());
     }
 
     getTypeExpressionFromNode(node: TsNode) {
         const tsType = node.getTypeAtLocation();
-        const def = bindToDefinition<TypeExpressionDefinition>(new TsExpressionBinderByNode(node), new TypeExpressionDefinition());
+        const def = bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsExpressionBinderByNode(node), new definitions.TypeExpressionDefinition());
 
         if (tsType != null) {
             def.types.push(this.getType(tsType));
@@ -114,14 +107,11 @@ export class TsFactory {
             return null;
         }
 
-        return this.typeExpressions.getOrCreate(
-            tsTypeExpression,
-            () => bindToDefinition<TypeExpressionDefinition>(new TsExpressionBinder(tsTypeExpression), new TypeExpressionDefinition()),
-            createdTypeExpression => {
-                tsTypeExpression.getTypes().forEach(type => {
-                    createdTypeExpression.types.push(this.getType(type));
-                });
-            });
+        const def = bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsExpressionBinder(tsTypeExpression), new definitions.TypeExpressionDefinition());
+        // todo: this array inside a KeyValueCache should be refactored out so it's more clear what's going on here
+        const typeExpressionArray = this.typeExpressions.getOrCreate(tsTypeExpression, () => []);
+        typeExpressionArray.push(def); // this adds to the array inside getOrCreate
+        return def;
     }
 
     getTypePropertyFromSymbol(symbol: TsSymbol) {
@@ -129,19 +119,23 @@ export class TsFactory {
     }
 
     getTypePropertyFromNode(node: TsNode) {
-        return bindToDefinition(new TsTypePropertyBinder(this, node), new TypePropertyDefinition());
+        return bindToDefinition(new binders.TsTypePropertyBinder(this, node), new definitions.TypePropertyDefinition());
     }
 
     getType(type: TsType) {
-        return this.types.getOrCreate(type, () => bindToDefinition(new TsTypeBinder(this, type), new TypeDefinition()));
+        return this.types.getOrCreate(type, () => bindToDefinition(new binders.TsTypeBinder(this, type), new definitions.TypeDefinition()));
+    }
+
+    getUserDefinedTypeGuardFromNode(node: TsNode) {
+        return bindToDefinition(new binders.TsUserDefinedTypeGuardBinder(this, node), new definitions.UserDefinedTypeGuardDefinition());
     }
 
     getAllExportableDefinitionsBySymbol(symbol: TsSymbol) {
         symbol = symbol.isAlias() ? symbol.getAliasSymbol() : symbol;
         const definitions = this.getAllDefinitionsBySymbol(symbol);
-        const exportableDefinitions: ExportableDefinitions[] = [];
+        const exportableDefinitions: definitions.ExportableDefinitions[] = [];
 
-        function handleDefinition(definition: (ExportableDefinitions | ReExportDefinition)) {
+        function handleDefinition(definition: (definitions.ExportableDefinitions | definitions.ReExportDefinition)) {
             if (definition.isReExportDefinition()) {
                 handleReExport(definition);
             }
@@ -150,7 +144,7 @@ export class TsFactory {
             }
         }
 
-        function handleReExport(reExportDefinition: ReExportDefinition) {
+        function handleReExport(reExportDefinition: definitions.ReExportDefinition) {
             reExportDefinition.getExports().forEach(handleDefinition);
         }
 
@@ -171,8 +165,8 @@ export class TsFactory {
 
     getFileDefinition(file: TsSourceFile) {
         return this.files.getOrCreate(file, () => {
-            const def = new FileDefinition();
-            const binder = new TsFileBinder(this, file);
+            const def = new definitions.FileDefinition();
+            const binder = new binders.TsFileBinder(this, file);
 
             binder.bind(def);
 
@@ -181,7 +175,7 @@ export class TsFactory {
     }
 
     getDefinitionsOrExpressionFromExportSymbol(symbol: TsSymbol) {
-        const obj: { definitions: ExportableDefinitions[]; expression: ExpressionDefinition; } = { definitions: [], expression: null };
+        const obj: { definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; } = { definitions: [], expression: null };
 
         if (symbol != null) {
             if (symbol.isAlias()) {
@@ -195,7 +189,7 @@ export class TsFactory {
                 return obj;
             }
 
-            obj.definitions.push(...this.getAllDefinitionsBySymbol(symbol) as ExportableDefinitions[]);
+            obj.definitions.push(...this.getAllDefinitionsBySymbol(symbol) as definitions.ExportableDefinitions[]);
         }
 
         return obj;
@@ -216,12 +210,25 @@ export class TsFactory {
     }
 
     fillAllCachedTypesWithDefinitions() {
-        this.types.getAll().forEach(type => {
-            const iType = this.types.getKeyFromValue(type);
-            const symbols = iType.getSymbols();
+        this.types.getAllKeyValues().forEach(keyValue => {
+            const tsType = keyValue.key;
+            const typeDef = keyValue.value;
+            const symbols = tsType.getSymbols();
 
             symbols.forEach(s => {
-                type.definitions.push(...this.getAllDefinitionsBySymbol(s) as ModuleMemberDefinitions[]);
+                typeDef.definitions.push(...this.getAllDefinitionsBySymbol(s) as definitions.ModuleMemberDefinitions[]);
+            });
+        });
+    }
+
+    fillAllCachedTypeExpressionsWithTypes() {
+        this.typeExpressions.getAllKeyValues().forEach(keyValue => {
+            const tsTypeExpression = keyValue.key;
+            const definitions = keyValue.value;
+            const types = tsTypeExpression.getTypes().map(type => this.getType(type));
+
+            definitions.forEach(def => {
+                def.types.push(...types);
             });
         });
     }
@@ -233,33 +240,33 @@ export class TsFactory {
     }
 
     private createDefinition(node: TsNode) {
-        let definition: NodeDefinitions;
+        let definition: definitions.NodeDefinitions;
 
         // todo: all these if statements are very similar. Need to reduce the redundancy
         if (node.isFunction()) {
-            definition = bindToDefinition(new TsFunctionBinder(this, node), new FunctionDefinition());
+            definition = bindToDefinition(new binders.TsFunctionBinder(this, node), new definitions.FunctionDefinition());
         }
         else if (node.isClass()) {
-            definition = bindToDefinition(new TsClassBinder(this, node), new ClassDefinition());
+            definition = bindToDefinition(new binders.TsClassBinder(this, node), new definitions.ClassDefinition());
         }
         else if (node.isInterface()) {
-            definition = bindToDefinition(new TsInterfaceBinder(this, node), new InterfaceDefinition());
+            definition = bindToDefinition(new binders.TsInterfaceBinder(this, node), new definitions.InterfaceDefinition());
         }
         else if (node.isEnum()) {
-            definition = bindToDefinition(new TsEnumBinder(this, node), new EnumDefinition());
+            definition = bindToDefinition(new binders.TsEnumBinder(this, node), new definitions.EnumDefinition());
         }
         else if (node.isVariable()) {
-            definition = bindToDefinition(new TsVariableBinder(this, node), new VariableDefinition());
+            definition = bindToDefinition(new binders.TsVariableBinder(this, node), new definitions.VariableDefinition());
         }
         else if (node.isTypeAlias()) {
-            definition = bindToDefinition(new TsTypeAliasBinder(this, node), new TypeAliasDefinition());
+            definition = bindToDefinition(new binders.TsTypeAliasBinder(this, node), new definitions.TypeAliasDefinition());
         }
         else if (node.isNamespace()) {
-            definition = bindToDefinition(new TsNamespaceBinder(this, node), new NamespaceDefinition());
+            definition = bindToDefinition(new binders.TsNamespaceBinder(this, node), new definitions.NamespaceDefinition());
         }
         else if (node.isExportDeclaration()) {
-            const binder = new TsReExportBinder(this, node);
-            definition = new ReExportDefinition();
+            const binder = new binders.TsReExportBinder(this, node);
+            definition = new definitions.ReExportDefinition();
 
             this.deferredBindings.push({
                 binder: binder,
@@ -267,8 +274,8 @@ export class TsFactory {
             });
         }
         else if (node.isImport()) {
-            const binder = new TsImportBinder(this, node);
-            definition = new ImportDefinition();
+            const binder = new binders.TsImportBinder(this, node);
+            definition = new definitions.ImportDefinition();
 
             this.deferredBindings.push({
                 binder: binder,

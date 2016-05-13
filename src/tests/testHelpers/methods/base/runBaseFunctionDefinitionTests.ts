@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import {FunctionTestStructure, ParameterTestStructures} from "./../../testStructures";
 import {BaseFunctionDefinitions, ParameterDefinitions} from "./../../../../definitions";
-import {runCallSignatureDefinitionTests} from "./../general";
+import {runCallSignatureDefinitionTests, runUserDefinedTypeGuardTests} from "./../general";
 import {runBaseDefinitionTests} from "./runBaseDefinitionTests";
 import {runNamedDefinitionTests} from "./runNamedDefinitionTests";
 import {runReturnTypedDefinitionTests} from "./runReturnTypedDefinitionTests";
@@ -18,6 +18,7 @@ export function runBaseFunctionDefinitionTests(
     runNamedDefinitionTests(definition, structure);
     runReturnTypedDefinitionTests(definition, structure);
     runParameteredDefinitionTests(runParameterDefinitionTests, definition, structure);
+    runUserDefinedTypeGuardTests(definition.userDefinedTypeGuard, structure.userDefinedTypeGuard);
 
     it("should have the same number of overload signatures", () => {
         assert.equal(definition.overloadSignatures.length, structure.overloadSignatures.length);

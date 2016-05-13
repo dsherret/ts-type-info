@@ -5,3 +5,4 @@ export * from "./general/TsIndexSignatureBinder";
 export * from "./general/TsTypeAliasBinder";
 export * from "./general/TsTypeParameterBinder";
 export * from "./general/TsTypePropertyBinder";
+export * from "./general/TsUserDefinedTypeGuardBinder";

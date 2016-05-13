@@ -26,26 +26,26 @@ export abstract class BaseDefinition {
 
     private _definitionType: DefinitionType;
 
-    isCallSignatureDefinition(): boolean;
-    isClassDefinition(): boolean;
-    isClassMethodDefinition(): boolean;
-    isClassPropertyDefinition(): boolean;
-    isClassStaticMethodDefinition(): boolean;
-    isClassStaticPropertyDefinition(): boolean;
-    isClassConstructorDefinition(): boolean;
-    isClassConstructorParameterDefinition(): boolean;
-    isEnumDefinition(): boolean;
-    isExportableDefinition(): boolean;
-    isFunctionDefinition(): boolean;
-    isFileDefinition(): boolean;
-    isImportDefinition(): boolean;
-    isInterfaceDefinition(): boolean;
-    isInterfaceMethodDefinition(): boolean;
-    isInterfacePropertyDefinition(): boolean;
-    isNamespaceDefinition(): boolean;
-    isReExportDefinition(): boolean;
-    isTypeAliasDefinition(): boolean;
-    isVariableDefinition(): boolean;
+    isCallSignatureDefinition(): this is CallSignatureDefinition;
+    isClassDefinition(): this is ClassDefinition;
+    isClassMethodDefinition(): this is ClassMethodDefinition;
+    isClassPropertyDefinition(): this is ClassPropertyDefinition;
+    isClassStaticMethodDefinition(): this is ClassStaticMethodDefinition;
+    isClassStaticPropertyDefinition(): this is ClassStaticPropertyDefinition;
+    isClassConstructorDefinition(): this is ClassConstructorDefinition;
+    isClassConstructorParameterDefinition(): this is ClassConstructorParameterDefinition;
+    isEnumDefinition(): this is EnumDefinition;
+    isExportableDefinition(): this is ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+    isFunctionDefinition(): this is FunctionDefinition;
+    isFileDefinition(): this is FileDefinition;
+    isImportDefinition(): this is ImportDefinition;
+    isInterfaceDefinition(): this is InterfaceDefinition;
+    isInterfaceMethodDefinition(): this is InterfaceMethodDefinition;
+    isInterfacePropertyDefinition(): this is InterfacePropertyDefinition;
+    isNamespaceDefinition(): this is NamespaceDefinition;
+    isReExportDefinition(): this is ReExportDefinition;
+    isTypeAliasDefinition(): this is TypeAliasDefinition;
+    isVariableDefinition(): this is VariableDefinition;
 }
 
 export enum DefinitionType {
@@ -80,7 +80,8 @@ export enum DefinitionType {
     TypeParameter = 1000,
     TypeProperty = 1100,
     Expression = 1200,
-    IndexSignature = 1300
+    IndexSignature = 1300,
+    UserDefinedTypeGuard = 1400
 }
 
 export class FunctionBodyWriteableDefinition {
@@ -178,6 +179,7 @@ export abstract class ObjectPropertyDefinition extends BasePropertyDefinition im
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
     overloadSignatures: CallSignatureDefinition[];
+    userDefinedTypeGuard: UserDefinedTypeGuardDefinition;
     name: string;
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
@@ -267,6 +269,11 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
     name: string;
 
     addArguments(...args: string[]): this;
+}
+
+export class UserDefinedTypeGuardDefinition extends BaseDefinition {
+    parameterName: string;
+    type: TypeDefinition;
 }
 
 export class ExpressionDefinition extends BaseDefinition {

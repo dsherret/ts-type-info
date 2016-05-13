@@ -10,6 +10,16 @@ function myFunctionWithParameters(str: string, optionalParam?: string, defaultPa
 }
 async function myAsyncFunction(): any {
 }
+function typeGuardFunction(def: any): def is MyClass {
+    return true;
+}
+function typeGuardFunctionIntersect(def: any): def is MyClass & MyClass2 {
+    return true;
+}
+class MyClass {
+}
+class MyClass2 {
+}
 `;
 
     const def = getInfoFromString(code);
@@ -44,6 +54,27 @@ async function myAsyncFunction(): any {
             name: "myAsyncFunction",
             isAsync: true,
             returnTypeExpression: { text: "any" }
+        }, {
+            name: "typeGuardFunction",
+            parameters: [{ name: "def" }],
+            returnTypeExpression: { text: "def is MyClass" },
+            userDefinedTypeGuard: {
+                parameterName: "def",
+                type: "MyClass"
+            }
+        }, {
+            name: "typeGuardFunctionIntersect",
+            parameters: [{ name: "def" }],
+            returnTypeExpression: { text: "def is MyClass & MyClass2" },
+            userDefinedTypeGuard: {
+                parameterName: "def",
+                type: "MyClass & MyClass2"
+            }
+        }],
+        classes: [{
+            name: "MyClass"
+        }, {
+            name: "MyClass2"
         }]
     });
 });

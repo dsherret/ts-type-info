@@ -2,7 +2,7 @@ import {TypeExpressionDefinition} from "./../expression";
 import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
 import {StructureFactory} from "./../../factories";
 import {applyMixins, DefinitionUtils} from "./../../utils";
-import {TypeParameterDefinition, CallSignatureDefinition} from "./../general";
+import {TypeParameterDefinition, CallSignatureDefinition, UserDefinedTypeGuardDefinition} from "./../general";
 import {BaseParameterDefinition} from "./BaseParameterDefinition";
 import {NamedDefinition} from "./NamedDefinition";
 import {TypeParameteredDefinition} from "./TypeParameteredDefinition";
@@ -14,8 +14,8 @@ import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
-
     overloadSignatures: CallSignatureDefinition[] = [];
+    userDefinedTypeGuard: UserDefinedTypeGuardDefinition;
 
     constructor(definitionType: DefinitionType) {
         super(definitionType);

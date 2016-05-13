@@ -32,6 +32,10 @@ class MyClass {
     // async
     async myAsyncMethod(): any {
     }
+
+    // user defined type guard
+    myUserDefinedTypeGuard(): this is MyClass {
+    }
 }`;
 
     const def = getInfoFromString(code);
@@ -79,6 +83,12 @@ class MyClass {
                 name: "myAsyncMethod",
                 isAsync: true,
                 returnTypeExpression: { text: "any" }
+            }, {
+                name: "myUserDefinedTypeGuard",
+                userDefinedTypeGuard: {
+                    type: "MyClass"
+                },
+                returnTypeExpression: { text: "this is MyClass" }
             }]
         }]
     });
