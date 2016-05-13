@@ -58,8 +58,11 @@ gulp.task("tslint", function() {
 });
 
 gulp.task("generate-definition-file", ["typescript"], function(cb) {
-    var generateDefinitionFile = require("./dist/build/generateDefinitionFile").generateDefinitionFile;
-    generateDefinitionFile();
+    require("./dist/build/generateDefinitionFile").generateDefinitionFile();
+});
+
+gulp.task("generate-strict-structures", ["typescript"], function(cb) {
+    require("./dist/build/generateStrictStructures").generateStrictStructures();
 });
 
 gulp.task("watch", function() {
