@@ -1,7 +1,7 @@
 ﻿import {ModuleSearchDefinitions} from "./../definitions";
 import {StructureFactory} from "./../factories";
 import {FileStructure} from "./../structures";
-import {DefinitionUtils, StringUtils} from "./../utils";
+import {DefinitionUtils, FileUtils} from "./../utils";
 import {FileDefinition} from "./file";
 
 export class GlobalDefinition {
@@ -17,7 +17,7 @@ export class GlobalDefinition {
         let searchFunction = fileNameOrSearchFunction as ((file: FileDefinition) => boolean);
 
         if (typeof fileNameOrSearchFunction === "string") {
-            searchFunction = (def) => StringUtils.endsWith(def.fileName, fileNameOrSearchFunction);
+            searchFunction = (def) => FileUtils.filePathMatches(def.fileName, fileNameOrSearchFunction);
         }
 
         return DefinitionUtils.getDefinitionFromListByFunc(this.files, searchFunction);
