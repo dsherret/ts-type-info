@@ -13,7 +13,7 @@ export class StructureClassBinder extends ClassBinder {
             new StructureAmbientableBinder(structure),
             new StructureTypeParameteredBinder(factory, structure),
             new StructureAbstractableBinder(structure),
-            new StructureDecoratableBinder(structure)
+            new StructureDecoratableBinder(factory, structure)
         );
     }
 

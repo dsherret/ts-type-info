@@ -1,7 +1,6 @@
 ﻿import * as assert from "assert";
 import {InterfaceDefinition} from "./../../../definitions";
-import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests, runInterfaceMethodDefinitionTests,
-    runInterfacePropertyDefinitionTests} from "./../../testHelpers";
+import * as testHelpers from "./../../testHelpers";
 
 describe("InterfaceDefinition", () => {
     describe("addCallSignatures()", () => {
@@ -14,14 +13,14 @@ describe("InterfaceDefinition", () => {
             returnType: "number"
         });
 
-        runCallSignatureDefinitionTests(i.callSignatures[0], {
+        testHelpers.runCallSignatureDefinitionTests(i.callSignatures[0], {
             returnTypeExpression: { text: "string" },
             parameters: [{ name: "myParam" }],
             typeParameters: [{ name: "T" }],
             minArgumentCount: 1
         });
 
-        runCallSignatureDefinitionTests(i.callSignatures[1], {
+        testHelpers.runCallSignatureDefinitionTests(i.callSignatures[1], {
             returnTypeExpression: { text: "number" }
         });
     });
@@ -50,13 +49,13 @@ describe("InterfaceDefinition", () => {
             returnType: "number"
         });
 
-        runIndexSignatureDefinitionTests(i.indexSignatures[0], {
+        testHelpers.runIndexSignatureDefinitionTests(i.indexSignatures[0], {
             keyName: "num",
             keyTypeExpression: { text: "number" },
             returnTypeExpression: { text: "Date" }
         });
 
-        runIndexSignatureDefinitionTests(i.indexSignatures[1], {
+        testHelpers.runIndexSignatureDefinitionTests(i.indexSignatures[1], {
             keyName: "str",
             keyTypeExpression: { text: "string" }, // defaults to string
             returnTypeExpression: { text: "number" }
@@ -74,14 +73,14 @@ describe("InterfaceDefinition", () => {
             name: "myMethod2"
         });
 
-        runInterfaceMethodDefinitionTests(i.methods[0], {
+        testHelpers.runInterfaceMethodDefinitionTests(i.methods[0], {
             name: "myMethod1",
             typeParameters: [{ name: "T" }],
             returnTypeExpression: { text: "string" },
             parameters: [{ name: "myParam" }]
         });
 
-        runInterfaceMethodDefinitionTests(i.methods[1], {
+        testHelpers.runInterfaceMethodDefinitionTests(i.methods[1], {
             name: "myMethod2"
         });
     });
@@ -97,13 +96,13 @@ describe("InterfaceDefinition", () => {
             name: "myProperty2"
         });
 
-        runInterfacePropertyDefinitionTests(i.properties[0], {
+        testHelpers.runInterfacePropertyDefinitionTests(i.properties[0], {
             isOptional: true,
             name: "myProperty1",
             typeExpression: { text: "string" }
         });
 
-        runInterfacePropertyDefinitionTests(i.properties[1], {
+        testHelpers.runInterfacePropertyDefinitionTests(i.properties[1], {
             name: "myProperty2"
         });
     });
@@ -118,14 +117,14 @@ describe("InterfaceDefinition", () => {
             returnType: "number"
         });
 
-        runCallSignatureDefinitionTests(i.newSignatures[0], {
+        testHelpers.runCallSignatureDefinitionTests(i.newSignatures[0], {
             returnTypeExpression: { text: "string" },
             parameters: [{ name: "myParam" }],
             typeParameters: [{ name: "T" }],
             minArgumentCount: 1
         });
 
-        runCallSignatureDefinitionTests(i.newSignatures[1], {
+        testHelpers.runCallSignatureDefinitionTests(i.newSignatures[1], {
             returnTypeExpression: { text: "number" }
         });
     });

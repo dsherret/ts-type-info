@@ -1,7 +1,6 @@
 ﻿import * as assert from "assert";
 import {ClassDefinition, Scope, ClassConstructorParameterScope} from "./../../../definitions";
-import {runClassMethodDefinitionTests, runClassPropertyDefinitionTests, runClassConstructorDefinitionTests, runClassStaticMethodDefinitionTests,
-    runClassStaticPropertyDefinitionTests} from "./../../testHelpers";
+import * as testHelpers from "./../../testHelpers";
 
 describe("ClassDefinition", () => {
     describe("addExtends", () => {
@@ -54,7 +53,7 @@ describe("ClassDefinition", () => {
             name: "mySecondMethod"
         });
 
-        runClassMethodDefinitionTests(c.methods[0], {
+        testHelpers.runClassMethodDefinitionTests(c.methods[0], {
             decorators: [{ name: "decorator" }],
             isAbstract: true,
             isAsync: true,
@@ -73,7 +72,7 @@ describe("ClassDefinition", () => {
             hasOnWriteFunctionBody: true
         });
 
-        runClassMethodDefinitionTests(c.methods[1], {
+        testHelpers.runClassMethodDefinitionTests(c.methods[1], {
             name: "mySecondMethod"
         });
     });
@@ -96,7 +95,7 @@ describe("ClassDefinition", () => {
             name: "mySecondProperty"
         });
 
-        runClassPropertyDefinitionTests(c.properties[0], {
+        testHelpers.runClassPropertyDefinitionTests(c.properties[0], {
             decorators: [{ name: "decorator" }],
             defaultExpression: { text: "4" },
             isAccessor: true,
@@ -108,7 +107,7 @@ describe("ClassDefinition", () => {
             hasOnWriteGetBody: true,
             hasOnWriteSetBody: true
         });
-        runClassPropertyDefinitionTests(c.properties[1], {
+        testHelpers.runClassPropertyDefinitionTests(c.properties[1], {
             name: "mySecondProperty"
         });
     });
@@ -135,7 +134,7 @@ describe("ClassDefinition", () => {
             name: "mySecondStaticMethod"
         });
 
-        runClassStaticMethodDefinitionTests(c.staticMethods[0], {
+        testHelpers.runClassStaticMethodDefinitionTests(c.staticMethods[0], {
             decorators: [{ name: "decorator" }],
             isAsync: true,
             returnTypeExpression: { text: "string" },
@@ -152,7 +151,7 @@ describe("ClassDefinition", () => {
             scope: Scope.Private
         });
 
-        runClassStaticMethodDefinitionTests(c.staticMethods[1], {
+        testHelpers.runClassStaticMethodDefinitionTests(c.staticMethods[1], {
             name: "mySecondStaticMethod"
         });
     });
@@ -171,7 +170,7 @@ describe("ClassDefinition", () => {
             name: "mySecondStaticProperty"
         });
 
-        runClassStaticPropertyDefinitionTests(c.staticProperties[0], {
+        testHelpers.runClassStaticPropertyDefinitionTests(c.staticProperties[0], {
             decorators: [{ name: "decorator" }],
             defaultExpression: { text: "4" },
             isOptional: true,
@@ -179,7 +178,7 @@ describe("ClassDefinition", () => {
             scope: Scope.Private,
             typeExpression: { text: "string" }
         });
-        runClassStaticPropertyDefinitionTests(c.staticProperties[1], {
+        testHelpers.runClassStaticPropertyDefinitionTests(c.staticProperties[1], {
             name: "mySecondStaticProperty"
         });
     });
@@ -193,7 +192,7 @@ describe("ClassDefinition", () => {
         });
 
         describe("constructor", () => {
-            runClassConstructorDefinitionTests(c.constructorDef, {
+            testHelpers.runClassConstructorDefinitionTests(c.constructorDef, {
                 parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
                 hasOnWriteFunctionBody: true
             });

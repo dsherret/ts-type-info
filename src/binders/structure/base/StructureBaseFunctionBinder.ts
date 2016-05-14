@@ -20,7 +20,7 @@ export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseP
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
             new StructureTypeParameteredBinder(factory, structure),
-            new StructureParameteredBinder(structure, paramDefinition, paramBinder),
+            new StructureParameteredBinder(factory, structure, paramDefinition, paramBinder),
             new StructureReturnTypedBinder(factory, structure)
         );
     }

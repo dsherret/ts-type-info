@@ -1,9 +1,10 @@
-﻿import {CallSignatureParameterStructure} from "./../../../structures";
+﻿import {StructureFactory} from "./../../../factories";
+import {CallSignatureParameterStructure} from "./../../../structures";
 import {CallSignatureParameterBinder} from "./../../base";
 import {StructureBaseParameterBinder} from "./../base";
 
 export class StructureCallSignatureParameterBinder extends CallSignatureParameterBinder {
-    constructor(structure: CallSignatureParameterStructure) {
+    constructor(factory: StructureFactory, structure: CallSignatureParameterStructure) {
         super(new StructureBaseParameterBinder(structure));
     }
 }

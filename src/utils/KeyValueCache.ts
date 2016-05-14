@@ -43,9 +43,7 @@ export class KeyValueCache<T, U> {
     }
 
     getAllKeyValues() {
-        return this.cacheItems.map(c => {
-            return { key: c.key, value: c.value };
-        });
+        return this.cacheItems.map(c => ({ key: c.key, value: c.value }));
     }
 
     add(key: T, value: U) {

@@ -9,11 +9,7 @@ export class StructureClassConstructorBinder extends ClassConstructorBinder {
     constructor(factory: StructureFactory, structure: ClassConstructorStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
-            new StructureParameteredBinder(
-                structure,
-                ClassConstructorParameterDefinition,
-                StructureClassConstructorParameterBinder
-            ),
+            new StructureParameteredBinder(factory, structure, ClassConstructorParameterDefinition, StructureClassConstructorParameterBinder),
             new StructureFunctionBodyWriteableBinder(structure)
         );
     }

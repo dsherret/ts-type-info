@@ -20,12 +20,10 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
             type: this.typeExpression.text,
             isOptional: this.isOptional,
             defaultExpression: this.defaultExpression != null ? this.defaultExpression.text : null,
-            decorators: this.decorators.map(decorator => {
-                return {
-                    name: decorator.name,
-                    arguments: decorator.arguments.map(arg => arg.text)
-                };
-            })
+            decorators: this.decorators.map(decorator => ({
+                name: decorator.name,
+                arguments: decorator.arguments.map(arg => arg.text)
+            }))
         });
 
         return def;

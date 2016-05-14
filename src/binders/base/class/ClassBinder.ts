@@ -1,14 +1,13 @@
-﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassPropertyDefinition, ClassStaticPropertyDefinition,
-    ClassConstructorDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import * as definitions from "./../../../definitions";
 import {IBaseBinder} from "./../IBaseBinder";
 import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, AbstractableBinder, DecoratableBinder} from "./../base";
 
 export class ClassMemberContainer {
-    constructorDef: ClassConstructorDefinition;
-    methods: ClassMethodDefinition[] = [];
-    properties: ClassPropertyDefinition[] = [];
-    staticMethods: ClassStaticMethodDefinition[] = [];
-    staticProperties: ClassStaticPropertyDefinition[] = [];
+    constructorDef: definitions.ClassConstructorDefinition;
+    methods: definitions.ClassMethodDefinition[] = [];
+    properties: definitions.ClassPropertyDefinition[] = [];
+    staticMethods: definitions.ClassStaticMethodDefinition[] = [];
+    staticProperties: definitions.ClassStaticPropertyDefinition[] = [];
 }
 
 export abstract class ClassBinder implements IBaseBinder {
@@ -24,10 +23,10 @@ export abstract class ClassBinder implements IBaseBinder {
     }
 
     abstract getMembers(): ClassMemberContainer;
-    abstract getExtendsTypeExpressions(): TypeExpressionDefinition[];
-    abstract getImplementsTypeExpressions(): TypeExpressionDefinition[];
+    abstract getExtendsTypeExpressions(): definitions.TypeExpressionDefinition[];
+    abstract getImplementsTypeExpressions(): definitions.TypeExpressionDefinition[];
 
-    bind(def: ClassDefinition) {
+    bind(def: definitions.ClassDefinition) {
         this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.exportableBinder.bind(def);
@@ -40,7 +39,7 @@ export abstract class ClassBinder implements IBaseBinder {
         def.implementsTypeExpressions.push(...this.getImplementsTypeExpressions());
     }
 
-    private bindMembers(def: ClassDefinition) {
+    private bindMembers(def: definitions.ClassDefinition) {
         const container = this.getMembers();
 
         def.constructorDef = container.constructorDef;

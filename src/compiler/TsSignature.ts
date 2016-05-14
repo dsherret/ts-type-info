@@ -36,9 +36,7 @@ export class TsSignature extends TsSourceFileChild {
         type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
         let typeParameters = this.signature.typeParameters;
 
-        return (typeParameters || []).map(typeParameter => {
-            return this.createSymbol(typeParameter.symbol);
-        });
+        return (typeParameters || []).map(typeParameter => this.createSymbol(typeParameter.symbol));
     }
 
     private getTypeExpressionFromType(tsType: ts.Type) {

@@ -10,7 +10,7 @@ export class StructureCallSignatureBinder extends CallSignatureBinder {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureTypeParameteredBinder(factory, structure),
-            new StructureParameteredBinder(structure, CallSignatureParameterDefinition, StructureCallSignatureParameterBinder),
+            new StructureParameteredBinder(factory, structure, CallSignatureParameterDefinition, StructureCallSignatureParameterBinder),
             new StructureReturnTypedBinder(factory, structure)
         );
     }

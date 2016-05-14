@@ -1,11 +1,10 @@
-﻿import {ExpressionDefinition} from "./../../../definitions";
+﻿import {StructureFactory} from "./../../../factories";
 import {DecoratorStructure} from "./../../../structures";
 import {DecoratorBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder} from "./../base";
-import {StructureExpressionBinder} from "./../expression";
 
 export class StructureDecoratorBinder extends DecoratorBinder {
-    constructor(private structure: DecoratorStructure) {
+    constructor(private factory: StructureFactory, private structure: DecoratorStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure)
@@ -13,13 +12,6 @@ export class StructureDecoratorBinder extends DecoratorBinder {
     }
 
     getArguments() {
-        return (this.structure.arguments || []).map(a => {
-            const expression = new ExpressionDefinition();
-            const binder = new StructureExpressionBinder(a);
-
-            binder.bind(expression);
-
-            return expression;
-        });
+        return (this.structure.arguments || []).map(a => this.factory.getExpressionFromText(a));
     }
 }

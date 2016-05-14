@@ -1,14 +1,13 @@
-﻿import {CallSignatureDefinition, IndexSignatureDefinition, InterfaceDefinition, InterfacePropertyDefinition, InterfaceMethodDefinition,
-    TypeExpressionDefinition} from "./../../../definitions";
+﻿import * as definitions from "./../../../definitions";
 import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export class InterfaceMemberContainer {
-    callSignatures: CallSignatureDefinition[] = [];
-    indexSignatures: IndexSignatureDefinition[] = [];
-    methods: InterfaceMethodDefinition[] = [];
-    newSignatures: CallSignatureDefinition[] = [];
-    properties: InterfacePropertyDefinition[] = [];
+    callSignatures: definitions.CallSignatureDefinition[] = [];
+    indexSignatures: definitions.IndexSignatureDefinition[] = [];
+    methods: definitions.InterfaceMethodDefinition[] = [];
+    newSignatures: definitions.CallSignatureDefinition[] = [];
+    properties: definitions.InterfacePropertyDefinition[] = [];
 }
 
 export abstract class InterfaceBinder implements IBaseBinder {
@@ -22,9 +21,9 @@ export abstract class InterfaceBinder implements IBaseBinder {
     }
 
     abstract getMembers(): InterfaceMemberContainer;
-    abstract getExtendsTypeExpressions(): TypeExpressionDefinition[];
+    abstract getExtendsTypeExpressions(): definitions.TypeExpressionDefinition[];
 
-    bind(def: InterfaceDefinition) {
+    bind(def: definitions.InterfaceDefinition) {
         this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.exportableBinder.bind(def);
@@ -34,7 +33,7 @@ export abstract class InterfaceBinder implements IBaseBinder {
         def.extendsTypeExpressions.push(...this.getExtendsTypeExpressions());
     }
 
-    private bindMembers(def: InterfaceDefinition) {
+    private bindMembers(def: definitions.InterfaceDefinition) {
         const memberContainer = this.getMembers();
         def.properties.push(...memberContainer.properties);
         def.methods.push(...memberContainer.methods);

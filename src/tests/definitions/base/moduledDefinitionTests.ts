@@ -1,8 +1,7 @@
 ﻿import * as assert from "assert";
 import {createVariable} from "./../../../createFunctions";
 import {NamespaceDefinition, NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
-import {runClassDefinitionTests, runEnumDefinitionTests, runFunctionDefinitionTests, runInterfaceDefinitionTests, runNamedDefinitionTests,
-    runNamespaceDefinitionTests, runTypeAliasDefinitionTests, runVariableDefinitionTests} from "./../../testHelpers";
+import * as testHelpers from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
     describe("addClasses", () => {
@@ -28,7 +27,7 @@ describe("ModuledDefinitionTests", () => {
             name: "class2"
         });
 
-        runClassDefinitionTests(n.classes[0], {
+        testHelpers.runClassDefinitionTests(n.classes[0], {
             name: "class1",
             constructorDef: { parameters: [{ name: "param1" }] },
             decorators: [{ name: "dec1" }],
@@ -46,7 +45,7 @@ describe("ModuledDefinitionTests", () => {
             staticProperties: [{ name: "staticProp1" }],
             typeParameters: [{ name: "T" }]
         });
-        runClassDefinitionTests(n.classes[1], {
+        testHelpers.runClassDefinitionTests(n.classes[1], {
             name: "class2"
         });
     });
@@ -65,7 +64,7 @@ describe("ModuledDefinitionTests", () => {
             name: "enum2"
         });
 
-        runEnumDefinitionTests(n.enums[0], {
+        testHelpers.runEnumDefinitionTests(n.enums[0], {
             name: "enum1",
             hasDeclareKeyword: true,
             isAmbient: true,
@@ -74,7 +73,7 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
         });
-        runEnumDefinitionTests(n.enums[1], {
+        testHelpers.runEnumDefinitionTests(n.enums[1], {
             name: "enum2"
         });
     });
@@ -97,7 +96,7 @@ describe("ModuledDefinitionTests", () => {
             name: "function2"
         });
 
-        runFunctionDefinitionTests(n.functions[0], {
+        testHelpers.runFunctionDefinitionTests(n.functions[0], {
             name: "function1",
             hasDeclareKeyword: true,
             isAmbient: true,
@@ -110,7 +109,7 @@ describe("ModuledDefinitionTests", () => {
             typeParameters: [{ name: "T" }, { name: "U" }],
             hasOnWriteFunctionBody: true
         });
-        runFunctionDefinitionTests(n.functions[1], {
+        testHelpers.runFunctionDefinitionTests(n.functions[1], {
             name: "function2"
         });
     });
@@ -144,7 +143,7 @@ describe("ModuledDefinitionTests", () => {
             name: "Interface2"
         });
 
-        runInterfaceDefinitionTests(n.interfaces[0], {
+        testHelpers.runInterfaceDefinitionTests(n.interfaces[0], {
             name: "Interface1",
             extendsTypeExpressions: [{ text: "Extend" }],
             hasDeclareKeyword: true,
@@ -170,7 +169,7 @@ describe("ModuledDefinitionTests", () => {
                 name: "typeParam"
             }]
         });
-        runInterfaceDefinitionTests(n.interfaces[1], {
+        testHelpers.runInterfaceDefinitionTests(n.interfaces[1], {
             name: "Interface2"
         });
     });
@@ -196,7 +195,7 @@ describe("ModuledDefinitionTests", () => {
             name: "namespace2"
         });
 
-        runNamespaceDefinitionTests(n.namespaces[0], {
+        testHelpers.runNamespaceDefinitionTests(n.namespaces[0], {
             name: "namespace1",
             declarationType: NamespaceDeclarationType.Module,
             classes: [{ name: "class1" }],
@@ -212,7 +211,7 @@ describe("ModuledDefinitionTests", () => {
             typeAliases: [{ name: "typeAlias1", typeExpression: { text: "string" }}],
             variables: [{ name: "variable1", declarationType: VariableDeclarationType.Let }]
         });
-        runNamespaceDefinitionTests(n.namespaces[1], {
+        testHelpers.runNamespaceDefinitionTests(n.namespaces[1], {
             name: "namespace2",
             declarationType: NamespaceDeclarationType.Namespace // should default to namespace
         });
@@ -234,7 +233,7 @@ describe("ModuledDefinitionTests", () => {
             type: "string"
         });
 
-        runTypeAliasDefinitionTests(n.typeAliases[0], {
+        testHelpers.runTypeAliasDefinitionTests(n.typeAliases[0], {
             name: "typeAlias1",
             hasDeclareKeyword: true,
             isAmbient: true,
@@ -244,7 +243,7 @@ describe("ModuledDefinitionTests", () => {
             typeExpression: { text: "string" },
             typeParameters: [{ name: "T" }]
         });
-        runTypeAliasDefinitionTests(n.typeAliases[1], {
+        testHelpers.runTypeAliasDefinitionTests(n.typeAliases[1], {
             name: "typeAlias2",
             typeExpression: { text: "string" }
         });
@@ -266,7 +265,7 @@ describe("ModuledDefinitionTests", () => {
             name: "myVar2"
         });
 
-        runVariableDefinitionTests(n.variables[0], {
+        testHelpers.runVariableDefinitionTests(n.variables[0], {
             name: "myVar1",
             declarationType: VariableDeclarationType.Const,
             defaultExpression: { text: "5" },
@@ -277,7 +276,7 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             typeExpression: { text: "number" }
         });
-        runVariableDefinitionTests(n.variables[1], {
+        testHelpers.runVariableDefinitionTests(n.variables[1], {
             name: "myVar2",
             declarationType: VariableDeclarationType.Let // should default to let
         });
@@ -286,50 +285,50 @@ describe("ModuledDefinitionTests", () => {
     describe("getClass", () => {
         const n = new NamespaceDefinition();
         n.addClasses({ name: "name1" }, { name: "name2" });
-        runNamedDefinitionTests(n.getClass("name2"), { name: "name2" });
-        runNamedDefinitionTests(n.getClass(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getClass("name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getClass(d => d.name === "name2"), { name: "name2" });
     });
 
     describe("getEnum", () => {
         const n = new NamespaceDefinition();
         n.addEnums({ name: "name1" }, { name: "name2" });
-        runNamedDefinitionTests(n.getEnum("name2"), { name: "name2" });
-        runNamedDefinitionTests(n.getEnum(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getEnum("name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getEnum(d => d.name === "name2"), { name: "name2" });
     });
 
     describe("getFunction", () => {
         const n = new NamespaceDefinition();
         n.addFunctions({ name: "name1" }, { name: "name2" });
-        runNamedDefinitionTests(n.getFunction("name2"), { name: "name2" });
-        runNamedDefinitionTests(n.getFunction(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getFunction("name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getFunction(d => d.name === "name2"), { name: "name2" });
     });
 
     describe("getInterface", () => {
         const n = new NamespaceDefinition();
         n.addInterfaces({ name: "name1" }, { name: "name2" });
-        runNamedDefinitionTests(n.getInterface("name2"), { name: "name2" });
-        runNamedDefinitionTests(n.getInterface(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getInterface("name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getInterface(d => d.name === "name2"), { name: "name2" });
     });
 
     describe("getNamespace", () => {
         const n = new NamespaceDefinition();
         n.addNamespaces({ name: "name1" }, { name: "name2" });
-        runNamedDefinitionTests(n.getNamespace("name2"), { name: "name2" });
-        runNamedDefinitionTests(n.getNamespace(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getNamespace("name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getNamespace(d => d.name === "name2"), { name: "name2" });
     });
 
     describe("getTypeAlias", () => {
         const n = new NamespaceDefinition();
         n.addTypeAliases({ name: "name1", type: "string" }, { name: "name2", type: "string" });
-        runNamedDefinitionTests(n.getTypeAlias("name2"), { name: "name2" });
-        runNamedDefinitionTests(n.getTypeAlias(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getTypeAlias("name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getTypeAlias(d => d.name === "name2"), { name: "name2" });
     });
 
     describe("getVariable", () => {
         const n = new NamespaceDefinition();
         n.addVariables({ name: "name1" }, { name: "name2" });
-        runNamedDefinitionTests(n.getVariable("name2"), { name: "name2" });
-        runNamedDefinitionTests(n.getVariable(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getVariable("name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getVariable(d => d.name === "name2"), { name: "name2" });
     });
 
     describe("directlyContains", () => {

@@ -1,5 +1,4 @@
-﻿import {ClassDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, Scope, ScopedDefinition, ClassConstructorDefinition,
-    ClassConstructorParameterScope} from "./../definitions";
+﻿import * as definitions from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ExtendsImplementsClauseWriter} from "./ExtendsImplementsClauseWriter";
@@ -9,13 +8,13 @@ import {PropertyWriter} from "./PropertyWriter";
 import {MethodWriter} from "./MethodWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
 
-export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
+export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinition> {
     private typeParametersWriter = new TypeParametersWriter(this.writer);
     private propertyWriter = new PropertyWriter(this.writer);
     private methodWriter = new MethodWriter(this.writer);
     private classConstructorWriter = new ClassConstructorWriter(this.writer);
 
-    protected writeDefault(def: ClassDefinition, flags: WriteFlags) {
+    protected writeDefault(def: definitions.ClassDefinition, flags: WriteFlags) {
         this.writeHeader(def, flags);
         this.writer.block(() => {
             this.writeStaticProperties(def, flags);
@@ -30,7 +29,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         });
     }
 
-    private writeHeader(def: ClassDefinition, flags: WriteFlags) {
+    private writeHeader(def: definitions.ClassDefinition, flags: WriteFlags) {
         this.writeExportClause(def, flags);
         this.writeDeclareClause(def);
         this.writeAbstract(def);
@@ -41,13 +40,13 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         extendsImplementsWriter.writeExtends(def).writeImplements(def);
     }
 
-    private writeAbstract(def: ClassDefinition) {
+    private writeAbstract(def: definitions.ClassDefinition) {
         if (def.isAbstract) {
             this.writer.write("abstract ");
         }
     }
 
-    private writeConstructor(constructorDef: ClassConstructorDefinition, flags: WriteFlags) {
+    private writeConstructor(constructorDef: definitions.ClassConstructorDefinition, flags: WriteFlags) {
         if (constructorDef != null && ClassConstructorWriter.shouldWriteConstructor(constructorDef, flags)) {
             const willWriteFunctionBody = FunctionBodyWriter.willWriteFunctionBody(constructorDef, flags);
 
@@ -60,14 +59,14 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
 
             // if the function body won't be written, the scoped constructor parameters need to be written out as properties
             if (!willWriteFunctionBody) {
-                (constructorDef.parameters || []).filter(p => p.scope !== ClassConstructorParameterScope.None).forEach(p => {
+                (constructorDef.parameters || []).filter(p => p.scope !== definitions.ClassConstructorParameterScope.None).forEach(p => {
                     this.propertyWriter.write(p.toClassProperty(), flags);
                 });
             }
         }
     }
 
-    private writeStaticProperties(def: ClassDefinition, flags: WriteFlags) {
+    private writeStaticProperties(def: definitions.ClassDefinition, flags: WriteFlags) {
         def.staticProperties.forEach(p => {
             if (this.shouldInclude(p, flags)) {
                 this.propertyWriter.write(p, flags);
@@ -75,7 +74,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         });
     }
 
-    private writeProperties(def: ClassDefinition, flags: WriteFlags) {
+    private writeProperties(def: definitions.ClassDefinition, flags: WriteFlags) {
         def.properties.forEach(p => {
             if (this.shouldInclude(p, flags) && !p.isConstructorParameter) {
                 // todo: improve this by moving writing blank lines into code-block-writer (See #69)
@@ -95,7 +94,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
 
     private lastHadBlankLine = true;
 
-    private writeStaticMethods(def: ClassDefinition, flags: WriteFlags) {
+    private writeStaticMethods(def: definitions.ClassDefinition, flags: WriteFlags) {
         this.lastHadBlankLine = true;
 
         if (def.isAmbient) {
@@ -105,7 +104,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         def.staticMethods.forEach(m => this.writeMethod(m, flags));
     }
 
-    private writeMethods(def: ClassDefinition, flags: WriteFlags) {
+    private writeMethods(def: definitions.ClassDefinition, flags: WriteFlags) {
         this.lastHadBlankLine = true;
 
         if (def.isAmbient) {
@@ -115,7 +114,7 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         def.methods.forEach(m => this.writeMethod(m, flags));
     }
 
-    private writeMethod(def: ClassMethodDefinition | ClassStaticMethodDefinition, flags: WriteFlags) {
+    private writeMethod(def: definitions.ClassMethodDefinition | definitions.ClassStaticMethodDefinition, flags: WriteFlags) {
         // todo: improve this by moving writing blank lines into code-block-writer (See #69)
         const thisHasBlankLine = FunctionBodyWriter.willWriteFunctionBody(def, flags);
 
@@ -134,11 +133,11 @@ export class ClassWriter extends BaseDefinitionWriter<ClassDefinition> {
         this.lastHadBlankLine = thisHasBlankLine;
     }
 
-    private shouldInclude(def: ScopedDefinition, flags: WriteFlags) {
-        if (def.scope === Scope.Private && (flags & WriteFlags.HidePrivateMembers)) {
+    private shouldInclude(def: definitions.ScopedDefinition, flags: WriteFlags) {
+        if (def.scope === definitions.Scope.Private && (flags & WriteFlags.HidePrivateMembers)) {
             return false;
         }
-        else if (def.scope === Scope.Protected && (flags & WriteFlags.HideProtectedMembers)) {
+        else if (def.scope === definitions.Scope.Protected && (flags & WriteFlags.HideProtectedMembers)) {
             return false;
         }
         else {

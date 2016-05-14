@@ -33,28 +33,17 @@ export class TsType extends TsSourceFileChild {
 
     getProperties(): TsSymbol[] {
         const properties = this.type.getProperties();
-
-        return (properties || []).filter(p => p.name !== "prototype").map(property => {
-            return this.createSymbol(property);
-        });
+        return (properties || []).filter(p => p.name !== "prototype").map(property => this.createSymbol(property));
     }
 
     getCallSignatures() {
         const callSignatures = this.type.getCallSignatures();
-
-        return (callSignatures || []).map(callSignature => {
-            return this.createTsSignature({
-                signature: callSignature
-            });
-        });
+        return (callSignatures || []).map(callSignature => this.createTsSignature({ signature: callSignature }));
     }
 
     getTypeArguments() {
         const tsTypeArguments = (this.type as ts.TypeReference).typeArguments;
-
-        return (tsTypeArguments || []).map(arg => {
-            return tryGet(this.getText(), () => this.createType(arg));
-        });
+        return (tsTypeArguments || []).map(arg => tryGet(this.getText(), () => this.createType(arg)));
     }
 
     getSymbols(): TsSymbol[] {

@@ -293,9 +293,7 @@ export class TsNode extends TsSourceFileChild {
         type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
         let typeParameteredDeclaration = this.node as typeParameteredTypes;
 
-        return (typeParameteredDeclaration.typeParameters || []).map(typeParameter => {
-            return this.createNode(typeParameter);
-        });
+        return (typeParameteredDeclaration.typeParameters || []).map(typeParameter => this.createNode(typeParameter));
     }
 
     getTypeParameterConstraintTypeExpression() {

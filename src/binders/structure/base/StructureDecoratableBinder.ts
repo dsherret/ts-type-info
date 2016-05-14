@@ -1,21 +1,13 @@
-﻿import {DecoratorDefinition} from "./../../../definitions";
+﻿import {DecoratableBinder} from "./../../base";
+import {StructureFactory} from "./../../../factories";
 import {DecoratableStructure} from "./../../../structures";
-import {DecoratableBinder} from "./../../base";
-import {StructureDecoratorBinder} from "./../general";
 
 export class StructureDecoratableBinder extends DecoratableBinder {
-    constructor(private structure: DecoratableStructure) {
+    constructor(private factory: StructureFactory, private structure: DecoratableStructure) {
         super();
     }
 
     getDecorators() {
-        return (this.structure.decorators || []).map(decoratorStructure => {
-            const def = new DecoratorDefinition();
-            const binder = new StructureDecoratorBinder(decoratorStructure);
-
-            binder.bind(def);
-
-            return def;
-        });
+        return (this.structure.decorators || []).map(decoratorStructure => this.factory.getDecorator(decoratorStructure));
     }
 }

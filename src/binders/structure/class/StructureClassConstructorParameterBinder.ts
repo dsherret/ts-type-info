@@ -1,13 +1,14 @@
 ﻿import {ClassConstructorParameterScope} from "./../../../definitions";
+import {StructureFactory} from "./../../../factories";
 import {ClassConstructorParameterStructure} from "./../../../structures";
 import {ClassConstructorParameterBinder} from "./../../base";
 import {StructureBaseParameterBinder, StructureDecoratableBinder} from "./../base";
 
 export class StructureClassConstructorParameterBinder extends ClassConstructorParameterBinder {
-    constructor(private structure: ClassConstructorParameterStructure) {
+    constructor(factory: StructureFactory, private structure: ClassConstructorParameterStructure) {
         super(
             new StructureBaseParameterBinder(structure),
-            new StructureDecoratableBinder(structure)
+            new StructureDecoratableBinder(factory, structure)
         );
     }
 

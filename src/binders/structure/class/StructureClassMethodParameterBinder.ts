@@ -1,9 +1,10 @@
-﻿import {ClassMethodParameterStructure} from "./../../../structures";
+﻿import {StructureFactory} from "./../../../factories";
+import {ClassMethodParameterStructure} from "./../../../structures";
 import {ClassMethodParameterBinder} from "./../../base";
 import {StructureBaseClassMethodParameterBinder} from "./base";
 
 export class StructureClassMethodParameterBinder extends ClassMethodParameterBinder {
-    constructor(structure: ClassMethodParameterStructure) {
-        super(new StructureBaseClassMethodParameterBinder(structure));
+    constructor(factory: StructureFactory, structure: ClassMethodParameterStructure) {
+        super(new StructureBaseClassMethodParameterBinder(factory, structure));
     }
 }

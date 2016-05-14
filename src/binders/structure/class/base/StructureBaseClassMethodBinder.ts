@@ -16,7 +16,7 @@ export class StructureBaseClassMethodBinder<ParameterType extends BaseClassMetho
     ) {
         super(
             new StructureBaseFunctionBinder(factory, structure, paramDefinition, paramBinder),
-            new StructureDecoratableBinder(structure),
+            new StructureDecoratableBinder(factory, structure),
             new StructureScopedBinder(structure),
             new StructureAsyncableBinder(structure),
             new StructureFunctionBodyWriteableBinder(structure)
