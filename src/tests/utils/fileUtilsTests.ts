@@ -43,6 +43,10 @@ describe("FileUtils", () => {
             assert.equal(FileUtils.filePathMatches("V:/dir/test.ts", "V:/dir/test.ts"), true);
         });
 
+        it("should not error when the file path being searched for is longer", () => {
+            assert.equal(FileUtils.filePathMatches("V:/dir/test.ts", "V:/dir/dir/test.ts"), false);
+        });
+
         it("should return false when the directory name doesn't exactly match", () => {
             assert.equal(FileUtils.filePathMatches("V:/dir/test.ts", "ir/test.ts"), false);
         });
