@@ -1,4 +1,4 @@
-﻿import {ClassConstructorDefinition} from "./../definitions";
+﻿import {ClassDefinition, ClassConstructorDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {ParametersWriter} from "./ParametersWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
@@ -9,7 +9,7 @@ export class ClassConstructorWriter extends BaseDefinitionWriter<ClassConstructo
     private functionBodyWriter = new FunctionBodyWriter(this.writer);
 
     static shouldWriteConstructor(def: ClassConstructorDefinition, flags: WriteFlags) {
-        return (def.parameters.length > 0 || FunctionBodyWriter.willWriteFunctionBody(def, flags));
+        return (def.parameters.length > 0 || FunctionBodyWriter.willWriteFunctionBody(def, flags) || flags & WriteFlags.HideFunctionBodies);
     }
 
     protected writeDefault(def: ClassConstructorDefinition, flags: WriteFlags) {

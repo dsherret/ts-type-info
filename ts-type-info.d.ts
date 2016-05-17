@@ -228,25 +228,33 @@ export class CallSignatureDefinition extends BaseDefinition implements TypeParam
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
 
+    constructor();
+
     addParameters(...parameters: CallSignatureParameterStructure[]): this;
     getMinArgumentCount(): number;
 }
 
 export class CallSignatureParameterDefinition extends BaseParameterDefinition {
+    constructor();
 }
 
 export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition {
     keyName: string;
     keyTypeExpression: TypeExpressionDefinition;
     returnTypeExpression: TypeExpressionDefinition;
+
+    constructor();
 }
 
 export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition {
     constraintTypeExpression: TypeExpressionDefinition;
     name: string;
+
+    constructor();
 }
 
 export class TypePropertyDefinition extends BasePropertyDefinition {
+    constructor();
 }
 
 export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition {
@@ -261,6 +269,8 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    constructor();
+
     write(): string;
 }
 
@@ -268,16 +278,22 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
     arguments: ExpressionDefinition[];
     name: string;
 
+    constructor();
+
     addArguments(...args: string[]): this;
 }
 
 export class UserDefinedTypeGuardDefinition extends BaseDefinition {
     parameterName: string;
     type: TypeDefinition;
+
+    constructor();
 }
 
 export class ExpressionDefinition extends BaseDefinition {
     text: string;
+
+    constructor();
 }
 
 export class TypeDefinition {
@@ -308,11 +324,14 @@ export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameter
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    constructor();
+
     addParameters(...parameters: FunctionParameterStructure[]): this;
     write(): string;
 }
 
 export class FunctionParameterDefinition extends BaseParameterDefinition {
+    constructor();
 }
 
 export class BaseClassMethodParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ScopedDefinition {
@@ -372,6 +391,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     hasDeclareKeyword: boolean;
     isAbstract: boolean;
 
+    constructor();
+
     write(): string;
     addMethods(...methods: ClassMethodStructure[]): this;
     addProperties(...properties: ClassPropertyStructure[]): this;
@@ -390,10 +411,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethodParameterDefinition, ClassMethodParameterStructure> implements AbstractableDefinition {
     isAbstract: boolean;
 
+    constructor();
+
     addParameters(...parameters: ClassMethodParameterStructure[]): this;
 }
 
 export class ClassMethodParameterDefinition extends BaseClassMethodParameterDefinition {
+    constructor();
 }
 
 export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
@@ -402,12 +426,16 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isConstructorParameter: boolean;
     onWriteGetBody: (writer: CodeBlockWriter) => void;
     onWriteSetBody: (writer: CodeBlockWriter) => void;
+
+    constructor();
 }
 
 export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition {
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
+
+    constructor();
 
     addParameters(...parameters: ClassConstructorParameterStructure[]): this;
 }
@@ -418,6 +446,8 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     addDecorators: (...decorators: DecoratorStructure[]) => this;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
 
+    constructor();
+
     toClassProperty(): ClassPropertyDefinition;
 }
 
@@ -426,13 +456,17 @@ export type ClassConstructorParameterScope = "none" | "public" | "protected" | "
 export const ClassConstructorParameterScope: { None: "none" | "public" | "protected" | "private"; Public: "none" | "public" | "protected" | "private"; Protected: "none" | "public" | "protected" | "private"; Private: "none" | "public" | "protected" | "private"; toScope(scope: "none" | "public" | "protected" | "private"): "public" | "protected" | "private"; };
 
 export class ClassStaticMethodDefinition extends BaseClassMethodDefinition<ClassStaticMethodParameterDefinition, ClassStaticMethodParameterStructure> {
+    constructor();
+
     addParameters(...parameters: ClassStaticMethodParameterStructure[]): this;
 }
 
 export class ClassStaticPropertyDefinition extends BaseClassPropertyDefinition {
+    constructor();
 }
 
 export class ClassStaticMethodParameterDefinition extends BaseClassMethodParameterDefinition {
+    constructor();
 }
 
 export type Scope = "public" | "protected" | "private";
@@ -456,6 +490,8 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    constructor();
+
     addCallSignatures(...callSignatures: CallSignatureStructure[]): this;
     addExtends(...texts: string[]): this;
     addIndexSignatures(...indexSignatures: IndexSignatureStructure[]): this;
@@ -471,13 +507,17 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
 }
 
 export class InterfaceMethodParameterDefinition extends BaseParameterDefinition {
+    constructor();
 }
 
 export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceMethodParameterDefinition, InterfaceMethodParameterStructure> {
+    constructor();
+
     addParameters(...parameters: InterfaceMethodParameterStructure[]): this;
 }
 
 export class InterfacePropertyDefinition extends BasePropertyDefinition {
+    constructor();
 }
 
 export class EnumDefinition extends BaseDefinition implements ExportableDefinition, AmbientableDefinition {
@@ -489,6 +529,8 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    constructor();
+
     addMembers(...members: EnumMemberStructure[]): this;
     getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): EnumMemberDefinition;
     write(): string;
@@ -497,6 +539,8 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
 export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition {
     value: number;
     name: string;
+
+    constructor();
 }
 
 export type NamespaceDeclarationType = "namespace" | "module";
@@ -536,6 +580,8 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
+    constructor();
+
     write(): string;
 }
 
@@ -568,6 +614,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     directlyContains: (def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => boolean;
     getNamespacesToDefinition: (searchDef: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => NamespaceDefinition[];
 
+    constructor();
+
     addImports(...imports: ImportStructure[]): this;
     addReExports(...reExports: ReExportStructure[]): this;
     getImport(searchFunction: (importDef: ImportDefinition) => boolean): ImportDefinition;
@@ -585,6 +633,8 @@ export class ImportDefinition extends BaseDefinition {
     namedImports: ImportPartDefinition[];
     starImports: ImportPartDefinition[];
 
+    constructor();
+
     addNamedImports(...namedImports: NamedImportStructure[]): this;
     getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
     getStarImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
@@ -601,6 +651,8 @@ export abstract class BaseImportPartDefinition extends BaseDefinition {
 
 export class ImportPartDefinition extends BaseImportPartDefinition {
     importName: string;
+
+    constructor();
 }
 
 export class ReExportDefinition extends BaseDefinition {
@@ -608,6 +660,8 @@ export class ReExportDefinition extends BaseDefinition {
     moduleSpecifier: string;
     starExports: ReExportPartDefinition[];
     namedExports: ReExportPartDefinition[];
+
+    constructor();
 
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     addNamedExports(...namedExports: NamedImportStructure[]): this;
@@ -618,6 +672,8 @@ export class ReExportDefinition extends BaseDefinition {
 
 export class ReExportPartDefinition extends BaseImportPartDefinition {
     exportName: string;
+
+    constructor();
 }
 
 export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
@@ -630,6 +686,8 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     defaultExpression: ExpressionDefinition;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+
+    constructor();
 
     write(): string;
 }
