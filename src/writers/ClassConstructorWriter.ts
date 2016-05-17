@@ -1,4 +1,4 @@
-﻿import {ClassDefinition, ClassConstructorDefinition} from "./../definitions";
+﻿import {ClassConstructorDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {ParametersWriter} from "./ParametersWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
