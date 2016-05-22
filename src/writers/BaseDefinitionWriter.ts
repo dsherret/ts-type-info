@@ -1,4 +1,4 @@
-﻿import {ExportableDefinitions, AmbientableDefinition, AsyncableDefinition, BaseDefinition} from "./../definitions";
+﻿import {ExportableDefinitions, AmbientableDefinition, AsyncableDefinition, BaseDefinition, EnumDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseWriter} from "./BaseWriter";
 
