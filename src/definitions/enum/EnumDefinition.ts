@@ -8,6 +8,7 @@ import {NamedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefini
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
 export class EnumDefinition extends BaseDefinition implements ExportableDefinition, AmbientableDefinition {
+    isConst: boolean;
     members: EnumMemberDefinition[] = [];
 
     constructor() {

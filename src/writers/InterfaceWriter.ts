@@ -28,8 +28,8 @@ export class InterfaceWriter extends BaseDefinitionWriter<InterfaceDefinition> {
     }
 
     private writeHeader(def: InterfaceDefinition, flags: WriteFlags) {
-        this.writeExportClause(def, flags);
-        this.writeDeclareClause(def);
+        this.writeExportKeyword(def, flags);
+        this.writeDeclareKeyword(def);
         this.writer.write("interface ").write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);
 

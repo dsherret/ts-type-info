@@ -11,6 +11,7 @@ export abstract class EnumBinder implements IBaseBinder {
     ) {
     }
 
+    abstract getIsConst(): boolean;
     abstract getMembers(): EnumMemberDefinition[];
 
     bind(def: EnumDefinition) {
@@ -18,6 +19,7 @@ export abstract class EnumBinder implements IBaseBinder {
         this.namedBinder.bind(def);
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);
+        def.isConst = this.getIsConst();
         def.members.push(...this.getMembers());
     }
 }

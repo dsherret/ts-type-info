@@ -13,6 +13,10 @@ export class StructureEnumBinder extends EnumBinder {
         );
     }
 
+    getIsConst() {
+        return this.structure.isConst || false;
+    }
+
     getMembers() {
         return (this.structure.members || []).map(member => this.factory.getEnumMember(member));
     }

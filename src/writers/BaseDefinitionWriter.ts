@@ -19,7 +19,25 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
 
     protected abstract writeDefault(def: DefinitionType, flags: WriteFlags): void;
 
-    protected writeExportClause(def: ExportableDefinitions, flags: WriteFlags) {
+    protected writeAsyncKeyword(def: AsyncableDefinition) {
+        if (def.isAsync) {
+            this.writer.write("async ");
+        }
+    }
+
+    protected writeConstKeyword(def: EnumDefinition) {
+        if (def.isConst) {
+            this.writer.write("const ");
+        }
+    }
+
+    protected writeDeclareKeyword(def: AmbientableDefinition) {
+        if (def.hasDeclareKeyword) {
+            this.writer.write("declare ");
+        }
+    }
+
+    protected writeExportKeyword(def: ExportableDefinitions, flags: WriteFlags) {
         if (def.isExported && !def.isDefaultExportOfFile) {
             let shouldWrite = false;
 
@@ -33,18 +51,6 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
             if (shouldWrite) {
                 this.writer.write("export ");
             }
-        }
-    }
-
-    protected writeDeclareClause(def: AmbientableDefinition) {
-        if (def.hasDeclareKeyword) {
-            this.writer.write("declare ");
-        }
-    }
-
-    protected writeAsyncKeyword(def: AsyncableDefinition) {
-        if (def.isAsync) {
-            this.writer.write("async ");
         }
     }
 }

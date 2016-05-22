@@ -13,6 +13,10 @@ export class TsEnumBinder extends EnumBinder {
         );
     }
 
+    getIsConst() {
+        return this.node.hasConstKeyword();
+    }
+
     getMembers() {
         return this.node.getSymbol().getExportSymbols().map(memberSymbol => {
             const memberNode = memberSymbol.getOnlyNode();

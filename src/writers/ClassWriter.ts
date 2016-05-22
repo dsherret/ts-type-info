@@ -30,8 +30,8 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     }
 
     private writeHeader(def: definitions.ClassDefinition, flags: WriteFlags) {
-        this.writeExportClause(def, flags);
-        this.writeDeclareClause(def);
+        this.writeExportKeyword(def, flags);
+        this.writeDeclareKeyword(def);
         this.writeAbstract(def);
         this.writer.write("class ").write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);

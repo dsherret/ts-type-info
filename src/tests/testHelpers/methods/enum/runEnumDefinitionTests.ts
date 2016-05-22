@@ -15,6 +15,10 @@ export function runEnumDefinitionTests(definition: EnumDefinition, structure: En
             runExportableDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
 
+            it(`should ${structure.isConst ? "be" : "not be"} a const enum`, () => {
+                assert.equal(definition.isConst, structure.isConst || false);
+            });
+
             it(`should have ${structure.members.length} member(s)`, () => {
                 assert.equal(definition.members.length, structure.members.length);
             });

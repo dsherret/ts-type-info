@@ -16,13 +16,13 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
 
     protected writeDefault(def: FunctionDefinition, flags: WriteFlags) {
         (def.overloadSignatures || []).forEach(s => {
-            this.writeExportClause(def as FunctionDefinition, flags);
-            this.writeDeclareClause(def as FunctionDefinition);
+            this.writeExportKeyword(def as FunctionDefinition, flags);
+            this.writeDeclareKeyword(def as FunctionDefinition);
             this.writer.write("function ").write(def.name);
             this.callSignatureWriter.write(s, flags);
         });
-        this.writeExportClause(def as FunctionDefinition, flags);
-        this.writeDeclareClause(def as FunctionDefinition);
+        this.writeExportKeyword(def as FunctionDefinition, flags);
+        this.writeDeclareKeyword(def as FunctionDefinition);
         this.writeAsyncKeyword(def as FunctionDefinition);
         this.writer.write("function ").write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);

@@ -9,8 +9,8 @@ export class VariableWriter extends BaseDefinitionWriter<VariableDefinition> {
     private typeExpressionWriter = new TypeExpressionWriter(this.writer);
 
     protected writeDefault(def: VariableDefinition, flags: WriteFlags) {
-        this.writeDeclareClause(def);
-        this.writeExportClause(def, flags);
+        this.writeDeclareKeyword(def);
+        this.writeExportKeyword(def, flags);
         this.writeDeclarationType(def.declarationType);
         this.writer.spaceIfLastNotSpace().write(def.name);
         this.typeExpressionWriter.writeWithColon(def.typeExpression);

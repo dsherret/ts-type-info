@@ -2,5 +2,6 @@
 import {EnumMemberTestStructure} from "./EnumMemberTestStructure";
 
 export interface EnumTestStructure extends BaseTestStructure, NamedTestStructure, ExportableTestStructure, AmbientableTestStructure {
+    isConst?: boolean;
     members?: EnumMemberTestStructure[];
 }

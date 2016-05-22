@@ -337,6 +337,10 @@ export class TsNode extends TsSourceFileChild {
         return this.hasModifierWithSyntaxKind(ts.SyntaxKind.AsyncKeyword);
     }
 
+    hasConstKeyword() {
+        return this.hasModifierWithSyntaxKind(ts.SyntaxKind.ConstKeyword);
+    }
+
     hasDeclareKeyword() {
         return this.hasModifierWithSyntaxKind(ts.SyntaxKind.DeclareKeyword);
     }

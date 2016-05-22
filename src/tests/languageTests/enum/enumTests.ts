@@ -9,6 +9,9 @@ enum MyEnum {
 }
 
 export enum MyExportedEnum {
+}
+
+const enum MyConstEnum {
 }`;
 
     const def = getInfoFromString(code);
@@ -27,6 +30,9 @@ export enum MyExportedEnum {
             name: "MyExportedEnum",
             isExported: true,
             isNamedExportOfFile: true
+        }, {
+            name: "MyConstEnum",
+            isConst: true
         }],
         exports: [{
             name: "MyExportedEnum"

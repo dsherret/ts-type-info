@@ -10,8 +10,8 @@ export class NamespaceWriter extends BaseDefinitionWriter<NamespaceDefinition> {
     }
 
     protected writeDefault(def: NamespaceDefinition, flags: WriteFlags) {
-        this.writeExportClause(def, flags);
-        this.writeDeclareClause(def);
+        this.writeExportKeyword(def, flags);
+        this.writeDeclareKeyword(def);
         this.writer.write(this.getDeclarationTypeAsString(def.declarationType)).write(` ${def.name}`).block(() => {
             this.moduledWriter.write(def, flags);
         });

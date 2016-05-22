@@ -3,7 +3,7 @@ import CodeBlockWriter from "code-block-writer";
 import {getInfoFromString} from "./../main";
 import {WriteableDefinitions} from "./../definitions";
 import {writeDefinition} from "./../writeDefinition";
-import {NamespaceWriter, ModuledWriter, EnumWriter, TypeAliasWriter, VariableWriter} from "./../writers";
+import {NamespaceWriter, ModuledWriter, TypeAliasWriter, VariableWriter} from "./../writers";
 import {WriteFlags} from "./../WriteFlags";
 import * as testCode from "./writers/testCode";
 
@@ -27,18 +27,6 @@ describe("#writeDefinition()", () => {
                 const writer = getCodeBlockWriter();
                 const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
                 namespaceWriter.write(def, WriteFlags.Default);
-                assert.equal(writeDefinitionWrapper(def), writer.toString());
-            });
-        });
-    });
-
-    describe("EnumDefinition", () => {
-        const file = getInfoFromString(testCode.enumWriterTestCode);
-        file.enums.forEach(def => {
-            it(`should write the same thing as an enum writer for the function ${def.name}`, () => {
-                const writer = getCodeBlockWriter();
-                const enumWriter = new EnumWriter(writer);
-                enumWriter.write(def, WriteFlags.Default);
                 assert.equal(writeDefinitionWrapper(def), writer.toString());
             });
         });

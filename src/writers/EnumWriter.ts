@@ -7,8 +7,9 @@ export class EnumWriter extends BaseDefinitionWriter<EnumDefinition> {
     private enumMemberWriter = new EnumMemberWriter(this.writer);
 
     protected writeDefault(def: EnumDefinition, flags: WriteFlags) {
-        this.writeExportClause(def, flags);
-        this.writeDeclareClause(def);
+        this.writeExportKeyword(def, flags);
+        this.writeDeclareKeyword(def);
+        this.writeConstKeyword(def);
         this.writer.write("enum " + def.name).block(() => {
             this.writeMembers(def.members, flags);
         });
