@@ -6,14 +6,14 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
     write(def: DefinitionType, flags: WriteFlags) {
         if (typeof def.onBeforeWrite === "function") {
             def.onBeforeWrite(this.writer);
-            this.writer.newLineIfLastCharNotNewLine();
+            this.writer.newLineIfLastNotNewLine();
         }
 
         this.writeDefault(def, flags);
 
         if (typeof def.onAfterWrite === "function") {
             def.onAfterWrite(this.writer);
-            this.writer.newLineIfLastCharNotNewLine();
+            this.writer.newLineIfLastNotNewLine();
         }
     }
 

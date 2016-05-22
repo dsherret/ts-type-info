@@ -29,7 +29,7 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
         this.parametersWriter.write(def.parameters, flags);
         this.writeReturnType(def, flags);
         this.functionBodyWriter.write(def, flags);
-        this.writer.newLineIfLastCharNotNewLine();
+        this.writer.newLineIfLastNotNewLine();
     }
 
     private writeReturnType(def: FunctionDefinition, flags: WriteFlags) {
