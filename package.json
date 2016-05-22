@@ -27,7 +27,7 @@
     "definition": "ts-type-info.d.ts"
   },
   "dependencies": {
-    "code-block-writer": "^3.2.0",
+    "code-block-writer": "^4.0.0",
     "tmp": "0.0.28",
     "typescript": "^1.8.10"
   },

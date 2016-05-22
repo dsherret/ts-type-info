@@ -77,7 +77,6 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     private writeProperties(def: definitions.ClassDefinition, flags: WriteFlags) {
         def.properties.forEach(p => {
             if (this.shouldInclude(p, flags) && !p.isConstructorParameter) {
-                // todo: improve this by moving writing blank lines into code-block-writer (See #69)
                 const willWriteAccessorBody = PropertyWriter.willWriteAccessorBody(p);
                 if (willWriteAccessorBody) {
                     this.writer.newLine();
@@ -92,11 +91,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
         });
     }
 
-    private lastHadBlankLine = true;
-
     private writeStaticMethods(def: definitions.ClassDefinition, flags: WriteFlags) {
-        this.lastHadBlankLine = true;
-
         if (def.isAmbient) {
             flags = flags | WriteFlags.HideFunctionBodies;
         }
@@ -105,8 +100,6 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     }
 
     private writeMethods(def: definitions.ClassDefinition, flags: WriteFlags) {
-        this.lastHadBlankLine = true;
-
         if (def.isAmbient) {
             flags = flags | WriteFlags.HideFunctionBodies;
         }
@@ -115,10 +108,9 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     }
 
     private writeMethod(def: definitions.ClassMethodDefinition | definitions.ClassStaticMethodDefinition, flags: WriteFlags) {
-        // todo: improve this by moving writing blank lines into code-block-writer (See #69)
         const thisHasBlankLine = FunctionBodyWriter.willWriteFunctionBody(def, flags);
 
-        if (!this.lastHadBlankLine && thisHasBlankLine) {
+        if (thisHasBlankLine) {
             this.writer.newLine();
         }
 
@@ -129,8 +121,6 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
         if (thisHasBlankLine) {
             this.writer.newLine();
         }
-
-        this.lastHadBlankLine = thisHasBlankLine;
     }
 
     private shouldInclude(def: definitions.ScopedDefinition, flags: WriteFlags) {
