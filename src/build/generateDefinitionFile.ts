@@ -5,7 +5,7 @@ import {getInfoFromFiles} from "./../main";
 export function generateDefinitionFile() {
     const fileInfo = getInfoFromFiles([
         path.join(__dirname, "../../src/main.ts"),
-        path.join(__dirname, "../../src/typings/main.d.ts")
+        path.join(__dirname, "../../src/typings/index.d.ts")
     ], { showDebugMessages: true }).getFile("main.ts");
 
     fileInfo.getExports().forEach(def => {

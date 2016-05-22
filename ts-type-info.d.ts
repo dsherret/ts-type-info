@@ -48,7 +48,7 @@ export abstract class BaseDefinition {
     isVariableDefinition(): this is VariableDefinition;
 }
 
-export enum DefinitionType {
+export const enum DefinitionType {
     File = 1,
     Import = 2,
     ReExport = 3,
@@ -521,6 +521,7 @@ export class InterfacePropertyDefinition extends BasePropertyDefinition {
 }
 
 export class EnumDefinition extends BaseDefinition implements ExportableDefinition, AmbientableDefinition {
+    isConst: boolean;
     members: EnumMemberDefinition[];
     name: string;
     isExported: boolean;
@@ -916,6 +917,7 @@ export interface ClassStructure extends BaseStructure, NamedStructure, Decoratab
 }
 
 export interface EnumStructure extends BaseStructure, NamedStructure, ExportableStructure, AmbientableStructure {
+    isConst?: boolean;
     members?: EnumMemberStructure[];
 }
 
