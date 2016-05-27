@@ -6,7 +6,7 @@ import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, Inter
     VariableStructure} from "./../../structures";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, DefinitionUtils, validateImportStructure, StringUtils} from "./../../utils";
+import {applyMixins, DefinitionUtils, validateImportStructure, FileUtils, StringUtils} from "./../../utils";
 import {writeDefinition} from "./../../writeDefinition";
 import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expression";
@@ -50,14 +50,13 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
             throw new Error("The files being compared must both have a fileName.");
         }
 
-        const standardizeFileName = (fileName: string) => fileName.replace(/\\/g, "/");
-        const fileName1 = standardizeFileName(this.fileName);
-        const fileName2 = standardizeFileName(file.fileName);
-        const relativePath = path.relative(path.dirname(fileName1), path.dirname(fileName2));
-        const fullPath = path.join(relativePath, path.basename(fileName2));
+        const fileNameFrom = FileUtils.standardizeSlashes(this.fileName);
+        const fileNameTo = FileUtils.standardizeSlashes(file.fileName);
+        const relativePath = path.relative(path.dirname(fileNameFrom), path.dirname(fileNameTo));
+        const fullPath = path.join(relativePath, path.basename(fileNameTo));
         const fullPathWithoutExtension = fullPath.replace(/\.[^/.]+$/, "");
 
-        return "./" + fullPathWithoutExtension;
+        return "./" + FileUtils.standardizeSlashes(fullPathWithoutExtension);
     }
 
     getImport(searchFunction: (importDef: ImportDefinition) => boolean) {
