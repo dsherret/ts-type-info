@@ -1,4 +1,4 @@
-﻿import {ModuleSearchDefinitions} from "./../definitions";
+﻿import {ModuleMemberDefinitions} from "./../definitions";
 import {StructureFactory} from "./../factories";
 import {FileStructure} from "./../structures";
 import {DefinitionUtils, FileUtils} from "./../utils";
@@ -23,12 +23,12 @@ export class GlobalDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.files, searchFunction);
     }
 
-    getFileOfDefinition(def: ModuleSearchDefinitions) {
+    getFileOfDefinition(def: ModuleMemberDefinitions) {
         const result = this.getFileAndNamespacesToDefinition(def);
         return result == null ? null : result.file;
     }
 
-    getFileAndNamespacesToDefinition(def: ModuleSearchDefinitions) {
+    getFileAndNamespacesToDefinition(def: ModuleMemberDefinitions) {
         for (let i = 0; i < this.files.length; i++) {
             let namespaces = this.files[i].getNamespacesToDefinition(def);
             if (namespaces != null) {

@@ -1,4 +1,4 @@
-﻿import {ExportableDefinitions} from "./../../definitions";
+﻿import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, NamespaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
 import {DefinitionUtils} from "./../../utils";
@@ -9,8 +9,6 @@ import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
-
-export type ModuleSearchDefinitions = ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition;
 
 export abstract class ModuledDefinition {
     namespaces: NamespaceDefinition[] = [];
@@ -91,7 +89,7 @@ export abstract class ModuledDefinition {
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.variables, nameOrSearchFunction);
     }
 
-    directlyContains(def: ModuleSearchDefinitions): boolean {
+    directlyContains(def: ModuleMemberDefinitions): boolean {
         if (def.isClassDefinition()) {
             return this.getClass(d => d === def) != null;
         }
@@ -118,7 +116,7 @@ export abstract class ModuledDefinition {
         }
     }
 
-    getNamespacesToDefinition(searchDef: ModuleSearchDefinitions): NamespaceDefinition[] {
+    getNamespacesToDefinition(searchDef: ModuleMemberDefinitions): NamespaceDefinition[] {
         const foundInModule = this.directlyContains(searchDef);
 
         if (foundInModule) {

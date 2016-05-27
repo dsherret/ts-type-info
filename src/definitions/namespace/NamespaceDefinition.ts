@@ -1,10 +1,10 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {ExportableDefinitions} from "./../../definitions";
+import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
 import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, NamespaceStructure, VariableStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {ModuledDefinition, ModuleSearchDefinitions, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -54,8 +54,8 @@ export class NamespaceDefinition extends BaseDefinition
     getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
     getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
-    directlyContains: (def: ModuleSearchDefinitions) => boolean;
-    getNamespacesToDefinition: (searchDef: ModuleSearchDefinitions) => NamespaceDefinition[];
+    directlyContains: (def: ModuleMemberDefinitions) => boolean;
+    getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => NamespaceDefinition[];
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
