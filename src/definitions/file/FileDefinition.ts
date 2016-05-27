@@ -1,11 +1,12 @@
 import CodeBlockWriter from "code-block-writer";
+import * as path from "path";
 import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, InterfaceStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
     VariableStructure} from "./../../structures";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, DefinitionUtils, validateImportStructure} from "./../../utils";
+import {applyMixins, DefinitionUtils, validateImportStructure, StringUtils} from "./../../utils";
 import {writeDefinition} from "./../../writeDefinition";
 import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expression";
@@ -42,6 +43,19 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
         const factory = new StructureFactory();
         this.reExports.push(...reExports.map(r => factory.getReExport(r)));
         return this;
+    }
+
+    getModuleSpecifierToFile(file: FileDefinition) {
+        if (StringUtils.isNullOrWhiteSpace(file.fileName) || StringUtils.isNullOrWhiteSpace(this.fileName)) {
+            throw new Error("The files being compared must both have a fileName.");
+        }
+
+        const relativePath = path.relative(path.dirname(this.fileName), path.dirname(file.fileName));
+        const fullPath = path.join(relativePath, path.basename(file.fileName));
+        const fullPathWithSlashes = fullPath.replace(/\\/g, "/");
+        const fullPathWithoutExtension = fullPathWithSlashes.replace(/\.[^/.]+$/, "");
+
+        return "./" + fullPathWithoutExtension;
     }
 
     getImport(searchFunction: (importDef: ImportDefinition) => boolean) {

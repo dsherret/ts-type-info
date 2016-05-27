@@ -1,5 +1,6 @@
 ﻿import * as assert from "assert";
 import {FileDefinition} from "./../../../definitions";
+import {createFile} from "./../../../createFunctions";
 import {runImportDefinitionTests, runReExportDefinitionTests} from "./../../testHelpers";
 
 describe("FileDefinition", () => {
@@ -142,6 +143,38 @@ describe("FileDefinition", () => {
 
         it("should have the correct module specifier", () => {
             assert.equal(f.getReExport(i => i.moduleSpecifier === "./test2").moduleSpecifier, "./test2");
+        });
+    });
+
+    describe("#getModuleSpecifierToFile()", () => {
+        it("should handle windows file paths", () => {
+            const f1 = createFile({ fileName: "C:\\asdf\\asdf.ts" });
+            const f2 = createFile({ fileName: "C:\\test\\test.ts" });
+            assert.equal(f1.getModuleSpecifierToFile(f2), "./../test/test");
+        });
+
+        it("should get the relative paths between two files when going up then down a directory", () => {
+            const f1 = createFile({ fileName: "/asdf/asdf.ts" });
+            const f2 = createFile({ fileName: "/test/test.ts" });
+            assert.equal(f1.getModuleSpecifierToFile(f2), "./../test/test");
+        });
+
+        it("should get the relative paths between two files when going up directories", () => {
+            const f1 = createFile({ fileName: "/asdf1/asdf2/asdf.ts" });
+            const f2 = createFile({ fileName: "/test.ts" });
+            assert.equal(f1.getModuleSpecifierToFile(f2), "./../../test");
+        });
+
+        it("should get the relative paths between two files when going into directories", () => {
+            const f1 = createFile({ fileName: "/asdf.ts" });
+            const f2 = createFile({ fileName: "/test1/test2/test3.ts" });
+            assert.equal(f1.getModuleSpecifierToFile(f2), "./test1/test2/test3");
+        });
+
+        it("should get the relative paths between two files in the same directory", () => {
+            const f1 = createFile({ fileName: "/directory/asdf.ts" });
+            const f2 = createFile({ fileName: "/directory/test.ts" });
+            assert.equal(f1.getModuleSpecifierToFile(f2), "./test");
         });
     });
 });
