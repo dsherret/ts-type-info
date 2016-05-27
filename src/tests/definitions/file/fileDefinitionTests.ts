@@ -176,5 +176,29 @@ describe("FileDefinition", () => {
             const f2 = createFile({ fileName: "/directory/test.ts" });
             assert.equal(f1.getModuleSpecifierToFile(f2), "./test");
         });
+
+        it("should throw an error if the first file has an empty file name", () => {
+            const f1 = createFile({ fileName: "" });
+            const f2 = createFile({ fileName: "/directory/test.ts" });
+            assert.throws(() => f1.getModuleSpecifierToFile(f2));
+        });
+
+        it("should throw an error if the second file has an empty file name", () => {
+            const f1 = createFile({ fileName: "/directory/asdf.ts" });
+            const f2 = createFile({ fileName: "" });
+            assert.throws(() => f1.getModuleSpecifierToFile(f2));
+        });
+
+        it("should throw an error if the first file has a null file name", () => {
+            const f1 = createFile({ fileName: null });
+            const f2 = createFile({ fileName: "/directory/test.ts" });
+            assert.throws(() => f1.getModuleSpecifierToFile(f2));
+        });
+
+        it("should throw an error if the second file has a null file name", () => {
+            const f1 = createFile({ fileName: "/directory/asdf.ts" });
+            const f2 = createFile({ fileName: null });
+            assert.throws(() => f1.getModuleSpecifierToFile(f2));
+        });
     });
 });

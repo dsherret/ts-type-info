@@ -50,7 +50,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
             throw new Error("The files being compared must both have a fileName.");
         }
 
-        const relativePath = path.relative(path.dirname(this.fileName), path.dirname(file.fileName));
+        const driveLetterRegEx = /^[A-Z]\:[\\/]/;
+        const relativePath = path.relative(path.dirname(this.fileName.replace(driveLetterRegEx, "")), path.dirname(file.fileName.replace(driveLetterRegEx, "")));
         const fullPath = path.join(relativePath, path.basename(file.fileName));
         const fullPathWithSlashes = fullPath.replace(/\\/g, "/");
         const fullPathWithoutExtension = fullPathWithSlashes.replace(/\.[^/.]+$/, "");
