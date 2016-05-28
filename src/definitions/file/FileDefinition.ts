@@ -126,7 +126,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
     directlyContains: (def: ModuleMemberDefinitions) => boolean;
     getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => NamespaceDefinition[];
-    getAllMemberDefinitions: () => ModuleMemberDefinitions[];
+    getMembers: () => ModuleMemberDefinitions[];
 }
 
 applyMixins(FileDefinition, BaseDefinition, [ModuledDefinition]);

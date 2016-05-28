@@ -439,7 +439,7 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("#getAllMemberDefinitions()", () => {
+    describe("#getMembers()", () => {
         const def = createNamespace({
             name: "MyNamespace",
             namespaces: [{ name: "" }],
@@ -452,7 +452,7 @@ describe("ModuledDefinitionTests", () => {
         });
 
         describe("it should have 7 members", () => {
-            assert.equal(def.getAllMemberDefinitions().length, 7);
+            assert.equal(def.getMembers().length, 7);
         });
     });
 });

@@ -135,10 +135,10 @@ export abstract class ModuledDefinition {
     }
 
     getExports(): ExportableDefinitions[] {
-        return this.getAllMemberDefinitions().filter(d => d.isExported && !d.isDefaultExportOfFile);
+        return this.getMembers().filter(d => d.isExported && !d.isDefaultExportOfFile);
     }
 
-    getAllMemberDefinitions(): ModuleMemberDefinitions[] {
+    getMembers(): ModuleMemberDefinitions[] {
         return [
             ...this.namespaces,
             ...this.classes,

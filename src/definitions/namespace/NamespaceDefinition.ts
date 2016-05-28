@@ -56,7 +56,7 @@ export class NamespaceDefinition extends BaseDefinition
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
     directlyContains: (def: ModuleMemberDefinitions) => boolean;
     getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => NamespaceDefinition[];
-    getAllMemberDefinitions: () => ModuleMemberDefinitions[];
+    getMembers: () => ModuleMemberDefinitions[];
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
