@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {createVariable} from "./../../../createFunctions";
+import {createVariable, createNamespace} from "./../../../createFunctions";
 import {NamespaceDefinition, NamespaceDeclarationType, VariableDeclarationType} from "./../../../definitions";
 import * as testHelpers from "./../../testHelpers";
 
@@ -419,6 +419,40 @@ describe("ModuledDefinitionTests", () => {
             it("path should be null", () => {
                 assert.equal(path, null);
             });
+        });
+    });
+
+    describe("#getExports()", () => {
+        const def = createNamespace({
+            name: "MyNamespace",
+            namespaces: [{ name: "" }, { name: "", isExported: true }, { name: "", isExported: true, isDefaultExportOfFile: true }],
+            classes: [{ name: "" }, { name: "", isExported: true }],
+            interfaces: [{ name: "" }, { name: "", isExported: true }],
+            enums: [{ name: "" }, { name: "", isExported: true }],
+            functions: [{ name: "" }, { name: "", isExported: true }],
+            variables: [{ name: "" }, { name: "", isExported: true }],
+            typeAliases: [{ name: "", type: "" }, { name: "", type: "", isExported: true }]
+        });
+
+        describe("it should have 7 exports", () => {
+            assert.equal(def.getExports().length, 7);
+        });
+    });
+
+    describe("#getAllMemberDefinitions()", () => {
+        const def = createNamespace({
+            name: "MyNamespace",
+            namespaces: [{ name: "" }],
+            classes: [{ name: "" }],
+            interfaces: [{ name: "" }],
+            enums: [{ name: "" }],
+            functions: [{ name: "" }],
+            variables: [{ name: "" }],
+            typeAliases: [{ name: "", type: "" }]
+        });
+
+        describe("it should have 7 members", () => {
+            assert.equal(def.getAllMemberDefinitions().length, 7);
         });
     });
 });

@@ -134,22 +134,19 @@ export abstract class ModuledDefinition {
         }
     }
 
-    getExports() {
-        const exports: ExportableDefinitions[] = [];
-        const addExportedToExports = (e: ExportableDefinitions) => {
-            if (e.isExported && !e.isDefaultExportOfFile) {
-                exports.push(e);
-            }
-        };
+    getExports(): ExportableDefinitions[] {
+        return this.getAllMemberDefinitions().filter(d => d.isExported && !d.isDefaultExportOfFile);
+    }
 
-        this.namespaces.forEach(addExportedToExports);
-        this.classes.forEach(addExportedToExports);
-        this.interfaces.forEach(addExportedToExports);
-        this.enums.forEach(addExportedToExports);
-        this.functions.forEach(addExportedToExports);
-        this.variables.forEach(addExportedToExports);
-        this.typeAliases.forEach(addExportedToExports);
-
-        return exports;
+    getAllMemberDefinitions(): ModuleMemberDefinitions[] {
+        return [
+            ...this.namespaces,
+            ...this.classes,
+            ...this.interfaces,
+            ...this.enums,
+            ...this.functions,
+            ...this.variables,
+            ...this.typeAliases
+        ];
     }
 }
