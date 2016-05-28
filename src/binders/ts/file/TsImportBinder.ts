@@ -48,6 +48,12 @@ export class TsImportBinder extends ImportBinder {
         return Object.keys(namedSymbols || {}).map(name => {
             const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
 
+            if (defsOrExpression.definitions.length > 0) {
+                if (defsOrExpression.definitions[0].name === name) {
+                    name = null;
+                }
+            }
+
             return this.factory.getImportPart({
                 importName: name,
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],

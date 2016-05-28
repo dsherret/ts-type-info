@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {ImportDefinition} from "./../../../definitions";
+import {ImportDefinition, VariableDefinition} from "./../../../definitions";
 import {runImportPartDefinitionTests} from "./../../testHelpers";
 
 describe("ImportDefinition", () => {
@@ -12,14 +12,20 @@ describe("ImportDefinition", () => {
     describe("#addNamedImports()", () => {
         const importDef = new ImportDefinition();
         importDef.addNamedImports({
-            name: "name",
-            alias: "someAlias"
+            name: "name"
         }, {
-            name: "name2"
+            name: "name",
+            alias: "aliasName"
+        }, {
+            definition: { name: "MyDef" } as VariableDefinition
+        }, {
+            definitions: [{ name: "MyDef2" } as VariableDefinition, { name: "MyDef2" } as VariableDefinition]
         });
 
-        runImportPartDefinitionTests(importDef.namedImports[0], { importName: "someAlias", definitions: [{ name: "name", type: null }] });
-        runImportPartDefinitionTests(importDef.namedImports[1], { importName: "name2" });
+        runImportPartDefinitionTests(importDef.namedImports[0], { importName: "name", definitions: [{ name: "name", type: null }] });
+        runImportPartDefinitionTests(importDef.namedImports[1], { importName: "aliasName", definitions: [{ name: "name", type: null }] });
+        runImportPartDefinitionTests(importDef.namedImports[2], { importName: "MyDef", definitions: [{ name: "MyDef", type: null }] });
+        runImportPartDefinitionTests(importDef.namedImports[3], { importName: "MyDef2", definitions: [{ name: "MyDef2", type: null }, { name: "MyDef2", type: null }] });
     });
 
     describe("#getNamedImport()", () => {

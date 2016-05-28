@@ -1,7 +1,7 @@
 ﻿import {BaseStructure} from "./../base";
-import {NamedImportStructure} from "./NamedImportStructure";
+import {NamedImportStructureTypes} from "./NamedImportStructure";
 
 export interface ReExportStructure extends BaseStructure {
     moduleSpecifier: string;
-    namedExports?: NamedImportStructure[];
+    namedExports?: NamedImportStructureTypes[];
 }

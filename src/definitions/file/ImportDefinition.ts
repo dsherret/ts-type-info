@@ -1,6 +1,6 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {StructureFactory} from "./../../factories";
-import {NamedImportStructure} from "./../../structures";
+import {NamedImportStructureTypes} from "./../../structures";
 import {ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {DefinitionUtils} from "./../../utils";
@@ -19,7 +19,7 @@ export class ImportDefinition extends BaseDefinition {
         super(DefinitionType.Import);
     }
 
-    addNamedImports(...namedImports: NamedImportStructure[]) {
+    addNamedImports(...namedImports: NamedImportStructureTypes[]) {
         const factory = new StructureFactory();
         this.namedImports.push(...namedImports.map(n => factory.getImportPartByNamedImport(n)));
         return this;
@@ -35,7 +35,7 @@ export class ImportDefinition extends BaseDefinition {
 
     setDefaultImport(importName: string) {
         const factory = new StructureFactory();
-        this.defaultImport = factory.getImportPart(importName);
+        this.defaultImport = factory.getImportPartByImportName(importName);
         return this;
     }
 

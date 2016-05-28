@@ -7,6 +7,30 @@ import {FileDefinition} from "./file";
 export class GlobalDefinition {
     files: FileDefinition[] = [];
 
+    addDefinitionAsImportToFile(opts: { definition: ModuleMemberDefinitions; file: FileDefinition; alias?: string }) {
+        if (!opts.definition.isExported && !opts.definition.isDefaultExportOfFile) {
+            throw new Error("The specified definition is not exported from a file.");
+        }
+
+        const fileAndNamespaces = this.getFileAndNamespacesToDefinition(opts.definition);
+
+        if (fileAndNamespaces == null) {
+            throw new Error("The specified definition does not exist in any other file.");
+        }
+        else if (fileAndNamespaces.namespaces.length > 0) {
+            throw new Error(`The specified definition is located in the namespace ${fileAndNamespaces.namespaces[0].name}. Please move it out of the namespace.`);
+        }
+        else {
+            opts.file.addImports({
+                namedImports: [{
+                    definition: opts.definition,
+                    alias: opts.alias
+                }],
+                moduleSpecifier: opts.file.getModuleSpecifierToFile(fileAndNamespaces.file)
+            });
+        }
+    }
+
     addFiles(...files: FileStructure[]) {
         const factory = new StructureFactory();
         this.files.push(...files.map(f => factory.getFile(f)));

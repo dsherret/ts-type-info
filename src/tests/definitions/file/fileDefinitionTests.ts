@@ -17,9 +17,6 @@ describe("FileDefinition", () => {
                 moduleSpecifier: "./test3",
                 namedImports: [{
                     name: "namedImport1"
-                }, {
-                    name: "namedImport2",
-                    alias: "aliasName"
                 }]
             }, {
                 moduleSpecifier: "./test4",
@@ -49,11 +46,9 @@ describe("FileDefinition", () => {
                 runImportDefinitionTests(f.imports[2], {
                     moduleSpecifier: "./test3",
                     namedImports: [{
-                        importName: "namedImport1"
-                    }, {
-                        importName: "aliasName",
+                        importName: "namedImport1",
                         definitions: [{
-                            name: "namedImport2",
+                            name: "namedImport1",
                             type: null
                         }]
                     }]
@@ -64,7 +59,13 @@ describe("FileDefinition", () => {
                 runImportDefinitionTests(f.imports[3], {
                     moduleSpecifier: "./test4",
                     defaultImport: { importName: "defaultImport2" },
-                    namedImports: [{ importName: "namedImport3" }]
+                    namedImports: [{
+                        importName: "namedImport3",
+                        definitions: [{
+                            name: "namedImport3",
+                            type: null
+                        }]
+                    }]
                 });
             });
 
@@ -112,7 +113,8 @@ describe("FileDefinition", () => {
                     exportName: "aliasName",
                     definitions: [{ name: "namedImport1", type: null }]
                 }, {
-                    exportName: "namedImport2"
+                    exportName: "namedImport2",
+                    definitions: [{ name: "namedImport2", type: null }]
                 }]
             });
         });

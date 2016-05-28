@@ -1,7 +1,7 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ExportableDefinitions} from "./../../definitions";
 import {StructureFactory} from "./../../factories";
-import {NamedImportStructure} from "./../../structures";
+import {NamedImportStructureTypes} from "./../../structures";
 import {ReExportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {DefinitionUtils} from "./../../utils";
@@ -28,7 +28,7 @@ export class ReExportDefinition extends BaseDefinition {
         return exports;
     }
 
-    addNamedExports(...namedExports: NamedImportStructure[]) {
+    addNamedExports(...namedExports: NamedImportStructureTypes[]) {
         const factory = new StructureFactory();
         this.namedExports.push(...namedExports.map(n => factory.getReExportPartByNamedImport(n)));
         return this;

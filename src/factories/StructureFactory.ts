@@ -90,24 +90,20 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureImportBinder(this, structure), new definitions.ImportDefinition());
     }
 
-    getImportPart(importName: string) {
-        return this.getImportPartByNamedImport({ name: importName });
+    getImportPartByImportName(importName: string) {
+        const def = new definitions.ImportPartDefinition();
+        def.importName = importName;
+        return def;
     }
 
-    getImportPartByNamedImport(namedImport: structures.NamedImportStructure) {
+    getImportPartByNamedImport(namedImport: structures.NamedImportStructureTypes) {
         const def = new definitions.ImportPartDefinition();
 
-        if (StringUtils.isNullOrWhiteSpace(namedImport.alias)) {
-            def.importName = namedImport.name;
-        }
-        else {
+        if (!StringUtils.isNullOrWhiteSpace(namedImport.alias)) {
             def.importName = namedImport.alias;
-            def.definitions.push({
-                name: namedImport.name
-            } as definitions.ClassDefinition); // this is a bit of a hack
         }
 
-        def.expression = null;
+        this.fillNamedImportDetails(def, namedImport);
 
         return def;
     }
@@ -126,18 +122,14 @@ export class StructureFactory {
         return def;
     }
 
-    getReExportPartByNamedImport(namedImport: structures.NamedImportStructure) {
+    getReExportPartByNamedImport(namedImport: structures.NamedImportStructureTypes) {
         const def = new definitions.ReExportPartDefinition();
 
-        if (StringUtils.isNullOrWhiteSpace(namedImport.alias)) {
-            def.exportName = namedImport.name;
-        }
-        else {
+        if (!StringUtils.isNullOrWhiteSpace(namedImport.alias)) {
             def.exportName = namedImport.alias;
-            def.definitions.push({
-                name: namedImport.name
-            } as definitions.ClassDefinition); // this is a bit of a hack
         }
+
+        this.fillNamedImportDetails(def, namedImport);
 
         return def;
     }
@@ -181,5 +173,25 @@ export class StructureFactory {
 
     getVariable(structure: structures.VariableStructure) {
         return bindToDefinition(new binders.StructureVariableBinder(structure), new definitions.VariableDefinition());
+    }
+
+    private fillNamedImportDetails(def: definitions.ImportPartDefinition | definitions.ReExportPartDefinition, structure: structures.NamedImportStructureTypes) {
+        const namedImportWithDefinition = structure as structures.NamedImportStructureWithDefinition;
+        const namedImportWithDefinitions = structure as structures.NamedImportStructureWithDefinitions;
+        const namedImportWithName = structure as structures.NamedImportStructureWithName;
+
+        if (namedImportWithDefinition.definition != null) {
+            def.definitions.push(namedImportWithDefinition.definition);
+        }
+        else if (namedImportWithDefinitions.definitions != null) {
+            def.definitions.push(...namedImportWithDefinitions.definitions);
+        }
+        else {
+            def.definitions.push({
+                name: namedImportWithName.name
+            } as definitions.ClassDefinition); // this is a bit of a hack
+        }
+
+        def.expression = null;
     }
 }

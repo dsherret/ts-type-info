@@ -1,19 +1,25 @@
 ﻿import * as assert from "assert";
-import {ReExportDefinition} from "./../../../definitions";
+import {ReExportDefinition, VariableDefinition} from "./../../../definitions";
 import {runReExportPartDefinitionTests} from "./../../testHelpers";
 
 describe("ReExportDefinition", () => {
     describe("#addNamedExports()", () => {
         const def = new ReExportDefinition();
         def.addNamedExports({
-            name: "name",
-            alias: "someAlias"
+            name: "name"
         }, {
-            name: "name2"
+            name: "name",
+            alias: "aliasName"
+        }, {
+            definition: { name: "MyDef" } as VariableDefinition
+        }, {
+            definitions: [{ name: "MyDef2" } as VariableDefinition, { name: "MyDef2" } as VariableDefinition]
         });
 
-        runReExportPartDefinitionTests(def.namedExports[0], { exportName: "someAlias", definitions: [{ name: "name", type: null }] });
-        runReExportPartDefinitionTests(def.namedExports[1], { exportName: "name2" });
+        runReExportPartDefinitionTests(def.namedExports[0], { exportName: "name", definitions: [{ name: "name", type: null }] });
+        runReExportPartDefinitionTests(def.namedExports[1], { exportName: "aliasName", definitions: [{ name: "name", type: null }] });
+        runReExportPartDefinitionTests(def.namedExports[2], { exportName: "MyDef", definitions: [{ name: "MyDef", type: null }] });
+        runReExportPartDefinitionTests(def.namedExports[3], { exportName: "MyDef2", definitions: [{ name: "MyDef2", type: null }, { name: "MyDef2", type: null }] });
     });
 
     describe("#getNamedExport()", () => {

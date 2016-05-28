@@ -48,10 +48,16 @@ export class ImportWriter extends BaseDefinitionWriter<ImportDefinition> {
             this.writer.conditionalWrite(i !== 0, ", ");
 
             if ((namedImport.definitions || []).length > 0) {
-                name = namedImport.definitions[0].name || name;
+                const namedImportDef = namedImport.definitions[0];
+                if (namedImportDef.isDefaultExportOfFile) {
+                    name = "default";
+                }
+                else {
+                    name = namedImportDef.name || name;
+                }
             }
 
-            if (name !== alias) {
+            if (alias != null && name !== alias) {
                 this.writer.write(`${name} as ${alias}`);
             }
             else {
