@@ -126,8 +126,6 @@ export abstract class ExportableDefinition {
     isDefaultExportOfFile: boolean;
 }
 
-export type ModuleSearchDefinitions = ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition;
-
 export abstract class ModuledDefinition {
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
@@ -151,8 +149,8 @@ export abstract class ModuledDefinition {
     getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)): NamespaceDefinition;
     getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)): TypeAliasDefinition;
     getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)): VariableDefinition;
-    directlyContains(def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): boolean;
-    getNamespacesToDefinition(searchDef: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): NamespaceDefinition[];
+    directlyContains(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): boolean;
+    getNamespacesToDefinition(searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): NamespaceDefinition[];
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
@@ -573,8 +571,8 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
     getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
-    directlyContains: (def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => boolean;
-    getNamespacesToDefinition: (searchDef: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => NamespaceDefinition[];
+    directlyContains: (def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean;
+    getNamespacesToDefinition: (searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => NamespaceDefinition[];
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
@@ -612,13 +610,14 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
     getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
     getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
-    directlyContains: (def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => boolean;
-    getNamespacesToDefinition: (searchDef: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition) => NamespaceDefinition[];
+    directlyContains: (def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean;
+    getNamespacesToDefinition: (searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => NamespaceDefinition[];
 
     constructor();
 
     addImports(...imports: ImportStructure[]): this;
     addReExports(...reExports: ReExportStructure[]): this;
+    getModuleSpecifierToFile(file: FileDefinition): string;
     getImport(searchFunction: (importDef: ImportDefinition) => boolean): ImportDefinition;
     getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): ReExportDefinition;
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
@@ -636,7 +635,7 @@ export class ImportDefinition extends BaseDefinition {
 
     constructor();
 
-    addNamedImports(...namedImports: NamedImportStructure[]): this;
+    addNamedImports(...namedImports: (NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions)[]): this;
     getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
     getStarImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
     setDefaultImport(importName: string): this;
@@ -665,7 +664,7 @@ export class ReExportDefinition extends BaseDefinition {
     constructor();
 
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    addNamedExports(...namedExports: NamedImportStructure[]): this;
+    addNamedExports(...namedExports: (NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions)[]): this;
     getNamedExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
     getStarExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
     write(): string;
@@ -700,10 +699,11 @@ export const VariableDeclarationType: { Var: "var" | "let" | "const"; Let: "var"
 export class GlobalDefinition {
     files: FileDefinition[];
 
+    addDefinitionAsImportToFile(opts: { definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition; file: FileDefinition; alias?: string; }): void;
     addFiles(...files: FileStructure[]): this;
     getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): FileDefinition;
-    getFileOfDefinition(def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): FileDefinition;
-    getFileAndNamespacesToDefinition(def: ClassDefinition | EnumDefinition | FunctionDefinition | InterfaceDefinition | NamespaceDefinition | TypeAliasDefinition | VariableDefinition): { file: FileDefinition; namespaces: NamespaceDefinition[]; };
+    getFileOfDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): FileDefinition;
+    getFileAndNamespacesToDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): { file: FileDefinition; namespaces: NamespaceDefinition[]; };
 }
 
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
@@ -940,21 +940,33 @@ export interface FileStructure extends BaseStructure, ModuledStructure {
     defaultExportExpression?: string;
 }
 
-export interface NamedImportStructure {
+export interface NamedImportStructureWithName {
     name: string;
     alias?: string;
 }
+
+export interface NamedImportStructureWithDefinition {
+    definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+    alias?: string;
+}
+
+export interface NamedImportStructureWithDefinitions {
+    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    alias?: string;
+}
+
+export type NamedImportStructureTypes = NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions;
 
 export interface ImportStructure extends BaseStructure {
     moduleSpecifier: string;
     starImportName?: string;
     defaultImportName?: string;
-    namedImports?: NamedImportStructure[];
+    namedImports?: (NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions)[];
 }
 
 export interface ReExportStructure extends BaseStructure {
     moduleSpecifier: string;
-    namedExports?: NamedImportStructure[];
+    namedExports?: (NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions)[];
 }
 
 export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, AmbientableStructure, AsyncableStructure, ExportableStructure, FunctionBodyWriteableStructure {
