@@ -29,6 +29,7 @@ export class CallSignatureDefinition
     getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
     // ReturnTyped
     returnTypeExpression: TypeExpressionDefinition;
+    setReturnTypeExpression: (text: string) => any;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;

@@ -39,6 +39,7 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     setTypeExpression: (text: string) => any;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
+    setDefaultExpression: (text: string) => any;
 }
 
 applyMixins(BaseParameterDefinition, BaseDefinition, [NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);

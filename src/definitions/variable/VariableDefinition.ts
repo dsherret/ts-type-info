@@ -33,6 +33,7 @@ export class VariableDefinition extends BaseDefinition
     setTypeExpression: (text: string) => any;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
+    setDefaultExpression: (text: string) => any;
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

@@ -114,6 +114,8 @@ export abstract class TypeExpressionedDefinition {
 
 export abstract class DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition;
+
+    setDefaultExpression(text: string): any;
 }
 
 export abstract class DecoratableDefinition {
@@ -176,6 +178,7 @@ export abstract class TypeParameteredDefinition {
 
 export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition;
+    setDefaultExpression: (text: string) => any;
 
     constructor(definitionType: DefinitionType);
 }
@@ -187,6 +190,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
     returnTypeExpression: TypeExpressionDefinition;
+    setReturnTypeExpression: (text: string) => any;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -210,6 +214,7 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     typeExpression: TypeExpressionDefinition;
     setTypeExpression: (text: string) => any;
     defaultExpression: ExpressionDefinition;
+    setDefaultExpression: (text: string) => any;
 
     constructor(definitionType: DefinitionType);
 
@@ -226,12 +231,15 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
 
 export abstract class ReturnTypedDefinition {
     returnTypeExpression: TypeExpressionDefinition;
+
+    setReturnTypeExpression(text: string): any;
 }
 
 export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
     parameters: CallSignatureParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
     returnTypeExpression: TypeExpressionDefinition;
+    setReturnTypeExpression: (text: string) => any;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -250,6 +258,7 @@ export class IndexSignatureDefinition extends BaseDefinition implements ReturnTy
     keyName: string;
     keyTypeExpression: TypeExpressionDefinition;
     returnTypeExpression: TypeExpressionDefinition;
+    setReturnTypeExpression: (text: string) => any;
 
     constructor();
 }
@@ -702,6 +711,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     typeExpression: TypeExpressionDefinition;
     setTypeExpression: (text: string) => any;
     defaultExpression: ExpressionDefinition;
+    setDefaultExpression: (text: string) => any;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
