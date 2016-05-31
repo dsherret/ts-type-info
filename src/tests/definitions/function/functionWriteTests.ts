@@ -19,6 +19,8 @@ function myFunctionBodyWriter() {
 declare async function myDeclareAsyncFunction();
 export async function myExportAsyncFunction() {
 }
+function myFunctionWithDestructuringParameter(str: string, { prop1, prop2 = 4 }: { prop1: number; prop2?: number; }) {
+}
 `;
 
 describe("FunctionDefinition", () => {
@@ -95,6 +97,16 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 }
 `;
                 assert.equal(file.functions[6].write(), expected);
+            });
+        });
+
+        describe("myFunctionWithDestructuringParameter", () => {
+            it("should contain the function written out", () => {
+                const expected =
+`function myFunctionWithDestructuringParameter(str: string, { prop1, prop2 = 4 }: { prop1: number; prop2?: number; }) {
+}
+`;
+                assert.equal(file.functions[7].write(), expected);
             });
         });
     });

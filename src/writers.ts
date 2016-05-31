@@ -13,6 +13,7 @@ export * from "./writers/MethodWriter";
 export * from "./writers/ModuledWriter";
 export * from "./writers/NamespaceWriter";
 export * from "./writers/ParameterWriter";
+export * from "./writers/ParameterWithDestructuringWriter";
 export * from "./writers/ParametersWriter";
 export * from "./writers/PropertyWriter";
 export * from "./writers/ReExportWriter";

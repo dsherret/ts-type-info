@@ -2,22 +2,27 @@
 import {ParameterDefinitions, ClassConstructorParameterScope} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {ParameterWriter} from "./ParameterWriter";
+import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
 
 export class ParametersWriter extends BaseWriter {
     private parameterWriter = new ParameterWriter(this.writer);
+    private parameterWithDestructuringWriter = new ParameterWithDestructuringWriter(this.writer);
 
     write(parameters: ParameterDefinitions[], flags: WriteFlags) {
         this.writer.write("(");
         parameters.forEach((param, i) => {
-            if (i !== 0) {
-                this.writer.write(", ");
-            }
+            this.writer.conditionalWrite(i > 0, ", ");
 
-            if (param.isClassConstructorParameterDefinition()) {
-                this.writeScope(param.scope, flags);
-            }
+            if (param.destructuringProperties.length === 0) {
+                if (param.isClassConstructorParameterDefinition()) {
+                    this.writeScope(param.scope, flags);
+                }
 
-            this.parameterWriter.write(param, flags);
+                this.parameterWriter.write(param, flags);
+            }
+            else {
+                this.parameterWithDestructuringWriter.write(param, flags);
+            }
         });
         this.writer.write(")");
     }
