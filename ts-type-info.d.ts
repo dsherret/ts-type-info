@@ -108,6 +108,8 @@ export abstract class AsyncableDefinition {
 
 export abstract class TypeExpressionedDefinition {
     typeExpression: TypeExpressionDefinition;
+
+    setTypeExpression(text: string): any;
 }
 
 export abstract class DefaultExpressionedDefinition {
@@ -160,6 +162,7 @@ export abstract class BasePropertyDefinition extends BaseDefinition implements N
     isOptional: boolean;
     name: string;
     typeExpression: TypeExpressionDefinition;
+    setTypeExpression: (text: string) => any;
 
     constructor(definitionType: DefinitionType);
 }
@@ -205,11 +208,12 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     destructuringProperties: ObjectPropertyDefinition[];
     name: string;
     typeExpression: TypeExpressionDefinition;
+    setTypeExpression: (text: string) => any;
     defaultExpression: ExpressionDefinition;
 
     constructor(definitionType: DefinitionType);
 
-    addDestructuringProperties(...properties: ObjectPropertyStructure[]): this;
+    addDestructuringProperties(...properties: ObjectPropertyStructure[]): any;
     getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): ObjectPropertyDefinition;
 }
 
@@ -267,6 +271,7 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     typeExpression: TypeExpressionDefinition;
+    setTypeExpression: (text: string) => any;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -695,6 +700,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     typeExpression: TypeExpressionDefinition;
+    setTypeExpression: (text: string) => any;
     defaultExpression: ExpressionDefinition;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

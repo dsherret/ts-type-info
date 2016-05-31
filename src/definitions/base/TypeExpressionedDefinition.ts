@@ -6,6 +6,6 @@ export abstract class TypeExpressionedDefinition {
 
     setTypeExpression(text: string) {
         this.typeExpression = new StructureFactory().getTypeExpressionFromText(text);
-        return this;
+        return this as any;
     }
 }

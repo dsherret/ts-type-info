@@ -30,7 +30,7 @@ export class VariableDefinition extends BaseDefinition
     isDefaultExportOfFile: boolean;
     // TypeExpressionedDefinition
     typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => this;
+    setTypeExpression: (text: string) => any;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
     // AmbientableDefinition
