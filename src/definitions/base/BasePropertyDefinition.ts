@@ -16,6 +16,7 @@ export abstract class BasePropertyDefinition extends BaseDefinition implements N
     name: string;
     // TypeExpressionedDefinition
     typeExpression: TypeExpressionDefinition;
+    setTypeExpression: (text: string) => this;
 }
 
 applyMixins(BasePropertyDefinition, BaseDefinition, [NamedDefinition, TypeExpressionedDefinition]);

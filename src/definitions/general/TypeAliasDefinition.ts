@@ -34,6 +34,7 @@ export class TypeAliasDefinition extends BaseDefinition
     isDefaultExportOfFile: boolean;
     // TypeExpressionedDefinition
     typeExpression: TypeExpressionDefinition;
+    setTypeExpression: (text: string) => this;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;

@@ -36,6 +36,7 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     name: string;
     // TypeExpressionedDefinition
     typeExpression: TypeExpressionDefinition;
+    setTypeExpression: (text: string) => this;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
 }
