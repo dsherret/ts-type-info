@@ -1,10 +1,10 @@
 ﻿import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
-import {ObjectPropertyBinder} from "./../../base";
+import {BaseObjectPropertyBinder} from "./../../base";
 import {TsBasePropertyBinder} from "./TsBasePropertyBinder";
 import {TsDefaultExpressionedBinder} from "./TsDefaultExpressionedBinder";
 
-export class TsObjectPropertyBinder extends ObjectPropertyBinder {
+export class TsBaseObjectPropertyBinder extends BaseObjectPropertyBinder {
     constructor(factory: TsFactory, node: TsNode) {
         super(
             new TsBasePropertyBinder(factory, node),

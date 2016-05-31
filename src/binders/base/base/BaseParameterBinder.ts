@@ -1,4 +1,4 @@
-﻿import {BaseParameterDefinition} from "./../../../definitions";
+﻿import {BaseParameterDefinition, ObjectPropertyDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./BaseDefinitionBinder";
 import {NamedBinder} from "./NamedBinder";
 import {TypeExpressionedBinder} from "./TypeExpressionedBinder";
@@ -7,6 +7,7 @@ import {DefaultExpressionedBinder} from "./DefaultExpressionedBinder";
 export abstract class BaseParameterBinder {
     abstract getIsOptional(): boolean;
     abstract getIsRestParameter(): boolean;
+    abstract getDestructuringProperties(): ObjectPropertyDefinition[];
 
     constructor(
         private baseDefinitionBinder: BaseDefinitionBinder,
@@ -23,5 +24,10 @@ export abstract class BaseParameterBinder {
         this.defaultExpressionedBinder.bind(def);
         def.isOptional = this.getIsOptional();
         def.isRestParameter = this.getIsRestParameter();
+        def.destructuringProperties = this.getDestructuringProperties();
+
+        if (def.destructuringProperties.length > 0) {
+            def.name = null;
+        }
     }
 }

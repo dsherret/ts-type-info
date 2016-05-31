@@ -7,7 +7,7 @@ import {StructureBaseParameterBinder, StructureDecoratableBinder} from "./../bas
 export class StructureClassConstructorParameterBinder extends ClassConstructorParameterBinder {
     constructor(factory: StructureFactory, private structure: ClassConstructorParameterStructure) {
         super(
-            new StructureBaseParameterBinder(structure),
+            new StructureBaseParameterBinder(factory, structure),
             new StructureDecoratableBinder(factory, structure)
         );
     }

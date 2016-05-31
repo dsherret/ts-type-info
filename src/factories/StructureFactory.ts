@@ -154,6 +154,10 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureNamespaceBinder(this, structure), new definitions.NamespaceDefinition());
     }
 
+    getObjectProperty(structure: structures.ObjectPropertyStructure) {
+        return bindToDefinition(new binders.StructureObjectPropertyBinder(structure), new definitions.ObjectPropertyDefinition());
+    }
+
     getTypeAlias(structure: structures.TypeAliasStructure) {
         return bindToDefinition(new binders.StructureTypeAliasBinder(this, structure), new definitions.TypeAliasDefinition());
     }

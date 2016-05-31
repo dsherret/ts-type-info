@@ -8,7 +8,7 @@ export * from "./base/DecoratableStructure";
 export * from "./base/ExportableStructure";
 export * from "./base/FunctionBodyWriteableStructure";
 export * from "./base/ModuledStructure";
-export * from "./base/ObjectPropertyStructure";
+export * from "./base/BaseObjectPropertyStructure";
 export * from "./base/TypeExpressionedStructure";
 export * from "./base/BasePropertyStructure";
 export * from "./base/TypeParameteredStructure";

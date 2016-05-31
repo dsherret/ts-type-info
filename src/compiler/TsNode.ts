@@ -1,4 +1,5 @@
 ﻿import * as ts from "typescript";
+import {ArrayUtils} from "./../utils/ArrayUtils";
 import {Logger} from "./../utils/Logger";
 import {tryGet} from "./../utils/tryGet";
 import {TypeGuards} from "./../utils/TypeGuards";
@@ -220,6 +221,11 @@ export class TsNode extends TsSourceFileChild {
         else {
             return NamespaceDeclarationType.Module;
         }
+    }
+
+    getParameterObjectBindingPatternElements() {
+        const name = (this.node as ts.ParameterDeclaration).name as ts.ObjectBindingPattern;
+        return (name.elements || []).map(e => this.createNode(e));
     }
 
     getUserDefinedTypeGuardParameterName() {
@@ -455,9 +461,23 @@ export class TsNode extends TsSourceFileChild {
         return parameterDeclaration.questionToken != null || parameterDeclaration.initializer != null || parameterDeclaration.dotDotDotToken != null;
     }
 
-    isPropertyOptional() {
+    isPropertyOptional(): boolean {
         const propertyDeclaration = this.node as ts.PropertyDeclaration;
-        return propertyDeclaration.questionToken != null;
+
+        if (propertyDeclaration.questionToken != null) {
+            return true;
+        }
+        else if (this.node.parent != null && this.node.parent.parent != null && this.node.parent.parent.kind === ts.SyntaxKind.Parameter) {
+            // for parameter destructuring, check to see if the type has a questionToken
+            const name = this.getName();
+            const prop = ArrayUtils.firstOrDefault(this.createNode(this.node.parent.parent).getTypeAtLocation().getProperties(), p => p.getName() === name);
+
+            if (prop != null) {
+                return (prop.getOnlyNode().node as ts.PropertyDeclaration).questionToken != null;
+            }
+        }
+
+        return false;
     }
 
     isPropertyDeclaration() {

@@ -5,6 +5,6 @@ import {StructureBaseParameterBinder} from "./../base";
 
 export class StructureInterfaceMethodParameterBinder extends InterfaceMethodParameterBinder {
     constructor(factory: StructureFactory, structure: InterfaceMethodParameterStructure) {
-        super(new StructureBaseParameterBinder(structure));
+        super(new StructureBaseParameterBinder(factory, structure));
     }
 }

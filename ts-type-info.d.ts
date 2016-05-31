@@ -81,7 +81,8 @@ export const enum DefinitionType {
     TypeProperty = 1100,
     Expression = 1200,
     IndexSignature = 1300,
-    UserDefinedTypeGuard = 1400
+    UserDefinedTypeGuard = 1400,
+    ObjectPropertyDefinition = 1500
 }
 
 export class FunctionBodyWriteableDefinition {
@@ -170,7 +171,7 @@ export abstract class TypeParameteredDefinition {
     getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)): TypeParameterDefinition;
 }
 
-export abstract class ObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
+export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition;
 
     constructor(definitionType: DefinitionType);
@@ -201,11 +202,15 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
 export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
+    destructuringProperties: ObjectPropertyDefinition[];
     name: string;
     typeExpression: TypeExpressionDefinition;
     defaultExpression: ExpressionDefinition;
 
     constructor(definitionType: DefinitionType);
+
+    addDestructuringProperties(...properties: ObjectPropertyStructure[]): this;
+    getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): ObjectPropertyDefinition;
 }
 
 export abstract class ParameteredDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> {
@@ -282,6 +287,10 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
     addArguments(...args: string[]): this;
 }
 
+export class ObjectPropertyDefinition extends BaseObjectPropertyDefinition {
+    constructor();
+}
+
 export class UserDefinedTypeGuardDefinition extends BaseDefinition {
     parameterName: string;
     type: TypeDefinition;
@@ -355,7 +364,7 @@ export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassM
     abstract addParameters(...parameters: ParameterStructureType[]): this;
 }
 
-export class BaseClassPropertyDefinition extends ObjectPropertyDefinition implements DecoratableDefinition, ScopedDefinition {
+export class BaseClassPropertyDefinition extends BaseObjectPropertyDefinition implements DecoratableDefinition, ScopedDefinition {
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
@@ -808,7 +817,7 @@ export interface ModuledStructure {
     typeAliases?: TypeAliasStructure[];
 }
 
-export interface ObjectPropertyStructure extends BasePropertyStructure, DefaultExpressionedStructure {
+export interface BaseObjectPropertyStructure extends BasePropertyStructure, DefaultExpressionedStructure {
 }
 
 export interface TypeExpressionedStructure {
@@ -830,6 +839,7 @@ export interface BaseFunctionStructure<T extends BaseParameterStructure> extends
 export interface BaseParameterStructure extends BaseStructure, NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure {
     isOptional?: boolean;
     isRestParameter?: boolean;
+    destructuringProperties?: ObjectPropertyStructure[];
 }
 
 export interface ParameteredStructure<T extends BaseParameterStructure> {
@@ -856,6 +866,9 @@ export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStruc
     returnType: string;
 }
 
+export interface ObjectPropertyStructure extends BaseObjectPropertyStructure {
+}
+
 export interface TypeAliasStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure {
     type: string;
 }
@@ -873,7 +886,7 @@ export interface BaseClassMethodStructure<ParameterType extends BaseClassMethodP
 export interface BaseClassMethodParameterStructure extends BaseParameterStructure, DecoratableStructure {
 }
 
-export interface BaseClassPropertyStructure extends ObjectPropertyStructure, DecoratableStructure, ScopedStructure {
+export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure, DecoratableStructure, ScopedStructure {
 }
 
 export interface ScopedStructure {

@@ -4,7 +4,7 @@ import {DefinitionType} from "./DefinitionType";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
 import {BasePropertyDefinition} from "./BasePropertyDefinition";
 
-export abstract class ObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
+export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
     constructor(definitionType: DefinitionType) {
         super(definitionType);
     }
@@ -13,4 +13,4 @@ export abstract class ObjectPropertyDefinition extends BasePropertyDefinition im
     defaultExpression: ExpressionDefinition;
 }
 
-applyMixins(ObjectPropertyDefinition, BasePropertyDefinition, [DefaultExpressionedDefinition]);
+applyMixins(BaseObjectPropertyDefinition, BasePropertyDefinition, [DefaultExpressionedDefinition]);

@@ -5,6 +5,6 @@ import {StructureBaseParameterBinder} from "./../base";
 
 export class StructureFunctionParameterBinder extends FunctionParameterBinder {
     constructor(factory: StructureFactory, structure: FunctionParameterStructure) {
-        super(new StructureBaseParameterBinder(structure));
+        super(new StructureBaseParameterBinder(factory, structure));
     }
 }

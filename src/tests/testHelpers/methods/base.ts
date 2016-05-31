@@ -1,5 +1,6 @@
 ﻿export * from "./base/runBaseDefinitionTests";
 export * from "./base/runBasePropertyDefinitionTests";
+export * from "./base/runBaseObjectPropertyDefinitionTests";
 export * from "./base/runAbstractableDefinitionTests";
 export * from "./base/runAmbientableDefinitionTests";
 export * from "./base/runAsyncableDefinitionTests";
@@ -9,7 +10,6 @@ export * from "./base/runExportableDefinitionTests";
 export * from "./base/runFunctionBodyWriteableDefinitionTests";
 export * from "./base/runModuledDefinitionTests";
 export * from "./base/runNamedDefinitionTests";
-export * from "./base/runObjectPropertyDefinitionTests";
 export * from "./base/runTypeExpressionedDefinitionTests";
 export * from "./base/runTypeParameteredDefinitionTests";
 export * from "./base/runBaseFunctionDefinitionTests";

@@ -1,5 +1,5 @@
-import {DecoratableTestStructure, ObjectPropertyTestStructure} from "./../../base";
+import {DecoratableTestStructure, BaseObjectPropertyTestStructure} from "./../../base";
 import {ScopedTestStructure} from "./ScopedTestStructure";
 
-export interface BaseClassPropertyTestStructure extends ObjectPropertyTestStructure, DecoratableTestStructure, ScopedTestStructure {
+export interface BaseClassPropertyTestStructure extends BaseObjectPropertyTestStructure, DecoratableTestStructure, ScopedTestStructure {
 }

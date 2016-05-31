@@ -1,5 +1,5 @@
 ﻿import {BasePropertyTestStructure} from "./BasePropertyTestStructure";
 import {DefaultExpressionedTestStructure} from "./DefaultExpressionedTestStructure";
 
-export interface ObjectPropertyTestStructure extends BasePropertyTestStructure, DefaultExpressionedTestStructure {
+export interface BaseObjectPropertyTestStructure extends BasePropertyTestStructure, DefaultExpressionedTestStructure {
 }

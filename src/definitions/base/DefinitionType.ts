@@ -32,5 +32,6 @@ export const enum DefinitionType {
     TypeProperty = 1100,
     Expression = 1200,
     IndexSignature = 1300,
-    UserDefinedTypeGuard = 1400
+    UserDefinedTypeGuard = 1400,
+    ObjectPropertyDefinition = 1500
 }

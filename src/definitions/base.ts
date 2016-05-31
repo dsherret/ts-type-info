@@ -12,7 +12,7 @@ export * from "./base/ExportableDefinition";
 export * from "./base/ModuledDefinition";
 export * from "./base/BasePropertyDefinition";
 export * from "./base/TypeParameteredDefinition";
-export * from "./base/ObjectPropertyDefinition";
+export * from "./base/BaseObjectPropertyDefinition";
 export * from "./base/BaseFunctionDefinition";
 export * from "./base/BaseParameterDefinition";
 export * from "./base/ParameteredDefinition";

@@ -7,7 +7,7 @@ import {StructureScopedBinder} from "./StructureScopedBinder";
 export class StructureBaseClassMethodParameterBinder extends BaseClassMethodParameterBinder {
     constructor(factory: StructureFactory, structure: BaseClassMethodParameterStructure) {
         super(
-            new StructureBaseParameterBinder(structure),
+            new StructureBaseParameterBinder(factory, structure),
             new StructureDecoratableBinder(factory, structure),
             new StructureScopedBinder(structure)
         );

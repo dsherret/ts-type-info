@@ -1,11 +1,11 @@
 import {applyMixins} from "./../../../utils";
 import {DecoratorStructure} from "./../../../structures";
-import {DecoratableDefinition, DefinitionType, ObjectPropertyDefinition} from "./../../base";
+import {DecoratableDefinition, DefinitionType, BaseObjectPropertyDefinition} from "./../../base";
 import {DecoratorDefinition} from "./../../general";
 import {Scope} from "./../Scope";
 import {ScopedDefinition} from "./ScopedDefinition";
 
-export class BaseClassPropertyDefinition extends ObjectPropertyDefinition implements DecoratableDefinition, ScopedDefinition {
+export class BaseClassPropertyDefinition extends BaseObjectPropertyDefinition implements DecoratableDefinition, ScopedDefinition {
     constructor(definitionType: DefinitionType) {
         super(definitionType);
     }
@@ -18,4 +18,4 @@ export class BaseClassPropertyDefinition extends ObjectPropertyDefinition implem
     scope: Scope;
 }
 
-applyMixins(BaseClassPropertyDefinition, ObjectPropertyDefinition, [DecoratableDefinition, ScopedDefinition]);
+applyMixins(BaseClassPropertyDefinition, BaseObjectPropertyDefinition, [DecoratableDefinition, ScopedDefinition]);

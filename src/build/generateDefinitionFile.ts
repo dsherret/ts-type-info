@@ -22,6 +22,12 @@ export function generateDefinitionFile() {
                                          m.name !== "addType");
             def.properties = def.properties.filter(p => p.name.indexOf("fill") === -1 && p.name !== "addType");
         }
+
+        // hack to support the return type expression being "this" in the definition file
+        // todo: remove in TS 2.0+
+        if (def.name === "BaseParameterDefinition" && def.isClassDefinition()) {
+            def.getMethod("addDestructuringProperties").returnTypeExpression.text = "this";
+        }
     });
 
     const definitionFileText = fileInfo.writeExportsAsDefinitionFile({

@@ -7,7 +7,7 @@ import {TsNamedBinder} from "./TsNamedBinder";
 import {TsTypeExpressionedBinder} from "./TsTypeExpressionedBinder";
 
 export class TsBaseParameterBinder extends BaseParameterBinder {
-    constructor(factory: TsFactory, private node: TsNode) {
+    constructor(private factory: TsFactory, private node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),
@@ -22,5 +22,9 @@ export class TsBaseParameterBinder extends BaseParameterBinder {
 
     getIsRestParameter() {
         return this.node.isRestParameter();
+    }
+
+    getDestructuringProperties() {
+        return this.node.getParameterObjectBindingPatternElements().map(e => this.factory.getObjectProperty(e));
     }
 }

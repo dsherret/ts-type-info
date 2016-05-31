@@ -1,10 +1,10 @@
 ﻿import {BaseClassPropertyDefinition} from "./../../../../definitions";
-import {DecoratableBinder, ObjectPropertyBinder} from "./../../base";
+import {DecoratableBinder, BaseObjectPropertyBinder} from "./../../base";
 import {ScopedBinder} from "./ScopedBinder";
 
 export abstract class BaseClassPropertyBinder {
     constructor(
-        private objectPropertyBinder: ObjectPropertyBinder,
+        private objectPropertyBinder: BaseObjectPropertyBinder,
         private decoratableBinder: DecoratableBinder,
         private scopedBinder: ScopedBinder
     ) {

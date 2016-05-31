@@ -1,4 +1,4 @@
-﻿import {PropertyDefinitions, ObjectPropertyDefinition, ClassPropertyDefinition} from "./../definitions";
+﻿import {PropertyDefinitions, BaseObjectPropertyDefinition, ClassPropertyDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {TypeExpressionWriter} from "./TypeExpressionWriter";
 import {ExpressionWriter} from "./ExpressionWriter";
@@ -72,7 +72,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         }
 
         if (willWriteDefaultExpression) {
-            this.expressionWriter.writeWithEqualsSign((def as ObjectPropertyDefinition).defaultExpression);
+            this.expressionWriter.writeWithEqualsSign((def as BaseObjectPropertyDefinition).defaultExpression);
         }
 
         this.writer.write(";").newLine();
