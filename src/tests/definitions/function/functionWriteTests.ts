@@ -111,6 +111,7 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 `;
                 assert.equal(file.functions[7].write(), expected);
             });
+        });
 
         describe("myGeneratorFunction", () => {
             it("should contain the function written out", () => {
@@ -120,7 +121,6 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 `;
                 assert.equal(file.functions[8].write(), expected);
             });
-        });
         });
     });
 });
