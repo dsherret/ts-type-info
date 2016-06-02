@@ -20,21 +20,15 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
     protected abstract writeDefault(def: DefinitionType, flags: WriteFlags): void;
 
     protected writeAsyncKeyword(def: AsyncableDefinition) {
-        if (def.isAsync) {
-            this.writer.write("async ");
-        }
+        this.writer.conditionalWrite(def.isAsync, "async ");
     }
 
     protected writeConstKeyword(def: EnumDefinition) {
-        if (def.isConst) {
-            this.writer.write("const ");
-        }
+        this.writer.conditionalWrite(def.isConst, "const ");
     }
 
     protected writeDeclareKeyword(def: AmbientableDefinition) {
-        if (def.hasDeclareKeyword) {
-            this.writer.write("declare ");
-        }
+        this.writer.conditionalWrite(def.hasDeclareKeyword, "declare ");
     }
 
     protected writeExportKeyword(def: ExportableDefinitions, flags: WriteFlags) {

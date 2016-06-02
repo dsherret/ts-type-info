@@ -420,6 +420,10 @@ export class TsNode extends TsSourceFileChild {
         return this.getKind() === ts.SyntaxKind.FunctionType;
     }
 
+    isGeneratorFunction() {
+        return (this.node as ts.FunctionLikeDeclaration).asteriskToken != null;
+    }
+
     isGetAccessor() {
         return this.getKind() === ts.SyntaxKind.GetAccessor;
     }

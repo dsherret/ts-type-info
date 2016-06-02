@@ -16,6 +16,9 @@ function typeGuardFunction(def: any): def is MyClass {
 function typeGuardFunctionIntersect(def: any): def is MyClass & MyClass2 {
     return true;
 }
+function *myGeneratorFunction() {
+    yield "test";
+}
 class MyClass {
 }
 class MyClass2 {
@@ -70,6 +73,10 @@ class MyClass2 {
                 parameterName: "def",
                 type: "MyClass & MyClass2"
             }
+        }, {
+            name: "myGeneratorFunction",
+            isGenerator: true,
+            returnTypeExpression: { text: "IterableIterator<string>" }
         }],
         classes: [{
             name: "MyClass"

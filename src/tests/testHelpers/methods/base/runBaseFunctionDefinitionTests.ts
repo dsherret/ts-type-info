@@ -20,11 +20,17 @@ export function runBaseFunctionDefinitionTests(
     runParameteredDefinitionTests(runParameterDefinitionTests, definition, structure);
     runUserDefinedTypeGuardTests(definition.userDefinedTypeGuard, structure.userDefinedTypeGuard);
 
+    it(`${structure.isGenerator ? "should" : "should not"} be a generator function`, () => {
+        assert.equal(definition.isGenerator, structure.isGenerator || false);
+    });
+
     it("should have the same number of overload signatures", () => {
         assert.equal(definition.overloadSignatures.length, structure.overloadSignatures.length);
     });
 
-    structure.overloadSignatures.forEach((overloadSignatureStructure, i) => {
-        runCallSignatureDefinitionTests(definition.overloadSignatures[i], overloadSignatureStructure);
+    describe("overloadSignatures", () => {
+        structure.overloadSignatures.forEach((overloadSignatureStructure, i) => {
+            runCallSignatureDefinitionTests(definition.overloadSignatures[i], overloadSignatureStructure);
+        });
     });
 }

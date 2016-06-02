@@ -14,6 +14,7 @@ import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
+    isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[] = [];
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition;
 

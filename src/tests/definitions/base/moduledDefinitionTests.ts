@@ -89,10 +89,14 @@ describe("ModuledDefinitionTests", () => {
             isAsync: true,
             isDefaultExportOfFile: true,
             isExported: true,
+            isGenerator: true,
             isNamedExportOfFile: true,
             parameters: [{ name: "param1" }, { name: "param2" }],
             returnType: "string",
             typeParameters: [{ name: "T" }, { name: "U" }],
+            overloadSignatures: [{
+                parameters: [{ name: "param1" }]
+            }],
             onWriteFunctionBody: (writer) => writer.write("")
         }, {
             name: "function2"
@@ -105,10 +109,15 @@ describe("ModuledDefinitionTests", () => {
             isAsync: true,
             isDefaultExportOfFile: true,
             isExported: true,
+            isGenerator: true,
             isNamedExportOfFile: true,
             parameters: [{ name: "param1" }, { name: "param2" }],
             returnTypeExpression: { text: "string" },
             typeParameters: [{ name: "T" }, { name: "U" }],
+            overloadSignatures: [{
+                parameters: [{ name: "param1" }],
+                minArgumentCount: 1
+            }],
             hasOnWriteFunctionBody: true
         });
         testHelpers.runFunctionDefinitionTests(n.functions[1], {

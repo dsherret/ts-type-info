@@ -29,6 +29,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         this.writeStatic(def);
         this.writeAbstract(def as ClassMethodDefinition);
         this.writeAsyncKeyword(def as ClassMethodDefinition);
+        this.writer.conditionalWrite(def.isGenerator, "*");
         this.writer.write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);
         this.parametersWriter.write(def.parameters, flags);

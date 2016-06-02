@@ -52,6 +52,9 @@ abstract class MyClass {
     private myPrivateMethod() {
     }
 
+    private *myGeneratorMethod() {
+    }
+
     async myAsyncMethod() {
     }
 
@@ -117,6 +120,9 @@ describe("ClassDefinition", () => {
     }
 
     private myPrivateMethod() {
+    }
+
+    private *myGeneratorMethod() {
     }
 
     async myAsyncMethod() {

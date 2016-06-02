@@ -17,6 +17,7 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
 
     protected abstract getOverloadSignatures(): definitions.CallSignatureDefinition[];
     protected abstract getUserDefinedTypeGuard(): definitions.UserDefinedTypeGuardDefinition;
+    protected abstract getIsGenerator(): boolean;
 
     bind(def: definitions.BaseFunctionDefinition<ParameterType, any>) {
         this.baseDefinitionBinder.bind(def);
@@ -25,6 +26,7 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         this.parameterBinder.bind(def);
         this.returnTypedBinder.bind(def);
 
+        def.isGenerator = this.getIsGenerator();
         def.overloadSignatures.push(...this.getOverloadSignatures());
         def.userDefinedTypeGuard = this.getUserDefinedTypeGuard();
 

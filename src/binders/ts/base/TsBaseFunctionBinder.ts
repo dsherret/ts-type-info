@@ -24,6 +24,10 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
         );
     }
 
+    protected getIsGenerator() {
+        return this.node.isGeneratorFunction();
+    }
+
     protected getOverloadSignatures() {
         const callSignatures = this.node.getTypeAtLocation().getCallSignatures().filter(c => !c.getDeclaration().hasFunctionBody());
 

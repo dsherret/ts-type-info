@@ -10,4 +10,5 @@ export interface BaseFunctionTestStructure<T extends BaseParameterTestStructure>
         extends BaseTestStructure, NamedTestStructure, TypeParameteredTestStructure, ParameteredTestStructure<T>, ReturnTypedTestStructure {
     overloadSignatures?: CallSignatureTestStructure[];
     userDefinedTypeGuard?: UserDefinedTypeGuardTestStructure;
+    isGenerator?: boolean;
 }

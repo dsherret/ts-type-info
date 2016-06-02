@@ -24,7 +24,9 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
         this.writeExportKeyword(def as FunctionDefinition, flags);
         this.writeDeclareKeyword(def as FunctionDefinition);
         this.writeAsyncKeyword(def as FunctionDefinition);
-        this.writer.write("function ").write(def.name);
+        this.writer.write("function ");
+        this.writer.conditionalWrite(def.isGenerator, "*");
+        this.writer.write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);
         this.parametersWriter.write(def.parameters, flags);
         this.writeReturnType(def, flags);

@@ -49,6 +49,7 @@ export class TsMain {
         combinedOptions.suppressExcessPropertyErrors = getValue(combinedOptions.suppressExcessPropertyErrors, true);
         combinedOptions.suppressImplicitAnyIndexErrors = getValue(combinedOptions.suppressImplicitAnyIndexErrors, true);
         combinedOptions.noImplicitAny = getValue(combinedOptions.noImplicitAny, false);
+        combinedOptions.target = getValue(combinedOptions.target, ts.ScriptTarget.ES2015);
 
         return combinedOptions;
     }

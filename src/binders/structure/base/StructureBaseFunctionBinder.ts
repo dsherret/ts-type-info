@@ -25,6 +25,10 @@ export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseP
         );
     }
 
+    protected getIsGenerator() {
+        return this.structure.isGenerator || false;
+    }
+
     protected getOverloadSignatures() {
         return (this.structure.overloadSignatures || []).map(s => this.factory.getCallSignature(s));
     }

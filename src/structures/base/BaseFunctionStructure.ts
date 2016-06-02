@@ -8,5 +8,6 @@ import {BaseStructure} from "./BaseStructure";
 
 export interface BaseFunctionStructure<T extends BaseParameterStructure>
         extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure {
+    isGenerator?: boolean;
     overloadSignatures?: CallSignatureStructure[];
 }
