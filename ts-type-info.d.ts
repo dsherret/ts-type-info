@@ -184,6 +184,7 @@ export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinitio
 }
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
+    isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[];
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition;
     name: string;
@@ -849,6 +850,7 @@ export interface TypeParameteredStructure {
 }
 
 export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure {
+    isGenerator?: boolean;
     overloadSignatures?: CallSignatureStructure[];
 }
 

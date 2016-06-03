@@ -5,7 +5,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     static FAILURE_STRING = "duplicate imports from same file forbidden";
 
     apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoImportsWalker(sourceFile, this.getOptions()));
+        return this.applyWithWalker(new NoDuplicateImportsFromSameFileWalker(sourceFile, this.getOptions()));
     }
 }
 

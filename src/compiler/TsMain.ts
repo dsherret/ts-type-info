@@ -50,6 +50,7 @@ export class TsMain {
         combinedOptions.suppressImplicitAnyIndexErrors = getValue(combinedOptions.suppressImplicitAnyIndexErrors, true);
         combinedOptions.noImplicitAny = getValue(combinedOptions.noImplicitAny, false);
         combinedOptions.target = getValue(combinedOptions.target, ts.ScriptTarget.ES2015);
+        combinedOptions.moduleResolution = getValue(combinedOptions.moduleResolution, ts.ModuleResolutionKind.NodeJs);
 
         return combinedOptions;
     }

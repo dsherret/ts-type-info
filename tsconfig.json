@@ -8,9 +8,5 @@
         "noImplicitReturns": true,
         "removeComments": false,
         "experimentalDecorators": true
-    },
-    "exclude": [
-        "src/typings/browser.d.ts",
-        "src/typings/browser"
-    ]
+    }
 }
