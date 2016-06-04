@@ -18,6 +18,12 @@ export interface CompilerOptions {
     rootDir?: string;
 }
 
+export interface WriteOptions {
+    newLine?: string;
+    indentNumberOfSpaces?: number;
+    useTabs?: boolean;
+}
+
 export abstract class BaseDefinition {
     onBeforeWrite: (writer: CodeBlockWriter) => void;
     onAfterWrite: (writer: CodeBlockWriter) => void;
@@ -290,7 +296,7 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
 
     constructor();
 
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export class DecoratorDefinition extends BaseDefinition implements NamedDefinition {
@@ -350,7 +356,7 @@ export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameter
     constructor();
 
     addParameters(...parameters: FunctionParameterStructure[]): this;
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export class FunctionParameterDefinition extends BaseParameterDefinition {
@@ -416,7 +422,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 
     constructor();
 
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
     addMethods(...methods: ClassMethodStructure[]): this;
     addProperties(...properties: ClassPropertyStructure[]): this;
     addStaticMethods(...staticMethods: ClassStaticMethodStructure[]): this;
@@ -526,7 +532,7 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)): InterfaceMethodDefinition;
     getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition;
     getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)): InterfacePropertyDefinition;
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export class InterfaceMethodParameterDefinition extends BaseParameterDefinition {
@@ -557,7 +563,7 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
 
     addMembers(...members: EnumMemberStructure[]): this;
     getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): EnumMemberDefinition;
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition {
@@ -607,7 +613,7 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
 
     constructor();
 
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export class FileDefinition extends BaseDefinition implements ModuledDefinition {
@@ -648,8 +654,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     getImport(searchFunction: (importDef: ImportDefinition) => boolean): ImportDefinition;
     getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): ReExportDefinition;
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    write(): string;
-    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string; }[]; }): string;
+    write(writeOptions?: WriteOptions): string;
+    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string; }[]; writeOptions?: WriteOptions; }): string;
 }
 
 export class ImportDefinition extends BaseDefinition {
@@ -666,7 +672,7 @@ export class ImportDefinition extends BaseDefinition {
     getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
     getStarImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
     setDefaultImport(importName: string): this;
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export abstract class BaseImportPartDefinition extends BaseDefinition {
@@ -694,7 +700,7 @@ export class ReExportDefinition extends BaseDefinition {
     addNamedExports(...namedExports: (NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions)[]): this;
     getNamedExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
     getStarExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export class ReExportPartDefinition extends BaseImportPartDefinition {
@@ -718,7 +724,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
 
     constructor();
 
-    write(): string;
+    write(writeOptions?: WriteOptions): string;
 }
 
 export type VariableDeclarationType = "var" | "let" | "const";

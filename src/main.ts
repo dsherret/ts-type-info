@@ -8,6 +8,7 @@ import {Options} from "./Options";
 import {StringUtils, Logger} from "./utils";
 
 export * from "./Options";
+export * from "./WriteOptions";
 export * from "./definitions";
 export * from "./errors";
 export * from "./structures";
