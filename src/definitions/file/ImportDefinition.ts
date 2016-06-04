@@ -1,9 +1,9 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {StructureFactory} from "./../../factories";
+﻿import {MainFactory, StructureFactory} from "./../../factories";
 import {NamedImportStructureTypes} from "./../../structures";
+import {DefinitionUtils} from "./../../utils";
 import {ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {DefinitionUtils} from "./../../utils";
+import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ImportPartDefinition} from "./ImportPartDefinition";
 
@@ -39,8 +39,8 @@ export class ImportDefinition extends BaseDefinition {
         return this;
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const importWriter = new ImportWriter(writer);
         importWriter.write(this, WriteFlags.Default);
         return writer.toString();

@@ -1,9 +1,9 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {StructureFactory} from "./../../factories";
+﻿import {MainFactory, StructureFactory} from "./../../factories";
 import {EnumMemberStructure} from "./../../structures";
+import {applyMixins, DefinitionUtils} from "./../../utils";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, DefinitionUtils} from "./../../utils";
+import {WriteOptions} from "./../../WriteOptions";
 import {NamedDefinition, AmbientableDefinition, ExportableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
@@ -25,8 +25,8 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.members, nameOrSearchFunction);
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const enumWriter = new EnumWriter(writer);
         enumWriter.write(this, WriteFlags.Default);
         return writer.toString();

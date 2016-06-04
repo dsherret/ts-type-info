@@ -1,20 +1,7 @@
 ﻿import * as assert from "assert";
-import CodeBlockWriter from "code-block-writer";
-import {FileDefinition} from "./../../definitions";
-import {getInfoFromString} from "./../../main";
-import {FileWriter} from "./../../writers";
-import {WriteFlags} from "./../../WriteFlags";
+import {getInfoFromString} from "./../../../main";
 
-function getFileAsString(f: FileDefinition) {
-    const codeBlockWriter = new CodeBlockWriter();
-    const writer = new FileWriter(codeBlockWriter);
-
-    writer.write(f, WriteFlags.Default);
-
-    return codeBlockWriter.toString();
-}
-
-describe("Ambientable", () => {
+describe("AmbientableDefinition", () => {
     const code = `
 declare namespace MyNamespace {
 }
@@ -61,7 +48,7 @@ declare enum MyEnum {
 
 declare function myFunction(): void;
 `;
-            assert.equal(getFileAsString(myFile), expected);
+            assert.equal(myFile.write(), expected);
         });
     });
 });

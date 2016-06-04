@@ -1,10 +1,10 @@
-import CodeBlockWriter from "code-block-writer";
-import {StructureFactory} from "./../../factories";
+import {MainFactory, StructureFactory} from "./../../factories";
 import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure,
     ClassStaticMethodStructure, ClassStaticPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
+import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
         AbstractableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
@@ -30,8 +30,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         super(DefinitionType.Class);
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const classWriter = new ClassWriter(writer);
         classWriter.write(this, WriteFlags.Default);
         return writer.toString();

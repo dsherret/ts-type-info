@@ -1,10 +1,10 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {ExportableDefinitions} from "./../../definitions";
-import {StructureFactory} from "./../../factories";
+﻿import {ExportableDefinitions} from "./../../definitions";
+import {MainFactory, StructureFactory} from "./../../factories";
 import {NamedImportStructureTypes} from "./../../structures";
+import {DefinitionUtils} from "./../../utils";
 import {ReExportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {DefinitionUtils} from "./../../utils";
+import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ReExportPartDefinition} from "./ReExportPartDefinition";
 
@@ -42,8 +42,8 @@ export class ReExportDefinition extends BaseDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.starExports, searchFunction);
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const exportWriter = new ReExportWriter(writer);
         exportWriter.write(this, WriteFlags.Default);
         return writer.toString();

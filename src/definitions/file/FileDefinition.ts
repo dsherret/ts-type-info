@@ -1,12 +1,12 @@
-import CodeBlockWriter from "code-block-writer";
 import * as path from "path";
 import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
-import {StructureFactory} from "./../../factories";
+import {MainFactory, StructureFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, InterfaceStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
     VariableStructure} from "./../../structures";
+import {applyMixins, DefinitionUtils, validateImportStructure, FileUtils, StringUtils} from "./../../utils";
 import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, DefinitionUtils, validateImportStructure, FileUtils, StringUtils} from "./../../utils";
+import {WriteOptions} from "./../../WriteOptions";
 import {writeDefinition} from "./../../writeDefinition";
 import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expression";
@@ -73,17 +73,17 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
         return exports;
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const fileWriter = new FileWriter(writer);
         fileWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
-    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string }[]}) {
+    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string }[]; writeOptions?: WriteOptions; }) {
         console.warn("writeExportsAsDefinitionFile(...) is not supported. It has not been tested.");
 
-        const writer = new CodeBlockWriter();
+        const writer = MainFactory.createWriter(options.writeOptions);
 
         if (options && options.imports) {
             // todo: should use an ImportWriter to write this

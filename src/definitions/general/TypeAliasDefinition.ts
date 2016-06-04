@@ -1,8 +1,9 @@
-﻿import CodeBlockWriter from "code-block-writer";
+﻿import {MainFactory} from "./../../factories";
 import {TypeParameterStructure} from "./../../structures";
-import {WriteFlags} from "./../../WriteFlags";
-import {TypeAliasWriter} from "./../../writers";
 import {applyMixins} from "./../../utils";
+import {WriteFlags} from "./../../WriteFlags";
+import {WriteOptions} from "./../../WriteOptions";
+import {TypeAliasWriter} from "./../../writers";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {TypeExpressionDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
@@ -19,8 +20,8 @@ export class TypeAliasDefinition extends BaseDefinition
         super(DefinitionType.TypeAlias);
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const typeAliasWriter = new TypeAliasWriter(writer);
         typeAliasWriter.write(this, WriteFlags.Default);
         return writer.toString();

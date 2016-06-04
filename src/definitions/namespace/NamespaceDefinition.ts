@@ -1,9 +1,10 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
+﻿import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
+import {MainFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, NamespaceStructure, VariableStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
+import {WriteOptions} from "./../../WriteOptions";
 import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
@@ -21,8 +22,8 @@ export class NamespaceDefinition extends BaseDefinition
         super(DefinitionType.Namespace);
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const flags = WriteFlags.Default;
         const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
         namespaceWriter.write(this, flags);

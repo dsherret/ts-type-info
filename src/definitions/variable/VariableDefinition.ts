@@ -1,7 +1,8 @@
-﻿import CodeBlockWriter from "code-block-writer";
+﻿import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
+import {WriteOptions} from "./../../WriteOptions";
 import {AmbientableDefinition, NamedDefinition, TypeExpressionedDefinition, ExportableDefinition,
     DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition, TypeExpressionDefinition} from "./../expression";
@@ -15,8 +16,8 @@ export class VariableDefinition extends BaseDefinition
         super(DefinitionType.Variable);
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const variableWriter = new VariableWriter(writer);
         variableWriter.write(this, WriteFlags.Default);
         return writer.toString();

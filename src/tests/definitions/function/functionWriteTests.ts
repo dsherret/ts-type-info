@@ -24,6 +24,8 @@ function myFunctionWithDestructuringParameter(str: string, { prop1, prop2 = 4 }:
 function *myGeneratorFunction() {
     yield return "string";
 }
+function myParameterFunction(param1: string, param2 = "text", param3?: number, ...params: string[]) {
+}
 `;
 
 describe("FunctionDefinition", () => {
@@ -120,6 +122,16 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 }
 `;
                 assert.equal(file.functions[8].write(), expected);
+            });
+        });
+
+        describe("myParameterFunction", () => {
+            it("should contain the function written out", () => {
+                const expected =
+`function myParameterFunction(param1: string, param2 = "text", param3?: number, ...params: string[]) {
+}
+`;
+                assert.equal(file.functions[9].write(), expected);
             });
         });
     });

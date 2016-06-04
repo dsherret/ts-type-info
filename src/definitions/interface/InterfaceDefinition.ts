@@ -1,9 +1,9 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {StructureFactory} from "./../../factories";
+﻿import {MainFactory, StructureFactory} from "./../../factories";
 import {CallSignatureStructure, IndexSignatureStructure, InterfaceMethodStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
+import {applyMixins, DefinitionUtils} from "./../../utils";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
-import {applyMixins, DefinitionUtils} from "./../../utils";
+import {WriteOptions} from "./../../WriteOptions";
 import {NamedDefinition, ExportableDefinition, AmbientableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
 import {TypeExpressionDefinition} from "./../expression";
@@ -79,8 +79,8 @@ export class InterfaceDefinition extends BaseDefinition
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.properties, nameOrSearchFunction);
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const interfaceWriter = new InterfaceWriter(writer);
         interfaceWriter.write(this, WriteFlags.Default);
         return writer.toString();

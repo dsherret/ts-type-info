@@ -1,10 +1,11 @@
 import CodeBlockWriter from "code-block-writer";
-import {StructureFactory} from "./../../factories";
+import {MainFactory, StructureFactory} from "./../../factories";
 import {FunctionParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
-import {ExportableDefinition, AmbientableDefinition, AsyncableDefinition, DefinitionType, BaseFunctionDefinition, FunctionBodyWriteableDefinition} from "./../base";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
+import {WriteOptions} from "./../../WriteOptions";
+import {ExportableDefinition, AmbientableDefinition, AsyncableDefinition, DefinitionType, BaseFunctionDefinition, FunctionBodyWriteableDefinition} from "./../base";
 import {FunctionParameterDefinition} from "./FunctionParameterDefinition";
 
 export class FunctionDefinition
@@ -21,8 +22,8 @@ export class FunctionDefinition
         return this;
     }
 
-    write() {
-        const writer = new CodeBlockWriter();
+    write(writeOptions?: WriteOptions) {
+        const writer = MainFactory.createWriter(writeOptions);
         const functionWriter = new FunctionWriter(writer);
         functionWriter.write(this, WriteFlags.Default);
         return writer.toString();
