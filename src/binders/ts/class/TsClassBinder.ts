@@ -24,7 +24,7 @@ export class TsClassBinder extends ClassBinder {
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getTypeExpressionFromNode(node));
+            .map(node => this.getTypeExpressionFromNode(node));
     }
 
     getImplementsTypeExpressions() {
@@ -32,7 +32,7 @@ export class TsClassBinder extends ClassBinder {
             .filter(node => node.isHeritageClause() && node.hasImplementsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getTypeExpressionFromNode(node));
+            .map(node => this.getTypeExpressionFromNode(node));
     }
 
     getMembers() {
@@ -101,5 +101,16 @@ export class TsClassBinder extends ClassBinder {
         });
 
         return container;
+    }
+
+    private getTypeExpressionFromNode(node: TsNode) {
+        let typeExpression = node.getTypeExpression();
+
+        if (typeExpression == null || typeExpression.getText() === "any") {
+           return this.factory.getTypeExpressionFromNode(node)
+        }
+        else {
+            return this.factory.getTypeExpression(typeExpression);
+        }
     }
 }

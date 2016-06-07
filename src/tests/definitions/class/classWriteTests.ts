@@ -72,6 +72,9 @@ class MyImplementsClass implements MyChildClass {
 
 class MyExtendsImplementsClass extends MyChildClass implements MyImplementsClass {
 }
+
+class MyExtendsArray extends Array<string> {
+}
 `;
 
 describe("ClassDefinition", () => {
@@ -178,6 +181,16 @@ describe("ClassDefinition", () => {
 }
 `;
                 assert.equal(file.classes[4].write(), expected);
+            });
+        });
+
+        describe("MyExtendsArray", () => {
+            it("should contain the class written out", () => {
+                const expected =
+`class MyExtendsArray extends Array<string> {
+}
+`;
+                assert.equal(file.classes[5].write(), expected);
             });
         });
     });

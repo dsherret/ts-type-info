@@ -36,7 +36,13 @@ export class ExtendsImplementsClauseWriter extends BaseWriter {
                 this.writer.write(", ");
             }
 
+            t.text = this.toGenericArrayIfArray(t.text);
+
             this.expressionWriter.write(t);
         });
+    }
+
+    private toGenericArrayIfArray(str: string) {
+        return str.replace(/(.*)\[\]$/, "Array<$1>");
     }
 }
