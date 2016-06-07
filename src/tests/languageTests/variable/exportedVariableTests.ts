@@ -6,7 +6,7 @@ describe("exported variable tests", () => {
     describe("in definition file", () => {
         const code = `
     declare module "definition-var" {
-        export let myExplicitlyExportedVariable: string[];
+        export let myExplicitlyExportedVariable: string;
         let myImplicitlyExportedVariable: string;
     }
     `;
@@ -22,7 +22,7 @@ describe("exported variable tests", () => {
                 variables: [{
                     declarationType: VariableDeclarationType.Let,
                     name: "myExplicitlyExportedVariable",
-                    typeExpression: { text: "string[]" },
+                    typeExpression: { text: "string" },
                     isExported: true,
                     isAmbient: true,
                     hasDeclareKeyword: false

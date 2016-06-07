@@ -3,7 +3,7 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class method decorator parameter tests", () => {
     const code = `
-function MyClassMethodParameterDecorator(target: any, propertyKey: string | symbol, parameterIndex: number) {
+function MyClassMethodParameterDecorator(target: any, propertyKey: string, parameterIndex: number) {
 }
 
 class MyClass {
@@ -25,7 +25,7 @@ class MyClass {
             }, {
                 name: "propertyKey",
                 typeExpression: {
-                    text: "string | symbol"
+                    text: "string"
                 }
             }, {
                 name: "parameterIndex",

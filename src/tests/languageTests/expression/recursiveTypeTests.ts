@@ -32,7 +32,11 @@ class Note {
                     name: "note",
                     typeExpression: { text: "Note" }
                 }],
-                returnTypeExpression: { text: "Note[]" }
+                returnTypeExpression: {
+                    text: "Note[]",
+                    isArray: true,
+                    arrayElementTypeExpression: { text: "Note" }
+                }
             }]
         }]
     });

@@ -29,7 +29,14 @@ const VariableDeclarationType = {
         typeAliases: [{
             name: "VariableDeclarationType",
             typeExpression: {
-                text: `"var" | "let" | "const"`
+                text: `"var" | "let" | "const"`,
+                unionTypeExpressions: [{
+                    text: `"var"`
+                }, {
+                    text: `"let"`
+                }, {
+                    text: `"const"`
+                }]
             }
         }]
     });

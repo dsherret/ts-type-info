@@ -1,12 +1,12 @@
 ﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
-describe("interface method", () => {
+describe("call signature tests", () => {
     const code = `
 interface MyInterface {
-    (myParameter: string): string[];
-    (myParameter: number): number[];
-    (myParameter: any): any[];
+    (myParameter: string): string;
+    (myParameter: number): number;
+    (myParameter: any): any;
 }`;
 
     const def = getInfoFromString(code);
@@ -15,21 +15,21 @@ interface MyInterface {
         interfaces: [{
             name: "MyInterface",
             callSignatures: [{
-                returnTypeExpression: { text: "string[]" },
+                returnTypeExpression: { text: "string" },
                 parameters: [{
                     name: "myParameter",
                     typeExpression: { text: "string" }
                 }],
                 minArgumentCount: 1
             }, {
-                returnTypeExpression: { text: "number[]" },
+                returnTypeExpression: { text: "number" },
                 parameters: [{
                     name: "myParameter",
                     typeExpression: { text: "number" }
                 }],
                 minArgumentCount: 1
             }, {
-                returnTypeExpression: { text: "any[]" },
+                returnTypeExpression: { text: "any" },
                 parameters: [{
                     name: "myParameter",
                     typeExpression: { text: "any" }

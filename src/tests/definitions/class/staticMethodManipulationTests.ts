@@ -20,7 +20,7 @@ describe("ClassStaticMethod", () => {
 
         runClassStaticMethodParameterDefinitionTests(c.parameters[0], {
             name: "myParameter",
-            typeExpression: { text: "string[]" },
+            typeExpression: { text: "string[]", isArray: true, arrayElementTypeExpression: { text: "string" } },
             defaultExpression: { text: `["test"]` },
             isOptional: true,
             isRestParameter: true,

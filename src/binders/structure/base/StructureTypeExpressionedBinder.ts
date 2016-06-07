@@ -1,16 +1,17 @@
-import {TypeExpressionedStructure} from "./../../../structures";
 import {TypeExpressionDefinition} from "./../../../definitions";
+import {StructureFactory} from "./../../../factories";
+import {TypeExpressionedStructure} from "./../../../structures";
 import {TypeExpressionedBinder} from "./../../base";
-import {StructureExpressionBinder} from "./../expression";
+import {StructureTypeExpressionBinder} from "./../expression";
 
 export class StructureTypeExpressionedBinder extends TypeExpressionedBinder {
-    constructor(private structure: TypeExpressionedStructure) {
+    constructor(private factory: StructureFactory, private structure: TypeExpressionedStructure) {
         super();
     }
 
     getTypeExpression() {
         const def = new TypeExpressionDefinition();
-        const binder = new StructureExpressionBinder(this.structure.type || "any");
+        const binder = new StructureTypeExpressionBinder(this.factory, this.structure.type || "any");
         binder.bind(def);
         return def;
     }

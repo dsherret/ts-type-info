@@ -5,7 +5,7 @@ describe("function overload signature tests", () => {
     const code = `
 function myFunction<T>(num: number, t: T): number;
 function myFunction<T>(str: string, t: T): string;
-function myFunction<T>(myStringOrNumber: string | number, t: T): string | number {
+function myFunction<T>(myStringOrNumber: string | number, t: T): string {
     return "str";
 }
 `;
@@ -44,7 +44,14 @@ function myFunction<T>(myStringOrNumber: string | number, t: T): string | number
             }],
             parameters: [{
                 name: "myStringOrNumber",
-                typeExpression: { text: "string | number" }
+                typeExpression: {
+                    text: "string | number",
+                    unionTypeExpressions: [{
+                        text: "string"
+                    }, {
+                        text: "number"
+                    }]
+                }
             }, {
                 name: "t",
                 typeExpression: { text: "T" }
@@ -52,7 +59,7 @@ function myFunction<T>(myStringOrNumber: string | number, t: T): string | number
             typeParameters: [{
                 name: "T"
             }],
-            returnTypeExpression: { text: "string | number" }
+            returnTypeExpression: { text: "string" }
         }]
     });
 });

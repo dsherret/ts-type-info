@@ -1,7 +1,7 @@
 ﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
-describe("interface method", () => {
+describe("index signature tests", () => {
     const code = `
 interface MyInterface {
     [str: string]: Date;

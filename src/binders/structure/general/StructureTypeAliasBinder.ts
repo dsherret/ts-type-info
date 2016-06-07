@@ -15,7 +15,7 @@ export class StructureTypeAliasBinder extends TypeAliasBinder {
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
             new StructureExportableBinder(structure),
-            new StructureTypeExpressionedBinder(structure),
+            new StructureTypeExpressionedBinder(factory, structure),
             new StructureTypeParameteredBinder(factory, structure),
             new StructureAmbientableBinder(objectAssign(structure, { isAmbient: true }))
         );

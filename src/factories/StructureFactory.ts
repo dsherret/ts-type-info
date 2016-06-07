@@ -143,7 +143,7 @@ export class StructureFactory {
     }
 
     getInterfaceProperty(structure: structures.InterfacePropertyStructure) {
-        return bindToDefinition(new binders.StructureInterfacePropertyBinder(structure), new definitions.InterfacePropertyDefinition());
+        return bindToDefinition(new binders.StructureInterfacePropertyBinder(this, structure), new definitions.InterfacePropertyDefinition());
     }
 
     getInterfaceMethodParameter(structure: structures.InterfaceMethodParameterStructure) {
@@ -155,7 +155,7 @@ export class StructureFactory {
     }
 
     getObjectProperty(structure: structures.ObjectPropertyStructure) {
-        return bindToDefinition(new binders.StructureObjectPropertyBinder(structure), new definitions.ObjectPropertyDefinition());
+        return bindToDefinition(new binders.StructureObjectPropertyBinder(this, structure), new definitions.ObjectPropertyDefinition());
     }
 
     getTypeAlias(structure: structures.TypeAliasStructure) {
@@ -164,7 +164,7 @@ export class StructureFactory {
 
     getTypeExpressionFromText(text: string) {
         if (typeof text === "string" && text.length > 0) {
-            return bindToDefinition<definitions.TypeExpressionDefinition>(new binders.StructureExpressionBinder(text), new definitions.TypeExpressionDefinition());
+            return bindToDefinition<definitions.TypeExpressionDefinition>(new binders.StructureTypeExpressionBinder(this, text), new definitions.TypeExpressionDefinition());
         }
         else {
             return null;
@@ -176,7 +176,7 @@ export class StructureFactory {
     }
 
     getVariable(structure: structures.VariableStructure) {
-        return bindToDefinition(new binders.StructureVariableBinder(structure), new definitions.VariableDefinition());
+        return bindToDefinition(new binders.StructureVariableBinder(this, structure), new definitions.VariableDefinition());
     }
 
     private fillNamedImportDetails(def: definitions.ImportPartDefinition | definitions.ReExportPartDefinition, structure: structures.NamedImportStructureTypes) {

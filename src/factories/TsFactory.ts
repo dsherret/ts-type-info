@@ -2,6 +2,7 @@
 import {TsSourceFile, TsNode, TsSignature, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 import * as definitions from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
+import {StructureFactory} from "./StructureFactory";
 
 function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
@@ -96,14 +97,10 @@ export class TsFactory {
     }
 
     getTypeExpressionFromNode(node: TsNode) {
-        const tsType = node.getTypeAtLocation();
-        const def = bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsExpressionBinderByNode(node), new definitions.TypeExpressionDefinition());
-
-        if (tsType != null) {
-            def.types.push(this.getType(tsType));
-        }
-
-        return def;
+        return bindToDefinition<definitions.TypeExpressionDefinition>(
+            new binders.StructureTypeExpressionBinder(new StructureFactory(), node.getText()),
+            new definitions.TypeExpressionDefinition()
+        );
     }
 
     getTypeExpression(tsTypeExpression: TsTypeExpression) {
@@ -111,7 +108,7 @@ export class TsFactory {
             return null;
         }
 
-        const def = bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsExpressionBinder(tsTypeExpression), new definitions.TypeExpressionDefinition());
+        const def = bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsTypeExpressionBinder(this, tsTypeExpression), new definitions.TypeExpressionDefinition());
         // todo: this array inside a KeyValueCache should be refactored out so it's more clear what's going on here
         const typeExpressionArray = this.typeExpressions.getOrCreate(tsTypeExpression, () => []);
         typeExpressionArray.push(def); // this adds to the array inside getOrCreate

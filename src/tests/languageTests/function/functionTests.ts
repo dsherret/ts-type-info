@@ -5,7 +5,7 @@ describe("function name tests", () => {
     const code = `
 function myFunction() {
 }
-function myFunctionWithParameters(str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: string[]) {
+function myFunctionWithParameters(str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: MyClass[]) {
     return new Date();
 }
 async function myAsyncFunction(): any {
@@ -46,7 +46,7 @@ class MyClass2 {
                 isOptional: true
             }, {
                 name: "restParam",
-                typeExpression: { text: "string[]" },
+                typeExpression: { text: "MyClass[]", isArray: true, arrayElementTypeExpression: { text: "MyClass" } },
                 isOptional: true,
                 isRestParameter: true
             }],

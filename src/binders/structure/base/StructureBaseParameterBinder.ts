@@ -11,7 +11,7 @@ export class StructureBaseParameterBinder extends BaseParameterBinder {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
-            new StructureTypeExpressionedBinder(structure),
+            new StructureTypeExpressionedBinder(factory, structure),
             new StructureDefaultExpressionedBinder(structure)
         );
     }

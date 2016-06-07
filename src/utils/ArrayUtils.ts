@@ -12,4 +12,8 @@
 
         return null;
     }
+
+    export function getUniqueItems<T>(a: T[]) {
+        return a.filter((item, index) => a.indexOf(item) === index);
+    }
 }

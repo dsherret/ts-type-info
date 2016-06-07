@@ -5,7 +5,7 @@ describe("interface method", () => {
     const code = `
 interface MyInterface {
     // parameters
-    myParameterMethod(myParameter: string, myOptionalParameter?: number): number[];
+    myParameterMethod(myParameter: string, myOptionalParameter?: number): number;
     myImplicitAnyReturnTypeMethod();
     myExplicitReturnTypeMethod(): string;
 }`;
@@ -17,7 +17,7 @@ interface MyInterface {
             name: "MyInterface",
             methods: [{
                 name: "myParameterMethod",
-                returnTypeExpression: { text: "number[]" },
+                returnTypeExpression: { text: "number" },
                 parameters: [{
                     name: "myParameter",
                     typeExpression: { text: "string" }

@@ -59,7 +59,7 @@ class MyClass {
                     isOptional: true
                 }, {
                     name: "myRestParameter",
-                    typeExpression: { text: "number[]" },
+                    typeExpression: { text: "number[]", isArray: true, arrayElementTypeExpression: { text: "number" } },
                     isOptional: true,
                     isRestParameter: true
                 }],

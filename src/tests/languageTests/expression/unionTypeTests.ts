@@ -13,7 +13,6 @@ class MyOtherClass<T> {
 
     const def = getInfoFromString(code);
 
-    // todo: verify this works in testing
     runFileDefinitionTests(def, {
         classes: [{
             name: "MyClass",
@@ -34,6 +33,11 @@ class MyOtherClass<T> {
                         definitions: [{
                             name: "MyOtherClass"
                         }]
+                    }],
+                    unionTypeExpressions: [{
+                        text: "MyClass"
+                    }, {
+                        text: "MyOtherClass<string>"
                     }]
                 }
             }]

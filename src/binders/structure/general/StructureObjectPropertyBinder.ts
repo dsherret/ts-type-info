@@ -1,9 +1,10 @@
-﻿import {ObjectPropertyStructure} from "./../../../structures";
+﻿import {StructureFactory} from "./../../../factories";
+import {ObjectPropertyStructure} from "./../../../structures";
 import {ObjectPropertyBinder} from "./../../base";
 import {StructureBaseObjectPropertyBinder} from "./../base/StructureBaseObjectPropertyBinder";
 
 export class StructureObjectPropertyBinder extends ObjectPropertyBinder {
-    constructor(structure: ObjectPropertyStructure) {
-        super(new StructureBaseObjectPropertyBinder(structure));
+    constructor(factory: StructureFactory, structure: ObjectPropertyStructure) {
+        super(new StructureBaseObjectPropertyBinder(factory, structure));
     }
 }
