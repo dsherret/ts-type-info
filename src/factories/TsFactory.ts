@@ -2,7 +2,6 @@
 import {TsSourceFile, TsNode, TsSignature, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
 import * as definitions from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
-import {StructureFactory} from "./StructureFactory";
 
 function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
@@ -94,13 +93,6 @@ export class TsFactory {
 
     getTypeParameter(node: TsNode) {
         return bindToDefinition(new binders.TsTypeParameterBinder(this, node), new definitions.TypeParameterDefinition());
-    }
-
-    getTypeExpressionFromNode(node: TsNode) {
-        return bindToDefinition<definitions.TypeExpressionDefinition>(
-            new binders.StructureTypeExpressionBinder(new StructureFactory(), node.getText()),
-            new definitions.TypeExpressionDefinition()
-        );
     }
 
     getTypeExpression(tsTypeExpression: TsTypeExpression) {

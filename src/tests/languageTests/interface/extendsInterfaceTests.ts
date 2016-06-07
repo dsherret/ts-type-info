@@ -10,9 +10,6 @@ interface MyBaseInterface {
 interface MyChildInterface extends MyBaseInterface {
     name2: string;
 }
-
-interface MyExtendingNonExistent extends MyNonExistentInterface {
-}
 `;
 
     const def = getInfoFromString(code);
@@ -33,9 +30,6 @@ interface MyExtendingNonExistent extends MyNonExistentInterface {
                 name: "name2",
                 typeExpression: { text: "string" }
             }]
-        }, {
-            name: "MyExtendingNonExistent",
-            extendsTypeExpressions: [{ text: "MyNonExistentInterface" }]
         }]
     });
 });

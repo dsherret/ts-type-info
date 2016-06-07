@@ -14,9 +14,6 @@ class MyBaseClass {
 class MyExtendsImplementsClass extends MyBaseClass implements MyInterface {
     name: string;
 }
-
-class MyExtendingNonExistent extends NonExistent implements INonExistent, INonExistent2 {
-}
 `;
 
     const def = getInfoFromString(code);
@@ -49,10 +46,6 @@ class MyExtendingNonExistent extends NonExistent implements INonExistent, INonEx
                     text: "string"
                 }
             }]
-        }, {
-            name: "MyExtendingNonExistent",
-            extendsTypeExpressions: [{ text: "NonExistent" }],
-            implementsTypeExpressions: [{ text: "INonExistent" }, { text: "INonExistent2" }]
         }]
     });
 });
