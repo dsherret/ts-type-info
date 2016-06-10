@@ -21,7 +21,7 @@ export abstract class InterfaceBinder implements IBaseBinder {
     }
 
     abstract getMembers(): InterfaceMemberContainer;
-    abstract getExtendsTypeExpressions(): definitions.TypeExpressionDefinition[];
+    abstract getExtendsTypes(): definitions.TypeDefinition[];
 
     bind(def: definitions.InterfaceDefinition) {
         this.baseDefinitionBinder.bind(def);
@@ -30,7 +30,7 @@ export abstract class InterfaceBinder implements IBaseBinder {
         this.ambientableBinder.bind(def);
         this.typeParameteredBinder.bind(def);
         this.bindMembers(def);
-        def.extendsTypeExpressions.push(...this.getExtendsTypeExpressions());
+        def.extendsTypes.push(...this.getExtendsTypes());
     }
 
     private bindMembers(def: definitions.InterfaceDefinition) {

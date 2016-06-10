@@ -5,17 +5,17 @@ import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {TypeAliasWriter} from "./../../writers";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {TypeExpressionDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
 import {TypeParameteredDefinition} from "./../base/TypeParameteredDefinition";
-import {TypeExpressionedDefinition} from "./../base/TypeExpressionedDefinition";
+import {TypedDefinition} from "./../base/TypedDefinition";
 import {ExportableDefinition} from "./../base/ExportableDefinition";
 import {AmbientableDefinition} from "./../base/AmbientableDefinition";
 import {TypeParameterDefinition} from "./TypeParameterDefinition";
 
 export class TypeAliasDefinition extends BaseDefinition
-                                 implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition {
+                                 implements NamedDefinition, ExportableDefinition, TypedDefinition, TypeParameteredDefinition, AmbientableDefinition {
     constructor() {
         super(DefinitionType.TypeAlias);
     }
@@ -33,9 +33,9 @@ export class TypeAliasDefinition extends BaseDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    // TypeExpressionedDefinition
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    // TypedDefinition
+    type: TypeDefinition;
+    setType: (text: string) => any;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
@@ -45,4 +45,4 @@ export class TypeAliasDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(TypeAliasDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition]);
+applyMixins(TypeAliasDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, TypeParameteredDefinition, AmbientableDefinition]);

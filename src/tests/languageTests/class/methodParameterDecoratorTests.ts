@@ -19,17 +19,17 @@ class MyClass {
             name: "MyClassMethodParameterDecorator",
             parameters: [{
                 name: "target",
-                typeExpression: {
+                type: {
                     text: "any"
                 }
             }, {
                 name: "propertyKey",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }, {
                 name: "parameterIndex",
-                typeExpression: {
+                type: {
                     text: "number"
                 }
             }]
@@ -40,7 +40,7 @@ class MyClass {
                 name: "myMethod1",
                 parameters: [{
                     name: "param1",
-                    typeExpression: {
+                    type: {
                         text: "string"
                     },
                     decorators: [{

@@ -13,7 +13,7 @@ export class TypeAliasWriter extends BaseDefinitionWriter<TypeAliasDefinition> {
         this.writeExportKeyword(def, flags);
         this.writer.write("type ").write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);
-        this.expressionWriter.writeWithEqualsSign(def.typeExpression);
+        this.expressionWriter.writeWithEqualsSign(def.type);
         this.writer.write(";").newLine();
     }
 }

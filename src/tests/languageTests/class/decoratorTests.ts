@@ -18,7 +18,7 @@ class MyClass1 {
             name: "MyClassDecorator",
             parameters: [{
                 name: "target",
-                typeExpression: {
+                type: {
                     text: "Function"
                 }
             }]

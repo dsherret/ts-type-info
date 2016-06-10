@@ -101,7 +101,7 @@ describe("createFunctions", () => {
     describe("createIndexSignature()", () => {
         testHelpers.runIndexSignatureDefinitionTests(
             createFunctions.createIndexSignature({ keyName: "t", keyType: "string", returnType: "any" }),
-            { keyName: "t", keyTypeExpression: { text: "string" }, returnTypeExpression: { text: "any" } }
+            { keyName: "t", keyType: { text: "string" }, returnType: { text: "any" } }
         );
     });
 
@@ -135,7 +135,7 @@ describe("createFunctions", () => {
     describe("createTypeAlias()", () => {
         testHelpers.runTypeAliasDefinitionTests(
             createFunctions.createTypeAlias({ name: "name", type: "string" }),
-            { name: "name", typeExpression: { text: "string" } }
+            { name: "name", type: { text: "string" } }
         );
     });
 

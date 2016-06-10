@@ -32,38 +32,38 @@ class MyClass {
             name: "MyClass",
             properties: [{
                 name: "myString",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }, {
                 name: "myImplicit",
-                typeExpression: { text: "number" },
+                type: { text: "number" },
                 defaultExpression: { text: "4" }
             }, {
                 name: "myAny",
-                typeExpression: { text: "any" }
+                type: { text: "any" }
             }, {
                 name: "myOptional",
-                typeExpression: { text: "string" },
+                type: { text: "string" },
                 isOptional: true
             }, {
                 name: "myExplicitPublic",
-                typeExpression: { text: "any" },
+                type: { text: "any" },
                 scope: Scope.Public
             }, {
                 name: "myProtected",
-                typeExpression: { text: "any" },
+                type: { text: "any" },
                 scope: Scope.Protected
             }, {
                 name: "myPrivate",
-                typeExpression: { text: "any" },
+                type: { text: "any" },
                 scope: Scope.Private
             }, {
                 name: "myGetAccessor",
-                typeExpression: { text: "string" },
+                type: { text: "string" },
                 isAccessor: true,
                 isReadonly: true
             }, {
                 name: "myGetAndSetAccessor",
-                typeExpression: { text: "string" },
+                type: { text: "string" },
                 isAccessor: true
             }]
         }]

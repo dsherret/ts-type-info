@@ -1,4 +1,4 @@
-﻿import {IndexSignatureDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {IndexSignatureDefinition, TypeDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder, ReturnTypedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
@@ -10,12 +10,12 @@ export abstract class IndexSignatureBinder implements IBaseBinder {
     }
 
     abstract getKeyName(): string;
-    abstract getKeyTypeExpression(): TypeExpressionDefinition;
+    abstract getKeyType(): TypeDefinition;
 
     bind(def: IndexSignatureDefinition) {
         this.baseDefinitionBinder.bind(def);
         this.returnTypedBinder.bind(def);
         def.keyName = this.getKeyName();
-        def.keyTypeExpression = this.getKeyTypeExpression();
+        def.keyType = this.getKeyType();
     }
 }

@@ -22,14 +22,14 @@ describe("exported variable tests", () => {
                 variables: [{
                     declarationType: VariableDeclarationType.Let,
                     name: "myExplicitlyExportedVariable",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     isExported: true,
                     isAmbient: true,
                     hasDeclareKeyword: false
                 }, {
                     declarationType: VariableDeclarationType.Let,
                     name: "myImplicitlyExportedVariable",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     isExported: true,
                     isAmbient: true,
                     hasDeclareKeyword: false

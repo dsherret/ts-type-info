@@ -241,7 +241,7 @@ export class TsNode extends TsSourceFileChild {
         return parameters.filter(p => p != null).map(p => this.createNode(p));
     }
 
-    getReturnTypeExpression() {
+    getReturnType() {
         const tsType = this.typeChecker.getReturnTypeOfNode(this.node);
 
         return this.getTsTypeFromType(tsType);
@@ -296,7 +296,7 @@ export class TsNode extends TsSourceFileChild {
         return (typeParameteredDeclaration.typeParameters || []).map(typeParameter => this.createNode(typeParameter));
     }
 
-    getTypeParameterConstraintTypeExpression() {
+    getTypeParameterConstraintType() {
         const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
         return constraint == null ? null : this.getTypeAtLocationByNode((this.node as ts.TypeParameterDeclaration).constraint);
     }

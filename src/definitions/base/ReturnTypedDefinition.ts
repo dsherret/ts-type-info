@@ -1,11 +1,11 @@
 import {StructureFactory} from "./../../factories";
-import {TypeExpressionDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 
 export abstract class ReturnTypedDefinition {
-    returnTypeExpression: TypeExpressionDefinition;
+    returnType: TypeDefinition;
 
-    setReturnTypeExpression(text: string) {
-        this.returnTypeExpression = new StructureFactory().getTypeExpressionFromText(text);
+    setReturnType(text: string) {
+        this.returnType = new StructureFactory().getTypeFromText(text);
         return this as any;
     }
 }

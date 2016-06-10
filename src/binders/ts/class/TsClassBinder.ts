@@ -18,7 +18,7 @@ export class TsClassBinder extends ClassBinder {
         );
     }
 
-    getExtendsTypeExpressions() {
+    getExtendsTypes() {
         // todo: not the most efficient thing to loop through all the children each time
         return this.node.getChildren()
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
@@ -27,7 +27,7 @@ export class TsClassBinder extends ClassBinder {
             .map(node => this.factory.getType(node.getType()));
     }
 
-    getImplementsTypeExpressions() {
+    getImplementsTypes() {
         return this.node.getChildren()
             .filter(node => node.isHeritageClause() && node.hasImplementsKeyword())
             .map(node => node.getHeritageNodes())

@@ -11,16 +11,16 @@ export function generateStrictStructures() {
             i.name = "Strict" + i.name;
             i.properties.forEach(p => {
                 p.isOptional = false;
-                if (p.typeExpression.text.indexOf("Structure") >= 0 && p.typeExpression.text.indexOf("Strict") === -1) {
-                    p.typeExpression.text = "Strict" + p.typeExpression.text;
+                if (p.type.text.indexOf("Structure") >= 0 && p.type.text.indexOf("Strict") === -1) {
+                    p.type.text = "Strict" + p.type.text;
                 }
             });
-            i.extendsTypeExpressions.forEach(e => {
+            i.extendsTypes.forEach(e => {
                 e.text = "Strict" + e.text;
             });
             i.typeParameters.forEach(t => {
-                if (t.constraintTypeExpression != null) {
-                    t.constraintTypeExpression.text = "Strict" + t.constraintTypeExpression.text;
+                if (t.constraintType != null) {
+                    t.constraintType.text = "Strict" + t.constraintType.text;
                 }
             });
             fileDefForCreate.interfaces.push(i);

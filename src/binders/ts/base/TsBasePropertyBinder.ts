@@ -2,7 +2,7 @@
 import {TsNode} from "./../../../compiler";
 import {BasePropertyBinder} from "./../../base";
 import {TsNamedBinder} from "./TsNamedBinder";
-import {TsTypeExpressionedBinder} from "./TsTypeExpressionedBinder";
+import {TsTypedBinder} from "./TsTypedBinder";
 import {TsBaseDefinitionBinder} from "./TsBaseDefinitionBinder";
 
 export class TsBasePropertyBinder extends BasePropertyBinder {
@@ -10,7 +10,7 @@ export class TsBasePropertyBinder extends BasePropertyBinder {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),
-            new TsTypeExpressionedBinder(factory, node)
+            new TsTypedBinder(factory, node)
         );
     }
 

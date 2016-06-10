@@ -20,10 +20,10 @@ export class TsSignature extends TsSourceFileChild {
         return this.createNode(this.signature.declaration);
     }
 
-    getReturnTypeExpression() {
+    getReturnType() {
         const tsType = this.typeChecker.getReturnTypeOfSignature(this.signature);
 
-        return this.getTypeExpressionFromType(tsType);
+        return this.getTypeFromType(tsType);
     }
 
     getParameters() {
@@ -38,7 +38,7 @@ export class TsSignature extends TsSourceFileChild {
         return (typeParameters || []).map(typeParameter => this.createSymbol(typeParameter.symbol));
     }
 
-    private getTypeExpressionFromType(tsType: ts.Type) {
+    private getTypeFromType(tsType: ts.Type) {
         return this.tsCache.getType(this.typeChecker, this.sourceFile, tsType, () => this.createType(tsType));
     }
 

@@ -13,21 +13,21 @@ function parameterDestructuring({ prop1 = "s", prop2, prop3 }: { prop1?: string;
             name: "parameterDestructuring",
             parameters: [{
                 name: null,
-                typeExpression: {
+                type: {
                     text: "{ prop1?: string; prop2?: number; prop3: Date; }"
                 },
                 destructuringProperties: [{
                     name: "prop1",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     defaultExpression: { text: `"s"` },
                     isOptional: true
                 }, {
                     name: "prop2",
-                    typeExpression: { text: "number" },
+                    type: { text: "number" },
                     isOptional: true
                 }, {
                     name: "prop3",
-                    typeExpression: { text: "Date" }
+                    type: { text: "Date" }
                 }]
             }]
         }]

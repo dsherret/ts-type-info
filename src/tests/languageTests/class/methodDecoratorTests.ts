@@ -21,21 +21,21 @@ class MyClass {
             name: "MyClassMethodDecorator",
             parameters: [{
                 name: "target",
-                typeExpression: {
+                type: {
                     text: "Object"
                 }
             }, {
                 name: "propertyKey",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }, {
                 name: "descriptor",
-                typeExpression: {
+                type: {
                     text: "TypedPropertyDescriptor<any>"
                 }
             }],
-            returnTypeExpression: {
+            returnType: {
                 text: "TypedPropertyDescriptor<any>"
             }
         }],

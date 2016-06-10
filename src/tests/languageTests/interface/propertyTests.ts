@@ -16,13 +16,13 @@ interface MyPropertyInterface {
             name: "MyPropertyInterface",
             properties: [{
                 name: "myString",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }, {
                 name: "myAny",
-                typeExpression: { text: "any" }
+                type: { text: "any" }
             }, {
                 name: "myOptional",
-                typeExpression: { text: "string" },
+                type: { text: "string" },
                 isOptional: true
             }]
         }]

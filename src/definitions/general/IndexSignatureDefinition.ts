@@ -1,18 +1,18 @@
 ﻿import {applyMixins} from "./../../utils";
 import {BaseDefinition, DefinitionType, ReturnTypedDefinition} from "./../base";
-import {TypeExpressionDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 
 export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition {
     keyName: string;
-    keyTypeExpression: TypeExpressionDefinition;
+    keyType: TypeDefinition;
 
     constructor() {
         super(DefinitionType.IndexSignature);
     }
 
     // ReturnTypedDefinition
-    returnTypeExpression: TypeExpressionDefinition;
-    setReturnTypeExpression: (text: string) => any;
+    returnType: TypeDefinition;
+    setReturnType: (text: string) => any;
 }
 
 applyMixins(IndexSignatureDefinition, BaseDefinition, [ReturnTypedDefinition]);

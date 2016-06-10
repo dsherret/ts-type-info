@@ -1,5 +1,5 @@
 ﻿import {BaseTestStructure, NamedTestStructure, ExportableTestStructure, TypeParameteredTestStructure, AmbientableTestStructure} from "./../base";
-import {TypeExpressionTestStructure} from "./../expression";
+import {TypeTestStructure} from "./../expression";
 import {CallSignatureTestStructure, IndexSignatureTestStructure} from "./../general";
 import {InterfaceMethodTestStructure} from "./InterfaceMethodTestStructure";
 import {InterfacePropertyTestStructure} from "./InterfacePropertyTestStructure";
@@ -10,5 +10,5 @@ export interface InterfaceTestStructure extends BaseTestStructure, NamedTestStru
     callSignatures?: CallSignatureTestStructure[];
     indexSignatures?: IndexSignatureTestStructure[];
     properties?: InterfacePropertyTestStructure[];
-    extendsTypeExpressions?: TypeExpressionTestStructure[];
+    extendsTypes?: TypeTestStructure[];
 }

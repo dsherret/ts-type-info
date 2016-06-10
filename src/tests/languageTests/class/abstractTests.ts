@@ -17,14 +17,14 @@ abstract class MyAbstractClass {
             methods: [{
                 name: "myAbstractMethod",
                 isAbstract: true,
-                returnTypeExpression: { text: "string" },
+                returnType: { text: "string" },
                 parameters: [{
                     name: "str",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     isOptional: true
                 }],
                 overloadSignatures: [{
-                    returnTypeExpression: { text: "string" }
+                    returnType: { text: "string" }
                 }]
             }]
         }]

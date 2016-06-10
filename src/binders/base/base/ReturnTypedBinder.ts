@@ -1,9 +1,9 @@
-﻿import {ReturnTypedDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {ReturnTypedDefinition, TypeDefinition} from "./../../../definitions";
 
 export abstract class ReturnTypedBinder {
-    abstract getReturnTypeExpression(): TypeExpressionDefinition;
+    abstract getreturnType(): TypeDefinition;
 
     bind(def: ReturnTypedDefinition) {
-        def.returnTypeExpression = this.getReturnTypeExpression();
+        def.returnType = this.getreturnType();
     }
 }

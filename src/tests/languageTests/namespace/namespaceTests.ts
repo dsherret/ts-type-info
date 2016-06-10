@@ -80,7 +80,7 @@ export namespace MyExportedNamespace {
                     defaultExpression: {
                         text: `"string"`
                     },
-                    typeExpression: {
+                    type: {
                         text: "string"
                     }
                 }],

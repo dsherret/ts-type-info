@@ -1,5 +1,5 @@
 ﻿import {VariableDefinition, VariableDeclarationType} from "./../../../definitions";
-import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeExpressionedBinder, DefaultExpressionedBinder} from "./../base";
+import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypedBinder, DefaultExpressionedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class VariableBinder implements IBaseBinder {
@@ -8,7 +8,7 @@ export abstract class VariableBinder implements IBaseBinder {
         private namedBinder: NamedBinder,
         private exportableBinder: ExportableBinder,
         private ambientableBinder: AmbientableBinder,
-        private typeExpressionedBinder: TypeExpressionedBinder,
+        private TypedBinder: TypedBinder,
         private defaultExpressionedBinder: DefaultExpressionedBinder
     ) {
     }
@@ -20,7 +20,7 @@ export abstract class VariableBinder implements IBaseBinder {
         this.namedBinder.bind(def);
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);
-        this.typeExpressionedBinder.bind(def);
+        this.TypedBinder.bind(def);
         this.defaultExpressionedBinder.bind(def);
 
         def.declarationType = this.getDeclarationType();

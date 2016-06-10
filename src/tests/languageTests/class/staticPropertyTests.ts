@@ -22,29 +22,29 @@ class MyClass {
             name: "MyClass",
             staticProperties: [{
                 name: "myString",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }, {
                 name: "myImplicit",
-                typeExpression: { text: "number" },
+                type: { text: "number" },
                 defaultExpression: { text: "4" }
             }, {
                 name: "myAny",
-                typeExpression: { text: "any" }
+                type: { text: "any" }
             }, {
                 name: "myOptional",
-                typeExpression: { text: "string" },
+                type: { text: "string" },
                 isOptional: true
             }, {
                 name: "myExplicitPublic",
-                typeExpression: { text: "any" },
+                type: { text: "any" },
                 scope: Scope.Public
             }, {
                 name: "myProtected",
-                typeExpression: { text: "any" },
+                type: { text: "any" },
                 scope: Scope.Protected
             }, {
                 name: "myPrivate",
-                typeExpression: { text: "any" },
+                type: { text: "any" },
                 scope: Scope.Private
             }]
         }]

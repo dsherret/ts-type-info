@@ -16,7 +16,7 @@ describe("TypeParameteredDefinition", () => {
                 name: "T"
             }, {
                 name: "U",
-                constraintTypeExpression: { text: "string" }
+                constraintType: { text: "string" }
             }]
         });
     });

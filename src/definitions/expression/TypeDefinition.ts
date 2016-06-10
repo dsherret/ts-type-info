@@ -3,14 +3,14 @@ import {DefinitionUtils} from "./../../utils";
 import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
 import {ExpressionDefinition} from "./ExpressionDefinition";
 
-export class TypeExpressionDefinition extends ExpressionDefinition {
-    arrayElementTypeExpression: TypeExpressionDefinition = null;
-    intersectionTypeExpressions: TypeExpressionDefinition[] = [];
-    unionTypeExpressions: TypeExpressionDefinition[] = [];
+export class TypeDefinition extends ExpressionDefinition {
+    arrayElementType: TypeDefinition = null;
+    intersectionTypes: TypeDefinition[] = [];
+    unionTypes: TypeDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];
     definitions: ModuleMemberDefinitions[] = [];
     properties: TypePropertyDefinition[] = [];
-    typeArguments: TypeExpressionDefinition[] = [];
+    typeArguments: TypeDefinition[] = [];
     text: string;
 
     getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean) {
@@ -25,11 +25,11 @@ export class TypeExpressionDefinition extends ExpressionDefinition {
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.properties, searchFunctionOrName);
     }
 
-    getTypeArgument(searchFunction: (typeArgument: TypeExpressionDefinition) => boolean) {
+    getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.typeArguments, searchFunction);
     }
 
     isArray() {
-        return this.arrayElementTypeExpression != null || /\[\]$/.test(this.text) || /^Array\<.*\>$/.test(this.text);
+        return this.arrayElementType != null || /\[\]$/.test(this.text) || /^Array\<.*\>$/.test(this.text);
     }
 }

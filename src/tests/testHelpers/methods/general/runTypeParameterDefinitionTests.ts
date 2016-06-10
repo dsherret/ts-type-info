@@ -2,7 +2,7 @@
 import {TypeParameterTestStructure} from "./../../testStructures";
 import {TypeParameterDefinition} from "./../../../../definitions";
 import {runBaseDefinitionTests, runNamedDefinitionTests} from "./../base";
-import {runTypeExpressionDefinitionTests} from "./../expression";
+import {runTypeDefinitionTests} from "./../expression";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runTypeParameterDefinitionTests(definition: TypeParameterDefinition, structure: TypeParameterTestStructure) {
@@ -12,13 +12,13 @@ export function runTypeParameterDefinitionTests(definition: TypeParameterDefinit
             runNamedDefinitionTests(definition, structure);
 
             describe("constraint", () => {
-                if (structure.constraintTypeExpression == null) {
-                    it("should not have a constraintTypeExpression", () => {
-                        assert.equal(definition.constraintTypeExpression, null);
+                if (structure.constraintType == null) {
+                    it("should not have a constraintType", () => {
+                        assert.equal(definition.constraintType, null);
                     });
                 }
                 else {
-                    runTypeExpressionDefinitionTests(definition.constraintTypeExpression, structure.constraintTypeExpression);
+                    runTypeDefinitionTests(definition.constraintType, structure.constraintType);
                 }
             });
         });

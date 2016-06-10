@@ -1,11 +1,11 @@
 import {applyMixins} from "./../../utils";
-import {TypeExpressionDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 import {NamedDefinition} from "./NamedDefinition";
-import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
+import {TypedDefinition} from "./TypedDefinition";
 import {DefinitionType} from "./DefinitionType";
 import {BaseDefinition} from "./BaseDefinition";
 
-export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition {
+export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, TypedDefinition {
     isOptional: boolean;
 
     constructor(definitionType: DefinitionType) {
@@ -14,9 +14,9 @@ export abstract class BasePropertyDefinition extends BaseDefinition implements N
 
     // NamedDefinition
     name: string;
-    // TypeExpressionedDefinition
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    // TypedDefinition
+    type: TypeDefinition;
+    setType: (text: string) => any;
 }
 
-applyMixins(BasePropertyDefinition, BaseDefinition, [NamedDefinition, TypeExpressionedDefinition]);
+applyMixins(BasePropertyDefinition, BaseDefinition, [NamedDefinition, TypedDefinition]);

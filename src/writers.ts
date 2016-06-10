@@ -19,7 +19,7 @@ export * from "./writers/PropertyWriter";
 export * from "./writers/ReExportWriter";
 export * from "./writers/ScopeWriter";
 export * from "./writers/TypeAliasWriter";
-export * from "./writers/TypeExpressionWriter";
+export * from "./writers/TypeWriter";
 export * from "./writers/TypeParameterWriter";
 export * from "./writers/TypeParametersWriter";
 export * from "./writers/VariableWriter";

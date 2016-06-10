@@ -12,7 +12,7 @@ export class TsFactory {
     private definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
     private files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
     private deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
-    private createdTypesWithDefinition: { type: TsType; definition: definitions.TypeExpressionDefinition; }[] = [];
+    private createdTypesWithDefinition: { type: TsType; definition: definitions.TypeDefinition; }[] = [];
 
     getCallSignatureFromNode(node: TsNode) {
         return this.getCallSignatureFromSignature(node.getSignatureFromThis());
@@ -107,7 +107,7 @@ export class TsFactory {
             return null;
         }
 
-        const definition = bindToDefinition(new binders.TsTypeExpressionBinder(this, type), new definitions.TypeExpressionDefinition());
+        const definition = bindToDefinition(new binders.TsTypeBinder(this, type), new definitions.TypeDefinition());
         this.createdTypesWithDefinition.push({
             type,
             definition

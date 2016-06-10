@@ -15,8 +15,8 @@ export class StructureInterfaceBinder extends InterfaceBinder {
         );
     }
 
-    getExtendsTypeExpressions() {
-        return (this.structure.extendsTypes || []).map(s => this.factory.getTypeExpressionFromText(s));
+    getExtendsTypes() {
+        return (this.structure.extendsTypes || []).map(s => this.factory.getTypeFromText(s));
     }
 
     getMembers() {

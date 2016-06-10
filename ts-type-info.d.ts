@@ -112,10 +112,10 @@ export abstract class AsyncableDefinition {
     isAsync: boolean;
 }
 
-export abstract class TypeExpressionedDefinition {
-    typeExpression: TypeExpressionDefinition;
+export abstract class TypedDefinition {
+    type: TypeDefinition;
 
-    setTypeExpression(text: string): any;
+    setType(text: string): any;
 }
 
 export abstract class DefaultExpressionedDefinition {
@@ -166,11 +166,11 @@ export abstract class ModuledDefinition {
     getMembers(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
-export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition {
+export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, TypedDefinition {
     isOptional: boolean;
     name: string;
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    type: TypeDefinition;
+    setType: (text: string) => any;
 
     constructor(definitionType: DefinitionType);
 }
@@ -196,8 +196,8 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     name: string;
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
-    returnTypeExpression: TypeExpressionDefinition;
-    setReturnTypeExpression: (text: string) => any;
+    returnType: TypeDefinition;
+    setReturnType: (text: string) => any;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -213,13 +213,13 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition {
+export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypedDefinition, DefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[];
     name: string;
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    type: TypeDefinition;
+    setType: (text: string) => any;
     defaultExpression: ExpressionDefinition;
     setDefaultExpression: (text: string) => any;
 
@@ -237,16 +237,16 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
 }
 
 export abstract class ReturnTypedDefinition {
-    returnTypeExpression: TypeExpressionDefinition;
+    returnType: TypeDefinition;
 
-    setReturnTypeExpression(text: string): any;
+    setReturnType(text: string): any;
 }
 
 export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
     parameters: CallSignatureParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
-    returnTypeExpression: TypeExpressionDefinition;
-    setReturnTypeExpression: (text: string) => any;
+    returnType: TypeDefinition;
+    setReturnType: (text: string) => any;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -263,15 +263,15 @@ export class CallSignatureParameterDefinition extends BaseParameterDefinition {
 
 export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition {
     keyName: string;
-    keyTypeExpression: TypeExpressionDefinition;
-    returnTypeExpression: TypeExpressionDefinition;
-    setReturnTypeExpression: (text: string) => any;
+    keyType: TypeDefinition;
+    returnType: TypeDefinition;
+    setReturnType: (text: string) => any;
 
     constructor();
 }
 
 export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition {
-    constraintTypeExpression: TypeExpressionDefinition;
+    constraintType: TypeDefinition;
     name: string;
 
     constructor();
@@ -281,13 +281,13 @@ export class TypePropertyDefinition extends BasePropertyDefinition {
     constructor();
 }
 
-export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, TypeParameteredDefinition, AmbientableDefinition {
+export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, TypeParameteredDefinition, AmbientableDefinition {
     name: string;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    type: TypeDefinition;
+    setType: (text: string) => any;
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -325,7 +325,10 @@ export class ExpressionDefinition extends BaseDefinition {
     constructor();
 }
 
-export class TypeDefinition {
+export class TypeDefinition extends ExpressionDefinition {
+    arrayElementType: TypeDefinition;
+    intersectionTypes: TypeDefinition[];
+    unionTypes: TypeDefinition[];
     callSignatures: CallSignatureDefinition[];
     definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     properties: TypePropertyDefinition[];
@@ -336,12 +339,7 @@ export class TypeDefinition {
     getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
     getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): TypePropertyDefinition;
     getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): TypeDefinition;
-}
-
-export class TypeExpressionDefinition extends ExpressionDefinition {
-    types: TypeDefinition[];
-
-    getType(searchFunction: (typeDefinition: TypeDefinition) => boolean): TypeDefinition;
+    isArray(): boolean;
 }
 
 export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition {
@@ -404,8 +402,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     staticMethods: ClassStaticMethodDefinition[];
     staticProperties: ClassStaticPropertyDefinition[];
     constructorDef: ClassConstructorDefinition;
-    extendsTypeExpressions: TypeExpressionDefinition[];
-    implementsTypeExpressions: TypeExpressionDefinition[];
+    extendsTypes: TypeDefinition[];
+    implementsTypes: TypeDefinition[];
     name: string;
     decorators: DecoratorDefinition[];
     addDecorators: (...decorators: DecoratorStructure[]) => this;
@@ -508,7 +506,7 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     indexSignatures: IndexSignatureDefinition[];
     newSignatures: CallSignatureDefinition[];
     properties: InterfacePropertyDefinition[];
-    extendsTypeExpressions: TypeExpressionDefinition[];
+    extendsTypes: TypeDefinition[];
     name: string;
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -709,14 +707,14 @@ export class ReExportPartDefinition extends BaseImportPartDefinition {
     constructor();
 }
 
-export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
+export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
     declarationType: "var" | "let" | "const";
     name: string;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    type: TypeDefinition;
+    setType: (text: string) => any;
     defaultExpression: ExpressionDefinition;
     setDefaultExpression: (text: string) => any;
     isAmbient: boolean;
@@ -843,11 +841,11 @@ export interface ModuledStructure {
 export interface BaseObjectPropertyStructure extends BasePropertyStructure, DefaultExpressionedStructure {
 }
 
-export interface TypeExpressionedStructure {
+export interface TypedStructure {
     type?: string;
 }
 
-export interface BasePropertyStructure extends BaseStructure, NamedStructure, TypeExpressionedStructure {
+export interface BasePropertyStructure extends BaseStructure, NamedStructure, TypedStructure {
     isOptional?: boolean;
 }
 
@@ -860,7 +858,7 @@ export interface BaseFunctionStructure<T extends BaseParameterStructure> extends
     overloadSignatures?: CallSignatureStructure[];
 }
 
-export interface BaseParameterStructure extends BaseStructure, NamedStructure, TypeExpressionedStructure, DefaultExpressionedStructure {
+export interface BaseParameterStructure extends BaseStructure, NamedStructure, TypedStructure, DefaultExpressionedStructure {
     isOptional?: boolean;
     isRestParameter?: boolean;
     destructuringProperties?: ObjectPropertyStructure[];
@@ -893,7 +891,7 @@ export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStruc
 export interface ObjectPropertyStructure extends BaseObjectPropertyStructure {
 }
 
-export interface TypeAliasStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, TypeParameteredStructure, AmbientableStructure {
+export interface TypeAliasStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, TypeParameteredStructure, AmbientableStructure {
     type: string;
 }
 
@@ -1036,7 +1034,7 @@ export interface NamespaceStructure extends BaseStructure, NamedStructure, Expor
     declarationType?: "namespace" | "module";
 }
 
-export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeExpressionedStructure, DefaultExpressionedStructure, AmbientableStructure {
+export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, DefaultExpressionedStructure, AmbientableStructure {
     declarationType?: "var" | "let" | "const";
 }
 

@@ -18,9 +18,9 @@ class MyOtherClass<T> {
             name: "MyClass",
             properties: [{
                 name: "prop",
-                typeExpression: {
+                type: {
                     text: "MyClass | MyOtherClass<string>",
-                    unionTypeExpressions: [{
+                    unionTypes: [{
                         text: "MyClass",
                         definitions: [{
                             name: "MyClass"

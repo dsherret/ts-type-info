@@ -8,11 +8,11 @@ describe("ClassDefinition", () => {
         c.addExtends("test", "test2");
 
         it("should have two extends expressions", () => {
-            assert.equal(c.extendsTypeExpressions.length, 2);
+            assert.equal(c.extendsTypes.length, 2);
         });
 
         it("should have a test expression", () => {
-            assert.equal(c.extendsTypeExpressions[0].text, "test");
+            assert.equal(c.extendsTypes[0].text, "test");
         });
     });
 
@@ -21,11 +21,11 @@ describe("ClassDefinition", () => {
         c.addImplements("test", "test2");
 
         it("should have two implements expressions", () => {
-            assert.equal(c.implementsTypeExpressions.length, 2);
+            assert.equal(c.implementsTypes.length, 2);
         });
 
         it("should have a test expression", () => {
-            assert.equal(c.implementsTypeExpressions[0].text, "test");
+            assert.equal(c.implementsTypes[0].text, "test");
         });
     });
 
@@ -57,13 +57,13 @@ describe("ClassDefinition", () => {
             decorators: [{ name: "decorator" }],
             isAbstract: true,
             isAsync: true,
-            returnTypeExpression: { text: "string" },
-            typeParameters: [{ name: "TypeParam", constraintTypeExpression: { text: "string" } }],
+            returnType: { text: "string" },
+            typeParameters: [{ name: "TypeParam", constraintType: { text: "string" } }],
             parameters: [{
                 name: "myParam",
                 decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }] }],
                 defaultExpression: { text: "5" },
-                typeExpression: { text: "number" },
+                type: { text: "number" },
                 isOptional: true,
                 isRestParameter: true
             }],
@@ -103,7 +103,7 @@ describe("ClassDefinition", () => {
             isReadonly: true,
             name: "myProperty",
             scope: Scope.Private,
-            typeExpression: { text: "string" },
+            type: { text: "string" },
             hasOnWriteGetBody: true,
             hasOnWriteSetBody: true
         });
@@ -137,13 +137,13 @@ describe("ClassDefinition", () => {
         testHelpers.runClassStaticMethodDefinitionTests(c.staticMethods[0], {
             decorators: [{ name: "decorator" }],
             isAsync: true,
-            returnTypeExpression: { text: "string" },
-            typeParameters: [{ name: "TypeParam", constraintTypeExpression: { text: "string" } }],
+            returnType: { text: "string" },
+            typeParameters: [{ name: "TypeParam", constraintType: { text: "string" } }],
             parameters: [{
                 name: "myParam",
                 decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }] }],
                 defaultExpression: { text: "5" },
-                typeExpression: { text: "number" },
+                type: { text: "number" },
                 isOptional: true,
                 isRestParameter: true
             }],
@@ -176,7 +176,7 @@ describe("ClassDefinition", () => {
             isOptional: true,
             name: "myStaticProperty",
             scope: Scope.Private,
-            typeExpression: { text: "string" }
+            type: { text: "string" }
         });
         testHelpers.runClassStaticPropertyDefinitionTests(c.staticProperties[1], {
             name: "mySecondStaticProperty"

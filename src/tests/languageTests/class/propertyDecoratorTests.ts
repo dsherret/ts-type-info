@@ -36,12 +36,12 @@ class MyClass {
             name: "MyClassPropertyDecorator",
             parameters: [{
                 name: "target",
-                typeExpression: {
+                type: {
                     text: "Object"
                 }
             }, {
                 name: "propertyKey",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]
@@ -49,21 +49,21 @@ class MyClass {
             name: "MyClassPropertyAccessorDecorator",
             parameters: [{
                 name: "target",
-                typeExpression: {
+                type: {
                     text: "Object"
                 }
             }, {
                 name: "propertyKey",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }, {
                 name: "descriptor",
-                typeExpression: {
+                type: {
                     text: "TypedPropertyDescriptor<any>"
                 }
             }],
-            returnTypeExpression: {
+            returnType: {
                 text: "TypedPropertyDescriptor<any>"
             }
         }],
@@ -71,7 +71,7 @@ class MyClass {
             name: "MyClass",
             properties: [{
                 name: "myProperty1",
-                typeExpression: {
+                type: {
                     text: "string"
                 },
                 decorators: [{
@@ -79,7 +79,7 @@ class MyClass {
                 }]
             }, {
                 name: "myProperty2",
-                typeExpression: {
+                type: {
                     text: "string"
                 },
                 decorators: [{
@@ -89,7 +89,7 @@ class MyClass {
                 isReadonly: true
             }, {
                 name: "myProperty3",
-                typeExpression: {
+                type: {
                     text: "string"
                 },
                 decorators: [{

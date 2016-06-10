@@ -2,7 +2,7 @@
 import {WriteFlags} from "./../WriteFlags";
 import {CallSignatureWriter} from "./CallSignatureWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
-import {TypeExpressionWriter} from "./TypeExpressionWriter";
+import {TypeWriter} from "./TypeWriter";
 import {ParametersWriter} from "./ParametersWriter";
 import {ScopeWriter} from "./ScopeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
@@ -11,7 +11,7 @@ import {FunctionBodyWriter} from "./FunctionBodyWriter";
 export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     private callSignatureWriter = new CallSignatureWriter(this.writer);
     private typeParametersWriter = new TypeParametersWriter(this.writer);
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
+    private typeWriter = new TypeWriter(this.writer);
     private parametersWriter = new ParametersWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
     private functionBodyWriter = new FunctionBodyWriter(this.writer);
@@ -51,7 +51,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
 
     private writeReturnType(def: MethodDefinitions, flags: WriteFlags) {
         if (!FunctionBodyWriter.willWriteFunctionBody(def, flags) || def.overloadSignatures.length > 0) {
-            this.typeExpressionWriter.writeWithColon(def.returnTypeExpression);
+            this.typeWriter.writeWithColon(def.returnType);
         }
     }
 }

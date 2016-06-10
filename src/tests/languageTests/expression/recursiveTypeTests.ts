@@ -21,21 +21,21 @@ class Note {
             name: "Note",
             properties: [{
                 name: "name",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }, {
                 name: "note",
-                typeExpression: { text: "Note" }
+                type: { text: "Note" }
             }],
             methods: [{
                 name: "myMethod",
                 parameters: [{
                     name: "note",
-                    typeExpression: { text: "Note" }
+                    type: { text: "Note" }
                 }],
-                returnTypeExpression: {
+                returnType: {
                     text: "Note[]",
                     isArray: true,
-                    arrayElementTypeExpression: { text: "Note" }
+                    arrayElementType: { text: "Note" }
                 }
             }]
         }]

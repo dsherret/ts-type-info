@@ -1,40 +1,40 @@
 import * as assert from "assert";
-import {TypeExpressionDefinition} from "./../../../../definitions";
-import {TypeExpressionTestStructure} from "./../../testStructures";
+import {TypeDefinition} from "./../../../../definitions";
+import {TypeTestStructure} from "./../../testStructures";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runNamedDefinitionTests, runBasePropertyDefinitionTests} from "./../base";
 import {runCallSignatureDefinitionTests} from "./../general";
 
-export function runTypeExpressionDefinitionTests(definition: TypeExpressionDefinition, structure: TypeExpressionTestStructure) {
+export function runTypeDefinitionTests(definition: TypeDefinition, structure: TypeTestStructure) {
     describe("type expression", () => {
         ensureNotNull(definition, () => {
             it(`should have a type text of ${structure.text}`, () => {
                 assert.equal(definition.text, structure.text);
             });
 
-            if (structure.arrayElementTypeExpression != null) {
-                describe("arrayElementTypeExpression", () => {
-                    runTypeExpressionDefinitionTests(definition.arrayElementTypeExpression, structure.arrayElementTypeExpression);
+            if (structure.arrayElementType != null) {
+                describe("arrayElementType", () => {
+                    runTypeDefinitionTests(definition.arrayElementType, structure.arrayElementType);
                 });
             }
 
             it("should have the same number of intersection types", () => {
-                assert.equal(definition.intersectionTypeExpressions.length, (structure.intersectionTypeExpressions || []).length);
+                assert.equal(definition.intersectionTypes.length, (structure.intersectionTypes || []).length);
             });
 
             describe("intersection types", () => {
-                (structure.intersectionTypeExpressions || []).forEach((intersectionStructure, i) => {
-                    runTypeExpressionDefinitionTests(definition.intersectionTypeExpressions[i], intersectionStructure);
+                (structure.intersectionTypes || []).forEach((intersectionStructure, i) => {
+                    runTypeDefinitionTests(definition.intersectionTypes[i], intersectionStructure);
                 });
             });
 
             it("should have the same number of union types", () => {
-                assert.equal(definition.unionTypeExpressions.length, (structure.unionTypeExpressions || []).length);
+                assert.equal(definition.unionTypes.length, (structure.unionTypes || []).length);
             });
 
             describe("union types", () => {
-                (structure.unionTypeExpressions || []).forEach((unionStructure, i) => {
-                    runTypeExpressionDefinitionTests(definition.unionTypeExpressions[i], unionStructure);
+                (structure.unionTypes || []).forEach((unionStructure, i) => {
+                    runTypeDefinitionTests(definition.unionTypes[i], unionStructure);
                 });
             });
 
@@ -63,7 +63,7 @@ export function runTypeExpressionDefinitionTests(definition: TypeExpressionDefin
                 });
 
                 structure.typeArguments.forEach((typeTestStructure, i) => {
-                    runTypeExpressionDefinitionTests(definition.typeArguments[i], typeTestStructure);
+                    runTypeDefinitionTests(definition.typeArguments[i], typeTestStructure);
                 });
             }
 

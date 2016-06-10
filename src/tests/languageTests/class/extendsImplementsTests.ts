@@ -23,7 +23,7 @@ class MyExtendsImplementsClass extends MyBaseClass implements MyInterface {
             name: "MyInterface",
             properties: [{
                 name: "name",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]
@@ -32,17 +32,17 @@ class MyExtendsImplementsClass extends MyBaseClass implements MyInterface {
             name: "MyBaseClass",
             properties: [{
                 name: "prop",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]
         }, {
             name: "MyExtendsImplementsClass",
-            extendsTypeExpressions: [{ text: "MyBaseClass" }],
-            implementsTypeExpressions: [{ text: "MyInterface" }],
+            extendsTypes: [{ text: "MyBaseClass" }],
+            implementsTypes: [{ text: "MyInterface" }],
             properties: [{
                 name: "name",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]

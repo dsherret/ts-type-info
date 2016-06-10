@@ -15,14 +15,14 @@ function myTypeParameterFunction<T, U extends string>(tParam: T, uParam: U) {
                 name: "T"
             }, {
                 name: "U",
-                constraintTypeExpression: { text: "string" }
+                constraintType: { text: "string" }
             }],
             parameters: [{
                 name: "tParam",
-                typeExpression: { text: "T" }
+                type: { text: "T" }
             }, {
                 name: "uParam",
-                typeExpression: { text: "U" }
+                type: { text: "U" }
             }]
         }]
     });

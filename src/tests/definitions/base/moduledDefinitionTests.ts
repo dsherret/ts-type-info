@@ -31,8 +31,8 @@ describe("ModuledDefinitionTests", () => {
             name: "class1",
             constructorDef: { parameters: [{ name: "param1" }] },
             decorators: [{ name: "dec1" }],
-            extendsTypeExpressions: [{ text: "class2" }],
-            implementsTypeExpressions: [{ text: "interface1" }],
+            extendsTypes: [{ text: "class2" }],
+            implementsTypes: [{ text: "interface1" }],
             hasDeclareKeyword: true,
             isAbstract: true,
             isAmbient: true,
@@ -112,7 +112,7 @@ describe("ModuledDefinitionTests", () => {
             isGenerator: true,
             isNamedExportOfFile: true,
             parameters: [{ name: "param1" }, { name: "param2" }],
-            returnTypeExpression: { text: "string" },
+            returnType: { text: "string" },
             typeParameters: [{ name: "T" }, { name: "U" }],
             overloadSignatures: [{
                 parameters: [{ name: "param1" }],
@@ -156,7 +156,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runInterfaceDefinitionTests(n.interfaces[0], {
             name: "Interface1",
-            extendsTypeExpressions: [{ text: "Extend" }],
+            extendsTypes: [{ text: "Extend" }],
             hasDeclareKeyword: true,
             isAmbient: true,
             isDefaultExportOfFile: true,
@@ -219,7 +219,7 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             namespaces: [{ name: "namespace1", declarationType: NamespaceDeclarationType.Namespace }],
-            typeAliases: [{ name: "typeAlias1", typeExpression: { text: "string" }}],
+            typeAliases: [{ name: "typeAlias1", type: { text: "string" }}],
             variables: [{ name: "variable1", declarationType: VariableDeclarationType.Let }]
         });
         testHelpers.runNamespaceDefinitionTests(n.namespaces[1], {
@@ -251,12 +251,12 @@ describe("ModuledDefinitionTests", () => {
             isDefaultExportOfFile: true,
             isExported: true,
             isNamedExportOfFile: true,
-            typeExpression: { text: "string" },
+            type: { text: "string" },
             typeParameters: [{ name: "T" }]
         });
         testHelpers.runTypeAliasDefinitionTests(n.typeAliases[1], {
             name: "typeAlias2",
-            typeExpression: { text: "string" }
+            type: { text: "string" }
         });
     });
 
@@ -285,7 +285,7 @@ describe("ModuledDefinitionTests", () => {
             isDefaultExportOfFile: true,
             isExported: true,
             isNamedExportOfFile: true,
-            typeExpression: { text: "number" }
+            type: { text: "number" }
         });
         testHelpers.runVariableDefinitionTests(n.variables[1], {
             name: "myVar2",

@@ -15,7 +15,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
         );
     }
 
-    getExtendsTypeExpressions() {
+    getExtendsTypes() {
         return this.node.getChildren()
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
             .map(node => node.getHeritageNodes())

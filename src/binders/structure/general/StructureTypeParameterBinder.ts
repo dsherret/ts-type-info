@@ -12,7 +12,7 @@ export class StructureTypeParameterBinder extends TypeParameterBinder {
         );
     }
 
-    getConstraintTypeExpression() {
-        return this.factory.getTypeExpressionFromText(this.structure.constraintType);
+    getConstraintType() {
+        return this.factory.getTypeFromText(this.structure.constraintType);
     }
 }

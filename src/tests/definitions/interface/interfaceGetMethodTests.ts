@@ -8,7 +8,7 @@ describe("InterfaceDefinition", () => {
         i.addCallSignatures({ returnType: "string" }, { returnType: "number" });
 
         it("should equal the second definition", () => {
-            assert.equal(i.getCallSignature(n => n.returnTypeExpression.text === "number"), i.callSignatures[1]);
+            assert.equal(i.getCallSignature(n => n.returnType.text === "number"), i.callSignatures[1]);
         });
     });
 
@@ -17,7 +17,7 @@ describe("InterfaceDefinition", () => {
         i.addIndexSignatures({ keyName: "str", returnType: "string" }, { keyName: "num", returnType: "number" });
 
         it("should equal the second definition", () => {
-            assert.equal(i.getIndexSignature(n => n.returnTypeExpression.text === "number"), i.indexSignatures[1]);
+            assert.equal(i.getIndexSignature(n => n.returnType.text === "number"), i.indexSignatures[1]);
         });
     });
 
@@ -33,7 +33,7 @@ describe("InterfaceDefinition", () => {
         i.addNewSignatures({ returnType: "string" }, { returnType: "number" });
 
         it("should equal the second definition", () => {
-            assert.equal(i.getNewSignature(n => n.returnTypeExpression.text === "number"), i.newSignatures[1]);
+            assert.equal(i.getNewSignature(n => n.returnType.text === "number"), i.newSignatures[1]);
         });
     });
 

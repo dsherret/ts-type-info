@@ -5,8 +5,8 @@ export class TypeParameterWriter extends BaseDefinitionWriter<TypeParameterDefin
     protected writeDefault(typeParameter: TypeParameterDefinition) {
         this.writer.write(typeParameter.name);
 
-        if (typeParameter.constraintTypeExpression != null) {
-            this.writer.write(` extends ${typeParameter.constraintTypeExpression.text}`);
+        if (typeParameter.constraintType != null) {
+            this.writer.write(` extends ${typeParameter.constraintType.text}`);
         }
     }
 }

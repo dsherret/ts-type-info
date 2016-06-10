@@ -8,7 +8,7 @@ export class ExtendsImplementsClauseWriter extends BaseWriter {
     writeExtends(def: ClassDefinition | InterfaceDefinition) {
         this.writeClause({
             word: "extends",
-            expressions: def.extendsTypeExpressions
+            expressions: def.extendsTypes
         });
 
         return this;
@@ -17,7 +17,7 @@ export class ExtendsImplementsClauseWriter extends BaseWriter {
     writeImplements(def: ClassDefinition) {
         this.writeClause({
             word: "implements",
-            expressions: def.implementsTypeExpressions
+            expressions: def.implementsTypes
         });
 
         return this;

@@ -1,9 +1,9 @@
 ﻿import * as assert from "assert";
-import {TypeExpressionDefinition} from "./../../../definitions";
+import {TypeDefinition} from "./../../../definitions";
 
-describe("TypeExpressionDefinition", () => {
+describe("TypeDefinition", () => {
     describe("#getCallSignature()", () => {
-        const def = new TypeExpressionDefinition();
+        const def = new TypeDefinition();
         def.callSignatures.push({ parameters: [] } as any, { parameters: [{} as any] } as any);
 
         it("should get the correct call signature", () => {
@@ -12,7 +12,7 @@ describe("TypeExpressionDefinition", () => {
     });
 
     describe("#getDefinition()", () => {
-        const def = new TypeExpressionDefinition();
+        const def = new TypeDefinition();
         def.definitions.push({ name: "def1" } as any, { name: "def2" } as any);
 
         it("should get the correct definition", () => {
@@ -21,7 +21,7 @@ describe("TypeExpressionDefinition", () => {
     });
 
     describe("#getProperty()", () => {
-        const def = new TypeExpressionDefinition();
+        const def = new TypeDefinition();
         def.properties.push({ name: "prop1" } as any, { name: "prop2" } as any);
 
         it("should get the correct property", () => {
@@ -30,7 +30,7 @@ describe("TypeExpressionDefinition", () => {
     });
 
     describe("#getTypeArgument()", () => {
-        const def = new TypeExpressionDefinition();
+        const def = new TypeDefinition();
         def.typeArguments.push({ text: "text1" } as any, { text: "text2" } as any);
 
         it("should get the correct type argument", () => {

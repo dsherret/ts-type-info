@@ -6,7 +6,7 @@ import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests} from 
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";
-import {runTypeExpressionDefinitionTests} from "./../expression";
+import {runTypeDefinitionTests} from "./../expression";
 
 export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: InterfaceTestStructure) {
     describe(`interface ${structure.name}`, () => {
@@ -16,7 +16,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
             structure.callSignatures = structure.callSignatures || [];
             structure.indexSignatures = structure.indexSignatures || [];
             structure.properties = structure.properties || [];
-            structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
+            structure.extendsTypes = structure.extendsTypes || [];
             // interfaces should always be ambient
             structure.isAmbient = structure.isAmbient == null ? true : structure.isAmbient;
 
@@ -78,11 +78,11 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
 
             describe("extends", () => {
                 it("should have the expected number of extends", () => {
-                    assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
+                    assert.equal(definition.extendsTypes.length, structure.extendsTypes.length);
                 });
 
-                structure.extendsTypeExpressions.forEach((extendTestStructure, i) => {
-                    runTypeExpressionDefinitionTests(definition.extendsTypeExpressions[i], extendTestStructure);
+                structure.extendsTypes.forEach((extendTestStructure, i) => {
+                    runTypeDefinitionTests(definition.extendsTypes[i], extendTestStructure);
                 });
             });
         });

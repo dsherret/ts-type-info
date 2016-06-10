@@ -1,5 +1,5 @@
-﻿import {TypeExpressionTestStructure} from "./../expression";
+﻿import {TypeTestStructure} from "./../expression";
 
 export interface ReturnTypedTestStructure {
-    returnTypeExpression?: TypeExpressionTestStructure;
+    returnType?: TypeTestStructure;
 }

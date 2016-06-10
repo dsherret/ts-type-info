@@ -1,19 +1,19 @@
 ﻿import {VariableDefinition, VariableDeclarationType} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {ExpressionWriter} from "./ExpressionWriter";
-import {TypeExpressionWriter} from "./TypeExpressionWriter";
+import {TypeWriter} from "./TypeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class VariableWriter extends BaseDefinitionWriter<VariableDefinition> {
     private expressionWriter = new ExpressionWriter(this.writer);
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
+    private typeWriter = new TypeWriter(this.writer);
 
     protected writeDefault(def: VariableDefinition, flags: WriteFlags) {
         this.writeDeclareKeyword(def);
         this.writeExportKeyword(def, flags);
         this.writeDeclarationType(def.declarationType);
         this.writer.spaceIfLastNotSpace().write(def.name);
-        this.typeExpressionWriter.writeWithColon(def.typeExpression);
+        this.typeWriter.writeWithColon(def.type);
         if ((flags & WriteFlags.HideExpressions) !== WriteFlags.HideExpressions) {
             this.expressionWriter.writeWithEqualsSign(def.defaultExpression);
         }

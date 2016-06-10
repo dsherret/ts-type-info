@@ -17,21 +17,21 @@ interface MyInterface {
             name: "MyInterface",
             methods: [{
                 name: "myParameterMethod",
-                returnTypeExpression: { text: "number" },
+                returnType: { text: "number" },
                 parameters: [{
                     name: "myParameter",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "myOptionalParameter",
-                    typeExpression: { text: "number" },
+                    type: { text: "number" },
                     isOptional: true
                 }]
             }, {
                 name: "myImplicitAnyReturnTypeMethod",
-                returnTypeExpression: { text: "any" }
+                returnType: { text: "any" }
             }, {
                 name: "myExplicitReturnTypeMethod",
-                returnTypeExpression: { text: "string" }
+                returnType: { text: "string" }
             }]
         }]
     });

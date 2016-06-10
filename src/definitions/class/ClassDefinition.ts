@@ -8,7 +8,7 @@ import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
         AbstractableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
-import {TypeExpressionDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 import {ClassMethodDefinition} from "./ClassMethodDefinition";
@@ -23,8 +23,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     staticMethods: ClassStaticMethodDefinition[] = [];
     staticProperties: ClassStaticPropertyDefinition[] = [];
     constructorDef: ClassConstructorDefinition;
-    extendsTypeExpressions: TypeExpressionDefinition[] = [];
-    implementsTypeExpressions: TypeExpressionDefinition[] = [];
+    extendsTypes: TypeDefinition[] = [];
+    implementsTypes: TypeDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Class);
@@ -63,13 +63,13 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 
     addExtends(...texts: string[]) {
         const factory = new StructureFactory();
-        this.extendsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
+        this.extendsTypes.push(...texts.map(t => factory.getTypeFromText(t)));
         return this;
     }
 
     addImplements(...texts: string[]) {
         const factory = new StructureFactory();
-        this.implementsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
+        this.implementsTypes.push(...texts.map(t => factory.getTypeFromText(t)));
         return this;
     }
 

@@ -14,24 +14,24 @@ describe("multiple file definition tests", () => {
         variables: [{
             declarationType: VariableDeclarationType.Var,
             name: "c",
-            typeExpression: { text: "MyReferenceClass" }
+            type: { text: "MyReferenceClass" }
         }, {
             declarationType: VariableDeclarationType.Var,
             name: "i",
-            typeExpression: { text: "MyReferenceInterface" }
+            type: { text: "MyReferenceInterface" }
         }, {
             declarationType: VariableDeclarationType.Var,
             name: "f",
-            typeExpression: { text: "typeof MyReferenceFunction" },
+            type: { text: "typeof MyReferenceFunction" },
             defaultExpression: { text: "MyReferenceFunction" }
         }, {
             declarationType: VariableDeclarationType.Var,
             name: "e",
-            typeExpression: { text: "MyReferenceEnum" }
+            type: { text: "MyReferenceEnum" }
         }, {
             declarationType: VariableDeclarationType.Var,
             name: "t",
-            typeExpression: { text: "string" }
+            type: { text: "string" }
         }]
     });
     runFileDefinitionTests(referenceFileDef, {

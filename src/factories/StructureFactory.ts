@@ -162,9 +162,9 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureTypeAliasBinder(this, structure), new definitions.TypeAliasDefinition());
     }
 
-    getTypeExpressionFromText(text: string) {
+    getTypeFromText(text: string) {
         if (typeof text === "string" && text.length > 0) {
-            return bindToDefinition<definitions.TypeExpressionDefinition>(new binders.StructureTypeExpressionBinder(this, text), new definitions.TypeExpressionDefinition());
+            return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(this, text), new definitions.TypeDefinition());
         }
         else {
             return null;

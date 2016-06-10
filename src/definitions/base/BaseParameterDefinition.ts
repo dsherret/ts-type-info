@@ -1,10 +1,10 @@
 import {StructureFactory} from "./../../factories";
 import {ObjectPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
-import {TypeExpressionDefinition, ExpressionDefinition} from "./../expression";
+import {TypeDefinition, ExpressionDefinition} from "./../expression";
 import {ObjectPropertyDefinition} from "./../general/ObjectPropertyDefinition";
 import {NamedDefinition} from "./NamedDefinition";
-import {TypeExpressionedDefinition} from "./TypeExpressionedDefinition";
+import {TypedDefinition} from "./TypedDefinition";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
 import {BaseDefinition} from "./BaseDefinition";
 import {DefinitionType} from "./DefinitionType";
@@ -13,7 +13,7 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition {
+export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypedDefinition, DefaultExpressionedDefinition {
     isOptional: boolean;
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[] = [];
@@ -34,12 +34,12 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
 
     // NamedDefinition
     name: string;
-    // TypeExpressionedDefinition
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    // TypedDefinition
+    type: TypeDefinition;
+    setType: (text: string) => any;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
     setDefaultExpression: (text: string) => any;
 }
 
-applyMixins(BaseParameterDefinition, BaseDefinition, [NamedDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition]);
+applyMixins(BaseParameterDefinition, BaseDefinition, [NamedDefinition, TypedDefinition, DefaultExpressionedDefinition]);

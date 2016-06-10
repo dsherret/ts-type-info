@@ -1,14 +1,14 @@
 ﻿import {NamedTestStructure} from "./../base";
 import {CallSignatureTestStructure, TypePropertyTestStructure} from "./../general";
 
-export interface TypeExpressionTestStructure {
+export interface TypeTestStructure {
     text: string;
-    arrayElementTypeExpression?: TypeExpressionTestStructure;
-    intersectionTypeExpressions?: TypeExpressionTestStructure[];
-    unionTypeExpressions?: TypeExpressionTestStructure[];
+    arrayElementType?: TypeTestStructure;
+    intersectionTypes?: TypeTestStructure[];
+    unionTypes?: TypeTestStructure[];
     isArray?: boolean;
     callSignatures?: CallSignatureTestStructure[];
     properties?: TypePropertyTestStructure[];
-    typeArguments?: TypeExpressionTestStructure[];
+    typeArguments?: TypeTestStructure[];
     definitions?: NamedTestStructure[];
 }

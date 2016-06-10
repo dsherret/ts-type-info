@@ -8,7 +8,7 @@ import {runClassMethodDefinitionTests} from "./runClassMethodDefinitionTests";
 import {runClassStaticPropertyDefinitionTests} from "./runClassStaticPropertyDefinitionTests";
 import {runClassStaticMethodDefinitionTests} from "./runClassStaticMethodDefinitionTests";
 import {runClassConstructorDefinitionTests} from "./runClassConstructorDefinitionTests";
-import {runTypeExpressionDefinitionTests} from "./../expression";
+import {runTypeDefinitionTests} from "./../expression";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassTestStructure) {
@@ -18,8 +18,8 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
             structure.properties = structure.properties || [];
             structure.staticMethods = structure.staticMethods || [];
             structure.staticProperties = structure.staticProperties || [];
-            structure.extendsTypeExpressions = structure.extendsTypeExpressions || [];
-            structure.implementsTypeExpressions = structure.implementsTypeExpressions || [];
+            structure.extendsTypes = structure.extendsTypes || [];
+            structure.implementsTypes = structure.implementsTypes || [];
 
             runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
@@ -76,21 +76,21 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
 
             describe("extends", () => {
                 it("should have the expected number of extends", () => {
-                    assert.equal(definition.extendsTypeExpressions.length, structure.extendsTypeExpressions.length);
+                    assert.equal(definition.extendsTypes.length, structure.extendsTypes.length);
                 });
 
-                structure.extendsTypeExpressions.forEach((extendTestStructure, i) => {
-                    runTypeExpressionDefinitionTests(definition.extendsTypeExpressions[i], extendTestStructure);
+                structure.extendsTypes.forEach((extendTestStructure, i) => {
+                    runTypeDefinitionTests(definition.extendsTypes[i], extendTestStructure);
                 });
             });
 
             describe("implements", () => {
                 it("should have the expected number of implements", () => {
-                    assert.equal(definition.implementsTypeExpressions.length, structure.implementsTypeExpressions.length);
+                    assert.equal(definition.implementsTypes.length, structure.implementsTypes.length);
                 });
 
-                structure.implementsTypeExpressions.forEach((implementTestStructure, i) => {
-                    runTypeExpressionDefinitionTests(definition.implementsTypeExpressions[i], implementTestStructure);
+                structure.implementsTypes.forEach((implementTestStructure, i) => {
+                    runTypeDefinitionTests(definition.implementsTypes[i], implementTestStructure);
                 });
             });
         });

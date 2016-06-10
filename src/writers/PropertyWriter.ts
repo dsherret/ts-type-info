@@ -1,12 +1,12 @@
 ﻿import {PropertyDefinitions, BaseObjectPropertyDefinition, ClassPropertyDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
-import {TypeExpressionWriter} from "./TypeExpressionWriter";
+import {TypeWriter} from "./TypeWriter";
 import {ExpressionWriter} from "./ExpressionWriter";
 import {ScopeWriter} from "./ScopeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
+    private typeWriter = new TypeWriter(this.writer);
     private expressionWriter = new ExpressionWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
 
@@ -37,7 +37,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.writer.write("get ");
         this.writeHeader(def);
         this.writer.write("()");
-        this.typeExpressionWriter.writeWithColon(def.typeExpression);
+        this.typeWriter.writeWithColon(def.type);
 
         this.writer.block(() => {
             if (isWriteBodyFunctionDefined) {
@@ -51,7 +51,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.writer.write("set ");
         this.writeHeader(def);
         this.writer.write("(value"); // default to value for now
-        this.typeExpressionWriter.writeWithColon(def.typeExpression);
+        this.typeWriter.writeWithColon(def.type);
         this.writer.write(")");
 
         this.writer.block(() => {
@@ -68,7 +68,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         const willWriteDefaultExpression = ExpressionWriter.willWriteDefaultExpression(def, flags);
 
         if (!willWriteDefaultExpression || def.isOptional === true) {
-            this.typeExpressionWriter.writeWithColon(def.typeExpression);
+            this.typeWriter.writeWithColon(def.type);
         }
 
         if (willWriteDefaultExpression) {

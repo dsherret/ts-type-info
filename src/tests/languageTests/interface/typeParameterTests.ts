@@ -17,14 +17,14 @@ interface MyInterface<T, U extends string> {
                 name: "T"
             }, {
                 name: "U",
-                constraintTypeExpression: { text: "string" }
+                constraintType: { text: "string" }
             }],
             properties: [{
                 name: "tProp",
-                typeExpression: { text: "T" }
+                type: { text: "T" }
             }, {
                 name: "uProp",
-                typeExpression: { text: "U" }
+                type: { text: "U" }
             }]
         }]
     });

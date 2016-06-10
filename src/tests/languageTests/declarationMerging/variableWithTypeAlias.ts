@@ -19,7 +19,7 @@ const VariableDeclarationType = {
         variables: [{
             name: "VariableDeclarationType",
             declarationType: VariableDeclarationType.Const,
-            typeExpression: {
+            type: {
                 text: `{ Var: "var" | "let" | "const"; Let: "var" | "let" | "const"; Const: "var" | "let" | "const"; }`
             },
             defaultExpression: {
@@ -28,9 +28,9 @@ const VariableDeclarationType = {
         }],
         typeAliases: [{
             name: "VariableDeclarationType",
-            typeExpression: {
+            type: {
                 text: `"var" | "let" | "const"`,
-                unionTypeExpressions: [{
+                unionTypes: [{
                     text: `"var"`
                 }, {
                     text: `"let"`

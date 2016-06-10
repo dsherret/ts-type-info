@@ -1,11 +1,11 @@
 ﻿import {VariableDefinition} from "./../../../definitions";
-import {runTypeExpressionedDefinitionTests} from "./../../testHelpers";
+import {runTypedDefinitionTests} from "./../../testHelpers";
 
-describe("TypeExpressionedDefinition", () => {
-    describe("setTypeExpression", () => {
+describe("TypedDefinition", () => {
+    describe("setType", () => {
         const v = new VariableDefinition();
-        v.setTypeExpression("string");
+        v.setType("string");
 
-        runTypeExpressionedDefinitionTests(v, { typeExpression: { text: "string" } });
+        runTypedDefinitionTests(v, { type: { text: "string" } });
     });
 });

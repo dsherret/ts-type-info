@@ -1,9 +1,9 @@
 ﻿import {TsType} from "./../../../compiler";
 import {TsFactory} from "./../../../factories";
-import {TypeExpressionBinder} from "./../../base";
+import {TypeBinder} from "./../../base";
 import {TsExpressionBinder} from "./TsExpressionBinder";
 
-export class TsTypeExpressionBinder extends TypeExpressionBinder {
+export class TsTypeBinder extends TypeBinder {
     private getCallSignatureAndProperties: boolean;
 
     constructor(private factory: TsFactory, private tsType: TsType) {
@@ -26,12 +26,12 @@ export class TsTypeExpressionBinder extends TypeExpressionBinder {
         return this.tsType.isUnionType();
     }
 
-    getArrayElementTypeExpression() {
+    getarrayElementType() {
         return this.factory.getType(this.tsType.getArrayElementType());
     }
 
-    getUnionOrIntersectionTypeExpressions() {
-        return this.tsType.getUnionOrIntersectionTypeExpressions().map(t => this.factory.getType(t));
+    getUnionOrIntersectionTypes() {
+        return this.tsType.getUnionOrIntersectionTypes().map(t => this.factory.getType(t));
     }
 
     getCallSignatures() {

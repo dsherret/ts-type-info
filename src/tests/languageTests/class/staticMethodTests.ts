@@ -43,33 +43,33 @@ class MyClassWithStaticMethods {
                 name: "myParameterMethod",
                 parameters: [{
                     name: "myParameter",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "myDefaultParameter",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     isOptional: true,
                     defaultExpression: { text: `"some string"` }
                 }, {
                     name: "myOptionalParameter",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     isOptional: true
                 }, {
                     name: "myRestParameter",
-                    typeExpression: {
+                    type: {
                         text: "number[]",
                         isArray: true,
-                        arrayElementTypeExpression: { text: "number" }
+                        arrayElementType: { text: "number" }
                     },
                     isOptional: true,
                     isRestParameter: true
                 }],
-                returnTypeExpression: { text: "string" }
+                returnType: { text: "string" }
             }, {
                 name: "myExplicitReturnTypeMethod",
-                returnTypeExpression: { text: "string" }
+                returnType: { text: "string" }
             }, {
                 name: "myImplicitReturnTypeMethod",
-                returnTypeExpression: { text: "string" }
+                returnType: { text: "string" }
             }, {
                 name: "myPublicMethod",
                 scope: Scope.Public
@@ -82,7 +82,7 @@ class MyClassWithStaticMethods {
             }, {
                 name: "myAsyncMethod",
                 isAsync: true,
-                returnTypeExpression: { text: "any" }
+                returnType: { text: "any" }
             }]
         }]
     });

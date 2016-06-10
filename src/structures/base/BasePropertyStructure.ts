@@ -1,7 +1,7 @@
 import {NamedStructure} from "./NamedStructure";
-import {TypeExpressionedStructure} from "./TypeExpressionedStructure";
+import {TypedStructure} from "./TypedStructure";
 import {BaseStructure} from "./BaseStructure";
 
-export interface BasePropertyStructure extends BaseStructure, NamedStructure, TypeExpressionedStructure {
+export interface BasePropertyStructure extends BaseStructure, NamedStructure, TypedStructure {
     isOptional?: boolean;
 }

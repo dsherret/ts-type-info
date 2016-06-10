@@ -7,7 +7,7 @@ describe("BaseFunctionDefinition", () => {
         const f = new FunctionDefinition();
         f.addOverloadSignatures({ returnType: "string" }, { returnType: "number" });
         it("should match the right definition", () => {
-            assert.equal(f.getOverloadSignature(s => s.returnTypeExpression.text === "number"), f.overloadSignatures[1]);
+            assert.equal(f.getOverloadSignature(s => s.returnType.text === "number"), f.overloadSignatures[1]);
         });
     });
 
@@ -22,14 +22,14 @@ describe("BaseFunctionDefinition", () => {
         });
 
         runCallSignatureDefinitionTests(f.overloadSignatures[0], {
-            returnTypeExpression: { text: "string" },
+            returnType: { text: "string" },
             typeParameters: [{ name: "T" }],
             parameters: [{ name: "myParam" }],
             minArgumentCount: 1
         });
 
         runCallSignatureDefinitionTests(f.overloadSignatures[1], {
-            returnTypeExpression: { text: "number" }
+            returnType: { text: "number" }
         });
     });
 });

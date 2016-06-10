@@ -13,20 +13,20 @@ function myFunc(func: <T extends string>(str: T, num?: number) => void) {
             name: "myFunc",
             parameters: [{
                 name: "func",
-                typeExpression: {
+                type: {
                     text: "<T extends string>(str: T, num?: number) => void",
                     callSignatures: [{
                         minArgumentCount: 1,
                         typeParameters: [{
                             name: "T",
-                            constraintTypeExpression: { text: "string" }
+                            constraintType: { text: "string" }
                         }],
                         parameters: [{
                             name: "str",
-                            typeExpression: { text: "T" }
+                            type: { text: "T" }
                         }, {
                             name: "num",
-                            typeExpression: { text: "number" },
+                            type: { text: "number" },
                             isOptional: true
                         }]
                     }]

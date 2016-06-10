@@ -19,16 +19,16 @@ interface MyChildInterface extends MyBaseInterface {
             name: "MyBaseInterface",
             properties: [{
                 name: "name",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }]
         }, {
             name: "MyChildInterface",
-            extendsTypeExpressions: [{
+            extendsTypes: [{
                 text: "MyBaseInterface"
             }],
             properties: [{
                 name: "name2",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }]
         }]
     });

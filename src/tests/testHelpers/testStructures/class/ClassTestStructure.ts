@@ -1,6 +1,6 @@
 ﻿import {BaseTestStructure, NamedTestStructure, DecoratableTestStructure, ExportableTestStructure, TypeParameteredTestStructure, AmbientableTestStructure,
     AbstractableTestStructure} from "./../base";
-import {TypeExpressionTestStructure} from "./../expression";
+import {TypeTestStructure} from "./../expression";
 import {ClassMethodTestStructure} from "./ClassMethodTestStructure";
 import {ClassPropertyTestStructure} from "./ClassPropertyTestStructure";
 import {ClassStaticMethodTestStructure} from "./ClassStaticMethodTestStructure";
@@ -14,6 +14,6 @@ export interface ClassTestStructure extends BaseTestStructure, NamedTestStructur
     staticMethods?: ClassStaticMethodTestStructure[];
     staticProperties?: ClassStaticPropertyTestStructure[];
     constructorDef?: ClassConstructorTestStructure;
-    extendsTypeExpressions?: TypeExpressionTestStructure[];
-    implementsTypeExpressions?: TypeExpressionTestStructure[];
+    extendsTypes?: TypeTestStructure[];
+    implementsTypes?: TypeTestStructure[];
 }

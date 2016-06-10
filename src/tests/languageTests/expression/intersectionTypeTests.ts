@@ -11,13 +11,13 @@ let test: string | string & number;
     runFileDefinitionTests(def, {
         variables: [{
             name: "test",
-            typeExpression: {
+            type: {
                 text: "string | (string & number)",
-                unionTypeExpressions: [{
+                unionTypes: [{
                     text: "string"
                 }, {
                     text: "string & number",
-                    intersectionTypeExpressions: [{
+                    intersectionTypes: [{
                         text: "string"
                     }, {
                         text: "number"

@@ -1,13 +1,13 @@
 ﻿import {TsNode} from "./../../../compiler";
 import {TsFactory} from "./../../../factories";
-import {TypeExpressionedBinder} from "./../../base";
+import {TypedBinder} from "./../../base";
 
-export class TsTypeExpressionedBinder extends TypeExpressionedBinder {
+export class TsTypedBinder extends TypedBinder {
     constructor(private factory: TsFactory, private node: TsNode) {
         super();
     }
 
-    getTypeExpression() {
+    getType() {
         return this.factory.getType(this.node.getType());
     }
 }

@@ -6,7 +6,7 @@ import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {NamedDefinition, ExportableDefinition, AmbientableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
-import {TypeExpressionDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 
@@ -17,7 +17,7 @@ export class InterfaceDefinition extends BaseDefinition
     indexSignatures: IndexSignatureDefinition[] = [];
     newSignatures: CallSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
-    extendsTypeExpressions: TypeExpressionDefinition[] = [];
+    extendsTypes: TypeDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Interface);
@@ -31,7 +31,7 @@ export class InterfaceDefinition extends BaseDefinition
 
     addExtends(...texts: string[]) {
         const factory = new StructureFactory();
-        this.extendsTypeExpressions.push(...texts.map(t => factory.getTypeExpressionFromText(t)));
+        this.extendsTypes.push(...texts.map(t => factory.getTypeFromText(t)));
         return this;
     }
 

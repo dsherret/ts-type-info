@@ -91,7 +91,7 @@ export class TsType extends TsSourceFileChild {
         return (this.type.flags & ts.TypeFlags.Interface) !== 0;
     }
 
-    getUnionOrIntersectionTypeExpressions() {
+    getUnionOrIntersectionTypes() {
         return ((this.type as ts.UnionOrIntersectionType).types || []).map(t => this.createType(t));
     }
 

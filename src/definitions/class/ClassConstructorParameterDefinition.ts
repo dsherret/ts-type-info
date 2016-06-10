@@ -17,7 +17,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
         const def = factory.getClassProperty({
             name: this.name,
             scope: ClassConstructorParameterScope.toScope(this.scope),
-            type: this.typeExpression.text,
+            type: this.type.text,
             isOptional: this.isOptional,
             defaultExpression: this.defaultExpression != null ? this.defaultExpression.text : null,
             decorators: this.decorators.map(decorator => ({

@@ -14,27 +14,27 @@ class Note {
     runFileDefinitionTests(def, {
         variables: [{
             name: "obj",
-            typeExpression: {
+            type: {
                 text: "{ myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
                 properties: [{
                     name: "myString",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "myOtherType",
                     isOptional: true,
-                    typeExpression: {
+                    type: {
                         text: "Note",
                         properties: [] // shouldn't have any properties
                     }
                 }, {
                     name: "myNext",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "myNext2",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "myReallyReallyReallyReallyReallyLongName",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }]
             }
         }],
@@ -42,7 +42,7 @@ class Note {
             name: "Note",
             properties: [{
                 name: "prop",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }]
         }]
     });

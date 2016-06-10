@@ -1,4 +1,4 @@
-import {TypeExpressionDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
 import {StructureFactory} from "./../../factories";
 import {applyMixins, DefinitionUtils} from "./../../utils";
@@ -39,8 +39,8 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     abstract addParameters(...parameters: ParameterStructureType[]): this;
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
     // ReturnTyped
-    returnTypeExpression: TypeExpressionDefinition;
-    setReturnTypeExpression: (text: string) => any;
+    returnType: TypeDefinition;
+    setReturnType: (text: string) => any;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;

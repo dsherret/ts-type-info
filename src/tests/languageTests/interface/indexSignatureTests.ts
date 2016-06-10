@@ -15,12 +15,12 @@ interface MyInterface {
             name: "MyInterface",
             indexSignatures: [{
                 keyName: "str",
-                keyTypeExpression: { text: "string" },
-                returnTypeExpression: { text: "Date" }
+                keyType: { text: "string" },
+                returnType: { text: "Date" }
             }, {
                 keyName: "num",
-                keyTypeExpression: { text: "number" },
-                returnTypeExpression: { text: "Date" }
+                keyType: { text: "number" },
+                returnType: { text: "Date" }
             }]
         }]
     });

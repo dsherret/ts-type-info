@@ -1,9 +1,9 @@
-﻿import {UserDefinedTypeGuardDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {UserDefinedTypeGuardDefinition, TypeDefinition} from "./../../../definitions";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class UserDefinedTypeGuardBinder implements IBaseBinder {
     protected abstract getParameterName(): string;
-    protected abstract getType(): TypeExpressionDefinition;
+    protected abstract getType(): TypeDefinition;
 
     bind(def: UserDefinedTypeGuardDefinition) {
         def.parameterName = this.getParameterName();

@@ -3,13 +3,13 @@ import {applyMixins} from "./../../utils";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {AmbientableDefinition, NamedDefinition, TypeExpressionedDefinition, ExportableDefinition,
+import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition,
     DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {ExpressionDefinition, TypeExpressionDefinition} from "./../expression";
+import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
-                                implements NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
+                                implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
     declarationType: VariableDeclarationType;
 
     constructor() {
@@ -29,9 +29,9 @@ export class VariableDefinition extends BaseDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
-    // TypeExpressionedDefinition
-    typeExpression: TypeExpressionDefinition;
-    setTypeExpression: (text: string) => any;
+    // TypedDefinition
+    type: TypeDefinition;
+    setType: (text: string) => any;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
     setDefaultExpression: (text: string) => any;
@@ -40,4 +40,4 @@ export class VariableDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
 }
 
-applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeExpressionedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);
+applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);

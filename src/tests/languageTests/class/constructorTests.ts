@@ -33,7 +33,7 @@ class MyClass4 {
             constructorDef: {
                 parameters: [{
                     name: "parameter1",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }]
             }
         }, {
@@ -41,15 +41,15 @@ class MyClass4 {
             constructorDef: {
                 parameters: [{
                     name: "param1",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     scope: ClassConstructorParameterScope.Public
                 }, {
                     name: "param2",
-                    typeExpression: { text: "number" },
+                    type: { text: "number" },
                     scope: ClassConstructorParameterScope.Protected
                 }, {
                     name: "param3",
-                    typeExpression: { text: "Date" },
+                    type: { text: "Date" },
                     defaultExpression: { text: "new Date()" },
                     scope: ClassConstructorParameterScope.Private,
                     isOptional: true

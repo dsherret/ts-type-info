@@ -2,7 +2,7 @@
 import {BasePropertyStructure} from "./../../../structures";
 import {BasePropertyBinder} from "./../../base";
 import {StructureNamedBinder} from "./StructureNamedBinder";
-import {StructureTypeExpressionedBinder} from "./StructureTypeExpressionedBinder";
+import {StructureTypedBinder} from "./StructureTypedBinder";
 import {StructureBaseDefinitionBinder} from "./StructureBaseDefinitionBinder";
 
 export class StructureBasePropertyBinder extends BasePropertyBinder {
@@ -10,7 +10,7 @@ export class StructureBasePropertyBinder extends BasePropertyBinder {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
-            new StructureTypeExpressionedBinder(factory, structure)
+            new StructureTypedBinder(factory, structure)
         );
     }
 

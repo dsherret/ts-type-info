@@ -9,7 +9,7 @@ export * from "./base/ExportableStructure";
 export * from "./base/FunctionBodyWriteableStructure";
 export * from "./base/ModuledStructure";
 export * from "./base/BaseObjectPropertyStructure";
-export * from "./base/TypeExpressionedStructure";
+export * from "./base/TypedStructure";
 export * from "./base/BasePropertyStructure";
 export * from "./base/TypeParameteredStructure";
 export * from "./base/BaseFunctionStructure";

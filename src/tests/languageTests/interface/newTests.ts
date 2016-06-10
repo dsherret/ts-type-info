@@ -19,24 +19,24 @@ interface MyInterfaceWithMultipleNew {
         interfaces: [{
             name: "MyInterface",
             newSignatures: [{
-                returnTypeExpression: { text: "MyInterface" }
+                returnType: { text: "MyInterface" }
             }]
         }, {
             name: "MyInterfaceWithMultipleNew",
             newSignatures: [{
-                returnTypeExpression: { text: "MyInterface" }
+                returnType: { text: "MyInterface" }
             }, {
                 typeParameters: [{
                     name: "T"
                 }],
                 parameters: [{
                     name: "str",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "t",
-                    typeExpression: { text: "T" }
+                    type: { text: "T" }
                 }],
-                returnTypeExpression: { text: "MyInterface" },
+                returnType: { text: "MyInterface" },
                 minArgumentCount: 2
             }]
         }]

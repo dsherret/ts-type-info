@@ -1,12 +1,12 @@
 ﻿import {ParameterDefinitions} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {ExpressionWriter} from "./ExpressionWriter";
-import {TypeExpressionWriter} from "./TypeExpressionWriter";
+import {TypeWriter} from "./TypeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class ParameterWithDestructuringWriter extends BaseDefinitionWriter<ParameterDefinitions> {
     private expressionWriter = new ExpressionWriter(this.writer);
-    private typeExpressionWriter = new TypeExpressionWriter(this.writer);
+    private typeWriter = new TypeWriter(this.writer);
 
     protected writeDefault(param: ParameterDefinitions, flags: WriteFlags) {
         this.writeLeftSide(param, flags);
@@ -33,7 +33,7 @@ export class ParameterWithDestructuringWriter extends BaseDefinitionWriter<Param
                 this.writer.conditionalWrite(i > 0, " ");
                 this.writer.write(p.name);
                 this.writer.conditionalWrite(p.isOptional, "?");
-                this.typeExpressionWriter.writeWithColon(p.typeExpression);
+                this.typeWriter.writeWithColon(p.type);
                 this.writer.write(";");
             });
         });

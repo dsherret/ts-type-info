@@ -1,31 +1,31 @@
-﻿import {CallSignatureDefinition, TypeExpressionDefinition, TypePropertyDefinition} from "./../../../definitions";
+﻿import {CallSignatureDefinition, TypeDefinition, TypePropertyDefinition} from "./../../../definitions";
 import {ExpressionBinder} from "./ExpressionBinder";
 
-export abstract class TypeExpressionBinder {
+export abstract class TypeBinder {
     abstract isArrayType(): boolean;
     abstract isIntersectionType(): boolean;
     abstract isUnionType(): boolean;
-    abstract getArrayElementTypeExpression(): TypeExpressionDefinition;
-    abstract getUnionOrIntersectionTypeExpressions(): TypeExpressionDefinition[];
+    abstract getarrayElementType(): TypeDefinition;
+    abstract getUnionOrIntersectionTypes(): TypeDefinition[];
     abstract getCallSignatures(): CallSignatureDefinition[];
     abstract getProperties(): TypePropertyDefinition[];
-    abstract getTypeArguments(): TypeExpressionDefinition[];
+    abstract getTypeArguments(): TypeDefinition[];
 
     constructor(private expressionBinder: ExpressionBinder) {
     }
 
-    bind(def: TypeExpressionDefinition) {
+    bind(def: TypeDefinition) {
         this.expressionBinder.bind(def);
 
         if (this.isArrayType()) {
-            def.arrayElementTypeExpression = this.getArrayElementTypeExpression();
+            def.arrayElementType = this.getarrayElementType();
         }
 
         if (this.isUnionType()) {
-            def.unionTypeExpressions.push(...this.getUnionOrIntersectionTypeExpressions());
+            def.unionTypes.push(...this.getUnionOrIntersectionTypes());
         }
         else if (this.isIntersectionType()) {
-            def.intersectionTypeExpressions.push(...this.getUnionOrIntersectionTypeExpressions());
+            def.intersectionTypes.push(...this.getUnionOrIntersectionTypes());
         }
 
         def.callSignatures.push(...this.getCallSignatures());

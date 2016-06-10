@@ -19,12 +19,12 @@ class MyClass {
             name: "MyClassStaticPropertyDecorator",
             parameters: [{
                 name: "target",
-                typeExpression: {
+                type: {
                     text: "Object"
                 }
             }, {
                 name: "propertyKey",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]
@@ -33,7 +33,7 @@ class MyClass {
             name: "MyClass",
             staticProperties: [{
                 name: "myStaticProperty",
-                typeExpression: {
+                type: {
                     text: "string"
                 },
                 decorators: [{

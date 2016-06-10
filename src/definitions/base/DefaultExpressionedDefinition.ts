@@ -5,7 +5,7 @@ export abstract class DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition;
 
     setDefaultExpression(text: string) {
-        this.defaultExpression = new StructureFactory().getTypeExpressionFromText(text);
+        this.defaultExpression = new StructureFactory().getTypeFromText(text);
         return this as any;
     }
 }

@@ -18,35 +18,35 @@ function myFunction<T>(myStringOrNumber: string | number, t: T): string {
             overloadSignatures: [{
                 parameters: [{
                     name: "num",
-                    typeExpression: { text: "number" }
+                    type: { text: "number" }
                 }, {
                     name: "t",
-                    typeExpression: { text: "T" }
+                    type: { text: "T" }
                 }],
                 typeParameters: [{
                     name: "T"
                 }],
-                returnTypeExpression: { text: "number" },
+                returnType: { text: "number" },
                 minArgumentCount: 2
             }, {
                 parameters: [{
                     name: "str",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "t",
-                    typeExpression: { text: "T" }
+                    type: { text: "T" }
                 }],
                 typeParameters: [{
                     name: "T"
                 }],
-                returnTypeExpression: { text: "string" },
+                returnType: { text: "string" },
                 minArgumentCount: 2
             }],
             parameters: [{
                 name: "myStringOrNumber",
-                typeExpression: {
+                type: {
                     text: "string | number",
-                    unionTypeExpressions: [{
+                    unionTypes: [{
                         text: "string"
                     }, {
                         text: "number"
@@ -54,12 +54,12 @@ function myFunction<T>(myStringOrNumber: string | number, t: T): string {
                 }
             }, {
                 name: "t",
-                typeExpression: { text: "T" }
+                type: { text: "T" }
             }],
             typeParameters: [{
                 name: "T"
             }],
-            returnTypeExpression: { text: "string" }
+            returnType: { text: "string" }
         }]
     });
 });

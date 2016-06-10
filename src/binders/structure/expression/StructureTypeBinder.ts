@@ -1,9 +1,9 @@
-﻿import {CallSignatureDefinition, TypeExpressionDefinition, TypePropertyDefinition} from "./../../../definitions";
+﻿import {CallSignatureDefinition, TypeDefinition, TypePropertyDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
-import {TypeExpressionBinder} from "./../../base";
+import {TypeBinder} from "./../../base";
 import {StructureExpressionBinder} from "./StructureExpressionBinder";
 
-export class StructureTypeExpressionBinder extends TypeExpressionBinder {
+export class StructureTypeBinder extends TypeBinder {
     constructor(private factory: StructureFactory, private text: string) {
         super(new StructureExpressionBinder(text));
     }
@@ -20,11 +20,11 @@ export class StructureTypeExpressionBinder extends TypeExpressionBinder {
         return false;
     }
 
-    getArrayElementTypeExpression(): TypeExpressionDefinition {
-        return this.factory.getTypeExpressionFromText(this.text.replace(/\[\]$/, "").replace(/^Array\<(.*)\>$/, "$1"));
+    getarrayElementType(): TypeDefinition {
+        return this.factory.getTypeFromText(this.text.replace(/\[\]$/, "").replace(/^Array\<(.*)\>$/, "$1"));
     }
 
-    getUnionOrIntersectionTypeExpressions(): TypeExpressionDefinition[] {
+    getUnionOrIntersectionTypes(): TypeDefinition[] {
         return [];
     }
 
@@ -36,7 +36,7 @@ export class StructureTypeExpressionBinder extends TypeExpressionBinder {
         return [];
     }
 
-    getTypeArguments(): TypeExpressionDefinition[] {
+    getTypeArguments(): TypeDefinition[] {
         return [];
     }
 }

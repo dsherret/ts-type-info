@@ -15,14 +15,14 @@ class MyArrayExt extends Array<string> {
             name: "MyArrayExt",
             properties: [{
                 name: "prop",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }],
-            extendsTypeExpressions: [{
+            extendsTypes: [{
                 text: "string[]",
                 isArray: true,
-                arrayElementTypeExpression: { text: "string" }
+                arrayElementType: { text: "string" }
             }]
         }]
     });

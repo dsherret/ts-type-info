@@ -24,7 +24,7 @@ class MyClassImplementsInterface implements MyInterface, MyTest {
             name: "MyInterface",
             properties: [{
                 name: "name",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]
@@ -32,22 +32,22 @@ class MyClassImplementsInterface implements MyInterface, MyTest {
             name: "MyTest",
             properties: [{
                 name: "name2",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]
         }],
         classes: [{
             name: "MyClassImplementsInterface",
-            implementsTypeExpressions: [{ text: "MyInterface" }, { text: "MyTest" }],
+            implementsTypes: [{ text: "MyInterface" }, { text: "MyTest" }],
             properties: [{
                 name: "name",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }, {
                 name: "name2",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]

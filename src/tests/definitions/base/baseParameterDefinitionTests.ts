@@ -18,7 +18,7 @@ describe("BaseParameterDefinition", () => {
         });
 
         it("should match the right definition by function", () => {
-            assert.equal(param.getDestructuringProperty(p => p.typeExpression.text === "string"), param.destructuringProperties[1]);
+            assert.equal(param.getDestructuringProperty(p => p.type.text === "string"), param.destructuringProperties[1]);
         });
     });
 
@@ -40,14 +40,14 @@ describe("BaseParameterDefinition", () => {
             defaultExpression: { text: "5"} ,
             isOptional: true,
             name: "prop1",
-            typeExpression: { text: "number" },
+            type: { text: "number" },
             hasOnAfterWrite: true,
             hasOnBeforeWrite: true
         });
 
         runObjectPropertyDefinitionTests(param.destructuringProperties[1], {
             name: "prop2",
-            typeExpression: { text: "string" }
+            type: { text: "string" }
         });
     });
 });

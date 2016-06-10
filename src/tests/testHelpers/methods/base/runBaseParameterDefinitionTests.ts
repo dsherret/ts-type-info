@@ -4,13 +4,13 @@ import {BaseParameterDefinition} from "./../../../../definitions";
 import {runObjectPropertyDefinitionTests} from "./../general/runObjectPropertyDefinitionTests";
 import {runBaseDefinitionTests} from "./runBaseDefinitionTests";
 import {runNamedDefinitionTests} from "./runNamedDefinitionTests";
-import {runTypeExpressionedDefinitionTests} from "./runTypeExpressionedDefinitionTests";
+import {runTypedDefinitionTests} from "./runTypedDefinitionTests";
 import {runDefaultExpressionedDefinitionTests} from "./runDefaultExpressionedDefinitionTests";
 
 export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition, structure: BaseParameterTestStructure) {
     runBaseDefinitionTests(definition, structure);
     runNamedDefinitionTests(definition, structure);
-    runTypeExpressionedDefinitionTests(definition, structure);
+    runTypedDefinitionTests(definition, structure);
     runDefaultExpressionedDefinitionTests(definition, structure);
 
     it(`should be ${structure.isOptional ? "optional" : "not optional"}`, () => {

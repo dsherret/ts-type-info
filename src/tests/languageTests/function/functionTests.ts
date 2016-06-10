@@ -34,33 +34,33 @@ class MyClass2 {
             name: "myFunctionWithParameters",
             parameters: [{
                 name: "str",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }, {
                 name: "optionalParam",
-                typeExpression: { text: "string" },
+                type: { text: "string" },
                 isOptional: true
             }, {
                 name: "defaultParam",
-                typeExpression: { text: "Date" },
+                type: { text: "Date" },
                 defaultExpression: { text: "new Date()" },
                 isOptional: true
             }, {
                 name: "restParam",
-                typeExpression: { text: "MyClass[]", isArray: true, arrayElementTypeExpression: { text: "MyClass" } },
+                type: { text: "MyClass[]", isArray: true, arrayElementType: { text: "MyClass" } },
                 isOptional: true,
                 isRestParameter: true
             }],
-            returnTypeExpression: {
+            returnType: {
                 text: "Date"
             }
         }, {
             name: "myAsyncFunction",
             isAsync: true,
-            returnTypeExpression: { text: "any" }
+            returnType: { text: "any" }
         }, {
             name: "typeGuardFunction",
             parameters: [{ name: "def" }],
-            returnTypeExpression: { text: "def is MyClass" },
+            returnType: { text: "def is MyClass" },
             userDefinedTypeGuard: {
                 parameterName: "def",
                 type: "MyClass"
@@ -68,7 +68,7 @@ class MyClass2 {
         }, {
             name: "typeGuardFunctionIntersect",
             parameters: [{ name: "def" }],
-            returnTypeExpression: { text: "def is MyClass & MyClass2" },
+            returnType: { text: "def is MyClass & MyClass2" },
             userDefinedTypeGuard: {
                 parameterName: "def",
                 type: "MyClass & MyClass2"
@@ -76,7 +76,7 @@ class MyClass2 {
         }, {
             name: "myGeneratorFunction",
             isGenerator: true,
-            returnTypeExpression: { text: "IterableIterator<string>" }
+            returnType: { text: "IterableIterator<string>" }
         }],
         classes: [{
             name: "MyClass"

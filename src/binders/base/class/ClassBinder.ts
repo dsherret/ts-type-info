@@ -23,8 +23,8 @@ export abstract class ClassBinder implements IBaseBinder {
     }
 
     abstract getMembers(): ClassMemberContainer;
-    abstract getExtendsTypeExpressions(): definitions.TypeExpressionDefinition[];
-    abstract getImplementsTypeExpressions(): definitions.TypeExpressionDefinition[];
+    abstract getExtendsTypes(): definitions.TypeDefinition[];
+    abstract getImplementsTypes(): definitions.TypeDefinition[];
 
     bind(def: definitions.ClassDefinition) {
         this.baseDefinitionBinder.bind(def);
@@ -35,8 +35,8 @@ export abstract class ClassBinder implements IBaseBinder {
         this.abstractableBinder.bind(def);
         this.decoratableBinder.bind(def);
         this.bindMembers(def);
-        def.extendsTypeExpressions.push(...this.getExtendsTypeExpressions());
-        def.implementsTypeExpressions.push(...this.getImplementsTypeExpressions());
+        def.extendsTypes.push(...this.getExtendsTypes());
+        def.implementsTypes.push(...this.getImplementsTypes());
     }
 
     private bindMembers(def: definitions.ClassDefinition) {

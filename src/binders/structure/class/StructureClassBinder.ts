@@ -17,12 +17,12 @@ export class StructureClassBinder extends ClassBinder {
         );
     }
 
-    getExtendsTypeExpressions() {
-        return (this.structure.extendsTypes || []).map(t => this.factory.getTypeExpressionFromText(t));
+    getExtendsTypes() {
+        return (this.structure.extendsTypes || []).map(t => this.factory.getTypeFromText(t));
     }
 
-    getImplementsTypeExpressions() {
-        return (this.structure.implementsTypes || []).map(t => this.factory.getTypeExpressionFromText(t));
+    getImplementsTypes() {
+        return (this.structure.implementsTypes || []).map(t => this.factory.getTypeFromText(t));
     }
 
     getMembers() {

@@ -4,14 +4,14 @@ import {BaseParameterBinder} from "./../../base";
 import {StructureBaseDefinitionBinder} from "./StructureBaseDefinitionBinder";
 import {StructureDefaultExpressionedBinder} from "./StructureDefaultExpressionedBinder";
 import {StructureNamedBinder} from "./StructureNamedBinder";
-import {StructureTypeExpressionedBinder} from "./StructureTypeExpressionedBinder";
+import {StructureTypedBinder} from "./StructureTypedBinder";
 
 export class StructureBaseParameterBinder extends BaseParameterBinder {
     constructor(private factory: StructureFactory, private structure: BaseParameterStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
-            new StructureTypeExpressionedBinder(factory, structure),
+            new StructureTypedBinder(factory, structure),
             new StructureDefaultExpressionedBinder(structure)
         );
     }

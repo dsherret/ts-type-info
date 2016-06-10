@@ -14,5 +14,5 @@ export * from "./base/ModuledBinder";
 export * from "./base/NamedBinder";
 export * from "./base/ParameteredBinder";
 export * from "./base/ReturnTypedBinder";
-export * from "./base/TypeExpressionedBinder";
+export * from "./base/TypedBinder";
 export * from "./base/TypeParameteredBinder";

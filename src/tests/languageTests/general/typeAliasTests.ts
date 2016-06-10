@@ -19,9 +19,9 @@ var myVariableUsingType: myUnionTypeAlias;
         variables: [{
             name: "myVariableUsingType",
             declarationType: VariableDeclarationType.Var,
-            typeExpression: {
+            type: {
                 text: "string | number",
-                unionTypeExpressions: [{
+                unionTypes: [{
                     text: "string"
                 }, {
                     text: "number"
@@ -30,12 +30,12 @@ var myVariableUsingType: myUnionTypeAlias;
         }],
         typeAliases: [{
             name: "myStringTypeAlias",
-            typeExpression: { text: "string" }
+            type: { text: "string" }
         }, {
             name: "myUnionTypeAlias",
-            typeExpression: {
+            type: {
                 text: "string | number",
-                unionTypeExpressions: [{
+                unionTypes: [{
                     text: "string"
                 }, {
                     text: "number"
@@ -46,24 +46,24 @@ var myVariableUsingType: myUnionTypeAlias;
             typeParameters: [{
                 name: "T"
             }],
-            typeExpression: { text: "T" }
+            type: { text: "T" }
         }, {
             name: "myTypeAliasWithTypeParameterConstraint",
             typeParameters: [{
                 name: "T",
-                constraintTypeExpression: { text: "string" }
+                constraintType: { text: "string" }
             }],
-            typeExpression: { text: "T" }
+            type: { text: "T" }
         }, {
             name: "myExportedType",
-            typeExpression: { text: "string" },
+            type: { text: "string" },
             isExported: true,
             isNamedExportOfFile: true
         }, {
             name: "myStringLiteralTypeAlias",
-            typeExpression: {
+            type: {
                 text: `"some string" | "other string"`,
-                unionTypeExpressions: [{
+                unionTypes: [{
                     text: `"some string"`
                 }, {
                     text: `"other string"`

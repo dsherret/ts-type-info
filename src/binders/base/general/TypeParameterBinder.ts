@@ -1,4 +1,4 @@
-﻿import {TypeParameterDefinition, TypeExpressionDefinition} from "./../../../definitions";
+﻿import {TypeParameterDefinition, TypeDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./../base/BaseDefinitionBinder";
 import {NamedBinder} from "./../base/NamedBinder";
 import {IBaseBinder} from "./../IBaseBinder";
@@ -10,11 +10,11 @@ export abstract class TypeParameterBinder implements IBaseBinder {
     ) {
     }
 
-    abstract getConstraintTypeExpression(): TypeExpressionDefinition;
+    abstract getConstraintType(): TypeDefinition;
 
     bind(def: TypeParameterDefinition) {
         this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
-        def.constraintTypeExpression = this.getConstraintTypeExpression();
+        def.constraintType = this.getConstraintType();
     }
 }

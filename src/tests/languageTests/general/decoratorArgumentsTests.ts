@@ -20,11 +20,11 @@ class MyClass1 {
             name: "MyClassDecorator",
             parameters: [{
                 name: "myArg",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }],
-            returnTypeExpression: {
+            returnType: {
                 text: "(target: Function) => void"
             }
         }],

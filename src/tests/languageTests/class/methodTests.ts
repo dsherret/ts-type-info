@@ -47,29 +47,29 @@ class MyClass {
                 name: "myParameterMethod",
                 parameters: [{
                     name: "myParameter",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }, {
                     name: "myDefaultParameter",
-                    typeExpression: { text: "number" },
+                    type: { text: "number" },
                     isOptional: true,
                     defaultExpression: { text: "15" }
                 }, {
                     name: "myOptionalParameter",
-                    typeExpression: { text: "string" },
+                    type: { text: "string" },
                     isOptional: true
                 }, {
                     name: "myRestParameter",
-                    typeExpression: { text: "number[]", isArray: true, arrayElementTypeExpression: { text: "number" } },
+                    type: { text: "number[]", isArray: true, arrayElementType: { text: "number" } },
                     isOptional: true,
                     isRestParameter: true
                 }],
-                returnTypeExpression: { text: "string" }
+                returnType: { text: "string" }
             }, {
                 name: "myExplicitReturnTypeMethod",
-                returnTypeExpression: { text: "string" }
+                returnType: { text: "string" }
             }, {
                 name: "myImplicitReturnTypeMethod",
-                returnTypeExpression: { text: "string" }
+                returnType: { text: "string" }
             }, {
                 name: "myPublicMethod",
                 scope: Scope.Public
@@ -82,13 +82,13 @@ class MyClass {
             }, {
                 name: "myAsyncMethod",
                 isAsync: true,
-                returnTypeExpression: { text: "any" }
+                returnType: { text: "any" }
             }, {
                 name: "myUserDefinedTypeGuard",
                 userDefinedTypeGuard: {
                     type: "MyClass"
                 },
-                returnTypeExpression: { text: "this is MyClass" }
+                returnType: { text: "this is MyClass" }
             }]
         }]
     });

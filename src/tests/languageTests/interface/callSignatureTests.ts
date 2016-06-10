@@ -15,24 +15,24 @@ interface MyInterface {
         interfaces: [{
             name: "MyInterface",
             callSignatures: [{
-                returnTypeExpression: { text: "string" },
+                returnType: { text: "string" },
                 parameters: [{
                     name: "myParameter",
-                    typeExpression: { text: "string" }
+                    type: { text: "string" }
                 }],
                 minArgumentCount: 1
             }, {
-                returnTypeExpression: { text: "number" },
+                returnType: { text: "number" },
                 parameters: [{
                     name: "myParameter",
-                    typeExpression: { text: "number" }
+                    type: { text: "number" }
                 }],
                 minArgumentCount: 1
             }, {
-                returnTypeExpression: { text: "any" },
+                returnType: { text: "any" },
                 parameters: [{
                     name: "myParameter",
-                    typeExpression: { text: "any" }
+                    type: { text: "any" }
                 }],
                 minArgumentCount: 1
             }]

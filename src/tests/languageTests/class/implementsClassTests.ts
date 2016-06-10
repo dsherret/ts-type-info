@@ -20,21 +20,21 @@ class MyClassImplementsClass implements MyBaseClass {
             name: "MyBaseClass",
             properties: [{
                 name: "name1",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]
         }, {
             name: "MyClassImplementsClass",
-            implementsTypeExpressions: [{ text: "MyBaseClass" }],
+            implementsTypes: [{ text: "MyBaseClass" }],
             properties: [{
                 name: "name1",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }, {
                 name: "name2",
-                typeExpression: {
+                type: {
                     text: "string"
                 }
             }]

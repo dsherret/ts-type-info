@@ -17,24 +17,24 @@ const myConst: number;
         variables: [{
             name: "myImplicitAny",
             declarationType: VariableDeclarationType.Var,
-            typeExpression: { text: "any" }
+            type: { text: "any" }
         }, {
             name: "myExplicitTypeVar",
             declarationType: VariableDeclarationType.Var,
-            typeExpression: { text: "number" }
+            type: { text: "number" }
         }, {
             name: "myImplicitTypeVar",
             declarationType: VariableDeclarationType.Var,
-            typeExpression: { text: "string" },
+            type: { text: "string" },
             defaultExpression: { text: `"my string"` }
         }, {
             name: "myLet",
             declarationType: VariableDeclarationType.Let,
-            typeExpression: { text: "string" }
+            type: { text: "string" }
         }, {
             name: "myConst",
             declarationType: VariableDeclarationType.Const,
-            typeExpression: { text: "number" }
+            type: { text: "number" }
         }]
     });
 });

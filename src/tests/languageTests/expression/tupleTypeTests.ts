@@ -13,7 +13,7 @@ let tuple: [number, string] = [5, "a string"];
         variables: [{
             name: "tuple",
             declarationType: VariableDeclarationType.Let,
-            typeExpression: {
+            type: {
                 text: "[number, string]"
             },
             defaultExpression: { text: `[5, "a string"]` }

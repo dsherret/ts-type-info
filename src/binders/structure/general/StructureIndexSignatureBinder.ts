@@ -15,8 +15,8 @@ export class StructureIndexSignatureBinder extends IndexSignatureBinder {
         return this.structure.keyName || "";
     }
 
-    getKeyTypeExpression() {
+    getKeyType() {
         // default to string for the key type
-        return this.factory.getTypeExpressionFromText(this.structure.keyType || "string");
+        return this.factory.getTypeFromText(this.structure.keyType || "string");
     }
 }

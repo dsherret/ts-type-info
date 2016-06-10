@@ -26,31 +26,31 @@ class MyImplementsClass implements MyClass<number, string> {
                 name: "T"
             }, {
                 name: "U",
-                constraintTypeExpression: { text: "string" }
+                constraintType: { text: "string" }
             }],
             properties: [{
                 name: "tProp",
-                typeExpression: { text: "T" }
+                type: { text: "T" }
             }, {
                 name: "uProp",
-                typeExpression: { text: "U" }
+                type: { text: "U" }
             }]
         }, {
             name: "MyExtendsClass",
-            extendsTypeExpressions: [{
+            extendsTypes: [{
                 text: "MyClass<number, string>"
             }]
         }, {
             name: "MyImplementsClass",
-            implementsTypeExpressions: [{
+            implementsTypes: [{
                 text: "MyClass<number, string>"
             }],
             properties: [{
                 name: "tProp",
-                typeExpression: { text: "number" }
+                type: { text: "number" }
             }, {
                 name: "uProp",
-                typeExpression: { text: "string" }
+                type: { text: "string" }
             }]
         }]
     });
