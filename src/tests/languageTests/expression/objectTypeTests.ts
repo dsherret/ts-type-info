@@ -3,51 +3,47 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("object type tests", () => {
     const code = `
-class MyClass {
-    // this object type is pruposefully long because the typescript compiler will omit the text once
-    // the object type text is long enough unless TypeFormatFlags.NoTruncation is set
-    myMethod(obj: { myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }) {
-    }
-}
+let obj: { myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; };
+
 class Note {
+    prop: string;
 }`;
 
     const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
-        classes: [{
-            name: "MyClass",
-            methods: [{
-                name: "myMethod",
-                parameters: [{
-                    name: "obj",
+        variables: [{
+            name: "obj",
+            typeExpression: {
+                text: "{ myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
+                properties: [{
+                    name: "myString",
+                    typeExpression: { text: "string" }
+                }, {
+                    name: "myOtherType",
+                    isOptional: true,
                     typeExpression: {
-                        text: "{ myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
-                        types: [{
-                            text: "{ myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
-                            properties: [{
-                                name: "myString",
-                                typeExpression: { text: "string" }
-                            }, {
-                                name: "myOtherType",
-                                isOptional: true,
-                                typeExpression: { text: "Note" }
-                            }, {
-                                name: "myNext",
-                                typeExpression: { text: "string" }
-                            }, {
-                                name: "myNext2",
-                                typeExpression: { text: "string" }
-                            }, {
-                                name: "myReallyReallyReallyReallyReallyLongName",
-                                typeExpression: { text: "string" }
-                            }]
-                        }]
+                        text: "Note",
+                        properties: [] // shouldn't have any properties
                     }
+                }, {
+                    name: "myNext",
+                    typeExpression: { text: "string" }
+                }, {
+                    name: "myNext2",
+                    typeExpression: { text: "string" }
+                }, {
+                    name: "myReallyReallyReallyReallyReallyLongName",
+                    typeExpression: { text: "string" }
                 }]
+            }
+        }],
+        classes: [{
+            name: "Note",
+            properties: [{
+                name: "prop",
+                typeExpression: { text: "string" }
             }]
-        }, {
-            name: "Note"
         }]
     });
 });

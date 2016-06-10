@@ -22,22 +22,16 @@ class MyOtherClass<T> {
                     text: "MyClass | MyOtherClass<string>",
                     unionTypeExpressions: [{
                         text: "MyClass",
-                        types: [{
-                            text: "MyClass",
-                            definitions: [{
-                                name: "MyClass"
-                            }]
+                        definitions: [{
+                            name: "MyClass"
                         }]
                     }, {
                         text: "MyOtherClass<string>",
-                        types: [{
-                            text: "MyOtherClass<string>",
-                            typeArguments: [{
-                                text: "string"
-                            }],
-                            definitions: [{
-                                name: "MyOtherClass"
-                            }]
+                        typeArguments: [{
+                            text: "string"
+                        }],
+                        definitions: [{
+                            name: "MyOtherClass"
                         }]
                     }]
                 }

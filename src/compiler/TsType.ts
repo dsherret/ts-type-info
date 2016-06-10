@@ -75,15 +75,20 @@ export class TsType extends TsSourceFileChild {
         return (this.type.flags & ts.TypeFlags.Union) !== 0;
     }
 
-    hasCallSignaturesAndProperties() {
-        return (this.type.flags & (
-            ts.TypeFlags.ObjectType |
-            ts.TypeFlags.Instantiated
-        )) !== 0 &&
-        (this.type.flags & (
-            ts.TypeFlags.Class |
-            ts.TypeFlags.Interface
-        )) === 0;
+    isAnonymousType() {
+        return (this.type.flags & ts.TypeFlags.Anonymous) !== 0;
+    }
+
+    isReferenceType() {
+        return (this.type.flags & ts.TypeFlags.Reference) !== 0;
+    }
+
+    isClassType() {
+        return (this.type.flags & ts.TypeFlags.Class) !== 0;
+    }
+
+    isInterfaceType() {
+        return (this.type.flags & ts.TypeFlags.Interface) !== 0;
     }
 
     getUnionOrIntersectionTypeExpressions() {

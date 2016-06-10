@@ -20,7 +20,7 @@ export class TsInterfaceBinder extends InterfaceBinder {
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getTypeExpressionFromType(node.getType()));
+            .map(node => this.factory.getType(node.getType()));
     }
 
     getMembers() {

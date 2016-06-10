@@ -16,6 +16,6 @@ export class TsIndexSignatureBinder extends IndexSignatureBinder {
     }
 
     getKeyTypeExpression() {
-        return this.factory.getTypeExpressionFromType(this.signature.getParameters()[0].getOnlyNode().getType());
+        return this.factory.getType(this.signature.getParameters()[0].getOnlyNode().getType());
     }
 }

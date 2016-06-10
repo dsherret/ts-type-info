@@ -1,4 +1,4 @@
-﻿import {TypeExpressionDefinition} from "./../../../definitions";
+﻿import {CallSignatureDefinition, TypeExpressionDefinition, TypePropertyDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {TypeExpressionBinder} from "./../../base";
 import {StructureExpressionBinder} from "./StructureExpressionBinder";
@@ -25,6 +25,18 @@ export class StructureTypeExpressionBinder extends TypeExpressionBinder {
     }
 
     getUnionOrIntersectionTypeExpressions(): TypeExpressionDefinition[] {
+        return [];
+    }
+
+    getCallSignatures(): CallSignatureDefinition[] {
+        return [];
+    }
+
+    getProperties(): TypePropertyDefinition[] {
+        return [];
+    }
+
+    getTypeArguments(): TypeExpressionDefinition[] {
         return [];
     }
 }

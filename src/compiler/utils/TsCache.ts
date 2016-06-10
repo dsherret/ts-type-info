@@ -1,5 +1,5 @@
 ﻿import * as ts from "typescript";
-import {KeyValueCache, tryGet, Logger} from "./../../utils";
+import {KeyValueCache, Logger} from "./../../utils";
 import {TsType} from "./../TsType";
 import {TsSymbol} from "./../TsSymbol";
 import {TsNode} from "./../TsNode";

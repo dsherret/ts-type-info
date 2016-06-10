@@ -1,4 +1,4 @@
-﻿import {TypeExpressionDefinition} from "./../../../definitions";
+﻿import {CallSignatureDefinition, TypeExpressionDefinition, TypePropertyDefinition} from "./../../../definitions";
 import {ExpressionBinder} from "./ExpressionBinder";
 
 export abstract class TypeExpressionBinder {
@@ -7,6 +7,9 @@ export abstract class TypeExpressionBinder {
     abstract isUnionType(): boolean;
     abstract getArrayElementTypeExpression(): TypeExpressionDefinition;
     abstract getUnionOrIntersectionTypeExpressions(): TypeExpressionDefinition[];
+    abstract getCallSignatures(): CallSignatureDefinition[];
+    abstract getProperties(): TypePropertyDefinition[];
+    abstract getTypeArguments(): TypeExpressionDefinition[];
 
     constructor(private expressionBinder: ExpressionBinder) {
     }
@@ -24,5 +27,9 @@ export abstract class TypeExpressionBinder {
         else if (this.isIntersectionType()) {
             def.intersectionTypeExpressions.push(...this.getUnionOrIntersectionTypeExpressions());
         }
+
+        def.callSignatures.push(...this.getCallSignatures());
+        def.properties.push(...this.getProperties());
+        def.typeArguments.push(...this.getTypeArguments());
     }
 }

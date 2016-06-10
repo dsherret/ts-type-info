@@ -11,8 +11,8 @@ function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: D
 export class TsFactory {
     private definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
     private files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
-    private types = new KeyValueCache<TsType, definitions.TypeDefinition>();
-    private deferredBindings: { binder: binders.IBaseBinder, definition: definitions.BaseDefinition }[] = [];
+    private deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
+    private createdTypesWithDefinition: { type: TsType; definition: definitions.TypeExpressionDefinition; }[] = [];
 
     getCallSignatureFromNode(node: TsNode) {
         return this.getCallSignatureFromSignature(node.getSignatureFromThis());
@@ -94,14 +94,6 @@ export class TsFactory {
         return bindToDefinition(new binders.TsTypeParameterBinder(this, node), new definitions.TypeParameterDefinition());
     }
 
-    getTypeExpressionFromType(tsType: TsType) {
-        if (tsType == null) {
-            return null;
-        }
-
-        return bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsTypeExpressionBinder(this, tsType), new definitions.TypeExpressionDefinition());
-    }
-
     getTypePropertyFromSymbol(symbol: TsSymbol) {
         return this.getTypePropertyFromNode(symbol.getOnlyNode());
     }
@@ -111,7 +103,16 @@ export class TsFactory {
     }
 
     getType(type: TsType) {
-        return this.types.getOrCreate(type, () => bindToDefinition(new binders.TsTypeBinder(this, type), new definitions.TypeDefinition()));
+        if (type == null) {
+            return null;
+        }
+
+        const definition = bindToDefinition(new binders.TsTypeExpressionBinder(this, type), new definitions.TypeExpressionDefinition());
+        this.createdTypesWithDefinition.push({
+            type,
+            definition
+        });
+        return definition;
     }
 
     getUserDefinedTypeGuardFromNode(node: TsNode) {
@@ -196,13 +197,12 @@ export class TsFactory {
     }
 
     fillAllCachedTypesWithDefinitions() {
-        this.types.getAllKeyValues().forEach(keyValue => {
-            const tsType = keyValue.key;
-            const typeDef = keyValue.value;
-            const symbols = tsType.getSymbols();
+        this.createdTypesWithDefinition.forEach(typeAndDef => {
+            const {type, definition} = typeAndDef;
+            const symbols = type.getSymbols();
 
             symbols.forEach(s => {
-                typeDef.definitions.push(...this.getAllDefinitionsBySymbol(s) as definitions.ModuleMemberDefinitions[]);
+                definition.definitions.push(...this.getAllDefinitionsBySymbol(s) as definitions.ModuleMemberDefinitions[]);
             });
         });
     }

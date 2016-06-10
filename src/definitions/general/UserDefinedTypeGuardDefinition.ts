@@ -1,6 +1,6 @@
 ﻿import {BaseDefinition} from "./../base/BaseDefinition";
 import {DefinitionType} from "./../base/DefinitionType";
-import {TypeDefinition} from "./../expression/TypeDefinition";
+import {TypeExpressionDefinition} from "./../expression/TypeExpressionDefinition";
 
 export class UserDefinedTypeGuardDefinition extends BaseDefinition {
     constructor() {
@@ -8,5 +8,5 @@ export class UserDefinedTypeGuardDefinition extends BaseDefinition {
     }
 
     parameterName: string;
-    type: TypeDefinition;
+    type: TypeExpressionDefinition;
 }

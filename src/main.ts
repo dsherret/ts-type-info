@@ -26,18 +26,13 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
     const tsMain = new TsMain(fileNames, options);
     const tsFactory = new TsFactory();
 
-    const definitionWithSourceFiles = tsMain.getSourceFiles().map(sourceFile => {
-        return {
-            definition: tsFactory.getFileDefinition(sourceFile),
-            sourceFile: sourceFile
-        };
-    });
+    const fileDefinitions = tsMain.getSourceFiles().map(sourceFile => tsFactory.getFileDefinition(sourceFile));
 
     tsFactory.bindDeferred();
     tsFactory.fillAllCachedTypesWithDefinitions();
 
     const globalDef = new GlobalDefinition();
-    globalDef.files = definitionWithSourceFiles.map(f => f.definition);
+    globalDef.files = fileDefinitions;
     return globalDef;
 }
 

@@ -1,19 +1,32 @@
-import {ArrayUtils, DefinitionUtils} from "./../../utils";
-import {TypeDefinition} from "./TypeDefinition";
+import {ModuleMemberDefinitions} from "./../../definitions";
+import {DefinitionUtils} from "./../../utils";
+import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
 import {ExpressionDefinition} from "./ExpressionDefinition";
 
 export class TypeExpressionDefinition extends ExpressionDefinition {
-    types: TypeDefinition[] = [];
     arrayElementTypeExpression: TypeExpressionDefinition = null;
     intersectionTypeExpressions: TypeExpressionDefinition[] = [];
     unionTypeExpressions: TypeExpressionDefinition[] = [];
+    callSignatures: CallSignatureDefinition[] = [];
+    definitions: ModuleMemberDefinitions[] = [];
+    properties: TypePropertyDefinition[] = [];
+    typeArguments: TypeExpressionDefinition[] = [];
+    text: string;
 
-    getType(searchFunction: (typeDefinition: TypeDefinition) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.types, searchFunction);
+    getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.callSignatures, searchFunction);
     }
 
-    getDefinitions() {
-        return ArrayUtils.getUniqueItems(this.types.map(t => t.definitions).reduce((a, b) => a.concat(b), []));
+    getDefinition(searchFunction: (definition: ModuleMemberDefinitions) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.definitions, searchFunction);
+    }
+
+    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)) {
+        return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.properties, searchFunctionOrName);
+    }
+
+    getTypeArgument(searchFunction: (typeArgument: TypeExpressionDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.typeArguments, searchFunction);
     }
 
     isArray() {
