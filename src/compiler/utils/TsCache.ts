@@ -1,7 +1,6 @@
 ﻿import * as ts from "typescript";
 import {KeyValueCache, tryGet, Logger} from "./../../utils";
 import {TsType} from "./../TsType";
-import {TsTypeExpression} from "./../TsTypeExpression";
 import {TsSymbol} from "./../TsSymbol";
 import {TsNode} from "./../TsNode";
 import {TsTypeChecker} from "./TsTypeChecker";
@@ -9,7 +8,6 @@ import {TsTypeChecker} from "./TsTypeChecker";
 export class TsCache {
     private nodeCache = new KeyValueCache<ts.Node, TsNode>();
     private symbolCache = new KeyValueCache<ts.Symbol, TsSymbol>();
-    private typeExpressionCacheContainer = new TypeCacheContainer<TsTypeExpression>();
     private typeCacheContainer = new TypeCacheContainer<TsType>();
 
     getSymbol(symbol: ts.Symbol, createFunc: () => TsSymbol) {
@@ -18,19 +16,6 @@ export class TsCache {
 
     getNode(node: ts.Node, createFunc: () => TsNode) {
         return this.nodeCache.getOrCreate(node, () => createFunc());
-    }
-
-    getTypeExpression(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createFunc: () => TsTypeExpression, createTsType: (tsType: ts.Type) => TsType) {
-        const typeExpressionCache = this.typeExpressionCacheContainer.getCache(tsType);
-        const typeText = typeChecker.typeToString(sourceFile, tsType);
-
-        return typeExpressionCache.getOrCreate(typeText, () => createFunc(), typeExpression => {
-            const types = (tsType as ts.UnionOrIntersectionType).types || [tsType];
-
-            types.forEach(t => {
-                tryGet(typeText, () => this.getType(typeChecker, sourceFile, t, () => createTsType(t)), type => typeExpression.addType(type));
-            });
-        });
     }
 
     getType(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createTsType: () => TsType) {

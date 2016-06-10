@@ -13,6 +13,6 @@ export class TsTypeParameterBinder extends TypeParameterBinder {
     }
 
     getConstraintTypeExpression() {
-        return this.factory.getTypeExpression(this.node.getTypeParameterConstraintTypeExpression());
+        return this.factory.getTypeExpressionFromType(this.node.getTypeParameterConstraintTypeExpression());
     }
 }

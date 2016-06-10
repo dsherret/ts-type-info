@@ -8,6 +8,6 @@ export class TsTypeExpressionedBinder extends TypeExpressionedBinder {
     }
 
     getTypeExpression() {
-        return this.factory.getTypeExpression(this.node.getTypeExpression());
+        return this.factory.getTypeExpressionFromType(this.node.getType());
     }
 }

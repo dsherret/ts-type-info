@@ -1,30 +1,30 @@
-﻿import {TsTypeExpression} from "./../../../compiler";
+﻿import {TsType} from "./../../../compiler";
 import {TsFactory} from "./../../../factories";
 import {TypeExpressionBinder} from "./../../base";
 import {TsExpressionBinder} from "./TsExpressionBinder";
 
 export class TsTypeExpressionBinder extends TypeExpressionBinder {
-    constructor(private factory: TsFactory, private tsTypeExpression: TsTypeExpression) {
-        super(new TsExpressionBinder(tsTypeExpression));
+    constructor(private factory: TsFactory, private tsType: TsType) {
+        super(new TsExpressionBinder(tsType));
     }
 
     isArrayType() {
-        return this.tsTypeExpression.isArrayType();
+        return this.tsType.isArrayType();
     }
 
     isIntersectionType() {
-        return this.tsTypeExpression.isIntersectionType();
+        return this.tsType.isIntersectionType();
     }
 
     isUnionType() {
-        return this.tsTypeExpression.isUnionType();
+        return this.tsType.isUnionType();
     }
 
     getArrayElementTypeExpression() {
-        return this.factory.getTypeExpression(this.tsTypeExpression.getArrayElementTypeExpression());
+        return this.factory.getTypeExpressionFromType(this.tsType.getArrayElementType());
     }
 
     getUnionOrIntersectionTypeExpressions() {
-        return this.tsTypeExpression.getUnionOrIntersectionTypeExpressions().map(t => this.factory.getTypeExpression(t));
+        return this.tsType.getUnionOrIntersectionTypeExpressions().map(t => this.factory.getTypeExpressionFromType(t));
     }
 }

@@ -1,9 +1,9 @@
-import {TsExpression, TsTypeExpression} from "./../../../compiler";
+import {TsExpression, TsType} from "./../../../compiler";
 import {ExpressionBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./../base";
 
 export class TsExpressionBinder extends ExpressionBinder {
-    constructor(private tsExpression: TsExpression | TsTypeExpression) {
+    constructor(private tsExpression: TsExpression | TsType) {
         super(new TsBaseDefinitionBinder());
     }
 

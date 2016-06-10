@@ -1,5 +1,5 @@
 ﻿import * as binders from "./../binders";
-import {TsSourceFile, TsNode, TsSignature, TsType, TsTypeExpression, TsSymbol, TsExpression} from "./../compiler";
+import {TsSourceFile, TsNode, TsSignature, TsType, TsSymbol, TsExpression} from "./../compiler";
 import * as definitions from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 
@@ -12,7 +12,6 @@ export class TsFactory {
     private definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
     private files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
     private types = new KeyValueCache<TsType, definitions.TypeDefinition>();
-    private typeExpressions = new KeyValueCache<TsTypeExpression, definitions.TypeExpressionDefinition[]>();
     private deferredBindings: { binder: binders.IBaseBinder, definition: definitions.BaseDefinition }[] = [];
 
     getCallSignatureFromNode(node: TsNode) {
@@ -95,16 +94,12 @@ export class TsFactory {
         return bindToDefinition(new binders.TsTypeParameterBinder(this, node), new definitions.TypeParameterDefinition());
     }
 
-    getTypeExpression(tsTypeExpression: TsTypeExpression) {
-        if (tsTypeExpression == null) {
+    getTypeExpressionFromType(tsType: TsType) {
+        if (tsType == null) {
             return null;
         }
 
-        const def = bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsTypeExpressionBinder(this, tsTypeExpression), new definitions.TypeExpressionDefinition());
-        // todo: this array inside a KeyValueCache should be refactored out so it's more clear what's going on here
-        const typeExpressionArray = this.typeExpressions.getOrCreate(tsTypeExpression, () => []);
-        typeExpressionArray.push(def); // this adds to the array inside getOrCreate
-        return def;
+        return bindToDefinition<definitions.TypeExpressionDefinition>(new binders.TsTypeExpressionBinder(this, tsType), new definitions.TypeExpressionDefinition());
     }
 
     getTypePropertyFromSymbol(symbol: TsSymbol) {
@@ -208,18 +203,6 @@ export class TsFactory {
 
             symbols.forEach(s => {
                 typeDef.definitions.push(...this.getAllDefinitionsBySymbol(s) as definitions.ModuleMemberDefinitions[]);
-            });
-        });
-    }
-
-    fillAllCachedTypeExpressionsWithTypes() {
-        this.typeExpressions.getAllKeyValues().forEach(keyValue => {
-            const tsTypeExpression = keyValue.key;
-            const definitions = keyValue.value;
-            const types = tsTypeExpression.getTypes().map(type => this.getType(type));
-
-            definitions.forEach(def => {
-                def.types.push(...types);
             });
         });
     }

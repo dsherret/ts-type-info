@@ -3,7 +3,6 @@ import {tryGet} from "./../utils";
 import {TsSourceFileChild, TsSourceFileChildOptions} from "./TsSourceFileChild";
 import {TsSymbol} from "./TsSymbol";
 import {TsSignature} from "./TsSignature";
-import {TsTypeExpression} from "./TsTypeExpression";
 
 export interface TsTypeOptions extends TsSourceFileChildOptions {
     type: ts.Type;
@@ -22,13 +21,13 @@ export class TsType extends TsSourceFileChild {
         return this.typeChecker.typeToString(this.sourceFile, this.type);
     }
 
-    getBaseTypeExpressions(): TsTypeExpression[] {
+    getBaseTypes(): TsType[] {
         // not sure why, but accessing target.resolvedBaseTypes is necessary for getting the info
         // for BaseParameterDefinition in this library...
         const typeReference = this.type as ts.TypeReference;
         const baseTypes = (typeReference.target || {} as any).resolvedBaseTypes as ts.ObjectType[] || this.type.getBaseTypes();
 
-        return (baseTypes || []).map(t => this.createTypeExpression(t));
+        return (baseTypes || []).map(t => this.createType(t));
     }
 
     getProperties(): TsSymbol[] {
@@ -60,8 +59,20 @@ export class TsType extends TsSourceFileChild {
         }
     }
 
+    isArrayType() {
+        return this.getArrayElementType() != null;
+    }
+
     isTupleType() {
         return (this.type.flags & ts.TypeFlags.Tuple) !== 0;
+    }
+
+    isIntersectionType() {
+        return (this.type.flags & ts.TypeFlags.Intersection) !== 0;
+    }
+
+    isUnionType() {
+        return (this.type.flags & ts.TypeFlags.Union) !== 0;
     }
 
     hasCallSignaturesAndProperties() {
@@ -75,24 +86,26 @@ export class TsType extends TsSourceFileChild {
         )) === 0;
     }
 
-    private createTypeExpression(type: ts.Type): TsTypeExpression {
-        return this.tsCache.getTypeExpression(
-            this.typeChecker,
-            this.sourceFile,
-            type,
-            () => new TsTypeExpression({
-                sourceFile: this.sourceFile,
-                typeChecker: this.typeChecker,
-                tsCache: this.tsCache,
-                type: type
-            }),
-            (typeType) => new TsType({
-                sourceFile: this.sourceFile,
-                tsSourceFile: this.tsSourceFile,
-                typeChecker: this.typeChecker,
-                tsCache: this.tsCache,
-                type: typeType
-            }));
+    getUnionOrIntersectionTypeExpressions() {
+        return ((this.type as ts.UnionOrIntersectionType).types || []).map(t => this.createType(t));
+    }
+
+    getArrayElementType() {
+        const type = (this.type as any).elementType as ts.Type || this.getArrayTypeArgument();
+        return type == null ? null : this.createType(type);
+    }
+
+    private getArrayTypeArgument() {
+        const typeRef = (this.type as ts.TypeReference);
+
+        if (typeRef.typeArguments != null && typeRef.typeArguments.length === 1 &&
+            this.type.symbol != null && (this.type.symbol || {} as ts.Symbol).name === "Array"
+        ) {
+            return typeRef.typeArguments[0];
+        }
+        else {
+            return null;
+        }
     }
 
     private createType(type: ts.Type): TsType {

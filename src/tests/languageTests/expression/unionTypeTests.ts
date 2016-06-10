@@ -20,24 +20,25 @@ class MyOtherClass<T> {
                 name: "prop",
                 typeExpression: {
                     text: "MyClass | MyOtherClass<string>",
-                    types: [{
+                    unionTypeExpressions: [{
                         text: "MyClass",
-                        definitions: [{
-                            name: "MyClass"
+                        types: [{
+                            text: "MyClass",
+                            definitions: [{
+                                name: "MyClass"
+                            }]
                         }]
                     }, {
                         text: "MyOtherClass<string>",
-                        typeArguments: [{
-                            text: "string"
-                        }],
-                        definitions: [{
-                            name: "MyOtherClass"
+                        types: [{
+                            text: "MyOtherClass<string>",
+                            typeArguments: [{
+                                text: "string"
+                            }],
+                            definitions: [{
+                                name: "MyOtherClass"
+                            }]
                         }]
-                    }],
-                    unionTypeExpressions: [{
-                        text: "MyClass"
-                    }, {
-                        text: "MyOtherClass<string>"
                     }]
                 }
             }]

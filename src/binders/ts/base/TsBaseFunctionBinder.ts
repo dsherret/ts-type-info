@@ -29,7 +29,7 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
     }
 
     protected getOverloadSignatures() {
-        const callSignatures = this.node.getTypeAtLocation().getCallSignatures().filter(c => !c.getDeclaration().hasFunctionBody());
+        const callSignatures = this.node.getType().getCallSignatures().filter(c => !c.getDeclaration().hasFunctionBody());
 
         // we need to ignore the implementation signature in these cases
         if (this.node.isMethodSignature() || this.node.isAmbient() || this.node.hasAbstractKeyword()) {

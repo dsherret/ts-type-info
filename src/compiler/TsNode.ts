@@ -8,7 +8,6 @@ import {TsExpression} from "./TsExpression";
 import {TsSignature} from "./TsSignature";
 import {TsSymbol} from "./TsSymbol";
 import {TsType} from "./TsType";
-import {TsTypeExpression} from "./TsTypeExpression";
 import {TsSourceFileChildOptions, TsSourceFileChild} from "./TsSourceFileChild";
 
 export interface TsNodeOptions extends TsSourceFileChildOptions {
@@ -235,7 +234,7 @@ export class TsNode extends TsSourceFileChild {
 
     getUserDefinedTypeGuardType() {
         const typeNode = (this.node as ts.TypePredicateNode).type;
-        return typeNode == null ? null : this.createNode(typeNode).getTypeAtLocation();
+        return typeNode == null ? null : this.createNode(typeNode).getType();
     }
 
     getParameters() {
@@ -246,7 +245,7 @@ export class TsNode extends TsSourceFileChild {
     getReturnTypeExpression() {
         const tsType = this.typeChecker.getReturnTypeOfNode(this.node);
 
-        return this.getTypeExpressionFromType(tsType);
+        return this.getTsTypeFromType(tsType);
     }
 
     getScope() {
@@ -291,10 +290,6 @@ export class TsNode extends TsSourceFileChild {
         return this.node.getText();
     }
 
-    getTypeExpression(): TsTypeExpression {
-        return tryGet(this, () => this.getTypeExpressionAtLocation(this.node));
-    }
-
     getTypeParameters() {
         type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
         let typeParameteredDeclaration = this.node as typeParameteredTypes;
@@ -304,7 +299,7 @@ export class TsNode extends TsSourceFileChild {
 
     getTypeParameterConstraintTypeExpression() {
         const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
-        return constraint == null ? null : this.getTypeExpressionAtLocation((this.node as ts.TypeParameterDeclaration).constraint);
+        return constraint == null ? null : this.getTypeAtLocationByNode((this.node as ts.TypeParameterDeclaration).constraint);
     }
 
     getHeritageNodes() {
@@ -315,10 +310,8 @@ export class TsNode extends TsSourceFileChild {
             });
     }
 
-    getTypeAtLocation() {
-        const tsType = this.typeChecker.getTypeAtLocation(this.node);
-
-        return tsType == null ? null : this.createType(tsType);
+    getType(): TsType {
+        return this.getTypeAtLocationByNode(this.node);
     }
 
     getVariableDeclarationType() {
@@ -474,7 +467,7 @@ export class TsNode extends TsSourceFileChild {
         else if (this.node.parent != null && this.node.parent.parent != null && this.node.parent.parent.kind === ts.SyntaxKind.Parameter) {
             // for parameter destructuring, check to see if the type has a questionToken
             const name = this.getName();
-            const prop = ArrayUtils.firstOrDefault(this.createNode(this.node.parent.parent).getTypeAtLocation().getProperties(), p => p.getName() === name);
+            const prop = ArrayUtils.firstOrDefault(this.createNode(this.node.parent.parent).getType().getProperties(), p => p.getName() === name);
 
             if (prop != null) {
                 return (prop.getOnlyNode().node as ts.PropertyDeclaration).questionToken != null;
@@ -528,18 +521,18 @@ export class TsNode extends TsSourceFileChild {
         return this.typeChecker.getSyntaxKindAsString(this.getKind());
     }
 
-    private getTypeExpressionAtLocation(node: ts.Node): TsTypeExpression {
+    private getTypeAtLocationByNode(node: ts.Node): TsType {
         if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
             const declaration = node as ts.TypeAliasDeclaration;
-            return this.getTypeExpressionAtLocation(declaration.type);
+            return this.getTypeAtLocationByNode(declaration.type);
         }
         else {
-            return this.getTypeExpressionFromType(this.typeChecker.getTypeAtLocation(node));
+            return this.getTsTypeFromType(this.typeChecker.getTypeAtLocation(node));
         }
     }
 
-    private getTypeExpressionFromType(tsType: ts.Type) {
-        return this.tsCache.getTypeExpression(this.typeChecker, this.sourceFile, tsType, () => this.createTypeExpression(tsType), type => this.createType(type));
+    private getTsTypeFromType(tsType: ts.Type) {
+        return this.tsCache.getType(this.typeChecker, this.sourceFile, tsType, () => this.createType(tsType));
     }
 
     private createType(type: ts.Type): TsType {
@@ -549,15 +542,6 @@ export class TsNode extends TsSourceFileChild {
             type: type,
             tsCache: this.tsCache,
             tsSourceFile: this.tsSourceFile
-        });
-    }
-
-    private createTypeExpression(tsType: ts.Type): TsTypeExpression {
-        return new TsTypeExpression({
-            sourceFile: this.sourceFile,
-            typeChecker: this.typeChecker,
-            type: tsType,
-            tsCache: this.tsCache
         });
     }
 

@@ -1,6 +1,5 @@
 ﻿import * as ts from "typescript";
 import {TsSourceFileChild, TsSourceFileChildOptions} from "./TsSourceFileChild";
-import {TsTypeExpression} from "./TsTypeExpression";
 import {TsType} from "./TsType";
 import {TsNode} from "./TsNode";
 import {TsSymbol} from "./TsSymbol";
@@ -40,7 +39,7 @@ export class TsSignature extends TsSourceFileChild {
     }
 
     private getTypeExpressionFromType(tsType: ts.Type) {
-        return this.tsCache.getTypeExpression(this.typeChecker, this.sourceFile, tsType, () => this.createTypeExpression(tsType), type => this.createType(type));
+        return this.tsCache.getType(this.typeChecker, this.sourceFile, tsType, () => this.createType(tsType));
     }
 
     private createType(type: ts.Type): TsType {
@@ -61,15 +60,6 @@ export class TsSignature extends TsSourceFileChild {
             node: node,
             tsSourceFile: this.tsSourceFile
         }));
-    }
-
-    private createTypeExpression(tsType: ts.Type) {
-        return new TsTypeExpression({
-            sourceFile: this.sourceFile,
-            typeChecker: this.typeChecker,
-            type: tsType,
-            tsCache: this.tsCache
-        });
     }
 
     private createSymbol(symbol: ts.Symbol) {

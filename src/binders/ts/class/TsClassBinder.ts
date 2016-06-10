@@ -24,7 +24,7 @@ export class TsClassBinder extends ClassBinder {
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getTypeExpression(node.getTypeExpression()));
+            .map(node => this.factory.getTypeExpressionFromType(node.getType()));
     }
 
     getImplementsTypeExpressions() {
@@ -32,7 +32,7 @@ export class TsClassBinder extends ClassBinder {
             .filter(node => node.isHeritageClause() && node.hasImplementsKeyword())
             .map(node => node.getHeritageNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getTypeExpression(node.getTypeExpression()));
+            .map(node => this.factory.getTypeExpressionFromType(node.getType()));
     }
 
     getMembers() {

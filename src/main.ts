@@ -34,7 +34,6 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
     });
 
     tsFactory.bindDeferred();
-    tsFactory.fillAllCachedTypeExpressionsWithTypes();
     tsFactory.fillAllCachedTypesWithDefinitions();
 
     const globalDef = new GlobalDefinition();
