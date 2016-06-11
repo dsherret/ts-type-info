@@ -4,9 +4,9 @@ import {NamespaceDefinition, NamespaceDeclarationType, VariableDeclarationType} 
 import * as testHelpers from "./../../testHelpers";
 
 describe("ModuledDefinitionTests", () => {
-    describe("addClasses", () => {
+    describe("#addClass()", () => {
         const n = new NamespaceDefinition();
-        n.addClasses({
+        const returnedDef = n.addClass({
             name: "class1",
             constructorDef: { parameters: [{ name: "param1" }] },
             decorators: [{ name: "dec1" }],
@@ -23,8 +23,13 @@ describe("ModuledDefinitionTests", () => {
             staticMethods: [{ name: "staticMethod1" }],
             staticProperties: [{ name: "staticProp1" }],
             typeParameters: [{ name: "T" }]
-        }, {
+        });
+        n.addClass({
             name: "class2"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, n.classes[0]);
         });
 
         testHelpers.runClassDefinitionTests(n.classes[0], {
@@ -50,9 +55,9 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("addEnums", () => {
+    describe("#addEnum()", () => {
         const n = new NamespaceDefinition();
-        n.addEnums({
+        const returnedDef = n.addEnum({
             name: "enum1",
             hasDeclareKeyword: true,
             isAmbient: true,
@@ -61,8 +66,13 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             isConst: true,
             members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
-        }, {
+        });
+        n.addEnum({
             name: "enum2"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, n.enums[0]);
         });
 
         testHelpers.runEnumDefinitionTests(n.enums[0], {
@@ -80,9 +90,9 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("addFunctions", () => {
+    describe("addFunction", () => {
         const n = new NamespaceDefinition();
-        n.addFunctions({
+        const returnedDef = n.addFunction({
             name: "function1",
             hasDeclareKeyword: true,
             isAmbient: true,
@@ -98,8 +108,13 @@ describe("ModuledDefinitionTests", () => {
                 parameters: [{ name: "param1" }]
             }],
             onWriteFunctionBody: (writer) => writer.write("")
-        }, {
+        });
+        n.addFunction({
             name: "function2"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, n.functions[0]);
         });
 
         testHelpers.runFunctionDefinitionTests(n.functions[0], {
@@ -125,9 +140,9 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("addInterfaces", () => {
+    describe("#addInterface()", () => {
         const n = new NamespaceDefinition();
-        n.addInterfaces({
+        const returnedDef = n.addInterface({
             name: "Interface1",
             extendsTypes: ["Extend"],
             hasDeclareKeyword: true,
@@ -150,8 +165,13 @@ describe("ModuledDefinitionTests", () => {
             typeParameters: [{
                 name: "typeParam"
             }]
-        }, {
+        })
+        n.addInterface({
             name: "Interface2"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, n.interfaces[0]);
         });
 
         testHelpers.runInterfaceDefinitionTests(n.interfaces[0], {
@@ -185,9 +205,9 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("addNamespaces", () => {
+    describe("#addNamespace()", () => {
         const n = new NamespaceDefinition();
-        n.addNamespaces({
+        const returnedDef = n.addNamespace({
             name: "namespace1",
             declarationType: NamespaceDeclarationType.Module,
             classes: [{ name: "class1" }],
@@ -202,8 +222,13 @@ describe("ModuledDefinitionTests", () => {
             namespaces: [{ name: "namespace1" }],
             typeAliases: [{ name: "typeAlias1", type: "string" }],
             variables: [{ name: "variable1" }]
-        }, {
+        });
+        n.addNamespace({
             name: "namespace2"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, n.namespaces[0]);
         });
 
         testHelpers.runNamespaceDefinitionTests(n.namespaces[0], {
@@ -228,9 +253,9 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("addTypeAliases", () => {
+    describe("#addTypeAlias()", () => {
         const n = new NamespaceDefinition();
-        n.addTypeAliases({
+        const returnedDef = n.addTypeAlias({
             name: "typeAlias1",
             hasDeclareKeyword: true,
             isAmbient: true,
@@ -239,9 +264,14 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             type: "string",
             typeParameters: [{ name: "T" }]
-        }, {
+        })
+        n.addTypeAlias({
             name: "typeAlias2",
             type: "string"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, n.typeAliases[0]);
         });
 
         testHelpers.runTypeAliasDefinitionTests(n.typeAliases[0], {
@@ -260,9 +290,9 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("addVariables", () => {
+    describe("#addVariable()", () => {
         const n = new NamespaceDefinition();
-        n.addVariables({
+        const returnedDef = n.addVariable({
             name: "myVar1",
             declarationType: VariableDeclarationType.Const,
             defaultExpression: "5",
@@ -272,8 +302,13 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             type: "number"
-        }, {
+        });
+        n.addVariable({
             name: "myVar2"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, n.variables[0]);
         });
 
         testHelpers.runVariableDefinitionTests(n.variables[0], {
@@ -293,64 +328,71 @@ describe("ModuledDefinitionTests", () => {
         });
     });
 
-    describe("getClass", () => {
+    describe("#getClass()", () => {
         const n = new NamespaceDefinition();
-        n.addClasses({ name: "name1" }, { name: "name2" });
+        n.addClass({ name: "name1" });
+        n.addClass({ name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getClass("name2"), { name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getClass(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("getEnum", () => {
+    describe("#getEnum()", () => {
         const n = new NamespaceDefinition();
-        n.addEnums({ name: "name1" }, { name: "name2" });
+        n.addEnum({ name: "name1" });
+        n.addEnum({ name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getEnum("name2"), { name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getEnum(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("getFunction", () => {
+    describe("#getFunction()", () => {
         const n = new NamespaceDefinition();
-        n.addFunctions({ name: "name1" }, { name: "name2" });
+        n.addFunction({ name: "name1" });
+        n.addFunction({ name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getFunction("name2"), { name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getFunction(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("getInterface", () => {
+    describe("#getInterface()", () => {
         const n = new NamespaceDefinition();
-        n.addInterfaces({ name: "name1" }, { name: "name2" });
+        n.addInterface({ name: "name1" });
+        n.addInterface({ name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getInterface("name2"), { name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getInterface(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("getNamespace", () => {
+    describe("#getNamespace()", () => {
         const n = new NamespaceDefinition();
-        n.addNamespaces({ name: "name1" }, { name: "name2" });
+        n.addNamespace({ name: "name1" });
+        n.addNamespace({ name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getNamespace("name2"), { name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getNamespace(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("getTypeAlias", () => {
+    describe("#getTypeAlias()", () => {
         const n = new NamespaceDefinition();
-        n.addTypeAliases({ name: "name1", type: "string" }, { name: "name2", type: "string" });
+        n.addTypeAlias({ name: "name1", type: "string" });
+        n.addTypeAlias({ name: "name2", type: "string" });
         testHelpers.runNamedDefinitionTests(n.getTypeAlias("name2"), { name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getTypeAlias(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("getVariable", () => {
+    describe("#getVariable()", () => {
         const n = new NamespaceDefinition();
-        n.addVariables({ name: "name1" }, { name: "name2" });
+        n.addVariable({ name: "name1" });
+        n.addVariable({ name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getVariable("name2"), { name: "name2" });
         testHelpers.runNamedDefinitionTests(n.getVariable(d => d.name === "name2"), { name: "name2" });
     });
 
-    describe("directlyContains", () => {
+    describe("#directlyContains()", () => {
         const n = new NamespaceDefinition();
-        n.addClasses({ name: "c" })
-            .addEnums({ name: "e" })
-            .addFunctions({ name: "f" })
-            .addInterfaces({ name: "i" })
-            .addNamespaces({ name: "n" })
-            .addTypeAliases({ name: "t", type: "string" })
-            .addVariables({ name: "v" });
+        n.addClass({ name: "c" });
+        n.addEnum({ name: "e" });
+        n.addFunction({ name: "f" });
+        n.addInterface({ name: "i" });
+        n.addNamespace({ name: "n" });
+        n.addTypeAlias({ name: "t", type: "string" });
+        n.addVariable({ name: "v" });
 
         it("should contain the class", () => {
             assert.equal(n.directlyContains(n.classes[0]), true);
@@ -387,10 +429,11 @@ describe("ModuledDefinitionTests", () => {
 
     describe("#getNamespacesToDefinition()", () => {
         const def = new NamespaceDefinition();
-        def.addVariables({ name: "v" });
-        def.addNamespaces({
+        def.addVariable({ name: "v" });
+        def.addNamespace({
             name: "n1"
-        }, {
+        });
+        def.addNamespace({
             name: "n2",
             namespaces: [{
                 name: "n3",

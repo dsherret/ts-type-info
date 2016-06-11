@@ -1,14 +1,20 @@
-﻿import {ClassDefinition} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {ClassDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests, runTypeParameteredDefinitionTests} from "./../../testHelpers";
 
 describe("TypeParameteredDefinition", () => {
-    describe("addTypeParameters", () => {
+    describe("#addTypeParameter()", () => {
         const d = new ClassDefinition();
-        d.addTypeParameters({
+        const returnedDef = d.addTypeParameter({
             name: "T"
-        }, {
+        });
+        d.addTypeParameter({
             name: "U",
             constraintType: "string"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, d.typeParameters[0]);
         });
 
         runTypeParameteredDefinitionTests(d, {
@@ -21,9 +27,10 @@ describe("TypeParameteredDefinition", () => {
         });
     });
 
-    describe("getTypeParameter", () => {
+    describe("#getTypeParameter()", () => {
         const c = new ClassDefinition();
-        c.addTypeParameters({ name: "name1" }, { name: "name2" });
+        c.addTypeParameter({ name: "name1" });
+        c.addTypeParameter({ name: "name2" });
         runNamedDefinitionTests(c.getTypeParameter("name2"), { name: "name2" });
         runNamedDefinitionTests(c.getTypeParameter(d => d.name === "name2"), { name: "name2" });
     });

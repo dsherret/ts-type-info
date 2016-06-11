@@ -21,7 +21,7 @@ export class GlobalDefinition {
             throw new Error(`The specified definition is located in the namespace ${fileAndNamespaces.namespaces[0].name}. Please move it out of the namespace.`);
         }
         else {
-            opts.file.addImports({
+            opts.file.addImport({
                 namedImports: [{
                     definition: opts.definition,
                     alias: opts.alias
@@ -31,10 +31,10 @@ export class GlobalDefinition {
         }
     }
 
-    addFiles(...files: FileStructure[]) {
-        const factory = new StructureFactory();
-        this.files.push(...files.map(f => factory.getFile(f)));
-        return this;
+    addFile(structure: FileStructure) {
+        const def = new StructureFactory().getFile(structure);
+        this.files.push(def);
+        return def;
     }
 
     getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)) {

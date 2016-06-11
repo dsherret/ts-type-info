@@ -4,28 +4,36 @@ import {createFile} from "./../../../createFunctions";
 import {runImportDefinitionTests, runReExportDefinitionTests} from "./../../testHelpers";
 
 describe("FileDefinition", () => {
-    describe("#addImports()", () => {
+    describe("#addImport()", () => {
         describe("multiple imports", () => {
             const f = new FileDefinition();
-            f.addImports({
+            const returnedDef = f.addImport({
                 moduleSpecifier: "./test1",
                 starImportName: "myStarImport1"
-            }, {
+            });
+            f.addImport({
                 moduleSpecifier: "./test2",
                 defaultImportName: "defaultImport1"
-            }, {
+            });
+            f.addImport({
                 moduleSpecifier: "./test3",
                 namedImports: [{
                     name: "namedImport1"
                 }]
-            }, {
+            });
+            f.addImport({
                 moduleSpecifier: "./test4",
                 namedImports: [{
                     name: "namedImport3"
                 }],
                 defaultImportName: "defaultImport2"
-            }, {
+            });
+            f.addImport({
                 moduleSpecifier: "./test5"
+            });
+
+            it("the returned definition should be in the array", () => {
+                assert.equal(returnedDef, f.imports[0]);
             });
 
             describe("import star", () => {
@@ -79,7 +87,7 @@ describe("FileDefinition", () => {
         it("should error when a star import and named import are specified", () => {
             const f = new FileDefinition();
             assert.throws(() => {
-                f.addImports({
+                f.addImport({
                     moduleSpecifier: "./test1",
                     starImportName: "test",
                     namedImports: [{ name: "test2" }]
@@ -88,16 +96,21 @@ describe("FileDefinition", () => {
         });
     });
 
-    describe("#addReExports()", () => {
+    describe("#addReExport()", () => {
         const f = new FileDefinition();
-        f.addReExports({
+        const returnedDef = f.addReExport({
             moduleSpecifier: "./test1"
-        }, {
+        });
+        f.addReExport({
             moduleSpecifier: "./test2",
             namedExports: [
                 { name: "namedImport1", alias: "aliasName" },
                 { name: "namedImport2" }
             ]
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, f.reExports[0]);
         });
 
         describe("import star", () => {
@@ -122,10 +135,11 @@ describe("FileDefinition", () => {
 
     describe("#getImport()", () => {
         const f = new FileDefinition();
-        f.addImports({
+        f.addImport({
             moduleSpecifier: "./test1",
             starImportName: "myStarImport1"
-        }, {
+        });
+        f.addImport({
             moduleSpecifier: "./test2",
             starImportName: "myStarImport2"
         });
@@ -137,9 +151,10 @@ describe("FileDefinition", () => {
 
     describe("#getReExport()", () => {
         const f = new FileDefinition();
-        f.addReExports({
+        f.addReExport({
             moduleSpecifier: "./test1"
-        }, {
+        });
+        f.addReExport({
             moduleSpecifier: "./test2"
         });
 

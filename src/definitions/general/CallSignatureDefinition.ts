@@ -14,10 +14,10 @@ export class CallSignatureDefinition
         super(DefinitionType.CallSignature);
     }
 
-    addParameters(...parameters: CallSignatureParameterStructure[]) {
-        const factory = new StructureFactory();
-        this.parameters.push(...parameters.map(p => factory.getCallSignatureParameter(p)));
-        return this;
+    addParameter(structure: CallSignatureParameterStructure) {
+        const def = new StructureFactory().getCallSignatureParameter(structure);
+        this.parameters.push(def);
+        return def;
     }
 
     getMinArgumentCount() {
@@ -32,7 +32,7 @@ export class CallSignatureDefinition
     setReturnType: (text: string) => any;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
-    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
 }
 

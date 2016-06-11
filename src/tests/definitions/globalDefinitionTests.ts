@@ -5,7 +5,7 @@ import {GlobalDefinition} from "./../../definitions";
 describe("GlobalDefinition", () => {
     describe("#addDefinitionAsImportToFile()", () => {
         const def = new GlobalDefinition();
-        def.addFiles({
+        def.addFile({
             fileName: "/file1.ts",
             classes: [{
                 name: "MyClass",
@@ -24,7 +24,8 @@ describe("GlobalDefinition", () => {
                     isExported: true
                 }]
             }]
-        }, {
+        });
+        def.addFile({
             fileName: "/file2.ts"
         });
 
@@ -63,9 +64,14 @@ describe("GlobalDefinition", () => {
         });
     });
 
-    describe("#addFiles()", () => {
+    describe("#addFile()", () => {
         const def = new GlobalDefinition();
-        def.addFiles({ fileName: "test.ts" }, { fileName: "test2.ts" });
+        const returnedDef = def.addFile({ fileName: "test.ts" });
+        def.addFile({ fileName: "test2.ts" });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, def.files[0]);
+        });
 
         // good enough to just check the number of files is correct...
         // this is tested more thoroughly in the createFile tests
@@ -76,7 +82,8 @@ describe("GlobalDefinition", () => {
 
     describe("#getFile()", () => {
         const def = new GlobalDefinition();
-        def.addFiles({ fileName: "test.ts" }, { fileName: "test2.ts" });
+        def.addFile({ fileName: "test.ts" });
+        def.addFile({ fileName: "test2.ts" });
 
         it("should get the correct file when specifying a file name", () => {
             assert.equal(def.getFile("test2.ts"), def.files[1]);
@@ -90,9 +97,10 @@ describe("GlobalDefinition", () => {
     describe("#getFileOfDefinition()", () => {
         // no need to test anything extravagant in here because this method calls getNamespacesToDefinition()
         const def = new GlobalDefinition();
-        def.addFiles({
+        def.addFile({
             fileName: "dummy.ts"
-        }, {
+        });
+        def.addFile({
             namespaces: [{
                 name: "n",
                 variables: [{
@@ -112,9 +120,10 @@ describe("GlobalDefinition", () => {
 
     describe("#getNamespacesToDefinition()", () => {
         const def = new GlobalDefinition();
-        def.addFiles({
+        def.addFile({
             fileName: "dummy.ts"
-        }, {
+        });
+        def.addFile({
             namespaces: [{
                 name: "n1"
             }, {
@@ -124,7 +133,8 @@ describe("GlobalDefinition", () => {
                     variables: [{ name: "v1" }, { name: "v2" }]
                 }]
             }]
-        }, {
+        });
+        def.addFile({
             variables: [{ name: "v" }]
         });
 

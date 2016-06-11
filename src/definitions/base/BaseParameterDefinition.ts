@@ -22,10 +22,10 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
         super(definitionType);
     }
 
-    addDestructuringProperties(...properties: ObjectPropertyStructure[]) {
-        const factory = new StructureFactory();
-        this.destructuringProperties.push(...properties.map(p => factory.getObjectProperty(p)));
-        return this as any; // todo: type this in TypeScript 2.0
+    addDestructuringProperty(structure: ObjectPropertyStructure) {
+        const def = new StructureFactory().getObjectProperty(structure);
+        this.destructuringProperties.push(def);
+        return def;
     }
 
     getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)) {

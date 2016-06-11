@@ -9,17 +9,24 @@ describe("ImportDefinition", () => {
         runImportPartDefinitionTests(importDef.defaultImport, { importName: "defaultImportName" });
     });
 
-    describe("#addNamedImports()", () => {
+    describe("#addNamedImport()", () => {
         const importDef = new ImportDefinition();
-        importDef.addNamedImports({
+        const returnedDef = importDef.addNamedImport({
             name: "name"
-        }, {
+        });
+        importDef.addNamedImport({
             name: "name",
             alias: "aliasName"
-        }, {
+        });
+        importDef.addNamedImport({
             definition: { name: "MyDef" } as VariableDefinition
-        }, {
+        });
+        importDef.addNamedImport({
             definitions: [{ name: "MyDef2" } as VariableDefinition, { name: "MyDef2" } as VariableDefinition]
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, importDef.namedImports[0]);
         });
 
         runImportPartDefinitionTests(importDef.namedImports[0], { importName: "name", definitions: [{ name: "name", type: null }] });
@@ -30,10 +37,11 @@ describe("ImportDefinition", () => {
 
     describe("#getNamedImport()", () => {
         const importDef = new ImportDefinition();
-        importDef.addNamedImports({
+        importDef.addNamedImport({
             name: "name",
             alias: "someAlias"
-        }, {
+        });
+        importDef.addNamedImport({
             name: "name2"
         });
 

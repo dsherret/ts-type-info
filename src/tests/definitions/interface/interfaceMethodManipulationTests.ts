@@ -1,21 +1,26 @@
-﻿import {InterfaceMethodDefinition} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {InterfaceMethodDefinition} from "./../../../definitions";
 import {runInterfaceMethodParameterDefinitionTests} from "./../../testHelpers";
 
 describe("InterfaceMethodDefinition", () => {
-    describe("addParameters", () => {
-        const c = new InterfaceMethodDefinition();
-
-        c.addParameters({
+    describe("#addParameter()", () => {
+        const m = new InterfaceMethodDefinition();
+        const returnedDef = m.addParameter({
             name: "myParameter",
             type: "string[]",
             defaultExpression: `["test"]`,
             isOptional: true,
             isRestParameter: true
-        }, {
+        });
+        m.addParameter({
             name: "mySecondParameter"
         });
 
-        runInterfaceMethodParameterDefinitionTests(c.parameters[0], {
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, m.parameters[0]);
+        });
+
+        runInterfaceMethodParameterDefinitionTests(m.parameters[0], {
             name: "myParameter",
             type: { text: "string[]", isArray: true, arrayElementType: { text: "string" } },
             defaultExpression: { text: `["test"]` },
@@ -23,7 +28,7 @@ describe("InterfaceMethodDefinition", () => {
             isRestParameter: true
         });
 
-        runInterfaceMethodParameterDefinitionTests(c.parameters[1], {
+        runInterfaceMethodParameterDefinitionTests(m.parameters[1], {
             name: "mySecondParameter"
         });
     });

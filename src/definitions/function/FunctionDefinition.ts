@@ -16,10 +16,10 @@ export class FunctionDefinition
         super(DefinitionType.Function);
     }
 
-    addParameters(...parameters: FunctionParameterStructure[]) {
-        const factory = new StructureFactory();
-        this.parameters.push(...parameters.map(p => factory.getFunctionParameter(p)));
-        return this;
+    addParameter(structure: FunctionParameterStructure) {
+        const def = new StructureFactory().getFunctionParameter(structure);
+        this.parameters.push(def);
+        return def;
     }
 
     write(writeOptions?: WriteOptions) {

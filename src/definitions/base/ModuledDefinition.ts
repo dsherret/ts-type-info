@@ -19,46 +19,46 @@ export abstract class ModuledDefinition {
     variables: VariableDefinition[] = [];
     typeAliases: TypeAliasDefinition[] = [];
 
-    addClasses(...classes: ClassStructure[]) {
-        const factory = new StructureFactory();
-        this.classes.push(...classes.map(c => factory.getClass(c)));
-        return this;
+    addClass(structure: ClassStructure) {
+        const def = new StructureFactory().getClass(structure);
+        this.classes.push(def);
+        return def;
     }
 
-    addEnums(...enums: EnumStructure[]) {
-        const factory = new StructureFactory();
-        this.enums.push(...enums.map(e => factory.getEnum(e)));
-        return this;
+    addEnum(structure: EnumStructure) {
+        const def = new StructureFactory().getEnum(structure);
+        this.enums.push(def);
+        return def;
     }
 
-    addFunctions(...functions: FunctionStructure[]) {
-        const factory = new StructureFactory();
-        this.functions.push(...functions.map(f => factory.getFunction(f)));
-        return this;
+    addFunction(structure: FunctionStructure) {
+        const def = new StructureFactory().getFunction(structure);
+        this.functions.push(def);
+        return def;
     }
 
-    addInterfaces(...interfaces: InterfaceStructure[]) {
-        const factory = new StructureFactory();
-        this.interfaces.push(...interfaces.map(i => factory.getInterface(i)));
-        return this;
+    addInterface(structure: InterfaceStructure) {
+        const def = new StructureFactory().getInterface(structure);
+        this.interfaces.push(def);
+        return def;
     }
 
-    addNamespaces(...namespaces: NamespaceStructure[]) {
-        const factory = new StructureFactory();
-        this.namespaces.push(...namespaces.map(n => factory.getNamespace(n)));
-        return this;
+    addNamespace(structure: NamespaceStructure) {
+        const def = new StructureFactory().getNamespace(structure);
+        this.namespaces.push(def);
+        return def;
     }
 
-    addTypeAliases(...typeAliases: TypeAliasStructure[]) {
-        const factory = new StructureFactory();
-        this.typeAliases.push(...typeAliases.map(t => factory.getTypeAlias(t)));
-        return this;
+    addTypeAlias(structure: TypeAliasStructure) {
+        const def = new StructureFactory().getTypeAlias(structure);
+        this.typeAliases.push(def);
+        return def;
     }
 
-    addVariables(...variables: VariableStructure[]) {
-        const factory = new StructureFactory();
-        this.variables.push(...variables.map(v => factory.getVariable(v)));
-        return this;
+    addVariable(structure: VariableStructure) {
+        const def = new StructureFactory().getVariable(structure);
+        this.variables.push(def);
+        return def;
     }
 
     getClass(nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) {

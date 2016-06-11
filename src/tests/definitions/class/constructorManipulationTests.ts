@@ -1,19 +1,24 @@
-﻿import {ClassConstructorDefinition, ClassConstructorParameterScope} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {ClassConstructorDefinition, ClassConstructorParameterScope} from "./../../../definitions";
 import {runClassConstructorParameterDefinitionTests} from "./../../testHelpers";
 
 describe("ClassConstructor", () => {
-    describe("addParameters", () => {
+    describe("#addParameter()", () => {
         const c = new ClassConstructorDefinition();
-
-        c.addParameters({
+        const returnedDef = c.addParameter({
             name: "myParameter",
             type: "string[]",
             defaultExpression: `["test"]`,
             isOptional: true,
             isRestParameter: true,
             scope: ClassConstructorParameterScope.Private
-        }, {
+        });
+        c.addParameter({
             name: "mySecondParameter"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.parameters[0]);
         });
 
         runClassConstructorParameterDefinitionTests(c.parameters[0], {

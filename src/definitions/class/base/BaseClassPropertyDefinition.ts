@@ -12,7 +12,7 @@ export class BaseClassPropertyDefinition extends BaseObjectPropertyDefinition im
 
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
-    addDecorators: (...decorators: DecoratorStructure[]) => this;
+    addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     // ScopeDefinition
     scope: Scope;

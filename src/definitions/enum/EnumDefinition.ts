@@ -15,10 +15,10 @@ export class EnumDefinition extends BaseDefinition implements ExportableDefiniti
         super(DefinitionType.Enum);
     }
 
-    addMembers(...members: EnumMemberStructure[]) {
-        const factory = new StructureFactory();
-        this.members.push(...members.map(m => factory.getEnumMember(m)));
-        return this;
+    addMember(structure: EnumMemberStructure) {
+        const def = new StructureFactory().getEnumMember(structure);
+        this.members.push(def);
+        return def;
     }
 
     getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)) {

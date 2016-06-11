@@ -6,10 +6,10 @@ import {TypeParameterDefinition} from "./../general";
 export abstract class TypeParameteredDefinition {
     typeParameters: TypeParameterDefinition[] = [];
 
-    addTypeParameters(...typeParameters: TypeParameterStructure[]) {
-        const factory = new StructureFactory();
-        this.typeParameters.push(...typeParameters.map(t => factory.getTypeParameter(t)));
-        return this;
+    addTypeParameter(structure: TypeParameterStructure) {
+        const def = new StructureFactory().getTypeParameter(structure);
+        this.typeParameters.push(def);
+        return def;
     }
 
     getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) {

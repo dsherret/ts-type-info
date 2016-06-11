@@ -8,9 +8,9 @@ export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceM
         super(DefinitionType.InterfaceMethod);
     }
 
-    addParameters(...parameters: InterfaceMethodParameterStructure[]) {
-        const factory = new StructureFactory();
-        this.parameters.push(...parameters.map(p => factory.getInterfaceMethodParameter(p)));
-        return this;
+    addParameter(structure: InterfaceMethodParameterStructure) {
+        const def = new StructureFactory().getInterfaceMethodParameter(structure);
+        this.parameters.push(def);
+        return def;
     }
 }

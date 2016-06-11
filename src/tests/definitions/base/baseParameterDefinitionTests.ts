@@ -3,12 +3,13 @@ import {FunctionParameterDefinition} from "./../../../definitions";
 import {runObjectPropertyDefinitionTests} from "./../../testHelpers";
 
 describe("BaseParameterDefinition", () => {
-    describe("getDestructuringProperty", () => {
+    describe("#getDestructuringProperty()", () => {
         const param = new FunctionParameterDefinition();
-        param.addDestructuringProperties({
+        param.addDestructuringProperty({
             name: "prop1",
             type: "number"
-        }, {
+        });
+        param.addDestructuringProperty({
             name: "prop2",
             type: "string"
         });
@@ -22,18 +23,23 @@ describe("BaseParameterDefinition", () => {
         });
     });
 
-    describe("addDestructuringProperties", () => {
+    describe("#addDestructuringProperty()", () => {
         const param = new FunctionParameterDefinition();
-        param.addDestructuringProperties({
+        const returnedDef = param.addDestructuringProperty({
             defaultExpression: "5",
             isOptional: true,
             name: "prop1",
             type: "number",
             onAfterWrite: (writer) => writer.write(""),
             onBeforeWrite: (writer) => writer.write("")
-        }, {
+        });
+        param.addDestructuringProperty({
             name: "prop2",
             type: "string"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, param.destructuringProperties[0]);
         });
 
         runObjectPropertyDefinitionTests(param.destructuringProperties[0], {

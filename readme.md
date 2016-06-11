@@ -82,10 +82,11 @@ myMethod.onWriteFunctionBody = writer => {
     writer.newLine().write("return myParam;");
 };
 
-myClass.addProperties({
+myClass.addProperty({
     name: "myProperty1"
     type: "string"
-}, {
+});
+myClass.addProperty({
     name: "myProperty2",
     type: "number",
     defaultExpression: "4"

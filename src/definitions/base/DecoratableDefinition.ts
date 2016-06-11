@@ -4,10 +4,10 @@ import {DefinitionUtils} from "./../../utils";
 import {DecoratorDefinition} from "./../general";
 
 export abstract class DecoratableDefinition {
-    addDecorators(...decorators: DecoratorStructure[]) {
-        const factory = new StructureFactory();
-        this.decorators.push(...decorators.map(d => factory.getDecorator(d)));
-        return this;
+    addDecorator(structure: DecoratorStructure) {
+        const def = new StructureFactory().getDecorator(structure);
+        this.decorators.push(def);
+        return def;
     }
 
     decorators: DecoratorDefinition[] = [];

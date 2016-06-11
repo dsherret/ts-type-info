@@ -4,7 +4,7 @@ import {runBaseDefinitionTests} from "./../../testHelpers";
 describe("BaseDefinition", () => {
     describe("adding onBeforeWrite and onAfterWrite", () => {
         const n = new NamespaceDefinition();
-        n.addFunctions({
+        n.addFunction({
             name: "name",
             onBeforeWrite: (writer) => writer.write(""),
             onAfterWrite: (writer) => writer.write("")

@@ -10,10 +10,10 @@ export class ClassMethodDefinition extends BaseClassMethodDefinition<ClassMethod
         super(DefinitionType.ClassMethod);
     }
 
-    addParameters(...parameters: ClassMethodParameterStructure[]) {
-        const factory = new StructureFactory();
-        this.parameters.push(...parameters.map(p => factory.getClassMethodParameter(p)));
-        return this;
+    addParameter(structure: ClassMethodParameterStructure) {
+        const def = new StructureFactory().getClassMethodParameter(structure);
+        this.parameters.push(def);
+        return def;
     }
 
     // AbstractableDefinition

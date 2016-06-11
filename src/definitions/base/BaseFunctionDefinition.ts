@@ -22,10 +22,10 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
         super(definitionType);
     }
 
-    addOverloadSignatures(...overloadSignatures: CallSignatureStructure[]) {
-        const factory = new StructureFactory();
-        this.overloadSignatures.push(...overloadSignatures.map(s => factory.getCallSignature(s)));
-        return this;
+    addOverloadSignature(structure: CallSignatureStructure) {
+        const def = new StructureFactory().getCallSignature(structure);
+        this.overloadSignatures.push(def);
+        return def;
     }
 
     getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean) {
@@ -36,14 +36,14 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     name: string;
     // ParameteredDefinition
     parameters: ParameterType[];
-    abstract addParameters(...parameters: ParameterStructureType[]): this;
+    abstract addParameter(structure: ParameterStructureType): ParameterType;
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
     // ReturnTyped
     returnType: TypeDefinition;
     setReturnType: (text: string) => any;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
-    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
 }
 

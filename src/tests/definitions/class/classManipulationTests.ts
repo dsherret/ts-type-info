@@ -3,9 +3,14 @@ import {ClassDefinition, Scope, ClassConstructorParameterScope} from "./../../..
 import * as testHelpers from "./../../testHelpers";
 
 describe("ClassDefinition", () => {
-    describe("addExtends", () => {
+    describe("#addExtends()", () => {
         const c = new ClassDefinition();
-        c.addExtends("test", "test2");
+        const returnedDef = c.addExtends("test");
+        c.addExtends("test2");
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.extendsTypes[0]);
+        });
 
         it("should have two extends expressions", () => {
             assert.equal(c.extendsTypes.length, 2);
@@ -16,9 +21,14 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("addImplements", () => {
+    describe("#addImplements()", () => {
         const c = new ClassDefinition();
-        c.addImplements("test", "test2");
+        const returnedDef = c.addImplements("test");
+        c.addImplements("test2");
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.implementsTypes[0]);
+        });
 
         it("should have two implements expressions", () => {
             assert.equal(c.implementsTypes.length, 2);
@@ -29,10 +39,9 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("addMethods", () => {
+    describe("#addMethod()", () => {
         const c = new ClassDefinition();
-
-        c.addMethods({
+        const returnedDef = c.addMethod({
             decorators: [{ name: "decorator" }],
             isAbstract: true,
             isAsync: true,
@@ -49,8 +58,13 @@ describe("ClassDefinition", () => {
             name: "myMethod",
             scope: Scope.Private,
             onWriteFunctionBody: (writer) => writer.write("")
-        }, {
+        });
+        c.addMethod({
             name: "mySecondMethod"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.methods[0]);
         });
 
         testHelpers.runClassMethodDefinitionTests(c.methods[0], {
@@ -77,10 +91,9 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("addProperties", () => {
+    describe("#addProperty()", () => {
         const c = new ClassDefinition();
-
-        c.addProperties({
+        const returnedDef = c.addProperty({
             decorators: [{ name: "decorator" }],
             defaultExpression: "4",
             isAccessor: true,
@@ -91,8 +104,13 @@ describe("ClassDefinition", () => {
             type: "string",
             onWriteGetBody: (writer) => writer.write(""),
             onWriteSetBody: (writer) => writer.write("")
-        }, {
+        });
+        c.addProperty({
             name: "mySecondProperty"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.properties[0]);
         });
 
         testHelpers.runClassPropertyDefinitionTests(c.properties[0], {
@@ -112,10 +130,9 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("addStaticMethods", () => {
+    describe("#addStaticMethod()", () => {
         const c = new ClassDefinition();
-
-        c.addStaticMethods({
+        const returnedDef = c.addStaticMethod({
             decorators: [{ name: "decorator" }],
             isAsync: true,
             returnType: "string",
@@ -130,8 +147,13 @@ describe("ClassDefinition", () => {
             }],
             name: "myStaticMethod",
             scope: Scope.Private
-        }, {
+        });
+        c.addStaticMethod({
             name: "mySecondStaticMethod"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.staticMethods[0]);
         });
 
         testHelpers.runClassStaticMethodDefinitionTests(c.staticMethods[0], {
@@ -156,18 +178,22 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("addStaticProperties", () => {
+    describe("#addStaticProperty()", () => {
         const c = new ClassDefinition();
-
-        c.addStaticProperties({
+        const returnedDef = c.addStaticProperty({
             decorators: [{ name: "decorator" }],
             defaultExpression: "4",
             isOptional: true,
             name: "myStaticProperty",
             scope: Scope.Private,
             type: "string"
-        }, {
+        });
+        c.addStaticProperty({
             name: "mySecondStaticProperty"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.staticProperties[0]);
         });
 
         testHelpers.runClassStaticPropertyDefinitionTests(c.staticProperties[0], {
@@ -183,7 +209,7 @@ describe("ClassDefinition", () => {
         });
     });
 
-    describe("setConstructor", () => {
+    describe("#setConstructor()", () => {
         const c = new ClassDefinition();
 
         c.setConstructor({

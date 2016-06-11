@@ -3,17 +3,24 @@ import {ReExportDefinition, VariableDefinition} from "./../../../definitions";
 import {runReExportPartDefinitionTests} from "./../../testHelpers";
 
 describe("ReExportDefinition", () => {
-    describe("#addNamedExports()", () => {
+    describe("#addNamedExport()", () => {
         const def = new ReExportDefinition();
-        def.addNamedExports({
+        const returnedDef = def.addNamedExport({
             name: "name"
-        }, {
+        });
+        def.addNamedExport({
             name: "name",
             alias: "aliasName"
-        }, {
+        });
+        def.addNamedExport({
             definition: { name: "MyDef" } as VariableDefinition
-        }, {
+        });
+        def.addNamedExport({
             definitions: [{ name: "MyDef2" } as VariableDefinition, { name: "MyDef2" } as VariableDefinition]
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, def.namedExports[0]);
         });
 
         runReExportPartDefinitionTests(def.namedExports[0], { exportName: "name", definitions: [{ name: "name", type: null }] });
@@ -24,10 +31,11 @@ describe("ReExportDefinition", () => {
 
     describe("#getNamedExport()", () => {
         const def = new ReExportDefinition();
-        def.addNamedExports({
+        def.addNamedExport({
             name: "name",
             alias: "someAlias"
-        }, {
+        });
+        def.addNamedExport({
             name: "name2"
         });
 

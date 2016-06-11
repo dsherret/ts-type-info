@@ -27,7 +27,7 @@ export function generateStrictStructures() {
         });
     });
 
-    fileDefForCreate.addImports({
+    fileDefForCreate.addImport({
         defaultImportName: "CodeBlockWriter",
         moduleSpecifier: "code-block-writer"
     });

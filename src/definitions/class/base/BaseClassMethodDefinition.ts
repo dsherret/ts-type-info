@@ -20,10 +20,10 @@ export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassM
     // FunctionBodyWriteableDefinition
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     // ParameteredDefinition
-    abstract addParameters(...parameters: ParameterStructureType[]): this;
+    abstract addParameter(structure: ParameterStructureType): ParameterType;
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
-    addDecorators: (...decorators: DecoratorStructure[]) => this;
+    addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     // ScopeDefinition
     scope: Scope;

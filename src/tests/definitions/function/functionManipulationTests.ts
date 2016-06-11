@@ -1,19 +1,21 @@
-﻿import {FunctionDefinition} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {FunctionDefinition} from "./../../../definitions";
 import {runFunctionParameterDefinitionTests} from "./../../testHelpers";
 
 describe("FunctionDefinition", () => {
-    describe("addParameters", () => {
+    describe("#addParameter()", () => {
         const c = new FunctionDefinition();
-
-        c.addParameters({
+        const returnedDef = c.addParameter({
             name: "myParameter",
             type: "string[]",
             defaultExpression: `["test"]`,
             isOptional: true,
             isRestParameter: true
-        }, {
+        });
+        c.addParameter({
             name: "mySecondParameter"
-        }, {
+        });
+        c.addParameter({
             name: null,
             destructuringProperties: [{
                 name: "param1",
@@ -23,6 +25,10 @@ describe("FunctionDefinition", () => {
             }, {
                 name: "param2"
             }]
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.parameters[0]);
         });
 
         runFunctionParameterDefinitionTests(c.parameters[0], {

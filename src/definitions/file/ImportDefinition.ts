@@ -19,10 +19,10 @@ export class ImportDefinition extends BaseDefinition {
         super(DefinitionType.Import);
     }
 
-    addNamedImports(...namedImports: NamedImportStructureTypes[]) {
-        const factory = new StructureFactory();
-        this.namedImports.push(...namedImports.map(n => factory.getImportPartByNamedImport(n)));
-        return this;
+    addNamedImport(structure: NamedImportStructureTypes) {
+        const def = new StructureFactory().getImportPartByNamedImport(structure);
+        this.namedImports.push(def);
+        return def;
     }
 
     getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean) {

@@ -31,7 +31,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
 
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
-    addDecorators: (...decorators: DecoratorStructure[]) => this;
+    addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
 }
 

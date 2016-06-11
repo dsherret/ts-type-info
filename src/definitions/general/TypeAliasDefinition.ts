@@ -38,7 +38,7 @@ export class TypeAliasDefinition extends BaseDefinition
     setType: (text: string) => any;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
-    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     // AmbientableDefinition
     isAmbient: boolean;

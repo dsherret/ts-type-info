@@ -1,11 +1,11 @@
-﻿import {ClassStaticMethodDefinition} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {ClassStaticMethodDefinition} from "./../../../definitions";
 import {runClassStaticMethodParameterDefinitionTests} from "./../../testHelpers";
 
 describe("ClassStaticMethod", () => {
-    describe("addParameters", () => {
-        const c = new ClassStaticMethodDefinition();
-
-        c.addParameters({
+    describe("#addParameter()", () => {
+        const m = new ClassStaticMethodDefinition();
+        const returnedDef = m.addParameter({
             name: "myParameter",
             type: "string[]",
             defaultExpression: `["test"]`,
@@ -14,11 +14,16 @@ describe("ClassStaticMethod", () => {
             decorators: [{
                 name: "decorator"
             }]
-        }, {
+        });
+        m.addParameter({
             name: "mySecondParameter"
         });
 
-        runClassStaticMethodParameterDefinitionTests(c.parameters[0], {
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, m.parameters[0]);
+        });
+
+        runClassStaticMethodParameterDefinitionTests(m.parameters[0], {
             name: "myParameter",
             type: { text: "string[]", isArray: true, arrayElementType: { text: "string" } },
             defaultExpression: { text: `["test"]` },
@@ -29,7 +34,7 @@ describe("ClassStaticMethod", () => {
             }]
         });
 
-        runClassStaticMethodParameterDefinitionTests(c.parameters[1], {
+        runClassStaticMethodParameterDefinitionTests(m.parameters[1], {
             name: "mySecondParameter"
         });
     });

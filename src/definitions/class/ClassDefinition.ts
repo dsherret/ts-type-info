@@ -37,40 +37,40 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return writer.toString();
     }
 
-    addMethods(...methods: ClassMethodStructure[]) {
-        const factory = new StructureFactory();
-        this.methods.push(...methods.map(m => factory.getClassMethod(m)));
-        return this;
+    addMethod(structure: ClassMethodStructure) {
+        const def = new StructureFactory().getClassMethod(structure);
+        this.methods.push(def);
+        return def;
     }
 
-    addProperties(...properties: ClassPropertyStructure[]) {
-        const factory = new StructureFactory();
-        this.properties.push(...properties.map(p => factory.getClassProperty(p)));
-        return this;
+    addProperty(structure: ClassPropertyStructure) {
+        const def = new StructureFactory().getClassProperty(structure);
+        this.properties.push(def);
+        return def;
     }
 
-    addStaticMethods(...staticMethods: ClassStaticMethodStructure[]) {
-        const factory = new StructureFactory();
-        this.staticMethods.push(...staticMethods.map(m => factory.getClassStaticMethod(m)));
-        return this;
+    addStaticMethod(structure: ClassStaticMethodStructure) {
+        const def = new StructureFactory().getClassStaticMethod(structure);
+        this.staticMethods.push(def);
+        return def;
     }
 
-    addStaticProperties(...staticProperties: ClassStaticPropertyStructure[]) {
-        const factory = new StructureFactory();
-        this.staticProperties.push(...staticProperties.map(p => factory.getClassStaticProperty(p)));
-        return this;
+    addStaticProperty(structure: ClassStaticPropertyStructure) {
+        const def = new StructureFactory().getClassStaticProperty(structure);
+        this.staticProperties.push(def);
+        return def;
     }
 
-    addExtends(...texts: string[]) {
-        const factory = new StructureFactory();
-        this.extendsTypes.push(...texts.map(t => factory.getTypeFromText(t)));
-        return this;
+    addExtends(structure: string) {
+        const def = new StructureFactory().getTypeFromText(structure);
+        this.extendsTypes.push(def);
+        return def;
     }
 
-    addImplements(...texts: string[]) {
-        const factory = new StructureFactory();
-        this.implementsTypes.push(...texts.map(t => factory.getTypeFromText(t)));
-        return this;
+    addImplements(structure: string) {
+        const def = new StructureFactory().getTypeFromText(structure);
+        this.implementsTypes.push(def);
+        return def;
     }
 
     getPropertiesAndConstructorParameters() {
@@ -105,7 +105,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     name: string;
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
-    addDecorators: (...decorators: DecoratorStructure[]) => this;
+    addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     // ExportableDefinition
     isExported: boolean;
@@ -113,7 +113,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
-    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     // AmbientableDefinition
     isAmbient: boolean;

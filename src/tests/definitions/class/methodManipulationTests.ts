@@ -1,11 +1,11 @@
-﻿import {ClassMethodDefinition} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {ClassMethodDefinition} from "./../../../definitions";
 import {runClassMethodParameterDefinitionTests} from "./../../testHelpers";
 
 describe("ClassMethod", () => {
-    describe("addParameters", () => {
+    describe("#addParameter()", () => {
         const c = new ClassMethodDefinition();
-
-        c.addParameters({
+        const returnedDef = c.addParameter({
             name: "myParameter",
             type: "string[]",
             defaultExpression: `["test"]`,
@@ -14,8 +14,13 @@ describe("ClassMethod", () => {
             decorators: [{
                 name: "decorator"
             }]
-        }, {
+        });
+        c.addParameter({
             name: "mySecondParameter"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.parameters[0]);
         });
 
         runClassMethodParameterDefinitionTests(c.parameters[0], {

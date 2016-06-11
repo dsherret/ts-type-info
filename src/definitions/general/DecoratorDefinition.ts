@@ -9,10 +9,10 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
         super(DefinitionType.Decorator);
     }
 
-    addArguments(...args: string[]) {
-        const factory = new StructureFactory();
-        this.arguments.push(...args.map(arg => factory.getTypeFromText(arg)));
-        return this;
+    addArgument(structure: string) {
+        const def = new StructureFactory().getTypeFromText(structure);
+        this.arguments.push(def);
+        return def;
     }
 
     // NamedDefinition

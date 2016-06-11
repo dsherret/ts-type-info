@@ -30,19 +30,17 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
         super(DefinitionType.File);
     }
 
-    addImports(...imports: ImportStructure[]) {
-        const factory = new StructureFactory();
-        this.imports.push(...imports.map(i => {
-            validateImportStructure(i);
-            return factory.getImport(i);
-        }));
-        return this;
+    addImport(structure: ImportStructure) {
+        validateImportStructure(structure);
+        const def = new StructureFactory().getImport(structure);
+        this.imports.push(def);
+        return def;
     }
 
-    addReExports(...reExports: ReExportStructure[]) {
-        const factory = new StructureFactory();
-        this.reExports.push(...reExports.map(r => factory.getReExport(r)));
-        return this;
+    addReExport(structure: ReExportStructure) {
+        const def = new StructureFactory().getReExport(structure);
+        this.reExports.push(def);
+        return def;
     }
 
     getModuleSpecifierToFile(file: FileDefinition) {
@@ -110,13 +108,13 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     functions: FunctionDefinition[];
     variables: VariableDefinition[];
     typeAliases: TypeAliasDefinition[];
-    addClasses: (...classes: ClassStructure[]) => this;
-    addEnums: (...enums: EnumStructure[]) => this;
-    addFunctions: (...functions: FunctionStructure[]) => this;
-    addInterfaces: (...interfaces: InterfaceStructure[]) => this;
-    addNamespaces: (...namespaces: NamespaceStructure[]) => this;
-    addTypeAliases: (...typeAliases: TypeAliasStructure[]) => this;
-    addVariables: (...variables: VariableStructure[]) => this;
+    addClass: (structure: ClassStructure) => ClassDefinition;
+    addEnum: (structure: EnumStructure) => EnumDefinition;
+    addFunction: (structure: FunctionStructure) => FunctionDefinition;
+    addInterface: (structure: InterfaceStructure) => InterfaceDefinition;
+    addNamespace: (structure: NamespaceStructure) => NamespaceDefinition;
+    addTypeAlias: (structure: TypeAliasStructure) => TypeAliasDefinition;
+    addVariable: (structure: VariableStructure) => VariableDefinition;
     getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition;
     getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition;
     getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition;

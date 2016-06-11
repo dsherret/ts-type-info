@@ -28,10 +28,10 @@ export class ReExportDefinition extends BaseDefinition {
         return exports;
     }
 
-    addNamedExports(...namedExports: NamedImportStructureTypes[]) {
-        const factory = new StructureFactory();
-        this.namedExports.push(...namedExports.map(n => factory.getReExportPartByNamedImport(n)));
-        return this;
+    addNamedExport(structure: NamedImportStructureTypes) {
+        const def = new StructureFactory().getReExportPartByNamedImport(structure);
+        this.namedExports.push(def);
+        return def;
     }
 
     getNamedExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean) {

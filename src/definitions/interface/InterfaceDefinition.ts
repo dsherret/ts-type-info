@@ -23,40 +23,40 @@ export class InterfaceDefinition extends BaseDefinition
         super(DefinitionType.Interface);
     }
 
-    addCallSignatures(...callSignatures: CallSignatureStructure[]) {
-        const factory = new StructureFactory();
-        this.callSignatures.push(...callSignatures.map(n => factory.getCallSignature(n)));
-        return this;
+    addCallSignature(structure: CallSignatureStructure) {
+        const def = new StructureFactory().getCallSignature(structure);
+        this.callSignatures.push(def);
+        return def;
     }
 
-    addExtends(...texts: string[]) {
-        const factory = new StructureFactory();
-        this.extendsTypes.push(...texts.map(t => factory.getTypeFromText(t)));
-        return this;
+    addExtends(structure: string) {
+        const def = new StructureFactory().getTypeFromText(structure);
+        this.extendsTypes.push(def);
+        return def;
     }
 
-    addIndexSignatures(...indexSignatures: IndexSignatureStructure[]) {
-        const factory = new StructureFactory();
-        this.indexSignatures.push(...indexSignatures.map(n => factory.getIndexSignature(n)));
-        return this;
+    addIndexSignature(structure: IndexSignatureStructure) {
+        const def = new StructureFactory().getIndexSignature(structure);
+        this.indexSignatures.push(def);
+        return def;
     }
 
-    addMethods(...methods: InterfaceMethodStructure[]) {
-        const factory = new StructureFactory();
-        this.methods.push(...methods.map(m => factory.getInterfaceMethod(m)));
-        return this;
+    addMethod(structure: InterfaceMethodStructure) {
+        const def = new StructureFactory().getInterfaceMethod(structure);
+        this.methods.push(def);
+        return def;
     }
 
-    addNewSignatures(...newSignatures: CallSignatureStructure[]) {
-        const factory = new StructureFactory();
-        this.newSignatures.push(...newSignatures.map(n => factory.getCallSignature(n)));
-        return this;
+    addNewSignature(structure: CallSignatureStructure) {
+        const def = new StructureFactory().getCallSignature(structure);
+        this.newSignatures.push(def);
+        return def;
     }
 
-    addProperties(...properties: InterfacePropertyStructure[]) {
-        const factory = new StructureFactory();
-        this.properties.push(...properties.map(p => factory.getInterfaceProperty(p)));
-        return this;
+    addProperty(structure: InterfacePropertyStructure) {
+        const def = new StructureFactory().getInterfaceProperty(structure);
+        this.properties.push(def);
+        return def;
     }
 
     getCallSignature(searchFunction: (callSignature: CallSignatureDefinition) => boolean) {
@@ -94,7 +94,7 @@ export class InterfaceDefinition extends BaseDefinition
     isDefaultExportOfFile: boolean;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
-    addTypeParameters: (...typeParameters: TypeParameterStructure[]) => this;
+    addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     // AmbientableDefinition
     isAmbient: boolean;

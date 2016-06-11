@@ -13,10 +13,10 @@ export class ClassConstructorDefinition
         super(DefinitionType.ClassConstructor);
     }
 
-    addParameters(...parameters: ClassConstructorParameterStructure[]) {
-        const factory = new StructureFactory();
-        this.parameters.push(...parameters.map(p => factory.getClassConstructorParameter(p)));
-        return this;
+    addParameter(structure: ClassConstructorParameterStructure) {
+        const def = new StructureFactory().getClassConstructorParameter(structure);
+        this.parameters.push(def);
+        return def;
     }
 
     // FunctionBodyWriteableDefinition

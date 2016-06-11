@@ -1,14 +1,20 @@
-﻿import {ClassDefinition} from "./../../../definitions";
+﻿import * as assert from "assert";
+import {ClassDefinition} from "./../../../definitions";
 import {runNamedDefinitionTests, runDecoratableDefinitionTests} from "./../../testHelpers";
 
 describe("DecoratableDefinition", () => {
-    describe("addDecorators", () => {
+    describe("#addDecorator()", () => {
         const c = new ClassDefinition();
-        c.addDecorators({
+        const returnedDef = c.addDecorator({
             name: "decorator1",
             arguments: ["5", `"test"`]
-        }, {
+        });
+        c.addDecorator({
             name: "decorator2"
+        });
+
+        it("the returned definition should be in the array", () => {
+            assert.equal(returnedDef, c.decorators[0]);
         });
 
         runDecoratableDefinitionTests(c, {
@@ -25,9 +31,10 @@ describe("DecoratableDefinition", () => {
         });
     });
 
-    describe("getDecorator", () => {
+    describe("#getDecorator()", () => {
         const c = new ClassDefinition();
-        c.addDecorators({ name: "name1" }, { name: "name2" });
+        c.addDecorator({ name: "name1" });
+        c.addDecorator({ name: "name2" });
         runNamedDefinitionTests(c.getDecorator("name2"), { name: "name2" });
         runNamedDefinitionTests(c.getDecorator(d => d.name === "name2"), { name: "name2" });
     });
