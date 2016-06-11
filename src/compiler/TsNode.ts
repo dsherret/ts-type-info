@@ -285,10 +285,6 @@ export class TsNode extends TsSourceFileChild {
         return this.createSymbol(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(namespaceImport.name)));
     }
 
-    getText() {
-        return this.node.getText();
-    }
-
     getTypeParameters() {
         type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
         let typeParameteredDeclaration = this.node as typeParameteredTypes;

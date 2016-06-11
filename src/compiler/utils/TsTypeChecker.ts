@@ -106,10 +106,6 @@ export class TsTypeChecker {
         return this.typeChecker;
     }
 
-    isNodeSourceFile(node: ts.Node) {
-        return typeof (node as ts.SourceFile).fileName === "string";
-    }
-
     isSymbolNamedExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
         const fileSymbol = this.getSymbolAtLocation(file);
 

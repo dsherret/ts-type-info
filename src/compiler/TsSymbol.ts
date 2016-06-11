@@ -1,6 +1,5 @@
 ﻿import * as ts from "typescript";
 import {Logger} from "./../utils";
-import {TsType} from "./TsType";
 import {TsNode} from "./TsNode";
 import {TsSourceFileChild, TsSourceFileChildOptions} from "./TsSourceFileChild";
 
@@ -27,10 +26,6 @@ export class TsSymbol extends TsSourceFileChild {
 
     getAliasSymbol(): TsSymbol {
         return this.createSymbol(this.typeChecker.getAliasedSymbol(this.symbol));
-    }
-
-    getDeclaredType(): TsType {
-        return this.createType(this.typeChecker.getDeclaredTypeOfSymbol(this.symbol));
     }
 
     getExportSymbols() {
@@ -131,20 +126,6 @@ export class TsSymbol extends TsSourceFileChild {
 
     isPropertyReadonly() {
         return this.isPropertyAccessor() && (this.symbol.flags & ts.SymbolFlags.SetAccessor) === 0;
-    }
-
-    private createType(type: ts.Type): TsType {
-        return this.tsCache.getType(
-            this.typeChecker,
-            this.sourceFile,
-            type,
-            () => new TsType({
-                sourceFile: this.sourceFile,
-                tsSourceFile: this.tsSourceFile,
-                typeChecker: this.typeChecker,
-                tsCache: this.tsCache,
-                type: type
-            }));
     }
 
     private createSymbol(symbol: ts.Symbol): TsSymbol {

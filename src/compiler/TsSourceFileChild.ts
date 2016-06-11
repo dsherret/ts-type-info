@@ -13,8 +13,4 @@ export class TsSourceFileChild extends TsBase {
 
         this.tsSourceFile = opts.tsSourceFile;
     }
-
-    getSourceFile(): TsSourceFile {
-        return this.tsSourceFile;
-    }
 }

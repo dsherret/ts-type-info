@@ -22,7 +22,7 @@ describe("FunctionDefinition", () => {
                 isOptional: true
             }, {
                 name: "param2"
-            }],
+            }]
         });
 
         runFunctionParameterDefinitionTests(c.parameters[0], {

@@ -21,15 +21,6 @@ export class TsType extends TsSourceFileChild {
         return this.typeChecker.typeToString(this.sourceFile, this.type);
     }
 
-    getBaseTypes(): TsType[] {
-        // not sure why, but accessing target.resolvedBaseTypes is necessary for getting the info
-        // for BaseParameterDefinition in this library...
-        const typeReference = this.type as ts.TypeReference;
-        const baseTypes = (typeReference.target || {} as any).resolvedBaseTypes as ts.ObjectType[] || this.type.getBaseTypes();
-
-        return (baseTypes || []).map(t => this.createType(t));
-    }
-
     getProperties(): TsSymbol[] {
         const properties = this.type.getProperties();
         return (properties || []).filter(p => p.name !== "prototype").map(property => this.createSymbol(property));

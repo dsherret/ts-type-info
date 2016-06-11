@@ -116,12 +116,6 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureReExportBinder(this, structure), new definitions.ReExportDefinition());
     }
 
-    getReExportPart(exportName: string) {
-        const def = new definitions.ReExportPartDefinition();
-        def.exportName = exportName;
-        return def;
-    }
-
     getReExportPartByNamedImport(namedImport: structures.NamedImportStructureTypes) {
         const def = new definitions.ReExportPartDefinition();
 
