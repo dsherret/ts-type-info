@@ -202,7 +202,11 @@ export class TsFactory {
             const symbols = type.getSymbols();
 
             symbols.forEach(s => {
-                definition.definitions.push(...this.getAllDefinitionsBySymbol(s) as definitions.ModuleMemberDefinitions[]);
+                const hasChildTypes = definition.unionTypes.length > 0 || definition.intersectionTypes.length > 0 || definition.isArray();
+
+                if (!hasChildTypes) {
+                    definition.definitions.push(...this.getAllDefinitionsBySymbol(s) as definitions.ModuleMemberDefinitions[]);
+                }
             });
         });
     }

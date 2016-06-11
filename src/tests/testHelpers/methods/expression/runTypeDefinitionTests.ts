@@ -94,6 +94,22 @@ export function runTypeDefinitionTests(definition: TypeDefinition, structure: Ty
                     });
                 });
             }
+
+            if (structure.allDefinitions != null) {
+                it(`should have the same number of getAllDefinitions()`, () => {
+                    assert.equal(definition.getAllDefinitions().length, structure.allDefinitions.length);
+                });
+
+                structure.allDefinitions.forEach((defTestStructure, i) => {
+                    const defs = definition.getAllDefinitions();
+
+                    it(`definition ${defTestStructure.name}`, () => {
+                        ensureNotNull(defs[i], () => {
+                            runNamedDefinitionTests(defs[i], defTestStructure);
+                        });
+                    });
+                });
+            }
         });
     });
 }

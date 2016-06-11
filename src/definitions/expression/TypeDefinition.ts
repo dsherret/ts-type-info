@@ -1,5 +1,5 @@
 import {ModuleMemberDefinitions} from "./../../definitions";
-import {DefinitionUtils} from "./../../utils";
+import {ArrayUtils, DefinitionUtils} from "./../../utils";
 import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
 import {ExpressionDefinition} from "./ExpressionDefinition";
 
@@ -12,6 +12,17 @@ export class TypeDefinition extends ExpressionDefinition {
     properties: TypePropertyDefinition[] = [];
     typeArguments: TypeDefinition[] = [];
     text: string;
+
+    getAllDefinitions(): ModuleMemberDefinitions[] {
+        const arraysOfDefinitions = [...this.unionTypes.map(t => t.getAllDefinitions()), ...this.intersectionTypes.map(t => t.getAllDefinitions())];
+        const definitions = [...arraysOfDefinitions.reduce((a, b) => a.concat(b), []), ...this.definitions];
+
+        if (this.arrayElementType != null) {
+            definitions.push(...this.arrayElementType.definitions);
+        }
+
+        return ArrayUtils.getUniqueItems(definitions);
+    }
 
     getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.intersectionTypes, searchFunction);

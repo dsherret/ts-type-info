@@ -4,10 +4,11 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("union type tests", () => {
     const code = `
 class MyClass {
-    prop: MyClass | MyOtherClass<string>;
+    prop: MyClass | MyOtherClass<MyClass>;
 }
 
 class MyOtherClass<T> {
+    recursiveRelationshipProp: MyClass;
 }
 `;
 
@@ -19,20 +20,35 @@ class MyOtherClass<T> {
             properties: [{
                 name: "prop",
                 type: {
-                    text: "MyClass | MyOtherClass<string>",
+                    text: "MyClass | MyOtherClass<MyClass>",
                     unionTypes: [{
                         text: "MyClass",
                         definitions: [{
                             name: "MyClass"
+                        }],
+                        allDefinitions: [{
+                            name: "MyClass"
                         }]
                     }, {
-                        text: "MyOtherClass<string>",
+                        text: "MyOtherClass<MyClass>",
                         typeArguments: [{
-                            text: "string"
+                            text: "MyClass",
+                            definitions: [{
+                                name: "MyClass"
+                            }]
                         }],
                         definitions: [{
                             name: "MyOtherClass"
+                        }],
+                        allDefinitions: [{
+                            name: "MyOtherClass"
                         }]
+                    }],
+                    definitions: [],
+                    allDefinitions: [{
+                        name: "MyClass"
+                    }, {
+                        name: "MyOtherClass"
                     }]
                 }
             }]
@@ -40,6 +56,18 @@ class MyOtherClass<T> {
             name: "MyOtherClass",
             typeParameters: [{
                 name: "T"
+            }],
+            properties: [{
+                name: "recursiveRelationshipProp",
+                type: {
+                    text: "MyClass",
+                    definitions: [{
+                        name: "MyClass"
+                    }],
+                    allDefinitions: [{
+                        name: "MyClass"
+                    }]
+                }
             }]
         }]
     });

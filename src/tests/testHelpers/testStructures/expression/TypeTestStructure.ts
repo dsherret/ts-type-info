@@ -11,4 +11,5 @@ export interface TypeTestStructure {
     properties?: TypePropertyTestStructure[];
     typeArguments?: TypeTestStructure[];
     definitions?: NamedTestStructure[];
+    allDefinitions?: NamedTestStructure[];
 }
