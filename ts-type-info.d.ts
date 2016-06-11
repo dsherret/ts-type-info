@@ -335,6 +335,8 @@ export class TypeDefinition extends ExpressionDefinition {
     typeArguments: TypeDefinition[];
     text: string;
 
+    getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition;
+    getUnionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition;
     getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean): CallSignatureDefinition;
     getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
     getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): TypePropertyDefinition;
