@@ -165,7 +165,7 @@ describe("ModuledDefinitionTests", () => {
             typeParameters: [{
                 name: "typeParam"
             }]
-        })
+        });
         n.addInterface({
             name: "Interface2"
         });
@@ -264,7 +264,7 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             type: "string",
             typeParameters: [{ name: "T" }]
-        })
+        });
         n.addTypeAlias({
             name: "typeAlias2",
             type: "string"
