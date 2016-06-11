@@ -13,6 +13,14 @@ export class TypeDefinition extends ExpressionDefinition {
     typeArguments: TypeDefinition[] = [];
     text: string;
 
+    getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.intersectionTypes, searchFunction);
+    }
+
+    getUnionType(searchFunction: (definition: TypeDefinition) => boolean) {
+        return DefinitionUtils.getDefinitionFromListByFunc(this.unionTypes, searchFunction);
+    }
+
     getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.callSignatures, searchFunction);
     }

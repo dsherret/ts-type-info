@@ -2,6 +2,24 @@
 import {TypeDefinition} from "./../../../definitions";
 
 describe("TypeDefinition", () => {
+    describe("#getIntersectionType()", () => {
+        const def = new TypeDefinition();
+        def.intersectionTypes.push({ text: "" } as any, { text: "test" } as any);
+
+        it("should get the correct type", () => {
+            assert.equal(def.getIntersectionType(c => c.text === "test"), def.intersectionTypes[1]);
+        });
+    });
+
+    describe("#getUnionType()", () => {
+        const def = new TypeDefinition();
+        def.unionTypes.push({ text: "" } as any, { text: "test" } as any);
+
+        it("should get the correct type", () => {
+            assert.equal(def.getUnionType(c => c.text === "test"), def.unionTypes[1]);
+        });
+    });
+
     describe("#getCallSignature()", () => {
         const def = new TypeDefinition();
         def.callSignatures.push({ parameters: [] } as any, { parameters: [{} as any] } as any);
