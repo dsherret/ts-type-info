@@ -8,7 +8,7 @@
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
-* [Version 3.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
+* [Version 4.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
 * [Language support](https://github.com/dsherret/ts-type-info/wiki/Language-Support)
 
 ```
@@ -41,7 +41,8 @@ const property = result.getFile("TestFile.ts")
     .getClass("MyClass")                            // get first by name
     .getProperty(p => p.defaultExpression != null); // or first by what matches
 
-console.log(property.name); // myNumberProperty
+console.log(property.name);                   // myNumberProperty
+console.log(property.type.text);              // number
 console.log(property.defaultExpression.text); // 253
 
 // or access the arrays directly
