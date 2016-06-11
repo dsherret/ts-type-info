@@ -13,6 +13,16 @@ describe("FunctionDefinition", () => {
             isRestParameter: true
         }, {
             name: "mySecondParameter"
+        }, {
+            name: null,
+            destructuringProperties: [{
+                name: "param1",
+                type: "string",
+                defaultExpression: `""`,
+                isOptional: true
+            }, {
+                name: "param2"
+            }],
         });
 
         runFunctionParameterDefinitionTests(c.parameters[0], {
@@ -25,6 +35,18 @@ describe("FunctionDefinition", () => {
 
         runFunctionParameterDefinitionTests(c.parameters[1], {
             name: "mySecondParameter"
+        });
+
+        runFunctionParameterDefinitionTests(c.parameters[2], {
+            name: null,
+            destructuringProperties: [{
+                name: "param1",
+                type: { text: "string" },
+                defaultExpression: { text: `""` },
+                isOptional: true
+            }, {
+                name: "param2"
+            }]
         });
     });
 });
