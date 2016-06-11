@@ -26,7 +26,7 @@ export class TsTypeBinder extends TypeBinder {
         return this.tsType.isUnionType();
     }
 
-    getarrayElementType() {
+    getArrayElementType() {
         return this.factory.getType(this.tsType.getArrayElementType());
     }
 

@@ -20,7 +20,7 @@ export class StructureTypeBinder extends TypeBinder {
         return false;
     }
 
-    getarrayElementType(): TypeDefinition {
+    getArrayElementType(): TypeDefinition {
         return this.factory.getTypeFromText(this.text.replace(/\[\]$/, "").replace(/^Array\<(.*)\>$/, "$1"));
     }
 

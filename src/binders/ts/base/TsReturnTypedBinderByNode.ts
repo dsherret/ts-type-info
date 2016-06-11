@@ -7,7 +7,7 @@ export class TsReturnTypedBinderByNode extends ReturnTypedBinder {
         super();
     }
 
-    getreturnType() {
+    getReturnType() {
         return this.factory.getType(this.node.getReturnType());
     }
 }

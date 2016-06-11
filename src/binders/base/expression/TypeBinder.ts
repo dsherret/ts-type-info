@@ -5,7 +5,7 @@ export abstract class TypeBinder {
     abstract isArrayType(): boolean;
     abstract isIntersectionType(): boolean;
     abstract isUnionType(): boolean;
-    abstract getarrayElementType(): TypeDefinition;
+    abstract getArrayElementType(): TypeDefinition;
     abstract getUnionOrIntersectionTypes(): TypeDefinition[];
     abstract getCallSignatures(): CallSignatureDefinition[];
     abstract getProperties(): TypePropertyDefinition[];
@@ -18,7 +18,7 @@ export abstract class TypeBinder {
         this.expressionBinder.bind(def);
 
         if (this.isArrayType()) {
-            def.arrayElementType = this.getarrayElementType();
+            def.arrayElementType = this.getArrayElementType();
         }
 
         if (this.isUnionType()) {
