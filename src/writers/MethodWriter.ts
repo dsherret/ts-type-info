@@ -7,6 +7,7 @@ import {ParametersWriter} from "./ParametersWriter";
 import {ScopeWriter} from "./ScopeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
+import {FunctionReturnTypeWriter} from "./FunctionReturnTypeWriter";
 
 export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     private callSignatureWriter = new CallSignatureWriter(this.writer);
@@ -15,6 +16,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     private parametersWriter = new ParametersWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
     private functionBodyWriter = new FunctionBodyWriter(this.writer);
+    private functionReturnTypeWriter = new FunctionReturnTypeWriter(this.writer);
 
     protected writeDefault(def: MethodDefinitions, flags: WriteFlags) {
         def.overloadSignatures.forEach(s => {
@@ -33,7 +35,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         this.writer.write(def.name);
         this.typeParametersWriter.write(def.typeParameters, flags);
         this.parametersWriter.write(def.parameters, flags);
-        this.writeReturnType(def, flags);
+        this.functionReturnTypeWriter.write(def, flags);
         this.functionBodyWriter.write(def, flags);
     }
 
@@ -46,12 +48,6 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     private writeAbstract(def: ClassMethodDefinition) {
         if (def.isAbstract) {
             this.writer.write("abstract ");
-        }
-    }
-
-    private writeReturnType(def: MethodDefinitions, flags: WriteFlags) {
-        if (!FunctionBodyWriter.willWriteFunctionBody(def, flags) || def.overloadSignatures.length > 0) {
-            this.typeWriter.writeWithColon(def.returnType);
         }
     }
 }

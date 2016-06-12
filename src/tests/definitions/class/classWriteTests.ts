@@ -44,6 +44,12 @@ abstract class MyClass {
     myMethod() {
     }
 
+    myParamTypeGuard(p: MyClass | string): p is MyClass {
+    }
+
+    myThisTypeGuard(): this is MyClass {
+    }
+
     private myMethodWithOverloadSignatures<T>(): string;
     private myMethodWithOverloadSignatures<T>(str?: string) {
         return "";
@@ -116,6 +122,12 @@ describe("ClassDefinition", () => {
     abstract myAbstractMethod2(str?: string): string;
 
     myMethod() {
+    }
+
+    myParamTypeGuard(p: MyClass | string): p is MyClass {
+    }
+
+    myThisTypeGuard(): this is MyClass {
     }
 
     private myMethodWithOverloadSignatures<T>(): string;

@@ -26,6 +26,8 @@ function *myGeneratorFunction() {
 }
 function myParameterFunction(param1: string, param2 = "text", param3?: number, ...params: string[]) {
 }
+function myTypeGuard(p: string): p is string {
+}
 `;
 
 describe("FunctionDefinition", () => {
@@ -132,6 +134,16 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 }
 `;
                 assert.equal(file.functions[9].write(), expected);
+            });
+        });
+
+        describe("myTypeGuard", () => {
+            it("should contain the function written out", () => {
+                const expected =
+`function myTypeGuard(p: string): p is string {
+}
+`;
+                assert.equal(file.functions[10].write(), expected);
             });
         });
     });
