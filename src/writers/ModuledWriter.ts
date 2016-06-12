@@ -1,7 +1,7 @@
 ﻿import {ModuledDefinitions} from "./../definitions";
 import {DefinitionUtils} from "./../utils";
 import {WriteFlags} from "./../WriteFlags";
-import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
+import {BaseWriter} from "./BaseWriter";
 import {NamespaceWriter} from "./NamespaceWriter";
 import {ClassWriter} from "./ClassWriter";
 import {EnumWriter} from "./EnumWriter";
@@ -9,7 +9,7 @@ import {InterfaceWriter} from "./InterfaceWriter";
 import {FunctionWriter} from "./FunctionWriter";
 import {TypeAliasWriter} from "./TypeAliasWriter";
 
-export class ModuledWriter extends BaseDefinitionWriter<ModuledDefinitions> {
+export class ModuledWriter extends BaseWriter {
     private namespaceWriter = new NamespaceWriter(this.writer, this);
     private interfaceWriter = new InterfaceWriter(this.writer);
     private classWriter = new ClassWriter(this.writer);
@@ -25,10 +25,10 @@ export class ModuledWriter extends BaseDefinitionWriter<ModuledDefinitions> {
             flags = flags & ~WriteFlags.IsInAmbientContext;
         }
 
-        super.write(def, flags);
+        this.writeChildren(def, flags);
     }
 
-    protected writeDefault(def: ModuledDefinitions, flags: WriteFlags) {
+    private writeChildren(def: ModuledDefinitions, flags: WriteFlags) {
         def.typeAliases.forEach(t => this.typeAliasWriter.write(t, flags));
         this.writer.newLine();
         def.namespaces.forEach(n => this.addBlankLines(() => this.namespaceWriter.write(n, flags)));
