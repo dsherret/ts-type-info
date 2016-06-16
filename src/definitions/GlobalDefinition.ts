@@ -1,7 +1,7 @@
 ﻿import {ModuleMemberDefinitions} from "./../definitions";
 import {StructureFactory} from "./../factories";
 import {FileStructure} from "./../structures";
-import {DefinitionUtils, FileUtils} from "./../utils";
+import {DefinitionUtils, FileUtils, DefinitionRenamer} from "./../utils";
 import {FileDefinition} from "./file";
 
 export class GlobalDefinition {
@@ -64,5 +64,10 @@ export class GlobalDefinition {
         }
 
         return null;
+    }
+
+    renameDefinitionAs(definition: ModuleMemberDefinitions, newName: string) {
+        const renamer = new DefinitionRenamer(this.files, definition);
+        renamer.renameAs(newName);
     }
 }

@@ -1,6 +1,7 @@
 ﻿import * as assert from "assert";
 import {createVariable} from "./../../createFunctions";
 import {GlobalDefinition} from "./../../definitions";
+import {getInfoFromString} from "./../../main";
 
 describe("GlobalDefinition", () => {
     describe("#addDefinitionAsImportToFile()", () => {
@@ -176,6 +177,37 @@ describe("GlobalDefinition", () => {
             it("result should be null", () => {
                 assert.equal(result, null);
             });
+        });
+    });
+
+    describe("#renameDefinitionAs()", () => {
+        const code = `let myVar: MyClass & MyOtherClass<MyClass>;
+
+namespace MyNamespace {
+    interface MyInterface extends MyClass {
+        prop: MyClass;
+
+        method2(m: MyClass): void;
+    }
+}
+
+class MyOtherClass<T> {
+}
+
+class MyClass extends MyOtherClass<MyClass> {
+    property = new MyClass();
+
+    method(p = new MyClass()): p is MyClass {
+    }
+}
+`;
+        const file = getInfoFromString(code);
+        const globalDef = new GlobalDefinition();
+        globalDef.files.push(file);
+        globalDef.renameDefinitionAs(file.getClass("MyClass"), "MyNewName");
+
+        it("should rename the definition", () => {
+            assert.equal(file.write(), code.replace(/MyClass/g, "MyNewName"));
         });
     });
 });

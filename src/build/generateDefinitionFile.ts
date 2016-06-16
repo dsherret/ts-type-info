@@ -8,6 +8,10 @@ export function generateDefinitionFile() {
         path.join(__dirname, "../../src/typings/index.d.ts")
     ], { showDebugMessages: true }).getFile("main.ts");
 
+    // remove internal properties
+    const baseDefClass = fileInfo.getClass("BaseDefinition");
+    baseDefClass.properties = baseDefClass.properties.filter(p => p.name !== "__uniqueID");
+
     const definitionFileText = fileInfo.writeExportsAsDefinitionFile({
         imports: [{
             defaultImport: "CodeBlockWriter",

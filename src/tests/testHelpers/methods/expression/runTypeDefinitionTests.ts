@@ -4,13 +4,12 @@ import {TypeTestStructure} from "./../../testStructures";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runNamedDefinitionTests, runBasePropertyDefinitionTests} from "./../base";
 import {runCallSignatureDefinitionTests} from "./../general";
+import {runBaseExpressionDefinitionTests} from "./runBaseExpressionDefinitionTests";
 
 export function runTypeDefinitionTests(definition: TypeDefinition, structure: TypeTestStructure) {
     describe("type expression", () => {
         ensureNotNull(definition, () => {
-            it(`should have a type text of ${structure.text}`, () => {
-                assert.equal(definition.text, structure.text);
-            });
+            runBaseExpressionDefinitionTests(definition, structure);
 
             if (structure.arrayElementType != null) {
                 describe("arrayElementType", () => {

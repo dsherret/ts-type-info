@@ -4,6 +4,7 @@ import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassSt
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./../interface";
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./../File";
+import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {FunctionDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
 import {EnumDefinition} from "./../enum";
@@ -12,10 +13,20 @@ import {VariableDefinition} from "./../variable";
 import {DefinitionType} from "./DefinitionType";
 
 export abstract class BaseDefinition {
+    private static _uniqueID = 0;
+    __uniqueID: number;
+
     constructor(private _definitionType: DefinitionType) {
         const mixins = (this.constructor as any)["mixins"] as any[] || [];
         mixins.forEach(mixin => {
             mixin.call(this);
+        });
+
+        Object.defineProperty(this, "__uniqueID", {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: ++BaseDefinition._uniqueID
         });
     }
 
@@ -62,6 +73,10 @@ export abstract class BaseDefinition {
         return typeof (this as any as ExportableDefinition).isExported === "boolean";
     }
 
+    isExpressionDefinition(): this is ExpressionDefinition {
+        return this._definitionType === DefinitionType.Expression;
+    }
+
     isFunctionDefinition(): this is FunctionDefinition {
         return this._definitionType === DefinitionType.Function;
     }
@@ -92,6 +107,10 @@ export abstract class BaseDefinition {
 
     isReExportDefinition(): this is ReExportDefinition {
         return this._definitionType === DefinitionType.ReExport;
+    }
+
+    isTypeDefinition(): this is TypeDefinition {
+        return this._definitionType === DefinitionType.Type;
     }
 
     isTypeAliasDefinition(): this is TypeAliasDefinition {

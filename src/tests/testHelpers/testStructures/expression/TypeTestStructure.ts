@@ -1,8 +1,8 @@
 ﻿import {NamedTestStructure} from "./../base";
 import {CallSignatureTestStructure, TypePropertyTestStructure} from "./../general";
+import {BaseExpressionTestStructure} from "./BaseExpressionTestStructure";
 
-export interface TypeTestStructure {
-    text: string;
+export interface TypeTestStructure extends BaseExpressionTestStructure {
     arrayElementType?: TypeTestStructure;
     intersectionTypes?: TypeTestStructure[];
     unionTypes?: TypeTestStructure[];

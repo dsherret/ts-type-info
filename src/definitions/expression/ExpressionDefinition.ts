@@ -1,9 +1,8 @@
-﻿import {BaseDefinition, DefinitionType} from "./../base";
+﻿import {DefinitionType} from "./../base";
+import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
 
-export class ExpressionDefinition extends BaseDefinition {
+export class ExpressionDefinition extends BaseExpressionDefinition {
     constructor() {
         super(DefinitionType.Expression);
     }
-
-    text: string;
 }

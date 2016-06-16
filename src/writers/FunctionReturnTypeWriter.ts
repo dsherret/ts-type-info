@@ -1,4 +1,4 @@
-﻿import {InterfaceMethodDefinition, FunctionBodyWriteableDefinitions, FunctionDefinition, ClassMethodDefinition, ClassStaticMethodDefinition, ClassConstructorDefinition} from "./../definitions";
+﻿import {InterfaceMethodDefinition, FunctionDefinition, ClassMethodDefinition, ClassStaticMethodDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseWriter} from "./BaseWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";

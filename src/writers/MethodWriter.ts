@@ -2,7 +2,6 @@
 import {WriteFlags} from "./../WriteFlags";
 import {CallSignatureWriter} from "./CallSignatureWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
-import {TypeWriter} from "./TypeWriter";
 import {ParametersWriter} from "./ParametersWriter";
 import {ScopeWriter} from "./ScopeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
@@ -12,7 +11,6 @@ import {FunctionReturnTypeWriter} from "./FunctionReturnTypeWriter";
 export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     private callSignatureWriter = new CallSignatureWriter(this.writer);
     private typeParametersWriter = new TypeParametersWriter(this.writer);
-    private typeWriter = new TypeWriter(this.writer);
     private parametersWriter = new ParametersWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
     private functionBodyWriter = new FunctionBodyWriter(this.writer);

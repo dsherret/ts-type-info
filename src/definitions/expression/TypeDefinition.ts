@@ -1,9 +1,10 @@
 import {ModuleMemberDefinitions} from "./../../definitions";
 import {ArrayUtils, DefinitionUtils} from "./../../utils";
+import {DefinitionType} from "./../base";
 import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
-import {ExpressionDefinition} from "./ExpressionDefinition";
+import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
 
-export class TypeDefinition extends ExpressionDefinition {
+export class TypeDefinition extends BaseExpressionDefinition {
     arrayElementType: TypeDefinition = null;
     intersectionTypes: TypeDefinition[] = [];
     unionTypes: TypeDefinition[] = [];
@@ -12,6 +13,10 @@ export class TypeDefinition extends ExpressionDefinition {
     properties: TypePropertyDefinition[] = [];
     typeArguments: TypeDefinition[] = [];
     text: string;
+
+    constructor() {
+        super(DefinitionType.Type);
+    }
 
     getAllDefinitions(): ModuleMemberDefinitions[] {
         const arraysOfDefinitions = [...this.unionTypes.map(t => t.getAllDefinitions()), ...this.intersectionTypes.map(t => t.getAllDefinitions())];
