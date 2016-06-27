@@ -43,19 +43,13 @@ export class TsSourceFile extends TsBase {
     }
 
     private createNode(node: ts.Node, tsSymbol: TsSymbol): TsNode {
-        return this.tsCache.getNode(
-            node,
-            () => new TsNode(
-                {
-                    tsCache: this.tsCache,
-                    typeChecker: this.typeChecker,
-                    node: node,
-                    tsSourceFile: this,
-                    sourceFile: this.sourceFile
-                },
-                tsSymbol
-            )
-        );
+        return this.tsCache.getNode(node, () => new TsNode({
+            tsCache: this.tsCache,
+            typeChecker: this.typeChecker,
+            node: node,
+            tsSourceFile: this,
+            sourceFile: this.sourceFile
+        }, tsSymbol));
     }
 
     private createSymbol(symbol: ts.Symbol): TsSymbol {
