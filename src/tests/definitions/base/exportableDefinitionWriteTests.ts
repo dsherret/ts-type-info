@@ -45,7 +45,7 @@ export function myFunction() {
         });
     });
 
-    describe("default exports", () => {
+    describe("default export statements", () => {
         it("should write export default for a namespace", () => {
             const code = `namespace MyNamespace {}\nexport default MyNamespace;`;
             const expected = `namespace MyNamespace {\n}\n\nexport default MyNamespace;\n`;

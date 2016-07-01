@@ -1,24 +1,16 @@
 ﻿import {ParameterDefinitions} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
-import {ExpressionWriter} from "./ExpressionWriter";
-import {TypeWriter} from "./TypeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
+import {TypeWithDefaultExpressionWriter} from "./TypeWithDefaultExpressionWriter";
 
 export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> {
-    private typeWriter = new TypeWriter(this.writer);
-    private expressionWriter = new ExpressionWriter(this.writer);
+    private typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
 
     protected writeDefault(param: ParameterDefinitions, flags: WriteFlags) {
         this.writeRestParameter(param);
         this.writer.write(param.name);
         this.writeIsOptional(param, flags);
-
-        if (!ExpressionWriter.willWriteDefaultExpression(param, flags)) {
-            this.typeWriter.writeWithColon(param.type);
-        }
-        else {
-            this.expressionWriter.writeWithEqualsSign(param.defaultExpression);
-        }
+        this.typeWithDefaultExpressionWriter.write(param, flags);
     }
 
     private writeRestParameter(param: ParameterDefinitions) {

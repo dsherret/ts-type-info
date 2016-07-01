@@ -1,14 +1,14 @@
-﻿import {PropertyDefinitions, BaseObjectPropertyDefinition, ClassPropertyDefinition} from "./../definitions";
+﻿import {PropertyDefinitions, ClassPropertyDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {TypeWriter} from "./TypeWriter";
-import {ExpressionWriter} from "./ExpressionWriter";
 import {ScopeWriter} from "./ScopeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
+import {TypeWithDefaultExpressionWriter} from "./TypeWithDefaultExpressionWriter";
 
 export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     private typeWriter = new TypeWriter(this.writer);
-    private expressionWriter = new ExpressionWriter(this.writer);
     private scopeWriter = new ScopeWriter(this.writer);
+    private typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
 
     static willWriteAccessorBody(def: PropertyDefinitions) {
         return def.isClassPropertyDefinition() && def.isAccessor && (def.onWriteGetBody != null || def.onWriteSetBody != null);
@@ -65,14 +65,11 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.writeHeader(def);
         this.writeOptionalFlag(def);
 
-        const willWriteDefaultExpression = ExpressionWriter.willWriteDefaultExpression(def, flags);
-
-        if (!willWriteDefaultExpression || def.isOptional === true) {
+        if (def.isInterfacePropertyDefinition()) {
             this.typeWriter.writeWithColon(def.type);
         }
-
-        if (willWriteDefaultExpression) {
-            this.expressionWriter.writeWithEqualsSign((def as BaseObjectPropertyDefinition).defaultExpression);
+        else {
+            this.typeWithDefaultExpressionWriter.writeWithOptionalCheck(def, flags);
         }
 
         this.writer.write(";").newLine();

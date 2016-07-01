@@ -11,20 +11,19 @@ var Rule = (function (_super) {
         _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoImportsWalker(sourceFile, this.getOptions()));
+        return this.applyWithWalker(new NoDuplicateImportsFromSameFileWalker(sourceFile, this.getOptions()));
     };
-    Rule.FAILURE_STRING = "import statement forbidden";
+    Rule.FAILURE_STRING = "duplicate imports from same file forbidden";
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-// The walker takes care of all the work.
-var NoImportsWalker = (function (_super) {
-    __extends(NoImportsWalker, _super);
-    function NoImportsWalker() {
+var NoDuplicateImportsFromSameFileWalker = (function (_super) {
+    __extends(NoDuplicateImportsFromSameFileWalker, _super);
+    function NoDuplicateImportsFromSameFileWalker() {
         _super.apply(this, arguments);
         this.fileImportsByFileName = {};
     }
-    NoImportsWalker.prototype.visitImportDeclaration = function (node) {
+    NoDuplicateImportsFromSameFileWalker.prototype.visitImportDeclaration = function (node) {
         var sourceFile = node.parent;
         var fileImports = this.getFileImports(sourceFile.fileName);
         var importPath = node.moduleSpecifier.text;
@@ -36,9 +35,9 @@ var NoImportsWalker = (function (_super) {
         }
         _super.prototype.visitImportDeclaration.call(this, node);
     };
-    NoImportsWalker.prototype.getFileImports = function (fileName) {
+    NoDuplicateImportsFromSameFileWalker.prototype.getFileImports = function (fileName) {
         this.fileImportsByFileName[fileName] = this.fileImportsByFileName[fileName] || {};
         return this.fileImportsByFileName[fileName];
     };
-    return NoImportsWalker;
+    return NoDuplicateImportsFromSameFileWalker;
 }(Lint.RuleWalker));

@@ -29,7 +29,7 @@ describe("VariableDefinition", () => {
 
         describe("myImplicitTypeVar", () => {
             it("should write out the expression when specifying to", () => {
-                const expected = `var myImplicitTypeVar: string = "my string";\n`;
+                const expected = `var myImplicitTypeVar = "my string";\n`;
                 assert.equal(myFile.variables[2].write(), expected);
             });
         });
