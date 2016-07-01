@@ -12,6 +12,7 @@ export * from "./base/ExportableBinder";
 export * from "./base/FunctionBodyWriteableBinder";
 export * from "./base/ModuledBinder";
 export * from "./base/NamedBinder";
+export * from "./base/OptionalBinder";
 export * from "./base/ParameteredBinder";
 export * from "./base/ReturnTypedBinder";
 export * from "./base/TypedBinder";

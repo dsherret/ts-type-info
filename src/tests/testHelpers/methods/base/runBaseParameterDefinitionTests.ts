@@ -4,18 +4,16 @@ import {BaseParameterDefinition} from "./../../../../definitions";
 import {runObjectPropertyDefinitionTests} from "./../general/runObjectPropertyDefinitionTests";
 import {runBaseDefinitionTests} from "./runBaseDefinitionTests";
 import {runNamedDefinitionTests} from "./runNamedDefinitionTests";
+import {runOptionalDefinitionTests} from "./runOptionalDefinitionTests";
 import {runTypedDefinitionTests} from "./runTypedDefinitionTests";
 import {runDefaultExpressionedDefinitionTests} from "./runDefaultExpressionedDefinitionTests";
 
 export function runBaseParameterDefinitionTests(definition: BaseParameterDefinition, structure: BaseParameterTestStructure) {
     runBaseDefinitionTests(definition, structure);
     runNamedDefinitionTests(definition, structure);
+    runOptionalDefinitionTests(definition, structure);
     runTypedDefinitionTests(definition, structure);
     runDefaultExpressionedDefinitionTests(definition, structure);
-
-    it(`should be ${structure.isOptional ? "optional" : "not optional"}`, () => {
-        assert.equal(definition.isOptional, typeof structure.isOptional === "boolean" ? structure.isOptional : false);
-    });
 
     it(`should ${structure.isRestParameter ? "be" : "not be"} a rest parameter`, () => {
         assert.equal(definition.isRestParameter, typeof structure.isRestParameter === "boolean" ? structure.isRestParameter : false);

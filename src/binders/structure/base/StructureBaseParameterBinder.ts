@@ -4,6 +4,7 @@ import {BaseParameterBinder} from "./../../base";
 import {StructureBaseDefinitionBinder} from "./StructureBaseDefinitionBinder";
 import {StructureDefaultExpressionedBinder} from "./StructureDefaultExpressionedBinder";
 import {StructureNamedBinder} from "./StructureNamedBinder";
+import {StructureOptionalBinder} from "./StructureOptionalBinder";
 import {StructureTypedBinder} from "./StructureTypedBinder";
 
 export class StructureBaseParameterBinder extends BaseParameterBinder {
@@ -11,13 +12,10 @@ export class StructureBaseParameterBinder extends BaseParameterBinder {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),
+            new StructureOptionalBinder(structure),
             new StructureTypedBinder(factory, structure),
             new StructureDefaultExpressionedBinder(structure)
         );
-    }
-
-    getIsOptional() {
-        return this.structure.isOptional || false;
     }
 
     getIsRestParameter() {

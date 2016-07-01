@@ -4,6 +4,7 @@ import {applyMixins, DefinitionUtils} from "./../../utils";
 import {TypeDefinition, ExpressionDefinition} from "./../expression";
 import {ObjectPropertyDefinition} from "./../general/ObjectPropertyDefinition";
 import {NamedDefinition} from "./NamedDefinition";
+import {OptionalDefinition} from "./OptionalDefinition";
 import {TypedDefinition} from "./TypedDefinition";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
 import {BaseDefinition} from "./BaseDefinition";
@@ -13,8 +14,7 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypedDefinition, DefaultExpressionedDefinition {
-    isOptional: boolean;
+export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[] = [];
 
@@ -34,6 +34,8 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
 
     // NamedDefinition
     name: string;
+    // OptionalDefinition
+    isOptional: boolean;
     // TypedDefinition
     type: TypeDefinition;
     setType: (text: string) => any;
@@ -42,4 +44,4 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     setDefaultExpression: (text: string) => any;
 }
 
-applyMixins(BaseParameterDefinition, BaseDefinition, [NamedDefinition, TypedDefinition, DefaultExpressionedDefinition]);
+applyMixins(BaseParameterDefinition, BaseDefinition, [NamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition]);

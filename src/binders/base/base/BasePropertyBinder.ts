@@ -1,14 +1,14 @@
 ﻿import {BasePropertyDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./BaseDefinitionBinder";
 import {NamedBinder} from "./NamedBinder";
+import {OptionalBinder} from "./OptionalBinder";
 import {TypedBinder} from "./TypedBinder";
 
 export abstract class BasePropertyBinder {
-    abstract getIsOptional(): boolean;
-
     constructor(
         private baseDefinitionBinder: BaseDefinitionBinder,
         private namedBinder: NamedBinder,
+        private optionalBinder: OptionalBinder,
         private TypedBinder: TypedBinder
     ) {
     }
@@ -16,7 +16,7 @@ export abstract class BasePropertyBinder {
     bind(def: BasePropertyDefinition) {
         this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
+        this.optionalBinder.bind(def);
         this.TypedBinder.bind(def);
-        def.isOptional = this.getIsOptional();
     }
 }

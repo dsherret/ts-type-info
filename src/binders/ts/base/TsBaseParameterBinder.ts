@@ -3,6 +3,7 @@ import {TsNode} from "./../../../compiler";
 import {BaseParameterBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./TsBaseDefinitionBinder";
 import {TsDefaultExpressionedBinder} from "./TsDefaultExpressionedBinder";
+import {TsOptionalBinderForParameter} from "./TsOptionalBinderForParameter";
 import {TsNamedBinder} from "./TsNamedBinder";
 import {TsTypedBinder} from "./TsTypedBinder";
 
@@ -11,13 +12,10 @@ export class TsBaseParameterBinder extends BaseParameterBinder {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),
+            new TsOptionalBinderForParameter(node),
             new TsTypedBinder(factory, node),
             new TsDefaultExpressionedBinder(factory, node)
         );
-    }
-
-    getIsOptional() {
-        return this.node.isParameterOptional();
     }
 
     getIsRestParameter() {
