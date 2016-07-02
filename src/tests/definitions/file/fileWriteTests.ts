@@ -13,7 +13,6 @@ import "./test";
 export * from "./test";
 export {myExport1, myAlias} from "./test";
 
-var myVariable: string;
 namespace MyNamespace {
 }
 module MyModule {
@@ -26,6 +25,7 @@ enum MyEnum {
 }
 function myFunction() {
 }
+var myVariable: string;
 
 export default MyEnum;
 `;
@@ -52,8 +52,6 @@ import "./test";
 export * from "./test";
 export {myExport1, MyActualName as myAlias} from "./test";
 
-var myVariable: string;
-
 namespace MyNamespace {
 }
 
@@ -71,6 +69,8 @@ enum MyEnum {
 
 function myFunction() {
 }
+
+var myVariable: string;
 
 export default MyEnum;
 `;

@@ -17,6 +17,8 @@ namespace MyNamespace {
     }
     function myFunction() {
     }
+    let myVar = "";
+    let mySecondVar = "";
 }
 module MyModule {
     interface MyInterface {
@@ -52,6 +54,9 @@ describe("NamespaceDefinition", () => {
 
     function myFunction() {
     }
+
+    let myVar = "";
+    let mySecondVar = "";
 }
 `;
                 assert.equal(myFile.namespaces[0].write(), expected);

@@ -7,6 +7,7 @@ import {ClassWriter} from "./ClassWriter";
 import {EnumWriter} from "./EnumWriter";
 import {InterfaceWriter} from "./InterfaceWriter";
 import {FunctionWriter} from "./FunctionWriter";
+import {VariableWriter} from "./VariableWriter";
 import {TypeAliasWriter} from "./TypeAliasWriter";
 
 export class ModuledWriter extends BaseWriter {
@@ -15,6 +16,7 @@ export class ModuledWriter extends BaseWriter {
     private classWriter = new ClassWriter(this.writer);
     private enumWriter = new EnumWriter(this.writer);
     private functionWriter = new FunctionWriter(this.writer);
+    private variableWriter = new VariableWriter(this.writer);
     private typeAliasWriter = new TypeAliasWriter(this.writer);
 
     write(def: ModuledDefinitions, flags: WriteFlags) {
@@ -36,6 +38,7 @@ export class ModuledWriter extends BaseWriter {
         def.classes.forEach(c => this.addBlankLines(() => this.classWriter.write(c, flags)));
         def.enums.forEach(e => this.addBlankLines(() => this.enumWriter.write(e, flags)));
         def.functions.forEach(f => this.addBlankLines(() => this.functionWriter.write(f, flags)));
+        def.variables.forEach(v => this.variableWriter.write(v, flags));
     }
 
     private addBlankLines(func: () => void) {
