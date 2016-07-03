@@ -25,6 +25,10 @@ export class FileImportsAnalyzer {
         const renameInfos: RenameInfo[] = [];
 
         if (importDef.moduleSpecifier === this.searchingModuleSpecifier) {
+            if (importDef.defaultImport != null) {
+                renameInfos.push(...this.getRenameInfosFromDefaultImport(importDef.defaultImport.importName));
+            }
+
             renameInfos.push(...this.getRenameInfosFromStarImport(importDef.starImportName));
 
             importDef.namedImports.forEach(named => {
@@ -35,15 +39,27 @@ export class FileImportsAnalyzer {
         return renameInfos;
     }
 
-    private getRenameInfosFromStarImport(starImportName: string): RenameInfo[] {
-        if (starImportName == null) {
-            return [];
+    private getRenameInfosFromDefaultImport(defaultImportName: string): RenameInfo[] {
+        if (defaultImportName != null && this.renameInfo.hasNamespaces() && this.renameInfo.getExportDefinitionOfFile().isDefaultExportOfFile) {
+            return [{
+                fullName: this.renameInfo.getNameWithNamespaces(this.renameInfo.getOldName(), defaultImportName),
+                fullReplace: this.renameInfo.getNameWithNamespaces(this.renameInfo.getNewName(), defaultImportName)
+            }];
         }
         else {
+            return [];
+        }
+    }
+
+    private getRenameInfosFromStarImport(starImportName: string): RenameInfo[] {
+        if (starImportName != null) {
             return [{
                 fullName: starImportName + "." + this.renameInfo.getNameWithNamespaces(this.renameInfo.getOldName()),
                 fullReplace: starImportName + "." + this.renameInfo.getNameWithNamespaces(this.renameInfo.getNewName())
             }];
+        }
+        else {
+            return [];
         }
     }
 

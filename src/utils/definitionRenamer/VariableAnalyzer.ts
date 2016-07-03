@@ -6,10 +6,9 @@ export class VariableAnalyzer {
     }
 
     getRenameInfosFromVariablesInModule(moduleDef: ModuledDefinition) {
-        const varsWithDefaultExpression = moduleDef.variables.filter(v => v.defaultExpression != null);
         const newRenameInfos: RenameInfo[] = [];
 
-        varsWithDefaultExpression.forEach(varDef => {
+        moduleDef.variables.forEach(varDef => {
             const allRenameInfos = [...this.renameInfos, ...newRenameInfos];
 
             allRenameInfos.forEach(renameInfo => {

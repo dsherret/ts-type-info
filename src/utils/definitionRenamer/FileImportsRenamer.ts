@@ -6,7 +6,7 @@ export class FileImportsRenamer {
     }
 
     renameImports() {
-        if (this.renameInfo.getExportDefinitionOfFile().isDefaultExportOfFile) {
+        if (this.renameInfo.getExportDefinitionOfFile().isDefaultExportOfFile || this.renameInfo.hasNamespaces()) {
             return;
         }
 
