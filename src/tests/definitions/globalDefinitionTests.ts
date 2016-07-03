@@ -181,9 +181,9 @@ describe("GlobalDefinition", () => {
     });
 
     describe("#renameDefinitionAs()", () => {
-        const code = `let myVar: MyClass & MyOtherClass<MyClass>;
-
-namespace MyNamespace {
+        describe("renaming without imports", () => {
+            const code =
+`namespace MyNamespace {
     interface MyInterface extends MyClass {
         prop: MyClass;
 
@@ -200,14 +200,157 @@ class MyClass extends MyOtherClass<MyClass> {
     method(p = new MyClass()): p is MyClass {
     }
 }
-`;
-        const file = getInfoFromString(code);
-        const globalDef = new GlobalDefinition();
-        globalDef.files.push(file);
-        globalDef.renameDefinitionAs(file.getClass("MyClass"), "MyNewName");
 
-        it("should rename the definition", () => {
-            assert.equal(file.write(), code.replace(/MyClass/g, "MyNewName"));
+let myVar: MyClass & MyOtherClass<MyClass>;
+`;
+            const file = getInfoFromString(code);
+            const globalDef = new GlobalDefinition();
+            globalDef.files.push(file);
+            globalDef.renameDefinitionAs(file.getClass("MyClass"), "MyNewName");
+
+            it("should rename the definition", () => {
+                assert.equal(file.write(), code.replace(/MyClass/g, "MyNewName"));
+            });
+        });
+
+        describe("renaming with assignment to variable", () => {
+            const code =
+`namespace MyNamespace {
+    export namespace MyInnerNamespace {
+        export class MyClass {
+        }
+    }
+}
+
+var t = MyNamespace;
+var a = t.MyInnerNamespace;
+var b = a.MyClass;
+`;
+            const file = getInfoFromString(code);
+            const globalDef = new GlobalDefinition();
+            globalDef.files.push(file);
+            globalDef.renameDefinitionAs(file.getNamespace("MyNamespace").getNamespace("MyInnerNamespace").getClass("MyClass"), "MyNewName");
+
+            it("should rename the definition", () => {
+                assert.equal(file.write(), code.replace(/MyClass/g, "MyNewName"));
+            });
+        });
+
+        function getGlobalDef({ aliasName = "", isDefaultImport = false }) {
+            const globalDef = new GlobalDefinition();
+            globalDef.addFile({
+                fileName: "C:\\MyClass.ts",
+                classes: [{
+                    name: "MyClass",
+                    isExported: true,
+                    isDefaultExportOfFile: isDefaultImport
+                }, {
+                    name: "MyOtherClass",
+                    isExported: true
+                }],
+                variables: [{
+                    name: "myVar",
+                    type: "MyClass"
+                }],
+                defaultExportExpression: isDefaultImport ? "MyClass" : null
+            });
+            globalDef.addFile({
+                fileName: "C:\\Main.ts",
+                variables: [{
+                    name: "myVar",
+                    type: aliasName || "MyClass"
+                }, {
+                    name: "myVar2",
+                    type: "MyClass"
+                }],
+                imports: [{
+                    defaultImportName: "dummy",
+                    moduleSpecifier: "./dummyImport"
+                }]
+            });
+
+            globalDef.addDefinitionAsImportToFile({
+                definition: globalDef.files[0].classes[0],
+                file: globalDef.files[1],
+                alias: aliasName
+            });
+
+            globalDef.addDefinitionAsImportToFile({
+                definition: globalDef.files[0].classes[1],
+                file: globalDef.files[1]
+            });
+
+            return globalDef;
+        }
+
+        describe("renaming with imports and no alias", () => {
+            const expectedCode =
+`import dummy from "./dummyImport";
+import {MyNewName} from "./MyClass";
+import {MyOtherClass} from "./MyClass";
+
+let myVar: MyNewName;
+let myVar2: MyNewName;
+`;
+            const globalDef = getGlobalDef({});
+            globalDef.renameDefinitionAs(globalDef.files[0].classes[0], "MyNewName");
+
+            it("should write the file, change the imports, and change the reference in the file", () => {
+                assert.equal(globalDef.files[1].write(), expectedCode);
+            });
+
+            it("should rename the definition", () => {
+                assert.equal(globalDef.files[0].classes[0].name, "MyNewName");
+            });
+        });
+
+        describe("renaming with imports and an alias", () => {
+            const expectedCode =
+`import dummy from "./dummyImport";
+import {MyNewName as MyAlias} from "./MyClass";
+import {MyOtherClass} from "./MyClass";
+
+let myVar: MyAlias;
+let myVar2: MyClass;
+`;
+
+            it("should write the file and only change the import", () => {
+                const globalDef = getGlobalDef({ aliasName: "MyAlias" });
+                globalDef.renameDefinitionAs(globalDef.files[0].classes[0], "MyNewName");
+                assert.equal(globalDef.files[1].write(), expectedCode);
+            });
+        });
+
+        describe("renaming with default import", () => {
+            const globalDef = getGlobalDef({ aliasName: "MyClass", isDefaultImport: true });
+            globalDef.renameDefinitionAs(globalDef.files[0].classes[0], "MyNewName");
+
+            it("should rename in the file the default import is contained in", () => {
+                const expectedCode =
+`class MyNewName {
+}
+
+export class MyOtherClass {
+}
+
+let myVar: MyNewName;
+
+export default MyNewName;
+`;
+                assert.equal(globalDef.files[0].write(), expectedCode);
+            });
+
+            it("should not rename anything in the other file", () => {
+                const expectedCode =
+`import dummy from "./dummyImport";
+import {default as MyClass} from "./MyClass";
+import {MyOtherClass} from "./MyClass";
+
+let myVar: MyClass;
+let myVar2: MyClass;
+`;
+                assert.equal(globalDef.files[1].write(), expectedCode);
+            });
         });
     });
 });

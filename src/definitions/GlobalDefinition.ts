@@ -67,7 +67,7 @@ export class GlobalDefinition {
     }
 
     renameDefinitionAs(definition: ModuleMemberDefinitions, newName: string) {
-        const renamer = new DefinitionRenamer(this.files, definition);
-        renamer.renameAs(newName);
+        const renamer = new DefinitionRenamer(this);
+        renamer.renameDefinitionAs(definition, newName);
     }
 }

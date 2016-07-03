@@ -1,48 +1,23 @@
-﻿import {BaseDefinition, FileDefinition, ModuleMemberDefinitions} from "./../definitions";
-import {renameDefinitionInText} from "./renameDefinitionInText";
+﻿import {ModuleMemberDefinitions, GlobalDefinition} from "./../definitions";
+import {DefinitionRenameInfo} from "./definitionRenamer/DefinitionRenameInfo";
+import {FileAnalyzer} from "./definitionRenamer/FileAnalyzer";
+import {DefinitionInFileRenamer} from "./definitionRenamer/DefinitionInFileRenamer";
 
 export class DefinitionRenamer {
-    private lookedAtObjects: { [uniqueID: string]: boolean; } = {};
-    private newName: string;
-
-    constructor(private files: FileDefinition[], private definition: ModuleMemberDefinitions) {
+    constructor(private globalDef: GlobalDefinition) {
     }
 
-    renameAs(newName: string) {
-        this.newName = newName;
+    renameDefinitionAs(definition: ModuleMemberDefinitions, newName: string) {
+        const definitionRenameInfo = new DefinitionRenameInfo(this.globalDef, definition, newName);
+        const fileAnalyzer = new FileAnalyzer(definitionRenameInfo);
 
-        this.files.forEach(file => {
-            this.iterateObj(file);
+        this.globalDef.files.forEach(file => {
+            const fileRenamer = new DefinitionInFileRenamer(file);
+            const renameInfos = fileAnalyzer.getRenameInfosFromFile(file);
+
+            fileRenamer.rename(renameInfos);
         });
 
-        this.definition.name = newName;
-        this.lookedAtObjects = {};
-    }
-
-    private iterateObj(obj: any) {
-        const def = obj as BaseDefinition;
-
-        if (obj instanceof Array) {
-            this.handleArray(obj);
-        }
-        else if (def != null && typeof def === "object" && typeof def.__uniqueID === "number" && this.lookedAtObjects[def.__uniqueID] !== true) {
-            this.handleObject(def);
-        }
-    }
-
-    private handleArray(obj: any[]) {
-        obj.forEach(item => this.iterateObj(item));
-    }
-
-    private handleObject(def: BaseDefinition) {
-        this.lookedAtObjects[def.__uniqueID] = true;
-
-        Object.keys(def).forEach(key => {
-            this.iterateObj((def as any)[key]);
-        });
-
-        if (def.isTypeDefinition() || def.isExpressionDefinition()) {
-            def.text = renameDefinitionInText(def.text, this.definition.name, this.newName);
-        }
+        definition.name = newName;
     }
 }

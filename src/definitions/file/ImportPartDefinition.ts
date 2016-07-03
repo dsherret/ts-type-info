@@ -13,6 +13,11 @@ export class ImportPartDefinition extends BaseImportPartDefinition {
     }
 
     set importName(value: string) {
-        this._alias = value;
+        if (this.definitions.length > 0 && this.definitions[0].name === value) {
+            this._alias = null;
+        }
+        else {
+            this._alias = value;
+        }
     }
 }
