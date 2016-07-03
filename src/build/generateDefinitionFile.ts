@@ -3,14 +3,15 @@ import * as fs from "fs";
 import {getInfoFromFiles} from "./../main";
 
 export function generateDefinitionFile() {
-    const fileInfo = getInfoFromFiles([
+    const result = getInfoFromFiles([
         path.join(__dirname, "../../src/main.ts"),
         path.join(__dirname, "../../src/typings/index.d.ts")
-    ], { showDebugMessages: true }).getFile("main.ts");
+    ], { showDebugMessages: false });
+    const fileInfo = result.getFile("main.ts");
 
     // remove internal properties
-    const baseDefClass = fileInfo.getClass("BaseDefinition");
-    baseDefClass.properties = baseDefClass.properties.filter(p => p.name !== "__uniqueID");
+    const baseDefClass = result.getFile("BaseDefinition.ts").getClass("BaseDefinition");
+    baseDefClass.properties = baseDefClass.properties.filter(p => p.name !== "___uniqueID");
 
     const definitionFileText = fileInfo.writeExportsAsDefinitionFile({
         imports: [{

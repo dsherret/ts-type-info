@@ -42,6 +42,7 @@ export abstract class BaseDefinition {
     isClassConstructorParameterDefinition(): this is ClassConstructorParameterDefinition;
     isEnumDefinition(): this is EnumDefinition;
     isExportableDefinition(): this is ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+    isExpressionDefinition(): this is ExpressionDefinition;
     isFunctionDefinition(): this is FunctionDefinition;
     isFileDefinition(): this is FileDefinition;
     isImportDefinition(): this is ImportDefinition;
@@ -50,6 +51,7 @@ export abstract class BaseDefinition {
     isInterfacePropertyDefinition(): this is InterfacePropertyDefinition;
     isNamespaceDefinition(): this is NamespaceDefinition;
     isReExportDefinition(): this is ReExportDefinition;
+    isTypeDefinition(): this is TypeDefinition;
     isTypeAliasDefinition(): this is TypeAliasDefinition;
     isVariableDefinition(): this is VariableDefinition;
 }
@@ -88,7 +90,8 @@ export const enum DefinitionType {
     Expression = 1200,
     IndexSignature = 1300,
     UserDefinedTypeGuard = 1400,
-    ObjectPropertyDefinition = 1500
+    ObjectPropertyDefinition = 1500,
+    Type = 1600
 }
 
 export class FunctionBodyWriteableDefinition {
@@ -97,6 +100,10 @@ export class FunctionBodyWriteableDefinition {
 
 export abstract class NamedDefinition {
     name: string;
+}
+
+export abstract class OptionalDefinition {
+    isOptional: boolean;
 }
 
 export abstract class AbstractableDefinition {
@@ -166,9 +173,9 @@ export abstract class ModuledDefinition {
     getMembers(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
 }
 
-export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, TypedDefinition {
-    isOptional: boolean;
+export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, OptionalDefinition, TypedDefinition {
     name: string;
+    isOptional: boolean;
     type: TypeDefinition;
     setType: (text: string) => any;
 
@@ -213,11 +220,11 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, TypedDefinition, DefaultExpressionedDefinition {
-    isOptional: boolean;
+export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[];
     name: string;
+    isOptional: boolean;
     type: TypeDefinition;
     setType: (text: string) => any;
     defaultExpression: ExpressionDefinition;
@@ -319,13 +326,17 @@ export class UserDefinedTypeGuardDefinition extends BaseDefinition {
     constructor();
 }
 
-export class ExpressionDefinition extends BaseDefinition {
+export class BaseExpressionDefinition extends BaseDefinition {
     text: string;
 
+    constructor(type: DefinitionType);
+}
+
+export class ExpressionDefinition extends BaseExpressionDefinition {
     constructor();
 }
 
-export class TypeDefinition extends ExpressionDefinition {
+export class TypeDefinition extends BaseExpressionDefinition {
     arrayElementType: TypeDefinition;
     intersectionTypes: TypeDefinition[];
     unionTypes: TypeDefinition[];
@@ -334,6 +345,8 @@ export class TypeDefinition extends ExpressionDefinition {
     properties: TypePropertyDefinition[];
     typeArguments: TypeDefinition[];
     text: string;
+
+    constructor();
 
     getAllDefinitions(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition;
@@ -740,6 +753,7 @@ export class GlobalDefinition {
     getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): FileDefinition;
     getFileOfDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): FileDefinition;
     getFileAndNamespacesToDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): { file: FileDefinition; namespaces: NamespaceDefinition[]; };
+    renameDefinitionAs(definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition, newName: string): void;
 }
 
 export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassMethodParameterDefinition | ClassConstructorParameterDefinition;
@@ -841,6 +855,10 @@ export interface ModuledStructure {
     typeAliases?: TypeAliasStructure[];
 }
 
+export interface OptionalStructure {
+    isOptional?: boolean;
+}
+
 export interface BaseObjectPropertyStructure extends BasePropertyStructure, DefaultExpressionedStructure {
 }
 
@@ -848,8 +866,7 @@ export interface TypedStructure {
     type?: string;
 }
 
-export interface BasePropertyStructure extends BaseStructure, NamedStructure, TypedStructure {
-    isOptional?: boolean;
+export interface BasePropertyStructure extends BaseStructure, NamedStructure, OptionalStructure, TypedStructure {
 }
 
 export interface TypeParameteredStructure {
@@ -861,8 +878,7 @@ export interface BaseFunctionStructure<T extends BaseParameterStructure> extends
     overloadSignatures?: CallSignatureStructure[];
 }
 
-export interface BaseParameterStructure extends BaseStructure, NamedStructure, TypedStructure, DefaultExpressionedStructure {
-    isOptional?: boolean;
+export interface BaseParameterStructure extends BaseStructure, NamedStructure, OptionalStructure, TypedStructure, DefaultExpressionedStructure {
     isRestParameter?: boolean;
     destructuringProperties?: ObjectPropertyStructure[];
 }
@@ -964,14 +980,6 @@ export interface EnumStructure extends BaseStructure, NamedStructure, Exportable
 
 export interface EnumMemberStructure extends BaseStructure, NamedStructure {
     value: number;
-}
-
-export interface TypeStructure {
-    callSignatures?: CallSignatureStructure[];
-    properties?: TypePropertyStructure[];
-    typeArguments?: string[];
-    definitions?: NamedStructure[];
-    text: string;
 }
 
 export interface FileStructure extends BaseStructure, ModuledStructure {
