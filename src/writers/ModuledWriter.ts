@@ -31,18 +31,53 @@ export class ModuledWriter extends BaseWriter {
     }
 
     private writeChildren(def: ModuledDefinitions, flags: WriteFlags) {
-        def.typeAliases.forEach(t => this.typeAliasWriter.write(t, flags));
-        this.writer.newLine();
-        def.namespaces.forEach(n => this.addBlankLines(() => this.namespaceWriter.write(n, flags)));
-        def.interfaces.forEach(i => this.addBlankLines(() => this.interfaceWriter.write(i, flags)));
-        def.classes.forEach(c => this.addBlankLines(() => this.classWriter.write(c, flags)));
-        def.enums.forEach(e => this.addBlankLines(() => this.enumWriter.write(e, flags)));
-        def.functions.forEach(f => this.addBlankLines(() => this.functionWriter.write(f, flags)));
-        def.variables.forEach(v => this.variableWriter.write(v, flags));
-    }
+        const allDefinitions = [...def.classes, ...def.interfaces, ...def.functions, ...def.namespaces, ...def.variables, ...def.enums, ...def.typeAliases];
+        allDefinitions.sort((a, b) => {
+            if (b.order == null) {
+                return -1;
+            }
+            else if (a.order == null) {
+                return 1;
+            }
+            else {
+                return a.order - b.order;
+            }
+        });
 
-    private addBlankLines(func: () => void) {
-        func();
-        this.writer.newLine();
+        allDefinitions.forEach((d, i) => {
+            if (i > 0 && !d.isTypeAliasDefinition() && !d.isVariableDefinition()) {
+                this.writer.newLine();
+            }
+
+            if (d.isClassDefinition()) {
+                this.classWriter.write(d, flags);
+            }
+            else if (d.isInterfaceDefinition()) {
+                this.interfaceWriter.write(d, flags);
+            }
+            else if (d.isFunctionDefinition()) {
+                this.functionWriter.write(d, flags);
+            }
+            else if (d.isNamespaceDefinition()) {
+                this.namespaceWriter.write(d, flags);
+            }
+            else if (d.isVariableDefinition()) {
+                if (i > 0 && !allDefinitions[i - 1].isVariableDefinition()) {
+                    this.writer.newLine();
+                }
+
+                this.variableWriter.write(d, flags);
+            }
+            else if (d.isEnumDefinition()) {
+                this.enumWriter.write(d, flags);
+            }
+            else if (d.isTypeAliasDefinition()) {
+                if (i > 0 && !allDefinitions[i - 1].isTypeAliasDefinition()) {
+                    this.writer.newLine();
+                }
+
+                this.typeAliasWriter.write(d, flags);
+            }
+        });
     }
 }

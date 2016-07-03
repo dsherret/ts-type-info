@@ -13,19 +13,25 @@ import "./test";
 export * from "./test";
 export {myExport1, myAlias} from "./test";
 
+var myVariable: string;
+var mySecondVariable: number;
+type myType = string;
+type mySecondType = number;
+
+class MyClass {
+}
+interface MyInterface {
+}
+function myFunction() {
+}
+enum MyEnum {
+}
 namespace MyNamespace {
 }
 module MyModule {
 }
-interface MyInterface {
-}
-class MyClass {
-}
-enum MyEnum {
-}
-function myFunction() {
-}
-var myVariable: string;
+
+let myVarAtEndOfFile = "";
 
 export default MyEnum;
 `;
@@ -52,25 +58,31 @@ import "./test";
 export * from "./test";
 export {myExport1, MyActualName as myAlias} from "./test";
 
+var myVariable: string;
+var mySecondVariable: number;
+
+type myType = string;
+type mySecondType = number;
+
+class MyClass {
+}
+
+interface MyInterface {
+}
+
+function myFunction() {
+}
+
+enum MyEnum {
+}
+
 namespace MyNamespace {
 }
 
 module MyModule {
 }
 
-interface MyInterface {
-}
-
-class MyClass {
-}
-
-enum MyEnum {
-}
-
-function myFunction() {
-}
-
-var myVariable: string;
+let myVarAtEndOfFile = "";
 
 export default MyEnum;
 `;
