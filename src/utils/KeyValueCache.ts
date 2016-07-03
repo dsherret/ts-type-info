@@ -6,26 +6,15 @@ interface KeyValueCacheItem<T, U> {
 export class KeyValueCache<T, U> {
     private cacheItems: KeyValueCacheItem<T, U>[] = [];
 
-    getOrCreate(key: T, createFunc: () => U, onAfterAdd: (item: U) => void = () => { /* empty */ }) {
+    getOrCreate(key: T, createFunc: () => U) {
         let item = this.get(key);
 
         if (item == null) {
             item = createFunc();
             this.add(key, item);
-            onAfterAdd(item);
         }
 
         return item;
-    }
-
-    getKeyFromValue(value: U) {
-        for (let cacheItem of this.cacheItems) {
-            if (cacheItem.value === value) {
-                return cacheItem.key;
-            }
-        }
-
-        return null;
     }
 
     get(key: T) {
@@ -36,14 +25,6 @@ export class KeyValueCache<T, U> {
         }
 
         return null;
-    }
-
-    getAll() {
-        return this.cacheItems.map(c => c.value);
-    }
-
-    getAllKeyValues() {
-        return this.cacheItems.map(c => ({ key: c.key, value: c.value }));
     }
 
     add(key: T, value: U) {
