@@ -35,7 +35,7 @@ export class TypeAliasDefinition extends BaseDefinition
     isDefaultExportOfFile: boolean;
     // TypedDefinition
     type: TypeDefinition;
-    setType: (text: string) => any;
+    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;

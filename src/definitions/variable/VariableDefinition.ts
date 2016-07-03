@@ -31,7 +31,7 @@ export class VariableDefinition extends BaseDefinition
     isDefaultExportOfFile: boolean;
     // TypedDefinition
     type: TypeDefinition;
-    setType: (text: string) => any;
+    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition;
     setDefaultExpression: (text: string) => any;

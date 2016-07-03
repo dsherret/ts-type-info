@@ -122,7 +122,8 @@ export abstract class AsyncableDefinition {
 export abstract class TypedDefinition {
     type: TypeDefinition;
 
-    setType(text: string): any;
+    setType(definition: NamedDefinition, typeArguments?: string[]): TypeDefinition;
+    setType(text: string): TypeDefinition;
 }
 
 export abstract class DefaultExpressionedDefinition {
@@ -177,9 +178,11 @@ export abstract class BasePropertyDefinition extends BaseDefinition implements N
     name: string;
     isOptional: boolean;
     type: TypeDefinition;
-    setType: (text: string) => any;
 
     constructor(definitionType: DefinitionType);
+
+    setType(definition: NamedDefinition, typeArguments?: string[]): any;
+    setType(text: string): any;
 }
 
 export abstract class TypeParameteredDefinition {
@@ -226,7 +229,6 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     name: string;
     isOptional: boolean;
     type: TypeDefinition;
-    setType: (text: string) => any;
     defaultExpression: ExpressionDefinition;
     setDefaultExpression: (text: string) => any;
 
@@ -234,6 +236,8 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
 
     addDestructuringProperty(structure: ObjectPropertyStructure): ObjectPropertyDefinition;
     getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): ObjectPropertyDefinition;
+    setType(definition: NamedDefinition, typeArguments?: string[]): any;
+    setType(text: string): any;
 }
 
 export abstract class ParameteredDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> {
@@ -294,7 +298,6 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     type: TypeDefinition;
-    setType: (text: string) => any;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -304,6 +307,8 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     constructor();
 
     write(writeOptions?: WriteOptions): string;
+    setType(definition: NamedDefinition, typeArguments?: string[]): any;
+    setType(text: string): any;
 }
 
 export class DecoratorDefinition extends BaseDefinition implements NamedDefinition {
@@ -733,7 +738,6 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     type: TypeDefinition;
-    setType: (text: string) => any;
     defaultExpression: ExpressionDefinition;
     setDefaultExpression: (text: string) => any;
     isAmbient: boolean;
@@ -742,6 +746,8 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     constructor();
 
     write(writeOptions?: WriteOptions): string;
+    setType(definition: NamedDefinition, typeArguments?: string[]): any;
+    setType(text: string): any;
 }
 
 export type VariableDeclarationType = "var" | "let" | "const";

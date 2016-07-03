@@ -156,15 +156,10 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureTypeAliasBinder(this, structure), new definitions.TypeAliasDefinition());
     }
 
-    getTypeFromDefinitionAndTypeArguments(definition: definitions.NamedDefinition & definitions.TypeParameteredDefinition, typeArguments: string[]) {
+    getTypeFromDefinitionAndTypeArguments(definition: definitions.NamedDefinition, typeArguments: string[]) {
         let text = definition.name || "";
-        const maxTypeArgs = Math.max(definition.typeParameters.length, typeArguments.length);
 
-        if (maxTypeArgs > 0) {
-            while (typeArguments.length < maxTypeArgs) {
-                typeArguments.push("any");
-            }
-
+        if (typeArguments.length > 0) {
             text += `<${typeArguments.join(", ")}>`;
         }
 

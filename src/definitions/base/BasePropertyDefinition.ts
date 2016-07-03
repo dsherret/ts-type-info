@@ -17,7 +17,7 @@ export abstract class BasePropertyDefinition extends BaseDefinition implements N
     isOptional: boolean;
     // TypedDefinition
     type: TypeDefinition;
-    setType: (text: string) => any;
+    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
 }
 
 applyMixins(BasePropertyDefinition, BaseDefinition, [NamedDefinition, OptionalDefinition, TypedDefinition]);

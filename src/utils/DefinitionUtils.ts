@@ -1,8 +1,8 @@
-﻿import {FileDefinition, NamedDefinition, TypeDefinition, ClassDefinition, InterfaceDefinition} from "./../definitions";
+﻿import {FileDefinition, NamedDefinition, TypeDefinition} from "./../definitions";
 import {StructureFactory} from "./../factories";
 
 export class DefinitionUtils {
-    static getTypeDefinitionFromTextOrDefinition(textOrDefinition: string | ClassDefinition | InterfaceDefinition, typeArguments: string[]) {
+    static getTypeDefinitionFromTextOrDefinition(textOrDefinition: string | NamedDefinition, typeArguments: string[]) {
         const structureFactory = new StructureFactory();
         let def: TypeDefinition;
 
