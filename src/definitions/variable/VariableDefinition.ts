@@ -4,12 +4,12 @@ import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition,
-    DefaultExpressionedDefinition, BaseDefinition, DefinitionType} from "./../base";
+    DefaultExpressionedDefinition, BaseDefinition, DefinitionType, OrderableDefinition} from "./../base";
 import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
-                                implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
+        implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition {
     declarationType: VariableDeclarationType;
 
     constructor() {
@@ -25,19 +25,22 @@ export class VariableDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
+    // DefaultExpressionedDefinition
+    defaultExpression: ExpressionDefinition;
+    setDefaultExpression: (text: string) => any;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    // OrderableDefinition
+    order: number;
     // TypedDefinition
     type: TypeDefinition;
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
-    // DefaultExpressionedDefinition
-    defaultExpression: ExpressionDefinition;
-    setDefaultExpression: (text: string) => any;
-    // AmbientableDefinition
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
 }
 
-applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition]);
+applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition,
+    OrderableDefinition]);

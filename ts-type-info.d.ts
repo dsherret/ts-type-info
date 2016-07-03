@@ -102,6 +102,10 @@ export abstract class NamedDefinition {
     name: string;
 }
 
+export abstract class OrderableDefinition {
+    order: number;
+}
+
 export abstract class OptionalDefinition {
     isOptional: boolean;
 }
@@ -292,17 +296,18 @@ export class TypePropertyDefinition extends BasePropertyDefinition {
     constructor();
 }
 
-export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, TypeParameteredDefinition, AmbientableDefinition {
+export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition {
     name: string;
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    order: number;
     type: TypeDefinition;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
 
     constructor();
 
@@ -363,7 +368,7 @@ export class TypeDefinition extends BaseExpressionDefinition {
     isArray(): boolean;
 }
 
-export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition {
+export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition, OrderableDefinition {
     isAsync: boolean;
     onWriteFunctionBody: (writer: CodeBlockWriter) => void;
     isExported: boolean;
@@ -371,6 +376,7 @@ export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameter
     isDefaultExportOfFile: boolean;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+    order: number;
 
     constructor();
 
@@ -417,7 +423,7 @@ export abstract class ScopedDefinition {
     scope: "public" | "protected" | "private";
 }
 
-export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
+export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, OrderableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
     methods: ClassMethodDefinition[];
     properties: ClassPropertyDefinition[];
     staticMethods: ClassStaticMethodDefinition[];
@@ -432,6 +438,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    order: number;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -523,7 +530,7 @@ export type Scope = "public" | "protected" | "private";
 
 export const Scope: { Public: "public" | "protected" | "private"; Protected: "public" | "protected" | "private"; Private: "public" | "protected" | "private"; };
 
-export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
+export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition {
     methods: InterfaceMethodDefinition[];
     callSignatures: CallSignatureDefinition[];
     indexSignatures: IndexSignatureDefinition[];
@@ -531,14 +538,15 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     properties: InterfacePropertyDefinition[];
     extendsTypes: TypeDefinition[];
     name: string;
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    order: number;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
 
     constructor();
 
@@ -571,13 +579,14 @@ export class InterfacePropertyDefinition extends BasePropertyDefinition {
     constructor();
 }
 
-export class EnumDefinition extends BaseDefinition implements ExportableDefinition, AmbientableDefinition {
+export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition {
     isConst: boolean;
     members: EnumMemberDefinition[];
     name: string;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    order: number;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
 
@@ -599,9 +608,14 @@ export type NamespaceDeclarationType = "namespace" | "module";
 
 export const NamespaceDeclarationType: { Namespace: "namespace" | "module"; Module: "namespace" | "module"; };
 
-export class NamespaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
+export class NamespaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition {
     declarationType: "namespace" | "module";
     name: string;
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
+    isExported: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
     interfaces: InterfaceDefinition[];
@@ -627,11 +641,7 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     directlyContains: (def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean;
     getNamespacesToDefinition: (searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => NamespaceDefinition[];
     getMembers: () => (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    isExported: boolean;
-    isNamedExportOfFile: boolean;
-    isDefaultExportOfFile: boolean;
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
+    order: number;
 
     constructor();
 
@@ -731,17 +741,18 @@ export class ReExportPartDefinition extends BaseImportPartDefinition {
     constructor();
 }
 
-export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition {
+export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition {
     declarationType: "var" | "let" | "const";
     name: string;
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
+    defaultExpression: ExpressionDefinition;
+    setDefaultExpression: (text: string) => any;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    order: number;
     type: TypeDefinition;
-    defaultExpression: ExpressionDefinition;
-    setDefaultExpression: (text: string) => any;
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
 
     constructor();
 

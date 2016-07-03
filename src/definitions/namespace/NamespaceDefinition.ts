@@ -5,7 +5,7 @@ import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType, OrderableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -15,7 +15,7 @@ import {TypeAliasDefinition} from "./../general";
 import {NamespaceDeclarationType} from "./NamespaceDeclarationType";
 
 export class NamespaceDefinition extends BaseDefinition
-                                 implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition {
+        implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition {
     declarationType: NamespaceDeclarationType;
 
     constructor() {
@@ -32,6 +32,13 @@ export class NamespaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
+    // ExportableDefinition
+    isExported: boolean;
+    isNamedExportOfFile: boolean;
+    isDefaultExportOfFile: boolean;
     // ModuledDefinition
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
@@ -58,13 +65,8 @@ export class NamespaceDefinition extends BaseDefinition
     directlyContains: (def: ModuleMemberDefinitions) => boolean;
     getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => NamespaceDefinition[];
     getMembers: () => ModuleMemberDefinitions[];
-    // ExportableDefinition
-    isExported: boolean;
-    isNamedExportOfFile: boolean;
-    isDefaultExportOfFile: boolean;
-    // AmbientableDefinition
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
+    // OrderableDefinition
+    order: number;
 }
 
-applyMixins(NamespaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition]);
+applyMixins(NamespaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition]);

@@ -8,6 +8,7 @@ import {BaseDefinition, DefinitionType} from "./../base";
 import {TypeDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
+import {OrderableDefinition} from "./../base/OrderableDefinition";
 import {TypeParameteredDefinition} from "./../base/TypeParameteredDefinition";
 import {TypedDefinition} from "./../base/TypedDefinition";
 import {ExportableDefinition} from "./../base/ExportableDefinition";
@@ -15,7 +16,7 @@ import {AmbientableDefinition} from "./../base/AmbientableDefinition";
 import {TypeParameterDefinition} from "./TypeParameterDefinition";
 
 export class TypeAliasDefinition extends BaseDefinition
-                                 implements NamedDefinition, ExportableDefinition, TypedDefinition, TypeParameteredDefinition, AmbientableDefinition {
+        implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition {
     constructor() {
         super(DefinitionType.TypeAlias);
     }
@@ -29,10 +30,15 @@ export class TypeAliasDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    // OrderableDefinition
+    order: number;
     // TypedDefinition
     type: TypeDefinition;
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
@@ -40,9 +46,7 @@ export class TypeAliasDefinition extends BaseDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
-    // AmbientableDefinition
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
 }
 
-applyMixins(TypeAliasDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, TypeParameteredDefinition, AmbientableDefinition]);
+applyMixins(TypeAliasDefinition, BaseDefinition, [NamedDefinition, AmbientableDefinition, OrderableDefinition, ExportableDefinition, TypedDefinition,
+    TypeParameteredDefinition]);

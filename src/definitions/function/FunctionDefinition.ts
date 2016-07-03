@@ -5,12 +5,13 @@ import {applyMixins} from "./../../utils";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {ExportableDefinition, AmbientableDefinition, AsyncableDefinition, DefinitionType, BaseFunctionDefinition, FunctionBodyWriteableDefinition} from "./../base";
+import {ExportableDefinition, AmbientableDefinition, AsyncableDefinition, DefinitionType, BaseFunctionDefinition, FunctionBodyWriteableDefinition,
+    OrderableDefinition} from "./../base";
 import {FunctionParameterDefinition} from "./FunctionParameterDefinition";
 
 export class FunctionDefinition
         extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure>
-        implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition {
+        implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition, OrderableDefinition {
 
     constructor() {
         super(DefinitionType.Function);
@@ -40,6 +41,9 @@ export class FunctionDefinition
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+    // OrderableDefinition
+    order: number;
 }
 
-applyMixins(FunctionDefinition, BaseFunctionDefinition, [ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition]);
+applyMixins(FunctionDefinition, BaseFunctionDefinition, [ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition,
+    OrderableDefinition]);

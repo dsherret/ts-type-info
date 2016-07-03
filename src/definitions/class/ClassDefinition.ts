@@ -6,7 +6,7 @@ import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
-        AbstractableDefinition, DefinitionType} from "./../base";
+        AbstractableDefinition, OrderableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {TypeDefinition} from "./../expression";
 import {InterfaceDefinition} from "./../interface";
@@ -17,7 +17,7 @@ import {ClassPropertyDefinition} from "./ClassPropertyDefinition";
 import {ClassStaticMethodDefinition} from "./ClassStaticMethodDefinition";
 import {ClassStaticPropertyDefinition} from "./ClassStaticPropertyDefinition";
 
-export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition,
+export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, OrderableDefinition,
                                         ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
@@ -120,6 +120,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    // OrderableDefinition
+    order: number;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
@@ -131,4 +133,5 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isAbstract: boolean;
 }
 
-applyMixins(ClassDefinition, BaseDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition]);
+applyMixins(ClassDefinition, BaseDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition,
+    AbstractableDefinition, OrderableDefinition]);

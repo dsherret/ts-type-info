@@ -2,6 +2,7 @@
 export * from "./base/DefinitionType";
 export * from "./base/FunctionBodyWriteableDefinition";
 export * from "./base/NamedDefinition";
+export * from "./base/OrderableDefinition";
 export * from "./base/OptionalDefinition";
 export * from "./base/AbstractableDefinition";
 export * from "./base/AmbientableDefinition";

@@ -8,6 +8,7 @@ export * from "./base/DecoratableTestStructure";
 export * from "./base/ExportableTestStructure";
 export * from "./base/FunctionBodyWriteableTestStructure";
 export * from "./base/ModuledTestStructure";
+export * from "./base/OrderableTestStructure";
 export * from "./base/OptionalTestStructure";
 export * from "./base/BaseObjectPropertyTestStructure";
 export * from "./base/TypedTestStructure";

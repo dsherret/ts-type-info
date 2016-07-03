@@ -17,12 +17,15 @@ module MyModule {
     }
     export module MyInnerExportedModule {
         export class MyInnerModuleClass {}
+        class MyNonExportedInnerClass {}
     }
     namespace MyInnerNamespace {
     }
     export namespace MyInnerExportedNamespace {
         export class MyInnerNamespaceClass {}
     }
+    type myTypeAlias = string;
+    export type myExportedTypeAlias = string;
 }
 export module MyExportedModule {
 }`;
@@ -34,47 +37,62 @@ export module MyExportedModule {
             name: "MyModule",
             declarationType: NamespaceDeclarationType.Module,
             classes: [
-                { name: "MyModuleClass" },
-                { name: "MyExportedModuleClass", isExported: true }
+                { name: "MyModuleClass", order: 0 },
+                { name: "MyExportedModuleClass", isExported: true, order: 1 }
             ],
             enums: [
-                { name: "MyModuleEnum" },
-                { name: "MyExportedModuleEnum", isExported: true }
+                { name: "MyModuleEnum", order: 2 },
+                { name: "MyExportedModuleEnum", isExported: true, order: 3 }
             ],
             functions: [
-                { name: "myModuleFunction" },
-                { name: "myExportedModuleFunction", isExported: true }
+                { name: "myModuleFunction", order: 4 },
+                { name: "myExportedModuleFunction", isExported: true, order: 5 }
             ],
             interfaces: [
-                { name: "MyModuleInterface" },
-                { name: "MyExportedModuleInterface", isExported: true }
+                { name: "MyModuleInterface", order: 6 },
+                { name: "MyExportedModuleInterface", isExported: true, order: 7 }
             ],
             namespaces: [{
                 name: "MyInnerModule",
-                declarationType: NamespaceDeclarationType.Module
+                declarationType: NamespaceDeclarationType.Module,
+                order: 8
             }, {
                 name: "MyInnerExportedModule",
                 declarationType: NamespaceDeclarationType.Module,
                 isExported: true,
+                order: 9,
                 classes: [
-                    { name: "MyInnerModuleClass", isExported: true }
+                    { name: "MyInnerModuleClass", isExported: true, order: 0 },
+                    { name: "MyNonExportedInnerClass", order: 1 }
                 ],
                 exports: [{
                     name: "MyInnerModuleClass"
                 }]
             }, {
                 name: "MyInnerNamespace",
-                declarationType: NamespaceDeclarationType.Namespace
+                declarationType: NamespaceDeclarationType.Namespace,
+                order: 10
             }, {
                 name: "MyInnerExportedNamespace",
                 declarationType: NamespaceDeclarationType.Namespace,
                 isExported: true,
+                order: 11,
                 classes: [
-                    { name: "MyInnerNamespaceClass", isExported: true }
+                    { name: "MyInnerNamespaceClass", isExported: true, order: 0 }
                 ],
                 exports: [{
                     name: "MyInnerNamespaceClass"
                 }]
+            }],
+            typeAliases: [{
+                name: "myTypeAlias",
+                type: { text: "string" },
+                order: 12
+            }, {
+                name: "myExportedTypeAlias",
+                type: { text: "string" },
+                isExported: true,
+                order: 13
             }],
             exports: [{
                 name: "MyInnerExportedModule"
@@ -88,6 +106,8 @@ export module MyExportedModule {
                 name: "MyExportedModuleEnum"
             }, {
                 name: "myExportedModuleFunction"
+            }, {
+                name: "myExportedTypeAlias"
             }]
         }, {
             name: "MyExportedModule",

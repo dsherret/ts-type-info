@@ -4,7 +4,7 @@ import {applyMixins, DefinitionUtils} from "./../../utils";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {NamedDefinition, ExportableDefinition, AmbientableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
 import {ClassDefinition} from "./../class";
 import {TypeDefinition} from "./../expression";
@@ -12,7 +12,7 @@ import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 
 export class InterfaceDefinition extends BaseDefinition
-        implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
+        implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];
     indexSignatures: IndexSignatureDefinition[] = [];
@@ -93,17 +93,19 @@ export class InterfaceDefinition extends BaseDefinition
 
     // NamedDefinition
     name: string;
+    // AmbientableDefinition
+    isAmbient: boolean;
+    hasDeclareKeyword: boolean;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
+    // OrderableDefinition
+    order: number;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
-    // AmbientableDefinition
-    isAmbient: boolean;
-    hasDeclareKeyword: boolean;
 }
 
-applyMixins(InterfaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition]);
+applyMixins(InterfaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition]);

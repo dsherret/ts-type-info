@@ -1,7 +1,7 @@
 import {FunctionTestStructure} from "./../../testStructures";
 import {FunctionDefinition} from "./../../../../definitions";
 import {runAmbientableDefinitionTests, runAsyncableDefinitionTests, runExportableDefinitionTests, runBaseFunctionDefinitionTests,
-    runFunctionBodyWriteableDefinitionTests} from "./../base";
+    runFunctionBodyWriteableDefinitionTests, runOrderableDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runFunctionParameterDefinitionTests} from "./runFunctionParameterDefinitionTests";
 
@@ -13,6 +13,7 @@ export function runFunctionDefinitionTests(definition: FunctionDefinition, struc
             runAsyncableDefinitionTests(definition, structure);
             runExportableDefinitionTests(definition, structure);
             runFunctionBodyWriteableDefinitionTests(definition, structure);
+            runOrderableDefinitionTests(definition, structure);
         });
     });
 }

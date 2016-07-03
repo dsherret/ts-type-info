@@ -12,12 +12,17 @@ export class TsModuledBinder extends ModuledBinder {
     getMembers() {
         const members: NodeDefinitions[] = [];
         // because there can be multiple function signatures, the last one needs to be used
-        const functions: { [name: string]: TsNode } = {};
+        let currentFunction: { name: string; node: TsNode; } = null;
 
         this.node.getChildren().forEach(childNode => {
             tryGet(childNode, () => {
+                if (currentFunction != null && childNode.getName() !== currentFunction.name) {
+                    members.push(this.factory.getDefinitionByNode(currentFunction.node));
+                    currentFunction = null;
+                }
+
                 if (childNode.isFunction()) {
-                    functions[childNode.getName()] = childNode;
+                    currentFunction = { name: childNode.getName(), node: childNode };
                     return;
                 }
 
@@ -40,12 +45,11 @@ export class TsModuledBinder extends ModuledBinder {
             });
         });
 
-        Object.keys(functions).forEach(name => {
-            const childNode = functions[name];
-            tryGet(childNode, () => {
-                members.push(this.factory.getDefinitionByNode(childNode));
+        if (currentFunction != null) {
+            tryGet(currentFunction.node, () => {
+                members.push(this.factory.getDefinitionByNode(currentFunction.node));
             });
-        });
+        }
 
         return members;
     }
