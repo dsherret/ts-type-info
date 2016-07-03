@@ -92,8 +92,11 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
             writer.newLine();
         }
 
+        const writeFlags = WriteFlags.HideFunctionBodies | WriteFlags.HideExpressions | WriteFlags.HidePrivateMembers | WriteFlags.HideProtectedMembers |
+            WriteFlags.HideFunctionImplementations;
+
         this.getExports().forEach((exportDef) => {
-            writeDefinition(exportDef, writer, WriteFlags.HideFunctionBodies | WriteFlags.HideExpressions | WriteFlags.HidePrivateMembers | WriteFlags.HideProtectedMembers);
+            writeDefinition(exportDef, writer, writeFlags);
             writer.newLine();
         });
 

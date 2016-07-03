@@ -18,12 +18,25 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
 
     protected writeDefault(def: MethodDefinitions, flags: WriteFlags) {
         def.overloadSignatures.forEach(s => {
-            this.scopeWriter.write((def as ClassMethodDefinition).scope);
-            this.writer.spaceIfLastNotSpace();
-            this.writeAbstract(def as ClassMethodDefinition);
-            this.writer.write(def.name);
+            this.writeStartOfFunctionHeader(def, flags);
             this.callSignatureWriter.write(s, flags);
         });
+        this.writeImplementation(def, flags);
+    }
+
+    private writeImplementation(def: MethodDefinitions, flags: WriteFlags) {
+        const showImplementation = def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0;
+
+        if (showImplementation) {
+            this.writeStartOfFunctionHeader(def, flags);
+            this.typeParametersWriter.write(def.typeParameters, flags);
+            this.parametersWriter.write(def.parameters, flags);
+            this.functionReturnTypeWriter.write(def, flags);
+            this.functionBodyWriter.write(def, flags);
+        }
+    }
+
+    private writeStartOfFunctionHeader(def: MethodDefinitions, flags: WriteFlags) {
         this.scopeWriter.write((def as ClassMethodDefinition).scope);
         this.writer.spaceIfLastNotSpace();
         this.writeStatic(def);
@@ -31,10 +44,6 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         this.writeAsyncKeyword(def as ClassMethodDefinition);
         this.writer.conditionalWrite(def.isGenerator, "*");
         this.writer.write(def.name);
-        this.typeParametersWriter.write(def.typeParameters, flags);
-        this.parametersWriter.write(def.parameters, flags);
-        this.functionReturnTypeWriter.write(def, flags);
-        this.functionBodyWriter.write(def, flags);
     }
 
     private writeStatic(def: MethodDefinitions) {
