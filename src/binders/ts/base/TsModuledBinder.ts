@@ -16,7 +16,7 @@ export class TsModuledBinder extends ModuledBinder {
 
         this.node.getChildren().forEach(childNode => {
             tryGet(childNode, () => {
-                if (currentFunction != null && childNode.getName() !== currentFunction.name) {
+                if (currentFunction != null && (!childNode.isFunction() || childNode.getName() !== currentFunction.name)) {
                     members.push(this.factory.getDefinitionByNode(currentFunction.node));
                     currentFunction = null;
                 }
