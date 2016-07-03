@@ -156,6 +156,21 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureTypeAliasBinder(this, structure), new definitions.TypeAliasDefinition());
     }
 
+    getTypeFromDefinitionAndTypeArguments(definition: definitions.NamedDefinition & definitions.TypeParameteredDefinition, typeArguments: string[]) {
+        let text = definition.name || "";
+        const maxTypeArgs = Math.max(definition.typeParameters.length, typeArguments.length);
+
+        if (maxTypeArgs > 0) {
+            while (typeArguments.length < maxTypeArgs) {
+                typeArguments.push("any");
+            }
+
+            text += `<${typeArguments.join(", ")}>`;
+        }
+
+        return this.getTypeFromText(text);
+    }
+
     getTypeFromText(text: string) {
         if (typeof text === "string" && text.length > 0) {
             return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(this, text), new definitions.TypeDefinition());

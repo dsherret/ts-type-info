@@ -1,5 +1,6 @@
 ﻿import * as assert from "assert";
 import {InterfaceDefinition} from "./../../../definitions";
+import {createInterface, createClass} from "./../../../createFunctions";
 import * as testHelpers from "./../../testHelpers";
 
 describe("InterfaceDefinition", () => {
@@ -31,20 +32,61 @@ describe("InterfaceDefinition", () => {
     });
 
     describe("#addExtends()", () => {
-        const i = new InterfaceDefinition();
-        const returnedDef = i.addExtends("test");
-        i.addExtends("test2");
+        describe("supplying a text", () => {
+            const i = new InterfaceDefinition();
+            const returnedDef = i.addExtends("test");
+            i.addExtends("test2");
 
-        it("the returned definition should be in the array", () => {
-            assert.equal(returnedDef, i.extendsTypes[0]);
+            it("the returned definition should be in the array", () => {
+                assert.equal(returnedDef, i.extendsTypes[0]);
+            });
+
+            it("should have two extends expressions", () => {
+                assert.equal(i.extendsTypes.length, 2);
+            });
+
+            it("should have the correct expression", () => {
+                assert.equal(i.extendsTypes[0].text, "test");
+            });
         });
 
-        it("should have two extends expressions", () => {
-            assert.equal(i.extendsTypes.length, 2);
+        describe("supplying a definition without type arguments", () => {
+            const baseInterface = createInterface({ name: "BaseInterface" });
+            const i = new InterfaceDefinition();
+            const returnedDef = i.addExtends(baseInterface);
+
+            it("the returned definition should be in the array", () => {
+                assert.equal(returnedDef, i.extendsTypes[0]);
+            });
+
+            it("should have the correct expression", () => {
+                assert.equal(i.extendsTypes[0].text, "BaseInterface");
+            });
         });
 
-        it("should have a test expression", () => {
-            assert.equal(i.extendsTypes[0].text, "test");
+        describe("supplying a definition with type arguments", () => {
+            const baseClass = createClass({ name: "BaseClass" });
+            const i = new InterfaceDefinition();
+
+            describe("one type argument", () => {
+                const returnedDef = i.addExtends(baseClass, ["string"]);
+
+                it("the returned definition should be in the array", () => {
+                    assert.equal(returnedDef, i.extendsTypes[0]);
+                });
+
+                it("should have the correct expression", () => {
+                    assert.equal(i.extendsTypes[0].text, "BaseClass<string>");
+                });
+            });
+
+            describe("multiple type arguments", () => {
+                i.addExtends(baseClass, ["string", "number"]);
+
+                it("should have the correct expression", () => {
+                    assert.equal(i.extendsTypes[1].text, "BaseClass<string, number>");
+                });
+            });
         });
     });
 

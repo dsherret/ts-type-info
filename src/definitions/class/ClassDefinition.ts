@@ -9,6 +9,7 @@ import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefin
         AbstractableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {TypeDefinition} from "./../expression";
+import {InterfaceDefinition} from "./../interface";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 import {ClassMethodDefinition} from "./ClassMethodDefinition";
@@ -61,15 +62,23 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return def;
     }
 
-    addExtends(structure: string) {
-        const def = new StructureFactory().getTypeFromText(structure);
-        this.extendsTypes.push(def);
+    addExtends(definition: ClassDefinition, typeArguments?: string[]): TypeDefinition;
+    addExtends(text: string): TypeDefinition;
+    addExtends(textOrDefinition: string | ClassDefinition, typeArguments: string[] = []) {
+        const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
+        if (def != null) {
+            this.extendsTypes.push(def);
+        }
         return def;
     }
 
-    addImplements(structure: string) {
-        const def = new StructureFactory().getTypeFromText(structure);
-        this.implementsTypes.push(def);
+    addImplements(definition: InterfaceDefinition | ClassDefinition, typeArguments?: string[]): TypeDefinition;
+    addImplements(text: string): TypeDefinition;
+    addImplements(textOrDefinition: string | InterfaceDefinition | ClassDefinition, typeArguments: string[] = []) {
+        const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
+        if (def != null) {
+            this.implementsTypes.push(def);
+        }
         return def;
     }
 

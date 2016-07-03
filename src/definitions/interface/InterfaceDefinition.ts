@@ -6,12 +6,13 @@ import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {NamedDefinition, ExportableDefinition, AmbientableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
+import {ClassDefinition} from "./../class";
 import {TypeDefinition} from "./../expression";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 
 export class InterfaceDefinition extends BaseDefinition
-                                 implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
+        implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition {
     methods: InterfaceMethodDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];
     indexSignatures: IndexSignatureDefinition[] = [];
@@ -29,9 +30,13 @@ export class InterfaceDefinition extends BaseDefinition
         return def;
     }
 
-    addExtends(structure: string) {
-        const def = new StructureFactory().getTypeFromText(structure);
-        this.extendsTypes.push(def);
+    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[]): TypeDefinition;
+    addExtends(text: string): TypeDefinition;
+    addExtends(textOrDefinition: string | ClassDefinition | InterfaceDefinition, typeArguments: string[] = []) {
+        const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
+        if (def != null) {
+            this.extendsTypes.push(def);
+        }
         return def;
     }
 

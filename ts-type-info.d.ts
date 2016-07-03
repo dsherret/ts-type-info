@@ -441,8 +441,10 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addProperty(structure: ClassPropertyStructure): ClassPropertyDefinition;
     addStaticMethod(structure: ClassStaticMethodStructure): ClassStaticMethodDefinition;
     addStaticProperty(structure: ClassStaticPropertyStructure): ClassStaticPropertyDefinition;
-    addExtends(structure: string): TypeDefinition;
-    addImplements(structure: string): TypeDefinition;
+    addExtends(definition: ClassDefinition, typeArguments?: string[]): TypeDefinition;
+    addExtends(text: string): TypeDefinition;
+    addImplements(definition: InterfaceDefinition | ClassDefinition, typeArguments?: string[]): TypeDefinition;
+    addImplements(text: string): TypeDefinition;
     getPropertiesAndConstructorParameters(): (ClassConstructorParameterDefinition | ClassPropertyDefinition)[];
     getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): ClassMethodDefinition;
     getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition;
@@ -536,7 +538,8 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     constructor();
 
     addCallSignature(structure: CallSignatureStructure): CallSignatureDefinition;
-    addExtends(structure: string): TypeDefinition;
+    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[]): TypeDefinition;
+    addExtends(text: string): TypeDefinition;
     addIndexSignature(structure: IndexSignatureStructure): IndexSignatureDefinition;
     addMethod(structure: InterfaceMethodStructure): InterfaceMethodDefinition;
     addNewSignature(structure: CallSignatureStructure): CallSignatureDefinition;
@@ -788,7 +791,7 @@ export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinitio
 
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
 
-export class BaseError extends Error {
+export abstract class BaseError extends Error {
     constructor(message: string);
 }
 

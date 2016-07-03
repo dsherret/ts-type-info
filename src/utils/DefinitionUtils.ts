@@ -1,6 +1,21 @@
-﻿import {FileDefinition, NamedDefinition} from "./../definitions";
+﻿import {FileDefinition, NamedDefinition, TypeDefinition, ClassDefinition, InterfaceDefinition} from "./../definitions";
+import {StructureFactory} from "./../factories";
 
 export class DefinitionUtils {
+    static getTypeDefinitionFromTextOrDefinition(textOrDefinition: string | ClassDefinition | InterfaceDefinition, typeArguments: string[]) {
+        const structureFactory = new StructureFactory();
+        let def: TypeDefinition;
+
+        if (typeof textOrDefinition === "string") {
+            def = structureFactory.getTypeFromText(textOrDefinition);
+        }
+        else if (textOrDefinition != null) {
+            def = structureFactory.getTypeFromDefinitionAndTypeArguments(textOrDefinition, typeArguments);
+        }
+
+        return def;
+    }
+
     static isDefinitionFile(def: FileDefinition) {
         const definitionFileExt = ".d.ts";
         const fileName = def.fileName || "";

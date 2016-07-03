@@ -1,41 +1,124 @@
 ﻿import * as assert from "assert";
 import {ClassDefinition, Scope, ClassConstructorParameterScope} from "./../../../definitions";
+import {createClass, createInterface} from "./../../../createFunctions";
 import * as testHelpers from "./../../testHelpers";
 
 describe("ClassDefinition", () => {
     describe("#addExtends()", () => {
-        const c = new ClassDefinition();
-        const returnedDef = c.addExtends("test");
-        c.addExtends("test2");
+        describe("supplying a text", () => {
+            const c = new ClassDefinition();
+            const returnedDef = c.addExtends("test");
+            c.addExtends("test2");
 
-        it("the returned definition should be in the array", () => {
-            assert.equal(returnedDef, c.extendsTypes[0]);
+            it("the returned definition should be in the array", () => {
+                assert.equal(returnedDef, c.extendsTypes[0]);
+            });
+
+            it("should have two extends expressions", () => {
+                assert.equal(c.extendsTypes.length, 2);
+            });
+
+            it("should have the correct expression", () => {
+                assert.equal(c.extendsTypes[0].text, "test");
+            });
         });
 
-        it("should have two extends expressions", () => {
-            assert.equal(c.extendsTypes.length, 2);
+        describe("supplying a definition without type arguments", () => {
+            const baseClass = createClass({ name: "BaseClass" });
+            const c = new ClassDefinition();
+            const returnedDef = c.addExtends(baseClass);
+
+            it("the returned definition should be in the array", () => {
+                assert.equal(returnedDef, c.extendsTypes[0]);
+            });
+
+            it("should have the correct expression", () => {
+                assert.equal(c.extendsTypes[0].text, "BaseClass");
+            });
         });
 
-        it("should have a test expression", () => {
-            assert.equal(c.extendsTypes[0].text, "test");
+        describe("supplying a definition with type arguments", () => {
+            const baseClass = createClass({ name: "BaseClass" });
+            const c = new ClassDefinition();
+
+            describe("one type argument", () => {
+                const returnedDef = c.addExtends(baseClass, ["string"]);
+
+                it("the returned definition should be in the array", () => {
+                    assert.equal(returnedDef, c.extendsTypes[0]);
+                });
+
+                it("should have the correct expression", () => {
+                    assert.equal(c.extendsTypes[0].text, "BaseClass<string>");
+                });
+            });
+
+            describe("multiple type arguments", () => {
+                c.addExtends(baseClass, ["string", "number"]);
+
+                it("should have the correct expression", () => {
+                    assert.equal(c.extendsTypes[1].text, "BaseClass<string, number>");
+                });
+            });
         });
     });
 
     describe("#addImplements()", () => {
-        const c = new ClassDefinition();
-        const returnedDef = c.addImplements("test");
-        c.addImplements("test2");
+        describe("supplying a text", () => {
+            const c = new ClassDefinition();
+            const returnedDef = c.addImplements("test");
+            c.addImplements("test2");
 
-        it("the returned definition should be in the array", () => {
-            assert.equal(returnedDef, c.implementsTypes[0]);
+            it("the returned definition should be in the array", () => {
+                assert.equal(returnedDef, c.implementsTypes[0]);
+            });
+
+            it("should have two implements expressions", () => {
+                assert.equal(c.implementsTypes.length, 2);
+            });
+
+            it("should have the correct expression", () => {
+                assert.equal(c.implementsTypes[0].text, "test");
+            });
         });
 
-        it("should have two implements expressions", () => {
-            assert.equal(c.implementsTypes.length, 2);
+        describe("supplying a definition without type arguments", () => {
+            const baseClass = createClass({ name: "BaseClass" });
+            const c = new ClassDefinition();
+            const returnedDef = c.addImplements(baseClass);
+
+            it("the returned definition should be in the array", () => {
+                assert.equal(returnedDef, c.implementsTypes[0]);
+            });
+
+            it("should have the correct expression", () => {
+                assert.equal(c.implementsTypes[0].text, "BaseClass");
+            });
         });
 
-        it("should have a test expression", () => {
-            assert.equal(c.implementsTypes[0].text, "test");
+        describe("supplying a definition with type arguments", () => {
+            const baseInterface = createInterface({ name: "BaseInterface" });
+            const c = new ClassDefinition();
+
+            describe("one type argument", () => {
+                const returnedDef = c.addImplements(baseInterface, ["string"]);
+
+                it("the returned definition should be in the array", () => {
+                    assert.equal(returnedDef, c.implementsTypes[0]);
+                });
+
+                it("should have the correct expression", () => {
+                    assert.equal(c.implementsTypes[0].text, "BaseInterface<string>");
+                });
+            });
+
+            describe("multiple type arguments", () => {
+                c.addImplements(baseInterface, ["string", "number"]);
+
+                it("should have the correct expression", () => {
+                    assert.equal(c.implementsTypes[1].text, "BaseInterface<string, number>");
+                });
+            });
         });
     });
 
