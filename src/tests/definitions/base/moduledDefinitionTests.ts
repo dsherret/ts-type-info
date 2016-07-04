@@ -34,6 +34,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runClassDefinitionTests(n.classes[0], {
             name: "class1",
+            order: 0,
             constructorDef: { parameters: [{ name: "param1" }] },
             decorators: [{ name: "dec1" }],
             extendsTypes: [{ text: "class2" }],
@@ -51,7 +52,8 @@ describe("ModuledDefinitionTests", () => {
             typeParameters: [{ name: "T" }]
         });
         testHelpers.runClassDefinitionTests(n.classes[1], {
-            name: "class2"
+            name: "class2",
+            order: 1
         });
     });
 
@@ -77,6 +79,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runEnumDefinitionTests(n.enums[0], {
             name: "enum1",
+            order: 0,
             hasDeclareKeyword: true,
             isAmbient: true,
             isDefaultExportOfFile: true,
@@ -86,7 +89,8 @@ describe("ModuledDefinitionTests", () => {
             members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
         });
         testHelpers.runEnumDefinitionTests(n.enums[1], {
-            name: "enum2"
+            name: "enum2",
+            order: 1
         });
     });
 
@@ -119,6 +123,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runFunctionDefinitionTests(n.functions[0], {
             name: "function1",
+            order: 0,
             hasDeclareKeyword: true,
             isAmbient: true,
             isAsync: true,
@@ -136,7 +141,8 @@ describe("ModuledDefinitionTests", () => {
             hasOnWriteFunctionBody: true
         });
         testHelpers.runFunctionDefinitionTests(n.functions[1], {
-            name: "function2"
+            name: "function2",
+            order: 1
         });
     });
 
@@ -176,6 +182,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runInterfaceDefinitionTests(n.interfaces[0], {
             name: "Interface1",
+            order: 0,
             extendsTypes: [{ text: "Extend" }],
             hasDeclareKeyword: true,
             isAmbient: true,
@@ -201,7 +208,8 @@ describe("ModuledDefinitionTests", () => {
             }]
         });
         testHelpers.runInterfaceDefinitionTests(n.interfaces[1], {
-            name: "Interface2"
+            name: "Interface2",
+            order: 1
         });
     });
 
@@ -209,6 +217,7 @@ describe("ModuledDefinitionTests", () => {
         const n = new NamespaceDefinition();
         const returnedDef = n.addNamespace({
             name: "namespace1",
+            order: 0,
             declarationType: NamespaceDeclarationType.Module,
             classes: [{ name: "class1" }],
             enums: [{ name: "enum1" }],
@@ -224,7 +233,8 @@ describe("ModuledDefinitionTests", () => {
             variables: [{ name: "variable1" }]
         });
         n.addNamespace({
-            name: "namespace2"
+            name: "namespace2",
+            order: 1
         });
 
         it("the returned definition should be in the array", () => {
@@ -276,6 +286,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runTypeAliasDefinitionTests(n.typeAliases[0], {
             name: "typeAlias1",
+            order: 0,
             hasDeclareKeyword: true,
             isAmbient: true,
             isDefaultExportOfFile: true,
@@ -286,6 +297,7 @@ describe("ModuledDefinitionTests", () => {
         });
         testHelpers.runTypeAliasDefinitionTests(n.typeAliases[1], {
             name: "typeAlias2",
+            order: 1,
             type: { text: "string" }
         });
     });
@@ -313,6 +325,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runVariableDefinitionTests(n.variables[0], {
             name: "myVar1",
+            order: 0,
             declarationType: VariableDeclarationType.Const,
             defaultExpression: { text: "5" },
             hasDeclareKeyword: true,
@@ -324,6 +337,7 @@ describe("ModuledDefinitionTests", () => {
         });
         testHelpers.runVariableDefinitionTests(n.variables[1], {
             name: "myVar2",
+            order: 1,
             declarationType: VariableDeclarationType.Let // should default to let
         });
     });

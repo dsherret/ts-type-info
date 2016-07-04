@@ -21,42 +21,49 @@ export abstract class ModuledDefinition {
 
     addClass(structure: ClassStructure) {
         const def = new StructureFactory().getClass(structure);
+        def.order = this.getNextOrder();
         this.classes.push(def);
         return def;
     }
 
     addEnum(structure: EnumStructure) {
         const def = new StructureFactory().getEnum(structure);
+        def.order = this.getNextOrder();
         this.enums.push(def);
         return def;
     }
 
     addFunction(structure: FunctionStructure) {
         const def = new StructureFactory().getFunction(structure);
+        def.order = this.getNextOrder();
         this.functions.push(def);
         return def;
     }
 
     addInterface(structure: InterfaceStructure) {
         const def = new StructureFactory().getInterface(structure);
+        def.order = this.getNextOrder();
         this.interfaces.push(def);
         return def;
     }
 
     addNamespace(structure: NamespaceStructure) {
         const def = new StructureFactory().getNamespace(structure);
+        def.order = this.getNextOrder();
         this.namespaces.push(def);
         return def;
     }
 
     addTypeAlias(structure: TypeAliasStructure) {
         const def = new StructureFactory().getTypeAlias(structure);
+        def.order = this.getNextOrder();
         this.typeAliases.push(def);
         return def;
     }
 
     addVariable(structure: VariableStructure) {
         const def = new StructureFactory().getVariable(structure);
+        def.order = this.getNextOrder();
         this.variables.push(def);
         return def;
     }
@@ -148,5 +155,11 @@ export abstract class ModuledDefinition {
             ...this.variables,
             ...this.typeAliases
         ];
+    }
+
+    private getNextOrder() {
+        let maxOrder = -1;
+        this.getMembers().forEach(m => maxOrder = Math.max(m.order, maxOrder));
+        return maxOrder + 1;
     }
 }

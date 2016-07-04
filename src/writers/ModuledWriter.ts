@@ -31,7 +31,9 @@ export class ModuledWriter extends BaseWriter {
     }
 
     private writeChildren(def: ModuledDefinitions, flags: WriteFlags) {
-        const allDefinitions = [...def.classes, ...def.interfaces, ...def.functions, ...def.namespaces, ...def.variables, ...def.enums, ...def.typeAliases];
+        // order these by what should be written if order is null
+        const allDefinitions = [...def.typeAliases, ...def.interfaces, ...def.enums, ...def.classes, ...def.namespaces, ...def.variables, ...def.functions];
+
         allDefinitions.sort((a, b) => {
             if (b.order == null) {
                 return -1;
