@@ -16,6 +16,7 @@ export class StructureModuledBinder extends ModuledBinder {
         const typeAliases = (this.structure.typeAliases || []).map(t => this.factory.getTypeAlias(t));
         const variables = (this.structure.variables || []).map(v => this.factory.getVariable(v));
 
-        return [...classes, ...enums, ...functions, ... interfaces, ...namespaces, ...typeAliases, ...variables];
+        // should order these in the order that would work well with writing
+        return [...typeAliases, ...interfaces, ...enums, ...classes, ...namespaces, ...functions, ...variables];
     }
 }

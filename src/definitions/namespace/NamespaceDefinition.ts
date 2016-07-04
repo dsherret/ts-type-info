@@ -65,6 +65,7 @@ export class NamespaceDefinition extends BaseDefinition
     directlyContains: (def: ModuleMemberDefinitions) => boolean;
     getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => NamespaceDefinition[];
     getMembers: () => ModuleMemberDefinitions[];
+    setOrderOfMember: (order: number, member: ModuleMemberDefinitions) => this;
     // OrderableDefinition
     order: number;
 }

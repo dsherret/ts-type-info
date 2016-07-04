@@ -21,49 +21,49 @@ export abstract class ModuledDefinition {
 
     addClass(structure: ClassStructure) {
         const def = new StructureFactory().getClass(structure);
-        def.order = this.getNextOrder();
+        def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.classes.push(def);
         return def;
     }
 
     addEnum(structure: EnumStructure) {
         const def = new StructureFactory().getEnum(structure);
-        def.order = this.getNextOrder();
+        def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.enums.push(def);
         return def;
     }
 
     addFunction(structure: FunctionStructure) {
         const def = new StructureFactory().getFunction(structure);
-        def.order = this.getNextOrder();
+        def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.functions.push(def);
         return def;
     }
 
     addInterface(structure: InterfaceStructure) {
         const def = new StructureFactory().getInterface(structure);
-        def.order = this.getNextOrder();
+        def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.interfaces.push(def);
         return def;
     }
 
     addNamespace(structure: NamespaceStructure) {
         const def = new StructureFactory().getNamespace(structure);
-        def.order = this.getNextOrder();
+        def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.namespaces.push(def);
         return def;
     }
 
     addTypeAlias(structure: TypeAliasStructure) {
         const def = new StructureFactory().getTypeAlias(structure);
-        def.order = this.getNextOrder();
+        def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.typeAliases.push(def);
         return def;
     }
 
     addVariable(structure: VariableStructure) {
         const def = new StructureFactory().getVariable(structure);
-        def.order = this.getNextOrder();
+        def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.variables.push(def);
         return def;
     }
@@ -157,9 +157,23 @@ export abstract class ModuledDefinition {
         ];
     }
 
-    private getNextOrder() {
-        let maxOrder = -1;
-        this.getMembers().forEach(m => maxOrder = Math.max(m.order, maxOrder));
-        return maxOrder + 1;
+    setOrderOfMember(order: number, member: ModuleMemberDefinitions) {
+        const members = this.getMembers();
+        order = Math.max(order, 0);
+
+        if (!members.some(m => m === member)) {
+            throw new Error(`The member '${member.name}' does not exist in this module.`);
+        }
+        else {
+            members.forEach(m => {
+                if (m.order >= order) {
+                    m.order++;
+                }
+            });
+
+            member.order = order;
+        }
+
+        return this;
     }
 }

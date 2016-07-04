@@ -1,4 +1,4 @@
-﻿import {FileDefinition, NamedDefinition, TypeDefinition} from "./../definitions";
+﻿import {FileDefinition, NamedDefinition, TypeDefinition, ModuledDefinition} from "./../definitions";
 import {StructureFactory} from "./../factories";
 
 export class DefinitionUtils {
@@ -14,6 +14,12 @@ export class DefinitionUtils {
         }
 
         return def;
+    }
+
+    static getNextOrderOfModule(def: ModuledDefinition) {
+        let maxOrder = -1;
+        def.getMembers().forEach(m => maxOrder = Math.max(m.order, maxOrder));
+        return maxOrder + 1;
     }
 
     static isDefinitionFile(def: FileDefinition) {

@@ -217,7 +217,6 @@ describe("ModuledDefinitionTests", () => {
         const n = new NamespaceDefinition();
         const returnedDef = n.addNamespace({
             name: "namespace1",
-            order: 0,
             declarationType: NamespaceDeclarationType.Module,
             classes: [{ name: "class1" }],
             enums: [{ name: "enum1" }],
@@ -233,8 +232,7 @@ describe("ModuledDefinitionTests", () => {
             variables: [{ name: "variable1" }]
         });
         n.addNamespace({
-            name: "namespace2",
-            order: 1
+            name: "namespace2"
         });
 
         it("the returned definition should be in the array", () => {
@@ -243,6 +241,7 @@ describe("ModuledDefinitionTests", () => {
 
         testHelpers.runNamespaceDefinitionTests(n.namespaces[0], {
             name: "namespace1",
+            order: 0,
             declarationType: NamespaceDeclarationType.Module,
             classes: [{ name: "class1" }],
             enums: [{ name: "enum1" }],
@@ -259,6 +258,7 @@ describe("ModuledDefinitionTests", () => {
         });
         testHelpers.runNamespaceDefinitionTests(n.namespaces[1], {
             name: "namespace2",
+            order: 1,
             declarationType: NamespaceDeclarationType.Namespace // should default to namespace
         });
     });
@@ -519,6 +519,61 @@ describe("ModuledDefinitionTests", () => {
 
         describe("it should have 7 members", () => {
             assert.equal(def.getMembers().length, 7);
+        });
+    });
+
+    describe("#setOrderOfMember()", () => {
+        describe("changing the order", () => {
+            const def = createNamespace({
+                name: "MyNamespace"
+            });
+            def.addNamespace({ name: "n" });
+            def.addClass({ name: "c" });
+            def.addInterface({ name: "i" });
+            def.addEnum({ name: "e" });
+            def.addFunction({ name: "f" });
+            def.addVariable({ name: "v" });
+            def.addTypeAlias({ name: "t", type: "string" });
+
+            def.setOrderOfMember(1, def.typeAliases[0]);
+
+            testHelpers.runNamespaceDefinitionTests(def, {
+                name: "MyNamespace",
+                namespaces: [{ name: "n", order: 0 }],
+                classes: [{ name: "c", order: 2 }],
+                interfaces: [{ name: "i", order: 3 }],
+                enums: [{ name: "e", order: 4 }],
+                functions: [{ name: "f", order: 5 }],
+                variables: [{ name: "v", order: 6 }],
+                typeAliases: [{ name: "t", order: 1, type: { text: "string" } }]
+            });
+        });
+
+        describe("specifying an order less than 0", () => {
+            const def = createNamespace({
+                name: "MyNamespace"
+            });
+            def.addNamespace({ name: "n" });
+            def.addClass({ name: "c" });
+
+            def.setOrderOfMember(-1, def.classes[0]);
+
+            testHelpers.runNamespaceDefinitionTests(def, {
+                name: "MyNamespace",
+                namespaces: [{ name: "n", order: 1 }],
+                classes: [{ name: "c", order: 0 }]
+            });
+        });
+
+        describe("providing a member that doesn't exist", () => {
+            it("should throw an error", () => {
+                const def = createNamespace({ name: "" });
+                def.addNamespace({ name: "n" });
+
+                assert.throws(() => {
+                    def.setOrderOfMember(0, createNamespace({ name: "n" }));
+                }, Error, `The member 'n' does not exist in this module.`);
+            });
         });
     });
 });
