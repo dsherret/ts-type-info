@@ -11,7 +11,7 @@ abstract class MyClass {
     static async myAsyncStaticMethod() {
     }
 
-    myString: string;
+    protected myString: string;
     private myPrivateString: string;
     nonOptionalString = "text";
     optionalNumber?: number;
@@ -99,7 +99,7 @@ describe("ClassDefinition", () => {
     static async myAsyncStaticMethod() {
     }
 
-    myString: string;
+    protected myString: string;
     private myPrivateString: string;
     nonOptionalString = "text";
     optionalNumber?: number;
