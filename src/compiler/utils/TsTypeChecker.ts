@@ -15,10 +15,6 @@ export class TsTypeChecker {
         return (ts as any).SyntaxKind[kind] as string;
     }
 
-    getDeclaredTypeOfSymbol(symbol: ts.Symbol) {
-        return this.typeChecker.getDeclaredTypeOfSymbol(symbol);
-    }
-
     getConstantValue(node: ts.Node) {
         return this.typeChecker.getConstantValue(node as ts.ElementAccessExpression);
     }
