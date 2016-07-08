@@ -42,14 +42,14 @@ describe("DefinitionInTextRenamer", () => {
         assert.equal(result, "MyNamespace.MyOtherNamespace.MyClass");
     });
 
-    it("should NOT rename in double quotes", () => {
-        const result = DefinitionInTextRenamer.renameDefinitionInText(`"MyNamespace"`, "MyNamespace", "MyNewNamespace");
-        assert.equal(result, `"MyNamespace"`);
-    });
-
     it("should NOT rename in single quotes", () => {
         const result = DefinitionInTextRenamer.renameDefinitionInText(`'MyNamespace'`, "MyNamespace", "MyNewNamespace");
         assert.equal(result, `'MyNamespace'`);
+    });
+
+    it("should NOT rename in double quotes", () => {
+        const result = DefinitionInTextRenamer.renameDefinitionInText(`"MyNamespace"`, "MyNamespace", "MyNewNamespace");
+        assert.equal(result, `"MyNamespace"`);
     });
 
     it("should NOT rename in back tick quotes", () => {
@@ -60,5 +60,15 @@ describe("DefinitionInTextRenamer", () => {
     it("should rename in back tick quotes' ${}", () => {
         const result = DefinitionInTextRenamer.renameDefinitionInText("`MyNamespace${MyNamespace}MyNamespace`", "MyNamespace", "MyNewNamespace");
         assert.equal(result, "`MyNamespace${MyNewNamespace}MyNamespace`");
+    });
+
+    it("should handle backslashes in single quotes", () => {
+        const result = DefinitionInTextRenamer.renameDefinitionInText(`"MyNamespace\\"MyNamespace"`, "MyNamespace", "MyNewNamespace");
+        assert.equal(result, `"MyNamespace\\"MyNamespace"`);
+    });
+
+    it("should handle backslashes in double quotes", () => {
+        const result = DefinitionInTextRenamer.renameDefinitionInText(`'MyNamespace\\'MyNamespace'`, "MyNamespace", "MyNewNamespace");
+        assert.equal(result, `'MyNamespace\\'MyNamespace'`);
     });
 });
