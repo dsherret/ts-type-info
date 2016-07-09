@@ -38,7 +38,7 @@
     }
 
     private isValidVariableNameChar(char: string) {
-        const validVarNameChars = /A-Za-z0-9_/;
+        const validVarNameChars = /[A-Za-z0-9_]/;
 
         return char != null && validVarNameChars.test(char);
     }

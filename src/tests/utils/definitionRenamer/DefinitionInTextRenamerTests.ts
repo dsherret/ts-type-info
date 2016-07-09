@@ -32,6 +32,16 @@ describe("DefinitionInTextRenamer", () => {
         assert.equal(result, "MyNamespace.MyNewName");
     });
 
+    it("should not rename a namespace when it doesn't match exactly on the left", () => {
+        const result = DefinitionInTextRenamer.renameDefinitionInText("MyTestClass", "TestClass", "NewTestClass");
+        assert.equal(result, "MyTestClass");
+    });
+
+    it("should not rename a namespace when it doesn't match exactly on the right", () => {
+        const result = DefinitionInTextRenamer.renameDefinitionInText("MyTestClass", "MyTest", "NewMyTest");
+        assert.equal(result, "MyTestClass");
+    });
+
     it("should rename a namespace when it matches from the left", () => {
         const result = DefinitionInTextRenamer.renameDefinitionInText("MyNamespace.MyOtherNamespace.MyClass", "MyNamespace.MyOtherNamespace", "MyNamespace.MyNewNamespace");
         assert.equal(result, "MyNamespace.MyNewNamespace.MyClass");
