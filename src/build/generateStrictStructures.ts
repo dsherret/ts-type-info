@@ -6,23 +6,15 @@ export function generateStrictStructures() {
     const result = getInfoFromFiles([path.join(__dirname, "../../src/structures.ts")]);
     const fileDefForCreate = createFile();
 
-    result.files.filter(f => f.fileName.indexOf("structures") >= 0).forEach(f => {
+    result.files.filter(f => f.fileName.indexOf("structures") >= 0).forEach((f, j) => {
         f.interfaces.forEach(i => {
-            i.name = "Strict" + i.name;
+            result.renameDefinitionAs(i, "Strict" + i.name);
+
+
             i.properties.forEach(p => {
                 p.isOptional = false;
-                if (p.type.text.indexOf("Structure") >= 0 && p.type.text.indexOf("Strict") === -1) {
-                    p.type.text = "Strict" + p.type.text;
-                }
             });
-            i.extendsTypes.forEach(e => {
-                e.text = "Strict" + e.text;
-            });
-            i.typeParameters.forEach(t => {
-                if (t.constraintType != null) {
-                    t.constraintType.text = "Strict" + t.constraintType.text;
-                }
-            });
+
             fileDefForCreate.interfaces.push(i);
         });
     });
