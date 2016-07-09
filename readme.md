@@ -9,7 +9,6 @@
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
 * [Version 4.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
-* [Language support](https://github.com/dsherret/ts-type-info/wiki/Language-Support)
 
 ```
 npm install ts-type-info --save-dev
@@ -28,7 +27,6 @@ export class MyClass {
         return `Test: ${myParameter}`;
     }
 }
-
 ```
 
 Get the file info:
@@ -51,6 +49,8 @@ const myMethod = result.files[0].classes[0].methods[0];
 console.log(myMethod.name); // myMethod
 ```
 
+If you notice a language feature missing please open [an issue](https://github.com/dsherret/ts-type-info/issues).
+
 ## Code Generation
 
 You can work with objects retrieved from "reflection" or start with your own new file definition:
@@ -64,7 +64,14 @@ const file = TsTypeInfo.createFile({
         name: "MyClass",
         methods: [{
             name: "myMethod",
-            parameters: [{ name: "myParam", type: "string" }]
+            parameters: [{ name: "myParam", type: "string" }],
+            onBeforeWrite: writer => writer.write("// myMethod is here"),
+            onWriteFunctionBody: writer => {
+                writer.write(`if (myParam != null && myParam.length > 40)`).block(() => {
+                    writer.write("alert(myParam)");
+                });
+                writer.newLine().write("return myParam;");
+            }
         }]
     }]
 });
@@ -74,17 +81,8 @@ const myClass = file.getClass("MyClass");
 myClass.isAbstract = true;
 myClass.onBeforeWrite = writer => writer.write("@MyDecorator");
 
-const myMethod = myClass.getMethod("myMethod");
-myMethod.onBeforeWrite = writer => writer.write("// myMethod is here");
-myMethod.onWriteFunctionBody = writer => {
-    writer.write(`if (myParam != null && myParam.length > 40)`).block(() => {
-        writer.write("alert(myParam)");
-    });
-    writer.newLine().write("return myParam;");
-};
-
 myClass.addProperty({
-    name: "myProperty1"
+    name: "myProperty1",
     type: "string"
 });
 myClass.addProperty({
@@ -93,6 +91,7 @@ myClass.addProperty({
     defaultExpression: "4"
 });
 
+// write it out
 console.log(file.write());
 ```
 
