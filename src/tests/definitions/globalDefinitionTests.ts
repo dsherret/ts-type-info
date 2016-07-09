@@ -372,7 +372,8 @@ let myVar2: MyClass;
                     isDefaultExportOfFile: true,
                     classes: [{
                         name: "MyClass",
-                        isExported: true
+                        isExported: true,
+                        extendsTypes: ["MyNamespace.MyClass"]
                     }]
                 }],
                 defaultExportExpression: "MyDefaultNamespace"
@@ -423,7 +424,7 @@ let myVar2: MyClass;
 }
 
 namespace MyDefaultNamespace {
-    export class MyOtherNewName {
+    export class MyOtherNewName extends MyNamespace.MyNewName {
     }
 }
 
