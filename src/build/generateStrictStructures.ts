@@ -10,7 +10,6 @@ export function generateStrictStructures() {
         f.interfaces.forEach(i => {
             result.renameDefinitionAs(i, "Strict" + i.name);
 
-
             i.properties.forEach(p => {
                 p.isOptional = false;
             });
