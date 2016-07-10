@@ -23,23 +23,23 @@ describe("DefinitionInTextRenamer", () => {
     });
 
     it("should rename in intersection and union type", () => {
-        const result = DefinitionInTextRenamer.renameDefinitionInText("(MyClass1 & MyClass2) | MyClass3", "MyClass2", "MyNewName");
-        assert.equal(result, "(MyClass1 & MyNewName) | MyClass3");
+        const result = DefinitionInTextRenamer.renameDefinitionInText("(MyClass1 & MyClass2) | MyClass2", "MyClass2", "MyNewName");
+        assert.equal(result, "(MyClass1 & MyNewName) | MyNewName");
+    });
+
+    it("should not rename a definition when it doesn't match exactly on the left", () => {
+        const result = DefinitionInTextRenamer.renameDefinitionInText("MyTestClass", "TestClass", "NewTestClass");
+        assert.equal(result, "MyTestClass");
+    });
+
+    it("should not rename a definition when it doesn't match exactly on the right", () => {
+        const result = DefinitionInTextRenamer.renameDefinitionInText("MyTestClass", "MyTest", "NewMyTest");
+        assert.equal(result, "MyTestClass");
     });
 
     it("should rename a namespace when it matches exactly", () => {
         const result = DefinitionInTextRenamer.renameDefinitionInText("MyNamespace.MyClass", "MyNamespace.MyClass", "MyNamespace.MyNewName");
         assert.equal(result, "MyNamespace.MyNewName");
-    });
-
-    it("should not rename a namespace when it doesn't match exactly on the left", () => {
-        const result = DefinitionInTextRenamer.renameDefinitionInText("MyTestClass", "TestClass", "NewTestClass");
-        assert.equal(result, "MyTestClass");
-    });
-
-    it("should not rename a namespace when it doesn't match exactly on the right", () => {
-        const result = DefinitionInTextRenamer.renameDefinitionInText("MyTestClass", "MyTest", "NewMyTest");
-        assert.equal(result, "MyTestClass");
     });
 
     it("should rename a namespace when it matches from the left", () => {
