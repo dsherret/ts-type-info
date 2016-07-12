@@ -1,5 +1,5 @@
 ﻿import {BaseDefinition, ModuledDefinition} from "./../../definitions";
-import {DefinitionInTextRenamer} from "./DefinitionInTextRenamer";
+import {renameDefinitionInText} from "./renameDefinitionInText";
 import {StringHashSet} from "./../StringHashSet";
 import {RenameInfo} from "./RenameInfo";
 
@@ -45,7 +45,7 @@ export class ModuleBodyRenamer {
         });
 
         if (def.isTypeDefinition() || def.isExpressionDefinition()) {
-            def.text = DefinitionInTextRenamer.renameDefinitionInText(def.text, this.renameInfo.fullName, this.renameInfo.fullReplace);
+            def.text = renameDefinitionInText(def.text, this.renameInfo.fullName, this.renameInfo.fullReplace);
         }
     }
 }

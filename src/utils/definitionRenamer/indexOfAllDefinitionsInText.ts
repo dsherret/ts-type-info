@@ -1,4 +1,8 @@
-﻿export class DefinitionInTextFinder {
+﻿export function indexOfAllDefinitionsInText(text: string, searchingText: string) {
+    return new DefinitionInTextFinder(text).indexOfAll(searchingText);
+}
+
+class DefinitionInTextFinder {
     private stringCharStack: string[] = [];
     private currentIndex: number = 0;
     private validVarNameChars = /[A-Za-z0-9_]/;
