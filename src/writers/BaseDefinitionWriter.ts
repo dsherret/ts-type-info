@@ -32,7 +32,7 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
     }
 
     protected writeExportKeyword(def: ExportableDefinitions, flags: WriteFlags) {
-        if (def.isExported && !def.isDefaultExportOfFile) {
+        if ((def.isExported && !def.isDefaultExportOfFile) || def.isNamedExportOfFile) {
             let shouldWrite = false;
 
             if (def.isInterfaceDefinition() || def.isTypeAliasDefinition()) {

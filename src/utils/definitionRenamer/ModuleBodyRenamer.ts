@@ -45,7 +45,7 @@ export class ModuleBodyRenamer {
         });
 
         if (def.isTypeDefinition() || def.isExpressionDefinition()) {
-            def.text = renameDefinitionInText(def.text, this.renameInfo.fullName, this.renameInfo.fullReplace);
+            def.text = renameDefinitionInText(def.text, this.renameInfo.fullNameFrom, this.renameInfo.fullNameTo);
         }
     }
 }

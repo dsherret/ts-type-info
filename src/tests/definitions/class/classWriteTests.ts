@@ -111,7 +111,7 @@ describe("ClassDefinition", () => {
     }
 
     set myGetSetWithWriteDefined(value: string) {
-        console.log(value);
+        alert(value);
     }
 
     constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
@@ -150,7 +150,7 @@ describe("ClassDefinition", () => {
                 const property = classDef.getProperty("myGetSetWithWriteDefined");
 
                 property.onWriteGetBody = writer => writer.write(`return "";`);
-                property.onWriteSetBody = writer => writer.write(`console.log(value);`);
+                property.onWriteSetBody = writer => writer.write(`alert(value);`);
 
                 assert.equal(classDef.write(), expected);
             });

@@ -10,7 +10,7 @@ describe("GlobalDefinition", () => {
             fileName: "/file1.ts",
             classes: [{
                 name: "MyClass",
-                isExported: true
+                isNamedExportOfFile: true
             }, {
                 name: "MyOtherClass",
                 isDefaultExportOfFile: true
@@ -19,7 +19,7 @@ describe("GlobalDefinition", () => {
             }],
             namespaces: [{
                 name: "MyNamespace",
-                isExported: true,
+                isNamedExportOfFile: true,
                 classes: [{
                     name: "MyClassInNamespace",
                     isExported: true
@@ -38,7 +38,7 @@ describe("GlobalDefinition", () => {
         });
 
         it("should throw an error when specifying a definition that does not exist in the global definition", () => {
-            assert.throws(() => def.addDefinitionAsImportToFile({ definition: createVariable({ name: "myVar", isExported: true }), file: file2 }));
+            assert.throws(() => def.addDefinitionAsImportToFile({ definition: createVariable({ name: "myVar", isNamedExportOfFile: true }), file: file2 }));
         });
 
         it("should throw an error when specifying a definition that is in a namespace", () => {
@@ -222,9 +222,11 @@ let myVar: MyClass & MyOtherClass<MyClass>;
     }
 }
 
-var t = MyNamespace;
-var a = t.MyInnerNamespace;
-var b = a.MyClass;
+var a = MyNamespace;
+var b = a.MyInnerNamespace;
+var c = MyNamespace.MyInnerNamespace;
+var d = b.MyClass;
+var e = c.MyClass;
 `;
             const file = getInfoFromString(code);
             const globalDef = new GlobalDefinition();
@@ -243,11 +245,11 @@ var b = a.MyClass;
                     fileName: "C:\\MyClass.ts",
                     classes: [{
                         name: "MyClass",
-                        isExported: true,
+                        isNamedExportOfFile: !isDefaultImport,
                         isDefaultExportOfFile: isDefaultImport
                     }, {
                         name: "MyOtherClass",
-                        isExported: true
+                        isNamedExportOfFile: true
                     }],
                     variables: [{
                         name: "myVar",
@@ -361,14 +363,13 @@ let myVar2: MyClass;
                 fileName: "C:/MyNamespace.ts",
                 namespaces: [{
                     name: "MyNamespace",
-                    isExported: true,
+                    isNamedExportOfFile: true,
                     classes: [{
                         name: "MyClass",
                         isExported: true
                     }]
                 }, {
                     name: "MyDefaultNamespace",
-                    isExported: true,
                     isDefaultExportOfFile: true,
                     classes: [{
                         name: "MyClass",
@@ -447,6 +448,47 @@ let myDefaultImportVar: typeof MyDefaultImportNamespace.MyOtherNewName;
 `;
                     assert.equal(globalDef.files[1].write(), expectedCode);
                 });
+            });
+        });
+
+        describe("renaming re-exported definitions", () => {
+            const globalDef = new GlobalDefinition();
+            globalDef.addFile({
+                fileName: "C:/MyClass.ts",
+                classes: [{
+                    name: "MyClass",
+                    isNamedExportOfFile: true
+                }]
+            });
+            globalDef.addFile({
+                fileName: "C:/classes.ts",
+                reExports: [{
+                    moduleSpecifier: "./MyClass"
+                }]
+            });
+            globalDef.addFile({
+                fileName: "C:/main.ts",
+                imports: [{
+                    moduleSpecifier: "./classes",
+                    namedImports: [{
+                        name: "MyClass"
+                    }]
+                }],
+                variables: [{
+                    name: "t",
+                    type: "MyClass"
+                }]
+            });
+
+            it("should rename the imported re-exported definition", () => {
+                globalDef.renameDefinitionAs(globalDef.getFile("MyClass.ts").classes[0], "MyNewName");
+                const expectedCode =
+`import {MyNewName} from "./classes";
+
+let t: MyNewName;
+`;
+
+                assert.equal(globalDef.getFile("main.ts").write(), expectedCode);
             });
         });
     });

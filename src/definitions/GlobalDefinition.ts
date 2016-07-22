@@ -1,14 +1,14 @@
 ﻿import {ModuleMemberDefinitions} from "./../definitions";
 import {StructureFactory} from "./../factories";
 import {FileStructure} from "./../structures";
-import {DefinitionUtils, FileUtils, DefinitionRenamer} from "./../utils";
+import {DefinitionUtils, FileUtils, renameDefinition} from "./../utils";
 import {FileDefinition} from "./file";
 
 export class GlobalDefinition {
     files: FileDefinition[] = [];
 
     addDefinitionAsImportToFile(opts: { definition: ModuleMemberDefinitions; file: FileDefinition; alias?: string }) {
-        if (!opts.definition.isExported && !opts.definition.isDefaultExportOfFile) {
+        if (!opts.definition.isNamedExportOfFile && !opts.definition.isDefaultExportOfFile) {
             throw new Error("The specified definition is not exported from a file.");
         }
 
@@ -67,7 +67,10 @@ export class GlobalDefinition {
     }
 
     renameDefinitionAs(definition: ModuleMemberDefinitions, newName: string) {
-        const renamer = new DefinitionRenamer(this);
-        renamer.renameDefinitionAs(definition, newName);
+        renameDefinition({
+            globalDef: this,
+            definition,
+            newName
+        });
     }
 }
