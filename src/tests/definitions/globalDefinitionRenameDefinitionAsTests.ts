@@ -1,9 +1,20 @@
 ﻿import * as assert from "assert";
 import {GlobalDefinition} from "./../../definitions";
 import {getInfoFromString} from "./../../main";
+import {createVariable} from "./../../createFunctions";
 
 describe("GlobalDefinition", () => {
     describe("#renameDefinitionAs()", () => {
+        describe("passing in a definition that doesn't exist in the global definition", () => {
+            it("should not error", () => {
+                const originalCode = "var myString: string;\n";
+                const file = getInfoFromString(originalCode);
+                const globalDef = new GlobalDefinition();
+                globalDef.files.push(file);
+                globalDef.renameDefinitionAs(createVariable({ name: "myOtherVar" }), "MyNewName");
+                assert.equal(file.write(), originalCode);
+            });
+        });
         describe("renaming without imports", () => {
             const code =
 `namespace MyNamespace {
@@ -220,6 +231,12 @@ let myVar2: MyClass;
                     moduleSpecifier: "./MyNamespace",
                     namedImports: [{
                         name: "MyNamespace"
+                    }, {
+                        name: "MyNamespace",
+                        alias: "MyNamespaceAlias"
+                    }, {
+                        name: "default",
+                        alias: "MyDefaultNamedNamespace"
                     }]
                 }, {
                     moduleSpecifier: "./MyNamespace",
@@ -231,6 +248,12 @@ let myVar2: MyClass;
                 variables: [{
                     name: "myVar",
                     type: "typeof MyNamespace.MyClass"
+                }, {
+                    name: "myNamespaceAliasVar",
+                    type: "typeof MyNamespaceAlias.MyClass"
+                }, {
+                    name: "myDefaultNamedNamespaceVar",
+                    type: "typeof MyDefaultNamedNamespace.MyClass"
                 }, {
                     name: "myVar2",
                     type: "typeof MyNamespaceModule.MyNamespace.MyClass"
@@ -271,11 +294,13 @@ export default MyDefaultNamespace;
 
                 it("should rename the class in the other file", () => {
                     const expectedCode =
-`import {MyNamespace} from "./MyNamespace";
+`import {MyNamespace, MyNamespace as MyNamespaceAlias, default as MyDefaultNamedNamespace} from "./MyNamespace";
 import * as MyNamespaceModule from "./MyNamespace";
 import MyDefaultImportNamespace from "./MyNamespace";
 
 let myVar: typeof MyNamespace.MyNewName;
+let myNamespaceAliasVar: typeof MyNamespaceAlias.MyNewName;
+let myDefaultNamedNamespaceVar: typeof MyDefaultNamedNamespace.MyOtherNewName;
 let myVar2: typeof MyNamespaceModule.MyNamespace.MyNewName;
 let myNamespaceVar = MyNamespace;
 let myVar3 = myNamespaceVar.MyNewName;

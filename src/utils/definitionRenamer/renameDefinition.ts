@@ -9,17 +9,18 @@ import {renameInGlobal} from "./renameInGlobal";
 
 export function renameDefinition(opts: { globalDef: GlobalDefinition; definition: ModuleMemberDefinitions; newName: string; }) {
     const {globalDef, definition, newName} = opts;
-    const {file: mainFile = null, namespaces = []} = globalDef.getFileAndNamespacesToDefinition(definition);
-    let renameInfo = RenameInfo.createFromNamespaces({ nameFrom: definition.name, nameTo: newName, namespaceNames: namespaces.map(n => n.name) });
+    const fileAndNamespaces = globalDef.getFileAndNamespacesToDefinition(definition);
 
-    renameInMainFileNamespaces(renameInfo, namespaces);
-    renameInFile([renameInfo], mainFile);
+    if (fileAndNamespaces == null) {
+        return;
+    }
 
+    const {file: mainFile, namespaces} = fileAndNamespaces;
+    const renameInfo = RenameInfo.createFromNamespaces({ nameFrom: definition.name, nameTo: newName, namespaceNames: namespaces.map(n => n.name) });
     const fileLocalRenameInfos = getRenameInfosFromVariablesInModule({
         moduleDef: mainFile,
         currentRenameInfos: [renameInfo]
     });
-
     const exportedRenameInfos = getRenameInfosFromDefaultExport({
         currentRenameInfos: [renameInfo, ...fileLocalRenameInfos],
         file: mainFile
@@ -29,6 +30,8 @@ export function renameDefinition(opts: { globalDef: GlobalDefinition; definition
         exportedRenameInfos.push(renameInfo);
     }
 
+    renameInMainFileNamespaces(renameInfo, namespaces);
+    renameInFile([renameInfo], mainFile);
     renameInGlobal({
         exportedRenameInfos,
         exportedFile: mainFile,
