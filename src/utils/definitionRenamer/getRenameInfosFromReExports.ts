@@ -13,18 +13,21 @@ export function getRenameInfosFromReExports(opts: { exportedRenameInfos: RenameI
                 validExportedRenameInfos.forEach(renameInfo => {
                     const partName = namedReExport.definitions.length > 0 ? namedReExport.definitions[0].name : namedReExport.exportName;
 
-                    if (this.exportDef.name === partName) {
+                    if (renameInfo.getRootName() === partName) {
                         const hasAlias = partName !== namedReExport.exportName;
 
-                        if (!hasAlias || hasAlias && renameInfo.hasNamespaces()) {
+                        if (hasAlias && renameInfo.hasNamespaces()) {
                             renameInfos.push(renameInfo.createWithNewFirstNamespace(namedReExport.exportName));
+                        }
+                        else if (!hasAlias) {
+                            renameInfos.push(renameInfo);
                         }
                     }
                 });
             });
         }
         else {
-            renameInfos.push(...exportedRenameInfos);
+            renameInfos.push(...validExportedRenameInfos);
         }
     });
 

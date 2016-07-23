@@ -68,9 +68,15 @@
     }
 
     createWithNewFirstNamespace(namespaceName: string) {
+        const replace = (name: string) => {
+            const parts = name.split(".");
+            parts[0] = namespaceName;
+            return parts.join(".");
+        };
+
         return new RenameInfo({
-            fullNameFrom: namespaceName + this.fullNameFrom.substr(this.fullNameFrom.indexOf(".")),
-            fullNameTo: namespaceName + this.fullNameTo.substr(this.fullNameTo.indexOf("."))
+            fullNameFrom: replace(this.fullNameFrom),
+            fullNameTo: replace(this.fullNameTo)
         });
     }
 }

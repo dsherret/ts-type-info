@@ -327,25 +327,60 @@ let myDefaultImportVar: typeof MyDefaultImportNamespace.MyOtherNewName;
                 }]
             });
             globalDef.addFile({
+                fileName: "C:/namedClasses.ts",
+                reExports: [{
+                    moduleSpecifier: "./MyClass",
+                    namedExports: [{
+                        name: "MyClass"
+                    }, {
+                        name: "MyClass",
+                        alias: "MyClassAlias"
+                    }]
+                }]
+            });
+            globalDef.addFile({
                 fileName: "C:/main.ts",
                 imports: [{
                     moduleSpecifier: "./classes",
                     namedImports: [{
                         name: "MyClass"
+                    }, {
+                        name: "MyClass",
+                        alias: "MyClassAlias"
+                    }]
+                }, {
+                    moduleSpecifier: "./namedClasses",
+                    namedImports: [{
+                        name: "MyClass",
+                        alias: "MyClassAlias2"
                     }]
                 }],
                 variables: [{
-                    name: "t",
+                    name: "a",
                     type: "MyClass"
+                }, {
+                    name: "b",
+                    type: "MyClassAlias"
                 }]
             });
 
-            it("should rename the imported re-exported definition", () => {
-                globalDef.renameDefinitionAs(globalDef.getFile("MyClass.ts").classes[0], "MyNewName");
-                const expectedCode =
-`import {MyNewName} from "./classes";
+            globalDef.renameDefinitionAs(globalDef.getFile("MyClass.ts").classes[0], "MyNewName");
 
-let t: MyNewName;
+            it("should rename the re-exports appropriately", () => {
+                const expectedCode =
+`export {MyNewName, MyNewName as MyClassAlias} from "./MyClass";
+`;
+
+                assert.equal(globalDef.getFile("namedClasses.ts").write(), expectedCode);
+            });
+
+            it("should rename the imported re-exported definition in the main file", () => {
+                const expectedCode =
+`import {MyNewName, MyNewName as MyClassAlias} from "./classes";
+import {MyNewName as MyClassAlias2} from "./namedClasses";
+
+let a: MyNewName;
+let b: MyClassAlias;
 `;
 
                 assert.equal(globalDef.getFile("main.ts").write(), expectedCode);

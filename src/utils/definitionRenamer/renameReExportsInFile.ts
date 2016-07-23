@@ -12,15 +12,8 @@ export function renameReExportsInFile(opts: { exportedRenameInfos: RenameInfo[];
                 validExportedRenameInfos.forEach(renameInfo => {
                     const partName = named.definitions.length > 0 ? named.definitions[0].name : named.exportName;
 
-                    if (this.exportDef.name === partName) {
-                        const hasAlias = partName !== named.exportName;
-
-                        if (!hasAlias) {
-                            named.exportName = renameInfo.fullNameTo;
-                        }
-                        else if (named.definitions.length > 0) {
-                            named.definitions[0].name = renameInfo.fullNameTo;
-                        }
+                    if (renameInfo.getRootName() === partName) {
+                        named.definitions[0].name = renameInfo.fullNameTo;
                     }
                 });
             });
