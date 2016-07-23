@@ -1,6 +1,6 @@
 export * from "./utils/applyMixins";
 export * from "./utils/ArrayUtils";
-export * from "./utils/definitionRenamer/renameDefinition";
+export * from "./utils/renameDefinitionAs/renameDefinitionAs";
 export * from "./utils/DefinitionUtils";
 export * from "./utils/FileUtils";
 export * from "./utils/KeyValueCache";

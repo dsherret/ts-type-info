@@ -7,7 +7,7 @@ import {renameInFile} from "./renameInFile";
 import {renameInModule} from "./renameInModule";
 import {renameInGlobal} from "./renameInGlobal";
 
-export function renameDefinition(opts: { globalDef: GlobalDefinition; definition: ModuleMemberDefinitions; newName: string; }) {
+export function renameDefinitionAs(opts: { globalDef: GlobalDefinition; definition: ModuleMemberDefinitions; newName: string; }) {
     const {globalDef, definition, newName} = opts;
     const fileAndNamespaces = globalDef.getFileAndNamespacesToDefinition(definition);
 

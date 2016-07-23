@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {renameDefinitionInText} from "./../../../utils/definitionRenamer/renameDefinitionInText";
+import {renameDefinitionInText} from "./../../../utils/renameDefinitionAs/renameDefinitionInText";
 
 describe("renameDefinitionInText()", () => {
     it("should rename the name outside type parameters", () => {

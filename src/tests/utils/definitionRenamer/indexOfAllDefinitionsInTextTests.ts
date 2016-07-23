@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {indexOfAllDefinitionsInText} from "./../../../utils/definitionRenamer/indexOfAllDefinitionsInText";
+import {indexOfAllDefinitionsInText} from "./../../../utils/renameDefinitionAs/indexOfAllDefinitionsInText";
 
 describe("indexOfAllDefinitionsInText", () => {
     it("should find the name outside type parameters", () => {
