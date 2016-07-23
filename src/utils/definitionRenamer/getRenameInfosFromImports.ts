@@ -1,5 +1,6 @@
 ﻿import {FileDefinition} from "./../../definitions";
 import {RenameInfo} from "./RenameInfo";
+import {getRenameInfosFromImportReExportPart} from "./getRenameInfosFromImportReExportPart";
 
 // todo: split up
 export function getRenameInfosFromImports(opts: { exportedRenameInfos: RenameInfo[]; searchingModuleSpecifier: string; file: FileDefinition; }) {
@@ -23,22 +24,10 @@ export function getRenameInfosFromImports(opts: { exportedRenameInfos: RenameInf
                 }
 
                 importDef.namedImports.forEach(named => {
-                    named.definitions.forEach(def => {
-                        if (def.name === renameInfo.getRootName()) {
-                            const hasAlias = named.importName !== renameInfo.getRootName();
-
-                            if (hasAlias || renameInfo.isRootDefaultExportOfFile()) {
-                                const shouldHandleAlias = renameInfo.hasNamespaces();
-
-                                if (shouldHandleAlias) {
-                                    importedRenameInfos.push(renameInfo.createWithNewFirstNamespace(named.importName));
-                                }
-                            }
-                            else {
-                                importedRenameInfos.push(renameInfo.createCopy());
-                            }
-                        }
-                    });
+                    importedRenameInfos.push(...getRenameInfosFromImportReExportPart({
+                        currentRenameInfo: renameInfo,
+                        importReExportPart: named
+                    }));
                 });
             });
         }
