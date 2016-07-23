@@ -39,9 +39,21 @@ let myVar: MyClass & MyOtherClass<MyClass>;
         describe("renaming with assignment to variable", () => {
             const code =
 `namespace MyNamespace {
+    var f = MyNamespace;
+    var g = f.MyInnerNamespace.MyClass;
+    var h = MyInnerNamespace;
+    var i = h.MyClass;
+
     export namespace MyInnerNamespace {
+        var j = MyInnerNamespace;
+        var k = h.MyClass;
+
         export class MyClass {
         }
+    }
+
+    namespace MyOtherInnerNamespace {
+        var l = h.MyClass;
     }
 }
 
