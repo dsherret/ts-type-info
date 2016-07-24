@@ -23,23 +23,7 @@ export class TsReExportBinder extends ReExportBinder {
     }
 
     getNamedExports() {
-        const namedSymbols = this.node.getNamedExportSymbolsByName();
-
-        return Object.keys(namedSymbols || {}).map(name => {
-            const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
-
-            if (defsOrExpression.definitions.length > 0) {
-                if (defsOrExpression.definitions[0].name === name) {
-                    name = null;
-                }
-            }
-
-            return this.factory.getReExportPart({
-                exportName: name,
-                definitions: defsOrExpression.definitions as ExportableDefinitions[],
-                expression: defsOrExpression.expression
-            });
-        });
+        return this.node.getReExportNamedExportNodes().map(node => this.factory.getNamedImportPart(node));
     }
 
     getStarExports() {

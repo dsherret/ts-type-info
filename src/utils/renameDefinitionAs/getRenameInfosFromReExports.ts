@@ -1,6 +1,6 @@
 ﻿import {FileDefinition} from "./../../definitions";
 import {RenameInfo} from "./RenameInfo";
-import {getRenameInfosFromImportReExportPart} from "./getRenameInfosFromImportReExportPart";
+import {getRenameInfosFromNamedImportPart} from "./getRenameInfosFromNamedImportPart";
 
 export function getRenameInfosFromReExports(opts: { exportedRenameInfos: RenameInfo[]; searchingModuleSpecifier: string; file: FileDefinition; }) {
     const {exportedRenameInfos, searchingModuleSpecifier, file} = opts;
@@ -11,9 +11,9 @@ export function getRenameInfosFromReExports(opts: { exportedRenameInfos: RenameI
         if (reExportDef.namedExports.length > 0) {
             reExportDef.namedExports.forEach(namedReExport => {
                 exportedRenameInfos.forEach(renameInfo => {
-                    renameInfos.push(...getRenameInfosFromImportReExportPart({
+                    renameInfos.push(...getRenameInfosFromNamedImportPart({
                         currentRenameInfo: renameInfo,
-                        importReExportPart: namedReExport
+                        namedImportPart: namedReExport
                     }));
                 });
             });

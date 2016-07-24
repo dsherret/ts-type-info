@@ -174,15 +174,9 @@ export class TsNode extends TsSourceFileChild {
        return this.createSymbol(this.typeChecker.getSymbolAtLocation(importDeclaration.moduleSpecifier));
     }
 
-    getNamedExportSymbolsByName() {
-        const exportSymbols: { [name: string]: TsSymbol; } = {};
+    getReExportNamedExportNodes() {
         const exportDeclaration = this.node as ts.ExportDeclaration;
-
-        exportDeclaration.exportClause.elements.forEach(element => {
-            exportSymbols[element.name.getText()] = this.createSymbol(this.typeChecker.getSymbolAtLocation(element));
-        });
-
-        return exportSymbols;
+        return exportDeclaration.exportClause.elements.map(e => this.createNode(e));
     }
 
     getNamedImportSymbolsByName(): { [name: string]: TsSymbol; } {
@@ -514,6 +508,16 @@ export class TsNode extends TsSourceFileChild {
 
     nodeKindToString() {
         return this.typeChecker.getSyntaxKindAsString(this.getKind());
+    }
+
+    getNamedImportName() {
+        const name = (this.node as ts.ImportOrExportSpecifier).name;
+        return name != null ? name.text : null;
+    }
+
+    getNamedImportPropertyName() {
+        const propertyName = (this.node as ts.ImportOrExportSpecifier).propertyName;
+        return propertyName != null ? propertyName.text : null;
     }
 
     private getTypeAtLocationByNode(node: ts.Node): TsType {

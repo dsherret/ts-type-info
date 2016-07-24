@@ -22,15 +22,10 @@ export class ReExportWriter extends BaseDefinitionWriter<ReExportDefinition> {
     private writeNamedReExports(def: ReExportDefinition) {
         this.writer.write("{");
         (def.namedExports || []).forEach((namedExport, i) => {
-            let alias = namedExport.exportName;
-            let name = namedExport.exportName;
+            let {alias, name} = namedExport;
             this.writer.conditionalWrite(i !== 0, ", ");
 
-            if ((namedExport.definitions || []).length > 0) {
-                name = namedExport.definitions[0].name || name;
-            }
-
-            if (name !== alias) {
+            if (alias != null && name !== alias) {
                 this.writer.write(`${name} as ${alias}`);
             }
             else {

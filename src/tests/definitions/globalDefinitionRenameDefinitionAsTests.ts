@@ -1,6 +1,7 @@
 ﻿import * as assert from "assert";
+import * as path from "path";
 import {GlobalDefinition} from "./../../definitions";
-import {getInfoFromString} from "./../../main";
+import {getInfoFromString, getInfoFromFiles} from "./../../main";
 import {createVariable} from "./../../createFunctions";
 
 describe("GlobalDefinition", () => {
@@ -404,6 +405,23 @@ let b: MyClassAlias;
 let c: MyAliasNamespace.MyNewInnerClass;
 `;
 
+                assert.equal(globalDef.getFile("main.ts").write(), expectedCode);
+            });
+        });
+
+        describe("re-naming default exports", () => {
+            const globalDef = getInfoFromFiles([path.join(__dirname, "./../../../src/tests/testFiles/reExportRename/main.ts")]);
+            globalDef.renameDefinitionAs(globalDef.getFile("MyNamespace.ts").namespaces[0].classes[0], "MyNewClass");
+
+            it("should rename in the main file correctly", () => {
+                const expectedCode =
+`import * as StarImport from "./reExports";
+import {MyNamespace, MyNamespace as MyNamespaceAlias} from "./reExports";
+
+let a = StarImport.MyNamespace.MyNewClass;
+let b = MyNamespace.MyNewClass;
+let c = MyNamespaceAlias.MyNewClass;
+`;
                 assert.equal(globalDef.getFile("main.ts").write(), expectedCode);
             });
         });

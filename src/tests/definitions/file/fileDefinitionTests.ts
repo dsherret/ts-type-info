@@ -123,11 +123,10 @@ describe("FileDefinition", () => {
             runReExportDefinitionTests(f.reExports[1], {
                 moduleSpecifier: "./test2",
                 namedExports: [{
-                    exportName: "aliasName",
-                    definitions: [{ name: "namedImport1", type: null }]
+                    name: "namedImport1",
+                    alias: "aliasName"
                 }, {
-                    exportName: "namedImport2",
-                    definitions: [{ name: "namedImport2", type: null }]
+                    name: "namedImport2"
                 }]
             });
         });

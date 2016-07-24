@@ -1,4 +1,4 @@
-﻿import {ReExportDefinition, ReExportPartDefinition} from "./../../../definitions";
+﻿import {ReExportDefinition, ReExportPartDefinition, NamedImportPartDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
@@ -9,7 +9,7 @@ export abstract class ReExportBinder implements IBaseBinder {
     abstract getFileName(): string;
     abstract getModuleSpecifier(): string;
     abstract getIsStarExport(): boolean;
-    abstract getNamedExports(): ReExportPartDefinition[];
+    abstract getNamedExports(): NamedImportPartDefinition[];
     abstract getStarExports(): ReExportPartDefinition[];
 
     bind(def: ReExportDefinition) {

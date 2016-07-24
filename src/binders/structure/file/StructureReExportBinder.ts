@@ -23,7 +23,7 @@ export class StructureReExportBinder extends ReExportBinder {
     }
 
     getNamedExports() {
-        return (this.structure.namedExports || []).map(n => this.factory.getReExportPartByNamedImport(n));
+        return (this.structure.namedExports || []).map(n => this.factory.getNamedImportPart(n));
     }
 
     getStarExports() {

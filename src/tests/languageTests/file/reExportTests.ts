@@ -12,7 +12,7 @@ describe("file re-export tests", () => {
             moduleSpecifier: "./namedDefaultExports",
             fileName: "namedDefaultExports.ts",
             namedExports: [{
-                exportName: "NamedExport1",
+                name: "NamedExport1",
                 expression: null,
                 definitions: [{
                     name: "NamedExport1",
@@ -27,7 +27,8 @@ describe("file re-export tests", () => {
             moduleSpecifier: "./namedDefaultExports",
             fileName: "namedDefaultExports.ts",
             namedExports: [{
-                exportName: "DefaultExportClass",
+                name: "default",
+                alias: "DefaultExportClass",
                 expression: null,
                 definitions: [{
                     name: "DefaultExport",
@@ -70,7 +71,8 @@ describe("file re-export tests", () => {
             moduleSpecifier: "./expression",
             fileName: "expression.ts",
             namedExports: [{
-                exportName: "Expression",
+                name: "default",
+                alias: "Expression",
                 expression: {
                     text: "5"
                 },

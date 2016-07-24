@@ -10,10 +10,8 @@ export function renameReExportsInFile(opts: { exportedRenameInfos: RenameInfo[];
         if (reExportDef.namedExports.length > 0) {
             reExportDef.namedExports.forEach(named => {
                 validExportedRenameInfos.forEach(renameInfo => {
-                    const partName = named.definitions.length > 0 ? named.definitions[0].name : named.exportName;
-
-                    if (renameInfo.getRootName() === partName) {
-                        named.definitions[0].name = renameInfo.fullNameTo;
+                    if (renameInfo.getRootNameFrom() === named.name) {
+                        named.name = renameInfo.getRootNameTo()
                     }
                 });
             });

@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {ReExportDefinition, VariableDefinition} from "./../../../definitions";
-import {runReExportPartDefinitionTests} from "./../../testHelpers";
+import {runReExportPartDefinitionTests, runNamedImportPartDefinitionTests} from "./../../testHelpers";
 
 describe("ReExportDefinition", () => {
     describe("#addNamedExport()", () => {
@@ -12,21 +12,13 @@ describe("ReExportDefinition", () => {
             name: "name",
             alias: "aliasName"
         });
-        def.addNamedExport({
-            definition: { name: "MyDef" } as VariableDefinition
-        });
-        def.addNamedExport({
-            definitions: [{ name: "MyDef2" } as VariableDefinition, { name: "MyDef2" } as VariableDefinition]
-        });
 
         it("the returned definition should be in the array", () => {
             assert.equal(returnedDef, def.namedExports[0]);
         });
 
-        runReExportPartDefinitionTests(def.namedExports[0], { exportName: "name", definitions: [{ name: "name", type: null }] });
-        runReExportPartDefinitionTests(def.namedExports[1], { exportName: "aliasName", definitions: [{ name: "name", type: null }] });
-        runReExportPartDefinitionTests(def.namedExports[2], { exportName: "MyDef", definitions: [{ name: "MyDef", type: null }] });
-        runReExportPartDefinitionTests(def.namedExports[3], { exportName: "MyDef2", definitions: [{ name: "MyDef2", type: null }, { name: "MyDef2", type: null }] });
+        runNamedImportPartDefinitionTests(def.namedExports[0], { name: "name" });
+        runNamedImportPartDefinitionTests(def.namedExports[1], { name: "name", alias: "aliasName" });
     });
 
     describe("#getNamedExport()", () => {
@@ -40,7 +32,7 @@ describe("ReExportDefinition", () => {
         });
 
         it("should get the correct named import", () => {
-            assert.equal(def.getNamedExport(n => n.exportName === "name2"), def.namedExports[1]);
+            assert.equal(def.getNamedExport(n => n.name === "name2"), def.namedExports[1]);
         });
     });
 

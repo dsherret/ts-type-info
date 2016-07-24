@@ -116,16 +116,8 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureReExportBinder(this, structure), new definitions.ReExportDefinition());
     }
 
-    getReExportPartByNamedImport(namedImport: structures.NamedImportStructureTypes) {
-        const def = new definitions.ReExportPartDefinition();
-
-        if (!StringUtils.isNullOrWhiteSpace(namedImport.alias)) {
-            def.exportName = namedImport.alias;
-        }
-
-        this.fillNamedImportDetails(def, namedImport);
-
-        return def;
+    getNamedImportPart(structure: structures.NamedImportPartStructure) {
+        return bindToDefinition(new binders.StructureNamedImportPartBinder(structure), new definitions.NamedImportPartDefinition());
     }
 
     getInterface(structure: structures.InterfaceStructure) {

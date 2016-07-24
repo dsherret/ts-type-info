@@ -1,18 +1,19 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
 import {MainFactory, StructureFactory} from "./../../factories";
-import {NamedImportStructureTypes} from "./../../structures";
+import {NamedImportPartStructure} from "./../../structures";
 import {DefinitionUtils} from "./../../utils";
 import {ReExportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ReExportPartDefinition} from "./ReExportPartDefinition";
+import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
 export class ReExportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
     starExports: ReExportPartDefinition[] = [];
-    namedExports: ReExportPartDefinition[] = [];
+    namedExports: NamedImportPartDefinition[] = [];
 
     constructor() {
         super(DefinitionType.ReExport);
@@ -28,13 +29,13 @@ export class ReExportDefinition extends BaseDefinition {
         return exports;
     }
 
-    addNamedExport(structure: NamedImportStructureTypes) {
-        const def = new StructureFactory().getReExportPartByNamedImport(structure);
+    addNamedExport(structure: NamedImportPartStructure) {
+        const def = new StructureFactory().getNamedImportPart(structure);
         this.namedExports.push(def);
         return def;
     }
 
-    getNamedExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean) {
+    getNamedExport(searchFunction: (exportPart: NamedImportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.namedExports, searchFunction);
     }
 

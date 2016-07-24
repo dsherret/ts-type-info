@@ -82,6 +82,10 @@ export class TsFactory {
         return bindToDefinition(new binders.TsObjectPropertyBinder(this, node), new definitions.ObjectPropertyDefinition());
     }
 
+    getNamedImportPart(node: TsNode) {
+        return bindToDefinition(new binders.TsNamedImportPartBinder(this, node), new definitions.NamedImportPartDefinition());
+    }
+
     getReExportPart(obj: { exportName: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; }) {
         const def = new definitions.ReExportPartDefinition();
         def.exportName = obj.exportName;

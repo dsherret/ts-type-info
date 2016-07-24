@@ -11,7 +11,7 @@ import myDefaultImport3, * as myStarImport2 from "./test";
 import "./test";
 
 export * from "./test";
-export {myExport1, myAlias} from "./test";
+export {myExport1, MyActualName as myAlias} from "./test";
 
 var myVariable: string;
 var mySecondVariable: number;
@@ -42,7 +42,6 @@ describe("FileDefinition", () => {
     // give the import and re-export more information for testing writing "defName as alias"
     const varDef = createVariable({ name: "MyActualName" });
     file.getImport(i => i.defaultImport != null && i.defaultImport.importName === "myDefaultImport2").namedImports[0].definitions.push(varDef);
-    file.getReExport(e => e.namedExports.length > 0).namedExports[1].definitions.push(varDef);
     file.imports[2].namedImports[0].definitions.push(createVariable({ name: "MyVar", isDefaultExportOfFile: true }));
 
     describe("write()", () => {

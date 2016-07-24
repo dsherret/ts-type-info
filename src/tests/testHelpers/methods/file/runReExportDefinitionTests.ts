@@ -4,6 +4,7 @@ import {ReExportDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runBaseDefinitionTests} from "./../base";
 import {runReExportPartDefinitionTests} from "./runReExportPartDefinitionTests";
+import {runNamedImportPartDefinitionTests} from "./runNamedImportPartDefinitionTests";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {
     describe(`re-export ${structure.moduleSpecifier}`, () => {
@@ -39,7 +40,7 @@ export function runReExportDefinitionTests(definition: ReExportDefinition, struc
                 });
 
                 structure.namedExports.forEach((exportPartStructure, i) => {
-                    runReExportPartDefinitionTests(definition.namedExports[i], exportPartStructure);
+                    runNamedImportPartDefinitionTests(definition.namedExports[i], exportPartStructure);
                 });
             });
         });

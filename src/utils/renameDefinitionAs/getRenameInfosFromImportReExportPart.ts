@@ -7,8 +7,8 @@ export function getRenameInfosFromImportReExportPart(opts: { currentRenameInfo: 
     const isDefaultExport = importReExportPart.definitions.length > 0 && importReExportPart.definitions.some(d => d.isDefaultExportOfFile);
     const partName = importReExportPart.definitions.length > 0 ? importReExportPart.definitions[0].name : importExportName;
 
-    if (currentRenameInfo.getRootName() === partName || currentRenameInfo.isRootDefaultExportOfFile() && isDefaultExport) {
-        const hasAlias = importExportName !== currentRenameInfo.getRootName() || isDefaultExport;
+    if (currentRenameInfo.getRootNameFrom() === partName || currentRenameInfo.isRootDefaultExportOfFile() && isDefaultExport) {
+        const hasAlias = importExportName !== currentRenameInfo.getRootNameFrom() || isDefaultExport;
 
         if (hasAlias && currentRenameInfo.hasNamespaces()) {
             return [currentRenameInfo.createWithNewFirstNamespace(importExportName)];

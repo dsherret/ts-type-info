@@ -27,11 +27,15 @@
     }
 
     isRootDefaultExportOfFile() {
-        return this.getRootName() === "default";
+        return this.getRootNameFrom() === "default";
     }
 
-    getRootName() {
+    getRootNameFrom() {
         return this.fullNameFrom.split(".")[0];
+    }
+
+    getRootNameTo() {
+        return this.fullNameTo.split(".")[0];
     }
 
     getFirstXNamespacesFromFullName(numberNamespaces: number) {
