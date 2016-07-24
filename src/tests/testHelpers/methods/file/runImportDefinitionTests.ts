@@ -4,6 +4,7 @@ import {ImportDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runBaseDefinitionTests} from "./../base";
 import {runImportPartDefinitionTests} from "./runImportPartDefinitionTests";
+import {runNamedImportPartDefinitionTests} from "./runNamedImportPartDefinitionTests";
 
 export function runImportDefinitionTests(definition: ImportDefinition, structure: ImportTestStructure) {
     describe(`import ${structure.moduleSpecifier}`, () => {
@@ -37,7 +38,7 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
                 });
 
                 structure.namedImports.forEach((namedImportStructure, i) => {
-                    runImportPartDefinitionTests(definition.namedImports[i], namedImportStructure);
+                    runNamedImportPartDefinitionTests(definition.namedImports[i], namedImportStructure);
                 });
             });
 

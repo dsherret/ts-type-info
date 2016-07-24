@@ -17,8 +17,8 @@ describe("GlobalDefinition", () => {
                 name: "MyNonExportedClass"
             }],
             namespaces: [{
-                name: "MyNamespace",
-                isNamedExportOfFile: true,
+                name: "MyDefaultNamespace",
+                isDefaultExportOfFile: true,
                 classes: [{
                     name: "MyClassInNamespace",
                     isExported: true
@@ -40,26 +40,50 @@ describe("GlobalDefinition", () => {
             assert.throws(() => def.addDefinitionAsImportToFile({ definition: createVariable({ name: "myVar", isNamedExportOfFile: true }), file: file2 }));
         });
 
-        it("should throw an error when specifying a definition that is in a namespace", () => {
-            assert.throws(() => def.addDefinitionAsImportToFile({ definition: file1.getNamespace("MyNamespace").classes[0], file: file2 }));
-        });
-
         describe("adding an exported definition as an import to another file", () => {
             def.addDefinitionAsImportToFile({ definition: file1.getClass("MyClass"), file: file2 });
+            const importDef = file2.imports[0];
 
             it("should have a name of MyClass", () => {
-                assert.equal(file2.imports[0].namedImports[0].definitions[0].name, "MyClass");
+                assert.equal(importDef.namedImports[0].name, "MyClass");
+            });
+
+            it("should have a definition of MyClass", () => {
+                assert.equal(importDef.namedImports[0].definitions[0].name, "MyClass");
             });
 
             it("should have a module specifier of ./file1", () => {
-                assert.equal(file2.imports[0].moduleSpecifier, "./file1");
+                assert.equal(importDef.moduleSpecifier, "./file1");
+            });
+        });
+
+        describe("adding an exported definition as an import inside a namespace", () => {
+            def.addDefinitionAsImportToFile({ definition: file1.getNamespace("MyDefaultNamespace").getClass("MyClassInNamespace"), file: file2 });
+            const importDef = file2.imports[1];
+
+            it("should have a definition of MyDefaultNamespace", () => {
+                assert.equal(importDef.namedImports[0].definitions[0].name, "MyDefaultNamespace");
+            });
+
+            it("should have a name of default", () => {
+                assert.equal(importDef.namedImports[0].name, "default");
+            });
+
+            it("should have an alias of MyDefaultNamespace", () => {
+                assert.equal(importDef.namedImports[0].alias, "MyDefaultNamespace");
+            });
+
+            it("should have a module specifier of ./file1", () => {
+                assert.equal(importDef.moduleSpecifier, "./file1");
             });
         });
 
         describe("adding an exported definition as an import to another file with an alias", () => {
             def.addDefinitionAsImportToFile({ definition: file1.getClass("MyClass"), file: file2, alias: "myAlias" });
-            it("should have an importName of myAlias", () => {
-                assert.equal(file2.imports[1].namedImports[0].importName, "myAlias");
+            const importDef = file2.imports[2];
+
+            it("should have an alias of myAlias", () => {
+                assert.equal(importDef.namedImports[0].alias, "myAlias");
             });
         });
     });

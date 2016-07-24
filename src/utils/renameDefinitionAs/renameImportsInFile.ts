@@ -9,18 +9,9 @@ export function renameImportsInFile(opts: { exportedRenameInfos: RenameInfo[]; s
     matchingImports.forEach(importDef => {
         renameInfos.forEach(renameInfo => {
             importDef.namedImports.forEach(named => {
-                named.definitions.forEach(def => {
-                    if (def.name === renameInfo.fullNameFrom) {
-                        const hasAlias = named.importName !== renameInfo.fullNameFrom;
-
-                        if (!hasAlias) {
-                            def.name = renameInfo.fullNameTo;
-                        }
-                        else if (named.definitions.length > 0) {
-                            named.definitions[0].name = renameInfo.fullNameTo;
-                        }
-                    }
-                });
+                if (named.name === renameInfo.fullNameFrom) {
+                    named.name = renameInfo.getRootNameTo();
+                }
             });
         });
     });

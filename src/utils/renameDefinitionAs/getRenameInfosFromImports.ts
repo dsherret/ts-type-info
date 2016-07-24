@@ -1,6 +1,6 @@
 ﻿import {FileDefinition} from "./../../definitions";
 import {RenameInfo} from "./RenameInfo";
-import {getRenameInfosFromImportReExportPart} from "./getRenameInfosFromImportReExportPart";
+import {getRenameInfosFromNamedImportPart} from "./getRenameInfosFromNamedImportPart";
 
 // todo: split up
 export function getRenameInfosFromImports(opts: { exportedRenameInfos: RenameInfo[]; searchingModuleSpecifier: string; file: FileDefinition; }) {
@@ -24,9 +24,9 @@ export function getRenameInfosFromImports(opts: { exportedRenameInfos: RenameInf
                 }
 
                 importDef.namedImports.forEach(named => {
-                    importedRenameInfos.push(...getRenameInfosFromImportReExportPart({
+                    importedRenameInfos.push(...getRenameInfosFromNamedImportPart({
                         currentRenameInfo: renameInfo,
-                        importReExportPart: named
+                        namedImportPart: named
                     }));
                 });
             });

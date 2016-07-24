@@ -43,19 +43,8 @@ export class ImportWriter extends BaseDefinitionWriter<ImportDefinition> {
     private writeNamedImports(def: ImportDefinition) {
         this.writer.write("{");
         (def.namedImports || []).forEach((namedImport, i) => {
-            let alias = namedImport.importName;
-            let name = namedImport.importName;
+            let {name, alias} = namedImport;
             this.writer.conditionalWrite(i !== 0, ", ");
-
-            if ((namedImport.definitions || []).length > 0) {
-                const namedImportDef = namedImport.definitions[0];
-                if (namedImportDef.isDefaultExportOfFile) {
-                    name = "default";
-                }
-                else {
-                    name = namedImportDef.name || name;
-                }
-            }
 
             if (alias != null && name !== alias) {
                 this.writer.write(`${name} as ${alias}`);

@@ -8,26 +8,26 @@ export class GlobalDefinition {
     files: FileDefinition[] = [];
 
     addDefinitionAsImportToFile(opts: { definition: ModuleMemberDefinitions; file: FileDefinition; alias?: string }) {
-        if (!opts.definition.isNamedExportOfFile && !opts.definition.isDefaultExportOfFile) {
-            throw new Error("The specified definition is not exported from a file.");
-        }
-
         const fileAndNamespaces = this.getFileAndNamespacesToDefinition(opts.definition);
 
         if (fileAndNamespaces == null) {
             throw new Error("The specified definition does not exist in any other file.");
         }
-        else if (fileAndNamespaces.namespaces.length > 0) {
-            throw new Error(`The specified definition is located in the namespace ${fileAndNamespaces.namespaces[0].name}. Please move it out of the namespace.`);
-        }
         else {
+            const rootDef = fileAndNamespaces.namespaces.length > 0 ? fileAndNamespaces.namespaces[0] : opts.definition;
+
+            if (!rootDef.isNamedExportOfFile && !rootDef.isDefaultExportOfFile) {
+                throw new Error("The specified definition is not exported from a file.");
+            }
+
             opts.file.addImport({
                 namedImports: [{
-                    definition: opts.definition,
-                    alias: opts.alias
+                    name: rootDef.isDefaultExportOfFile ? "default" : rootDef.name,
+                    alias: opts.alias || (rootDef.isDefaultExportOfFile ? rootDef.name : null)
                 }],
                 moduleSpecifier: opts.file.getModuleSpecifierToFile(fileAndNamespaces.file)
             });
+            opts.file.imports[opts.file.imports.length - 1].namedImports[0].definitions.push(rootDef);
         }
     }
 

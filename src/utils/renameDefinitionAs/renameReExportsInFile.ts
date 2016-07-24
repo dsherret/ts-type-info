@@ -7,14 +7,12 @@ export function renameReExportsInFile(opts: { exportedRenameInfos: RenameInfo[];
     const validExportedRenameInfos = exportedRenameInfos.filter(i => !i.isRootDefaultExportOfFile() && !i.hasNamespaces());
 
     matchingReExports.forEach(reExportDef => {
-        if (reExportDef.namedExports.length > 0) {
+        validExportedRenameInfos.forEach(renameInfo => {
             reExportDef.namedExports.forEach(named => {
-                validExportedRenameInfos.forEach(renameInfo => {
-                    if (renameInfo.getRootNameFrom() === named.name) {
-                        named.name = renameInfo.getRootNameTo()
-                    }
-                });
+                if (renameInfo.getRootNameFrom() === named.name) {
+                    named.name = renameInfo.getRootNameTo()
+                }
             });
-        }
+        });
     });
 }

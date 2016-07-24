@@ -174,34 +174,16 @@ export class TsNode extends TsSourceFileChild {
        return this.createSymbol(this.typeChecker.getSymbolAtLocation(importDeclaration.moduleSpecifier));
     }
 
-    getReExportNamedExportNodes() {
-        const exportDeclaration = this.node as ts.ExportDeclaration;
-        return exportDeclaration.exportClause.elements.map(e => this.createNode(e));
+    getImportNamedImportNodes() {
+        const importDeclaration = this.node as ts.ImportDeclaration;
+        const importClause = (importDeclaration.importClause || {}) as ts.ImportClause;
+        const namedBindings = (importClause.namedBindings || {}) as ts.NamedImports;
+        return (namedBindings.elements || []).map(e => this.createNode(e));
     }
 
-    getNamedImportSymbolsByName(): { [name: string]: TsSymbol; } {
-        const symbolsByName: { [name: string]: TsSymbol; } = {};
-        const importDeclaration = this.node as ts.ImportDeclaration;
-
-        if (importDeclaration.importClause != null) {
-            const namedBindings = importDeclaration.importClause.namedBindings as ts.NamedImportsOrExports;
-
-            if (namedBindings != null) {
-                (namedBindings.elements || []).forEach(element => {
-                    const symbol = this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(element));
-
-                    /* istanbul ignore else */
-                    if (symbol != null) {
-                        symbolsByName[element.name.text] = this.createSymbol(symbol);
-                    }
-                    else {
-                        Logger.warn(`Unknown symbol: ${element.name.text}`);
-                    }
-                });
-            }
-        }
-
-        return symbolsByName;
+    getReExportNamedExportNodes() {
+        const exportDeclaration = this.node as ts.ExportDeclaration;
+        return (exportDeclaration.exportClause.elements || []).map(e => this.createNode(e));
     }
 
     getNamespaceDeclarationType() {

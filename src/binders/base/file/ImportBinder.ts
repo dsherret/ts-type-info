@@ -1,4 +1,4 @@
-﻿import {ImportDefinition, ImportPartDefinition} from "./../../../definitions";
+﻿import {ImportDefinition, ImportPartDefinition, NamedImportPartDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
@@ -11,7 +11,7 @@ export abstract class ImportBinder implements IBaseBinder {
     abstract getIsStarImport(): boolean;
     abstract getStarImportName(): string;
     abstract getDefaultImport(): ImportPartDefinition;
-    abstract getNamedImports(): ImportPartDefinition[];
+    abstract getNamedImports(): NamedImportPartDefinition[];
     abstract getStarImports(): ImportPartDefinition[];
 
     bind(def: ImportDefinition) {

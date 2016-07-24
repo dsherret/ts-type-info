@@ -36,7 +36,7 @@ export class StructureImportBinder extends ImportBinder {
     }
 
     getNamedImports() {
-        return (this.structure.namedImports || []).map(n => this.factory.getImportPartByNamedImport(n));
+        return (this.structure.namedImports || []).map(n => this.factory.getNamedImportPart(n));
     }
 
     getStarImports() {

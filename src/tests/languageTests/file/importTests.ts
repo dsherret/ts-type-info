@@ -46,7 +46,7 @@ describe("file import tests", () => {
         fileName: "namedExports.ts",
         defaultImport: null,
         namedImports: [{
-            importName: "NamedExport1",
+            name: "NamedExport1",
             definitions: [{
                 name: "NamedExport1",
                 type: ClassDefinition
@@ -56,7 +56,7 @@ describe("file import tests", () => {
             }],
             expression: null
         }, {
-            importName: "NamedExport2",
+            name: "NamedExport2",
             definitions: [{
                 name: "NamedExport2",
                 type: ClassDefinition
@@ -105,7 +105,8 @@ describe("file import tests", () => {
             expression: null
         },
         namedImports: [{
-            importName: "NamedExportLocalName",
+            name: "NamedExportEnum",
+            alias: "NamedExportLocalName",
             definitions: [{
                 name: "NamedExportEnum",
                 type: EnumDefinition

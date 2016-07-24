@@ -1,31 +1,32 @@
 ﻿import {MainFactory, StructureFactory} from "./../../factories";
-import {NamedImportStructureTypes} from "./../../structures";
+import {NamedImportPartStructure} from "./../../structures";
 import {DefinitionUtils} from "./../../utils";
 import {ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ImportPartDefinition} from "./ImportPartDefinition";
+import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
 export class ImportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
     starImportName: string;
     defaultImport: ImportPartDefinition;
-    namedImports: ImportPartDefinition[] = [];
+    namedImports: NamedImportPartDefinition[] = [];
     starImports: ImportPartDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Import);
     }
 
-    addNamedImport(structure: NamedImportStructureTypes) {
-        const def = new StructureFactory().getImportPartByNamedImport(structure);
+    addNamedImport(structure: NamedImportPartStructure) {
+        const def = new StructureFactory().getNamedImportPart(structure);
         this.namedImports.push(def);
         return def;
     }
 
-    getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean) {
+    getNamedImport(searchFunction: (importPart: NamedImportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.namedImports, searchFunction);
     }
 

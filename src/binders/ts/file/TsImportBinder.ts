@@ -43,23 +43,7 @@ export class TsImportBinder extends ImportBinder {
     }
 
     getNamedImports() {
-        const namedSymbols = this.node.getNamedImportSymbolsByName();
-
-        return Object.keys(namedSymbols || {}).map(name => {
-            const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(namedSymbols[name]);
-
-            if (defsOrExpression.definitions.length > 0) {
-                if (defsOrExpression.definitions[0].name === name) {
-                    name = null;
-                }
-            }
-
-            return this.factory.getImportPart({
-                importName: name,
-                definitions: defsOrExpression.definitions as ExportableDefinitions[],
-                expression: defsOrExpression.expression
-            });
-        });
+        return this.node.getImportNamedImportNodes().map(node => this.factory.getNamedImportPart(node));
     }
 
     getStarImports() {

@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {ImportDefinition, VariableDefinition} from "./../../../definitions";
-import {runImportPartDefinitionTests} from "./../../testHelpers";
+import {runImportPartDefinitionTests, runNamedImportPartDefinitionTests} from "./../../testHelpers";
 
 describe("ImportDefinition", () => {
     describe("#setDefaultImport()", () => {
@@ -18,21 +18,13 @@ describe("ImportDefinition", () => {
             name: "name",
             alias: "aliasName"
         });
-        importDef.addNamedImport({
-            definition: { name: "MyDef" } as VariableDefinition
-        });
-        importDef.addNamedImport({
-            definitions: [{ name: "MyDef2" } as VariableDefinition, { name: "MyDef2" } as VariableDefinition]
-        });
 
         it("the returned definition should be in the array", () => {
             assert.equal(returnedDef, importDef.namedImports[0]);
         });
 
-        runImportPartDefinitionTests(importDef.namedImports[0], { importName: "name", definitions: [{ name: "name", type: null }] });
-        runImportPartDefinitionTests(importDef.namedImports[1], { importName: "aliasName", definitions: [{ name: "name", type: null }] });
-        runImportPartDefinitionTests(importDef.namedImports[2], { importName: "MyDef", definitions: [{ name: "MyDef", type: null }] });
-        runImportPartDefinitionTests(importDef.namedImports[3], { importName: "MyDef2", definitions: [{ name: "MyDef2", type: null }, { name: "MyDef2", type: null }] });
+        runNamedImportPartDefinitionTests(importDef.namedImports[0], { name: "name" });
+        runNamedImportPartDefinitionTests(importDef.namedImports[1], { name: "name", alias: "aliasName" });
     });
 
     describe("#getNamedImport()", () => {
@@ -46,7 +38,7 @@ describe("ImportDefinition", () => {
         });
 
         it("should get the correct named import", () => {
-            assert.equal(importDef.getNamedImport(n => n.importName === "name2"), importDef.namedImports[1]);
+            assert.equal(importDef.getNamedImport(n => n.name === "name2"), importDef.namedImports[1]);
         });
     });
 
