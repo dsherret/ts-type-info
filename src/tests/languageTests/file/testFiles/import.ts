@@ -16,6 +16,7 @@ import * as reexports from "./reExport";
 import * as definitionLocal from "definition";
 import * as definitionNamespace from "./definitionNamespace";
 import * as definitionVar from "definition-var";
+import * as NamedExpressions from "./namedExpression";
 
 let myVar1: definitionLocal.DefinitionInterface;
 let myVar2: definitionNamespace.DefinitionNamespaceInterface;

@@ -111,6 +111,10 @@ describe("file re-export tests", () => {
                     name: "SingleNamedExportB",
                     type: ClassDefinition
                 }]
+            }, {
+                name: "NamedExpression",
+                expression: { text: "5" },
+                definitions: []
             }]
         }],
         exports: [{

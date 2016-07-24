@@ -50,12 +50,12 @@ export class TsImportBinder extends ImportBinder {
         const starExportSymbols = this.node.getStarSymbol().getExportSymbolsOfModuleByName();
 
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
-            const definitions = this.factory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
+            const {definitions, expression} = this.factory.getDefinitionsOrExpressionFromExportSymbol(starExportSymbols[name]);
 
             return this.factory.getStarImportPart({
                 name,
                 definitions,
-                expression: null
+                expression
             });
         });
     }

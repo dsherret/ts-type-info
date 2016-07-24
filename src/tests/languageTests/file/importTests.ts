@@ -246,6 +246,19 @@ describe("file import tests", () => {
         }]
     });
 
+    runImportDefinitionTests(fileDef.imports[i++], {
+        moduleSpecifier: "./namedExpression",
+        fileName: "namedExpression.ts",
+        defaultImport: null,
+        namedImports: [],
+        starImportName: "NamedExpressions",
+        starImports: [{
+            name: "NamedExpression",
+            definitions: [],
+            expression: { text: `"test string"` }
+        }]
+    });
+
     it(`should have ${i} imports`, () => {
         assert.equal(fileDef.imports.length, i);
     });
