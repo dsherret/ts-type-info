@@ -86,9 +86,9 @@ export class TsFactory {
         return bindToDefinition(new binders.TsNamedImportPartBinder(this, node), new definitions.NamedImportPartDefinition());
     }
 
-    getReExportPart(obj: { exportName: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; }) {
-        const def = new definitions.ReExportPartDefinition();
-        def.exportName = obj.exportName;
+    getStarImportPart(obj: { name: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; }) {
+        const def = new definitions.StarImportPartDefinition();
+        def.name = obj.name;
         def.definitions.push(...obj.definitions);
         def.expression = obj.expression;
         return def;

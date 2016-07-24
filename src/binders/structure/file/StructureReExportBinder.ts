@@ -1,4 +1,4 @@
-﻿import {ReExportPartDefinition} from "./../../../definitions";
+﻿import {StarImportPartDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {ReExportStructure} from "./../../../structures";
 import {ArrayUtils} from "./../../../utils";
@@ -27,6 +27,6 @@ export class StructureReExportBinder extends ReExportBinder {
     }
 
     getStarExports() {
-        return [] as ReExportPartDefinition[];
+        return [] as StarImportPartDefinition[];
     }
 }

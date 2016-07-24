@@ -41,14 +41,14 @@ describe("file re-export tests", () => {
             fileName: "exportStar.ts",
             namedExports: [],
             starExports: [{
-                exportName: "NamedExportEnum",
+                name: "NamedExportEnum",
                 expression: null,
                 definitions: [{
                     name: "NamedExportEnum",
                     type: EnumDefinition
                 }]
             }, {
-                exportName: "NamedExportEnum2",
+                name: "NamedExportEnum2",
                 expression: null,
                 definitions: [{
                     name: "NamedExportEnum2",
@@ -60,7 +60,7 @@ describe("file re-export tests", () => {
             fileName: "exportStar2.ts",
             namedExports: [],
             starExports: [{
-                exportName: "ExportStar2Class",
+                name: "ExportStar2Class",
                 expression: null,
                 definitions: [{
                     name: "ExportStar2Class",
@@ -84,28 +84,28 @@ describe("file re-export tests", () => {
             fileName: "reExportCombined.ts",
             namedExports: [],
             starExports: [{
-                exportName: "RenamedA1",
+                name: "RenamedA1",
                 expression: null,
                 definitions: [{
                     name: "SingleNamedExportA",
                     type: ClassDefinition
                 }]
             }, {
-                exportName: "RenamedA2",
+                name: "RenamedA2",
                 expression: null,
                 definitions: [{
                     name: "SingleNamedExportA",
                     type: ClassDefinition
                 }]
             }, {
-                exportName: "RenamedA3",
+                name: "RenamedA3",
                 expression: null,
                 definitions: [{
                     name: "SingleNamedExportA",
                     type: ClassDefinition
                 }]
             }, {
-                exportName: "SingleNamedExportB",
+                name: "SingleNamedExportB",
                 expression: null,
                 definitions: [{
                     name: "SingleNamedExportB",

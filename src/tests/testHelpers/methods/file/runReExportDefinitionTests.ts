@@ -3,7 +3,7 @@ import {ReExportTestStructure} from "./../../testStructures";
 import {ReExportDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runBaseDefinitionTests} from "./../base";
-import {runReExportPartDefinitionTests} from "./runReExportPartDefinitionTests";
+import {runStarImportPartDefinitionTests} from "./runStarImportPartDefinitionTests";
 import {runNamedImportPartDefinitionTests} from "./runNamedImportPartDefinitionTests";
 
 export function runReExportDefinitionTests(definition: ReExportDefinition, structure: ReExportTestStructure) {
@@ -30,7 +30,7 @@ export function runReExportDefinitionTests(definition: ReExportDefinition, struc
                 });
 
                 structure.starExports.forEach((exportPartStructure, i) => {
-                    runReExportPartDefinitionTests(definition.starExports[i], exportPartStructure);
+                    runStarImportPartDefinitionTests(definition.starExports[i], exportPartStructure);
                 });
             });
 

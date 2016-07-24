@@ -74,7 +74,7 @@ describe("file import tests", () => {
         namedImports: [],
         starImportName: "NamedExports",
         starImports: [{
-            importName: "NamedExport1",
+            name: "NamedExport1",
             definitions: [{
                 name: "NamedExport1",
                 type: ClassDefinition
@@ -84,7 +84,7 @@ describe("file import tests", () => {
             }],
             expression: null
         }, {
-            importName: "NamedExport2",
+            name: "NamedExport2",
             definitions: [{
                 name: "NamedExport2",
                 type: ClassDefinition
@@ -131,7 +131,7 @@ describe("file import tests", () => {
         namedImports: [],
         starImportName: "NamedWithDefaultExportStarImport",
         starImports: [{
-            importName: "NamedExportEnum",
+            name: "NamedExportEnum",
             definitions: [{
                 name: "NamedExportEnum",
                 type: EnumDefinition
@@ -169,7 +169,7 @@ describe("file import tests", () => {
         namedImports: [],
         starImportName: "reexports",
         starImports: [{
-            importName: "RenamedExport",
+            name: "RenamedExport",
             definitions: [{
                 name: "NamedExport1",
                 type: ClassDefinition
@@ -179,7 +179,7 @@ describe("file import tests", () => {
             }],
             expression: null
         }, {
-            importName: "NamedExport1",
+            name: "NamedExport1",
             definitions: [{
                 name: "NamedExport1",
                 type: ClassDefinition
@@ -189,7 +189,7 @@ describe("file import tests", () => {
             }],
             expression: null
         }, {
-            importName: "NamedExport2",
+            name: "NamedExport2",
             definitions: [{
                 name: "NamedExport2",
                 type: ClassDefinition
@@ -205,7 +205,7 @@ describe("file import tests", () => {
         namedImports: [],
         starImportName: "definitionLocal",
         starImports: [{
-            importName: "DefinitionInterface",
+            name: "DefinitionInterface",
             definitions: [{
                 name: "DefinitionInterface",
                 type: InterfaceDefinition
@@ -221,7 +221,7 @@ describe("file import tests", () => {
         namedImports: [],
         starImportName: "definitionNamespace",
         starImports: [{
-            importName: "DefinitionNamespaceInterface",
+            name: "DefinitionNamespaceInterface",
             definitions: [{
                 name: "DefinitionNamespaceInterface",
                 type: InterfaceDefinition
@@ -237,7 +237,7 @@ describe("file import tests", () => {
         namedImports: [],
         starImportName: "definitionVar",
         starImports: [{
-            importName: "Methods",
+            name: "Methods",
             definitions: [{
                 name: "Methods",
                 type: VariableDefinition

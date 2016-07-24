@@ -1,9 +1,8 @@
 ﻿import {BaseTestStructure} from "./../base";
 import {ExpressionTestStructure} from "./../expression";
 
-export interface NamedImportPartTestStructure extends BaseTestStructure {
+export interface StarImportPartTestStructure extends BaseTestStructure {
     name: string;
-    alias?: string;
     expression?: ExpressionTestStructure;
     definitions?: { name: string, type: any }[];
 }

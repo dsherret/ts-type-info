@@ -1,4 +1,4 @@
-﻿import {ImportPartDefinition} from "./../../../definitions";
+﻿import {ImportPartDefinition, StarImportPartDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {ImportStructure} from "./../../../structures";
 import {StringUtils} from "./../../../utils";
@@ -40,6 +40,6 @@ export class StructureImportBinder extends ImportBinder {
     }
 
     getStarImports() {
-        return [] as ImportPartDefinition[];
+        return [] as StarImportPartDefinition[];
     }
 }

@@ -1,10 +1,10 @@
 ﻿import {BaseTestStructure} from "./../base";
 import {NamedImportPartTestStructure} from "./NamedImportPartTestStructure";
-import {ReExportPartTestStructure} from "./ReExportPartTestStructure";
+import {StarImportPartTestStructure} from "./StarImportPartTestStructure";
 
 export interface ReExportTestStructure extends BaseTestStructure {
     moduleSpecifier: string;
     fileName?: string;
-    starExports?: ReExportPartTestStructure[];
+    starExports?: StarImportPartTestStructure[];
     namedExports?: NamedImportPartTestStructure[];
 }

@@ -33,9 +33,9 @@ export class TsReExportBinder extends ReExportBinder {
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
             const definitions = this.factory.getAllExportableDefinitionsBySymbol(starExportSymbols[name]);
 
-            return this.factory.getReExportPart({
-                exportName: name,
-                definitions: definitions,
+            return this.factory.getStarImportPart({
+                name,
+                definitions,
                 expression: null
             });
         });

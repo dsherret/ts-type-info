@@ -44,11 +44,11 @@ describe("ImportDefinition", () => {
 
     describe("#getStarImport()", () => {
         const importDef = new ImportDefinition();
-        importDef.starImports.push({ importName: "name1" } as any);
-        importDef.starImports.push({ importName: "name2" } as any);
+        importDef.starImports.push({ name: "name1" } as any);
+        importDef.starImports.push({ name: "name2" } as any);
 
         it("should get the correct star import", () => {
-            assert.equal(importDef.getStarImport(n => n.importName === "name2"), importDef.starImports[1]);
+            assert.equal(importDef.getStarImport(n => n.name === "name2"), importDef.starImports[1]);
         });
     });
 });

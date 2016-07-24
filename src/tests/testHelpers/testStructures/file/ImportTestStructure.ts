@@ -1,5 +1,6 @@
 ﻿import {BaseTestStructure} from "./../base";
 import {ImportPartTestStructure} from "./ImportPartTestStructure";
+import {StarImportPartTestStructure} from "./StarImportPartTestStructure";
 import {NamedImportPartTestStructure} from "./NamedImportPartTestStructure";
 
 export interface ImportTestStructure extends BaseTestStructure {
@@ -8,5 +9,5 @@ export interface ImportTestStructure extends BaseTestStructure {
     defaultImport?: ImportPartTestStructure;
     namedImports?: NamedImportPartTestStructure[];
     starImportName?: string;
-    starImports?: ImportPartTestStructure[];
+    starImports?: StarImportPartTestStructure[];
 }

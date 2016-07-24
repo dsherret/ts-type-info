@@ -3,7 +3,7 @@ import {ExportableDefinitions, ExportableDefinition} from "./../../definitions";
 import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./../interface";
-import {FileDefinition, ImportDefinition, ReExportDefinition, ImportPartDefinition, ReExportPartDefinition} from "./../File";
+import {FileDefinition, ImportDefinition, ReExportDefinition} from "./../File";
 import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {FunctionDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
@@ -89,10 +89,6 @@ export abstract class BaseDefinition {
         return this._definitionType === DefinitionType.Import;
     }
 
-    isImportPartDefinition(): this is ImportPartDefinition {
-        return this._definitionType === DefinitionType.ImportPart;
-    }
-
     isInterfaceDefinition(): this is InterfaceDefinition {
         return this._definitionType === DefinitionType.Interface;
     }
@@ -111,10 +107,6 @@ export abstract class BaseDefinition {
 
     isReExportDefinition(): this is ReExportDefinition {
         return this._definitionType === DefinitionType.ReExport;
-    }
-
-    isReExportPartDefinition(): this is ReExportPartDefinition {
-        return this._definitionType === DefinitionType.ReExportPart;
     }
 
     isTypeDefinition(): this is TypeDefinition {

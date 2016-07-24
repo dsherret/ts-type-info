@@ -38,11 +38,11 @@ describe("ReExportDefinition", () => {
 
     describe("#getStarExport()", () => {
         const importDef = new ReExportDefinition();
-        importDef.starExports.push({ exportName: "name1" } as any);
-        importDef.starExports.push({ exportName: "name2" } as any);
+        importDef.starExports.push({ name: "name1" } as any);
+        importDef.starExports.push({ name: "name2" } as any);
 
         it("should get the correct star import", () => {
-            assert.equal(importDef.getStarExport(n => n.exportName === "name2"), importDef.starExports[1]);
+            assert.equal(importDef.getStarExport(n => n.name === "name2"), importDef.starExports[1]);
         });
     });
 });

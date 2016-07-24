@@ -5,6 +5,7 @@ import {ensureNotNull} from "./../../ensureNotNull";
 import {runBaseDefinitionTests} from "./../base";
 import {runImportPartDefinitionTests} from "./runImportPartDefinitionTests";
 import {runNamedImportPartDefinitionTests} from "./runNamedImportPartDefinitionTests";
+import {runStarImportPartDefinitionTests} from "./runStarImportPartDefinitionTests";
 
 export function runImportDefinitionTests(definition: ImportDefinition, structure: ImportTestStructure) {
     describe(`import ${structure.moduleSpecifier}`, () => {
@@ -48,7 +49,7 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
                 });
 
                 structure.starImports.forEach((starImportStructure, i) => {
-                    runImportPartDefinitionTests(definition.starImports[i], starImportStructure);
+                    runStarImportPartDefinitionTests(definition.starImports[i], starImportStructure);
                 });
             });
         });

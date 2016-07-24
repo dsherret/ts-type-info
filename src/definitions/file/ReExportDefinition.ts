@@ -6,13 +6,13 @@ import {ReExportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {ReExportPartDefinition} from "./ReExportPartDefinition";
+import {StarImportPartDefinition} from "./StarImportPartDefinition";
 import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
 export class ReExportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
-    starExports: ReExportPartDefinition[] = [];
+    starExports: StarImportPartDefinition[] = [];
     namedExports: NamedImportPartDefinition[] = [];
 
     constructor() {
@@ -39,7 +39,7 @@ export class ReExportDefinition extends BaseDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.namedExports, searchFunction);
     }
 
-    getStarExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean) {
+    getStarExport(searchFunction: (exportPart: StarImportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.starExports, searchFunction);
     }
 

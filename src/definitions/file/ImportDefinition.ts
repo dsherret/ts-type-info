@@ -6,6 +6,7 @@ import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ImportPartDefinition} from "./ImportPartDefinition";
+import {StarImportPartDefinition} from "./StarImportPartDefinition";
 import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
 export class ImportDefinition extends BaseDefinition {
@@ -14,7 +15,7 @@ export class ImportDefinition extends BaseDefinition {
     starImportName: string;
     defaultImport: ImportPartDefinition;
     namedImports: NamedImportPartDefinition[] = [];
-    starImports: ImportPartDefinition[] = [];
+    starImports: StarImportPartDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Import);
@@ -30,7 +31,7 @@ export class ImportDefinition extends BaseDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.namedImports, searchFunction);
     }
 
-    getStarImport(searchFunction: (importPart: ImportPartDefinition) => boolean) {
+    getStarImport(searchFunction: (importPart: StarImportPartDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.starImports, searchFunction);
     }
 

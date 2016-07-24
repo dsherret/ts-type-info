@@ -5,3 +5,4 @@ export * from "./file/ImportPartTestStructure";
 export * from "./file/ReExportTestStructure";
 export * from "./file/ReExportPartTestStructure";
 export * from "./file/NamedImportPartTestStructure";
+export * from "./file/StarImportPartTestStructure";
