@@ -13,7 +13,8 @@ export function getRenameInfosFromImports(opts: { exportedRenameInfos: RenameInf
         if (searchingModuleSpecifier === importDef.moduleSpecifier) {
             validExportedRenameInfos.forEach(renameInfo => {
                 if (importDef.defaultImport != null) {
-                    const defaultImportName = importDef.defaultImport.importName;
+                    const defaultImportName = importDef.defaultImport.name;
+
                     if (defaultImportName != null && renameInfo.hasNamespaces() && renameInfo.isRootDefaultExportOfFile()) {
                         importedRenameInfos.push(renameInfo.createWithNewFirstNamespace(defaultImportName));
                     }

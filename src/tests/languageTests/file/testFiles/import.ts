@@ -17,16 +17,6 @@ import * as definitionLocal from "definition";
 import * as definitionNamespace from "./definitionNamespace";
 import * as definitionVar from "definition-var";
 
-// removes linting errors
-function dummyFunction(...t: any[]) {
-    return t;
-}
-
-dummyFunction(DefaultExportSeparate, NamedExport1, NamedExport2, NamedExports.NamedExport1, NamedExports.NamedExport2,
-    DefaultExportClassLocalName1, NamedExportLocalName, reexports.RenamedExport, reexports.NamedExport1, reexports.NamedExport2, Expression);
-
 let myVar1: definitionLocal.DefinitionInterface;
-dummyFunction(myVar1);
 let myVar2: definitionNamespace.DefinitionNamespaceInterface;
-dummyFunction(myVar2);
 let myVar3 = () => definitionVar.Methods;

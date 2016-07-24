@@ -2,11 +2,12 @@
 import {BaseDefinition, DefinitionType} from "./../base";
 import {ExpressionDefinition} from "./../expression";
 
-export abstract class BaseImportPartDefinition extends BaseDefinition {
-    constructor(definitionType: DefinitionType) {
-        super(definitionType);
-    }
-
+export class DefaultImportPartDefinition extends BaseDefinition {
     definitions: ExportableDefinitions[] = [];
     expression: ExpressionDefinition;
+    name: string;
+
+    constructor() {
+        super(DefinitionType.DefaultImportPart);
+    }
 }

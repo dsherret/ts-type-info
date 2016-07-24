@@ -3,7 +3,7 @@ import {ImportTestStructure} from "./../../testStructures";
 import {ImportDefinition} from "./../../../../definitions";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runBaseDefinitionTests} from "./../base";
-import {runImportPartDefinitionTests} from "./runImportPartDefinitionTests";
+import {runDefaultImportPartDefinitionTests} from "./runDefaultImportPartDefinitionTests";
 import {runNamedImportPartDefinitionTests} from "./runNamedImportPartDefinitionTests";
 import {runStarImportPartDefinitionTests} from "./runStarImportPartDefinitionTests";
 
@@ -30,7 +30,7 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
             });
 
             describe(`default import`, () => {
-                runImportPartDefinitionTests(definition.defaultImport, structure.defaultImport);
+                runDefaultImportPartDefinitionTests(definition.defaultImport, structure.defaultImport);
             });
 
             describe("named imports", () => {

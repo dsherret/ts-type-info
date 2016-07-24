@@ -13,7 +13,7 @@ describe("file import tests", () => {
         moduleSpecifier: "./defaultExport",
         fileName: "defaultExport.ts",
         defaultImport: {
-            importName: "DefaultExport",
+            name: "DefaultExport",
             definitions: [{
                 name: "DefaultExport",
                 type: ClassDefinition
@@ -29,7 +29,7 @@ describe("file import tests", () => {
         moduleSpecifier: "./defaultExportSeparate",
         fileName: "defaultExportSeparate.ts",
         defaultImport: {
-            importName: "DefaultExportSeparate",
+            name: "DefaultExportSeparate",
             definitions: [{
                 name: "DefaultExportSeparate",
                 type: ClassDefinition
@@ -97,7 +97,7 @@ describe("file import tests", () => {
         moduleSpecifier: "./namedWithDefaultExport",
         fileName: "namedWithDefaultExport.ts",
         defaultImport: {
-            importName: "DefaultExportClassLocalName1",
+            name: "DefaultExportClassLocalName1",
             definitions: [{
                 name: "DefaultExportClass",
                 type: ClassDefinition
@@ -121,7 +121,7 @@ describe("file import tests", () => {
         moduleSpecifier: "./namedWithDefaultExport",
         fileName: "namedWithDefaultExport.ts",
         defaultImport: {
-            importName: "DefaultExportClassLocalName2",
+            name: "DefaultExportClassLocalName2",
             definitions: [{
                 name: "DefaultExportClass",
                 type: ClassDefinition
@@ -144,7 +144,7 @@ describe("file import tests", () => {
         moduleSpecifier: "./expression",
         fileName: "expression.ts",
         defaultImport: {
-            importName: "Expression",
+            name: "Expression",
             definitions: [],
             expression: { text: `"test string"` }
         },

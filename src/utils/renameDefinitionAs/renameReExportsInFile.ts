@@ -10,7 +10,7 @@ export function renameReExportsInFile(opts: { exportedRenameInfos: RenameInfo[];
         validExportedRenameInfos.forEach(renameInfo => {
             reExportDef.namedExports.forEach(named => {
                 if (renameInfo.getRootNameFrom() === named.name) {
-                    named.name = renameInfo.getRootNameTo()
+                    named.name = renameInfo.getRootNameTo();
                 }
             });
         });

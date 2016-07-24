@@ -31,8 +31,8 @@ export class TsImportBinder extends ImportBinder {
         if (defaultImportNameAndSymbol != null) {
             const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(defaultImportNameAndSymbol.symbol);
 
-            return this.factory.getImportPart({
-                importName: defaultImportNameAndSymbol.name,
+            return this.factory.getDefaultImportPart({
+                name: defaultImportNameAndSymbol.name,
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],
                 expression: defsOrExpression.expression
             });

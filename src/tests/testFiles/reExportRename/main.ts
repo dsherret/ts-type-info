@@ -1,4 +1,5 @@
-﻿import * as StarImport from "./reExports";
+﻿/* tslint:disable */
+import * as StarImport from "./reExports";
 import {MyNamespace, MyNamespace as MyNamespaceAlias} from "./reExports";
 
 let a = StarImport.MyNamespace.MyClass;

@@ -1,4 +1,4 @@
-﻿import {FileDefinition, NamedImportPartDefinition} from "./../../definitions";
+﻿import {NamedImportPartDefinition} from "./../../definitions";
 import {RenameInfo} from "./RenameInfo";
 
 export function getRenameInfosFromNamedImportPart(opts: { currentRenameInfo: RenameInfo; namedImportPart: NamedImportPartDefinition; }) {

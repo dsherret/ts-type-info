@@ -1,5 +1,4 @@
-﻿import {ExportableDefinitions} from "./../../../definitions";
-import {TsFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {TsNode, TsSymbol} from "./../../../compiler";
 import {ReExportBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./../base";

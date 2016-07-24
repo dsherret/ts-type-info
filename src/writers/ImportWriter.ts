@@ -36,7 +36,7 @@ export class ImportWriter extends BaseDefinitionWriter<ImportDefinition> {
 
     private writeDefaultImport(def: ImportDefinition) {
         if (def.defaultImport != null) {
-            this.writer.write(def.defaultImport.importName);
+            this.writer.write(def.defaultImport.name);
         }
     }
 

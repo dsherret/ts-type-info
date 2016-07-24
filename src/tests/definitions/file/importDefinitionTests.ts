@@ -1,12 +1,12 @@
 ﻿import * as assert from "assert";
-import {ImportDefinition, VariableDefinition} from "./../../../definitions";
-import {runImportPartDefinitionTests, runNamedImportPartDefinitionTests} from "./../../testHelpers";
+import {ImportDefinition} from "./../../../definitions";
+import {runDefaultImportPartDefinitionTests, runNamedImportPartDefinitionTests} from "./../../testHelpers";
 
 describe("ImportDefinition", () => {
     describe("#setDefaultImport()", () => {
         const importDef = new ImportDefinition();
         importDef.setDefaultImport("defaultImportName");
-        runImportPartDefinitionTests(importDef.defaultImport, { importName: "defaultImportName" });
+        runDefaultImportPartDefinitionTests(importDef.defaultImport, { name: "defaultImportName" });
     });
 
     describe("#addNamedImport()", () => {

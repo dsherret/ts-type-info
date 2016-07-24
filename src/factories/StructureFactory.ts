@@ -1,7 +1,6 @@
 ﻿import * as binders from "./../binders";
 import * as definitions from "./../definitions";
 import * as structures from "./../structures";
-import {StringUtils} from "./../utils";
 
 function bindToDefinition<DefType extends definitions.BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
@@ -91,8 +90,8 @@ export class StructureFactory {
     }
 
     getImportPartByImportName(importName: string) {
-        const def = new definitions.ImportPartDefinition();
-        def.importName = importName;
+        const def = new definitions.DefaultImportPartDefinition();
+        def.name = importName;
         return def;
     }
 

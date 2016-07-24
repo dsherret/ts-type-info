@@ -5,7 +5,7 @@ import {ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {ImportPartDefinition} from "./ImportPartDefinition";
+import {DefaultImportPartDefinition} from "./DefaultImportPartDefinition";
 import {StarImportPartDefinition} from "./StarImportPartDefinition";
 import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
@@ -13,7 +13,7 @@ export class ImportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
     starImportName: string;
-    defaultImport: ImportPartDefinition;
+    defaultImport: DefaultImportPartDefinition;
     namedImports: NamedImportPartDefinition[] = [];
     starImports: StarImportPartDefinition[] = [];
 

@@ -47,7 +47,7 @@ describe("FileDefinition", () => {
             describe("default import", () => {
                 runImportDefinitionTests(f.imports[1], {
                     moduleSpecifier: "./test2",
-                    defaultImport: { importName: "defaultImport1" }
+                    defaultImport: { name: "defaultImport1" }
                 });
             });
 
@@ -63,7 +63,7 @@ describe("FileDefinition", () => {
             describe("named import with default import", () => {
                 runImportDefinitionTests(f.imports[3], {
                     moduleSpecifier: "./test4",
-                    defaultImport: { importName: "defaultImport2" },
+                    defaultImport: { name: "defaultImport2" },
                     namedImports: [{
                         name: "default",
                         alias: "namedImport3"

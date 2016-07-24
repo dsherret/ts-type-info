@@ -1,9 +1,8 @@
 ﻿import {ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
-import {NamedImportPartStructure} from "./../../../structures";
 import {NamedImportPartBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./../base";
-import {TsNode, TsSymbol} from "./../../../compiler";
+import {TsNode} from "./../../../compiler";
 
 export class TsNamedImportPartBinder extends NamedImportPartBinder {
     private defsOrExpression: {

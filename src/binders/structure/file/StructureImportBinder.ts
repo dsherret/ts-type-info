@@ -1,4 +1,4 @@
-﻿import {ImportPartDefinition, StarImportPartDefinition} from "./../../../definitions";
+﻿import {StarImportPartDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {ImportStructure} from "./../../../structures";
 import {StringUtils} from "./../../../utils";

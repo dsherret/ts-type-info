@@ -1,4 +1,4 @@
-﻿import {ImportDefinition, ImportPartDefinition, NamedImportPartDefinition, StarImportPartDefinition} from "./../../../definitions";
+﻿import {ImportDefinition, DefaultImportPartDefinition, NamedImportPartDefinition, StarImportPartDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
@@ -10,7 +10,7 @@ export abstract class ImportBinder implements IBaseBinder {
     abstract getModuleSpecifier(): string;
     abstract getIsStarImport(): boolean;
     abstract getStarImportName(): string;
-    abstract getDefaultImport(): ImportPartDefinition;
+    abstract getDefaultImport(): DefaultImportPartDefinition;
     abstract getNamedImports(): NamedImportPartDefinition[];
     abstract getStarImports(): StarImportPartDefinition[];
 

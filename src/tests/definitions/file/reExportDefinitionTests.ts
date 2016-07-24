@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
-import {ReExportDefinition, VariableDefinition} from "./../../../definitions";
-import {runReExportPartDefinitionTests, runNamedImportPartDefinitionTests} from "./../../testHelpers";
+import {ReExportDefinition} from "./../../../definitions";
+import {runNamedImportPartDefinitionTests} from "./../../testHelpers";
 
 describe("ReExportDefinition", () => {
     describe("#addNamedExport()", () => {

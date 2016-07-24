@@ -1,5 +1,4 @@
 ﻿import * as assert from "assert";
-import {createVariable} from "./../../../createFunctions";
 import {getInfoFromString} from "./../../../main";
 
 const code = `
