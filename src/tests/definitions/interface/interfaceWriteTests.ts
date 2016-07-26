@@ -2,7 +2,10 @@
 import {getInfoFromString} from "./../../../main";
 
 const code =
-`interface MyInterface {
+`interface SimpleInterface {
+}
+
+interface MyInterface {
     myString: string;
     mySecond: number;
 
@@ -44,6 +47,14 @@ describe("InterfaceDefinition", () => {
     describe("write()", () => {
         it("should have the same output as the input", () => {
             assert.equal(file.write(), code);
+        });
+
+        it("should write when calling it on the interface", () => {
+            const expectedCode =
+`interface SimpleInterface {
+}
+`;
+            assert.equal(file.interfaces[0].write(), expectedCode);
         });
     });
 });
