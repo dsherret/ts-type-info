@@ -136,7 +136,7 @@ export class StructureFactory {
     }
 
     getTypeFromDefinitionAndTypeArguments(definition: definitions.NamedDefinition, typeArguments: string[]) {
-        let text = definition.name || "";
+        let text = definition.name || "any";
 
         if (typeArguments.length > 0) {
             text += `<${typeArguments.join(", ")}>`;

@@ -41,7 +41,7 @@ describe("InterfaceDefinition", () => {
                 assert.equal(returnedDef, i.extendsTypes[0]);
             });
 
-            it("should have two extends expressions", () => {
+            it("should have the correct number of extends expressions", () => {
                 assert.equal(i.extendsTypes.length, 2);
             });
 

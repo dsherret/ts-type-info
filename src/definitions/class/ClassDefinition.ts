@@ -66,9 +66,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addExtends(text: string): TypeDefinition;
     addExtends(textOrDefinition: string | ClassDefinition, typeArguments: string[] = []) {
         const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
-        if (def != null) {
-            this.extendsTypes.push(def);
-        }
+        this.extendsTypes.push(def);
         return def;
     }
 
@@ -76,9 +74,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addImplements(text: string): TypeDefinition;
     addImplements(textOrDefinition: string | InterfaceDefinition | ClassDefinition, typeArguments: string[] = []) {
         const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
-        if (def != null) {
-            this.implementsTypes.push(def);
-        }
+        this.implementsTypes.push(def);
         return def;
     }
 

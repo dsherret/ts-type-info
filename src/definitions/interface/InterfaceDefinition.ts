@@ -34,9 +34,7 @@ export class InterfaceDefinition extends BaseDefinition
     addExtends(text: string): TypeDefinition;
     addExtends(textOrDefinition: string | ClassDefinition | InterfaceDefinition, typeArguments: string[] = []) {
         const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
-        if (def != null) {
-            this.extendsTypes.push(def);
-        }
+        this.extendsTypes.push(def);
         return def;
     }
 

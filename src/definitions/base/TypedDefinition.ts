@@ -9,9 +9,7 @@ export abstract class TypedDefinition {
     setType(text: string): TypeDefinition;
     setType(textOrDefinition: string | NamedDefinition, typeArguments: string[] = []) {
         const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
-        if (def != null) {
-            this.type = def;
-        }
+        this.type = def;
         return this as any;
     }
 }

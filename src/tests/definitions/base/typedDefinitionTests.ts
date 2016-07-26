@@ -4,6 +4,20 @@ import {runTypedDefinitionTests} from "./../../testHelpers";
 
 describe("TypedDefinition", () => {
     describe("setType", () => {
+        describe("as null", () => {
+            const v = new VariableDefinition();
+            v.setType(null);
+
+            runTypedDefinitionTests(v, { type: { text: "any" } });
+        });
+
+        describe("as object with null name", () => {
+            const v = new VariableDefinition();
+            v.setType({ name: null });
+
+            runTypedDefinitionTests(v, { type: { text: "any" } });
+        });
+
         describe("with text", () => {
             const v = new VariableDefinition();
             v.setType("string");

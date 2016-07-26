@@ -9,6 +9,9 @@ export class DefinitionUtils {
         if (typeof textOrDefinition === "string") {
             def = structureFactory.getTypeFromText(textOrDefinition);
         }
+        else if (textOrDefinition == null) {
+            def = structureFactory.getTypeFromText("any");
+        }
         else if (textOrDefinition != null) {
             def = structureFactory.getTypeFromDefinitionAndTypeArguments(textOrDefinition, typeArguments);
         }
