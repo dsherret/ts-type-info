@@ -8,7 +8,7 @@ import {renameInFile} from "./renameInFile";
 import {renameImportsInFile} from "./renameImportsInFile";
 import {renameReExportsInFile} from "./renameReExportsInFile";
 
-export function renameInGlobal(opts: { exportedRenameInfos: RenameInfo[]; exportedFile: FileDefinition; globalDef: GlobalDefinition; }) {
+export function renameInGlobalForExternalModules(opts: { exportedRenameInfos: RenameInfo[]; exportedFile: FileDefinition; globalDef: GlobalDefinition; }) {
     const {exportedRenameInfos, exportedFile, globalDef} = opts;
 
     globalDef.files.filter(f => f !== exportedFile).forEach(f => {
@@ -40,7 +40,11 @@ export function renameInGlobal(opts: { exportedRenameInfos: RenameInfo[]; export
         renameInFile(importedRenameInfos, f);
 
         if (newExportedRenameInfos.length > 0) {
-            renameInGlobal({ exportedRenameInfos: newExportedRenameInfos, exportedFile: f, globalDef });
+            renameInGlobalForExternalModules({
+                exportedRenameInfos: newExportedRenameInfos,
+                exportedFile: f,
+                globalDef
+            });
         }
     });
 }

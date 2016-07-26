@@ -16,6 +16,62 @@ describe("GlobalDefinition", () => {
                 assert.equal(file.write(), originalCode);
             });
         });
+
+        describe("renaming for internal modules", () => {
+            const globalDef = new GlobalDefinition();
+            globalDef.addFile({
+                namespaces: [{
+                    name: "MyNamespace",
+                    variables: [{
+                        name: "c",
+                        defaultExpression: "MyClass"
+                    }],
+                    classes: [{
+                        name: "MyClass"
+                    }]
+                }],
+                variables: [{
+                    name: "d",
+                    defaultExpression: "MyNamespace.MyClass"
+                }]
+            });
+            globalDef.addFile({
+                variables: [{
+                    name: "a",
+                    type: "typeof MyNamespace",
+                    defaultExpression: "MyNamespace"
+                }]
+            });
+            globalDef.addFile({
+                variables: [{
+                    name: "b",
+                    defaultExpression: "a.MyClass"
+                }]
+            });
+            globalDef.renameDefinitionAs(globalDef.files[0].namespaces[0].classes[0], "MyNewName");
+
+            it("should have the correct code in the main file", () => {
+                const expectedCode =
+`namespace MyNamespace {
+    class MyNewName {
+    }
+
+    let c = MyNewName;
+}
+
+let d = MyNamespace.MyNewName;
+`;
+                assert.equal(globalDef.files[0].write(), expectedCode);
+            });
+
+            it("should have the correct code in the other file", () => {
+                const expectedCode =
+`let b = a.MyNewName;
+`;
+                assert.equal(globalDef.files[2].write(), expectedCode);
+            });
+        });
+
         describe("renaming without imports", () => {
             const code =
 `namespace MyNamespace {

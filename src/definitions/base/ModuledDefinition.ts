@@ -142,7 +142,7 @@ export abstract class ModuledDefinition {
     }
 
     getExports(): ExportableDefinitions[] {
-        return this.getMembers().filter(d => d.isExported && !d.isDefaultExportOfFile);
+        return this.getMembers().filter(d => d.isNamedExportOfFile || d.isExported && !d.isDefaultExportOfFile);
     }
 
     getMembers(): ModuleMemberDefinitions[] {
