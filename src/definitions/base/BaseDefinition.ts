@@ -1,14 +1,15 @@
 ﻿import CodeBlockWriter from "code-block-writer";
 import {ExportableDefinitions, ExportableDefinition} from "./../../definitions";
-import {ClassDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
+import {ClassDefinition, ClassMethodDefinition, ClassMethodParameterDefinition, ClassPropertyDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition,
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
-import {InterfaceDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./../interface";
-import {FileDefinition, ImportDefinition, ReExportDefinition} from "./../File";
+import {InterfaceDefinition, InterfaceMethodDefinition, InterfaceMethodParameterDefinition, InterfacePropertyDefinition} from "./../interface";
+import {FileDefinition, ImportDefinition, ReExportDefinition, NamedImportPartDefinition, StarImportPartDefinition, DefaultImportPartDefinition} from "./../file";
 import {ExpressionDefinition, TypeDefinition} from "./../expression";
-import {FunctionDefinition} from "./../function";
+import {FunctionDefinition, FunctionParameterDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
-import {EnumDefinition} from "./../enum";
-import {CallSignatureDefinition, TypeAliasDefinition} from "./../general";
+import {EnumDefinition, EnumMemberDefinition} from "./../enum";
+import {CallSignatureDefinition, CallSignatureParameterDefinition, TypeAliasDefinition, DecoratorDefinition, TypeParameterDefinition, TypePropertyDefinition,
+    UserDefinedTypeGuardDefinition, IndexSignatureDefinition, ObjectPropertyDefinition} from "./../general";
 import {VariableDefinition} from "./../variable";
 import {DefinitionType} from "./DefinitionType";
 
@@ -33,28 +34,35 @@ export abstract class BaseDefinition {
     onBeforeWrite: (writer: CodeBlockWriter) => void;
     onAfterWrite: (writer: CodeBlockWriter) => void;
 
-    isCallSignatureDefinition(): this is CallSignatureDefinition {
-        return this._definitionType === DefinitionType.CallSignature;
+    // IMPORTANT: The reason DefinitionType exists is because it's a workaround to avoid circular dependencies of instanceof.
+    //            I'm not sure if there's a better way of doing this.
+
+    isFileDefinition(): this is FileDefinition {
+        return this._definitionType === DefinitionType.File;
+    }
+
+    isImportDefinition(): this is ImportDefinition {
+        return this._definitionType === DefinitionType.Import;
+    }
+
+    isReExportDefinition(): this is ReExportDefinition {
+        return this._definitionType === DefinitionType.ReExport;
+    }
+
+    isNamedImportPartDefinition(): this is NamedImportPartDefinition {
+        return this._definitionType === DefinitionType.NamedImportPart;
+    }
+
+    isStarImportPartDefinition(): this is StarImportPartDefinition {
+        return this._definitionType === DefinitionType.StarImportPart;
+    }
+
+    isDefaultImportPartDefinition(): this is DefaultImportPartDefinition {
+        return this._definitionType === DefinitionType.DefaultImportPart;
     }
 
     isClassDefinition(): this is ClassDefinition {
         return this._definitionType === DefinitionType.Class;
-    }
-
-    isClassMethodDefinition(): this is ClassMethodDefinition {
-        return this._definitionType === DefinitionType.ClassMethod;
-    }
-
-    isClassPropertyDefinition(): this is ClassPropertyDefinition {
-        return this._definitionType === DefinitionType.ClassProperty;
-    }
-
-    isClassStaticMethodDefinition(): this is ClassStaticMethodDefinition {
-        return this._definitionType === DefinitionType.ClassStaticMethod;
-    }
-
-    isClassStaticPropertyDefinition(): this is ClassStaticPropertyDefinition {
-        return this._definitionType === DefinitionType.ClassStaticProperty;
     }
 
     isClassConstructorDefinition(): this is ClassConstructorDefinition {
@@ -65,28 +73,24 @@ export abstract class BaseDefinition {
         return this._definitionType === DefinitionType.ClassConstructorParameter;
     }
 
-    isEnumDefinition(): this is EnumDefinition {
-        return this._definitionType === DefinitionType.Enum;
+    isClassMethodDefinition(): this is ClassMethodDefinition {
+        return this._definitionType === DefinitionType.ClassMethod;
     }
 
-    isExportableDefinition(): this is ExportableDefinitions {
-        return typeof (this as any as ExportableDefinition).isExported === "boolean";
+    isClassMethodParameterDefinition(): this is ClassMethodParameterDefinition {
+        return this._definitionType === DefinitionType.ClassMethodParameter;
     }
 
-    isExpressionDefinition(): this is ExpressionDefinition {
-        return this._definitionType === DefinitionType.Expression;
+    isClassStaticMethodDefinition(): this is ClassStaticMethodDefinition {
+        return this._definitionType === DefinitionType.ClassStaticMethod;
     }
 
-    isFunctionDefinition(): this is FunctionDefinition {
-        return this._definitionType === DefinitionType.Function;
+    isClassPropertyDefinition(): this is ClassPropertyDefinition {
+        return this._definitionType === DefinitionType.ClassProperty;
     }
 
-    isFileDefinition(): this is FileDefinition {
-        return this._definitionType === DefinitionType.File;
-    }
-
-    isImportDefinition(): this is ImportDefinition {
-        return this._definitionType === DefinitionType.Import;
+    isClassStaticPropertyDefinition(): this is ClassStaticPropertyDefinition {
+        return this._definitionType === DefinitionType.ClassStaticProperty;
     }
 
     isInterfaceDefinition(): this is InterfaceDefinition {
@@ -97,6 +101,10 @@ export abstract class BaseDefinition {
         return this._definitionType === DefinitionType.InterfaceMethod;
     }
 
+    isInterfaceMethodParameterDefinition(): this is InterfaceMethodParameterDefinition {
+        return this._definitionType === DefinitionType.InterfaceMethodParameter;
+    }
+
     isInterfacePropertyDefinition(): this is InterfacePropertyDefinition {
         return this._definitionType === DefinitionType.InterfaceProperty;
     }
@@ -105,19 +113,71 @@ export abstract class BaseDefinition {
         return this._definitionType === DefinitionType.Namespace;
     }
 
-    isReExportDefinition(): this is ReExportDefinition {
-        return this._definitionType === DefinitionType.ReExport;
+    isFunctionDefinition(): this is FunctionDefinition {
+        return this._definitionType === DefinitionType.Function;
     }
 
-    isTypeDefinition(): this is TypeDefinition {
-        return this._definitionType === DefinitionType.Type;
+    isFunctionParameterDefinition(): this is FunctionParameterDefinition {
+        return this._definitionType === DefinitionType.FunctionParameter;
+    }
+
+    isVariableDefinition(): this is VariableDefinition {
+        return this._definitionType === DefinitionType.Variable;
+    }
+
+    isEnumDefinition(): this is EnumDefinition {
+        return this._definitionType === DefinitionType.Enum;
+    }
+
+    isEnumMemberDefinition(): this is EnumMemberDefinition {
+        return this._definitionType === DefinitionType.EnumMember;
+    }
+
+    isCallSignatureDefinition(): this is CallSignatureDefinition {
+        return this._definitionType === DefinitionType.CallSignature;
+    }
+
+    isCallSignatureParameterDefinition(): this is CallSignatureParameterDefinition {
+        return this._definitionType === DefinitionType.CallSignatureParameter;
+    }
+
+    isDecoratorDefinition(): this is DecoratorDefinition {
+        return this._definitionType === DefinitionType.Decorator;
     }
 
     isTypeAliasDefinition(): this is TypeAliasDefinition {
         return this._definitionType === DefinitionType.TypeAlias;
     }
 
-    isVariableDefinition(): this is VariableDefinition {
-        return this._definitionType === DefinitionType.Variable;
+    isTypeParameterDefinition(): this is TypeParameterDefinition {
+        return this._definitionType === DefinitionType.TypeParameter;
+    }
+
+    isTypePropertyDefinition(): this is TypePropertyDefinition {
+        return this._definitionType === DefinitionType.TypeProperty;
+    }
+
+    isExpressionDefinition(): this is ExpressionDefinition {
+        return this._definitionType === DefinitionType.Expression;
+    }
+
+    isIndexSignatureDefinition(): this is IndexSignatureDefinition {
+        return this._definitionType === DefinitionType.IndexSignature;
+    }
+
+    isUserDefinedTypeGuardDefinition(): this is UserDefinedTypeGuardDefinition {
+        return this._definitionType === DefinitionType.UserDefinedTypeGuard;
+    }
+
+    isObjectPropertyDefinition(): this is ObjectPropertyDefinition {
+        return this._definitionType === DefinitionType.ObjectPropertyDefinition;
+    }
+
+    isTypeDefinition(): this is TypeDefinition {
+        return this._definitionType === DefinitionType.Type;
+    }
+
+    isExportableDefinition(): this is ExportableDefinitions {
+        return typeof (this as any as ExportableDefinition).isExported === "boolean";
     }
 }
