@@ -32,36 +32,51 @@ export abstract class BaseDefinition {
 
     private _definitionType: DefinitionType;
 
-    isCallSignatureDefinition(): this is CallSignatureDefinition;
-    isClassDefinition(): this is ClassDefinition;
-    isClassMethodDefinition(): this is ClassMethodDefinition;
-    isClassPropertyDefinition(): this is ClassPropertyDefinition;
-    isClassStaticMethodDefinition(): this is ClassStaticMethodDefinition;
-    isClassStaticPropertyDefinition(): this is ClassStaticPropertyDefinition;
-    isClassConstructorDefinition(): this is ClassConstructorDefinition;
-    isClassConstructorParameterDefinition(): this is ClassConstructorParameterDefinition;
-    isEnumDefinition(): this is EnumDefinition;
-    isExportableDefinition(): this is ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
-    isExpressionDefinition(): this is ExpressionDefinition;
-    isFunctionDefinition(): this is FunctionDefinition;
     isFileDefinition(): this is FileDefinition;
     isImportDefinition(): this is ImportDefinition;
+    isReExportDefinition(): this is ReExportDefinition;
+    isNamedImportPartDefinition(): this is NamedImportPartDefinition;
+    isStarImportPartDefinition(): this is StarImportPartDefinition;
+    isDefaultImportPartDefinition(): this is DefaultImportPartDefinition;
+    isClassDefinition(): this is ClassDefinition;
+    isClassConstructorDefinition(): this is ClassConstructorDefinition;
+    isClassConstructorParameterDefinition(): this is ClassConstructorParameterDefinition;
+    isClassMethodDefinition(): this is ClassMethodDefinition;
+    isClassMethodParameterDefinition(): this is ClassMethodParameterDefinition;
+    isClassStaticMethodDefinition(): this is ClassStaticMethodDefinition;
+    isClassPropertyDefinition(): this is ClassPropertyDefinition;
+    isClassStaticPropertyDefinition(): this is ClassStaticPropertyDefinition;
     isInterfaceDefinition(): this is InterfaceDefinition;
     isInterfaceMethodDefinition(): this is InterfaceMethodDefinition;
+    isInterfaceMethodParameterDefinition(): this is InterfaceMethodParameterDefinition;
     isInterfacePropertyDefinition(): this is InterfacePropertyDefinition;
     isNamespaceDefinition(): this is NamespaceDefinition;
-    isReExportDefinition(): this is ReExportDefinition;
-    isTypeDefinition(): this is TypeDefinition;
-    isTypeAliasDefinition(): this is TypeAliasDefinition;
+    isFunctionDefinition(): this is FunctionDefinition;
+    isFunctionParameterDefinition(): this is FunctionParameterDefinition;
     isVariableDefinition(): this is VariableDefinition;
+    isEnumDefinition(): this is EnumDefinition;
+    isEnumMemberDefinition(): this is EnumMemberDefinition;
+    isCallSignatureDefinition(): this is CallSignatureDefinition;
+    isCallSignatureParameterDefinition(): this is CallSignatureParameterDefinition;
+    isDecoratorDefinition(): this is DecoratorDefinition;
+    isTypeAliasDefinition(): this is TypeAliasDefinition;
+    isTypeParameterDefinition(): this is TypeParameterDefinition;
+    isTypePropertyDefinition(): this is TypePropertyDefinition;
+    isExpressionDefinition(): this is ExpressionDefinition;
+    isIndexSignatureDefinition(): this is IndexSignatureDefinition;
+    isUserDefinedTypeGuardDefinition(): this is UserDefinedTypeGuardDefinition;
+    isObjectPropertyDefinition(): this is ObjectPropertyDefinition;
+    isTypeDefinition(): this is TypeDefinition;
+    isExportableDefinition(): this is ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
 }
 
 export const enum DefinitionType {
     File = 1,
     Import = 2,
     ReExport = 3,
-    ImportPart = 4,
-    ReExportPart = 5,
+    NamedImportPart = 6,
+    StarImportPart = 7,
+    DefaultImportPart = 8,
     Class = 100,
     ClassConstructor = 101,
     ClassConstructorParameter = 102,
@@ -697,49 +712,55 @@ export class ImportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
     starImportName: string;
-    defaultImport: ImportPartDefinition;
-    namedImports: ImportPartDefinition[];
-    starImports: ImportPartDefinition[];
+    defaultImport: DefaultImportPartDefinition;
+    namedImports: NamedImportPartDefinition[];
+    starImports: StarImportPartDefinition[];
 
     constructor();
 
-    addNamedImport(structure: NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions): ImportPartDefinition;
-    getNamedImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
-    getStarImport(searchFunction: (importPart: ImportPartDefinition) => boolean): ImportPartDefinition;
+    addNamedImport(structure: NamedImportPartStructure): NamedImportPartDefinition;
+    getNamedImport(searchFunction: (importPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition;
+    getStarImport(searchFunction: (importPart: StarImportPartDefinition) => boolean): StarImportPartDefinition;
     setDefaultImport(importName: string): this;
     write(writeOptions?: WriteOptions): string;
-}
-
-export abstract class BaseImportPartDefinition extends BaseDefinition {
-    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    expression: ExpressionDefinition;
-
-    constructor(definitionType: DefinitionType);
-}
-
-export class ImportPartDefinition extends BaseImportPartDefinition {
-    importName: string;
-
-    constructor();
 }
 
 export class ReExportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
-    starExports: ReExportPartDefinition[];
-    namedExports: ReExportPartDefinition[];
+    starExports: StarImportPartDefinition[];
+    namedExports: NamedImportPartDefinition[];
 
     constructor();
 
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    addNamedExport(structure: NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions): ReExportPartDefinition;
-    getNamedExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
-    getStarExport(searchFunction: (exportPart: ReExportPartDefinition) => boolean): ReExportPartDefinition;
+    addNamedExport(structure: NamedImportPartStructure): NamedImportPartDefinition;
+    getNamedExport(searchFunction: (exportPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition;
+    getStarExport(searchFunction: (exportPart: StarImportPartDefinition) => boolean): StarImportPartDefinition;
     write(writeOptions?: WriteOptions): string;
 }
 
-export class ReExportPartDefinition extends BaseImportPartDefinition {
-    exportName: string;
+export class NamedImportPartDefinition extends BaseDefinition {
+    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    expression: ExpressionDefinition;
+    alias: string;
+    name: string;
+
+    constructor();
+}
+
+export class StarImportPartDefinition extends BaseDefinition {
+    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    expression: ExpressionDefinition;
+    name: string;
+
+    constructor();
+}
+
+export class DefaultImportPartDefinition extends BaseDefinition {
+    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    expression: ExpressionDefinition;
+    name: string;
 
     constructor();
 }
@@ -1012,33 +1033,21 @@ export interface FileStructure extends BaseStructure, ModuledStructure {
     defaultExportExpression?: string;
 }
 
-export interface NamedImportStructureWithName {
+export interface NamedImportPartStructure {
     name: string;
     alias?: string;
 }
-
-export interface NamedImportStructureWithDefinition {
-    definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
-    alias?: string;
-}
-
-export interface NamedImportStructureWithDefinitions {
-    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    alias?: string;
-}
-
-export type NamedImportStructureTypes = NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions;
 
 export interface ImportStructure extends BaseStructure {
     moduleSpecifier: string;
     starImportName?: string;
     defaultImportName?: string;
-    namedImports?: (NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions)[];
+    namedImports?: NamedImportPartStructure[];
 }
 
 export interface ReExportStructure extends BaseStructure {
     moduleSpecifier: string;
-    namedExports?: (NamedImportStructureWithName | NamedImportStructureWithDefinition | NamedImportStructureWithDefinitions)[];
+    namedExports?: NamedImportPartStructure[];
 }
 
 export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, AmbientableStructure, AsyncableStructure, ExportableStructure, FunctionBodyWriteableStructure {
