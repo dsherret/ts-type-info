@@ -134,10 +134,6 @@ describe("file re-export tests", () => {
         }, {
             name: "SingleNamedExportA"
         }, {
-            name: "SingleNamedExportA"
-        }, {
-            name: "SingleNamedExportA"
-        }, {
             name: "SingleNamedExportB"
         }]
     });

@@ -67,7 +67,13 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
 
     getExports(): ExportableDefinitions[] {
         const exports = ModuledDefinition.prototype.getExports.call(this) as ExportableDefinitions[];
-        this.reExports.forEach(reExport => exports.push(...reExport.getExports()));
+        this.reExports.forEach(reExport => {
+            reExport.getExports().forEach(def => {
+                if (exports.indexOf(def) === -1) {
+                    exports.push(def);
+                }
+            });
+        });
         return exports;
     }
 
