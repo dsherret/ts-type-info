@@ -10,4 +10,5 @@ export interface CompilerOptions {
     locale?: string;
     project?: string;
     rootDir?: string;
+    strictNullChecks?: boolean;
 }
