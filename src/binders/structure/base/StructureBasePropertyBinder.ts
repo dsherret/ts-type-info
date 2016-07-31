@@ -7,7 +7,7 @@ import {StructureTypedBinder} from "./StructureTypedBinder";
 import {StructureBaseDefinitionBinder} from "./StructureBaseDefinitionBinder";
 
 export class StructureBasePropertyBinder extends BasePropertyBinder {
-    constructor(private factory: StructureFactory, private structure: BasePropertyStructure) {
+    constructor(factory: StructureFactory, structure: BasePropertyStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),

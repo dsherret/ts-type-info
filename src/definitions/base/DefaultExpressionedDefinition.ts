@@ -2,7 +2,7 @@
 import {ExpressionDefinition} from "./../expression";
 
 export abstract class DefaultExpressionedDefinition {
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
 
     setDefaultExpression(text: string) {
         this.defaultExpression = new StructureFactory().getTypeFromText(text);

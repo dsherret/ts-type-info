@@ -3,6 +3,7 @@ import {ObjectPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {TypeDefinition, ExpressionDefinition} from "./../expression";
 import {ObjectPropertyDefinition} from "./../general/ObjectPropertyDefinition";
+import {OptionallyNamedDefinition} from "./OptionallyNamedDefinition";
 import {NamedDefinition} from "./NamedDefinition";
 import {OptionalDefinition} from "./OptionalDefinition";
 import {TypedDefinition} from "./TypedDefinition";
@@ -14,7 +15,7 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
+export abstract class BaseParameterDefinition extends BaseDefinition implements OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[] = [];
 
@@ -32,16 +33,16 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.destructuringProperties, nameOrSearchFunction);
     }
 
-    // NamedDefinition
-    name: string;
+    // OptionallyNamedDefinition
+    name: string | null;
     // OptionalDefinition
     isOptional: boolean;
     // TypedDefinition
     type: TypeDefinition;
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
     // DefaultExpressionedDefinition
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
     setDefaultExpression: (text: string) => any;
 }
 
-applyMixins(BaseParameterDefinition, BaseDefinition, [NamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition]);
+applyMixins(BaseParameterDefinition, BaseDefinition, [OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition]);

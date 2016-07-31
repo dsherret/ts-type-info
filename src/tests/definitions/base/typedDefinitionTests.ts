@@ -6,14 +6,14 @@ describe("TypedDefinition", () => {
     describe("setType", () => {
         describe("as null", () => {
             const v = new VariableDefinition();
-            v.setType(null);
+            v.setType(null as any as string);
 
             runTypedDefinitionTests(v, { type: { text: "any" } });
         });
 
         describe("as object with null name", () => {
             const v = new VariableDefinition();
-            v.setType({ name: null });
+            v.setType({ name: null as any as string });
 
             runTypedDefinitionTests(v, { type: { text: "any" } });
         });

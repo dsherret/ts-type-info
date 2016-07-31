@@ -10,14 +10,14 @@ export class ExpressionWriter extends BaseWriter {
             !StringUtils.isNullOrWhiteSpace(def.defaultExpression.text));
     }
 
-    writeWithEqualsSign(def: ExpressionDefinition) {
+    writeWithEqualsSign(def: ExpressionDefinition | null) {
         if (def != null) {
             this.writer.write(" = ");
             this.write(def);
         }
     }
 
-    write(def: ExpressionDefinition) {
+    write(def: ExpressionDefinition | null) {
         if (def != null) {
             this.writer.write(def.text);
         }

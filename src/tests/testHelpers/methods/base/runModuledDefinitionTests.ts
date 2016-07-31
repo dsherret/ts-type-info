@@ -23,70 +23,70 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, struct
 
     describe("namespaces", () => {
         it("should have the expected number of namespaces", () => {
-            assert.equal(definition.namespaces.length, structure.namespaces.length);
+            assert.equal(definition.namespaces.length, structure.namespaces!.length);
         });
 
-        structure.namespaces.forEach((namespaceTestStructure, i) => {
+        structure.namespaces!.forEach((namespaceTestStructure, i) => {
             runNamespaceDefinitionTests(definition.namespaces[i], namespaceTestStructure);
         });
     });
 
     describe("classes", () => {
         it("should have the expected number of classes", () => {
-            assert.equal(definition.classes.length, structure.classes.length);
+            assert.equal(definition.classes.length, structure.classes!.length);
         });
 
-        structure.classes.forEach((classTestStructure, i) => {
+        structure.classes!.forEach((classTestStructure, i) => {
             runClassDefinitionTests(definition.classes[i], classTestStructure);
         });
     });
 
     describe("interfaces", () => {
         it("should have the expected number of interfaces", () => {
-            assert.equal(definition.interfaces.length, structure.interfaces.length);
+            assert.equal(definition.interfaces.length, structure.interfaces!.length);
         });
 
-        structure.interfaces.forEach((interfaceTestStructure, i) => {
+        structure.interfaces!.forEach((interfaceTestStructure, i) => {
             runInterfaceDefinitionTests(definition.interfaces[i], interfaceTestStructure);
         });
     });
 
     describe("functions", () => {
         it("should have the expected number of functions", () => {
-            assert.equal(definition.functions.length, structure.functions.length);
+            assert.equal(definition.functions.length, structure.functions!.length);
         });
 
-        structure.functions.forEach((functionTestStructure, i) => {
+        structure.functions!.forEach((functionTestStructure, i) => {
             runFunctionDefinitionTests(definition.functions[i], functionTestStructure);
         });
     });
 
     describe("enums", () => {
         it("should have the expected number of enums", () => {
-            assert.equal(definition.enums.length, structure.enums.length);
+            assert.equal(definition.enums.length, structure.enums!.length);
         });
 
-        structure.enums.forEach((enumTestStructure, i) => {
+        structure.enums!.forEach((enumTestStructure, i) => {
             runEnumDefinitionTests(definition.enums[i], enumTestStructure);
         });
     });
 
     describe("variables", () => {
         it("should have the expected number of variables", () => {
-            assert.equal(definition.variables.length, structure.variables.length);
+            assert.equal(definition.variables.length, structure.variables!.length);
         });
 
-        structure.variables.forEach((variableTestStructure, i) => {
+        structure.variables!.forEach((variableTestStructure, i) => {
             runVariableDefinitionTests(definition.variables[i], variableTestStructure);
         });
     });
 
     describe("typeAliases", () => {
         it("should have the expected number of type aliases", () => {
-            assert.equal(definition.typeAliases.length, structure.typeAliases.length);
+            assert.equal(definition.typeAliases.length, structure.typeAliases!.length);
         });
 
-        structure.typeAliases.forEach((typeAliasTestStructure, i) => {
+        structure.typeAliases!.forEach((typeAliasTestStructure, i) => {
             runTypeAliasDefinitionTests(definition.typeAliases[i], typeAliasTestStructure);
         });
     });
@@ -95,10 +95,10 @@ export function runModuledDefinitionTests(definition: ModuledDefinitions, struct
         const definitionExports = definition.getExports();
 
         it("should have the expected number of exports", () => {
-            assert.equal(definitionExports.length, structure.exports.length);
+            assert.equal(definitionExports.length, structure.exports!.length);
         });
 
-        structure.exports.forEach((exportTestStructure, i) => {
+        structure.exports!.forEach((exportTestStructure, i) => {
             // defaults
             exportTestStructure.isExported = exportTestStructure.isExported == null ? true : exportTestStructure.isExported;
             exportTestStructure.isNamedExportOfFile = exportTestStructure.isNamedExportOfFile == null ? false : exportTestStructure.isNamedExportOfFile;

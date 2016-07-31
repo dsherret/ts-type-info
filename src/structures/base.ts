@@ -1,5 +1,6 @@
 ﻿export * from "./base/BaseStructure";
 export * from "./base/NamedStructure";
+export * from "./base/OptionallyNamedStructure";
 export * from "./base/AbstractableStructure";
 export * from "./base/AmbientableStructure";
 export * from "./base/AsyncableStructure";

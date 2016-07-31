@@ -5,7 +5,7 @@ import {ensureNotNull} from "./../../ensureNotNull";
 import {runExpressionDefinitionTests} from "./../expression";
 import {runBaseDefinitionTests} from "./../base";
 
-export function runNamedImportPartDefinitionTests(definition: NamedImportPartDefinition, structure: NamedImportPartTestStructure) {
+export function runNamedImportPartDefinitionTests(definition: NamedImportPartDefinition, structure: NamedImportPartTestStructure | undefined) {
     if (structure == null) {
         it(`should be null`, () => {
             assert.equal(definition, null);
@@ -13,24 +13,24 @@ export function runNamedImportPartDefinitionTests(definition: NamedImportPartDef
     }
     else {
         ensureNotNull(definition, () => {
-            structure.definitions = structure.definitions || [];
+            structure!.definitions = structure!.definitions || [];
 
-            it(`should have name ${structure.name}`, () => {
-                assert.equal(definition.name, structure.name);
+            it(`should have name ${structure!.name}`, () => {
+                assert.equal(definition.name, structure!.name);
             });
 
-            it(`should have alias ${structure.alias}`, () => {
-                assert.equal(definition.alias, structure.alias);
+            it(`should have alias ${structure!.alias}`, () => {
+                assert.equal(definition.alias, structure!.alias);
             });
 
-            runBaseDefinitionTests(definition, structure);
+            runBaseDefinitionTests(definition, structure!);
 
             describe("definitions", () => {
                 it(`should have the expected number of definitions`, () => {
-                    assert.equal(definition.definitions.length, structure.definitions.length);
+                    assert.equal(definition.definitions.length, structure!.definitions!.length);
                 });
 
-                structure.definitions.forEach((structureDefinition, j) => {
+                structure!.definitions!.forEach((structureDefinition, j) => {
                     const definitionDefinition = definition.definitions[j];
 
                     ensureNotNull(definitionDefinition, () => {
@@ -48,7 +48,7 @@ export function runNamedImportPartDefinitionTests(definition: NamedImportPartDef
             });
 
             describe("expression", () => {
-                runExpressionDefinitionTests(definition.expression, structure.expression);
+                runExpressionDefinitionTests(definition.expression, structure!.expression);
             });
         });
     }

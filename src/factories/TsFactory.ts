@@ -86,7 +86,7 @@ export class TsFactory {
         return def;
     }
 
-    getStarImportPart(obj: { name: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; }) {
+    getStarImportPart(obj: { name: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition | null; }) {
         const def = new definitions.StarImportPartDefinition();
         def.name = obj.name;
         def.definitions.push(...obj.definitions);
@@ -107,10 +107,6 @@ export class TsFactory {
     }
 
     getType(type: TsType) {
-        if (type == null) {
-            return null;
-        }
-
         const definition = bindToDefinition(new binders.TsTypeBinder(this, type), new definitions.TypeDefinition());
         this.createdTypesWithDefinition.push({
             type,
@@ -124,7 +120,7 @@ export class TsFactory {
     }
 
     getAllExportableDefinitionsBySymbol(symbol: TsSymbol) {
-        symbol = symbol.isAlias() ? symbol.getAliasSymbol() : symbol;
+        symbol = symbol.isAlias() ? symbol.getAliasSymbol()! : symbol;
         const definitions = this.getAllDefinitionsBySymbol(symbol);
         const exportableDefinitions: definitions.ExportableDefinitions[] = [];
 
@@ -147,7 +143,7 @@ export class TsFactory {
     }
 
     getAllDefinitionsBySymbol(symbol: TsSymbol) {
-        return symbol.getNodes().map(node => this.getDefinitionByNode(node)).filter(d => d != null);
+        return symbol.getNodes().map(node => this.getDefinitionByNode(node)!).filter(d => d != null);
     }
 
     getDefinitionByNode(node: TsNode) {
@@ -166,21 +162,21 @@ export class TsFactory {
     }
 
     getDefinitionsOrExpressionFromExportSymbol(symbol: TsSymbol) {
-        const obj: { definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition; } = { definitions: [], expression: null };
+        const obj: { definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition | null; } = { definitions: [], expression: null };
 
         if (symbol != null) {
             if (symbol.isAlias()) {
-                symbol = symbol.getAliasSymbol();
+                symbol = symbol.getAliasSymbol()!;
             }
 
             const expression = this.getExpressionFromExportSymbol(symbol);
 
             if (expression != null) {
                 obj.expression = expression;
-                return obj;
             }
-
-            obj.definitions.push(...this.getAllDefinitionsBySymbol(symbol) as definitions.ExportableDefinitions[]);
+            else {
+                obj.definitions.push(...this.getAllDefinitionsBySymbol(symbol) as definitions.ExportableDefinitions[]);
+            }
         }
 
         return obj;
@@ -222,7 +218,7 @@ export class TsFactory {
     }
 
     private createDefinition(node: TsNode) {
-        let definition: definitions.NodeDefinitions;
+        let definition: definitions.NodeDefinitions | null = null;
 
         // todo: all these if statements are very similar. Need to reduce the redundancy
         if (node.isFunction()) {

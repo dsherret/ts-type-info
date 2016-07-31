@@ -39,7 +39,7 @@
     }
 
     getFirstXNamespacesFromFullName(numberNamespaces: number) {
-        return this.getFullNameParts().filter((n, i) => i < numberNamespaces).join(".");
+        return this.getFullNameParts().slice(0, numberNamespaces).join(".");
     }
 
     getFullNameParts() {
@@ -59,8 +59,8 @@
 
     createWithoutFirstXNamespaces(numNamespaces: number) {
         return new RenameInfo({
-            fullNameFrom: this.fullNameFrom.split(".").filter((n, i) => i >= numNamespaces).join("."),
-            fullNameTo: this.fullNameTo.split(".").filter((n, i) => i >= numNamespaces).join(".")
+            fullNameFrom: this.fullNameFrom.split(".").slice(numNamespaces).join("."),
+            fullNameTo: this.fullNameTo.split(".").slice(numNamespaces).join(".")
         });
     }
 

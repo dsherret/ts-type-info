@@ -5,7 +5,7 @@ import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
 import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
 
 export class TypeDefinition extends BaseExpressionDefinition {
-    arrayElementType: TypeDefinition = null;
+    arrayElementType: TypeDefinition | null = null;
     intersectionTypes: TypeDefinition[] = [];
     unionTypes: TypeDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];

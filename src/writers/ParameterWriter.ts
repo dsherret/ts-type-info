@@ -8,7 +8,7 @@ export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> 
 
     protected writeDefault(param: ParameterDefinitions, flags: WriteFlags) {
         this.writeRestParameter(param);
-        this.writer.write(param.name);
+        this.writer.write(param.name!);
         this.writeIsOptional(param, flags);
         this.typeWithDefaultExpressionWriter.write(param, flags);
     }

@@ -1,32 +1,32 @@
 import CodeBlockWriter from "code-block-writer";
 
-export function getInfoFromFiles(fileNames: string[], options?: Options): GlobalDefinition;
+export function getInfoFromFiles(fileNames: string[], options?: Options | undefined): GlobalDefinition;
 
-export function getInfoFromString(code: string, options?: Options): FileDefinition;
+export function getInfoFromString(code: string, options?: Options | undefined): FileDefinition;
 
 export interface Options {
-    compilerOptions?: CompilerOptions;
-    showDebugMessages?: boolean;
+    compilerOptions?: CompilerOptions | undefined;
+    showDebugMessages?: boolean | undefined;
 }
 
 export interface CompilerOptions {
-    [option: string]: string | number | boolean;
-    allowNonTsExtensions?: boolean;
-    charset?: string;
-    locale?: string;
-    project?: string;
-    rootDir?: string;
+    [option: string]: string | number | boolean | undefined;
+    allowJs?: boolean | undefined;
+    charset?: string | undefined;
+    locale?: string | undefined;
+    project?: string | undefined;
+    rootDir?: string | undefined;
 }
 
 export interface WriteOptions {
-    newLine?: string;
-    indentNumberOfSpaces?: number;
-    useTabs?: boolean;
+    newLine?: string | undefined;
+    indentNumberOfSpaces?: number | undefined;
+    useTabs?: boolean | undefined;
 }
 
 export abstract class BaseDefinition {
-    onBeforeWrite: (writer: CodeBlockWriter) => void;
-    onAfterWrite: (writer: CodeBlockWriter) => void;
+    onBeforeWrite: ((writer: CodeBlockWriter) => void) | null;
+    onAfterWrite: ((writer: CodeBlockWriter) => void) | null;
 
     constructor(_definitionType: DefinitionType);
 
@@ -110,11 +110,15 @@ export const enum DefinitionType {
 }
 
 export class FunctionBodyWriteableDefinition {
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
 }
 
 export abstract class NamedDefinition {
     name: string;
+}
+
+export abstract class OptionallyNamedDefinition {
+    name: string | null;
 }
 
 export abstract class OrderableDefinition {
@@ -141,12 +145,12 @@ export abstract class AsyncableDefinition {
 export abstract class TypedDefinition {
     type: TypeDefinition;
 
-    setType(definition: NamedDefinition, typeArguments?: string[]): TypeDefinition;
+    setType(definition: NamedDefinition, typeArguments?: string[] | undefined): TypeDefinition;
     setType(text: string): TypeDefinition;
 }
 
 export abstract class DefaultExpressionedDefinition {
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
 
     setDefaultExpression(text: string): any;
 }
@@ -155,7 +159,7 @@ export abstract class DecoratableDefinition {
     decorators: DecoratorDefinition[];
 
     addDecorator(structure: DecoratorStructure): DecoratorDefinition;
-    getDecorator(nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)): DecoratorDefinition;
+    getDecorator(nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)): DecoratorDefinition | null;
 }
 
 export abstract class ExportableDefinition {
@@ -180,15 +184,15 @@ export abstract class ModuledDefinition {
     addNamespace(structure: NamespaceStructure): NamespaceDefinition;
     addTypeAlias(structure: TypeAliasStructure): TypeAliasDefinition;
     addVariable(structure: VariableStructure): VariableDefinition;
-    getClass(nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)): ClassDefinition;
-    getEnum(nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)): EnumDefinition;
-    getFunction(nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)): FunctionDefinition;
-    getInterface(nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)): InterfaceDefinition;
-    getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)): NamespaceDefinition;
-    getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)): TypeAliasDefinition;
-    getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)): VariableDefinition;
+    getClass(nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)): ClassDefinition | null;
+    getEnum(nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)): EnumDefinition | null;
+    getFunction(nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)): FunctionDefinition | null;
+    getInterface(nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)): InterfaceDefinition | null;
+    getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)): NamespaceDefinition | null;
+    getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)): TypeAliasDefinition | null;
+    getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)): VariableDefinition | null;
     directlyContains(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): boolean;
-    getNamespacesToDefinition(searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): NamespaceDefinition[];
+    getNamespacesToDefinition(searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): NamespaceDefinition[] | null;
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     getMembers(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     setOrderOfMember(order: number, member: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): this;
@@ -209,11 +213,11 @@ export abstract class TypeParameteredDefinition {
     typeParameters: TypeParameterDefinition[];
 
     addTypeParameter(structure: TypeParameterStructure): TypeParameterDefinition;
-    getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)): TypeParameterDefinition;
+    getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)): TypeParameterDefinition | null;
 }
 
 export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
     setDefaultExpression: (text: string) => any;
 
     constructor(definitionType: DefinitionType);
@@ -222,7 +226,7 @@ export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinitio
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
     isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[];
-    userDefinedTypeGuard: UserDefinedTypeGuardDefinition;
+    userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
     name: string;
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
@@ -235,7 +239,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     constructor(definitionType: DefinitionType);
 
     addOverloadSignature(structure: CallSignatureStructure): CallSignatureDefinition;
-    getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean): CallSignatureDefinition;
+    getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
     abstract addParameter(structure: ParameterStructureType): ParameterType;
 }
 
@@ -243,19 +247,19 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export abstract class BaseParameterDefinition extends BaseDefinition implements NamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
+export abstract class BaseParameterDefinition extends BaseDefinition implements OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[];
-    name: string;
+    name: string | null;
     isOptional: boolean;
     type: TypeDefinition;
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
     setDefaultExpression: (text: string) => any;
 
     constructor(definitionType: DefinitionType);
 
     addDestructuringProperty(structure: ObjectPropertyStructure): ObjectPropertyDefinition;
-    getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): ObjectPropertyDefinition;
+    getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): ObjectPropertyDefinition | null;
     setType(definition: NamedDefinition, typeArguments?: string[]): any;
     setType(text: string): any;
 }
@@ -264,7 +268,7 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
     parameters: ParameterType[];
 
     abstract addParameter(structure: ParameterStructureType): ParameterType;
-    getParameter(nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)): ParameterType;
+    getParameter(nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)): ParameterType | null;
 }
 
 export abstract class ReturnTypedDefinition {
@@ -302,7 +306,7 @@ export class IndexSignatureDefinition extends BaseDefinition implements ReturnTy
 }
 
 export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition {
-    constraintType: TypeDefinition;
+    constraintType: TypeDefinition | null;
     name: string;
 
     constructor();
@@ -327,7 +331,7 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
 
     constructor();
 
-    write(writeOptions?: WriteOptions): string;
+    write(writeOptions?: WriteOptions | undefined): string;
     setType(definition: NamedDefinition, typeArguments?: string[]): any;
     setType(text: string): any;
 }
@@ -338,7 +342,7 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
 
     constructor();
 
-    addArgument(structure: string): TypeDefinition;
+    addArgument(text: string): TypeDefinition;
 }
 
 export class ObjectPropertyDefinition extends BaseObjectPropertyDefinition {
@@ -363,7 +367,7 @@ export class ExpressionDefinition extends BaseExpressionDefinition {
 }
 
 export class TypeDefinition extends BaseExpressionDefinition {
-    arrayElementType: TypeDefinition;
+    arrayElementType: TypeDefinition | null;
     intersectionTypes: TypeDefinition[];
     unionTypes: TypeDefinition[];
     callSignatures: CallSignatureDefinition[];
@@ -375,18 +379,18 @@ export class TypeDefinition extends BaseExpressionDefinition {
     constructor();
 
     getAllDefinitions(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition;
-    getUnionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition;
-    getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean): CallSignatureDefinition;
-    getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
-    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): TypePropertyDefinition;
-    getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): TypeDefinition;
+    getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition | null;
+    getUnionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition | null;
+    getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
+    getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition | null;
+    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): TypePropertyDefinition | null;
+    getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): TypeDefinition | null;
     isArray(): boolean;
 }
 
 export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition, OrderableDefinition {
     isAsync: boolean;
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
@@ -397,7 +401,7 @@ export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameter
     constructor();
 
     addParameter(structure: FunctionParameterStructure): FunctionParameterDefinition;
-    write(writeOptions?: WriteOptions): string;
+    write(writeOptions?: WriteOptions | undefined): string;
 }
 
 export class FunctionParameterDefinition extends BaseParameterDefinition {
@@ -415,7 +419,7 @@ export class BaseClassMethodParameterDefinition extends BaseParameterDefinition 
 
 export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements AsyncableDefinition, DecoratableDefinition, ScopedDefinition, FunctionBodyWriteableDefinition {
     isAsync: boolean;
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     decorators: DecoratorDefinition[];
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
@@ -464,20 +468,20 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 
     constructor();
 
-    write(writeOptions?: WriteOptions): string;
+    write(writeOptions?: WriteOptions | undefined): string;
     addMethod(structure: ClassMethodStructure): ClassMethodDefinition;
     addProperty(structure: ClassPropertyStructure): ClassPropertyDefinition;
     addStaticMethod(structure: ClassStaticMethodStructure): ClassStaticMethodDefinition;
     addStaticProperty(structure: ClassStaticPropertyStructure): ClassStaticPropertyDefinition;
-    addExtends(definition: ClassDefinition, typeArguments?: string[]): TypeDefinition;
+    addExtends(definition: ClassDefinition, typeArguments?: string[] | undefined): TypeDefinition;
     addExtends(text: string): TypeDefinition;
-    addImplements(definition: InterfaceDefinition | ClassDefinition, typeArguments?: string[]): TypeDefinition;
+    addImplements(definition: InterfaceDefinition | ClassDefinition, typeArguments?: string[] | undefined): TypeDefinition;
     addImplements(text: string): TypeDefinition;
     getPropertiesAndConstructorParameters(): (ClassConstructorParameterDefinition | ClassPropertyDefinition)[];
-    getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): ClassMethodDefinition;
-    getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition;
-    getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): ClassPropertyDefinition;
-    getStaticProperty(nameOrSearchFunction: string | ((staticProperty: ClassStaticPropertyDefinition) => boolean)): ClassStaticPropertyDefinition;
+    getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): ClassMethodDefinition | null;
+    getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition | null;
+    getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): ClassPropertyDefinition | null;
+    getStaticProperty(nameOrSearchFunction: string | ((staticProperty: ClassStaticPropertyDefinition) => boolean)): ClassStaticPropertyDefinition | null;
     setConstructor(structure: ClassConstructorStructure): this;
 }
 
@@ -497,14 +501,14 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isAccessor: boolean;
     isReadonly: boolean;
     isConstructorParameter: boolean;
-    onWriteGetBody: (writer: CodeBlockWriter) => void;
-    onWriteSetBody: (writer: CodeBlockWriter) => void;
+    onWriteGetBody: ((writer: CodeBlockWriter) => void) | null;
+    onWriteSetBody: ((writer: CodeBlockWriter) => void) | null;
 
     constructor();
 }
 
 export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition {
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
 
@@ -567,18 +571,18 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     constructor();
 
     addCallSignature(structure: CallSignatureStructure): CallSignatureDefinition;
-    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[]): TypeDefinition;
+    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[] | undefined): TypeDefinition;
     addExtends(text: string): TypeDefinition;
     addIndexSignature(structure: IndexSignatureStructure): IndexSignatureDefinition;
     addMethod(structure: InterfaceMethodStructure): InterfaceMethodDefinition;
     addNewSignature(structure: CallSignatureStructure): CallSignatureDefinition;
     addProperty(structure: InterfacePropertyStructure): InterfacePropertyDefinition;
-    getCallSignature(searchFunction: (callSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition;
-    getIndexSignature(searchFunction: (indexSignature: IndexSignatureDefinition) => boolean): IndexSignatureDefinition;
-    getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)): InterfaceMethodDefinition;
-    getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition;
-    getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)): InterfacePropertyDefinition;
-    write(writeOptions?: WriteOptions): string;
+    getCallSignature(searchFunction: (callSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
+    getIndexSignature(searchFunction: (indexSignature: IndexSignatureDefinition) => boolean): IndexSignatureDefinition | null;
+    getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)): InterfaceMethodDefinition | null;
+    getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
+    getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)): InterfacePropertyDefinition | null;
+    write(writeOptions?: WriteOptions | undefined): string;
 }
 
 export class InterfaceMethodParameterDefinition extends BaseParameterDefinition {
@@ -609,8 +613,8 @@ export class EnumDefinition extends BaseDefinition implements AmbientableDefinit
     constructor();
 
     addMember(structure: EnumMemberStructure): EnumMemberDefinition;
-    getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): EnumMemberDefinition;
-    write(writeOptions?: WriteOptions): string;
+    getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): EnumMemberDefinition | null;
+    write(writeOptions?: WriteOptions | undefined): string;
 }
 
 export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition {
@@ -647,29 +651,29 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     addNamespace: (structure: NamespaceStructure) => NamespaceDefinition;
     addTypeAlias: (structure: TypeAliasStructure) => TypeAliasDefinition;
     addVariable: (structure: VariableStructure) => VariableDefinition;
-    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition;
-    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition;
-    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition;
-    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition;
-    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
-    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
-    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
+    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition | null;
+    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition | null;
+    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition | null;
+    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition | null;
+    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition | null;
+    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition | null;
+    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition | null;
     directlyContains: (def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean;
-    getNamespacesToDefinition: (searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => NamespaceDefinition[];
+    getNamespacesToDefinition: (searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => NamespaceDefinition[] | null;
     getMembers: () => (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     setOrderOfMember: (order: number, member: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => this;
     order: number;
 
     constructor();
 
-    write(writeOptions?: WriteOptions): string;
+    write(writeOptions?: WriteOptions | undefined): string;
 }
 
 export class FileDefinition extends BaseDefinition implements ModuledDefinition {
     fileName: string;
     imports: ImportDefinition[];
     reExports: ReExportDefinition[];
-    defaultExportExpression: ExpressionDefinition;
+    defaultExportExpression: ExpressionDefinition | null;
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
     interfaces: InterfaceDefinition[];
@@ -684,15 +688,15 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     addNamespace: (structure: NamespaceStructure) => NamespaceDefinition;
     addTypeAlias: (structure: TypeAliasStructure) => TypeAliasDefinition;
     addVariable: (structure: VariableStructure) => VariableDefinition;
-    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition;
-    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition;
-    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition;
-    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition;
-    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
-    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
-    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
+    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition | null;
+    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition | null;
+    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition | null;
+    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition | null;
+    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition | null;
+    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition | null;
+    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition | null;
     directlyContains: (def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean;
-    getNamespacesToDefinition: (searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => NamespaceDefinition[];
+    getNamespacesToDefinition: (searchDef: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => NamespaceDefinition[] | null;
     getMembers: () => (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     setOrderOfMember: (order: number, member: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => this;
 
@@ -701,28 +705,28 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     addImport(structure: ImportStructure): ImportDefinition;
     addReExport(structure: ReExportStructure): ReExportDefinition;
     getModuleSpecifierToFile(file: FileDefinition): string;
-    getImport(searchFunction: (importDef: ImportDefinition) => boolean): ImportDefinition;
-    getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): ReExportDefinition;
+    getImport(searchFunction: (importDef: ImportDefinition) => boolean): ImportDefinition | null;
+    getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): ReExportDefinition | null;
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    write(writeOptions?: WriteOptions): string;
-    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string; }[]; writeOptions?: WriteOptions; }): string;
+    write(writeOptions?: WriteOptions | undefined): string;
+    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string; }[]; writeOptions?: WriteOptions | undefined; }): string;
 }
 
 export class ImportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
-    starImportName: string;
-    defaultImport: DefaultImportPartDefinition;
+    starImportName: string | null;
+    defaultImport: DefaultImportPartDefinition | null;
     namedImports: NamedImportPartDefinition[];
     starImports: StarImportPartDefinition[];
 
     constructor();
 
     addNamedImport(structure: NamedImportPartStructure): NamedImportPartDefinition;
-    getNamedImport(searchFunction: (importPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition;
-    getStarImport(searchFunction: (importPart: StarImportPartDefinition) => boolean): StarImportPartDefinition;
+    getNamedImport(searchFunction: (importPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition | null;
+    getStarImport(searchFunction: (importPart: StarImportPartDefinition) => boolean): StarImportPartDefinition | null;
     setDefaultImport(importName: string): this;
-    write(writeOptions?: WriteOptions): string;
+    write(writeOptions?: WriteOptions | undefined): string;
 }
 
 export class ReExportDefinition extends BaseDefinition {
@@ -735,15 +739,15 @@ export class ReExportDefinition extends BaseDefinition {
 
     getExports(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     addNamedExport(structure: NamedImportPartStructure): NamedImportPartDefinition;
-    getNamedExport(searchFunction: (exportPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition;
-    getStarExport(searchFunction: (exportPart: StarImportPartDefinition) => boolean): StarImportPartDefinition;
-    write(writeOptions?: WriteOptions): string;
+    getNamedExport(searchFunction: (exportPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition | null;
+    getStarExport(searchFunction: (exportPart: StarImportPartDefinition) => boolean): StarImportPartDefinition | null;
+    write(writeOptions?: WriteOptions | undefined): string;
 }
 
 export class NamedImportPartDefinition extends BaseDefinition {
     definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    expression: ExpressionDefinition;
-    alias: string;
+    expression: ExpressionDefinition | null;
+    alias: string | null;
     name: string;
 
     constructor();
@@ -751,7 +755,7 @@ export class NamedImportPartDefinition extends BaseDefinition {
 
 export class StarImportPartDefinition extends BaseDefinition {
     definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
-    expression: ExpressionDefinition;
+    expression: ExpressionDefinition | null;
     name: string;
 
     constructor();
@@ -770,7 +774,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     name: string;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
     setDefaultExpression: (text: string) => any;
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -780,7 +784,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
 
     constructor();
 
-    write(writeOptions?: WriteOptions): string;
+    write(writeOptions?: WriteOptions | undefined): string;
     setType(definition: NamedDefinition, typeArguments?: string[]): any;
     setType(text: string): any;
 }
@@ -792,11 +796,11 @@ export const VariableDeclarationType: { Var: "var" | "let" | "const"; Let: "var"
 export class GlobalDefinition {
     files: FileDefinition[];
 
-    addDefinitionAsImportToFile(opts: { definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition; file: FileDefinition; alias?: string; }): void;
+    addDefinitionAsImportToFile(opts: { definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition; file: FileDefinition; alias?: string | undefined; }): void;
     addFile(structure: FileStructure): FileDefinition;
-    getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): FileDefinition;
-    getFileOfDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): FileDefinition;
-    getFileAndNamespacesToDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): { file: FileDefinition; namespaces: NamespaceDefinition[]; };
+    getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): FileDefinition | null;
+    getFileOfDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): FileDefinition | null;
+    getFileAndNamespacesToDefinition(def: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): { file: FileDefinition; namespaces: NamespaceDefinition[]; } | null;
     renameDefinitionAs(definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition, newName: string): void;
 }
 
@@ -850,89 +854,93 @@ export class FileNotFoundError extends BaseError {
 }
 
 export interface BaseStructure {
-    onBeforeWrite?: (writer: CodeBlockWriter) => void;
-    onAfterWrite?: (writer: CodeBlockWriter) => void;
+    onBeforeWrite?: ((writer: CodeBlockWriter) => void) | undefined;
+    onAfterWrite?: ((writer: CodeBlockWriter) => void) | undefined;
 }
 
 export interface NamedStructure {
     name: string;
 }
 
+export interface OptionallyNamedStructure {
+    name?: string | undefined;
+}
+
 export interface AbstractableStructure {
-    isAbstract?: boolean;
+    isAbstract?: boolean | undefined;
 }
 
 export interface AmbientableStructure {
-    isAmbient?: boolean;
-    hasDeclareKeyword?: boolean;
+    isAmbient?: boolean | undefined;
+    hasDeclareKeyword?: boolean | undefined;
 }
 
 export interface AsyncableStructure {
-    isAsync?: boolean;
+    isAsync?: boolean | undefined;
 }
 
 export interface DefaultExpressionedStructure {
-    defaultExpression?: string;
+    defaultExpression?: string | undefined;
 }
 
 export interface DecoratableStructure {
-    decorators?: DecoratorStructure[];
+    decorators?: DecoratorStructure[] | undefined;
 }
 
 export interface ExportableStructure {
-    isExported?: boolean;
-    isNamedExportOfFile?: boolean;
-    isDefaultExportOfFile?: boolean;
+    isExported?: boolean | undefined;
+    isNamedExportOfFile?: boolean | undefined;
+    isDefaultExportOfFile?: boolean | undefined;
 }
 
 export interface FunctionBodyWriteableStructure {
-    onWriteFunctionBody?: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody?: ((writer: CodeBlockWriter) => void) | undefined;
 }
 
 export interface ModuledStructure {
-    namespaces?: NamespaceStructure[];
-    classes?: ClassStructure[];
-    interfaces?: InterfaceStructure[];
-    functions?: FunctionStructure[];
-    enums?: EnumStructure[];
-    variables?: VariableStructure[];
-    typeAliases?: TypeAliasStructure[];
+    namespaces?: NamespaceStructure[] | undefined;
+    classes?: ClassStructure[] | undefined;
+    interfaces?: InterfaceStructure[] | undefined;
+    functions?: FunctionStructure[] | undefined;
+    enums?: EnumStructure[] | undefined;
+    variables?: VariableStructure[] | undefined;
+    typeAliases?: TypeAliasStructure[] | undefined;
 }
 
 export interface OptionalStructure {
-    isOptional?: boolean;
+    isOptional?: boolean | undefined;
 }
 
 export interface BaseObjectPropertyStructure extends BasePropertyStructure, DefaultExpressionedStructure {
 }
 
 export interface TypedStructure {
-    type?: string;
+    type?: string | undefined;
 }
 
 export interface BasePropertyStructure extends BaseStructure, NamedStructure, OptionalStructure, TypedStructure {
 }
 
 export interface TypeParameteredStructure {
-    typeParameters?: TypeParameterStructure[];
+    typeParameters?: TypeParameterStructure[] | undefined;
 }
 
 export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure {
-    isGenerator?: boolean;
-    overloadSignatures?: CallSignatureStructure[];
+    isGenerator?: boolean | undefined;
+    overloadSignatures?: CallSignatureStructure[] | undefined;
 }
 
-export interface BaseParameterStructure extends BaseStructure, NamedStructure, OptionalStructure, TypedStructure, DefaultExpressionedStructure {
-    isRestParameter?: boolean;
-    destructuringProperties?: ObjectPropertyStructure[];
+export interface BaseParameterStructure extends BaseStructure, OptionallyNamedStructure, OptionalStructure, TypedStructure, DefaultExpressionedStructure {
+    isRestParameter?: boolean | undefined;
+    destructuringProperties?: ObjectPropertyStructure[] | undefined;
 }
 
 export interface ParameteredStructure<T extends BaseParameterStructure> {
-    parameters?: T[];
+    parameters?: T[] | undefined;
 }
 
 export interface ReturnTypedStructure {
-    returnType?: string;
+    returnType?: string | undefined;
 }
 
 export interface CallSignatureStructure extends BaseStructure, TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
@@ -942,12 +950,12 @@ export interface CallSignatureParameterStructure extends BaseParameterStructure 
 }
 
 export interface DecoratorStructure extends BaseStructure, NamedStructure {
-    arguments?: string[];
+    arguments?: string[] | undefined;
 }
 
 export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStructure {
     keyName: string;
-    keyType?: string;
+    keyType?: string | undefined;
     returnType: string;
 }
 
@@ -959,7 +967,7 @@ export interface TypeAliasStructure extends BaseStructure, NamedStructure, Expor
 }
 
 export interface TypeParameterStructure extends BaseStructure, NamedStructure {
-    constraintType?: string;
+    constraintType?: string | undefined;
 }
 
 export interface TypePropertyStructure extends BasePropertyStructure {
@@ -975,7 +983,7 @@ export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure,
 }
 
 export interface ScopedStructure {
-    scope?: "public" | "protected" | "private";
+    scope?: "public" | "protected" | "private" | undefined;
 }
 
 export interface ClassMethodParameterStructure extends BaseClassMethodParameterStructure {
@@ -985,17 +993,17 @@ export interface ClassMethodStructure extends BaseClassMethodStructure<ClassMeth
 }
 
 export interface ClassPropertyStructure extends BaseClassPropertyStructure {
-    isAccessor?: boolean;
-    isReadonly?: boolean;
-    onWriteGetBody?: (writer: CodeBlockWriter) => void;
-    onWriteSetBody?: (writer: CodeBlockWriter) => void;
+    isAccessor?: boolean | undefined;
+    isReadonly?: boolean | undefined;
+    onWriteGetBody?: ((writer: CodeBlockWriter) => void) | undefined;
+    onWriteSetBody?: ((writer: CodeBlockWriter) => void) | undefined;
 }
 
 export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure {
 }
 
 export interface ClassConstructorParameterStructure extends BaseParameterStructure {
-    scope?: "none" | "public" | "protected" | "private";
+    scope?: "none" | "public" | "protected" | "private" | undefined;
 }
 
 export interface ClassStaticMethodParameterStructure extends BaseClassMethodParameterStructure {
@@ -1008,18 +1016,18 @@ export interface ClassStaticPropertyStructure extends BaseClassPropertyStructure
 }
 
 export interface ClassStructure extends BaseStructure, NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, AbstractableStructure {
-    methods?: ClassMethodStructure[];
-    properties?: ClassPropertyStructure[];
-    staticMethods?: ClassStaticMethodStructure[];
-    staticProperties?: ClassStaticPropertyStructure[];
-    constructorDef?: ClassConstructorStructure;
-    extendsTypes?: string[];
-    implementsTypes?: string[];
+    methods?: ClassMethodStructure[] | undefined;
+    properties?: ClassPropertyStructure[] | undefined;
+    staticMethods?: ClassStaticMethodStructure[] | undefined;
+    staticProperties?: ClassStaticPropertyStructure[] | undefined;
+    constructorDef?: ClassConstructorStructure | undefined;
+    extendsTypes?: string[] | undefined;
+    implementsTypes?: string[] | undefined;
 }
 
 export interface EnumStructure extends BaseStructure, NamedStructure, ExportableStructure, AmbientableStructure {
-    isConst?: boolean;
-    members?: EnumMemberStructure[];
+    isConst?: boolean | undefined;
+    members?: EnumMemberStructure[] | undefined;
 }
 
 export interface EnumMemberStructure extends BaseStructure, NamedStructure {
@@ -1027,27 +1035,27 @@ export interface EnumMemberStructure extends BaseStructure, NamedStructure {
 }
 
 export interface FileStructure extends BaseStructure, ModuledStructure {
-    imports?: ImportStructure[];
-    reExports?: ReExportStructure[];
-    fileName?: string;
-    defaultExportExpression?: string;
+    imports?: ImportStructure[] | undefined;
+    reExports?: ReExportStructure[] | undefined;
+    fileName?: string | undefined;
+    defaultExportExpression?: string | undefined;
 }
 
 export interface NamedImportPartStructure {
     name: string;
-    alias?: string;
+    alias?: string | undefined;
 }
 
 export interface ImportStructure extends BaseStructure {
     moduleSpecifier: string;
-    starImportName?: string;
-    defaultImportName?: string;
-    namedImports?: NamedImportPartStructure[];
+    starImportName?: string | undefined;
+    defaultImportName?: string | undefined;
+    namedImports?: NamedImportPartStructure[] | undefined;
 }
 
 export interface ReExportStructure extends BaseStructure {
     moduleSpecifier: string;
-    namedExports?: NamedImportPartStructure[];
+    namedExports?: NamedImportPartStructure[] | undefined;
 }
 
 export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, AmbientableStructure, AsyncableStructure, ExportableStructure, FunctionBodyWriteableStructure {
@@ -1066,19 +1074,19 @@ export interface InterfacePropertyStructure extends BasePropertyStructure {
 }
 
 export interface InterfaceStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure {
-    callSignatures?: CallSignatureStructure[];
-    extendsTypes?: string[];
-    methods?: InterfaceMethodStructure[];
-    newSignatures?: CallSignatureStructure[];
-    properties?: InterfacePropertyStructure[];
+    callSignatures?: CallSignatureStructure[] | undefined;
+    extendsTypes?: string[] | undefined;
+    methods?: InterfaceMethodStructure[] | undefined;
+    newSignatures?: CallSignatureStructure[] | undefined;
+    properties?: InterfacePropertyStructure[] | undefined;
 }
 
 export interface NamespaceStructure extends BaseStructure, NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure {
-    declarationType?: "namespace" | "module";
+    declarationType?: "namespace" | "module" | undefined;
 }
 
 export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, DefaultExpressionedStructure, AmbientableStructure {
-    declarationType?: "var" | "let" | "const";
+    declarationType?: "var" | "let" | "const" | undefined;
 }
 
 export function createCallSignature(structure?: CallSignatureStructure): CallSignatureDefinition;

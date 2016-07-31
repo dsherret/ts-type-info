@@ -10,7 +10,7 @@ export abstract class ImportBinder implements IBaseBinder {
     abstract getModuleSpecifier(): string;
     abstract getIsStarImport(): boolean;
     abstract getStarImportName(): string;
-    abstract getDefaultImport(): DefaultImportPartDefinition;
+    abstract getDefaultImport(): DefaultImportPartDefinition | null;
     abstract getNamedImports(): NamedImportPartDefinition[];
     abstract getStarImports(): StarImportPartDefinition[];
 

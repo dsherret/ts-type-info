@@ -1,5 +1,5 @@
 ﻿export module ArrayUtils {
-    export function isNullOrEmpty<T>(a: T[]) {
+    export function isNullOrEmpty<T>(a: (T[] | undefined)): a is undefined {
         return !(a instanceof Array) || a.length === 0;
     }
 

@@ -11,7 +11,7 @@ export function runParameteredDefinitionTests(
         structure.parameters = structure.parameters || [];
 
         it(`should have ${structure.parameters.length} parameter(s)`, () => {
-            assert.equal(definition.parameters.length, structure.parameters.length);
+            assert.equal(definition.parameters.length, structure.parameters!.length);
         });
 
         structure.parameters.forEach((param, i) => {

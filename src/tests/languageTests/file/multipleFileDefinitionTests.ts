@@ -7,8 +7,8 @@ import {VariableDeclarationType} from "./../../../definitions";
 describe("multiple file definition tests", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/languageTests/file/testFiles/reference/main.ts");
     const result = getInfoFromFiles([fileName]);
-    const mainFileDef = result.getFile("main.ts");
-    const referenceFileDef = result.getFile("referenceStructures.d.ts");
+    const mainFileDef = result.getFile("main.ts")!;
+    const referenceFileDef = result.getFile("referenceStructures.d.ts")!;
 
     runFileDefinitionTests(mainFileDef, {
         variables: [{

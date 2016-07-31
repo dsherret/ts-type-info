@@ -10,7 +10,7 @@ export abstract class TypeParameterBinder implements IBaseBinder {
     ) {
     }
 
-    abstract getConstraintType(): TypeDefinition;
+    abstract getConstraintType(): TypeDefinition | null;
 
     bind(def: TypeParameterDefinition) {
         this.baseDefinitionBinder.bind(def);

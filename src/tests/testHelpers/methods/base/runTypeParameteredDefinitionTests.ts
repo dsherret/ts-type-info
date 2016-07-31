@@ -8,7 +8,7 @@ export function runTypeParameteredDefinitionTests(definition: TypeParameteredDef
         structure.typeParameters = structure.typeParameters || [];
 
         it(`should have ${structure.typeParameters.length} type parameter(s)`, () => {
-            assert.equal(definition.typeParameters.length, structure.typeParameters.length);
+            assert.equal(definition.typeParameters.length, structure.typeParameters!.length);
         });
 
         structure.typeParameters.forEach((param, i) => {

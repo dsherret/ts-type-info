@@ -20,7 +20,7 @@ export class ClassConstructorDefinition
     }
 
     // FunctionBodyWriteableDefinition
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     // ParameteredDefinition
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;

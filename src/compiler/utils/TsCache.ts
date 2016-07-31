@@ -40,7 +40,7 @@ class TypeCacheContainer<T> {
     }
 
     private getFileName(tsType: ts.Type) {
-        let fileName: string = null;
+        let fileName: string | null = null;
         const symbol = tsType.getSymbol();
 
         if (symbol != null && symbol.valueDeclaration != null) {

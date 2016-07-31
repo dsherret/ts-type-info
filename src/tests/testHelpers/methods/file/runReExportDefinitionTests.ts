@@ -21,25 +21,25 @@ export function runReExportDefinitionTests(definition: ReExportDefinition, struc
 
             it(`should have a file name that ends with ${structure.fileName}`, () => {
                 const defFileName = definition.fileName || "";
-                assert.equal(defFileName.substr(defFileName.length - structure.fileName.length), structure.fileName);
+                assert.equal(defFileName.substr(defFileName.length - structure.fileName!.length), structure.fileName);
             });
 
             describe("star exports", () => {
                 it(`should have the expected number of star exports`, () => {
-                    assert.equal(definition.starExports.length, structure.starExports.length);
+                    assert.equal(definition.starExports.length, structure.starExports!.length);
                 });
 
-                structure.starExports.forEach((exportPartStructure, i) => {
+                structure.starExports!.forEach((exportPartStructure, i) => {
                     runStarImportPartDefinitionTests(definition.starExports[i], exportPartStructure);
                 });
             });
 
             describe("named exports", () => {
                 it(`should have the expected number of named exports`, () => {
-                    assert.equal(definition.namedExports.length, structure.namedExports.length);
+                    assert.equal(definition.namedExports.length, structure.namedExports!.length);
                 });
 
-                structure.namedExports.forEach((exportPartStructure, i) => {
+                structure.namedExports!.forEach((exportPartStructure, i) => {
                     runNamedImportPartDefinitionTests(definition.namedExports[i], exportPartStructure);
                 });
             });

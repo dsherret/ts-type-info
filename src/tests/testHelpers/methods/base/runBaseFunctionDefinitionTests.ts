@@ -25,11 +25,11 @@ export function runBaseFunctionDefinitionTests(
     });
 
     it("should have the same number of overload signatures", () => {
-        assert.equal(definition.overloadSignatures.length, structure.overloadSignatures.length);
+        assert.equal(definition.overloadSignatures.length, structure.overloadSignatures!.length);
     });
 
     describe("overloadSignatures", () => {
-        structure.overloadSignatures.forEach((overloadSignatureStructure, i) => {
+        structure.overloadSignatures!.forEach((overloadSignatureStructure, i) => {
             runCallSignatureDefinitionTests(definition.overloadSignatures[i], overloadSignatureStructure);
         });
     });

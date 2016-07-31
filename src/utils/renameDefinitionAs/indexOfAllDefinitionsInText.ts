@@ -38,7 +38,7 @@ class DefinitionInTextFinder {
         return foundIndexes;
     }
 
-    private isValidVariableNameChar(char: string) {
+    private isValidVariableNameChar(char: string | null) {
         return char != null && this.validVarNameChars.test(char);
     }
 

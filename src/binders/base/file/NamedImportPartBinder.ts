@@ -7,9 +7,9 @@ export abstract class NamedImportPartBinder implements IBaseBinder {
     }
 
     abstract getName(): string;
-    abstract getAlias(): string;
+    abstract getAlias(): string | null;
     abstract getDefinitions(): ExportableDefinitions[];
-    abstract getExpression(): ExpressionDefinition;
+    abstract getExpression(): ExpressionDefinition | null;
 
     bind(def: NamedImportPartDefinition) {
         this.baseDefinitionBinder.bind(def);

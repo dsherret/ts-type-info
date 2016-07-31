@@ -22,20 +22,20 @@ export function runFileDefinitionTests(definition: FileDefinition, structure: Fi
 
     describe("imports", () => {
         it("should have the expected number of imports", () => {
-            assert.equal(definition.imports.length, structure.imports.length);
+            assert.equal(definition.imports.length, structure.imports!.length);
         });
 
-        structure.imports.forEach((importTestStructure, i) => {
+        structure.imports!.forEach((importTestStructure, i) => {
             runImportDefinitionTests(definition.imports[i], importTestStructure);
         });
     });
 
     describe("reExports", () => {
         it("should have the expected number of reExports", () => {
-            assert.equal(definition.reExports.length, structure.reExports.length);
+            assert.equal(definition.reExports.length, structure.reExports!.length);
         });
 
-        structure.reExports.forEach((reExportTestStructure, i) => {
+        structure.reExports!.forEach((reExportTestStructure, i) => {
             runReExportDefinitionTests(definition.reExports[i], reExportTestStructure);
         });
     });

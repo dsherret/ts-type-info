@@ -49,7 +49,7 @@ export class TsTypeChecker {
         }
     }
 
-    getAliasedSymbol(symbol: ts.Symbol): ts.Symbol {
+    getAliasedSymbol(symbol: ts.Symbol): ts.Symbol | null {
         if (this.symbolHasFlag(symbol, ts.SymbolFlags.Alias)) {
             return this.typeChecker.getAliasedSymbol(symbol);
         }
@@ -106,7 +106,7 @@ export class TsTypeChecker {
         const fileSymbol = this.getSymbolAtLocation(file);
 
         // when a file doesn't have exports the symbol will be null
-        return fileSymbol != null && fileSymbol.exports[symbol.name] != null && symbol.name !== "default";
+        return fileSymbol != null && fileSymbol.exports![symbol.name] != null && symbol.name !== "default";
     }
 
     isSymbolDefaultExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
@@ -114,7 +114,7 @@ export class TsTypeChecker {
         let isDefaultExportOfFile = false;
 
         if (fileSymbol != null) {
-            const defaultExport = fileSymbol.exports["default"];
+            const defaultExport = fileSymbol.exports!["default"];
 
             if (defaultExport != null) {
                 isDefaultExportOfFile = defaultExport === symbol || this.getAliasedSymbol(defaultExport) === symbol;

@@ -138,7 +138,7 @@ describe("FileDefinition", () => {
         });
 
         it("should have the correct module specifier", () => {
-            assert.equal(f.getImport(i => i.moduleSpecifier === "./test2").moduleSpecifier, "./test2");
+            assert.equal(f.getImport(i => i.moduleSpecifier === "./test2")!.moduleSpecifier, "./test2");
         });
     });
 
@@ -152,7 +152,7 @@ describe("FileDefinition", () => {
         });
 
         it("should have the correct module specifier", () => {
-            assert.equal(f.getReExport(i => i.moduleSpecifier === "./test2").moduleSpecifier, "./test2");
+            assert.equal(f.getReExport(i => i.moduleSpecifier === "./test2")!.moduleSpecifier, "./test2");
         });
     });
 
@@ -200,14 +200,14 @@ describe("FileDefinition", () => {
         });
 
         it("should throw an error if the first file has a null file name", () => {
-            const f1 = createFile({ fileName: null });
+            const f1 = createFile({ fileName: null as any as string });
             const f2 = createFile({ fileName: "/directory/test.ts" });
             assert.throws(() => f1.getModuleSpecifierToFile(f2));
         });
 
         it("should throw an error if the second file has a null file name", () => {
             const f1 = createFile({ fileName: "/directory/asdf.ts" });
-            const f2 = createFile({ fileName: null });
+            const f2 = createFile({ fileName: null as any as string });
             assert.throws(() => f1.getModuleSpecifierToFile(f2));
         });
     });

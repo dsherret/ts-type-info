@@ -1,9 +1,8 @@
 ﻿import {ReExportDefinition} from "./../definitions";
-import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class ReExportWriter extends BaseDefinitionWriter<ReExportDefinition> {
-    protected writeDefault(def: ReExportDefinition, flags: WriteFlags) {
+    protected writeDefault(def: ReExportDefinition) {
         this.writer.write("export ");
 
         if ((def.namedExports || []).length > 0) {

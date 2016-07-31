@@ -1,5 +1,4 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {FunctionBodyWriteableBinder} from "./../../base";
+﻿import {FunctionBodyWriteableBinder} from "./../../base";
 
 export class TsFunctionBodyWriteableBinder extends FunctionBodyWriteableBinder {
     constructor() {
@@ -7,6 +6,6 @@ export class TsFunctionBodyWriteableBinder extends FunctionBodyWriteableBinder {
     }
 
     getOnWriteFunctionBody() {
-        return null as (writer: CodeBlockWriter) => void;
+        return null;
     }
 }

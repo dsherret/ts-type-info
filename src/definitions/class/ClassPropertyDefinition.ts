@@ -7,8 +7,8 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     isReadonly: boolean;
     isConstructorParameter: boolean;
 
-    onWriteGetBody: (writer: CodeBlockWriter) => void;
-    onWriteSetBody: (writer: CodeBlockWriter) => void;
+    onWriteGetBody: ((writer: CodeBlockWriter) => void) | null;
+    onWriteSetBody: ((writer: CodeBlockWriter) => void) | null;
 
     constructor() {
         super(DefinitionType.ClassProperty);

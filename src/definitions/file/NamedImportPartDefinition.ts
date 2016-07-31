@@ -4,8 +4,8 @@ import {ExpressionDefinition} from "./../expression";
 
 export class NamedImportPartDefinition extends BaseDefinition {
     definitions: ExportableDefinitions[] = [];
-    expression: ExpressionDefinition;
-    alias: string;
+    expression: ExpressionDefinition | null;
+    alias: string | null;
     name: string;
 
     constructor() {

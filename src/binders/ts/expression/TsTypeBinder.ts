@@ -27,7 +27,8 @@ export class TsTypeBinder extends TypeBinder {
     }
 
     getArrayElementType() {
-        return this.factory.getType(this.tsType.getArrayElementType());
+        const tsType = this.tsType.getArrayElementType();
+        return tsType == null ? null : this.factory.getType(tsType);
     }
 
     getUnionOrIntersectionTypes() {

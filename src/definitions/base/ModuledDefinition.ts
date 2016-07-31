@@ -119,11 +119,11 @@ export abstract class ModuledDefinition {
             return this.getVariable(d => d === def) != null;
         }
         else {
-            return null;
+            return false;
         }
     }
 
-    getNamespacesToDefinition(searchDef: ModuleMemberDefinitions): NamespaceDefinition[] {
+    getNamespacesToDefinition(searchDef: ModuleMemberDefinitions): (NamespaceDefinition[] | null) {
         const foundInModule = this.directlyContains(searchDef);
 
         if (foundInModule) {

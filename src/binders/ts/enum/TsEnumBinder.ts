@@ -18,7 +18,7 @@ export class TsEnumBinder extends EnumBinder {
     }
 
     getMembers() {
-        return this.node.getSymbol().getExportSymbols().map(memberSymbol => {
+        return this.node.getSymbol()!.getExportSymbols().map(memberSymbol => {
             const memberNode = memberSymbol.getOnlyNode();
             return this.factory.getEnumMember(memberNode);
         });

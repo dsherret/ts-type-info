@@ -16,7 +16,6 @@ describe("FunctionDefinition", () => {
             name: "mySecondParameter"
         });
         c.addParameter({
-            name: null,
             destructuringProperties: [{
                 name: "param1",
                 type: "string",

@@ -33,7 +33,7 @@ describe("EnumDefinition", () => {
         const e = new EnumDefinition();
         e.addMember({ name: "name1", value: 1 });
         e.addMember({ name: "name2", value: 2 });
-        runNamedDefinitionTests(e.getMember("name2"), { name: "name2" });
-        runNamedDefinitionTests(e.getMember(d => d.name === "name2"), { name: "name2" });
+        runNamedDefinitionTests(e.getMember("name2")!, { name: "name2" });
+        runNamedDefinitionTests(e.getMember(d => d.name === "name2")!, { name: "name2" });
     });
 });

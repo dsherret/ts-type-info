@@ -18,6 +18,14 @@ import * as definitionNamespace from "./definitionNamespace";
 import * as definitionVar from "definition-var";
 import * as NamedExpressions from "./namedExpression";
 
-let myVar1: definitionLocal.DefinitionInterface;
-let myVar2: definitionNamespace.DefinitionNamespaceInterface;
+let myVar1: definitionLocal.DefinitionInterface = null as any;
+let myVar2: definitionNamespace.DefinitionNamespaceInterface = null as any;
 let myVar3 = () => definitionVar.Methods;
+
+// gets rid of unused variable compile errors
+{
+    DefaultExport, DefaultExportSeparate, NamedExport1, NamedExport2,
+    NamedExports, DefaultExportClassLocalName1, DefaultExportClassLocalName2,
+    NamedExportLocalName, NamedWithDefaultExportStarImport, Expression, reexports,
+    definitionLocal, definitionVar, NamedExpressions, myVar1, myVar2, myVar3
+};

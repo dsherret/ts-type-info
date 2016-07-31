@@ -16,7 +16,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
     isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[] = [];
-    userDefinedTypeGuard: UserDefinedTypeGuardDefinition;
+    userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
 
     constructor(definitionType: DefinitionType) {
         super(definitionType);

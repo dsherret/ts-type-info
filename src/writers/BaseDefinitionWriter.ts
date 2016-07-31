@@ -17,7 +17,7 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
         }
     }
 
-    protected abstract writeDefault(def: DefinitionType, flags: WriteFlags): void;
+    protected abstract writeDefault(def: DefinitionType, flags?: WriteFlags): void;
 
     protected writeAsyncKeyword(def: AsyncableDefinition) {
         this.writer.conditionalWrite(def.isAsync, "async ");

@@ -14,7 +14,7 @@ export interface TsNodeOptions extends TsSourceFileChildOptions {
 }
 
 export class TsNode extends TsSourceFileChild {
-    private __tsSymbol: TsSymbol;
+    private __tsSymbol: TsSymbol | null;
     private node: ts.Node;
 
     private get tsSymbol() {
@@ -25,7 +25,7 @@ export class TsNode extends TsSourceFileChild {
         return this.__tsSymbol;
     }
 
-    constructor(opts: TsNodeOptions, tsSymbol?: TsSymbol) {
+    constructor(opts: TsNodeOptions, tsSymbol?: TsSymbol | null) {
         super(opts);
 
         if (opts.node == null) {
@@ -33,18 +33,21 @@ export class TsNode extends TsSourceFileChild {
         }
 
         this.node = opts.node;
-        this.__tsSymbol = tsSymbol;
+        this.__tsSymbol = tsSymbol || null;
     }
 
     getName() {
-        let name: string;
+        let name: string | undefined;
         const symbol = this.tsSymbol;
 
         if (symbol != null) {
             name = symbol.getName();
 
             if (name === "default") {
-                name = this.getLocalSymbol().getName();
+                const localSymbol = this.getLocalSymbol();
+                if (localSymbol != null) {
+                    name = localSymbol.getName();
+                }
             }
         }
 
@@ -128,7 +131,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getExpression() {
-        let expression: TsExpression;
+        let expression: TsExpression | null = null;
         const expressionStatement = this.node as ts.ExpressionStatement;
 
         if (expressionStatement.expression != null) {
@@ -155,7 +158,7 @@ export class TsNode extends TsSourceFileChild {
 
     getFileNameOfModuleSpecifier() {
         const importDeclaration = this.node as ts.ImportDeclaration;
-        let fileName: string = null;
+        let fileName: string | null = null;
 
         if (importDeclaration.moduleSpecifier != null) {
             const moduleSymbol = this.typeChecker.getSymbolAtLocation(importDeclaration.moduleSpecifier);
@@ -183,7 +186,8 @@ export class TsNode extends TsSourceFileChild {
 
     getReExportNamedExportNodes() {
         const exportDeclaration = this.node as ts.ExportDeclaration;
-        return (exportDeclaration.exportClause.elements || []).map(e => this.createNode(e));
+        const exportClause = exportDeclaration.exportClause || {} as ts.NamedImports;
+        return (exportClause.elements || []).map(e => this.createNode(e));
     }
 
     getNamespaceDeclarationType() {
@@ -249,16 +253,26 @@ export class TsNode extends TsSourceFileChild {
 
     getStarImportName() {
         const importDeclaration = this.node as ts.ImportDeclaration;
-        const namespaceImport = importDeclaration.importClause.namedBindings as ts.NamespaceImport;
 
-        return namespaceImport.name.getText();
+        if (importDeclaration.importClause != null) {
+            const namespaceImport = importDeclaration.importClause.namedBindings as ts.NamespaceImport;
+            return namespaceImport.name.getText();
+        }
+        else {
+            return null;
+        }
     }
 
     getStarSymbol() {
         const importDeclaration = this.node as ts.ImportDeclaration;
-        const namespaceImport = importDeclaration.importClause.namedBindings as ts.NamespaceImport;
 
-        return this.createSymbol(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(namespaceImport.name)));
+        if (importDeclaration.importClause != null) {
+            const namespaceImport = importDeclaration.importClause.namedBindings as ts.NamespaceImport;
+            return this.createSymbol(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(namespaceImport.name)));
+        }
+        else {
+            return null;
+        }
     }
 
     getTypeParameters() {
@@ -270,7 +284,7 @@ export class TsNode extends TsSourceFileChild {
 
     getTypeParameterConstraintType() {
         const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
-        return constraint == null ? null : this.getTypeAtLocationByNode((this.node as ts.TypeParameterDeclaration).constraint);
+        return constraint == null ? null : this.getTypeAtLocationByNode(constraint);
     }
 
     getHeritageNodes() {
@@ -286,7 +300,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getVariableDeclarationType() {
-        const nodeFlags = this.node.parent.flags;
+        const nodeFlags = this.node.parent!.flags;
 
         if (nodeFlags & ts.NodeFlags.Let) {
             return VariableDeclarationType.Let;
@@ -536,7 +550,7 @@ export class TsNode extends TsSourceFileChild {
         }));
     }
 
-    private createSymbol(symbol: ts.Symbol): TsSymbol {
+    private createSymbol(symbol: ts.Symbol | null): TsSymbol | null {
         if (symbol == null) {
             return null;
         }
@@ -546,7 +560,7 @@ export class TsNode extends TsSourceFileChild {
                 sourceFile: this.sourceFile,
                 tsSourceFile: this.tsSourceFile,
                 tsCache: this.tsCache,
-                symbol: symbol
+                symbol: symbol!
             }));
         }
     }
@@ -625,7 +639,7 @@ export class TsNode extends TsSourceFileChild {
         }
         else {
             Logger.warn("The expression was null");
-            return null;
+            return "";
         }
     }
 
@@ -634,7 +648,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     private hasModifierWithSyntaxKind(syntaxKind: ts.SyntaxKind) {
-        const node = (this.isVariable()) ? this.node.parent.parent : this.node;
+        const node = (this.isVariable()) ? this.node.parent!.parent! : this.node;
         return (node.modifiers || []).some(m => m.kind === syntaxKind);
     }
 }

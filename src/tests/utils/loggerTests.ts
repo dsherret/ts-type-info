@@ -2,8 +2,8 @@
 import {Logger} from "./../../utils";
 
 describe("logger", () => {
-    let logedMsg: string;
-    let warnedMsg: string;
+    let logedMsg: string | null;
+    let warnedMsg: string | null;
     let wasEnabled = Logger.getIsEnabled();
 
     before(() => {

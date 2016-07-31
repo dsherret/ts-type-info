@@ -21,7 +21,7 @@ export function runEnumDefinitionTests(definition: EnumDefinition, structure: En
             });
 
             it(`should have ${structure.members.length} member(s)`, () => {
-                assert.equal(definition.members.length, structure.members.length);
+                assert.equal(definition.members.length, structure.members!.length);
             });
 
             structure.members.forEach((memberTestStructure, i) => {

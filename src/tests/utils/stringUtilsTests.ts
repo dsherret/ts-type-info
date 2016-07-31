@@ -3,10 +3,6 @@ import * as assert from "assert";
 
 describe("StringUtils", () => {
     describe("#ensureEndsWithNewline()", () => {
-        it("should return null for a null string", () => {
-            assert.equal(StringUtils.ensureEndsWithNewline(null), null);
-        });
-
         it("should add a newline for an empty string", () => {
             assert.equal(StringUtils.ensureEndsWithNewline(""), "\n");
         });

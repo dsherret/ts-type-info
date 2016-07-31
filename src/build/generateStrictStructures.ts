@@ -6,7 +6,7 @@ export function generateStrictStructures() {
     const result = getInfoFromFiles([path.join(__dirname, "../../src/structures.ts")]);
     const fileDefForCreate = createFile();
 
-    result.files.filter(f => f.fileName.indexOf("structures") >= 0).forEach((f, j) => {
+    result.files.filter(f => f.fileName.indexOf("structures") >= 0).forEach(f => {
         f.interfaces.forEach(i => {
             result.renameDefinitionAs(i, "Strict" + i.name);
 

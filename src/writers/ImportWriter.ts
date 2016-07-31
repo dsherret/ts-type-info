@@ -1,9 +1,8 @@
 ﻿import {ImportDefinition} from "./../definitions";
-import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class ImportWriter extends BaseDefinitionWriter<ImportDefinition> {
-    protected writeDefault(def: ImportDefinition, flags: WriteFlags) {
+    protected writeDefault(def: ImportDefinition) {
         const hasDefaultImport = def.defaultImport != null;
         const hasStarImport = def.starImportName != null && def.starImportName.length > 0;
         const hasNamedImports = (def.namedImports || []).length > 0;

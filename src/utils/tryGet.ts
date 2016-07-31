@@ -3,7 +3,7 @@ import {logError} from "./logError";
 
 /* istanbul ignore next */
 export function tryGet<T>(objOrString: TsSymbol | TsNode | string, attemptToGet: () => T, onSuccess?: (def: T) => void) {
-    let def: T;
+    let def: T | null = null;
 
     try {
         def = attemptToGet();

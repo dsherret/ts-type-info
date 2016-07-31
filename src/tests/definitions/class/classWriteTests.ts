@@ -147,7 +147,7 @@ describe("ClassDefinition", () => {
 }
 `;
                 const classDef = file.classes[0];
-                const property = classDef.getProperty("myGetSetWithWriteDefined");
+                const property = classDef.getProperty("myGetSetWithWriteDefined")!;
 
                 property.onWriteGetBody = writer => writer.write(`return "";`);
                 property.onWriteSetBody = writer => writer.write(`alert(value);`);

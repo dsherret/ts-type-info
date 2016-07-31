@@ -55,15 +55,15 @@ export class NamespaceDefinition extends BaseDefinition
     addNamespace: (structure: NamespaceStructure) => NamespaceDefinition;
     addTypeAlias: (structure: TypeAliasStructure) => TypeAliasDefinition;
     addVariable: (structure: VariableStructure) => VariableDefinition;
-    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => ClassDefinition;
-    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => EnumDefinition;
-    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => FunctionDefinition;
-    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => InterfaceDefinition;
-    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => NamespaceDefinition;
-    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => TypeAliasDefinition;
-    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => VariableDefinition;
+    getClass: (nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)) => (ClassDefinition | null);
+    getEnum: (nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)) => (EnumDefinition | null);
+    getFunction: (nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)) => (FunctionDefinition | null);
+    getInterface: (nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)) => (InterfaceDefinition | null);
+    getNamespace: (nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)) => (NamespaceDefinition | null);
+    getTypeAlias: (nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)) => (TypeAliasDefinition | null);
+    getVariable: (nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)) => (VariableDefinition | null);
     directlyContains: (def: ModuleMemberDefinitions) => boolean;
-    getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => NamespaceDefinition[];
+    getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => (NamespaceDefinition[] | null);
     getMembers: () => ModuleMemberDefinitions[];
     setOrderOfMember: (order: number, member: ModuleMemberDefinitions) => this;
     // OrderableDefinition

@@ -33,14 +33,14 @@ export class TsType extends TsSourceFileChild {
 
     getTypeArguments() {
         const tsTypeArguments = (this.type as ts.TypeReference).typeArguments;
-        return (tsTypeArguments || []).map(arg => tryGet(this.getText(), () => this.createType(arg)));
+        return (tsTypeArguments || []).map(arg => tryGet(this.getText(), () => this.createType(arg))!).filter(arg => arg != null);
     }
 
     getSymbols(): TsSymbol[] {
         const typeArray = (this.type as ts.UnionOrIntersectionType).types;
 
         if (typeArray != null) {
-            return typeArray.map(t => t.symbol).filter(s => s != null).map(s => this.createSymbol(s));
+            return typeArray.map(t => t.symbol).filter(s => s != null).map(s => this.createSymbol(s!));
         }
         else if (this.type.symbol != null) {
             return [this.createSymbol(this.type.symbol)];

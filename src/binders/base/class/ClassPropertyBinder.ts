@@ -9,8 +9,8 @@ export abstract class ClassPropertyBinder implements IBaseBinder {
 
     abstract getIsAccessor(): boolean;
     abstract getIsReadonly(): boolean;
-    abstract getOnWriteGetBody(): (writer: CodeBlockWriter) => void;
-    abstract getOnWriteSetBody(): (writer: CodeBlockWriter) => void;
+    abstract getOnWriteGetBody(): ((writer: CodeBlockWriter) => void) | null;
+    abstract getOnWriteSetBody(): ((writer: CodeBlockWriter) => void) | null;
 
     bind(def: ClassPropertyDefinition) {
         this.baseClassPropertyBinder.bind(def);

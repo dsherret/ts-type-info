@@ -8,7 +8,7 @@ export function getRenameInfosFromNamedImportPart(opts: { currentRenameInfo: Ren
         const hasAlias = namedImportPart.alias != null && namedImportPart.name !== namedImportPart.alias;
 
         if (hasAlias && currentRenameInfo.hasNamespaces()) {
-            return [currentRenameInfo.createWithNewFirstNamespace(namedImportPart.alias)];
+            return [currentRenameInfo.createWithNewFirstNamespace(namedImportPart!.alias!)];
         }
         else if (!hasAlias) {
             return [currentRenameInfo.createCopy()];

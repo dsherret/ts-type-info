@@ -18,7 +18,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
 
     protected writeDefault(def: MethodDefinitions, flags: WriteFlags) {
         def.overloadSignatures.forEach(s => {
-            this.writeStartOfFunctionHeader(def, flags);
+            this.writeStartOfFunctionHeader(def);
             this.callSignatureWriter.write(s, flags);
         });
         this.writeImplementation(def, flags);
@@ -28,7 +28,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         const showImplementation = def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0;
 
         if (showImplementation) {
-            this.writeStartOfFunctionHeader(def, flags);
+            this.writeStartOfFunctionHeader(def);
             this.typeParametersWriter.write(def.typeParameters, flags);
             this.parametersWriter.write(def.parameters, flags);
             this.functionReturnTypeWriter.write(def, flags);
@@ -36,7 +36,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         }
     }
 
-    private writeStartOfFunctionHeader(def: MethodDefinitions, flags: WriteFlags) {
+    private writeStartOfFunctionHeader(def: MethodDefinitions) {
         this.scopeWriter.write((def as ClassMethodDefinition).scope);
         this.writer.spaceIfLastNotSpace();
         this.writeStatic(def);

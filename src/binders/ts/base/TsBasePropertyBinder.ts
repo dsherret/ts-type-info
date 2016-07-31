@@ -7,7 +7,7 @@ import {TsTypedBinder} from "./TsTypedBinder";
 import {TsBaseDefinitionBinder} from "./TsBaseDefinitionBinder";
 
 export class TsBasePropertyBinder extends BasePropertyBinder {
-    constructor(factory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),

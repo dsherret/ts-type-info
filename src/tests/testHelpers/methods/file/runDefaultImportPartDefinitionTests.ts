@@ -5,7 +5,7 @@ import {ensureNotNull} from "./../../ensureNotNull";
 import {runExpressionDefinitionTests} from "./../expression";
 import {runBaseDefinitionTests} from "./../base";
 
-export function runDefaultImportPartDefinitionTests(definition: DefaultImportPartDefinition, structure: DefaultImportPartTestStructure) {
+export function runDefaultImportPartDefinitionTests(definition: DefaultImportPartDefinition | null, structure: DefaultImportPartTestStructure | undefined) {
     if (structure == null) {
         it(`should be null`, () => {
             assert.equal(definition, null);
@@ -13,21 +13,21 @@ export function runDefaultImportPartDefinitionTests(definition: DefaultImportPar
     }
     else {
         ensureNotNull(definition, () => {
-            structure.definitions = structure.definitions || [];
+            structure!.definitions = structure!.definitions || [];
 
-            it(`should have name ${structure.name}`, () => {
-                assert.equal(definition.name, structure.name);
+            it(`should have name ${structure!.name}`, () => {
+                assert.equal(definition!.name, structure!.name);
             });
 
-            runBaseDefinitionTests(definition, structure);
+            runBaseDefinitionTests(definition!, structure!);
 
             describe("definitions", () => {
                 it(`should have the expected number of definitions`, () => {
-                    assert.equal(definition.definitions.length, structure.definitions.length);
+                    assert.equal(definition!.definitions.length, structure!.definitions!.length);
                 });
 
-                structure.definitions.forEach((structureDefinition, j) => {
-                    const definitionDefinition = definition.definitions[j];
+                structure!.definitions!.forEach((structureDefinition, j) => {
+                    const definitionDefinition = definition!.definitions[j];
 
                     ensureNotNull(definitionDefinition, () => {
                         it(`should have the name ${structureDefinition.name}`, () => {
@@ -44,7 +44,7 @@ export function runDefaultImportPartDefinitionTests(definition: DefaultImportPar
             });
 
             describe("expression", () => {
-                runExpressionDefinitionTests(definition.expression, structure.expression);
+                runExpressionDefinitionTests(definition!.expression, structure!.expression);
             });
         });
     }

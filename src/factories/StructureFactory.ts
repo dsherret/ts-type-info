@@ -64,7 +64,7 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureEnumMemberBinder(structure), new definitions.EnumMemberDefinition());
     }
 
-    getExpressionFromText(text: string) {
+    getExpressionFromText(text: string | undefined) {
         if (typeof text === "string" && text.length > 0) {
             return bindToDefinition(new binders.StructureExpressionBinder(text), new definitions.ExpressionDefinition());
         }
@@ -145,13 +145,9 @@ export class StructureFactory {
         return this.getTypeFromText(text);
     }
 
-    getTypeFromText(text: string) {
-        if (typeof text === "string" && text.length > 0) {
-            return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(this, text), new definitions.TypeDefinition());
-        }
-        else {
-            return null;
-        }
+    getTypeFromText(text: string | undefined) {
+        text = text || "any";
+        return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(this, text), new definitions.TypeDefinition());
     }
 
     getTypeParameter(structure: structures.TypeParameterStructure) {

@@ -7,16 +7,16 @@ import {TsNode} from "./../../../compiler";
 export class TsNamedImportPartBinder extends NamedImportPartBinder {
     private defsOrExpression: {
         definitions: ExportableDefinitions[];
-        expression: ExpressionDefinition;
+        expression: ExpressionDefinition | null;
     };
 
     constructor(private factory: TsFactory, private node: TsNode) {
         super(new TsBaseDefinitionBinder());
-        this.defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(node.getSymbol());
+        this.defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(node.getSymbol()!);
     }
 
     getName() {
-        return this.node.getNamedImportPropertyName() || this.node.getNamedImportName();
+        return this.node.getNamedImportPropertyName() || this.node.getNamedImportName() || "";
     }
 
     getAlias() {

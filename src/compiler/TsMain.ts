@@ -11,7 +11,7 @@ export class TsMain {
     private tsSourceFiles: TsSourceFile[];
     private tsCache = new TsCache();
 
-    constructor(fileNames: string[], private options: Options) {
+    constructor(fileNames: string[], options: Options) {
         this.verifyFilesExist(fileNames);
 
         const compilerOptions = this.getTsCompilerOptions(options.compilerOptions);
@@ -35,14 +35,14 @@ export class TsMain {
         return this.tsSourceFiles;
     }
 
-    private getTsCompilerOptions(compilerOptions: CompilerOptions) {
+    private getTsCompilerOptions(compilerOptions: CompilerOptions | undefined) {
         function getValue<T>(currentValue: T, newValue: T) {
             return (currentValue == null) ? newValue : currentValue;
         }
 
         let combinedOptions = (compilerOptions || {}) as any as ts.CompilerOptions;
 
-        combinedOptions.allowNonTsExtensions = getValue(combinedOptions.allowNonTsExtensions, true);
+        combinedOptions.allowJs = getValue(combinedOptions.allowJs, true);
         combinedOptions.noLib = getValue(combinedOptions.noLib, false);
         combinedOptions.experimentalDecorators = getValue(combinedOptions.experimentalDecorators, true);
         combinedOptions.experimentalDecorators = getValue(combinedOptions.experimentalDecorators, true);
@@ -51,6 +51,7 @@ export class TsMain {
         combinedOptions.noImplicitAny = getValue(combinedOptions.noImplicitAny, false);
         combinedOptions.target = getValue(combinedOptions.target, ts.ScriptTarget.ES2015);
         combinedOptions.moduleResolution = getValue(combinedOptions.moduleResolution, ts.ModuleResolutionKind.NodeJs);
+        combinedOptions.strictNullChecks = getValue(combinedOptions.strictNullChecks, false);
 
         return combinedOptions;
     }

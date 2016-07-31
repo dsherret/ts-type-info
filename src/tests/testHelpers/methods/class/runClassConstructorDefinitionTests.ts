@@ -5,7 +5,7 @@ import {runBaseDefinitionTests, runParameteredDefinitionTests, runFunctionBodyWr
 import {runClassConstructorParameterDefinitionTests} from "./runClassConstructorParameterDefinitionTests";
 import {ensureNotNull} from "./../../ensureNotNull";
 
-export function runClassConstructorDefinitionTests(definition: ClassConstructorDefinition, structure: ClassConstructorTestStructure) {
+export function runClassConstructorDefinitionTests(definition: ClassConstructorDefinition | null, structure: ClassConstructorTestStructure | undefined) {
     if (structure == null) {
         it("should not have a constructor", () => {
             assert.equal(definition, null);
@@ -13,9 +13,9 @@ export function runClassConstructorDefinitionTests(definition: ClassConstructorD
     }
     else {
         ensureNotNull(definition, () => {
-            runBaseDefinitionTests(definition, structure);
-            runParameteredDefinitionTests(runClassConstructorParameterDefinitionTests, definition, structure);
-            runFunctionBodyWriteableDefinitionTests(definition, structure);
+            runBaseDefinitionTests(definition!, structure!);
+            runParameteredDefinitionTests(runClassConstructorParameterDefinitionTests, definition!, structure!);
+            runFunctionBodyWriteableDefinitionTests(definition!, structure!);
         });
     }
 }

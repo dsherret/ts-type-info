@@ -22,7 +22,6 @@ export class TsSignature extends TsSourceFileChild {
 
     getReturnType() {
         const tsType = this.typeChecker.getReturnTypeOfSignature(this.signature);
-
         return this.getTypeFromType(tsType);
     }
 
@@ -32,10 +31,8 @@ export class TsSignature extends TsSourceFileChild {
     }
 
     getTypeParameters() {
-        type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
         let typeParameters = this.signature.typeParameters;
-
-        return (typeParameters || []).map(typeParameter => this.createSymbol(typeParameter.symbol));
+        return (typeParameters || []).map(typeParameter => this.createSymbol(typeParameter.symbol!));
     }
 
     private getTypeFromType(tsType: ts.Type) {

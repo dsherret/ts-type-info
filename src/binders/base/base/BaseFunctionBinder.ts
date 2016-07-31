@@ -16,7 +16,7 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
     }
 
     protected abstract getOverloadSignatures(): definitions.CallSignatureDefinition[];
-    protected abstract getUserDefinedTypeGuard(): definitions.UserDefinedTypeGuardDefinition;
+    protected abstract getUserDefinedTypeGuard(): definitions.UserDefinedTypeGuardDefinition | null;
     protected abstract getIsGenerator(): boolean;
 
     bind(def: definitions.BaseFunctionDefinition<ParameterType, any>) {

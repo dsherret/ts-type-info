@@ -40,13 +40,14 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
     }
 
     protected getUserDefinedTypeGuard() {
-        let userDefinedTypeGuard: UserDefinedTypeGuardDefinition = null;
+        let userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null = null;
 
-        this.node.getChildren().forEach(node => {
+        for (let node of this.node.getChildren()) {
             if (node.isUserDefinedTypeGuard()) {
                 userDefinedTypeGuard = this.factory.getUserDefinedTypeGuardFromNode(node);
+                break;
             }
-        });
+        }
 
         return userDefinedTypeGuard;
     }

@@ -1,5 +1,4 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {BaseDefinitionBinder} from "./../../base";
+﻿import {BaseDefinitionBinder} from "./../../base";
 
 export class TsBaseDefinitionBinder extends BaseDefinitionBinder {
     constructor() {
@@ -7,10 +6,10 @@ export class TsBaseDefinitionBinder extends BaseDefinitionBinder {
     }
 
     getOnBeforeWrite() {
-        return null as (writer: CodeBlockWriter) => void;
+        return null;
     }
 
     getOnAfterWrite() {
-        return null as (writer: CodeBlockWriter) => void;
+        return null;
     }
 }

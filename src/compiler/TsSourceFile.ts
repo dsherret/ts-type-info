@@ -9,18 +9,17 @@ export interface TsSourceFileOptions extends TsBaseOptions {
 }
 
 export class TsSourceFile extends TsBase {
-    private symbol: ts.Symbol;
+    private symbol: ts.Symbol | null;
 
     constructor(opts: TsSourceFileOptions) {
         super(opts);
 
-        // symbol can be null
         this.symbol = opts.symbol;
     }
 
-    getDefaultExportSymbol(): TsSymbol {
+    getDefaultExportSymbol(): TsSymbol | null {
         if (this.fileHasExports()) {
-            const defaultExportSymbol = this.symbol.exports["default"];
+            const defaultExportSymbol = this.symbol!.exports!["default"];
 
             if (defaultExportSymbol != null) {
                 return this.createSymbol(defaultExportSymbol);
@@ -42,7 +41,7 @@ export class TsSourceFile extends TsBase {
         return this.symbol != null;
     }
 
-    private createNode(node: ts.Node, tsSymbol: TsSymbol): TsNode {
+    private createNode(node: ts.Node, tsSymbol: TsSymbol | null): TsNode {
         return this.tsCache.getNode(node, () => new TsNode({
             tsCache: this.tsCache,
             typeChecker: this.typeChecker,
@@ -52,7 +51,7 @@ export class TsSourceFile extends TsBase {
         }, tsSymbol));
     }
 
-    private createSymbol(symbol: ts.Symbol): TsSymbol {
+    private createSymbol(symbol: ts.Symbol | null): TsSymbol | null {
         if (symbol == null) {
             return null;
         }
@@ -60,7 +59,7 @@ export class TsSourceFile extends TsBase {
             return this.tsCache.getSymbol(symbol, () => new TsSymbol({
                 tsCache: this.tsCache,
                 typeChecker: this.typeChecker,
-                symbol: symbol,
+                symbol: symbol!,
                 tsSourceFile: this,
                 sourceFile: this.sourceFile
             }));

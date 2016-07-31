@@ -31,7 +31,7 @@ export class FileWriter extends BaseDefinitionWriter<FileDefinition> {
         });
     }
 
-    private writeDefaultExportExpression(expression: ExpressionDefinition) {
+    private writeDefaultExportExpression(expression: ExpressionDefinition | null) {
         if (expression != null) {
             this.writer.newLine();
             this.writer.write("export default ")

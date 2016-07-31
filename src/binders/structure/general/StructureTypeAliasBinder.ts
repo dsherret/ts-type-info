@@ -10,7 +10,7 @@ import {StructureTypeParameteredBinder} from "./../base/StructureTypeParametered
 import {StructureAmbientableBinder} from "./../base/StructureAmbientableBinder";
 
 export class StructureTypeAliasBinder extends TypeAliasBinder {
-    constructor(private factory: StructureFactory, private structure: TypeAliasStructure) {
+    constructor(factory: StructureFactory, structure: TypeAliasStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),

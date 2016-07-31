@@ -3,7 +3,7 @@ import {NamedDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {TypeDefinition} from "./../expression";
 
 export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition {
-    constraintType: TypeDefinition;
+    constraintType: TypeDefinition | null;
 
     constructor() {
         super(DefinitionType.TypeParameter);

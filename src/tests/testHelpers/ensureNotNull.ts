@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 
-export function ensureNotNull(obj: any, additionalTestsIfNotNull: () => void) {
+export function ensureNotNull<T>(obj: T | null, additionalTestsIfNotNull: () => void) {
     if (obj == null) {
         it(`should not be null`, () => {
             assert.notEqual(obj, null);

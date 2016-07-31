@@ -7,10 +7,10 @@ export class StructureBaseDefinitionBinder extends BaseDefinitionBinder {
     }
 
     getOnBeforeWrite() {
-        return this.structure.onBeforeWrite;
+        return this.structure.onBeforeWrite || null;
     }
 
     getOnAfterWrite() {
-        return this.structure.onAfterWrite;
+        return this.structure.onAfterWrite || null;
     }
 }

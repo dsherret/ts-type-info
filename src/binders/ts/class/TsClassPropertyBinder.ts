@@ -1,5 +1,4 @@
-﻿import CodeBlockWriter from "code-block-writer";
-import {TsFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {TsNode, TsSymbol} from "./../../../compiler";
 import {ClassPropertyBinder} from "./../../base";
 import {TsBaseClassPropertyBinder} from "./base";
@@ -7,10 +6,9 @@ import {TsBaseClassPropertyBinder} from "./base";
 export class TsClassPropertyBinder extends ClassPropertyBinder {
     private symbol: TsSymbol;
 
-    constructor(factory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, node: TsNode) {
         super(new TsBaseClassPropertyBinder(factory, node));
-
-        this.symbol = node.getSymbol();
+        this.symbol = node.getSymbol()!;
     }
 
     getIsAccessor() {
@@ -22,10 +20,10 @@ export class TsClassPropertyBinder extends ClassPropertyBinder {
     }
 
     getOnWriteGetBody() {
-        return null as (writer: CodeBlockWriter) => void;
+        return null;
     }
 
     getOnWriteSetBody() {
-        return null as (writer: CodeBlockWriter) => void;
+        return null;
     }
 }

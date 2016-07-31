@@ -33,21 +33,19 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     }
 
     private writeGetAccessor(def: ClassPropertyDefinition) {
-        const isWriteBodyFunctionDefined = typeof def.onWriteGetBody === "function";
         this.writer.write("get ");
         this.writeHeader(def);
         this.writer.write("()");
         this.typeWriter.writeWithColon(def.type);
 
         this.writer.block(() => {
-            if (isWriteBodyFunctionDefined) {
+            if (typeof def.onWriteGetBody === "function") {
                 def.onWriteGetBody(this.writer);
             }
         });
     }
 
     private writeSetAccessor(def: ClassPropertyDefinition) {
-        const isWriteBodyFunctionDefined = typeof def.onWriteSetBody === "function";
         this.writer.write("set ");
         this.writeHeader(def);
         this.writer.write("(value"); // default to value for now
@@ -55,7 +53,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.writer.write(")");
 
         this.writer.block(() => {
-            if (isWriteBodyFunctionDefined) {
+            if (typeof def.onWriteSetBody === "function") {
                 def.onWriteSetBody(this.writer);
             }
         });

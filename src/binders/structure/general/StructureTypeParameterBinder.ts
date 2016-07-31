@@ -13,6 +13,6 @@ export class StructureTypeParameterBinder extends TypeParameterBinder {
     }
 
     getConstraintType() {
-        return this.factory.getTypeFromText(this.structure.constraintType);
+        return this.structure.constraintType == null ? null : this.factory.getTypeFromText(this.structure.constraintType);
     }
 }

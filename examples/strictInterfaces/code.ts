@@ -15,7 +15,7 @@ const fileName = path.join(mainDir, "input.ts");
 
 // START
 const info = getInfoFromFiles([fileName]);
-const file = info.getFile(fileName);
+const file = info.getFile(fileName)!;
 
 file.interfaces.forEach(interfaceDef => {
     info.renameDefinitionAs(interfaceDef, interfaceDef.name + "Strict");
@@ -32,7 +32,7 @@ const inputText = fs.readFileSync(path.join(mainDir, "input.ts"), "utf8");
 const templateText = fs.readFileSync(path.join(mainDir, "template.md"), "utf8");
 let codeText = fs.readFileSync(path.join(mainDir, "code.ts"), "utf8");
 codeText = codeText.substring(codeText.indexOf("// START") + "// START".length, codeText.indexOf("// END"));
-codeText = `import {getInfoFromFiles} from "ts-type-info";\n\nconst fileName = "input.ts";\n` + codeText.replace(/\r?\n/, "");
+codeText = `import {getInfoFromFiles} from "ts-type-info";\n\nconst fileName = "input.ts";\n` + codeText.replace(/\r?\n/, "").replace(/!/g, "");
 const finalText = templateText
     .replace("{{Code}}", codeText.trim())
     .replace("{{Input}}", inputText.trim())

@@ -29,7 +29,7 @@ export class VariableDefinition extends BaseDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     // DefaultExpressionedDefinition
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
     setDefaultExpression: (text: string) => any;
     // ExportableDefinition
     isExported: boolean;

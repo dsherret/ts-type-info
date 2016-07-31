@@ -8,11 +8,11 @@ export function runDecoratableDefinitionTests(definition: DecoratedDefinitions, 
         structure.decorators = structure.decorators || [];
 
         it(`should have ${structure.decorators.length} parameters`, () => {
-            assert.equal(definition.decorators.length, structure.decorators.length);
+            assert.equal(definition.decorators.length, structure.decorators!.length);
         });
 
         structure.decorators.forEach((decoratorTestStructure, i) => {
-            runDecoratorDefinitionTests(definition.decorators[i], structure.decorators[i]);
+            runDecoratorDefinitionTests(definition.decorators[i], decoratorTestStructure);
         });
     });
 }

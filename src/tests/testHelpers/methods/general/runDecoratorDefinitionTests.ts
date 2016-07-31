@@ -14,7 +14,7 @@ export function runDecoratorDefinitionTests(definition: DecoratorDefinition, str
             runNamedDefinitionTests(definition, structure);
 
             it(`should have ${structure.arguments.length} argument(s)`, () => {
-                assert.equal(definition.arguments.length, structure.arguments.length);
+                assert.equal(definition.arguments.length, structure.arguments!.length);
             });
 
             structure.arguments.forEach((argumentTestStructure, i) => {

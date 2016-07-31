@@ -7,6 +7,6 @@ export class StructureFunctionBodyWriteableBinder extends FunctionBodyWriteableB
     }
 
     getOnWriteFunctionBody() {
-        return this.structure.onWriteFunctionBody;
+        return this.structure.onWriteFunctionBody || null;
     }
 }

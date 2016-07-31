@@ -23,7 +23,7 @@ export class GlobalDefinition {
             opts.file.addImport({
                 namedImports: [{
                     name: rootDef.isDefaultExportOfFile ? "default" : rootDef.name,
-                    alias: opts.alias || (rootDef.isDefaultExportOfFile ? rootDef.name : null)
+                    alias: opts.alias || (rootDef.isDefaultExportOfFile ? rootDef.name : undefined)
                 }],
                 moduleSpecifier: opts.file.getModuleSpecifierToFile(fileAndNamespaces.file)
             });
@@ -41,7 +41,8 @@ export class GlobalDefinition {
         let searchFunction = fileNameOrSearchFunction as ((file: FileDefinition) => boolean);
 
         if (typeof fileNameOrSearchFunction === "string") {
-            searchFunction = (def) => FileUtils.filePathMatches(def.fileName, fileNameOrSearchFunction);
+            // todo: why did I have to add an assertion here in TS 2.0? Shouldn't it figure this out as a string?
+            searchFunction = (def) => FileUtils.filePathMatches(def.fileName, fileNameOrSearchFunction as string);
         }
 
         return DefinitionUtils.getDefinitionFromListByFunc(this.files, searchFunction);

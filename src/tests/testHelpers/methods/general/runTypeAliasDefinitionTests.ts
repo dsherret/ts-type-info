@@ -9,8 +9,7 @@ export function runTypeAliasDefinitionTests(definition: TypeAliasDefinition, str
         ensureNotNull(definition, () => {
             structure.isAmbient = structure.isAmbient == null ? true : structure.isAmbient;
             if (structure.type == null) {
-                // default always to expect a string (for simplicity)
-                structure.type = { text: "string" };
+                structure.type = { text: "string" }; // default always to expect a string (for simplicity)
             }
 
             runBaseDefinitionTests(definition, structure);

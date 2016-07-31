@@ -2,7 +2,7 @@
 import {WriteOptions} from "./../WriteOptions";
 
 export class MainFactory {
-    static createWriter(writeOptions: WriteOptions) {
+    static createWriter(writeOptions: WriteOptions | undefined) {
         return new CodeBlockWriter(writeOptions);
     }
 }

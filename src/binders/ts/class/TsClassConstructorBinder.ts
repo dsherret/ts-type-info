@@ -6,7 +6,7 @@ import {TsBaseDefinitionBinder, TsParameteredBinderByNode, TsFunctionBodyWriteab
 import {TsClassConstructorParameterBinder} from "./TsClassConstructorParameterBinder";
 
 export class TsClassConstructorBinder extends ClassConstructorBinder {
-    constructor(factory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsParameteredBinderByNode(

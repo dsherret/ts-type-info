@@ -346,56 +346,56 @@ describe("ModuledDefinitionTests", () => {
         const n = new NamespaceDefinition();
         n.addClass({ name: "name1" });
         n.addClass({ name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getClass("name2"), { name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getClass(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getClass("name2")!, { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getClass(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("#getEnum()", () => {
         const n = new NamespaceDefinition();
         n.addEnum({ name: "name1" });
         n.addEnum({ name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getEnum("name2"), { name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getEnum(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getEnum("name2")!, { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getEnum(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("#getFunction()", () => {
         const n = new NamespaceDefinition();
         n.addFunction({ name: "name1" });
         n.addFunction({ name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getFunction("name2"), { name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getFunction(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getFunction("name2")!, { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getFunction(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("#getInterface()", () => {
         const n = new NamespaceDefinition();
         n.addInterface({ name: "name1" });
         n.addInterface({ name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getInterface("name2"), { name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getInterface(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getInterface("name2")!, { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getInterface(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("#getNamespace()", () => {
         const n = new NamespaceDefinition();
         n.addNamespace({ name: "name1" });
         n.addNamespace({ name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getNamespace("name2"), { name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getNamespace(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getNamespace("name2")!, { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getNamespace(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("#getTypeAlias()", () => {
         const n = new NamespaceDefinition();
         n.addTypeAlias({ name: "name1", type: "string" });
         n.addTypeAlias({ name: "name2", type: "string" });
-        testHelpers.runNamedDefinitionTests(n.getTypeAlias("name2"), { name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getTypeAlias(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getTypeAlias("name2")!, { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getTypeAlias(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("#getVariable()", () => {
         const n = new NamespaceDefinition();
         n.addVariable({ name: "name1" });
         n.addVariable({ name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getVariable("name2"), { name: "name2" });
-        testHelpers.runNamedDefinitionTests(n.getVariable(d => d.name === "name2"), { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getVariable("name2")!, { name: "name2" });
+        testHelpers.runNamedDefinitionTests(n.getVariable(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("#directlyContains()", () => {
@@ -456,7 +456,7 @@ describe("ModuledDefinitionTests", () => {
         });
 
         describe("getting the namesapces to a variable directly in the namespace", () => {
-            const namespaces = def.getNamespacesToDefinition(def.variables[0]);
+            const namespaces = def.getNamespacesToDefinition(def.variables[0])!;
 
             it("the array should have the correct length", () => {
                 assert.equal(namespaces.length, 0);
@@ -464,7 +464,7 @@ describe("ModuledDefinitionTests", () => {
         });
 
         describe("getting the namesapces to a variable in a namespace within a namespace", () => {
-            const namespaces = def.getNamespacesToDefinition(def.namespaces[1].namespaces[0].variables[1]);
+            const namespaces = def.getNamespacesToDefinition(def.namespaces[1].namespaces[0].variables[1])!;
 
             it("the array should have the correct length", () => {
                 assert.equal(namespaces.length, 2);

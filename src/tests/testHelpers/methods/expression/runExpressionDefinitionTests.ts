@@ -2,14 +2,17 @@
 import {ExpressionDefinition} from "./../../../../definitions";
 import {ExpressionTestStructure} from "./../../testStructures";
 import {runBaseExpressionDefinitionTests} from "./runBaseExpressionDefinitionTests";
+import {ensureNotNull} from "./../../ensureNotNull";
 
-export function runExpressionDefinitionTests(definition: ExpressionDefinition, structure: ExpressionTestStructure) {
+export function runExpressionDefinitionTests(definition: ExpressionDefinition | null, structure: ExpressionTestStructure | undefined) {
     if (structure == null) {
         it(`should be null`, () => {
             assert.equal(definition, null);
         });
     }
     else {
-        runBaseExpressionDefinitionTests(definition, structure);
+        ensureNotNull(definition, () => {
+            runBaseExpressionDefinitionTests(definition!, structure!);
+        });
     }
 }

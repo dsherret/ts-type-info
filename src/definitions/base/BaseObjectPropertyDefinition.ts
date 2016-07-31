@@ -10,7 +10,7 @@ export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinitio
     }
 
     // DefaultExpressionedDefinition
-    defaultExpression: ExpressionDefinition;
+    defaultExpression: ExpressionDefinition | null;
     setDefaultExpression: (text: string) => any;
 }
 

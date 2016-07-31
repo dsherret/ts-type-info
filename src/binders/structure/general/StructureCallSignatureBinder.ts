@@ -6,7 +6,7 @@ import {StructureBaseDefinitionBinder, StructureTypeParameteredBinder, Structure
 import {StructureCallSignatureParameterBinder} from "./StructureCallSignatureParameterBinder";
 
 export class StructureCallSignatureBinder extends CallSignatureBinder {
-    constructor(factory: StructureFactory, private structure: CallSignatureStructure) {
+    constructor(factory: StructureFactory, structure: CallSignatureStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureTypeParameteredBinder(factory, structure),

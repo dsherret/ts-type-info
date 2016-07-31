@@ -9,16 +9,16 @@ describe("Main", () => {
             assert.throws(() => tsTypeInfo.getInfoFromFiles("" as any), ArgumentTypeError);
         });
 
-        it("should not handle a non ts file when specifying not to allow them", () => {
-            const result = tsTypeInfo.getInfoFromFiles([path.join(__dirname, "../../src/tests/testFiles/nonTsFile.txt")], {
-                compilerOptions: { allowNonTsExtensions: false }
+        it("should not handle a js file when specifying to not allow them", () => {
+            const result = tsTypeInfo.getInfoFromFiles([path.join(__dirname, "../../src/tests/testFiles/nonTsFile.js")], {
+                compilerOptions: { allowJs: false }
             });
             assert.equal(result.files.length, 0);
         });
 
-        it("should get the class definition when specifying the compiler option to allow non ts extensions", () => {
-            const result = tsTypeInfo.getInfoFromFiles([path.join(__dirname, "../../src/tests/testFiles/nonTsFile.txt")], {
-                compilerOptions: { allowNonTsExtensions: true }
+        it("should get the class definition when specifying the compiler option to allow js", () => {
+            const result = tsTypeInfo.getInfoFromFiles([path.join(__dirname, "../../src/tests/testFiles/nonTsFile.js")], {
+                compilerOptions: { allowJs: true }
             });
             assert.equal(result.files[0].classes[0].name, "MyClass");
         });

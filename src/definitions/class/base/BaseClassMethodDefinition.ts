@@ -18,7 +18,7 @@ export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassM
     // AsyncableDefinition
     isAsync: boolean;
     // FunctionBodyWriteableDefinition
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     // ParameteredDefinition
     abstract addParameter(structure: ParameterStructureType): ParameterType;
     // DecoratableDefinition

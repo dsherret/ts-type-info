@@ -27,8 +27,8 @@ describe("InterfaceDefinition", () => {
         const i = new InterfaceDefinition();
         i.addMethod({ name: "name1" });
         i.addMethod({ name: "name2" });
-        runNamedDefinitionTests(i.getMethod("name2"), { name: "name2" });
-        runNamedDefinitionTests(i.getMethod(d => d.name === "name2"), { name: "name2" });
+        runNamedDefinitionTests(i.getMethod("name2")!, { name: "name2" });
+        runNamedDefinitionTests(i.getMethod(d => d.name === "name2")!, { name: "name2" });
     });
 
     describe("getNewSignature", () => {
@@ -45,7 +45,7 @@ describe("InterfaceDefinition", () => {
         const i = new InterfaceDefinition();
         i.addProperty({ name: "name1" });
         i.addProperty({ name: "name2" });
-        runNamedDefinitionTests(i.getProperty("name2"), { name: "name2" });
-        runNamedDefinitionTests(i.getProperty(d => d.name === "name2"), { name: "name2" });
+        runNamedDefinitionTests(i.getProperty("name2")!, { name: "name2" });
+        runNamedDefinitionTests(i.getProperty(d => d.name === "name2")!, { name: "name2" });
     });
 });

@@ -1,4 +1,4 @@
-﻿import {FileDefinition, NamedDefinition, TypeDefinition, ModuledDefinition} from "./../definitions";
+﻿import {FileDefinition, NamedDefinition, OptionallyNamedDefinition, TypeDefinition, ModuledDefinition} from "./../definitions";
 import {StructureFactory} from "./../factories";
 
 export class DefinitionUtils {
@@ -12,8 +12,8 @@ export class DefinitionUtils {
         else if (textOrDefinition == null) {
             def = structureFactory.getTypeFromText("any");
         }
-        else if (textOrDefinition != null) {
-            def = structureFactory.getTypeFromDefinitionAndTypeArguments(textOrDefinition, typeArguments);
+        else {
+            def = structureFactory.getTypeFromDefinitionAndTypeArguments(textOrDefinition, typeArguments)!;
         }
 
         return def;
@@ -31,13 +31,13 @@ export class DefinitionUtils {
         return fileName.lastIndexOf(definitionFileExt) === fileName.length - definitionFileExt.length;
     }
 
-    static getDefinitionFromListByNameOrFunc<T extends NamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T {
+    static getDefinitionFromListByNameOrFunc<T extends NamedDefinition | OptionallyNamedDefinition>(list: T[], nameOrFunc: string | ((item: T) => boolean)): T | null {
         const func = DefinitionUtils.getFuncFromNameOrFunc(nameOrFunc);
         return DefinitionUtils.getDefinitionFromListByFunc(list, func);
     }
 
-    static getDefinitionFromListByFunc<T>(list: T[], func: ((item: T) => boolean)): T {
-        let def: T = null;
+    static getDefinitionFromListByFunc<T>(list: T[], func: ((item: T) => boolean)): T | null {
+        let def: T | null = null;
 
         for (let i = 0, l = list.length; i < l; i++) {
             if (func(list[i])) {
@@ -49,7 +49,7 @@ export class DefinitionUtils {
         return def;
     }
 
-    private static getFuncFromNameOrFunc<T extends NamedDefinition>(nameOrFunc: string | ((item: T) => boolean)) {
+    private static getFuncFromNameOrFunc<T extends NamedDefinition | OptionallyNamedDefinition>(nameOrFunc: string | ((item: T) => boolean)) {
         let func = nameOrFunc as (def: T) => boolean;
 
         if (typeof nameOrFunc === "string") {

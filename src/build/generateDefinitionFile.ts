@@ -6,8 +6,13 @@ export function generateDefinitionFile() {
     const result = getInfoFromFiles([
         path.join(__dirname, "../../src/main.ts"),
         path.join(__dirname, "../../src/typings/index.d.ts")
-    ], { showDebugMessages: false });
-    const fileInfo = result.getFile("main.ts");
+    ], {
+        showDebugMessages: false,
+        compilerOptions: {
+            strictNullChecks: true
+        }
+    });
+    const fileInfo = result.getFile("main.ts")!;
 
     removeInternalProperties(result);
     fixSetType(result);
@@ -23,7 +28,7 @@ export function generateDefinitionFile() {
 }
 
 function removeInternalProperties(result: GlobalDefinition) {
-    const baseDefClass = result.getFile("BaseDefinition.ts").getClass("BaseDefinition");
+    const baseDefClass = result.getFile("BaseDefinition.ts")!.getClass("BaseDefinition")!;
     baseDefClass.properties = baseDefClass.properties.filter(p => p.name !== "___uniqueID");
 }
 

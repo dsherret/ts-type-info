@@ -12,7 +12,7 @@ export class StructureFileBinder extends FileBinder {
     }
 
     getFileName() {
-        return this.structure.fileName;
+        return this.structure.fileName || "";
     }
 
     getDefaultExportExpression() {

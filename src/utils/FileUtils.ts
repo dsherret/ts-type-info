@@ -18,8 +18,8 @@ export module FileUtils {
         return fileName.replace(/\\/g, "/");
     }
 
-    export function filePathMatches(fileName: string, searchString: string) {
-        const splitBySlash = (p: string) => standardizeSlashes(p || "").replace(/^\//, "").split("/");
+    export function filePathMatches(fileName: string | null, searchString: string | null) {
+        const splitBySlash = (p: string | null) => standardizeSlashes(p || "").replace(/^\//, "").split("/");
 
         const fileNameItems = splitBySlash(fileName);
         const searchItems = splitBySlash(searchString);

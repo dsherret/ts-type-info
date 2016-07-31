@@ -23,10 +23,10 @@ export function runStarImportPartDefinitionTests(definition: StarImportPartDefin
 
             describe("definitions", () => {
                 it(`should have the expected number of definitions`, () => {
-                    assert.equal(definition.definitions.length, structure.definitions.length);
+                    assert.equal(definition.definitions.length, structure.definitions!.length);
                 });
 
-                structure.definitions.forEach((structureDefinition, j) => {
+                structure.definitions!.forEach((structureDefinition, j) => {
                     const definitionDefinition = definition.definitions[j];
 
                     ensureNotNull(definitionDefinition, () => {

@@ -1,4 +1,4 @@
-﻿import {ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
+﻿import {ExportableDefinitions} from "./../../../definitions";
 import {NamedImportPartStructure} from "./../../../structures";
 import {NamedImportPartBinder} from "./../../base";
 import {StructureBaseDefinitionBinder} from "./../base";
@@ -13,7 +13,7 @@ export class StructureNamedImportPartBinder extends NamedImportPartBinder {
     }
 
     getAlias() {
-        return this.structure.alias;
+        return this.structure.alias || null;
     }
 
     getDefinitions() {
@@ -21,6 +21,6 @@ export class StructureNamedImportPartBinder extends NamedImportPartBinder {
     }
 
     getExpression() {
-        return null as ExpressionDefinition;
+        return null;
     }
 }

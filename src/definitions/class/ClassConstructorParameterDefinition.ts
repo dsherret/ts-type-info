@@ -15,11 +15,11 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     toClassProperty() {
         const factory = new StructureFactory();
         const def = factory.getClassProperty({
-            name: this.name,
+            name: this.name!,
             scope: ClassConstructorParameterScope.toScope(this.scope),
             type: this.type.text,
             isOptional: this.isOptional,
-            defaultExpression: this.defaultExpression != null ? this.defaultExpression.text : null,
+            defaultExpression: this.defaultExpression != null ? this.defaultExpression.text : undefined,
             decorators: this.decorators.map(decorator => ({
                 name: decorator.name,
                 arguments: decorator.arguments.map(arg => arg.text)

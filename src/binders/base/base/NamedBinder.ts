@@ -1,9 +1,9 @@
-﻿import {NamedDefinition} from "./../../../definitions";
+﻿import {NamedDefinition, OptionallyNamedDefinition} from "./../../../definitions";
 
 export abstract class NamedBinder {
-    abstract getName(): string;
+    abstract getName(): string | null;
 
-    bind(def: NamedDefinition) {
+    bind(def: NamedDefinition | OptionallyNamedDefinition) {
         def.name = this.getName();
     }
 }

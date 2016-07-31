@@ -34,6 +34,6 @@ export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseP
     }
 
     protected getUserDefinedTypeGuard() {
-        return null as definitions.UserDefinedTypeGuardDefinition;
+        return null;
     }
 }

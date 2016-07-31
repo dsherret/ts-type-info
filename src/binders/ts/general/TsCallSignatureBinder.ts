@@ -6,7 +6,7 @@ import {TsBaseDefinitionBinder, TsTypeParameteredBinderBySignature, TsParametere
 import {TsCallSignatureParameterBinder} from "./TsCallSignatureParameterBinder";
 
 export class TsCallSignatureBinder extends CallSignatureBinder {
-    constructor(factory: TsFactory, private signature: TsSignature) {
+    constructor(factory: TsFactory, signature: TsSignature) {
         super(
             new TsBaseDefinitionBinder(),
             new TsTypeParameteredBinderBySignature(factory, signature),

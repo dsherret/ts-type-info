@@ -6,51 +6,51 @@ import {runNamedDefinitionTests, runBasePropertyDefinitionTests} from "./../base
 import {runCallSignatureDefinitionTests} from "./../general";
 import {runBaseExpressionDefinitionTests} from "./runBaseExpressionDefinitionTests";
 
-export function runTypeDefinitionTests(definition: TypeDefinition, structure: TypeTestStructure) {
+export function runTypeDefinitionTests(definition: TypeDefinition | null, structure: TypeTestStructure) {
     describe("type expression", () => {
         ensureNotNull(definition, () => {
-            runBaseExpressionDefinitionTests(definition, structure);
+            runBaseExpressionDefinitionTests(definition!, structure);
 
             if (structure.arrayElementType != null) {
                 describe("arrayElementType", () => {
-                    runTypeDefinitionTests(definition.arrayElementType, structure.arrayElementType);
+                    runTypeDefinitionTests(definition!.arrayElementType, structure.arrayElementType!);
                 });
             }
 
             it("should have the same number of intersection types", () => {
-                assert.equal(definition.intersectionTypes.length, (structure.intersectionTypes || []).length);
+                assert.equal(definition!.intersectionTypes.length, (structure.intersectionTypes || []).length);
             });
 
             describe("intersection types", () => {
                 (structure.intersectionTypes || []).forEach((intersectionStructure, i) => {
-                    runTypeDefinitionTests(definition.intersectionTypes[i], intersectionStructure);
+                    runTypeDefinitionTests(definition!.intersectionTypes[i], intersectionStructure);
                 });
             });
 
             it("should have the same number of union types", () => {
-                assert.equal(definition.unionTypes.length, (structure.unionTypes || []).length);
+                assert.equal(definition!.unionTypes.length, (structure.unionTypes || []).length);
             });
 
             describe("union types", () => {
                 (structure.unionTypes || []).forEach((unionStructure, i) => {
-                    runTypeDefinitionTests(definition.unionTypes[i], unionStructure);
+                    runTypeDefinitionTests(definition!.unionTypes[i], unionStructure);
                 });
             });
 
             it("should have the same isArray property", () => {
-                assert.equal(definition.isArray(), structure.isArray || false);
+                assert.equal(definition!.isArray(), structure.isArray || false);
             });
 
             // only bother checking these if they are explictly asked to be checked for
             if (structure.callSignatures != null) {
                 it(`should have the same number of call signatures`, () => {
-                    assert.equal(definition.callSignatures.length, structure.callSignatures.length);
+                    assert.equal(definition!.callSignatures.length, structure.callSignatures!.length);
                 });
 
                 structure.callSignatures.forEach((callSignatureTestStructure, i) => {
                     describe(`call signature ${i}`, () => {
-                        ensureNotNull(definition.callSignatures[i], () => {
-                            runCallSignatureDefinitionTests(definition.callSignatures[i], callSignatureTestStructure);
+                        ensureNotNull(definition!.callSignatures[i], () => {
+                            runCallSignatureDefinitionTests(definition!.callSignatures[i], callSignatureTestStructure);
                         });
                     });
                 });
@@ -58,23 +58,23 @@ export function runTypeDefinitionTests(definition: TypeDefinition, structure: Ty
 
             if (structure.typeArguments != null) {
                 it(`should have the same number of type arguments`, () => {
-                    assert.equal(definition.typeArguments.length, structure.typeArguments.length);
+                    assert.equal(definition!.typeArguments.length, structure.typeArguments!.length);
                 });
 
                 structure.typeArguments.forEach((typeTestStructure, i) => {
-                    runTypeDefinitionTests(definition.typeArguments[i], typeTestStructure);
+                    runTypeDefinitionTests(definition!.typeArguments[i], typeTestStructure);
                 });
             }
 
             if (structure.properties != null) {
                 it(`should have the same number of properties`, () => {
-                    assert.equal(definition.properties.length, structure.properties.length);
+                    assert.equal(definition!.properties.length, structure.properties!.length);
                 });
 
                 structure.properties.forEach((propertyTestStructure, i) => {
                     describe(`property ${i}`, () => {
-                        ensureNotNull(definition.properties[i], () => {
-                            runBasePropertyDefinitionTests(definition.properties[i], propertyTestStructure);
+                        ensureNotNull(definition!.properties[i], () => {
+                            runBasePropertyDefinitionTests(definition!.properties[i], propertyTestStructure);
                         });
                     });
                 });
@@ -82,13 +82,13 @@ export function runTypeDefinitionTests(definition: TypeDefinition, structure: Ty
 
             if (structure.definitions != null) {
                 it(`should have the same number of definitions`, () => {
-                    assert.equal(definition.definitions.length, structure.definitions.length);
+                    assert.equal(definition!.definitions.length, structure.definitions!.length);
                 });
 
                 structure.definitions.forEach((defTestStructure, i) => {
                     it(`definition ${defTestStructure.name}`, () => {
-                        ensureNotNull(definition.definitions[i], () => {
-                            runNamedDefinitionTests(definition.definitions[i], defTestStructure);
+                        ensureNotNull(definition!.definitions[i], () => {
+                            runNamedDefinitionTests(definition!.definitions[i], defTestStructure);
                         });
                     });
                 });
@@ -96,11 +96,11 @@ export function runTypeDefinitionTests(definition: TypeDefinition, structure: Ty
 
             if (structure.allDefinitions != null) {
                 it(`should have the same number of getAllDefinitions()`, () => {
-                    assert.equal(definition.getAllDefinitions().length, structure.allDefinitions.length);
+                    assert.equal(definition!.getAllDefinitions().length, structure.allDefinitions!.length);
                 });
 
                 structure.allDefinitions.forEach((defTestStructure, i) => {
-                    const defs = definition.getAllDefinitions();
+                    const defs = definition!.getAllDefinitions();
 
                     it(`definition ${defTestStructure.name}`, () => {
                         ensureNotNull(defs[i], () => {

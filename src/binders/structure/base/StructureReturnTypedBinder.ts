@@ -8,6 +8,6 @@ export class StructureReturnTypedBinder extends ReturnTypedBinder {
     }
 
     getReturnType() {
-        return this.factory.getTypeFromText(this.structure.returnType) || this.factory.getTypeFromText("void");
+        return this.factory.getTypeFromText(this.structure.returnType || "void");
     }
 }

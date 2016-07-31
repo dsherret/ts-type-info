@@ -5,7 +5,7 @@ export abstract class TypeBinder {
     abstract isArrayType(): boolean;
     abstract isIntersectionType(): boolean;
     abstract isUnionType(): boolean;
-    abstract getArrayElementType(): TypeDefinition;
+    abstract getArrayElementType(): TypeDefinition | null;
     abstract getUnionOrIntersectionTypes(): TypeDefinition[];
     abstract getCallSignatures(): CallSignatureDefinition[];
     abstract getProperties(): TypePropertyDefinition[];

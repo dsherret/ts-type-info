@@ -9,11 +9,11 @@ export class TsReExportBinder extends ReExportBinder {
     }
 
     getFileName() {
-        return this.node.getFileNameOfModuleSpecifier();
+        return this.node.getFileNameOfModuleSpecifier() || "";
     }
 
     getModuleSpecifier() {
-        return this.node.getModuleSpecifierText();
+        return this.node.getModuleSpecifierText() || "";
     }
 
     getIsStarExport() {

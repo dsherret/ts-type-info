@@ -12,8 +12,8 @@ import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 export class ImportDefinition extends BaseDefinition {
     fileName: string;
     moduleSpecifier: string;
-    starImportName: string;
-    defaultImport: DefaultImportPartDefinition;
+    starImportName: string | null;
+    defaultImport: DefaultImportPartDefinition | null;
     namedImports: NamedImportPartDefinition[] = [];
     starImports: StarImportPartDefinition[] = [];
 

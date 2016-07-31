@@ -97,7 +97,7 @@ let myVar: MyClass & MyOtherClass<MyClass>;
             const file = getInfoFromString(code);
             const globalDef = new GlobalDefinition();
             globalDef.files.push(file);
-            globalDef.renameDefinitionAs(file.getClass("MyClass"), "MyNewName");
+            globalDef.renameDefinitionAs(file.getClass("MyClass")!, "MyNewName");
 
             it("should rename the definition", () => {
                 assert.equal(file.write(), code.replace(/MyClass/g, "MyNewName"));
@@ -134,7 +134,7 @@ var e = c.MyClass;
             const file = getInfoFromString(code);
             const globalDef = new GlobalDefinition();
             globalDef.files.push(file);
-            globalDef.renameDefinitionAs(file.getNamespace("MyNamespace").getNamespace("MyInnerNamespace").getClass("MyClass"), "MyNewName");
+            globalDef.renameDefinitionAs(file.getNamespace("MyNamespace")!.getNamespace("MyInnerNamespace")!.getClass("MyClass")!, "MyNewName");
 
             it("should rename the definition", () => {
                 assert.equal(file.write(), code.replace(/MyClass/g, "MyNewName"));
@@ -158,7 +158,7 @@ var e = c.MyClass;
                         name: "myVar",
                         type: "MyClass"
                     }],
-                    defaultExportExpression: isDefaultImport ? "MyClass" : null
+                    defaultExportExpression: isDefaultImport ? "MyClass" : undefined
                 });
                 globalDef.addFile({
                     fileName: "C:\\Main.ts",
@@ -439,7 +439,7 @@ let myDefaultImportVar: typeof MyDefaultImportNamespace.MyOtherNewName;
                 }]
             });
 
-            const file = globalDef.getFile("MyClass.ts");
+            const file = globalDef.getFile("MyClass.ts")!;
             globalDef.renameDefinitionAs(file.classes[0], "MyNewName");
             globalDef.renameDefinitionAs(file.namespaces[0].classes[0], "MyNewInnerClass");
 
@@ -448,7 +448,7 @@ let myDefaultImportVar: typeof MyDefaultImportNamespace.MyOtherNewName;
 `export {MyNewName, MyNewName as MyClassAlias, default as MyNamespace} from "./MyClass";
 `;
 
-                assert.equal(globalDef.getFile("namedClasses.ts").write(), expectedCode);
+                assert.equal(globalDef.getFile("namedClasses.ts")!.write(), expectedCode);
             });
 
             it("should rename the imported re-exported definition in the main file", () => {
@@ -461,13 +461,13 @@ let b: MyClassAlias;
 let c: MyAliasNamespace.MyNewInnerClass;
 `;
 
-                assert.equal(globalDef.getFile("main.ts").write(), expectedCode);
+                assert.equal(globalDef.getFile("main.ts")!.write(), expectedCode);
             });
         });
 
         describe("re-naming default exports", () => {
             const globalDef = getInfoFromFiles([path.join(__dirname, "./../../../src/tests/testFiles/reExportRename/main.ts")]);
-            globalDef.renameDefinitionAs(globalDef.getFile("MyNamespace.ts").namespaces[0].classes[0], "MyNewClass");
+            globalDef.renameDefinitionAs(globalDef.getFile("MyNamespace.ts")!.namespaces[0].classes[0], "MyNewClass");
 
             it("should rename in the main file correctly", () => {
                 const expectedCode =
@@ -478,7 +478,7 @@ let a = StarImport.MyNamespace.MyNewClass;
 let b = MyNamespace.MyNewClass;
 let c = MyNamespaceAlias.MyNewClass;
 `;
-                assert.equal(globalDef.getFile("main.ts").write(), expectedCode);
+                assert.equal(globalDef.getFile("main.ts")!.write(), expectedCode);
             });
         });
     });

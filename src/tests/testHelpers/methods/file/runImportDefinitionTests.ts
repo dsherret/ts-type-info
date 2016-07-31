@@ -22,7 +22,7 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
 
             it(`should have file name that ends with ${structure.fileName}`, () => {
                 const defFileName = definition.fileName || "";
-                assert.equal(defFileName.substr(defFileName.length - structure.fileName.length), structure.fileName);
+                assert.equal(defFileName.substr(defFileName.length - structure.fileName!.length), structure.fileName);
             });
 
             it(`should have star import name ${structure.starImportName}`, () => {
@@ -35,20 +35,20 @@ export function runImportDefinitionTests(definition: ImportDefinition, structure
 
             describe("named imports", () => {
                 it(`should have the same number of named imports`, () => {
-                    assert.equal(definition.namedImports.length, structure.namedImports.length);
+                    assert.equal(definition.namedImports.length, structure.namedImports!.length);
                 });
 
-                structure.namedImports.forEach((namedImportStructure, i) => {
+                structure.namedImports!.forEach((namedImportStructure, i) => {
                     runNamedImportPartDefinitionTests(definition.namedImports[i], namedImportStructure);
                 });
             });
 
             describe("star imports", () => {
                 it(`should have the same number of star imports`, () => {
-                    assert.equal(definition.starImports.length, structure.starImports.length);
+                    assert.equal(definition.starImports.length, structure.starImports!.length);
                 });
 
-                structure.starImports.forEach((starImportStructure, i) => {
+                structure.starImports!.forEach((starImportStructure, i) => {
                     runStarImportPartDefinitionTests(definition.starImports[i], starImportStructure);
                 });
             });

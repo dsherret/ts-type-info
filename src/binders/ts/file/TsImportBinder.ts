@@ -10,11 +10,11 @@ export class TsImportBinder extends ImportBinder {
     }
 
     getFileName() {
-        return this.node.getFileNameOfModuleSpecifier();
+        return this.node.getFileNameOfModuleSpecifier() || "";
     }
 
     getModuleSpecifier() {
-        return this.node.getModuleSpecifierText();
+        return this.node.getModuleSpecifierText() || "";
     }
 
     getIsStarImport() {
@@ -22,19 +22,19 @@ export class TsImportBinder extends ImportBinder {
     }
 
     getStarImportName() {
-        return this.node.getStarImportName();
+        return this.node.getStarImportName() || "";
     }
 
     getDefaultImport() {
         const defaultImportNameAndSymbol = this.node.getDefaultImportNameAndSymbol();
 
         if (defaultImportNameAndSymbol != null) {
-            const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(defaultImportNameAndSymbol.symbol);
+            const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(defaultImportNameAndSymbol.symbol!);
 
             return this.factory.getDefaultImportPart({
                 name: defaultImportNameAndSymbol.name,
                 definitions: defsOrExpression.definitions as ExportableDefinitions[],
-                expression: defsOrExpression.expression
+                expression: defsOrExpression.expression!
             });
         }
         else {
@@ -47,7 +47,7 @@ export class TsImportBinder extends ImportBinder {
     }
 
     getStarImports() {
-        const starExportSymbols = this.node.getStarSymbol().getExportSymbolsOfModuleByName();
+        const starExportSymbols = this.node.getStarSymbol()!.getExportSymbolsOfModuleByName();
 
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
             const {definitions, expression} = this.factory.getDefinitionsOrExpressionFromExportSymbol(starExportSymbols[name]);

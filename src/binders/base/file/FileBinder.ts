@@ -10,7 +10,7 @@ export abstract class FileBinder implements IBaseBinder {
     }
 
     abstract getFileName(): string;
-    abstract getDefaultExportExpression(): ExpressionDefinition;
+    abstract getDefaultExportExpression(): ExpressionDefinition | null;
     abstract getImports(): ImportDefinition[];
     abstract getReExports(): ReExportDefinition[];
 

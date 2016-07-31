@@ -4,10 +4,10 @@
 }
 
 export interface CompilerOptions {
-    allowNonTsExtensions?: boolean;
+    [option: string]: string | number | boolean | undefined;
+    allowJs?: boolean;
     charset?: string;
     locale?: string;
     project?: string;
     rootDir?: string;
-    [option: string]: string | number | boolean;
 }

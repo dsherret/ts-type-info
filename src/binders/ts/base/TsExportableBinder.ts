@@ -2,11 +2,10 @@
 import {ExportableBinder} from "./../../base";
 
 export class TsExportableBinder extends ExportableBinder {
-    private symbol: TsSymbol;
+    private symbol: TsSymbol | null;
 
     constructor(node: TsNode) {
         super();
-
         this.symbol = node.getSymbol();
     }
 

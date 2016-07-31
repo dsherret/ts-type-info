@@ -17,10 +17,10 @@ export class StructureClassPropertyBinder extends ClassPropertyBinder {
     }
 
     getOnWriteGetBody() {
-        return this.structure.onWriteGetBody;
+        return this.structure.onWriteGetBody || null;
     }
 
     getOnWriteSetBody() {
-        return this.structure.onWriteSetBody;
+        return this.structure.onWriteSetBody || null;
     }
 }

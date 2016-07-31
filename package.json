@@ -29,7 +29,7 @@
   "dependencies": {
     "code-block-writer": "^4.0.0",
     "tmp": "0.0.28",
-    "typescript": "^1.8.10"
+    "typescript": "^2.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.6",

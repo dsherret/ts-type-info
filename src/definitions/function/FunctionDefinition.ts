@@ -33,7 +33,7 @@ export class FunctionDefinition
     // AsyncableDefinition
     isAsync: boolean;
     // FunctionBodyWriteableDefinition
-    onWriteFunctionBody: (writer: CodeBlockWriter) => void;
+    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;

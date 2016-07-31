@@ -29,11 +29,11 @@ describe("GlobalDefinition", () => {
             fileName: "/file2.ts"
         });
 
-        const file1 = def.getFile("file1.ts");
-        const file2 = def.getFile("file2.ts");
+        const file1 = def.getFile("file1.ts")!;
+        const file2 = def.getFile("file2.ts")!;
 
         it("should throw an error when specifying a definition that is not exported", () => {
-            assert.throws(() => def.addDefinitionAsImportToFile({ definition: file1.getClass("MyNonExportedClass"), file: file2 }));
+            assert.throws(() => def.addDefinitionAsImportToFile({ definition: file1.getClass("MyNonExportedClass")!, file: file2 }));
         });
 
         it("should throw an error when specifying a definition that does not exist in the global definition", () => {
@@ -41,7 +41,7 @@ describe("GlobalDefinition", () => {
         });
 
         describe("adding an exported definition as an import to another file", () => {
-            def.addDefinitionAsImportToFile({ definition: file1.getClass("MyClass"), file: file2 });
+            def.addDefinitionAsImportToFile({ definition: file1.getClass("MyClass")!, file: file2 });
             const importDef = file2.imports[0];
 
             it("should have a name of MyClass", () => {
@@ -58,7 +58,7 @@ describe("GlobalDefinition", () => {
         });
 
         describe("adding an exported definition as an import inside a namespace", () => {
-            def.addDefinitionAsImportToFile({ definition: file1.getNamespace("MyDefaultNamespace").getClass("MyClassInNamespace"), file: file2 });
+            def.addDefinitionAsImportToFile({ definition: file1.getNamespace("MyDefaultNamespace")!.getClass("MyClassInNamespace")!, file: file2 });
             const importDef = file2.imports[1];
 
             it("should have a definition of MyDefaultNamespace", () => {
@@ -79,7 +79,7 @@ describe("GlobalDefinition", () => {
         });
 
         describe("adding an exported definition as an import to another file with an alias", () => {
-            def.addDefinitionAsImportToFile({ definition: file1.getClass("MyClass"), file: file2, alias: "myAlias" });
+            def.addDefinitionAsImportToFile({ definition: file1.getClass("MyClass")!, file: file2, alias: "myAlias" });
             const importDef = file2.imports[2];
 
             it("should have an alias of myAlias", () => {
@@ -163,7 +163,7 @@ describe("GlobalDefinition", () => {
         });
 
         describe("getting the file and namespaces to a variable in a file", () => {
-            const result = def.getFileAndNamespacesToDefinition(def.files[2].variables[0]);
+            const result = def.getFileAndNamespacesToDefinition(def.files[2].variables[0])!;
 
             it("should have the correct file", () => {
                 assert.equal(result.file, def.files[2]);
@@ -175,7 +175,7 @@ describe("GlobalDefinition", () => {
         });
 
         describe("getting the file and namespaces to a variable in a file within a namespace", () => {
-            const result = def.getFileAndNamespacesToDefinition(def.files[1].namespaces[1].namespaces[0].variables[1]);
+            const result = def.getFileAndNamespacesToDefinition(def.files[1].namespaces[1].namespaces[0].variables[1])!;
 
             it("should have the correct file", () => {
                 assert.equal(result.file, def.files[1]);

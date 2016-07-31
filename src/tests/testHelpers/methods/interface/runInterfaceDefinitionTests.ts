@@ -30,60 +30,60 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
 
             describe("callSignatures", () => {
                 it("should have the expected number of callSignatures", () => {
-                    assert.equal(definition.callSignatures.length, structure.callSignatures.length);
+                    assert.equal(definition.callSignatures.length, structure.callSignatures!.length);
                 });
 
-                structure.callSignatures.forEach((callSignatureTestStructure, i) => {
+                structure.callSignatures!.forEach((callSignatureTestStructure, i) => {
                     runCallSignatureDefinitionTests(definition.callSignatures[i], callSignatureTestStructure);
                 });
             });
 
             describe("indexSignatures", () => {
                 it("should have the expected number of indexSignatures", () => {
-                    assert.equal(definition.indexSignatures.length, structure.indexSignatures.length);
+                    assert.equal(definition.indexSignatures.length, structure.indexSignatures!.length);
                 });
 
-                structure.indexSignatures.forEach((indexSignatureTestStructure, i) => {
+                structure.indexSignatures!.forEach((indexSignatureTestStructure, i) => {
                     runIndexSignatureDefinitionTests(definition.indexSignatures[i], indexSignatureTestStructure);
                 });
             });
 
             describe("methods", () => {
                 it("should have the expected number of methods", () => {
-                    assert.equal(definition.methods.length, structure.methods.length);
+                    assert.equal(definition.methods.length, structure.methods!.length);
                 });
 
-                structure.methods.forEach((methodTestStructure, i) => {
+                structure.methods!.forEach((methodTestStructure, i) => {
                     runInterfaceMethodDefinitionTests(definition.methods[i], methodTestStructure);
                 });
             });
 
             describe("newSignatures", () => {
                 it("should have the expected number of newSignatures", () => {
-                    assert.equal(definition.newSignatures.length, structure.newSignatures.length);
+                    assert.equal(definition.newSignatures.length, structure.newSignatures!.length);
                 });
 
-                structure.newSignatures.forEach((newSignatureTestStructure, i) => {
+                structure.newSignatures!.forEach((newSignatureTestStructure, i) => {
                     runCallSignatureDefinitionTests(definition.newSignatures[i], newSignatureTestStructure);
                 });
             });
 
             describe("properties", () => {
                 it("should have the expected number of properties", () => {
-                    assert.equal(definition.properties.length, structure.properties.length);
+                    assert.equal(definition.properties.length, structure.properties!.length);
                 });
 
-                structure.properties.forEach((propertyTestStructure, i) => {
+                structure.properties!.forEach((propertyTestStructure, i) => {
                     runInterfacePropertyDefinitionTests(definition.properties[i], propertyTestStructure);
                 });
             });
 
             describe("extends", () => {
                 it("should have the expected number of extends", () => {
-                    assert.equal(definition.extendsTypes.length, structure.extendsTypes.length);
+                    assert.equal(definition.extendsTypes.length, structure.extendsTypes!.length);
                 });
 
-                structure.extendsTypes.forEach((extendTestStructure, i) => {
+                structure.extendsTypes!.forEach((extendTestStructure, i) => {
                     runTypeDefinitionTests(definition.extendsTypes[i], extendTestStructure);
                 });
             });

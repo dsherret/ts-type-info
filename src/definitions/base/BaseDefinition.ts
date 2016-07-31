@@ -31,8 +31,8 @@ export abstract class BaseDefinition {
         });
     }
 
-    onBeforeWrite: (writer: CodeBlockWriter) => void;
-    onAfterWrite: (writer: CodeBlockWriter) => void;
+    onBeforeWrite: ((writer: CodeBlockWriter) => void) | null;
+    onAfterWrite: ((writer: CodeBlockWriter) => void) | null;
 
     // IMPORTANT: The reason DefinitionType exists is because it's a workaround to avoid circular dependencies of instanceof.
     //            I'm not sure if there's a better way of doing this.

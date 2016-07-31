@@ -24,13 +24,14 @@ export class TsSymbol extends TsSourceFileChild {
         return this.symbol.getName();
     }
 
-    getAliasSymbol(): TsSymbol {
-        return this.createSymbol(this.typeChecker.getAliasedSymbol(this.symbol));
+    getAliasSymbol() {
+        const tsSymbol = this.typeChecker.getAliasedSymbol(this.symbol);
+        return tsSymbol == null ? null : this.createSymbol(tsSymbol);
     }
 
     getExportSymbols() {
         return Object.keys(this.symbol.exports).map(memberName => {
-            const memberSymbol = this.symbol.exports[memberName];
+            const memberSymbol = this.symbol.exports![memberName];
             return this.createSymbol(memberSymbol);
         });
     }
@@ -39,12 +40,12 @@ export class TsSymbol extends TsSourceFileChild {
         const exportSymbols: { [name: string]: TsSymbol; } = {};
 
         Object.keys(this.symbol.exports).forEach(memberName => {
-            const symbol = this.createSymbol(this.symbol.exports[memberName]);
+            const symbol = this.createSymbol(this.symbol.exports![memberName]);
             const isStarExport = memberName === "__export";
 
             if (isStarExport) {
                 symbol.getNodes().forEach(node => {
-                    const moduleSpecifierSymbol = node.getModuleSpecifierSymbol();
+                    const moduleSpecifierSymbol = node.getModuleSpecifierSymbol()!;
                     const starSymbolsByName = moduleSpecifierSymbol.getExportSymbolsByName();
 
                     Object.keys(starSymbolsByName).forEach(starSymbolMemberName => {
@@ -53,7 +54,7 @@ export class TsSymbol extends TsSourceFileChild {
                 });
             }
             else {
-                exportSymbols[memberName] = this.createSymbol(this.symbol.exports[memberName]);
+                exportSymbols[memberName] = this.createSymbol(this.symbol.exports![memberName]);
             }
         });
 
@@ -67,7 +68,7 @@ export class TsSymbol extends TsSourceFileChild {
             const name = symbol.getName();
 
             if (symbol.isAlias()) {
-                symbol = symbol.getAliasSymbol();
+                symbol = symbol.getAliasSymbol()!;
             }
 
             symbolsByName[name] = symbol;
