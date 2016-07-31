@@ -65,12 +65,32 @@ gulp.task("generate-strict-structures", ["typescript"], function(cb) {
     require("./dist/build/generateStrictStructures").generateStrictStructures();
 });
 
+gulp.task("generate-examples", ["typescript-examples"], function (cb) {
+    require("./temp-examples/strictInterfaces/code");
+    return del(["./temp-examples"], cb);
+});
+
+gulp.task("typescript-examples", ["clean-examples"], function() {
+    var tsProject = ts.createProject("tsconfig.json", {
+        typescript: require("typescript")
+    });
+
+    return gulp.src(["./examples/**/*.ts", "./src/typings/**/*.d.ts"])
+        .pipe(ts(tsProject))
+        .pipe(replace("/src/main", "/dist/main"))
+        .pipe(gulp.dest("./temp-examples"));
+});
+
 gulp.task("watch", function() {
     gulp.watch("./src/**/*.ts", ["tslint", "typescript"]);
 });
 
 gulp.task("clean-scripts", function(cb) {
-    return del(["./dist/**/*{.js,.js.map}"], cb);
+    return del(["./dist/**/*"], cb);
+});
+
+gulp.task("clean-examples", function(cb) {
+    return del(["./temp-examples"], cb);
 });
 
 gulp.task("default", ["tslint", "typescript"]);

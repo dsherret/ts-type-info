@@ -114,7 +114,11 @@ abstract class MyClass {
 }
 ```
 
-### Examples
+### Simple Examples
+
+* [Strict Interfaces](examples/strictInterfaces/readme.md) - Make all interface properties required and append "Strict" to the end of the interface name.
+
+### Full Examples
 
 * [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code.
 * [TsObjectCreate](https://github.com/dsherret/ts-object-create) - Code generation that writes functions for creating objects with their types.
