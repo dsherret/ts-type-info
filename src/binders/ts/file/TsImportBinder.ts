@@ -5,7 +5,7 @@ import {ImportBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./../base";
 
 export class TsImportBinder extends ImportBinder {
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(new TsBaseDefinitionBinder());
     }
 

@@ -4,9 +4,9 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ClassConstructorBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private parameteredBinder: ParameteredBinder<ClassConstructorParameterDefinition>,
-        private functionBodyWriteableBinder: FunctionBodyWriteableBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly parameteredBinder: ParameteredBinder<ClassConstructorParameterDefinition>,
+        private readonly functionBodyWriteableBinder: FunctionBodyWriteableBinder
     ) {
     }
 

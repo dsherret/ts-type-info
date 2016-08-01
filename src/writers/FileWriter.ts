@@ -6,9 +6,9 @@ import {ReExportWriter} from "./ReExportWriter";
 import {ModuledWriter} from "./ModuledWriter";
 
 export class FileWriter extends BaseDefinitionWriter<FileDefinition> {
-    private importWriter = new ImportWriter(this.writer);
-    private reExportWriter = new ReExportWriter(this.writer);
-    private moduledWriter = new ModuledWriter(this.writer);
+    private readonly importWriter = new ImportWriter(this.writer);
+    private readonly reExportWriter = new ReExportWriter(this.writer);
+    private readonly moduledWriter = new ModuledWriter(this.writer);
 
     protected writeDefault(def: FileDefinition, flags: WriteFlags) {
         this.writeImports(def, flags);

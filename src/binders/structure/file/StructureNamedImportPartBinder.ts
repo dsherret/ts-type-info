@@ -4,7 +4,7 @@ import {NamedImportPartBinder} from "./../../base";
 import {StructureBaseDefinitionBinder} from "./../base";
 
 export class StructureNamedImportPartBinder extends NamedImportPartBinder {
-    constructor(private structure: NamedImportPartStructure) {
+    constructor(private readonly structure: NamedImportPartStructure) {
         super(new StructureBaseDefinitionBinder(structure));
     }
 

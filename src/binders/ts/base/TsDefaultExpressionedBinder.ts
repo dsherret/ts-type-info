@@ -3,7 +3,7 @@ import {TsFactory} from "./../../../factories";
 import {DefaultExpressionedBinder} from "./../../base";
 
 export class TsDefaultExpressionedBinder extends DefaultExpressionedBinder {
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super();
     }
 

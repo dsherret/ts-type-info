@@ -9,9 +9,9 @@ export interface TsBaseOptions {
 }
 
 export class TsBase {
-    protected sourceFile: ts.SourceFile;
-    protected typeChecker: TsTypeChecker;
-    protected tsCache: TsCache;
+    protected readonly sourceFile: ts.SourceFile;
+    protected readonly typeChecker: TsTypeChecker;
+    protected readonly tsCache: TsCache;
 
     constructor(opts: TsBaseOptions) {
         this.typeChecker = opts.typeChecker;

@@ -7,7 +7,7 @@ import {TypeWriter} from "./TypeWriter";
 type SupportedTypes = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | InterfaceMethodDefinition;
 
 export class FunctionReturnTypeWriter extends BaseWriter {
-    private typeWriter = new TypeWriter(this.writer);
+    private readonly typeWriter = new TypeWriter(this.writer);
 
     write(def: SupportedTypes, flags: WriteFlags) {
         if (def.userDefinedTypeGuard != null) {

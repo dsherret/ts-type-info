@@ -2,7 +2,7 @@
 import {ExportableBinder} from "./../../base";
 
 export class StructureExportableBinder extends ExportableBinder {
-    constructor(private structure: ExportableStructure) {
+    constructor(private readonly structure: ExportableStructure) {
         super();
     }
 

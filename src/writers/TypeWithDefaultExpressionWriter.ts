@@ -7,8 +7,8 @@ import {BaseWriter} from "./BaseWriter";
 type typeWithDefault = TypedDefinition & DefaultExpressionedDefinition & BaseDefinition;
 
 export class TypeWithDefaultExpressionWriter extends BaseWriter {
-    private typeWriter = new TypeWriter(this.writer);
-    private expressionWriter = new ExpressionWriter(this.writer);
+    private readonly typeWriter = new TypeWriter(this.writer);
+    private readonly expressionWriter = new ExpressionWriter(this.writer);
 
     write(def: typeWithDefault, flags: WriteFlags) {
         const shouldWriteDefaultExpression = this.getShouldWriteDefaultExpression(def, flags);

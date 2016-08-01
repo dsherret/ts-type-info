@@ -2,7 +2,7 @@
 import {AbstractableBinder} from "./../../base";
 
 export class StructureAbstractableBinder extends AbstractableBinder {
-    constructor(private structure: AbstractableStructure) {
+    constructor(private readonly structure: AbstractableStructure) {
         super();
     }
 

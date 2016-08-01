@@ -4,8 +4,8 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class FileBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private moduledBinder: ModuledBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly moduledBinder: ModuledBinder
     ) {
     }
 

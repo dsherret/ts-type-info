@@ -5,8 +5,8 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
 
 export class ClassConstructorWriter extends BaseDefinitionWriter<ClassConstructorDefinition> {
-    private parametersWriter = new ParametersWriter(this.writer);
-    private functionBodyWriter = new FunctionBodyWriter(this.writer);
+    private readonly parametersWriter = new ParametersWriter(this.writer);
+    private readonly functionBodyWriter = new FunctionBodyWriter(this.writer);
 
     static shouldWriteConstructor(def: ClassConstructorDefinition, flags: WriteFlags) {
         return (def.parameters.length > 0 || FunctionBodyWriter.willWriteFunctionBody(def, flags) || flags & WriteFlags.HideFunctionBodies);

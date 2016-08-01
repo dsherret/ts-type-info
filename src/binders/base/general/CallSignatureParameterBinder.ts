@@ -3,7 +3,7 @@ import {BaseParameterBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class CallSignatureParameterBinder implements IBaseBinder {
-    constructor(private baseParameterBinder: BaseParameterBinder) {
+    constructor(private readonly baseParameterBinder: BaseParameterBinder) {
     }
 
     bind(def: CallSignatureParameterDefinition) {

@@ -4,7 +4,7 @@ import {IBaseBinder} from "./../IBaseBinder";
 import {BaseClassPropertyBinder} from "./base";
 
 export abstract class ClassPropertyBinder implements IBaseBinder {
-    constructor(private baseClassPropertyBinder: BaseClassPropertyBinder) {
+    constructor(private readonly baseClassPropertyBinder: BaseClassPropertyBinder) {
     }
 
     abstract getIsAccessor(): boolean;

@@ -3,7 +3,7 @@ import {TsFactory} from "./../../../factories";
 import {TypeParameteredBinder} from "./../../base";
 
 export class TsTypeParameteredBinderByNode extends TypeParameteredBinder {
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super();
     }
 

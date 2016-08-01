@@ -42,7 +42,7 @@
     "no-duplicate-key": true,
     "no-shadowed-variable": true,
     "no-duplicate-variable": true,
-    "no-empty": true,
+    "no-empty": false,
     "no-eval": true,
     "no-internal-module": false,
     "no-require-imports": false,

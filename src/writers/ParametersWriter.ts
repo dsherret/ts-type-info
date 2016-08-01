@@ -5,8 +5,8 @@ import {ParameterWriter} from "./ParameterWriter";
 import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
 
 export class ParametersWriter extends BaseWriter {
-    private parameterWriter = new ParameterWriter(this.writer);
-    private parameterWithDestructuringWriter = new ParameterWithDestructuringWriter(this.writer);
+    private readonly parameterWriter = new ParameterWriter(this.writer);
+    private readonly parameterWithDestructuringWriter = new ParameterWithDestructuringWriter(this.writer);
 
     write(parameters: ParameterDefinitions[], flags: WriteFlags) {
         this.writer.write("(");

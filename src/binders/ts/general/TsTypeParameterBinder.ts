@@ -5,7 +5,7 @@ import {TsBaseDefinitionBinder} from "./../base/TsBaseDefinitionBinder";
 import {TsNamedBinder} from "./../base/TsNamedBinder";
 
 export class TsTypeParameterBinder extends TypeParameterBinder {
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node)

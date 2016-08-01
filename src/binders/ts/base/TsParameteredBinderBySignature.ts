@@ -6,10 +6,10 @@ import {TsParameterBinderByNodeConstructor} from "./TsParameteredBinderByNode";
 
 export class TsParameteredBinderBySignature<ParameterType extends BaseParameterDefinition> extends ParameteredBinder<ParameterType> {
     constructor(
-        private factory: TsFactory,
-        private signature: TsSignature,
-        private paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
-        private paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
+        private readonly factory: TsFactory,
+        private readonly signature: TsSignature,
+        private readonly paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
+        private readonly paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
         super();
     }

@@ -4,7 +4,7 @@ import {NamespaceBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsModuledBinder} from "./../base";
 
 export class TsNamespaceBinder extends NamespaceBinder {
-    constructor(factory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),

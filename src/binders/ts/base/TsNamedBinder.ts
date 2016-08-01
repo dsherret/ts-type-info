@@ -2,7 +2,7 @@
 import {NamedBinder} from "./../../base";
 
 export class TsNamedBinder extends NamedBinder {
-    constructor(private node: TsNode) {
+    constructor(private readonly node: TsNode) {
         super();
     }
 

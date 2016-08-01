@@ -5,8 +5,8 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class TypePropertyBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private basePropertyBinder: BasePropertyBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly basePropertyBinder: BasePropertyBinder
     ) {
     }
 

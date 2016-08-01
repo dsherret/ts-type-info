@@ -4,7 +4,7 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {EnumMemberWriter} from "./EnumMemberWriter";
 
 export class EnumWriter extends BaseDefinitionWriter<EnumDefinition> {
-    private enumMemberWriter = new EnumMemberWriter(this.writer);
+    private readonly enumMemberWriter = new EnumMemberWriter(this.writer);
 
     protected writeDefault(def: EnumDefinition, flags: WriteFlags) {
         this.writeExportKeyword(def, flags);

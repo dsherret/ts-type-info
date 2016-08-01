@@ -4,11 +4,11 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class FunctionBinder implements IBaseBinder {
     constructor(
-        private baseFunctionBinder: BaseFunctionBinder<FunctionParameterDefinition>,
-        private exportableBinder: ExportableBinder,
-        private ambientableBinder: AmbientableBinder,
-        private asyncableBinder: AsyncableBinder,
-        private functionBodyWriteableBinder: FunctionBodyWriteableBinder
+        private readonly baseFunctionBinder: BaseFunctionBinder<FunctionParameterDefinition>,
+        private readonly exportableBinder: ExportableBinder,
+        private readonly ambientableBinder: AmbientableBinder,
+        private readonly asyncableBinder: AsyncableBinder,
+        private readonly functionBodyWriteableBinder: FunctionBodyWriteableBinder
     ) {
     }
 

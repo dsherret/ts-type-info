@@ -3,7 +3,7 @@ import {ModuledStructure} from "./../../../structures";
 import {ModuledBinder} from "./../../base";
 
 export class StructureModuledBinder extends ModuledBinder {
-    constructor(private factory: StructureFactory, private structure: ModuledStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: ModuledStructure) {
         super();
     }
 

@@ -5,7 +5,7 @@ import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureTypeParameteredBinder} from "./../base";
 
 export class StructureInterfaceBinder extends InterfaceBinder {
-    constructor(private factory: StructureFactory, private structure: InterfaceStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: InterfaceStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),

@@ -9,11 +9,11 @@ import {PropertyWriter} from "./PropertyWriter";
 import {MethodWriter} from "./MethodWriter";
 
 export class InterfaceWriter extends BaseDefinitionWriter<InterfaceDefinition> {
-    private typeParametersWriter = new TypeParametersWriter(this.writer);
-    private propertyWriter = new PropertyWriter(this.writer);
-    private methodWriter = new MethodWriter(this.writer);
-    private callSignatureWriter = new CallSignatureWriter(this.writer);
-    private indexSignatureWriter = new IndexSignatureWriter(this.writer);
+    private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
+    private readonly propertyWriter = new PropertyWriter(this.writer);
+    private readonly methodWriter = new MethodWriter(this.writer);
+    private readonly callSignatureWriter = new CallSignatureWriter(this.writer);
+    private readonly indexSignatureWriter = new IndexSignatureWriter(this.writer);
 
     protected writeDefault(def: InterfaceDefinition, flags: WriteFlags) {
         this.writeHeader(def, flags);

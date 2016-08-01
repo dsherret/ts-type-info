@@ -4,7 +4,7 @@ import {IndexSignatureBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureReturnTypedBinder} from "./../base";
 
 export class StructureIndexSignatureBinder extends IndexSignatureBinder {
-    constructor(private factory: StructureFactory, private structure: IndexSignatureStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: IndexSignatureStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureReturnTypedBinder(factory, structure)

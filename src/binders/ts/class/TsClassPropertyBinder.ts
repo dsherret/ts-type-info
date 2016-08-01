@@ -4,7 +4,7 @@ import {ClassPropertyBinder} from "./../../base";
 import {TsBaseClassPropertyBinder} from "./base";
 
 export class TsClassPropertyBinder extends ClassPropertyBinder {
-    private symbol: TsSymbol;
+    private readonly symbol: TsSymbol;
 
     constructor(factory: TsFactory, node: TsNode) {
         super(new TsBaseClassPropertyBinder(factory, node));

@@ -3,7 +3,7 @@ import {BaseDefinitionBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ReExportBinder implements IBaseBinder {
-    constructor(private baseDefinitionBinder: BaseDefinitionBinder) {
+    constructor(private readonly baseDefinitionBinder: BaseDefinitionBinder) {
     }
 
     abstract getFileName(): string;

@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../../factories";
 import {TypeParameteredBinder} from "./../../base";
 
 export class StructureTypeParameteredBinder extends TypeParameteredBinder {
-    constructor(private factory: StructureFactory, private structure: TypeParameteredStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: TypeParameteredStructure) {
         super();
     }
 

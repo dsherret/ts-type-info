@@ -4,12 +4,12 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class VariableBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private namedBinder: NamedBinder,
-        private exportableBinder: ExportableBinder,
-        private ambientableBinder: AmbientableBinder,
-        private TypedBinder: TypedBinder,
-        private defaultExpressionedBinder: DefaultExpressionedBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly namedBinder: NamedBinder,
+        private readonly exportableBinder: ExportableBinder,
+        private readonly ambientableBinder: AmbientableBinder,
+        private readonly TypedBinder: TypedBinder,
+        private readonly defaultExpressionedBinder: DefaultExpressionedBinder
     ) {
     }
 

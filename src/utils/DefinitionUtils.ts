@@ -2,6 +2,9 @@
 import {StructureFactory} from "./../factories";
 
 export class DefinitionUtils {
+    private constructor() {
+    }
+
     static getTypeDefinitionFromTextOrDefinition(textOrDefinition: string | NamedDefinition, typeArguments: string[]) {
         const structureFactory = new StructureFactory();
         let def: TypeDefinition;

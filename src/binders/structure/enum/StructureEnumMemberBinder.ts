@@ -3,7 +3,7 @@ import {EnumMemberBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder} from "./../base";
 
 export class StructureEnumMemberBinder extends EnumMemberBinder {
-    constructor(private structure: EnumMemberStructure) {
+    constructor(private readonly structure: EnumMemberStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure)

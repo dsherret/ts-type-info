@@ -5,7 +5,7 @@ import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportable
     StructureTypeParameteredBinder, StructureDecoratableBinder} from "./../base";
 
 export class StructureClassBinder extends ClassBinder {
-    constructor(private factory: StructureFactory, private structure: ClassStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: ClassStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),

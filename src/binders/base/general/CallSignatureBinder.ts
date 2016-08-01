@@ -4,10 +4,10 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class CallSignatureBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private typeParameterBinder: TypeParameteredBinder,
-        private parameterBinder: ParameteredBinder<CallSignatureParameterDefinition>,
-        private returnTypedBinder: ReturnTypedBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly typeParameterBinder: TypeParameteredBinder,
+        private readonly parameterBinder: ParameteredBinder<CallSignatureParameterDefinition>,
+        private readonly returnTypedBinder: ReturnTypedBinder
     ) {
     }
 

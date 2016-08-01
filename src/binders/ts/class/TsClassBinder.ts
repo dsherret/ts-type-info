@@ -6,7 +6,7 @@ import {TsBaseDefinitionBinder, TsNamedBinder, TsExportableBinder, TsAmbientable
     TsDecoratableBinder} from "./../base";
 
 export class TsClassBinder extends ClassBinder {
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),

@@ -11,8 +11,8 @@ import {StructureReturnTypedBinder} from "./StructureReturnTypedBinder";
 export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition, StructureParameterType extends BaseParameterStructure>
         extends BaseFunctionBinder<ParameterType> {
     constructor(
-        private factory: StructureFactory,
-        private structure: BaseFunctionStructure<StructureParameterType>,
+        private readonly factory: StructureFactory,
+        private readonly structure: BaseFunctionStructure<StructureParameterType>,
         paramDefinition: definitions.BaseParameterDefinitionConstructor<ParameterType>,
         paramBinder: StructureParameterBinderConstructor<ParameterType>
     ) {

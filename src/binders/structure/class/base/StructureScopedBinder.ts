@@ -3,7 +3,7 @@ import {Scope} from "./../../../../definitions";
 import {ScopedBinder} from "./../../../base";
 
 export class StructureScopedBinder extends ScopedBinder {
-    constructor(private structure: ScopedStructure) {
+    constructor(private readonly structure: ScopedStructure) {
         super();
     }
 

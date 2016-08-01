@@ -4,7 +4,7 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {TypeWithDefaultExpressionWriter} from "./TypeWithDefaultExpressionWriter";
 
 export class ParameterWriter extends BaseDefinitionWriter<ParameterDefinitions> {
-    private typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
+    private readonly typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
 
     protected writeDefault(param: ParameterDefinitions, flags: WriteFlags) {
         this.writeRestParameter(param);

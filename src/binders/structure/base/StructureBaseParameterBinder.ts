@@ -8,7 +8,7 @@ import {StructureOptionalBinder} from "./StructureOptionalBinder";
 import {StructureTypedBinder} from "./StructureTypedBinder";
 
 export class StructureBaseParameterBinder extends BaseParameterBinder {
-    constructor(private factory: StructureFactory, private structure: BaseParameterStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: BaseParameterStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),

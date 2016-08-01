@@ -10,10 +10,10 @@ export interface StructureParameterBinderConstructor<ParameterType extends BaseP
 export class StructureParameteredBinder<ParameterType extends BaseParameterDefinition, StructureParameterType extends BaseParameterStructure>
         extends ParameteredBinder<ParameterType> {
     constructor(
-        private factory: StructureFactory,
-        private structure: ParameteredStructure<StructureParameterType>,
-        private paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
-        private paramBinder: StructureParameterBinderConstructor<ParameterType>
+        private readonly factory: StructureFactory,
+        private readonly structure: ParameteredStructure<StructureParameterType>,
+        private readonly paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
+        private readonly paramBinder: StructureParameterBinderConstructor<ParameterType>
     ) {
         super();
     }

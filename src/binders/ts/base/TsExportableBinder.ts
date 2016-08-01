@@ -2,7 +2,7 @@
 import {ExportableBinder} from "./../../base";
 
 export class TsExportableBinder extends ExportableBinder {
-    private symbol: TsSymbol | null;
+    private readonly symbol: TsSymbol | null;
 
     constructor(node: TsNode) {
         super();

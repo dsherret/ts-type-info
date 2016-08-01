@@ -4,7 +4,7 @@ import {TypeBinder} from "./../../base";
 import {StructureExpressionBinder} from "./StructureExpressionBinder";
 
 export class StructureTypeBinder extends TypeBinder {
-    constructor(private factory: StructureFactory, private text: string) {
+    constructor(private readonly factory: StructureFactory, private readonly text: string) {
         super(new StructureExpressionBinder(text));
     }
 

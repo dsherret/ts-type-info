@@ -3,7 +3,7 @@ import {TsFactory} from "./../../../factories";
 import {ReturnTypedBinder} from "./../../base";
 
 export class TsReturnTypedBinderBySignature extends ReturnTypedBinder {
-    constructor(private factory: TsFactory, private signature: TsSignature) {
+    constructor(private readonly factory: TsFactory, private readonly signature: TsSignature) {
         super();
     }
 

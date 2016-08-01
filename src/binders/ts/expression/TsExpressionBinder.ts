@@ -3,7 +3,7 @@ import {ExpressionBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./../base";
 
 export class TsExpressionBinder extends ExpressionBinder {
-    constructor(private tsExpression: TsExpression | TsType) {
+    constructor(private readonly tsExpression: TsExpression | TsType) {
         super(new TsBaseDefinitionBinder());
     }
 

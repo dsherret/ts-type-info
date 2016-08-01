@@ -6,7 +6,7 @@ import {ImportBinder} from "./../../base";
 import {StructureBaseDefinitionBinder} from "./../base";
 
 export class StructureImportBinder extends ImportBinder {
-    constructor(private factory: StructureFactory, private structure: ImportStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: ImportStructure) {
         super(new StructureBaseDefinitionBinder(structure));
     }
 

@@ -4,7 +4,7 @@ import {BaseWriter} from "./BaseWriter";
 import {TypeParameterWriter} from "./TypeParameterWriter";
 
 export class TypeParametersWriter extends BaseWriter {
-    private typeParameterWriter = new TypeParameterWriter(this.writer);
+    private readonly typeParameterWriter = new TypeParameterWriter(this.writer);
 
     write(typeParameters: TypeParameterDefinition[], flags: WriteFlags) {
         if (typeParameters.length > 0) {

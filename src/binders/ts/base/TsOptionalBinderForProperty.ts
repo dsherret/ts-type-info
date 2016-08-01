@@ -2,7 +2,7 @@
 import {OptionalBinder} from "./../../base";
 
 export class TsOptionalBinderForProperty extends OptionalBinder {
-    constructor(private node: TsNode) {
+    constructor(private readonly node: TsNode) {
         super();
     }
 

@@ -8,8 +8,8 @@ import {TsCache} from "./utils/TsCache";
 import {TsSourceFile} from "./TsSourceFile";
 
 export class TsMain {
-    private tsSourceFiles: TsSourceFile[];
-    private tsCache = new TsCache();
+    private readonly tsSourceFiles: TsSourceFile[];
+    private readonly tsCache = new TsCache();
 
     constructor(fileNames: string[], options: Options) {
         this.verifyFilesExist(fileNames);

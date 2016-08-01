@@ -3,6 +3,9 @@
     private static logFunction: (msg: string) => void = console.log;
     private static warnFunction: (msg: string) => void = console.warn;
 
+    private constructor() {
+    }
+
     static getIsEnabled() {
         return this.isEnabled;
     }

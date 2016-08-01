@@ -1,12 +1,15 @@
 import * as fs from "fs";
 import * as path from "path";
 
-export module FileUtils {
-    export function getAbsolutePath(filePath: string) {
+export class FileUtils {
+    private constructor() {
+    }
+
+    static getAbsolutePath(filePath: string) {
         return path.resolve(filePath);
     }
 
-    export function fileExistsSync(filePath: string) {
+    static fileExistsSync(filePath: string) {
         try {
             return fs.statSync(filePath).isFile();
         } catch (err) {
@@ -14,12 +17,12 @@ export module FileUtils {
         }
     }
 
-    export function standardizeSlashes(fileName: string) {
+    static standardizeSlashes(fileName: string) {
         return fileName.replace(/\\/g, "/");
     }
 
-    export function filePathMatches(fileName: string | null, searchString: string | null) {
-        const splitBySlash = (p: string | null) => standardizeSlashes(p || "").replace(/^\//, "").split("/");
+    static filePathMatches(fileName: string | null, searchString: string | null) {
+        const splitBySlash = (p: string | null) => this.standardizeSlashes(p || "").replace(/^\//, "").split("/");
 
         const fileNameItems = splitBySlash(fileName);
         const searchItems = splitBySlash(searchString);

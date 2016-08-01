@@ -4,9 +4,9 @@ import {ScopedBinder} from "./ScopedBinder";
 
 export abstract class BaseClassPropertyBinder {
     constructor(
-        private objectPropertyBinder: BaseObjectPropertyBinder,
-        private decoratableBinder: DecoratableBinder,
-        private scopedBinder: ScopedBinder
+        private readonly objectPropertyBinder: BaseObjectPropertyBinder,
+        private readonly decoratableBinder: DecoratableBinder,
+        private readonly scopedBinder: ScopedBinder
     ) {
     }
 

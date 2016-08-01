@@ -9,12 +9,12 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class TypeAliasBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private namedBinder: NamedBinder,
-        private exportableBinder: ExportableBinder,
-        private TypedBinder: TypedBinder,
-        private typeParameteredBinder: TypeParameteredBinder,
-        private ambientableBinder: AmbientableBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly namedBinder: NamedBinder,
+        private readonly exportableBinder: ExportableBinder,
+        private readonly TypedBinder: TypedBinder,
+        private readonly typeParameteredBinder: TypeParameteredBinder,
+        private readonly ambientableBinder: AmbientableBinder
     ) {
     }
 

@@ -3,7 +3,7 @@ import {EnumMemberBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsNamedBinder} from "./../base";
 
 export class TsEnumMemberBinder extends EnumMemberBinder {
-    constructor(private node: TsNode) {
+    constructor(private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node)

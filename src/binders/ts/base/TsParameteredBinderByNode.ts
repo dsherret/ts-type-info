@@ -9,10 +9,10 @@ export interface TsParameterBinderByNodeConstructor<ParameterType extends BasePa
 
 export class TsParameteredBinderByNode<ParameterType extends BaseParameterDefinition> extends ParameteredBinder<ParameterType> {
     constructor(
-        private factory: TsFactory,
-        private node: TsNode,
-        private paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
-        private paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
+        private readonly factory: TsFactory,
+        private readonly node: TsNode,
+        private readonly paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
+        private readonly paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
         super();
     }

@@ -1,5 +1,5 @@
 ﻿export class StringHashSet {
-    private obj: { [uniqueID: string]: boolean; } = {};
+    private readonly obj: { [uniqueID: string]: boolean; } = {};
 
     add(key: string) {
         this.obj[key] = true;

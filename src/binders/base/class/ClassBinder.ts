@@ -12,13 +12,13 @@ export class ClassMemberContainer {
 
 export abstract class ClassBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private namedBinder: NamedBinder,
-        private exportableBinder: ExportableBinder,
-        private ambientableBinder: AmbientableBinder,
-        private typeParameteredBinder: TypeParameteredBinder,
-        private abstractableBinder: AbstractableBinder,
-        private decoratableBinder: DecoratableBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly namedBinder: NamedBinder,
+        private readonly exportableBinder: ExportableBinder,
+        private readonly ambientableBinder: AmbientableBinder,
+        private readonly typeParameteredBinder: TypeParameteredBinder,
+        private readonly abstractableBinder: AbstractableBinder,
+        private readonly decoratableBinder: DecoratableBinder
     ) {
     }
 

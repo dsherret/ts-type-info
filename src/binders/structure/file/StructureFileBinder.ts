@@ -4,7 +4,7 @@ import {FileBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureModuledBinder} from "./../base";
 
 export class StructureFileBinder extends FileBinder {
-    constructor(private factory: StructureFactory, private structure: FileStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: FileStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureModuledBinder(factory, structure)

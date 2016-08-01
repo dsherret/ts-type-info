@@ -4,7 +4,7 @@ import {EnumBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder} from "./../base";
 
 export class StructureEnumBinder extends EnumBinder {
-    constructor(private factory: StructureFactory, private structure: EnumStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: EnumStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),

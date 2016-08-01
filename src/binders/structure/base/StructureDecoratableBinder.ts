@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../../factories";
 import {DecoratableStructure} from "./../../../structures";
 
 export class StructureDecoratableBinder extends DecoratableBinder {
-    constructor(private factory: StructureFactory, private structure: DecoratableStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: DecoratableStructure) {
         super();
     }
 

@@ -1,8 +1,8 @@
 ﻿export class RenameInfo {
     // ex. MyNamespace.MyClass
-    fullNameFrom: string; // todo: mark readonly in TS 2.0
+    readonly fullNameFrom: string;
     // ex. MyNamespace.MyNewName
-    fullNameTo: string; // todo: mark readonly in TS 2.0
+    readonly fullNameTo: string;
 
     constructor(opts: { fullNameFrom: string; fullNameTo: string; }) {
         this.fullNameFrom = opts.fullNameFrom;

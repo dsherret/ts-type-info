@@ -3,7 +3,7 @@ import {TypeWriter} from "./TypeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class IndexSignatureWriter extends BaseDefinitionWriter<IndexSignatureDefinition> {
-    private typeWriter = new TypeWriter(this.writer);
+    private readonly typeWriter = new TypeWriter(this.writer);
 
     protected writeDefault(def: IndexSignatureDefinition) {
         this.writer.write(`[${def.keyName}`);

@@ -3,7 +3,7 @@ import {TsNode} from "./../../../compiler";
 import {DecoratableBinder} from "./../../base";
 
 export class TsDecoratableBinder extends DecoratableBinder {
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super();
     }
 

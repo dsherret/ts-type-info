@@ -5,7 +5,7 @@ import {TypedBinder} from "./../../base";
 import {StructureTypeBinder} from "./../expression";
 
 export class StructureTypedBinder extends TypedBinder {
-    constructor(private factory: StructureFactory, private structure: TypedStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: TypedStructure) {
         super();
     }
 

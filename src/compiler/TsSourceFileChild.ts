@@ -6,11 +6,10 @@ export interface TsSourceFileChildOptions extends TsBaseOptions {
 }
 
 export class TsSourceFileChild extends TsBase {
-    protected tsSourceFile: TsSourceFile;
+    protected readonly tsSourceFile: TsSourceFile;
 
     constructor(opts: TsSourceFileChildOptions) {
         super(opts);
-
         this.tsSourceFile = opts.tsSourceFile;
     }
 }

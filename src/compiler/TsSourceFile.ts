@@ -9,11 +9,10 @@ export interface TsSourceFileOptions extends TsBaseOptions {
 }
 
 export class TsSourceFile extends TsBase {
-    private symbol: ts.Symbol | null;
+    private readonly symbol: ts.Symbol | null;
 
     constructor(opts: TsSourceFileOptions) {
         super(opts);
-
         this.symbol = opts.symbol;
     }
 

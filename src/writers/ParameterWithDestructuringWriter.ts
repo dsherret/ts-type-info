@@ -5,8 +5,8 @@ import {TypeWriter} from "./TypeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class ParameterWithDestructuringWriter extends BaseDefinitionWriter<ParameterDefinitions> {
-    private expressionWriter = new ExpressionWriter(this.writer);
-    private typeWriter = new TypeWriter(this.writer);
+    private readonly expressionWriter = new ExpressionWriter(this.writer);
+    private readonly typeWriter = new TypeWriter(this.writer);
 
     protected writeDefault(param: ParameterDefinitions, flags: WriteFlags) {
         this.writeLeftSide(param, flags);

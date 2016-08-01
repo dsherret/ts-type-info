@@ -2,7 +2,7 @@
 import {OptionalBinder} from "./../../base";
 
 export class StructureOptionalBinder extends OptionalBinder {
-    constructor(private structure: OptionalStructure) {
+    constructor(private readonly structure: OptionalStructure) {
         super();
     }
 

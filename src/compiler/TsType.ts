@@ -9,11 +9,10 @@ export interface TsTypeOptions extends TsSourceFileChildOptions {
 }
 
 export class TsType extends TsSourceFileChild {
-    private type: ts.Type;
+    private readonly type: ts.Type;
 
     constructor(opts: TsTypeOptions) {
         super(opts);
-
         this.type = opts.type;
     }
 

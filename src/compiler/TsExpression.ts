@@ -6,7 +6,7 @@ export interface TsExpressionOptions extends TsBaseOptions {
 }
 
 export class TsExpression extends TsBase {
-    private expression: ts.Expression;
+    private readonly expression: ts.Expression;
 
     constructor(opts: TsExpressionOptions) {
         super(opts);

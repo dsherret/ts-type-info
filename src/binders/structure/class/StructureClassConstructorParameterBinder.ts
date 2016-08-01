@@ -5,7 +5,7 @@ import {ClassConstructorParameterBinder} from "./../../base";
 import {StructureBaseParameterBinder, StructureDecoratableBinder} from "./../base";
 
 export class StructureClassConstructorParameterBinder extends ClassConstructorParameterBinder {
-    constructor(factory: StructureFactory, private structure: ClassConstructorParameterStructure) {
+    constructor(factory: StructureFactory, private readonly structure: ClassConstructorParameterStructure) {
         super(
             new StructureBaseParameterBinder(factory, structure),
             new StructureDecoratableBinder(factory, structure)

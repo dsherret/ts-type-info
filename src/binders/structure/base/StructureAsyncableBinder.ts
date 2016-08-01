@@ -2,7 +2,7 @@
 import {AsyncableBinder} from "./../../base";
 
 export class StructureAsyncableBinder extends AsyncableBinder {
-    constructor(private structure: AsyncableStructure) {
+    constructor(private readonly structure: AsyncableStructure) {
         super();
     }
 

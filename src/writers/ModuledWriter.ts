@@ -11,13 +11,13 @@ import {VariableWriter} from "./VariableWriter";
 import {TypeAliasWriter} from "./TypeAliasWriter";
 
 export class ModuledWriter extends BaseWriter {
-    private namespaceWriter = new NamespaceWriter(this.writer, this);
-    private interfaceWriter = new InterfaceWriter(this.writer);
-    private classWriter = new ClassWriter(this.writer);
-    private enumWriter = new EnumWriter(this.writer);
-    private functionWriter = new FunctionWriter(this.writer);
-    private variableWriter = new VariableWriter(this.writer);
-    private typeAliasWriter = new TypeAliasWriter(this.writer);
+    private readonly namespaceWriter = new NamespaceWriter(this.writer, this);
+    private readonly interfaceWriter = new InterfaceWriter(this.writer);
+    private readonly classWriter = new ClassWriter(this.writer);
+    private readonly enumWriter = new EnumWriter(this.writer);
+    private readonly functionWriter = new FunctionWriter(this.writer);
+    private readonly variableWriter = new VariableWriter(this.writer);
+    private readonly typeAliasWriter = new TypeAliasWriter(this.writer);
 
     write(def: ModuledDefinitions, flags: WriteFlags) {
         if (def.isFileDefinition() && DefinitionUtils.isDefinitionFile(def) || def.isNamespaceDefinition() && def.isAmbient) {

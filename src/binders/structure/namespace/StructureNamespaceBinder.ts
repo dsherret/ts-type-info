@@ -5,7 +5,7 @@ import {NamespaceBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureModuledBinder} from "./../base";
 
 export class StructureNamespaceBinder extends NamespaceBinder {
-    constructor(factory: StructureFactory, private structure: NamespaceStructure) {
+    constructor(factory: StructureFactory, private readonly structure: NamespaceStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure),

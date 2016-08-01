@@ -4,8 +4,8 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class EnumMemberBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private namedBinder: NamedBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly namedBinder: NamedBinder
     ) {
     }
 

@@ -4,7 +4,7 @@ import {StructureExpressionBinder} from "./../expression";
 import {DefaultExpressionedBinder} from "./../../base";
 
 export class StructureDefaultExpressionedBinder extends DefaultExpressionedBinder {
-    constructor(private structure: DefaultExpressionedStructure) {
+    constructor(private readonly structure: DefaultExpressionedStructure) {
         super();
     }
 

@@ -5,7 +5,7 @@ import {FileBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsModuledBinder} from "./../base";
 
 export class TsFileBinder extends FileBinder {
-    constructor(private factory: TsFactory, private sourceFile: TsSourceFile) {
+    constructor(private readonly factory: TsFactory, private readonly sourceFile: TsSourceFile) {
         super(
             new TsBaseDefinitionBinder(),
             new TsModuledBinder(factory, sourceFile.getNode())

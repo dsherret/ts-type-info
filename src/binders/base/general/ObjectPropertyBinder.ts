@@ -3,7 +3,7 @@ import {IBaseBinder} from "./../IBaseBinder";
 import {BaseObjectPropertyBinder} from "./../base/BaseObjectPropertyBinder";
 
 export abstract class ObjectPropertyBinder implements IBaseBinder {
-    constructor(private baseObjectPropertyBinder: BaseObjectPropertyBinder) {
+    constructor(private readonly baseObjectPropertyBinder: BaseObjectPropertyBinder) {
     }
 
     bind(def: ObjectPropertyDefinition) {

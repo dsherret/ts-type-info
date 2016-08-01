@@ -10,7 +10,7 @@ export class TsNamedImportPartBinder extends NamedImportPartBinder {
         expression: ExpressionDefinition | null;
     };
 
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(new TsBaseDefinitionBinder());
         this.defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(node.getSymbol()!);
     }

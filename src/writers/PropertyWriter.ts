@@ -6,9 +6,9 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {TypeWithDefaultExpressionWriter} from "./TypeWithDefaultExpressionWriter";
 
 export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
-    private typeWriter = new TypeWriter(this.writer);
-    private scopeWriter = new ScopeWriter(this.writer);
-    private typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
+    private readonly typeWriter = new TypeWriter(this.writer);
+    private readonly scopeWriter = new ScopeWriter(this.writer);
+    private readonly typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
 
     static willWriteAccessorBody(def: PropertyDefinitions) {
         return def.isClassPropertyDefinition() && def.isAccessor && (def.onWriteGetBody != null || def.onWriteSetBody != null);

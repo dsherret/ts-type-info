@@ -6,9 +6,9 @@ import {TsNode} from "./../TsNode";
 import {TsTypeChecker} from "./TsTypeChecker";
 
 export class TsCache {
-    private nodeCache = new KeyValueCache<ts.Node, TsNode>();
-    private symbolCache = new KeyValueCache<ts.Symbol, TsSymbol>();
-    private typeCacheContainer = new TypeCacheContainer<TsType>();
+    private readonly nodeCache = new KeyValueCache<ts.Node, TsNode>();
+    private readonly symbolCache = new KeyValueCache<ts.Symbol, TsSymbol>();
+    private readonly typeCacheContainer = new TypeCacheContainer<TsType>();
 
     getSymbol(symbol: ts.Symbol, createFunc: () => TsSymbol) {
         return this.symbolCache.getOrCreate(symbol, () => createFunc());
@@ -27,8 +27,8 @@ export class TsCache {
 }
 
 class TypeCacheContainer<T> {
-    private fileCache = new KeyValueCache<string, KeyValueCache<string, T>>();
-    private typeCache = new KeyValueCache<string, T>();
+    private readonly fileCache = new KeyValueCache<string, KeyValueCache<string, T>>();
+    private readonly typeCache = new KeyValueCache<string, T>();
 
     getCache(tsType: ts.Type) {
         const fileName = this.getFileName(tsType);

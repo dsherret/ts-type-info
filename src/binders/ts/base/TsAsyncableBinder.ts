@@ -2,7 +2,7 @@
 import {AsyncableBinder} from "./../../base";
 
 export class TsAsyncableBinder extends AsyncableBinder {
-    constructor(private node: TsNode) {
+    constructor(private readonly node: TsNode) {
         super();
     }
 

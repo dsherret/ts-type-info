@@ -3,7 +3,7 @@ import {BaseDefinitionBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class NamedImportPartBinder implements IBaseBinder {
-    constructor(private baseDefinitionBinder: BaseDefinitionBinder) {
+    constructor(private readonly baseDefinitionBinder: BaseDefinitionBinder) {
     }
 
     abstract getName(): string;

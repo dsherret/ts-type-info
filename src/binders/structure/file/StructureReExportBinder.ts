@@ -6,7 +6,7 @@ import {ReExportBinder} from "./../../base";
 import {StructureBaseDefinitionBinder} from "./../base";
 
 export class StructureReExportBinder extends ReExportBinder {
-    constructor(private factory: StructureFactory, private structure: ReExportStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: ReExportStructure) {
         super(new StructureBaseDefinitionBinder(structure));
     }
 

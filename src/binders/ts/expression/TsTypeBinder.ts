@@ -4,9 +4,9 @@ import {TypeBinder} from "./../../base";
 import {TsExpressionBinder} from "./TsExpressionBinder";
 
 export class TsTypeBinder extends TypeBinder {
-    private getCallSignatureAndProperties: boolean;
+    private readonly getCallSignatureAndProperties: boolean;
 
-    constructor(private factory: TsFactory, private tsType: TsType) {
+    constructor(private readonly factory: TsFactory, private readonly tsType: TsType) {
         super(new TsExpressionBinder(tsType));
 
         this.getCallSignatureAndProperties = tsType.isAnonymousType() && !tsType.isReferenceType() &&

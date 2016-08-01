@@ -2,7 +2,7 @@
 import {NamedBinder} from "./../../base";
 
 export class StructureNamedBinder extends NamedBinder {
-    constructor(private structure: NamedStructure | OptionallyNamedStructure) {
+    constructor(private readonly structure: NamedStructure | OptionallyNamedStructure) {
         super();
     }
 

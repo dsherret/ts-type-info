@@ -4,8 +4,8 @@ import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class IndexSignatureBinder implements IBaseBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private returnTypedBinder: ReturnTypedBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly returnTypedBinder: ReturnTypedBinder
     ) {
     }
 

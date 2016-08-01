@@ -6,9 +6,9 @@ import {ParametersWriter} from "./ParametersWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class CallSignatureWriter extends BaseDefinitionWriter<CallSignatureDefinition> {
-    private typeParametersWriter = new TypeParametersWriter(this.writer);
-    private typeWriter = new TypeWriter(this.writer);
-    private parametersWriter = new ParametersWriter(this.writer);
+    private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
+    private readonly typeWriter = new TypeWriter(this.writer);
+    private readonly parametersWriter = new ParametersWriter(this.writer);
 
     protected writeDefault(def: CallSignatureDefinition, flags: WriteFlags) {
         this.typeParametersWriter.write(def.typeParameters, flags);

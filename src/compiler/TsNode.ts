@@ -1,5 +1,6 @@
 ﻿import * as ts from "typescript";
 import {ArrayUtils} from "./../utils/ArrayUtils";
+import {Memoize} from "./../utils/decorators";
 import {Logger} from "./../utils/Logger";
 import {TypeGuards} from "./../utils/TypeGuards";
 import {ClassConstructorParameterScope, NamespaceDeclarationType, Scope, VariableDeclarationType} from "./../definitions";
@@ -14,18 +15,14 @@ export interface TsNodeOptions extends TsSourceFileChildOptions {
 }
 
 export class TsNode extends TsSourceFileChild {
-    private __tsSymbol: TsSymbol | null;
-    private node: ts.Node;
+    private readonly node: ts.Node;
 
+    @Memoize
     private get tsSymbol() {
-        if (this.__tsSymbol == null) {
-            this.__tsSymbol = this.createSymbol(this.typeChecker.getSymbolAtLocation(this.node));
-        }
-
-        return this.__tsSymbol;
+        return this.originalSymbol || this.createSymbol(this.typeChecker.getSymbolAtLocation(this.node));
     }
 
-    constructor(opts: TsNodeOptions, tsSymbol?: TsSymbol | null) {
+    constructor(opts: TsNodeOptions, private readonly originalSymbol?: TsSymbol | null) {
         super(opts);
 
         if (opts.node == null) {
@@ -33,7 +30,6 @@ export class TsNode extends TsSourceFileChild {
         }
 
         this.node = opts.node;
-        this.__tsSymbol = tsSymbol || null;
     }
 
     getName() {

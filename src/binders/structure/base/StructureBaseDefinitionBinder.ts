@@ -2,7 +2,7 @@
 import {BaseDefinitionBinder} from "./../../base";
 
 export class StructureBaseDefinitionBinder extends BaseDefinitionBinder {
-    constructor(private structure: BaseStructure) {
+    constructor(private readonly structure: BaseStructure) {
         super();
     }
 

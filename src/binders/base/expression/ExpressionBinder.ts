@@ -4,7 +4,7 @@ import {BaseDefinitionBinder} from "./../base";
 export abstract class ExpressionBinder {
     abstract getText(): string;
 
-    constructor(private baseDefinitionBinder: BaseDefinitionBinder) {
+    constructor(private readonly baseDefinitionBinder: BaseDefinitionBinder) {
     }
 
     bind(def: ExpressionDefinition) {

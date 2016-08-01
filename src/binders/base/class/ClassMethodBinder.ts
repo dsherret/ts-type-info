@@ -5,8 +5,8 @@ import {BaseClassMethodBinder} from "./base";
 
 export abstract class ClassMethodBinder implements IBaseBinder {
     constructor(
-        private baseClassMethodBinder: BaseClassMethodBinder<ClassMethodParameterDefinition>,
-        private abstractableBinder: AbstractableBinder
+        private readonly baseClassMethodBinder: BaseClassMethodBinder<ClassMethodParameterDefinition>,
+        private readonly abstractableBinder: AbstractableBinder
     ) {
     }
 

@@ -2,7 +2,7 @@
 import {FunctionBodyWriteableBinder} from "./../../base";
 
 export class StructureFunctionBodyWriteableBinder extends FunctionBodyWriteableBinder {
-    constructor(private structure: FunctionBodyWriteableStructure) {
+    constructor(private readonly structure: FunctionBodyWriteableStructure) {
         super();
     }
 

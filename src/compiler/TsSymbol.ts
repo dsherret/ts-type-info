@@ -8,7 +8,7 @@ interface TsSymbolOptions extends TsSourceFileChildOptions {
 }
 
 export class TsSymbol extends TsSourceFileChild {
-    private symbol: ts.Symbol;
+    private readonly symbol: ts.Symbol;
 
     constructor(opts: TsSymbolOptions) {
         super(opts);
@@ -140,19 +140,13 @@ export class TsSymbol extends TsSourceFileChild {
     }
 
     private createNode(node: ts.Node): TsNode {
-        return this.tsCache.getNode(
-            node,
-            () => new TsNode(
-                {
-                    sourceFile: this.sourceFile,
-                    typeChecker: this.typeChecker,
-                    tsCache: this.tsCache,
-                    node: node,
-                    tsSourceFile: this.tsSourceFile
-                },
-                this
-            )
-        );
+        return this.tsCache.getNode(node, () => new TsNode({
+            sourceFile: this.sourceFile,
+            typeChecker: this.typeChecker,
+            tsCache: this.tsCache,
+            node: node,
+            tsSourceFile: this.tsSourceFile
+        }, this));
     }
 
     private getSymbolParent(symbol: ts.Symbol) {

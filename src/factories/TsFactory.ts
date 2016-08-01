@@ -9,10 +9,10 @@ function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: D
 }
 
 export class TsFactory {
-    private definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
-    private files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
-    private deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
-    private createdTypesWithDefinition: { type: TsType; definition: definitions.TypeDefinition; }[] = [];
+    private readonly definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
+    private readonly files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
+    private readonly deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
+    private readonly createdTypesWithDefinition: { type: TsType; definition: definitions.TypeDefinition; }[] = [];
 
     getCallSignatureFromNode(node: TsNode) {
         return this.getCallSignatureFromSignature(node.getSignatureFromThis());

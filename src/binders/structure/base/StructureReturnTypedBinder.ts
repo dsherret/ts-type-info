@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../../factories";
 import {ReturnTypedBinder} from "./../../base";
 
 export class StructureReturnTypedBinder extends ReturnTypedBinder {
-    constructor(private factory: StructureFactory, private structure: ReturnTypedStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: ReturnTypedStructure) {
         super();
     }
 

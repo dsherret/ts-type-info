@@ -6,8 +6,7 @@ import {RenameInfo} from "./RenameInfo";
 export class ModuleBodyRenamer {
     private lookedAtObjectsByName = new StringHashSet();
 
-    // todo: mark as private in TS 2.0
-    constructor(private renameInfo: RenameInfo, private moduleDef: ModuledDefinition) {
+    private constructor(private renameInfo: RenameInfo, private moduleDef: ModuledDefinition) {
     }
 
     static renameInModule(renameInfo: RenameInfo, moduleDef: ModuledDefinition) {

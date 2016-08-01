@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import {Logger} from "./../../utils";
 
 export class TsTypeChecker {
-    constructor(private typeChecker: ts.TypeChecker) {
+    constructor(private readonly typeChecker: ts.TypeChecker) {
     }
 
     typeToString(sourceFile: ts.SourceFile, type: ts.Type) {

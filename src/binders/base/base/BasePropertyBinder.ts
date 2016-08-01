@@ -6,10 +6,10 @@ import {TypedBinder} from "./TypedBinder";
 
 export abstract class BasePropertyBinder {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private namedBinder: NamedBinder,
-        private optionalBinder: OptionalBinder,
-        private TypedBinder: TypedBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly namedBinder: NamedBinder,
+        private readonly optionalBinder: OptionalBinder,
+        private readonly TypedBinder: TypedBinder
     ) {
     }
 

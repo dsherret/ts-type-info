@@ -11,8 +11,7 @@
         "experimentalDecorators": true,
         "strictNullChecks": true,
         "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "noUnusedParameters": true
+        "noFallthroughCasesInSwitch": true
     },
     "compileOnSave": false
 }

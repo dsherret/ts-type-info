@@ -3,7 +3,7 @@ import {BasePropertyBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class InterfacePropertyBinder implements IBaseBinder {
-    constructor(private basePropertyBinder: BasePropertyBinder) {
+    constructor(private readonly basePropertyBinder: BasePropertyBinder) {
     }
 
     bind(def: InterfacePropertyDefinition) {

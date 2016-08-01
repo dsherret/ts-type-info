@@ -9,12 +9,12 @@ import {FunctionBodyWriter} from "./FunctionBodyWriter";
 import {FunctionReturnTypeWriter} from "./FunctionReturnTypeWriter";
 
 export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
-    private callSignatureWriter = new CallSignatureWriter(this.writer);
-    private typeParametersWriter = new TypeParametersWriter(this.writer);
-    private parametersWriter = new ParametersWriter(this.writer);
-    private scopeWriter = new ScopeWriter(this.writer);
-    private functionBodyWriter = new FunctionBodyWriter(this.writer);
-    private functionReturnTypeWriter = new FunctionReturnTypeWriter(this.writer);
+    private readonly callSignatureWriter = new CallSignatureWriter(this.writer);
+    private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
+    private readonly parametersWriter = new ParametersWriter(this.writer);
+    private readonly scopeWriter = new ScopeWriter(this.writer);
+    private readonly functionBodyWriter = new FunctionBodyWriter(this.writer);
+    private readonly functionReturnTypeWriter = new FunctionReturnTypeWriter(this.writer);
 
     protected writeDefault(def: MethodDefinitions, flags: WriteFlags) {
         def.overloadSignatures.forEach(s => {

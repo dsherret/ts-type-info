@@ -5,8 +5,8 @@ import {DefaultExpressionedBinder} from "./DefaultExpressionedBinder";
 
 export abstract class BaseObjectPropertyBinder implements IBaseBinder {
     constructor(
-        private basePropertyBinder: BasePropertyBinder,
-        private defaultExpressionedBinder: DefaultExpressionedBinder
+        private readonly basePropertyBinder: BasePropertyBinder,
+        private readonly defaultExpressionedBinder: DefaultExpressionedBinder
     ) {
     }
 

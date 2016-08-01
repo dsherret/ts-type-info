@@ -2,7 +2,7 @@
 import {ScopedBinder} from "./../../../base";
 
 export class TsScopedBinder extends ScopedBinder {
-    constructor(private node: TsNode) {
+    constructor(private readonly node: TsNode) {
         super();
     }
 

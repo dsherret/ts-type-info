@@ -2,7 +2,7 @@
 import {AmbientableBinder} from "./../../base";
 
 export class TsAmbientableBinder extends AmbientableBinder {
-    constructor(private node: TsNode) {
+    constructor(private readonly node: TsNode) {
         super();
     }
 

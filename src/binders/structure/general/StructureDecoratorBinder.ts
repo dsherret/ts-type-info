@@ -4,7 +4,7 @@ import {DecoratorBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder} from "./../base";
 
 export class StructureDecoratorBinder extends DecoratorBinder {
-    constructor(private factory: StructureFactory, private structure: DecoratorStructure) {
+    constructor(private readonly factory: StructureFactory, private readonly structure: DecoratorStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
             new StructureNamedBinder(structure)

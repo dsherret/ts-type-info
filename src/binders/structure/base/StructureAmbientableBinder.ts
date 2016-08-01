@@ -2,7 +2,7 @@
 import {AmbientableBinder} from "./../../base";
 
 export class StructureAmbientableBinder extends AmbientableBinder {
-    constructor(private structure: AmbientableStructure) {
+    constructor(private readonly structure: AmbientableStructure) {
         super();
     }
 

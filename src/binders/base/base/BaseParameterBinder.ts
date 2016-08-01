@@ -10,11 +10,11 @@ export abstract class BaseParameterBinder {
     abstract getDestructuringProperties(): ObjectPropertyDefinition[];
 
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private namedBinder: NamedBinder,
-        private optionalBinder: OptionalBinder,
-        private TypedBinder: TypedBinder,
-        private defaultExpressionedBinder: DefaultExpressionedBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly namedBinder: NamedBinder,
+        private readonly optionalBinder: OptionalBinder,
+        private readonly TypedBinder: TypedBinder,
+        private readonly defaultExpressionedBinder: DefaultExpressionedBinder
     ) {
     }
 

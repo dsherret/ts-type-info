@@ -5,7 +5,7 @@ import {TsNode} from "./../../../compiler";
 import {ModuledBinder} from "./../../base";
 
 export class TsModuledBinder extends ModuledBinder {
-    constructor(private factory: TsFactory, private node: TsNode) {
+    constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super();
     }
 

@@ -7,11 +7,11 @@ import {ReturnTypedBinder} from "./ReturnTypedBinder";
 
 export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition> {
     constructor(
-        private baseDefinitionBinder: BaseDefinitionBinder,
-        private namedBinder: NamedBinder,
-        private typeParameterBinder: TypeParameteredBinder,
-        private parameterBinder: ParameteredBinder<ParameterType>,
-        private returnTypedBinder: ReturnTypedBinder
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly namedBinder: NamedBinder,
+        private readonly typeParameterBinder: TypeParameteredBinder,
+        private readonly parameterBinder: ParameteredBinder<ParameterType>,
+        private readonly returnTypedBinder: ReturnTypedBinder
     ) {
     }
 

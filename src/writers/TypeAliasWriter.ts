@@ -5,8 +5,8 @@ import {ExpressionWriter} from "./ExpressionWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
 export class TypeAliasWriter extends BaseDefinitionWriter<TypeAliasDefinition> {
-    private typeParametersWriter = new TypeParametersWriter(this.writer);
-    private expressionWriter = new ExpressionWriter(this.writer);
+    private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
+    private readonly expressionWriter = new ExpressionWriter(this.writer);
 
     protected writeDefault(def: TypeAliasDefinition, flags: WriteFlags) {
         this.writeDeclareKeyword(def);

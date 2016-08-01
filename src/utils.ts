@@ -1,3 +1,4 @@
+export * from "./utils/decorators";
 export * from "./utils/applyMixins";
 export * from "./utils/ArrayUtils";
 export * from "./utils/renameDefinitionAs/renameDefinitionAs";

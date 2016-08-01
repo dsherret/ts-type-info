@@ -9,10 +9,10 @@ import {MethodWriter} from "./MethodWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
 
 export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinition> {
-    private typeParametersWriter = new TypeParametersWriter(this.writer);
-    private propertyWriter = new PropertyWriter(this.writer);
-    private methodWriter = new MethodWriter(this.writer);
-    private classConstructorWriter = new ClassConstructorWriter(this.writer);
+    private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
+    private readonly propertyWriter = new PropertyWriter(this.writer);
+    private readonly methodWriter = new MethodWriter(this.writer);
+    private readonly classConstructorWriter = new ClassConstructorWriter(this.writer);
 
     protected writeDefault(def: definitions.ClassDefinition, flags: WriteFlags) {
         this.writeHeader(def, flags);

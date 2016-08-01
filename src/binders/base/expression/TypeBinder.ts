@@ -11,7 +11,7 @@ export abstract class TypeBinder {
     abstract getProperties(): TypePropertyDefinition[];
     abstract getTypeArguments(): TypeDefinition[];
 
-    constructor(private expressionBinder: ExpressionBinder) {
+    constructor(private readonly expressionBinder: ExpressionBinder) {
     }
 
     bind(def: TypeDefinition) {

@@ -4,7 +4,7 @@ import {IndexSignatureBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsReturnTypedBinderBySignature} from "./../base";
 
 export class TsIndexSignatureBinder extends IndexSignatureBinder {
-    constructor(private factory: TsFactory, private signature: TsSignature) {
+    constructor(private readonly factory: TsFactory, private readonly signature: TsSignature) {
         super(
             new TsBaseDefinitionBinder(),
             new TsReturnTypedBinderBySignature(factory, signature)

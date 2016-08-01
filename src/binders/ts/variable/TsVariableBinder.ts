@@ -4,7 +4,7 @@ import {VariableBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsDefaultExpressionedBinder, TsTypedBinder} from "./../base";
 
 export class TsVariableBinder extends VariableBinder {
-    constructor(factory: TsFactory, private node: TsNode) {
+    constructor(factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
             new TsNamedBinder(node),

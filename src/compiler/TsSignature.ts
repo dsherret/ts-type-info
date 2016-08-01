@@ -9,7 +9,7 @@ interface TsSignatureOptions extends TsSourceFileChildOptions {
 }
 
 export class TsSignature extends TsSourceFileChild {
-    private signature: ts.Signature;
+    private readonly signature: ts.Signature;
 
     constructor(opts: TsSignatureOptions) {
         super(opts);
