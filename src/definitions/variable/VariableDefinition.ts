@@ -30,7 +30,7 @@ export class VariableDefinition extends BaseDefinition
     hasDeclareKeyword: boolean;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition | null;
-    setDefaultExpression: (text: string) => any;
+    setDefaultExpression: (text: string) => this;
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -39,7 +39,7 @@ export class VariableDefinition extends BaseDefinition
     order: number;
     // TypedDefinition
     type: TypeDefinition;
-    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
+    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
 }
 
 applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition,

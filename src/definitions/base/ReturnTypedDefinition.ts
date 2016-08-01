@@ -6,6 +6,6 @@ export abstract class ReturnTypedDefinition {
 
     setReturnType(text: string) {
         this.returnType = new StructureFactory().getTypeFromText(text);
-        return this as any;
+        return this;
     }
 }

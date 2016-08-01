@@ -41,7 +41,7 @@ export class TypeAliasDefinition extends BaseDefinition
     order: number;
     // TypedDefinition
     type: TypeDefinition;
-    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
+    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;

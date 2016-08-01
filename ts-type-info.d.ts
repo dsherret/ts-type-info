@@ -16,6 +16,7 @@ export interface CompilerOptions {
     locale?: string | undefined;
     project?: string | undefined;
     rootDir?: string | undefined;
+    strictNullChecks?: boolean | undefined;
 }
 
 export interface WriteOptions {
@@ -145,14 +146,14 @@ export abstract class AsyncableDefinition {
 export abstract class TypedDefinition {
     type: TypeDefinition;
 
-    setType(definition: NamedDefinition, typeArguments?: string[] | undefined): TypeDefinition;
-    setType(text: string): TypeDefinition;
+    setType(definition: NamedDefinition, typeArguments?: string[] | undefined): this;
+    setType(text: string): this;
 }
 
 export abstract class DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition | null;
 
-    setDefaultExpression(text: string): any;
+    setDefaultExpression(text: string): this;
 }
 
 export abstract class DecoratableDefinition {
@@ -218,7 +219,7 @@ export abstract class TypeParameteredDefinition {
 
 export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
     defaultExpression: ExpressionDefinition | null;
-    setDefaultExpression: (text: string) => any;
+    setDefaultExpression: (text: string) => this;
 
     constructor(definitionType: DefinitionType);
 }
@@ -231,7 +232,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
     returnType: TypeDefinition;
-    setReturnType: (text: string) => any;
+    setReturnType: (text: string) => this;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -254,7 +255,7 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     isOptional: boolean;
     type: TypeDefinition;
     defaultExpression: ExpressionDefinition | null;
-    setDefaultExpression: (text: string) => any;
+    setDefaultExpression: (text: string) => this;
 
     constructor(definitionType: DefinitionType);
 
@@ -274,14 +275,14 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
 export abstract class ReturnTypedDefinition {
     returnType: TypeDefinition;
 
-    setReturnType(text: string): any;
+    setReturnType(text: string): this;
 }
 
 export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
     parameters: CallSignatureParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
     returnType: TypeDefinition;
-    setReturnType: (text: string) => any;
+    setReturnType: (text: string) => this;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
@@ -300,7 +301,7 @@ export class IndexSignatureDefinition extends BaseDefinition implements ReturnTy
     keyName: string;
     keyType: TypeDefinition;
     returnType: TypeDefinition;
-    setReturnType: (text: string) => any;
+    setReturnType: (text: string) => this;
 
     constructor();
 }
@@ -775,7 +776,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     defaultExpression: ExpressionDefinition | null;
-    setDefaultExpression: (text: string) => any;
+    setDefaultExpression: (text: string) => this;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;

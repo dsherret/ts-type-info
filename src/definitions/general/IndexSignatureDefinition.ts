@@ -12,7 +12,7 @@ export class IndexSignatureDefinition extends BaseDefinition implements ReturnTy
 
     // ReturnTypedDefinition
     returnType: TypeDefinition;
-    setReturnType: (text: string) => any;
+    setReturnType: (text: string) => this;
 }
 
 applyMixins(IndexSignatureDefinition, BaseDefinition, [ReturnTypedDefinition]);

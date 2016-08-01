@@ -39,10 +39,10 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     isOptional: boolean;
     // TypedDefinition
     type: TypeDefinition;
-    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => any;
+    setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition | null;
-    setDefaultExpression: (text: string) => any;
+    setDefaultExpression: (text: string) => this;
 }
 
 applyMixins(BaseParameterDefinition, BaseDefinition, [OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition]);

@@ -40,7 +40,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
     // ReturnTyped
     returnType: TypeDefinition;
-    setReturnType: (text: string) => any;
+    setReturnType: (text: string) => this;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;

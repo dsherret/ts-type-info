@@ -11,7 +11,7 @@ export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinitio
 
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition | null;
-    setDefaultExpression: (text: string) => any;
+    setDefaultExpression: (text: string) => this;
 }
 
 applyMixins(BaseObjectPropertyDefinition, BasePropertyDefinition, [DefaultExpressionedDefinition]);
