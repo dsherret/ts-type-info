@@ -121,12 +121,12 @@ export class TsSymbol extends TsSourceFileChild {
         return this.typeChecker.isSymbolNamedExportOfFile(this.symbol, this.sourceFile);
     }
 
-    isPropertyAccessor() {
+    hasGetAccessor() {
         return (this.symbol.flags & ts.SymbolFlags.GetAccessor) !== 0;
     }
 
-    isPropertyReadonly() {
-        return this.isPropertyAccessor() && (this.symbol.flags & ts.SymbolFlags.SetAccessor) === 0;
+    hasSetAccessor() {
+        return (this.symbol.flags & ts.SymbolFlags.SetAccessor) !== 0;
     }
 
     private createSymbol(symbol: ts.Symbol): TsSymbol {

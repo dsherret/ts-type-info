@@ -402,6 +402,10 @@ export class TsNode extends TsSourceFileChild {
         return this.getKind() === ts.SyntaxKind.GetAccessor;
     }
 
+    isSetAccessor() {
+        return this.getKind() === ts.SyntaxKind.SetAccessor;
+    }
+
     isHeritageClause() {
         return this.getKind() === ts.SyntaxKind.HeritageClause;
     }
@@ -469,10 +473,6 @@ export class TsNode extends TsSourceFileChild {
     isRestParameter() {
         const parameterDeclaration = this.node as ts.ParameterDeclaration;
         return parameterDeclaration.dotDotDotToken != null;
-    }
-
-    isSetAccessor() {
-        return this.getKind() === ts.SyntaxKind.SetAccessor;
     }
 
     isStarImport() {

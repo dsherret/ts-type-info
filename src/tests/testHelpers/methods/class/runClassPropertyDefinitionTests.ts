@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import {ClassPropertyTestStructure} from "./../../testStructures";
-import {ClassPropertyDefinition} from "./../../../../definitions";
+import {ClassPropertyDefinition, ClassPropertyKind} from "./../../../../definitions";
 import {runAbstractableDefinitionTests} from "./../base";
 import {runBaseClassPropertyDefinitionTests} from "./base";
 import {ensureNotNull} from "./../../ensureNotNull";
@@ -11,12 +11,8 @@ export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinit
             runBaseClassPropertyDefinitionTests(definition, structure);
             runAbstractableDefinitionTests(definition, structure);
 
-            it(`should be ${structure.isAccessor ? "an accessor" : "not an accessor"}`, () => {
-                assert.equal(definition.isAccessor, structure.isAccessor || false);
-            });
-
-            it(`should be ${structure.isReadonly ? "readonly" : "not readonly"}`, () => {
-                assert.equal(definition.isReadonly, structure.isReadonly || false);
+            it(`should have the same kind`, () => {
+                assert.equal(definition.kind, structure.kind || ClassPropertyKind.Normal);
             });
 
             it(`should ${structure.hasOnWriteGetBody ? "have" : "not have"} a writeGetBody`, () => {

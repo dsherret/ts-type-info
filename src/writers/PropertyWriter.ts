@@ -1,4 +1,4 @@
-﻿import {PropertyDefinitions, ClassPropertyDefinition} from "./../definitions";
+﻿import {PropertyDefinitions, ClassPropertyDefinition, ClassPropertyKind} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {TypeWriter} from "./TypeWriter";
 import {ScopeWriter} from "./ScopeWriter";
@@ -19,7 +19,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     }
 
     private static isAccessor(def: PropertyDefinitions): def is ClassPropertyDefinition {
-        return def.isClassPropertyDefinition() && def.isAccessor;
+        return def.isClassPropertyDefinition() && def.kind !== ClassPropertyKind.Normal;
     }
 
     protected writeDefault(def: PropertyDefinitions, flags: WriteFlags) {
@@ -32,10 +32,12 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     }
 
     private writeAccessor(def: ClassPropertyDefinition) {
-        this.writeGetAccessor(def);
+        if (def.kind & ClassPropertyKind.GetAccessor) {
+            this.writeGetAccessor(def);
+        }
 
-        if (!def.isReadonly) {
-            this.writer.conditionalNewLine(!def.isAbstract);
+        if (def.kind & ClassPropertyKind.SetAccessor) {
+            this.writer.conditionalNewLine(!def.isAbstract && def.kind === ClassPropertyKind.GetSetAccessor);
             this.writeSetAccessor(def);
         }
     }

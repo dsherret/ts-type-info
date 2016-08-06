@@ -1,26 +1,33 @@
-﻿import {TsFactory} from "./../../../factories";
+﻿import {ClassPropertyKind} from "./../../../definitions";
+import {TsFactory} from "./../../../factories";
 import {TsNode, TsSymbol} from "./../../../compiler";
 import {ClassPropertyBinder} from "./../../base";
 import {TsAbstractableBinder} from "./../base";
 import {TsBaseClassPropertyBinder} from "./base";
 
 export class TsClassPropertyBinder extends ClassPropertyBinder {
-    private readonly symbol: TsSymbol;
+    private readonly symbols: TsSymbol[];
 
-    constructor(factory: TsFactory, node: TsNode) {
+    constructor(factory: TsFactory, nodes: TsNode[]) {
         super(
-            new TsBaseClassPropertyBinder(factory, node),
-            new TsAbstractableBinder(node)
+            new TsBaseClassPropertyBinder(factory, nodes[0]),
+            new TsAbstractableBinder(nodes[0])
         );
-        this.symbol = node.getSymbol()!;
+        this.symbols = nodes.map(node => node.getSymbol()!);
     }
 
-    getIsAccessor() {
-        return this.symbol.isPropertyAccessor();
-    }
+    getKind() {
+        let kind = ClassPropertyKind.Normal;
 
-    getIsReadonly() {
-        return this.symbol.isPropertyReadonly();
+        if (this.symbols.some(s => s.hasGetAccessor())) {
+            kind = kind | ClassPropertyKind.GetAccessor;
+        }
+
+        if (this.symbols.some(s => s.hasSetAccessor())) {
+            kind = kind | ClassPropertyKind.SetAccessor;
+        }
+
+        return kind;
     }
 
     getOnWriteGetBody() {

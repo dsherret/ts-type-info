@@ -507,20 +507,28 @@ export class ClassMethodParameterDefinition extends BaseClassMethodParameterDefi
     constructor();
 }
 
-export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
-    isAccessor: boolean;
-    isReadonly: boolean;
+export class ClassPropertyDefinition extends BaseClassPropertyDefinition implements AbstractableDefinition {
+    kind: ClassPropertyKind;
     isConstructorParameter: boolean;
     onWriteGetBody: ((writer: CodeBlockWriter) => void) | null;
     onWriteSetBody: ((writer: CodeBlockWriter) => void) | null;
+    isAbstract: boolean;
 
     constructor();
 }
 
-export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition {
+export enum ClassPropertyKind {
+    Normal = 0,
+    GetAccessor = 1,
+    SetAccessor = 4,
+    GetSetAccessor = 5
+}
+
+export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition, ScopedDefinition {
     onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
+    scope: "public" | "protected" | "private";
 
     constructor();
 
@@ -1002,14 +1010,13 @@ export interface ClassMethodParameterStructure extends BaseClassMethodParameterS
 export interface ClassMethodStructure extends BaseClassMethodStructure<ClassMethodParameterStructure>, AbstractableStructure {
 }
 
-export interface ClassPropertyStructure extends BaseClassPropertyStructure {
-    isAccessor?: boolean | undefined;
-    isReadonly?: boolean | undefined;
+export interface ClassPropertyStructure extends BaseClassPropertyStructure, AbstractableStructure {
+    kind?: ClassPropertyKind | undefined;
     onWriteGetBody?: ((writer: CodeBlockWriter) => void) | undefined;
     onWriteSetBody?: ((writer: CodeBlockWriter) => void) | undefined;
 }
 
-export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure {
+export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure, ScopedStructure {
 }
 
 export interface ClassConstructorParameterStructure extends BaseParameterStructure {

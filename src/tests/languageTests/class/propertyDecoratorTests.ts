@@ -1,4 +1,5 @@
 ﻿import {getInfoFromString} from "./../../../main";
+import {ClassPropertyKind} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class property decorator tests", () => {
@@ -85,8 +86,7 @@ class MyClass {
                 decorators: [{
                     name: "MyClassPropertyAccessorDecorator"
                 }],
-                isAccessor: true,
-                isReadonly: true
+                kind: ClassPropertyKind.GetAccessor
             }, {
                 name: "myProperty3",
                 type: {
@@ -95,7 +95,7 @@ class MyClass {
                 decorators: [{
                     name: "MyClassPropertyAccessorDecorator"
                 }],
-                isAccessor: true
+                kind: ClassPropertyKind.GetSetAccessor
             }]
         }]
     });

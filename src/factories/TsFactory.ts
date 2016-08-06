@@ -34,8 +34,8 @@ export class TsFactory {
         return bindToDefinition(new binders.TsClassStaticMethodBinder(this, node), new definitions.ClassStaticMethodDefinition());
     }
 
-    getClassProperty(node: TsNode) {
-        return bindToDefinition(new binders.TsClassPropertyBinder(this, node), new definitions.ClassPropertyDefinition());
+    getClassProperty(nodes: TsNode[]) {
+        return bindToDefinition(new binders.TsClassPropertyBinder(this, nodes), new definitions.ClassPropertyDefinition());
     }
 
     getClassStaticProperty(node: TsNode) {

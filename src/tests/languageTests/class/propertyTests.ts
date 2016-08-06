@@ -1,5 +1,5 @@
 import {getInfoFromString} from "./../../../main";
-import {Scope} from "./../../../definitions";
+import {ClassPropertyKind, Scope} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class property tests", () => {
@@ -16,6 +16,9 @@ class MyClass {
 
     get myGetAccessor() {
         return "";
+    }
+
+    set mySetAccessor(val: string) {
     }
 
     get myGetAndSetAccessor() {
@@ -61,12 +64,15 @@ class MyClass {
             }, {
                 name: "myGetAccessor",
                 type: { text: "string" },
-                isAccessor: true,
-                isReadonly: true
+                kind: ClassPropertyKind.GetAccessor
+            }, {
+                name: "mySetAccessor",
+                type: { text: "string" },
+                kind: ClassPropertyKind.SetAccessor
             }, {
                 name: "myGetAndSetAccessor",
                 type: { text: "string" },
-                isAccessor: true
+                kind: ClassPropertyKind.GetSetAccessor
             }, {
                 name: "myAbstractProperty",
                 isAbstract: true,

@@ -3,6 +3,7 @@ export * from "./class/ClassDefinition";
 export * from "./class/ClassMethodDefinition";
 export * from "./class/ClassMethodParameterDefinition";
 export * from "./class/ClassPropertyDefinition";
+export * from "./class/ClassPropertyKind";
 export * from "./class/ClassConstructorDefinition";
 export * from "./class/ClassConstructorParameterDefinition";
 export * from "./class/ClassConstructorParameterScope";

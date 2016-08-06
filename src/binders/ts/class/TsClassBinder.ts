@@ -38,8 +38,10 @@ export class TsClassBinder extends ClassBinder {
     getMembers() {
         const container = new ClassMemberContainer();
         // because there can be multiple method signatures, the last one needs to be used
-        const methods: { [name: string]: TsNode } = {};
-        const staticMethods: { [name: string]: TsNode } = {};
+        const methods: { [name: string]: TsNode; } = {};
+        const staticMethods: { [name: string]: TsNode; } = {};
+        // because there can be set or get accessor nodes
+        const properties: { [name: string]: TsNode[]; } = {};
 
         this.node.getChildren().forEach(childNode => {
             tryGet(childNode, () => {
@@ -51,12 +53,14 @@ export class TsClassBinder extends ClassBinder {
                         methods[childNode.getName()] = childNode;
                     }
                 }
-                else if (childNode.isPropertyDeclaration() || childNode.isGetAccessor()) {
+                else if (childNode.isPropertyDeclaration() || childNode.isGetAccessor() || childNode.isSetAccessor()) {
                     if (childNode.hasStaticKeyword()) {
                         container.staticProperties.push(this.factory.getClassStaticProperty(childNode));
                     }
                     else {
-                        container.properties.push(this.factory.getClassProperty(childNode));
+                        const name = childNode.getName();
+                        properties[name] = properties[name] || [];
+                        properties[name].push(childNode);
                     }
                 }
                 else if (childNode.isConstructor()) {
@@ -97,6 +101,13 @@ export class TsClassBinder extends ClassBinder {
             const childNode = staticMethods[name];
             tryGet(childNode, () => {
                 container.staticMethods.push(this.factory.getClassStaticMethod(childNode));
+            });
+        });
+
+        Object.keys(properties).forEach(name => {
+            const childNodes = properties[name];
+            tryGet(name, () => {
+                container.properties.push(this.factory.getClassProperty(childNodes));
             });
         });
 

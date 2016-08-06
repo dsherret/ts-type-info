@@ -2,10 +2,10 @@ import CodeBlockWriter from "code-block-writer";
 import {applyMixins} from "./../../utils";
 import {DefinitionType, AbstractableDefinition} from "./../base";
 import {BaseClassPropertyDefinition} from "./base";
+import {ClassPropertyKind} from "./ClassPropertyKind";
 
 export class ClassPropertyDefinition extends BaseClassPropertyDefinition implements AbstractableDefinition {
-    isAccessor: boolean;
-    isReadonly: boolean;
+    kind: ClassPropertyKind;
     isConstructorParameter: boolean;
 
     onWriteGetBody: ((writer: CodeBlockWriter) => void) | null;

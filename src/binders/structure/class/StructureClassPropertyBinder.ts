@@ -1,4 +1,5 @@
-﻿import {StructureFactory} from "./../../../factories";
+﻿import {ClassPropertyKind} from "./../../../definitions";
+import {StructureFactory} from "./../../../factories";
 import {ClassPropertyStructure} from "./../../../structures";
 import {ClassPropertyBinder} from "./../../base";
 import {StructureAbstractableBinder} from "./../base";
@@ -12,12 +13,8 @@ export class StructureClassPropertyBinder extends ClassPropertyBinder {
         );
     }
 
-    getIsAccessor() {
-        return this.structure.isAccessor || false;
-    }
-
-    getIsReadonly() {
-        return this.structure.isReadonly || false;
+    getKind() {
+        return this.structure.kind || ClassPropertyKind.Normal;
     }
 
     getOnWriteGetBody() {

@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {ClassDefinition, Scope, ClassConstructorParameterScope} from "./../../../definitions";
+import {ClassDefinition, Scope, ClassConstructorParameterScope, ClassPropertyKind} from "./../../../definitions";
 import {createClass, createInterface} from "./../../../createFunctions";
 import * as testHelpers from "./../../testHelpers";
 
@@ -180,9 +180,8 @@ describe("ClassDefinition", () => {
             isAbstract: true,
             decorators: [{ name: "decorator" }],
             defaultExpression: "4",
-            isAccessor: true,
+            kind: ClassPropertyKind.GetAccessor,
             isOptional: true,
-            isReadonly: true,
             name: "myProperty",
             scope: Scope.Private,
             type: "string",
@@ -201,9 +200,8 @@ describe("ClassDefinition", () => {
             isAbstract: true,
             decorators: [{ name: "decorator" }],
             defaultExpression: { text: "4" },
-            isAccessor: true,
+            kind: ClassPropertyKind.GetAccessor,
             isOptional: true,
-            isReadonly: true,
             name: "myProperty",
             scope: Scope.Private,
             type: { text: "string" },
