@@ -14,7 +14,7 @@ export class ClassConstructorWriter extends BaseDefinitionWriter<ClassConstructo
 
     protected writeDefault(def: ClassConstructorDefinition, flags: WriteFlags) {
         this.writer.write("constructor");
-        this.parametersWriter.write(def.parameters, flags);
+        this.parametersWriter.write(def, flags);
         this.functionBodyWriter.write(def, flags);
     }
 }

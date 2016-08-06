@@ -21,6 +21,8 @@ export async function myExportAsyncFunction() {
 }
 function myFunctionWithDestructuringParameter(str: string, { prop1, prop2 = 4 }: { prop1: number; prop2?: number; }) {
 }
+function myFunctionWithThisType(this: string, num: number) {
+}
 function *myGeneratorFunction() {
     yield return "string";
 }
@@ -117,13 +119,23 @@ declare function myDeclareMultipleSignatures(str?: string): string;
             });
         });
 
+        describe("myFunctionWithThisType", () => {
+            it("should contain the function written out", () => {
+                const expected =
+`function myFunctionWithThisType(this: string, num: number) {
+}
+`;
+                assert.equal(file.functions[8].write(), expected);
+            });
+        });
+
         describe("myGeneratorFunction", () => {
             it("should contain the function written out", () => {
                 const expected =
 `function *myGeneratorFunction() {
 }
 `;
-                assert.equal(file.functions[8].write(), expected);
+                assert.equal(file.functions[9].write(), expected);
             });
         });
 
@@ -133,7 +145,7 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 `function myParameterFunction(param1: string, param2 = "text", param3?: number, ...params: string[]) {
 }
 `;
-                assert.equal(file.functions[9].write(), expected);
+                assert.equal(file.functions[10].write(), expected);
             });
         });
 
@@ -143,7 +155,7 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 `function myTypeGuard(p: string): p is string {
 }
 `;
-                assert.equal(file.functions[10].write(), expected);
+                assert.equal(file.functions[11].write(), expected);
             });
         });
     });

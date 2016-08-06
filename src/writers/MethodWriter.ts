@@ -30,7 +30,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
         if (showImplementation) {
             this.writeStartOfFunctionHeader(def);
             this.typeParametersWriter.write(def.typeParameters, flags);
-            this.parametersWriter.write(def.parameters, flags);
+            this.parametersWriter.write(def, flags);
             this.functionReturnTypeWriter.write(def, flags);
             this.functionBodyWriter.write(def, flags);
         }

@@ -1,17 +1,23 @@
 ﻿import {WriteFlags} from "./../WriteFlags";
-import {ParameterDefinitions, ClassConstructorParameterScope} from "./../definitions";
+import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {ParameterWriter} from "./ParameterWriter";
 import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
+import {TypeWriter} from "./TypeWriter";
 
 export class ParametersWriter extends BaseWriter {
     private readonly parameterWriter = new ParameterWriter(this.writer);
     private readonly parameterWithDestructuringWriter = new ParameterWithDestructuringWriter(this.writer);
+    private readonly typeWriter = new TypeWriter(this.writer);
 
-    write(parameters: ParameterDefinitions[], flags: WriteFlags) {
+    write(def: ParameteredDefinition<any, any>, flags: WriteFlags) {
+        const thisType = (def as any as ThisTypedDefinition).thisType;
+
         this.writer.write("(");
-        parameters.forEach((param, i) => {
-            this.writer.conditionalWrite(i > 0, ", ");
+        this.writeThisType(thisType);
+
+        def.parameters.forEach((param, i) => {
+            this.writer.conditionalWrite(i > 0 || thisType != null, ", ");
 
             if (param.destructuringProperties.length === 0) {
                 if (param.isClassConstructorParameterDefinition()) {
@@ -25,6 +31,13 @@ export class ParametersWriter extends BaseWriter {
             }
         });
         this.writer.write(")");
+    }
+
+    private writeThisType(thisType: TypeDefinition | null) {
+        if (thisType != null) {
+            this.writer.write("this");
+            this.typeWriter.writeWithColon(thisType);
+        }
     }
 
     private writeScope(scope: ClassConstructorParameterScope, flags: WriteFlags) {

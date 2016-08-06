@@ -143,6 +143,13 @@ export abstract class AsyncableDefinition {
     isAsync: boolean;
 }
 
+export abstract class ThisTypedDefinition {
+    thisType: TypeDefinition | null;
+
+    setThisType(definition: NamedDefinition, typeArguments?: string[] | undefined): this;
+    setThisType(text: string): this;
+}
+
 export abstract class TypedDefinition {
     type: TypeDefinition;
 
@@ -224,13 +231,15 @@ export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinitio
     constructor(definitionType: DefinitionType);
 }
 
-export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
+export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition, ThisTypedDefinition {
     isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[];
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
     name: string;
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
+    thisType: TypeDefinition | null;
+    setThisType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[] | undefined) => this;
     returnType: TypeDefinition;
     setReturnType: (text: string) => this;
     typeParameters: TypeParameterDefinition[];

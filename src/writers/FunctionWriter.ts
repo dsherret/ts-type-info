@@ -29,7 +29,7 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
         if (showImplementation) {
             this.writeStartOfFunctionHeader(def, flags);
             this.typeParametersWriter.write(def.typeParameters, flags);
-            this.parametersWriter.write(def.parameters, flags);
+            this.parametersWriter.write(def, flags);
             this.functionReturnTypeWriter.write(def, flags);
             this.functionBodyWriter.write(def, flags);
         }
