@@ -1,8 +1,9 @@
 import CodeBlockWriter from "code-block-writer";
-import {DefinitionType} from "./../base";
+import {applyMixins} from "./../../utils";
+import {DefinitionType, AbstractableDefinition} from "./../base";
 import {BaseClassPropertyDefinition} from "./base";
 
-export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
+export class ClassPropertyDefinition extends BaseClassPropertyDefinition implements AbstractableDefinition {
     isAccessor: boolean;
     isReadonly: boolean;
     isConstructorParameter: boolean;
@@ -13,4 +14,9 @@ export class ClassPropertyDefinition extends BaseClassPropertyDefinition {
     constructor() {
         super(DefinitionType.ClassProperty);
     }
+
+    // AbstractableDefinition
+    isAbstract: boolean;
 }
+
+applyMixins(ClassPropertyDefinition, BaseClassPropertyDefinition, [AbstractableDefinition]);

@@ -1,11 +1,15 @@
 ﻿import {StructureFactory} from "./../../../factories";
 import {ClassPropertyStructure} from "./../../../structures";
 import {ClassPropertyBinder} from "./../../base";
+import {StructureAbstractableBinder} from "./../base";
 import {StructureBaseClassPropertyBinder} from "./base";
 
 export class StructureClassPropertyBinder extends ClassPropertyBinder {
     constructor(factory: StructureFactory, private readonly structure: ClassPropertyStructure) {
-        super(new StructureBaseClassPropertyBinder(factory, structure));
+        super(
+            new StructureBaseClassPropertyBinder(factory, structure),
+            new StructureAbstractableBinder(structure)
+        );
     }
 
     getIsAccessor() {

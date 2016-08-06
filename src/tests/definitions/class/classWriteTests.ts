@@ -15,6 +15,9 @@ abstract class MyClass {
     private myPrivateString: string;
     nonOptionalString = "text";
     optionalNumber?: number;
+    protected abstract myAbstractProperty: string;
+    protected abstract get myAbstractAccessorProperty(): string;
+    protected abstract set myAbstractAccessorProperty(value: string);
 
     get myGet(): string {
         return "";
@@ -27,11 +30,11 @@ abstract class MyClass {
     set myGetSet(value: string) {
     }
 
-    get myGetSetWithWriteDefined(): string {
+    protected get myGetSetWithWriteDefined(): string {
         return "";
     }
 
-    set myGetSetWithWriteDefined(value: string) {
+    protected set myGetSetWithWriteDefined(value: string) {
     }
 
     constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
@@ -108,14 +111,17 @@ describe("ClassDefinition", () => {
     private myPrivateString: string;
     nonOptionalString = "text";
     optionalNumber?: number;
+    protected abstract myAbstractProperty: string;
+    protected abstract get myAbstractAccessorProperty(): string;
+    protected abstract set myAbstractAccessorProperty(value: string);
     myGet: string;
     myGetSet: string;
 
-    get myGetSetWithWriteDefined(): string {
+    protected get myGetSetWithWriteDefined(): string {
         return "";
     }
 
-    set myGetSetWithWriteDefined(value: string) {
+    protected set myGetSetWithWriteDefined(value: string) {
         alert(value);
     }
 

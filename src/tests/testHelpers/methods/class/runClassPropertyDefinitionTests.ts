@@ -1,6 +1,7 @@
 import * as assert from "assert";
 import {ClassPropertyTestStructure} from "./../../testStructures";
 import {ClassPropertyDefinition} from "./../../../../definitions";
+import {runAbstractableDefinitionTests} from "./../base";
 import {runBaseClassPropertyDefinitionTests} from "./base";
 import {ensureNotNull} from "./../../ensureNotNull";
 
@@ -8,6 +9,7 @@ export function runClassPropertyDefinitionTests(definition: ClassPropertyDefinit
     describe(`property ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             runBaseClassPropertyDefinitionTests(definition, structure);
+            runAbstractableDefinitionTests(definition, structure);
 
             it(`should be ${structure.isAccessor ? "an accessor" : "not an accessor"}`, () => {
                 assert.equal(definition.isAccessor, structure.isAccessor || false);

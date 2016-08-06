@@ -23,6 +23,8 @@ class MyClass {
     }
     set myGetAndSetAccessor(val: string) {
     }
+
+    abstract myAbstractProperty: string;
 }`;
 
     const def = getInfoFromString(code);
@@ -65,6 +67,10 @@ class MyClass {
                 name: "myGetAndSetAccessor",
                 type: { text: "string" },
                 isAccessor: true
+            }, {
+                name: "myAbstractProperty",
+                isAbstract: true,
+                type: { text: "string" }
             }]
         }]
     });

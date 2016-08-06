@@ -177,6 +177,7 @@ describe("ClassDefinition", () => {
     describe("#addProperty()", () => {
         const c = new ClassDefinition();
         const returnedDef = c.addProperty({
+            isAbstract: true,
             decorators: [{ name: "decorator" }],
             defaultExpression: "4",
             isAccessor: true,
@@ -197,6 +198,7 @@ describe("ClassDefinition", () => {
         });
 
         testHelpers.runClassPropertyDefinitionTests(c.properties[0], {
+            isAbstract: true,
             decorators: [{ name: "decorator" }],
             defaultExpression: { text: "4" },
             isAccessor: true,
