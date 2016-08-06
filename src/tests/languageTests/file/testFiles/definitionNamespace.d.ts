@@ -1,4 +1,6 @@
-﻿declare namespace definitionNamespace {
+﻿/* tslint:disable */
+
+declare namespace definitionNamespace {
     interface DefinitionNamespaceInterface {
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MyNamespace {
+﻿/* tslint:disable */
+
+namespace MyNamespace {
     export class MyClass {
     }
 }

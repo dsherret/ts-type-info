@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 // this is a test file
 export class NamedExport1 {
     name: string;

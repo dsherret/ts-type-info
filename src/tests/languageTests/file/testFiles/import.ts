@@ -1,8 +1,9 @@
-﻿// this is a test file used in import-tests
+﻿/* tslint:disable */
+
+// this is a test file used in import-tests
 /// <reference path="definition.d.ts" />
 /// <reference path="definition-var.d.ts" />
 
-/* tslint:disable */
 import DefaultExport from "./defaultExport";
 import DefaultExportSeparate from "./defaultExportSeparate";
 import {NamedExport1, NamedExport2} from "./namedExports";
