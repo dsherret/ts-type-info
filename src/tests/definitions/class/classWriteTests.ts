@@ -23,11 +23,21 @@ abstract class MyClass {
         return "";
     }
 
+    set mySet(value: string) {
+    }
+
     get myGetSet(): string {
         return "";
     }
 
     set myGetSet(value: string) {
+    }
+
+    private get myGetWithWriteDefined(): string {
+        return "";
+    }
+
+    private set mySetWithWriteDefined(value: string) {
     }
 
     protected get myGetSetWithWriteDefined(): string {
@@ -115,7 +125,16 @@ describe("ClassDefinition", () => {
     protected abstract get myAbstractAccessorProperty(): string;
     protected abstract set myAbstractAccessorProperty(value: string);
     myGet: string;
+    mySet: string;
     myGetSet: string;
+
+    private get myGetWithWriteDefined(): string {
+        return "";
+    }
+
+    private set mySetWithWriteDefined(value: string) {
+        alert(value);
+    }
 
     protected get myGetSetWithWriteDefined(): string {
         return "";
@@ -158,10 +177,13 @@ describe("ClassDefinition", () => {
 }
 `;
                 const classDef = file.classes[0];
-                const property = classDef.getProperty("myGetSetWithWriteDefined")!;
+                const getSetProperty = classDef.getProperty("myGetSetWithWriteDefined")!;
 
-                property.onWriteGetBody = writer => writer.write(`return "";`);
-                property.onWriteSetBody = writer => writer.write(`alert(value);`);
+                getSetProperty.onWriteGetBody = writer => writer.write(`return "";`);
+                getSetProperty.onWriteSetBody = writer => writer.write(`alert(value);`);
+
+                classDef.getProperty("myGetWithWriteDefined")!.onWriteGetBody = writer => writer.write(`return "";`);
+                classDef.getProperty("mySetWithWriteDefined")!.onWriteSetBody = writer => writer.write(`alert(value);`);
 
                 assert.equal(classDef.write(), expected);
             });
