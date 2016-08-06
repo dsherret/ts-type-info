@@ -3,12 +3,14 @@ import {StructureFactory} from "./../../factories";
 import {ClassConstructorParameterStructure} from "./../../structures";
 import {BaseDefinition, DefinitionType, ParameteredDefinition, FunctionBodyWriteableDefinition} from "./../base";
 import {applyMixins} from "./../../utils";
+import {ScopedDefinition} from "./base";
 import {ClassConstructorParameterDefinition} from "./ClassConstructorParameterDefinition";
+import {Scope} from "./Scope";
 
 export class ClassConstructorDefinition
         extends BaseDefinition
-        implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition {
-
+        implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition,
+            ScopedDefinition {
     constructor() {
         super(DefinitionType.ClassConstructor);
     }
@@ -24,6 +26,8 @@ export class ClassConstructorDefinition
     // ParameteredDefinition
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
+    // ScopedDefinition
+    scope: Scope;
 }
 
-applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition, FunctionBodyWriteableDefinition]);
+applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition, FunctionBodyWriteableDefinition, ScopedDefinition]);

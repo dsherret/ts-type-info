@@ -67,6 +67,11 @@ abstract class MyClass {
     abstract async myAbstractAsyncMethod();
 }
 
+class MyClassWithPrivateConstructor {
+    private constructor() {
+    }
+}
+
 class MyTypeParameterClass<T> {
 }
 
@@ -156,13 +161,25 @@ describe("ClassDefinition", () => {
             });
         });
 
+        describe("MyClassWithPrivateConstructor", () => {
+            it("should contain the class written out", () => {
+                const expected =
+`class MyClassWithPrivateConstructor {
+    private constructor() {
+    }
+}
+`;
+                assert.equal(file.classes[1].write(), expected);
+            });
+        });
+
         describe("MyTypeParameterClass", () => {
             it("should contain the class written out", () => {
                 const expected =
 `class MyTypeParameterClass<T> {
 }
 `;
-                assert.equal(file.classes[1].write(), expected);
+                assert.equal(file.classes[2].write(), expected);
             });
         });
 
@@ -172,7 +189,7 @@ describe("ClassDefinition", () => {
 `class MyChildClass extends MyTypeParameterClass<string> {
 }
 `;
-                assert.equal(file.classes[2].write(), expected);
+                assert.equal(file.classes[3].write(), expected);
             });
         });
 
@@ -182,7 +199,7 @@ describe("ClassDefinition", () => {
 `class MyImplementsClass implements MyChildClass {
 }
 `;
-                assert.equal(file.classes[3].write(), expected);
+                assert.equal(file.classes[4].write(), expected);
             });
         });
 
@@ -192,7 +209,7 @@ describe("ClassDefinition", () => {
 `class MyExtendsImplementsClass extends MyChildClass implements MyImplementsClass {
 }
 `;
-                assert.equal(file.classes[4].write(), expected);
+                assert.equal(file.classes[5].write(), expected);
             });
         });
 
@@ -202,7 +219,7 @@ describe("ClassDefinition", () => {
 `class MyExtendsArray extends Array<string> {
 }
 `;
-                assert.equal(file.classes[5].write(), expected);
+                assert.equal(file.classes[6].write(), expected);
             });
         });
     });
