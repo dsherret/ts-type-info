@@ -105,7 +105,7 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isGenerator: true,
             isNamedExportOfFile: true,
-            parameters: [{ name: "param1" }, { name: "param2" }],
+            parameters: [{ name: "this", type: "string" }, { name: "param1" }, { name: "param2" }],
             returnType: "string",
             typeParameters: [{ name: "T" }, { name: "U" }],
             overloadSignatures: [{
@@ -131,6 +131,7 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isGenerator: true,
             isNamedExportOfFile: true,
+            thisType: { text: "string" },
             parameters: [{ name: "param1" }, { name: "param2" }],
             returnType: { text: "string" },
             typeParameters: [{ name: "T" }, { name: "U" }],

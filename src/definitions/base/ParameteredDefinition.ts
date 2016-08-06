@@ -1,5 +1,5 @@
-import {BaseParameterDefinition} from "./BaseParameterDefinition";
 import {DefinitionUtils} from "./../../utils";
+import {BaseParameterDefinition} from "./BaseParameterDefinition";
 
 export abstract class ParameteredDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> {
     parameters: ParameterType[] = [];

@@ -10,10 +10,12 @@ import {BaseDefinition} from "./BaseDefinition";
 import {DefinitionType} from "./DefinitionType";
 import {ParameteredDefinition} from "./ParameteredDefinition";
 import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
+import {ThisTypedDefinition} from "./ThisTypedDefinition";
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
-        implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition {
+        implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition,
+            ThisTypedDefinition {
     isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[] = [];
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
@@ -38,6 +40,9 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     parameters: ParameterType[];
     abstract addParameter(structure: ParameterStructureType): ParameterType;
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
+    // ThisTypedDefinition
+    thisType: TypeDefinition | null;
+    setThisType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
     // ReturnTyped
     returnType: TypeDefinition;
     setReturnType: (text: string) => this;
@@ -47,4 +52,4 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
 }
 
-applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);
+applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, ThisTypedDefinition]);

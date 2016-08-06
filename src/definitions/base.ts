@@ -8,6 +8,7 @@ export * from "./base/OptionalDefinition";
 export * from "./base/AbstractableDefinition";
 export * from "./base/AmbientableDefinition";
 export * from "./base/AsyncableDefinition";
+export * from "./base/ThisTypedDefinition";
 export * from "./base/TypedDefinition";
 export * from "./base/DefaultExpressionedDefinition";
 export * from "./base/DecoratableDefinition";

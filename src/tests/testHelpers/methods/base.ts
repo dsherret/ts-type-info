@@ -12,6 +12,7 @@ export * from "./base/runModuledDefinitionTests";
 export * from "./base/runNamedDefinitionTests";
 export * from "./base/runOptionalDefinitionTests";
 export * from "./base/runOrderableDefinitionTests";
+export * from "./base/runThisTypedDefinitionTests";
 export * from "./base/runTypedDefinitionTests";
 export * from "./base/runTypeParameteredDefinitionTests";
 export * from "./base/runBaseFunctionDefinitionTests";

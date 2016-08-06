@@ -26,6 +26,11 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         this.parameterBinder.bind(def);
         this.returnTypedBinder.bind(def);
 
+        if (def.parameters.length > 0 && def.parameters[0].name === "this") {
+            const thisParam = def.parameters.splice(0, 1)[0];
+            def.thisType = thisParam.type;
+        }
+
         def.isGenerator = this.getIsGenerator();
         def.overloadSignatures.push(...this.getOverloadSignatures());
         def.userDefinedTypeGuard = this.getUserDefinedTypeGuard();

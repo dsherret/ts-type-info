@@ -10,6 +10,9 @@ class MyClass {
         return "";
     }
 
+    myThisTypeMethod(this: string, num: number) {
+    }
+
     // return types
     myExplicitReturnTypeMethod(): string {
         return null;
@@ -64,6 +67,13 @@ class MyClass {
                     isRestParameter: true
                 }],
                 returnType: { text: "string" }
+            }, {
+                name: "myThisTypeMethod",
+                thisType: { text: "string" },
+                parameters: [{
+                    name: "num",
+                    type: { text: "number" }
+                }]
             }, {
                 name: "myExplicitReturnTypeMethod",
                 returnType: { text: "string" }

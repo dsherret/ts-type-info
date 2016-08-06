@@ -2,7 +2,7 @@
 import * as definitions from "./../../../definitions";
 
 describe("BaseDefinition", () => {
-    describe("#isFileDefinition", () => {
+    describe("#isFileDefinition()", () => {
         it("should return true for the same type", () => {
             assert.equal(new definitions.FileDefinition().isFileDefinition(), true);
         });

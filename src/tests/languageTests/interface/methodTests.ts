@@ -8,6 +8,7 @@ interface MyInterface {
     myParameterMethod(myParameter: string, myOptionalParameter?: number): number;
     myImplicitAnyReturnTypeMethod();
     myExplicitReturnTypeMethod(): string;
+    myThisTypeMethod(this: string, num: number): void;
 }`;
 
     const def = getInfoFromString(code);
@@ -32,6 +33,13 @@ interface MyInterface {
             }, {
                 name: "myExplicitReturnTypeMethod",
                 returnType: { text: "string" }
+            }, {
+                name: "myThisTypeMethod",
+                thisType: { text: "string" },
+                parameters: [{
+                    name: "num",
+                    type: { text: "number" }
+                }]
             }]
         }]
     });

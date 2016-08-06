@@ -12,6 +12,7 @@ export * from "./base/ModuledTestStructure";
 export * from "./base/OrderableTestStructure";
 export * from "./base/OptionalTestStructure";
 export * from "./base/BaseObjectPropertyTestStructure";
+export * from "./base/ThisTypedTestStructure";
 export * from "./base/TypedTestStructure";
 export * from "./base/BasePropertyTestStructure";
 export * from "./base/TypeParameteredTestStructure";

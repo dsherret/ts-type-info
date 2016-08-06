@@ -8,6 +8,8 @@ function myFunction() {
 function myFunctionWithParameters(str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: MyClass[]) {
     return new Date();
 }
+function myFunctionWithThisType(this: string, num: number) {
+}
 async function myAsyncFunction(): any {
 }
 function typeGuardFunction(def: any): def is MyClass {
@@ -53,6 +55,13 @@ class MyClass2 {
             returnType: {
                 text: "Date"
             }
+        }, {
+            name: "myFunctionWithThisType",
+            thisType: { text: "string" },
+            parameters: [{
+                name: "num",
+                type: { text: "number" }
+            }]
         }, {
             name: "myAsyncFunction",
             isAsync: true,

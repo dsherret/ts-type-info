@@ -8,8 +8,7 @@ export abstract class TypedDefinition {
     setType(definition: NamedDefinition, typeArguments?: string[]): this;
     setType(text: string): this;
     setType(textOrDefinition: string | NamedDefinition, typeArguments: string[] = []) {
-        const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
-        this.type = def;
+        this.type = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
         return this;
     }
 }

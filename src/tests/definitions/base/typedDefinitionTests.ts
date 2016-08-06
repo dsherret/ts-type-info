@@ -3,7 +3,7 @@ import {createClass} from "./../../../createFunctions";
 import {runTypedDefinitionTests} from "./../../testHelpers";
 
 describe("TypedDefinition", () => {
-    describe("setType", () => {
+    describe("#setType()", () => {
         describe("as null", () => {
             const v = new VariableDefinition();
             v.setType(null as any as string);
