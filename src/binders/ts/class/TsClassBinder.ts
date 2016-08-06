@@ -40,7 +40,7 @@ export class TsClassBinder extends ClassBinder {
         // because there can be multiple method signatures, the last one needs to be used
         const methods: { [name: string]: TsNode; } = {};
         const staticMethods: { [name: string]: TsNode; } = {};
-        // because there can be set or get accessor nodes
+        // because there can be set and get accessor nodes
         const properties: { [name: string]: TsNode[]; } = {};
 
         this.node.getChildren().forEach(childNode => {
