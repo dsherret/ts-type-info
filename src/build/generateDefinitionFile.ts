@@ -39,16 +39,16 @@ function fixSetType(result: GlobalDefinition) {
                 c.properties = c.properties.filter(p => p.name !== "setType");
                 c.addMethod({
                     name: "setType",
-                    returnType: "any",
+                    returnType: "this",
                     overloadSignatures: [{
                         parameters: [
                             { name: "definition", type: "NamedDefinition" },
                             { name: "typeArguments", type: "string[]", isOptional: true }
                         ],
-                        returnType: "any"
+                        returnType: "this"
                     }, {
                         parameters: [{ name: "text", type: "string" }],
-                        returnType: "any"
+                        returnType: "this"
                     }]
                 });
             }

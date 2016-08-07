@@ -214,8 +214,8 @@ export abstract class BasePropertyDefinition extends BaseDefinition implements N
 
     constructor(definitionType: DefinitionType);
 
-    setType(definition: NamedDefinition, typeArguments?: string[]): any;
-    setType(text: string): any;
+    setType(definition: NamedDefinition, typeArguments?: string[]): this;
+    setType(text: string): this;
 }
 
 export abstract class TypeParameteredDefinition {
@@ -271,8 +271,8 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
 
     addDestructuringProperty(structure: ObjectPropertyStructure): ObjectPropertyDefinition;
     getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): ObjectPropertyDefinition | null;
-    setType(definition: NamedDefinition, typeArguments?: string[]): any;
-    setType(text: string): any;
+    setType(definition: NamedDefinition, typeArguments?: string[]): this;
+    setType(text: string): this;
 }
 
 export abstract class ParameteredDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> {
@@ -348,8 +348,8 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     constructor();
 
     write(writeOptions?: WriteOptions | undefined): string;
-    setType(definition: NamedDefinition, typeArguments?: string[]): any;
-    setType(text: string): any;
+    setType(definition: NamedDefinition, typeArguments?: string[]): this;
+    setType(text: string): this;
 }
 
 export class DecoratorDefinition extends BaseDefinition implements NamedDefinition {
@@ -810,8 +810,8 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     constructor();
 
     write(writeOptions?: WriteOptions | undefined): string;
-    setType(definition: NamedDefinition, typeArguments?: string[]): any;
-    setType(text: string): any;
+    setType(definition: NamedDefinition, typeArguments?: string[]): this;
+    setType(text: string): this;
 }
 
 export type VariableDeclarationType = "var" | "let" | "const";
