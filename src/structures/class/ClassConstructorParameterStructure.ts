@@ -1,6 +1,6 @@
 ﻿import {ClassConstructorParameterScope} from "./../../definitions";
-import {BaseParameterStructure} from "./../base";
+import {BaseParameterStructure, ReadonlyableStructure} from "./../base";
 
-export interface ClassConstructorParameterStructure extends BaseParameterStructure {
+export interface ClassConstructorParameterStructure extends BaseParameterStructure, ReadonlyableStructure {
     scope?: ClassConstructorParameterScope;
 }

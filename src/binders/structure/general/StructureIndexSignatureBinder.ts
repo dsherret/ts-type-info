@@ -1,13 +1,14 @@
 ﻿import {StructureFactory} from "./../../../factories";
 import {IndexSignatureStructure} from "./../../../structures";
 import {IndexSignatureBinder} from "./../../base";
-import {StructureBaseDefinitionBinder, StructureReturnTypedBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureReturnTypedBinder, StructureReadonlyableBinder} from "./../base";
 
 export class StructureIndexSignatureBinder extends IndexSignatureBinder {
     constructor(private readonly factory: StructureFactory, private readonly structure: IndexSignatureStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
-            new StructureReturnTypedBinder(factory, structure)
+            new StructureReturnTypedBinder(factory, structure),
+            new StructureReadonlyableBinder(structure)
         );
     }
 

@@ -6,6 +6,7 @@ export class IndexSignatureWriter extends BaseDefinitionWriter<IndexSignatureDef
     private readonly typeWriter = new TypeWriter(this.writer);
 
     protected writeDefault(def: IndexSignatureDefinition) {
+        this.writer.conditionalWrite(def.isReadonly, "readonly ");
         this.writer.write(`[${def.keyName}`);
         this.typeWriter.writeWithColon(def.keyType);
         this.writer.write("]");

@@ -27,7 +27,7 @@ interface CallSignatureInterface {
 }
 
 interface IndexSignatureInterface {
-    [str: string]: Date;
+    readonly [str: string]: Date;
     [num: number]: Date;
 }
 

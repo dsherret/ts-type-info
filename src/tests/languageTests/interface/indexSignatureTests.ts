@@ -4,7 +4,7 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("index signature tests", () => {
     const code = `
 interface MyInterface {
-    [str: string]: Date;
+    readonly [str: string]: Date;
     [num: number]: Date;
 }`;
 
@@ -14,6 +14,7 @@ interface MyInterface {
         interfaces: [{
             name: "MyInterface",
             indexSignatures: [{
+                isReadonly: true,
                 keyName: "str",
                 keyType: { text: "string" },
                 returnType: { text: "Date" }

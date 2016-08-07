@@ -2,10 +2,10 @@
 import {applyMixins} from "./../../utils";
 import {DecoratorStructure} from "./../../structures";
 import {DecoratorDefinition} from "./../general";
-import {DecoratableDefinition, DefinitionType, BaseParameterDefinition} from "./../base";
+import {DecoratableDefinition, DefinitionType, BaseParameterDefinition, ReadonlyableDefinition} from "./../base";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 
-export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition {
+export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ReadonlyableDefinition {
     scope: ClassConstructorParameterScope;
 
     constructor() {
@@ -19,6 +19,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
             scope: ClassConstructorParameterScope.toScope(this.scope),
             type: this.type.text,
             isOptional: this.isOptional,
+            isReadonly: this.isReadonly,
             defaultExpression: this.defaultExpression != null ? this.defaultExpression.text : undefined,
             decorators: this.decorators.map(decorator => ({
                 name: decorator.name,
@@ -33,6 +34,8 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     decorators: DecoratorDefinition[];
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
+    // ReadonlyableDefinition
+    isReadonly: boolean;
 }
 
-applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition]);
+applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition, ReadonlyableDefinition]);

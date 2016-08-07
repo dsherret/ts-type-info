@@ -3,7 +3,7 @@ import {getInfoFromString} from "./../../../main";
 
 const code = `
 abstract class MyClass {
-    static myStaticString: string;
+    static readonly myStaticString: string;
 
     static myStaticMethod() {
     }
@@ -15,7 +15,7 @@ abstract class MyClass {
     private myPrivateString: string;
     nonOptionalString = "text";
     optionalNumber?: number;
-    protected abstract myAbstractProperty: string;
+    protected abstract readonly myAbstractReadonlyProperty: string;
     protected abstract get myAbstractAccessorProperty(): string;
     protected abstract set myAbstractAccessorProperty(value: string);
 
@@ -47,7 +47,7 @@ abstract class MyClass {
     protected set myGetSetWithWriteDefined(value: string) {
     }
 
-    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
+    constructor(myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
     abstract myAbstractMethod(): string;
@@ -109,7 +109,7 @@ describe("ClassDefinition", () => {
             it("should contain the class written out", () => {
                 const expected =
 `abstract class MyClass {
-    static myStaticString: string;
+    static readonly myStaticString: string;
 
     static myStaticMethod() {
     }
@@ -121,7 +121,7 @@ describe("ClassDefinition", () => {
     private myPrivateString: string;
     nonOptionalString = "text";
     optionalNumber?: number;
-    protected abstract myAbstractProperty: string;
+    protected abstract readonly myAbstractReadonlyProperty: string;
     protected abstract get myAbstractAccessorProperty(): string;
     protected abstract set myAbstractAccessorProperty(value: string);
     myGet: string;
@@ -144,7 +144,7 @@ describe("ClassDefinition", () => {
         alert(value);
     }
 
-    constructor(myParam: string, public myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
+    constructor(myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
     abstract myAbstractMethod(): string;

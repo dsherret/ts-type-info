@@ -14,6 +14,7 @@ export * from "./base/StructureModuledBinder";
 export * from "./base/StructureNamedBinder";
 export * from "./base/StructureOptionalBinder";
 export * from "./base/StructureParameteredBinder";
+export * from "./base/StructureReadonlyableBinder";
 export * from "./base/StructureReturnTypedBinder";
 export * from "./base/StructureTypedBinder";
 export * from "./base/StructureTypeParameteredBinder";

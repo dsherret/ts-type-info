@@ -10,6 +10,7 @@ describe("ClassConstructor", () => {
             type: "string[]",
             defaultExpression: `["test"]`,
             isOptional: true,
+            isReadonly: true,
             isRestParameter: true,
             scope: ClassConstructorParameterScope.Private
         });
@@ -26,6 +27,7 @@ describe("ClassConstructor", () => {
             type: { text: "string[]", isArray: true, arrayElementType: { text: "string" } },
             defaultExpression: { text: `["test"]` },
             isOptional: true,
+            isReadonly: true,
             isRestParameter: true,
             scope: ClassConstructorParameterScope.Private
         });

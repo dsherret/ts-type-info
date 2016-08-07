@@ -20,4 +20,5 @@ export * from "./base/BaseObjectPropertyDefinition";
 export * from "./base/BaseFunctionDefinition";
 export * from "./base/BaseParameterDefinition";
 export * from "./base/ParameteredDefinition";
+export * from "./base/ReadonlyableDefinition";
 export * from "./base/ReturnTypedDefinition";

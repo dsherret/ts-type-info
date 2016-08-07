@@ -17,4 +17,5 @@ export * from "./base/TypeParameteredStructure";
 export * from "./base/BaseFunctionStructure";
 export * from "./base/BaseParameterStructure";
 export * from "./base/ParameteredStructure";
+export * from "./base/ReadonlyableStructure";
 export * from "./base/ReturnTypedStructure";

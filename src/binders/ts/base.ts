@@ -16,6 +16,7 @@ export * from "./base/TsOptionalBinderForParameter";
 export * from "./base/TsOptionalBinderForProperty";
 export * from "./base/TsParameteredBinderByNode";
 export * from "./base/TsParameteredBinderBySignature";
+export * from "./base/TsReadonlyableBinder";
 export * from "./base/TsReturnTypedBinderByNode";
 export * from "./base/TsReturnTypedBinderBySignature";
 export * from "./base/TsTypedBinder";

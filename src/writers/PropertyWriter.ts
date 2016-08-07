@@ -101,5 +101,6 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.writer.spaceIfLastNotSpace();
         this.writer.conditionalWrite((def as ClassPropertyDefinition).isAbstract, "abstract ");
         this.writer.conditionalWrite(def.isClassStaticPropertyDefinition(), "static ");
+        this.writer.conditionalWrite((def as ClassPropertyDefinition).isReadonly, "readonly ");
     }
 }

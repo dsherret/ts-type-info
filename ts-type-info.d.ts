@@ -206,10 +206,11 @@ export abstract class ModuledDefinition {
     setOrderOfMember(order: number, member: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition): this;
 }
 
-export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, OptionalDefinition, TypedDefinition {
+export abstract class BasePropertyDefinition extends BaseDefinition implements NamedDefinition, OptionalDefinition, TypedDefinition, ReadonlyableDefinition {
     name: string;
     isOptional: boolean;
     type: TypeDefinition;
+    isReadonly: boolean;
 
     constructor(definitionType: DefinitionType);
 
@@ -281,6 +282,10 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
     getParameter(nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)): ParameterType | null;
 }
 
+export abstract class ReadonlyableDefinition {
+    isReadonly: boolean;
+}
+
 export abstract class ReturnTypedDefinition {
     returnType: TypeDefinition;
 
@@ -306,11 +311,12 @@ export class CallSignatureParameterDefinition extends BaseParameterDefinition {
     constructor();
 }
 
-export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition {
+export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition, ReadonlyableDefinition {
     keyName: string;
     keyType: TypeDefinition;
     returnType: TypeDefinition;
     setReturnType: (text: string) => this;
+    isReadonly: boolean;
 
     constructor();
 }
@@ -535,11 +541,12 @@ export class ClassConstructorDefinition extends BaseDefinition implements Parame
     addParameter(structure: ClassConstructorParameterStructure): ClassConstructorParameterDefinition;
 }
 
-export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition {
+export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ReadonlyableDefinition {
     scope: "none" | "public" | "protected" | "private";
     decorators: DecoratorDefinition[];
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
+    isReadonly: boolean;
 
     constructor();
 
@@ -861,14 +868,14 @@ export abstract class BaseError extends Error {
 export class ArgumentTypeError extends BaseError {
     constructor(argName: string, expectedType: string);
 
-    argName: string;
-    expectedType: string;
+    readonly argName: string;
+    readonly expectedType: string;
 }
 
 export class FileNotFoundError extends BaseError {
     constructor(fileName: string);
 
-    fileName: string;
+    readonly fileName: string;
 }
 
 export interface BaseStructure {
@@ -936,7 +943,7 @@ export interface TypedStructure {
     type?: string | undefined;
 }
 
-export interface BasePropertyStructure extends BaseStructure, NamedStructure, OptionalStructure, TypedStructure {
+export interface BasePropertyStructure extends BaseStructure, NamedStructure, OptionalStructure, TypedStructure, ReadonlyableStructure {
 }
 
 export interface TypeParameteredStructure {
@@ -957,6 +964,10 @@ export interface ParameteredStructure<T extends BaseParameterStructure> {
     parameters?: T[] | undefined;
 }
 
+export interface ReadonlyableStructure {
+    isReadonly?: boolean | undefined;
+}
+
 export interface ReturnTypedStructure {
     returnType?: string | undefined;
 }
@@ -971,7 +982,7 @@ export interface DecoratorStructure extends BaseStructure, NamedStructure {
     arguments?: string[] | undefined;
 }
 
-export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStructure {
+export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStructure, ReadonlyableStructure {
     keyName: string;
     keyType?: string | undefined;
     returnType: string;
@@ -1019,7 +1030,7 @@ export interface ClassPropertyStructure extends BaseClassPropertyStructure, Abst
 export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure, ScopedStructure {
 }
 
-export interface ClassConstructorParameterStructure extends BaseParameterStructure {
+export interface ClassConstructorParameterStructure extends BaseParameterStructure, ReadonlyableStructure {
     scope?: "none" | "public" | "protected" | "private" | undefined;
 }
 

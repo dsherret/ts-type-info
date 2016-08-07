@@ -1,5 +1,5 @@
 ﻿import {WriteFlags} from "./../WriteFlags";
-import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition} from "./../definitions";
+import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition, BaseParameterDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {ParameterWriter} from "./ParameterWriter";
 import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
@@ -10,7 +10,7 @@ export class ParametersWriter extends BaseWriter {
     private readonly parameterWithDestructuringWriter = new ParameterWithDestructuringWriter(this.writer);
     private readonly typeWriter = new TypeWriter(this.writer);
 
-    write(def: ParameteredDefinition<any, any>, flags: WriteFlags) {
+    write(def: ParameteredDefinition<BaseParameterDefinition, any>, flags: WriteFlags) {
         const thisType = (def as any as ThisTypedDefinition).thisType;
 
         this.writer.write("(");
@@ -21,7 +21,10 @@ export class ParametersWriter extends BaseWriter {
 
             if (param.destructuringProperties.length === 0) {
                 if (param.isClassConstructorParameterDefinition()) {
-                    this.writeScope(param.scope, flags);
+                    if ((flags & WriteFlags.HideScopeOnParameters) === 0) {
+                        this.writeScope(param.scope, flags);
+                        this.writer.conditionalWrite(param.isReadonly, "readonly ");
+                    }
                 }
 
                 this.parameterWriter.write(param, flags);
@@ -41,16 +44,14 @@ export class ParametersWriter extends BaseWriter {
     }
 
     private writeScope(scope: ClassConstructorParameterScope, flags: WriteFlags) {
-        if ((flags & WriteFlags.HideScopeOnParameters) === 0) {
-            if (scope === ClassConstructorParameterScope.Private) {
-                this.writer.write("private ");
-            }
-            else if (scope === ClassConstructorParameterScope.Protected) {
-                this.writer.write("protected ");
-            }
-            else if (scope === ClassConstructorParameterScope.Public) {
-                this.writer.write("public ");
-            }
+        if (scope === ClassConstructorParameterScope.Private) {
+            this.writer.write("private ");
+        }
+        else if (scope === ClassConstructorParameterScope.Protected) {
+            this.writer.write("protected ");
+        }
+        else if (scope === ClassConstructorParameterScope.Public) {
+            this.writer.write("public ");
         }
     }
 }

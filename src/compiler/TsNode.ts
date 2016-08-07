@@ -337,6 +337,10 @@ export class TsNode extends TsSourceFileChild {
         return (this.node as ts.HeritageClause).token === ts.SyntaxKind.ImplementsKeyword;
     }
 
+    hasReadonlyKeyword() {
+        return this.hasModifierWithSyntaxKind(ts.SyntaxKind.ReadonlyKeyword);
+    }
+
     hasStaticKeyword() {
         return this.hasModifierWithSyntaxKind(ts.SyntaxKind.StaticKeyword);
     }

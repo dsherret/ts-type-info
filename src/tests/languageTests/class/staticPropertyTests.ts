@@ -5,7 +5,7 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("class static property tests", () => {
     const code = `
 class MyClass {
-    static myString: string;
+    static readonly myString: string;
     static myImplicit = 4;
     static myAny;
     static myOptional?: string;
@@ -22,6 +22,7 @@ class MyClass {
             name: "MyClass",
             staticProperties: [{
                 name: "myString",
+                isReadonly: true,
                 type: { text: "string" }
             }, {
                 name: "myImplicit",

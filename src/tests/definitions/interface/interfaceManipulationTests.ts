@@ -95,7 +95,8 @@ describe("InterfaceDefinition", () => {
         const returnedDef = i.addIndexSignature({
             keyName: "num",
             keyType: "number",
-            returnType: "Date"
+            returnType: "Date",
+            isReadonly: true
         });
         i.addIndexSignature({
             keyName: "str",
@@ -109,7 +110,8 @@ describe("InterfaceDefinition", () => {
         testHelpers.runIndexSignatureDefinitionTests(i.indexSignatures[0], {
             keyName: "num",
             keyType: { text: "number" },
-            returnType: { text: "Date" }
+            returnType: { text: "Date" },
+            isReadonly: true
         });
 
         testHelpers.runIndexSignatureDefinitionTests(i.indexSignatures[1], {

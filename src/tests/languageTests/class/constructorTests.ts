@@ -15,7 +15,7 @@ class MyClass3 {
     }
 }
 class MyClass4 {
-    constructor(public param1: string, protected param2: number, private param3 = new Date()) {
+    constructor(readonly param1: string, public param2: string, protected readonly param3: number, private param4 = new Date()) {
     }
 }
 class MyClass5 {
@@ -50,13 +50,19 @@ class MyClass6 {
                 parameters: [{
                     name: "param1",
                     type: { text: "string" },
-                    scope: ClassConstructorParameterScope.Public
+                    scope: ClassConstructorParameterScope.Public, // when readonly, it should change the scope to Public when not specifiying an access modifier
+                    isReadonly: true
                 }, {
                     name: "param2",
-                    type: { text: "number" },
-                    scope: ClassConstructorParameterScope.Protected
+                    type: { text: "string" },
+                    scope: ClassConstructorParameterScope.Public
                 }, {
                     name: "param3",
+                    type: { text: "number" },
+                    scope: ClassConstructorParameterScope.Protected,
+                    isReadonly: true
+                }, {
+                    name: "param4",
                     type: { text: "Date" },
                     defaultExpression: { text: "new Date()" },
                     scope: ClassConstructorParameterScope.Private,
