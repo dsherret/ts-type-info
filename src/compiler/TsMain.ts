@@ -45,7 +45,6 @@ export class TsMain {
         combinedOptions.allowJs = getValue(combinedOptions.allowJs, true);
         combinedOptions.noLib = getValue(combinedOptions.noLib, false);
         combinedOptions.experimentalDecorators = getValue(combinedOptions.experimentalDecorators, true);
-        combinedOptions.experimentalDecorators = getValue(combinedOptions.experimentalDecorators, true);
         combinedOptions.suppressExcessPropertyErrors = getValue(combinedOptions.suppressExcessPropertyErrors, true);
         combinedOptions.suppressImplicitAnyIndexErrors = getValue(combinedOptions.suppressImplicitAnyIndexErrors, true);
         combinedOptions.noImplicitAny = getValue(combinedOptions.noImplicitAny, false);

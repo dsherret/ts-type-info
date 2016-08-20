@@ -3,8 +3,18 @@
     showDebugMessages?: boolean;
 }
 
+// options copied from typescript.d.ts
+interface Map<T> {
+    [index: string]: T;
+}
+
+type RootPaths = string[];
+type PathSubstitutions = Map<string[]>;
+type TsConfigOnlyOptions = RootPaths | PathSubstitutions;
+type CompilerOptionsValue = string | number | boolean | (string | number)[] | TsConfigOnlyOptions;
+
 export interface CompilerOptions {
-    [option: string]: string | number | boolean | undefined;
+    [option: string]: CompilerOptionsValue | undefined;
     allowJs?: boolean;
     charset?: string;
     locale?: string;
