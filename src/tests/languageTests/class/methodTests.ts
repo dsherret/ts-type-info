@@ -98,7 +98,14 @@ class MyClass {
                 userDefinedTypeGuard: {
                     type: "MyClass"
                 },
-                returnType: { text: "this is MyClass" }
+                returnType: {
+                    text: "this is MyClass",
+                    unionTypes: [{
+                        text: "true"
+                    }, {
+                        text: "false"
+                    }]
+                }
             }]
         }]
     });

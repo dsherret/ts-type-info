@@ -47,11 +47,11 @@ class DefinitionInTextFinder {
             const lastStringChar = this.getLastStringCharOnStack();
             const currentChar = this.getCurrentChar();
 
-            if (currentChar === lastStringChar || currentChar === "}") {
+            if (currentChar === lastStringChar) {
                 this.stringCharStack.pop();
             }
             else {
-                this.stringCharStack.push(currentChar);
+                this.stringCharStack.push(currentChar === "{" ? "}" : currentChar);
             }
         }
     }
@@ -70,7 +70,7 @@ class DefinitionInTextFinder {
         else if (lastStringChar === "`" && lastChar === "$" && currentChar === "{") {
             return true;
         }
-        else if (lastStringChar === "{" && currentChar === "}") {
+        else if (lastStringChar === "}" && currentChar === "}") {
             return true;
         }
         else {
@@ -79,7 +79,7 @@ class DefinitionInTextFinder {
     }
 
     private isInString() {
-        return this.stringCharStack.length > 0 && this.stringCharStack[this.stringCharStack.length - 1] !== "{";
+        return this.stringCharStack.length > 0 && this.stringCharStack[this.stringCharStack.length - 1] !== "}";
     }
 
     private getLastStringCharOnStack() {

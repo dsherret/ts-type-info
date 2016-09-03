@@ -57,7 +57,7 @@ abstract class MyClass {
     myMethod() {
     }
 
-    myParamTypeGuard(p: MyClass | string): p is MyClass {
+    myParamTypeGuard(p: string | MyClass): p is MyClass {
     }
 
     myThisTypeGuard(): this is MyClass {
@@ -154,7 +154,7 @@ describe("ClassDefinition", () => {
     myMethod() {
     }
 
-    myParamTypeGuard(p: MyClass | string): p is MyClass {
+    myParamTypeGuard(p: string | MyClass): p is MyClass {
     }
 
     myThisTypeGuard(): this is MyClass {

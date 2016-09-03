@@ -69,7 +69,14 @@ class MyClass2 {
         }, {
             name: "typeGuardFunction",
             parameters: [{ name: "def" }],
-            returnType: { text: "def is MyClass" },
+            returnType: {
+                text: "def is MyClass",
+                unionTypes: [{
+                    text: "true"
+                }, {
+                    text: "false"
+                }]
+            },
             userDefinedTypeGuard: {
                 parameterName: "def",
                 type: "MyClass"
@@ -77,7 +84,14 @@ class MyClass2 {
         }, {
             name: "typeGuardFunctionIntersect",
             parameters: [{ name: "def" }],
-            returnType: { text: "def is MyClass & MyClass2" },
+            returnType: {
+                text: "def is MyClass & MyClass2",
+                unionTypes: [{
+                    text: "true"
+                }, {
+                    text: "false"
+                }]
+            },
             userDefinedTypeGuard: {
                 parameterName: "def",
                 type: "MyClass & MyClass2"
