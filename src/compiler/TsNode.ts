@@ -103,7 +103,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getDecorators() {
-        return (this.node.decorators || []).map(decorator => this.createNode(decorator));
+        return this.node.decorators ? this.node.decorators.map(d => this.createNode(d)) : [];
     }
 
     getDefaultExpression() {
@@ -275,7 +275,7 @@ export class TsNode extends TsSourceFileChild {
         type typeParameteredTypes = ts.ClassLikeDeclaration | ts.TypeAliasDeclaration | ts.InterfaceDeclaration | ts.FunctionDeclaration;
         let typeParameteredDeclaration = this.node as typeParameteredTypes;
 
-        return (typeParameteredDeclaration.typeParameters || []).map(typeParameter => this.createNode(typeParameter));
+        return typeParameteredDeclaration.typeParameters ? typeParameteredDeclaration.typeParameters.map(typeParameter => this.createNode(typeParameter)) : [];
     }
 
     getTypeParameterConstraintType() {
@@ -285,10 +285,7 @@ export class TsNode extends TsSourceFileChild {
 
     getHeritageNodes() {
         const clause = this.node as ts.HeritageClause;
-        return (clause.types || [])
-            .map(expressionWithTypeArgumentsTypeNode => {
-                return this.createNode(expressionWithTypeArgumentsTypeNode);
-            });
+        return clause.types ? clause.types.map(expressionWithTypeArgumentsTypeNode => this.createNode(expressionWithTypeArgumentsTypeNode)) : [];
     }
 
     getType(): TsType {
@@ -649,6 +646,6 @@ export class TsNode extends TsSourceFileChild {
 
     private hasModifierWithSyntaxKind(syntaxKind: ts.SyntaxKind) {
         const node = (this.isVariable()) ? this.node.parent!.parent! : this.node;
-        return (node.modifiers || []).some(m => m.kind === syntaxKind);
+        return node.modifiers ? node.modifiers.some(m => m.kind === syntaxKind) : false;
     }
 }

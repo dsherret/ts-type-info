@@ -1,5 +1,5 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {WriteableDefinitions} from "./definitions";
+import {WriteableDefinitions, NamedDefinition} from "./definitions";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter, TypeAliasWriter, VariableWriter} from "./writers";
 import {WriteFlags} from "./WriteFlags";
 import {Logger} from "./utils";
@@ -30,6 +30,6 @@ export function writeDefinition(definition: WriteableDefinitions, writer: CodeBl
         new VariableWriter(writer).write(definition, writeFlags);
     }
     else {
-        Logger.warn(`Not implemented writer for definition: ${definition.name}`);
+        Logger.warn(`Not implemented writer for definition: ${(definition as NamedDefinition).name}`);
     }
 }

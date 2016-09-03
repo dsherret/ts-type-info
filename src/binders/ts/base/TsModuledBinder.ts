@@ -12,13 +12,13 @@ export class TsModuledBinder extends ModuledBinder {
     getMembers() {
         const members: NodeDefinitions[] = [];
         // because there can be multiple function signatures, the last one needs to be used
-        let currentFunction: { name: string; node: TsNode; } | null = null;
+        let currentFunction: { name: string; node: TsNode; } | undefined;
 
         this.node.getChildren().forEach(childNode => {
             tryGet(childNode, () => {
                 if (currentFunction != null && (!childNode.isFunction() || childNode.getName() !== currentFunction.name)) {
                     members.push(this.factory.getDefinitionByNode(currentFunction.node)!);
-                    currentFunction = null;
+                    currentFunction = undefined;
                 }
 
                 if (childNode.isFunction()) {

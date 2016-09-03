@@ -6,8 +6,8 @@ export class TsTypeChecker {
     }
 
     typeToString(sourceFile: ts.SourceFile, type: ts.Type) {
-        const formatFlags = ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
-            ts.TypeFormatFlags.WriteTypeArgumentsOfSignature;
+        const formatFlags = (ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
+            ts.TypeFormatFlags.WriteTypeArgumentsOfSignature) as ts.TypeFormatFlags;
         return this.typeChecker.typeToString(type, sourceFile, formatFlags);
     }
 

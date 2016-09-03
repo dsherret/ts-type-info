@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {ParameteredTestStructures, ParameterTestStructures} from "./../../testStructures";
+import {ParameteredTestStructures, ParameterTestStructures, BaseClassMethodParameterTestStructure} from "./../../testStructures";
 import {ParameteredDefinitions, ParameterDefinitions} from "./../../../../definitions";
 
 export function runParameteredDefinitionTests(
@@ -14,7 +14,9 @@ export function runParameteredDefinitionTests(
             assert.equal(definition.parameters.length, structure.parameters!.length);
         });
 
-        structure.parameters.forEach((param, i) => {
+        // todo: why do I need to do this madness?
+        let parameters = structure.parameters as any as BaseClassMethodParameterTestStructure[];
+        parameters.forEach((param, i) => {
             runParameterDefinitionTests(definition.parameters[i], param);
         });
     });
