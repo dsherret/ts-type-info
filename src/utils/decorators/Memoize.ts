@@ -14,7 +14,7 @@ let counter = 0;
 function getNewFunction(originalFunction: () => void) {
     const identifier = ++counter;
 
-    return function (this: any, ...args: any[]) {
+    function decorator(this: any, ...args: any[]) {
         const propName = `__memoized_value_${identifier}`;
         let returnedValue: any;
 
@@ -32,5 +32,7 @@ function getNewFunction(originalFunction: () => void) {
         }
 
         return returnedValue;
-    };
+    }
+
+    return decorator;
 }

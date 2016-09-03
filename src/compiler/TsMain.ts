@@ -24,9 +24,9 @@ export class TsMain {
         }).map(sourceFile => {
             return new TsSourceFile({
                 tsCache: this.tsCache,
-                sourceFile: sourceFile,
+                sourceFile,
                 symbol: typeChecker.getSymbolAtLocation(sourceFile),
-                typeChecker: typeChecker
+                typeChecker
             });
         });
     }

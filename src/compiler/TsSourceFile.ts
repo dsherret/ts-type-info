@@ -44,7 +44,7 @@ export class TsSourceFile extends TsBase {
         return this.tsCache.getNode(node, () => new TsNode({
             tsCache: this.tsCache,
             typeChecker: this.typeChecker,
-            node: node,
+            node,
             tsSourceFile: this,
             sourceFile: this.sourceFile
         }, tsSymbol));

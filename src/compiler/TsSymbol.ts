@@ -134,7 +134,7 @@ export class TsSymbol extends TsSourceFileChild {
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
-            symbol: symbol,
+            symbol,
             tsSourceFile: this.tsSourceFile
         }));
     }
@@ -144,7 +144,7 @@ export class TsSymbol extends TsSourceFileChild {
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
-            node: node,
+            node,
             tsSourceFile: this.tsSourceFile
         }, this));
     }

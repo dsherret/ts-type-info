@@ -109,7 +109,7 @@ export class TsType extends TsSourceFileChild {
             tsSourceFile: this.tsSourceFile,
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
-            type: type
+            type
         }));
     }
 
@@ -119,7 +119,7 @@ export class TsType extends TsSourceFileChild {
                 sourceFile: this.sourceFile,
                 typeChecker: this.typeChecker,
                 tsCache: this.tsCache,
-                symbol: symbol,
+                symbol,
                 tsSourceFile: this.tsSourceFile
             });
         });

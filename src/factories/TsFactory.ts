@@ -247,8 +247,8 @@ export class TsFactory {
             definition = new definitions.ReExportDefinition();
 
             this.deferredBindings.push({
-                binder: binder,
-                definition: definition
+                binder,
+                definition
             });
         }
         else if (node.isImport()) {
@@ -256,8 +256,8 @@ export class TsFactory {
             definition = new definitions.ImportDefinition();
 
             this.deferredBindings.push({
-                binder: binder,
-                definition: definition
+                binder,
+                definition
             });
         }
         else if (node.isExportAssignment()) {

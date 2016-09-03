@@ -59,7 +59,7 @@ export class GlobalDefinition {
             if (namespaces != null) {
                 return {
                     file: this.files[i],
-                    namespaces: namespaces
+                    namespaces
                 };
             }
         }

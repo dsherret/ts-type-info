@@ -28,6 +28,6 @@ export class KeyValueCache<T, U> {
     }
 
     add(key: T, value: U) {
-        this.cacheItems.push({ key: key, value: value });
+        this.cacheItems.push({ key, value });
     }
 }

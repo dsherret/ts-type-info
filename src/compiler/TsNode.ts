@@ -531,7 +531,7 @@ export class TsNode extends TsSourceFileChild {
         return new TsType({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
-            type: type,
+            type,
             tsCache: this.tsCache,
             tsSourceFile: this.tsSourceFile
         });
@@ -543,7 +543,7 @@ export class TsNode extends TsSourceFileChild {
             sourceFile: this.sourceFile,
             tsSourceFile: this.tsSourceFile,
             tsCache: this.tsCache,
-            node: node
+            node
         }));
     }
 
@@ -567,7 +567,7 @@ export class TsNode extends TsSourceFileChild {
             typeChecker: this.typeChecker,
             sourceFile: this.sourceFile,
             tsCache: this.tsCache,
-            expression: expression
+            expression
         });
     }
 

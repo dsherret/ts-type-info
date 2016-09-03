@@ -43,7 +43,7 @@ export class TsSignature extends TsSourceFileChild {
         return new TsType({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
-            type: type,
+            type,
             tsCache: this.tsCache,
             tsSourceFile: this.tsSourceFile
         });
@@ -54,7 +54,7 @@ export class TsSignature extends TsSourceFileChild {
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
-            node: node,
+            node,
             tsSourceFile: this.tsSourceFile
         }));
     }
@@ -65,7 +65,7 @@ export class TsSignature extends TsSourceFileChild {
             tsSourceFile: this.tsSourceFile,
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
-            symbol: symbol
+            symbol
         });
     }
 }
