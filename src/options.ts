@@ -9,8 +9,7 @@ interface Map<T> {
 }
 
 type RootPaths = string[];
-type PathSubstitutions = Map<string[]>;
-type TsConfigOnlyOptions = RootPaths | PathSubstitutions;
+type TsConfigOnlyOptions = RootPaths;
 type CompilerOptionsValue = string | number | boolean | (string | number)[] | TsConfigOnlyOptions;
 
 export interface CompilerOptions {
