@@ -9,6 +9,7 @@ var sourcemaps = require("gulp-sourcemaps");
 var p = require("./package.json");
 var fs = require("fs");
 var path = require("path");
+var tsNameOf = require("ts-nameof");
 
 gulp.task("typescript", ["clean-scripts"], function() {
     var tsProject = ts.createProject("tsconfig.json", {
@@ -17,6 +18,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
 
     return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "!./src/tests/**/testFiles/**/*.ts"])
         .pipe(sourcemaps.init())
+        .pipe(tsNameOf())
         .pipe(ts(tsProject))
         .pipe(replace(/(}\)\()(.*\|\|.*;)/g, '$1/* istanbul ignore next */$2'))
         .pipe(replace(/(var __extends = \(this && this.__extends\))/g, '$1/* istanbul ignore next */'))

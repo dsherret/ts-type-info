@@ -3,10 +3,12 @@ import {KeyValueCache, Logger} from "./../../utils";
 import {TsType} from "./../TsType";
 import {TsSymbol} from "./../TsSymbol";
 import {TsNode} from "./../TsNode";
+import {TsTypeNode} from "./../TsTypeNode";
 import {TsTypeChecker} from "./TsTypeChecker";
 
 export class TsCache {
     private readonly nodeCache = new KeyValueCache<ts.Node, TsNode>();
+    private readonly typeNodeCache = new KeyValueCache<ts.TypeNode, TsTypeNode>();
     private readonly symbolCache = new KeyValueCache<ts.Symbol, TsSymbol>();
     private readonly typeCacheContainer = new TypeCacheContainer<TsType>();
 
@@ -16,6 +18,10 @@ export class TsCache {
 
     getNode(node: ts.Node, createFunc: () => TsNode) {
         return this.nodeCache.getOrCreate(node, () => createFunc());
+    }
+
+    getTypeNode(node: ts.TypeNode, createFunc: () => TsTypeNode) {
+        return this.typeNodeCache.getOrCreate(node, () => createFunc());
     }
 
     getType(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createTsType: () => TsType) {

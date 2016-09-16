@@ -18,9 +18,9 @@ export class TsInterfaceBinder extends InterfaceBinder {
     getExtendsTypes() {
         return this.node.getChildren()
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
-            .map(node => node.getHeritageNodes())
+            .map(node => node.getHeritageTypeNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getType(node.getType()));
+            .map(typeNode => this.factory.getTypeFromTypeNode(typeNode));
     }
 
     getMembers() {

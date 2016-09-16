@@ -8,6 +8,7 @@ export class TsReturnTypedBinderByNode extends ReturnTypedBinder {
     }
 
     getReturnType() {
-        return this.factory.getType(this.node.getReturnType());
+        const typeNode = this.node.getTypeNode();
+        return typeNode == null ? this.factory.getType(this.node.getReturnType()) : this.factory.getTypeFromTypeNode(typeNode);
     }
 }

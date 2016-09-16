@@ -32,7 +32,8 @@
                 "multiline": "never"
             }
         ],
-        "variable-name": false
+        "variable-name": false,
+        "no-reference": false
     },
     "rulesDirectory": [
         "tslint-rules"

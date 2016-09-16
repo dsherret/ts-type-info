@@ -62,7 +62,9 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
                 });
 
                 structure.typeArguments.forEach((typeTestStructure, i) => {
-                    runTypeDefinitionTests(definition!.typeArguments[i], typeTestStructure);
+                    describe(`type argument ${i}`, () => {
+                        runTypeDefinitionTests(definition!.typeArguments[i], typeTestStructure);
+                    });
                 });
             }
 
@@ -86,7 +88,7 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
                 });
 
                 structure.definitions.forEach((defTestStructure, i) => {
-                    it(`definition ${defTestStructure.name}`, () => {
+                    describe(`definition ${defTestStructure.name}`, () => {
                         ensureNotNull(definition!.definitions[i], () => {
                             runNamedDefinitionTests(definition!.definitions[i], defTestStructure);
                         });
@@ -102,7 +104,7 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
                 structure.allDefinitions.forEach((defTestStructure, i) => {
                     const defs = definition!.getAllDefinitions();
 
-                    it(`definition ${defTestStructure.name}`, () => {
+                    describe(`definition ${defTestStructure.name}`, () => {
                         ensureNotNull(defs[i], () => {
                             runNamedDefinitionTests(defs[i], defTestStructure);
                         });

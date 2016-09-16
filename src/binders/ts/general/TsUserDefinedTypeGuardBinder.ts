@@ -12,6 +12,6 @@ export class TsUserDefinedTypeGuardBinder extends UserDefinedTypeGuardBinder {
     }
 
     protected getType() {
-        return this.factory.getType(this.node.getUserDefinedTypeGuardType()!);
+        return this.factory.getTypeFromTypeNode(this.node.getUserDefinedTypeGuardTypeNode()!);
     }
 }

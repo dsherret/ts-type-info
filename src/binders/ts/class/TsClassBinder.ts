@@ -22,17 +22,17 @@ export class TsClassBinder extends ClassBinder {
         // todo: not the most efficient thing to loop through all the children each time
         return this.node.getChildren()
             .filter(node => node.isHeritageClause() && node.hasExtendsKeyword())
-            .map(node => node.getHeritageNodes())
+            .map(node => node.getHeritageTypeNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getType(node.getType()));
+            .map(typeNode => this.factory.getTypeFromTypeNode(typeNode));
     }
 
     getImplementsTypes() {
         return this.node.getChildren()
             .filter(node => node.isHeritageClause() && node.hasImplementsKeyword())
-            .map(node => node.getHeritageNodes())
+            .map(node => node.getHeritageTypeNodes())
             .reduce((a, b) => a.concat(b), [])
-            .map(node => this.factory.getType(node.getType()));
+            .map(typeNode => this.factory.getTypeFromTypeNode(typeNode));
     }
 
     getMembers() {

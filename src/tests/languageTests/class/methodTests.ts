@@ -99,12 +99,7 @@ class MyClass {
                     type: "MyClass"
                 },
                 returnType: {
-                    text: "this is MyClass",
-                    unionTypes: [{
-                        text: "true"
-                    }, {
-                        text: "false"
-                    }]
+                    text: "this is MyClass"
                 }
             }]
         }]

@@ -20,12 +20,7 @@ var myVariableUsingType: myUnionTypeAlias;
             name: "myVariableUsingType",
             declarationType: VariableDeclarationType.Var,
             type: {
-                text: "string | number",
-                unionTypes: [{
-                    text: "string"
-                }, {
-                    text: "number"
-                }]
+                text: "myUnionTypeAlias"
             }
         }],
         typeAliases: [{

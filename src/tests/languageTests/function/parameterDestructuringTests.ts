@@ -3,7 +3,7 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("function parameter destructuring", () => {
     const code = `
-function parameterDestructuring({ prop1 = "s", prop2, prop3 }: { prop1?: string; prop2?: number, prop3: Date; }) {
+function parameterDestructuring({ prop1 = "s", prop2, prop3 }: { prop1?: string; prop2?: number; prop3: Date; }) {
 }`;
 
     const def = getInfoFromString(code);

@@ -12,7 +12,7 @@ let test: string | string & number;
         variables: [{
             name: "test",
             type: {
-                text: "string | (string & number)",
+                text: "string | string & number",
                 unionTypes: [{
                     text: "string"
                 }, {

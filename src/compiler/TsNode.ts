@@ -8,6 +8,7 @@ import {TsExpression} from "./TsExpression";
 import {TsSignature} from "./TsSignature";
 import {TsSymbol} from "./TsSymbol";
 import {TsType} from "./TsType";
+import {TsTypeNode} from "./TsTypeNode";
 import {TsSourceFileChildOptions, TsSourceFileChild} from "./TsSourceFileChild";
 
 export interface TsNodeOptions extends TsSourceFileChildOptions {
@@ -15,7 +16,7 @@ export interface TsNodeOptions extends TsSourceFileChildOptions {
 }
 
 export class TsNode extends TsSourceFileChild {
-    private readonly node: ts.Node;
+    protected readonly node: ts.Node;
 
     @Memoize
     private get tsSymbol() {
@@ -26,7 +27,7 @@ export class TsNode extends TsSourceFileChild {
         super(opts);
 
         if (opts.node == null) {
-            throw new Error("Passed in ts.Node cannot be null.");
+            throw new Error(`Passed in ${nameof(opts)}.${nameof(opts.node)} cannot be null.`);
         }
 
         this.node = opts.node;
@@ -207,9 +208,9 @@ export class TsNode extends TsSourceFileChild {
         return (typePredicateNode.parameterName as ts.Identifier).text;
     }
 
-    getUserDefinedTypeGuardType() {
+    getUserDefinedTypeGuardTypeNode() {
         const typeNode = (this.node as ts.TypePredicateNode).type;
-        return typeNode == null ? null : this.createNode(typeNode).getType();
+        return typeNode == null ? null : this.createTypeNode(typeNode);
     }
 
     getParameters() {
@@ -278,18 +279,27 @@ export class TsNode extends TsSourceFileChild {
         return typeParameteredDeclaration.typeParameters ? typeParameteredDeclaration.typeParameters.map(typeParameter => this.createNode(typeParameter)) : [];
     }
 
-    getTypeParameterConstraintType() {
+    getTypeParameterConstraintTypeNode() {
         const constraint = (this.node as ts.TypeParameterDeclaration).constraint;
-        return constraint == null ? null : this.getTypeAtLocationByNode(constraint);
+        return constraint == null ? null : this.createTypeNode(constraint);
     }
 
-    getHeritageNodes() {
+    getHeritageTypeNodes() {
         const clause = this.node as ts.HeritageClause;
-        return clause.types ? clause.types.map(expressionWithTypeArgumentsTypeNode => this.createNode(expressionWithTypeArgumentsTypeNode)) : [];
+        return clause.types ? clause.types.map(expressionWithTypeArgumentsTypeNode => this.createTypeNode(expressionWithTypeArgumentsTypeNode)) : [];
     }
 
     getType(): TsType {
         return this.getTypeAtLocationByNode(this.node);
+    }
+
+    getTypeNode() {
+        const typeNode = (this.node as any)["type"] as ts.TypeNode | null;
+        return typeNode == null ? null : this.createTypeNode(typeNode);
+    }
+
+    getText() {
+        return this.node.getText();
     }
 
     getVariableDeclarationType() {
@@ -547,6 +557,16 @@ export class TsNode extends TsSourceFileChild {
         }));
     }
 
+    private createTypeNode(node: ts.TypeNode): TsTypeNode {
+        return this.tsCache.getTypeNode(node, () => new TsTypeNode({
+            typeChecker: this.typeChecker,
+            sourceFile: this.sourceFile,
+            tsSourceFile: this.tsSourceFile,
+            tsCache: this.tsCache,
+            node
+        }));
+    }
+
     private createSymbol(symbol: ts.Symbol | null): TsSymbol | null {
         if (symbol == null) {
             return null;
@@ -641,7 +661,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     private getKind() {
-        return (this.node == null) ? ts.SyntaxKind.Unknown : this.node.kind;
+        return this.node.kind;
     }
 
     private hasModifierWithSyntaxKind(syntaxKind: ts.SyntaxKind) {

@@ -1,5 +1,5 @@
 ﻿import * as binders from "./../binders";
-import {TsSourceFile, TsNode, TsSignature, TsType, TsSymbol, TsExpression} from "./../compiler";
+import {TsSourceFile, TsNode, TsTypeNode, TsSignature, TsType, TsSymbol, TsExpression} from "./../compiler";
 import * as definitions from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
 
@@ -104,6 +104,15 @@ export class TsFactory {
 
     getTypePropertyFromNode(node: TsNode) {
         return bindToDefinition(new binders.TsTypePropertyBinder(this, node), new definitions.TypePropertyDefinition());
+    }
+
+    getTypeFromTypeNode(node: TsTypeNode) {
+        const definition = bindToDefinition(new binders.TsTypeBinderByTypeNode(this, node), new definitions.TypeDefinition());
+        this.createdTypesWithDefinition.push({
+            type: node.getType(),
+            definition
+        });
+        return definition;
     }
 
     getType(type: TsType) {

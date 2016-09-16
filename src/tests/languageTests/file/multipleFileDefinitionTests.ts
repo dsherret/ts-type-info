@@ -31,7 +31,7 @@ describe("multiple file definition tests", () => {
         }, {
             declarationType: VariableDeclarationType.Var,
             name: "t",
-            type: { text: "string" }
+            type: { text: "MyReferenceType" }
         }]
     });
     runFileDefinitionTests(referenceFileDef, {
