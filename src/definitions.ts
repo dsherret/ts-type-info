@@ -11,6 +11,7 @@ export * from "./definitions/variable";
 export * from "./definitions/GlobalDefinition";
 
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/file";
+import {TypeDefinition, TypeFunctionParameterDefinition} from "./definitions/expression";
 import {FunctionDefinition, FunctionParameterDefinition} from "./definitions/function";
 import {InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./definitions/interface";
 import {ClassDefinition, ClassMethodParameterDefinition, ClassStaticMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition,
@@ -39,9 +40,9 @@ export type FunctionBodyWriteableDefinitions = FunctionDefinition | InterfaceMet
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
 export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition |
-    ClassConstructorParameterDefinition | CallSignatureParameterDefinition;
+    ClassConstructorParameterDefinition | CallSignatureParameterDefinition | TypeFunctionParameterDefinition;
 export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition |
-    CallSignatureDefinition;
+    CallSignatureDefinition | TypeDefinition;
 export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;

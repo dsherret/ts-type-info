@@ -2,6 +2,7 @@
 export * from "./structures/general";
 export * from "./structures/class";
 export * from "./structures/enum";
+export * from "./structures/expression";
 export * from "./structures/file";
 export * from "./structures/function";
 export * from "./structures/interface";

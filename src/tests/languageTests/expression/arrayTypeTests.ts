@@ -18,7 +18,7 @@ class MyClass {
             name: "t",
             type: {
                 text: "Array<MyClass>",
-                isArray: true,
+                isArrayType: true,
                 arrayElementType: {
                     text: "MyClass",
                     definitions: [{
@@ -37,7 +37,7 @@ class MyClass {
             name: "u",
             type: {
                 text: "string[]",
-                isArray: true,
+                isArrayType: true,
                 arrayElementType: {
                     text: "string"
                 }
@@ -46,10 +46,10 @@ class MyClass {
             name: "v",
             type: {
                 text: "string[][]",
-                isArray: true,
+                isArrayType: true,
                 arrayElementType: {
                     text: "string[]",
-                    isArray: true,
+                    isArrayType: true,
                     arrayElementType: {
                         text: "string"
                     }
@@ -59,10 +59,10 @@ class MyClass {
             name: "w",
             type: {
                 text: "Array<Array<string>>",
-                isArray: true,
+                isArrayType: true,
                 arrayElementType: {
                     text: "Array<string>",
-                    isArray: true,
+                    isArrayType: true,
                     arrayElementType: {
                         text: "string"
                     }

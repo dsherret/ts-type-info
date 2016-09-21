@@ -32,7 +32,7 @@ describe("FunctionDefinition", () => {
 
         runFunctionParameterDefinitionTests(c.parameters[0], {
             name: "myParameter",
-            type: { text: "string[]", isArray: true, arrayElementType: { text: "string" } },
+            type: { text: "string[]", isArrayType: true, arrayElementType: { text: "string" } },
             defaultExpression: { text: `["test"]` },
             isOptional: true,
             isRestParameter: true

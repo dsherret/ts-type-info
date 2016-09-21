@@ -29,6 +29,14 @@ export class TsTypeNode extends TsSourceFileChild {
         this.node = opts.node;
     }
 
+    isIntersectionType() {
+        return this.node.kind === ts.SyntaxKind.IntersectionType;
+    }
+
+    isUnionType() {
+        return this.node.kind === ts.SyntaxKind.UnionType;
+    }
+
     isArrayTypeNode() {
         return this.getArrayElementTypeNode() != null;
     }
@@ -55,6 +63,13 @@ export class TsTypeNode extends TsSourceFileChild {
         return typeArgs.map(a => this.createTypeNode(a));
     }
 
+    getTypeParameterNodes() {
+        const typeReferenceNode = this.node as any as ts.SignatureDeclaration;
+        const typeArgs = typeReferenceNode.typeParameters || [] as ts.TypeParameterDeclaration[];
+
+        return typeArgs.map(a => this.createNode(a));
+    }
+
     getText() {
         return this.node.getText();
     }
@@ -68,6 +83,13 @@ export class TsTypeNode extends TsSourceFileChild {
         const members = typeLiteralNode.members || [] as ts.TypeElement[];
 
         return members.map(m => this.createNode(m));
+    }
+
+    getParameters() {
+        const typeReferenceNode = this.node as any as ts.SignatureDeclaration;
+        const params = typeReferenceNode.parameters || [] as ts.ParameterDeclaration[];
+
+        return params.map(p => this.createNode(p));
     }
 
     getUnionOrIntersectionTypeNodes() {

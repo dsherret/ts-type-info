@@ -21,7 +21,7 @@ class MyArrayExt extends Array<string> {
             }],
             extendsTypes: [{
                 text: "Array<string>",
-                isArray: true,
+                isArrayType: true,
                 arrayElementType: { text: "string" }
             }]
         }]

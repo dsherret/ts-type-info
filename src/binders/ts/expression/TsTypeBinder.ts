@@ -1,13 +1,19 @@
 ﻿import {TsType} from "./../../../compiler";
+import {TypeParameterDefinition, TypeFunctionParameterDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TypeBinder} from "./../../base";
+import {TsParameteredBinderByType} from "./../base";
 import {TsExpressionBinder} from "./TsExpressionBinder";
+import {TsTypeFunctionParameterBinder} from "./TsTypeFunctionParameterBinder";
 
 export class TsTypeBinder extends TypeBinder {
     private readonly getCallSignatureAndProperties: boolean;
 
     constructor(private readonly factory: TsFactory, private readonly tsType: TsType) {
-        super(new TsExpressionBinder(tsType));
+        super(
+            new TsExpressionBinder(tsType),
+            new TsParameteredBinderByType(factory, tsType, TypeFunctionParameterDefinition, TsTypeFunctionParameterBinder)
+        );
 
         this.getCallSignatureAndProperties = tsType.isAnonymousType() && !tsType.isReferenceType() &&
             !tsType.isClassType() && !tsType.isInterfaceType() && !tsType.isUnionType() && !tsType.isIntersectionType() &&
@@ -55,5 +61,9 @@ export class TsTypeBinder extends TypeBinder {
 
     getTypeArguments() {
         return this.tsType.getTypeArguments().map(arg => this.factory.getType(arg));
+    }
+
+    getTypeParameters(): TypeParameterDefinition[] {
+        return [];
     }
 }

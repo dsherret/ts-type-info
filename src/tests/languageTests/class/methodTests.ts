@@ -62,7 +62,7 @@ class MyClass {
                     isOptional: true
                 }, {
                     name: "myRestParameter",
-                    type: { text: "number[]", isArray: true, arrayElementType: { text: "number" } },
+                    type: { text: "number[]", isArrayType: true, arrayElementType: { text: "number" } },
                     isOptional: true,
                     isRestParameter: true
                 }],

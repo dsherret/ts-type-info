@@ -34,7 +34,7 @@ class Note {
                 }],
                 returnType: {
                     text: "Note[]",
-                    isArray: true,
+                    isArrayType: true,
                     arrayElementType: { text: "Note" }
                 }
             }]

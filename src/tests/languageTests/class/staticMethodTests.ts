@@ -60,7 +60,7 @@ class MyClassWithStaticMethods {
                     name: "myRestParameter",
                     type: {
                         text: "number[]",
-                        isArray: true,
+                        isArrayType: true,
                         arrayElementType: { text: "number" }
                     },
                     isOptional: true,

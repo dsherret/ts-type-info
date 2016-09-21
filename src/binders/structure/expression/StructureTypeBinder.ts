@@ -1,11 +1,17 @@
-﻿import {CallSignatureDefinition, TypeDefinition, TypePropertyDefinition} from "./../../../definitions";
+﻿import {CallSignatureDefinition, TypeDefinition, TypePropertyDefinition, TypeParameterDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {TypeBinder} from "./../../base";
+import {StructureParameteredBinder} from "./../base";
 import {StructureExpressionBinder} from "./StructureExpressionBinder";
 
 export class StructureTypeBinder extends TypeBinder {
     constructor(private readonly factory: StructureFactory, private readonly text: string) {
-        super(new StructureExpressionBinder(text));
+        super(
+            new StructureExpressionBinder(text),
+            // this binder will never use the last two parameters so its safe to pass in null values like this
+            // note: doing this is somewhat laziness to not have to create another binder, but that should be done
+            new StructureParameteredBinder(factory, { parameters: [] }, null!, null!)
+        );
     }
 
     isArrayType() {
@@ -37,6 +43,10 @@ export class StructureTypeBinder extends TypeBinder {
     }
 
     getTypeArguments(): TypeDefinition[] {
+        return [];
+    }
+
+    getTypeParameters(): TypeParameterDefinition[] {
         return [];
     }
 }

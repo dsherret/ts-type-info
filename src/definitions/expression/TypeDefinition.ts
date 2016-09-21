@@ -1,10 +1,14 @@
-import {ModuleMemberDefinitions} from "./../../definitions";
-import {ArrayUtils, DefinitionUtils} from "./../../utils";
+import {ModuleMemberDefinitions, TypeParameteredDefinition, TypeParameterDefinition, ParameteredDefinition} from "./../../definitions";
+import {TypeParameterStructure, TypeFunctionParameterStructure} from "./../../structures";
+import {ArrayUtils, DefinitionUtils, applyMixins} from "./../../utils";
 import {DefinitionType} from "./../base";
 import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
 import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
+import {TypeFunctionParameterDefinition} from "./TypeFunctionParameterDefinition";
 
-export class TypeDefinition extends BaseExpressionDefinition {
+export class TypeDefinition
+        extends BaseExpressionDefinition
+        implements TypeParameteredDefinition, ParameteredDefinition<TypeFunctionParameterDefinition, TypeFunctionParameterStructure> {
     arrayElementType: TypeDefinition | null = null;
     intersectionTypes: TypeDefinition[] = [];
     unionTypes: TypeDefinition[] = [];
@@ -53,7 +57,22 @@ export class TypeDefinition extends BaseExpressionDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.typeArguments, searchFunction);
     }
 
-    isArray() {
+    isArrayType() {
         return this.arrayElementType != null || /\[\]$/.test(this.text) || /^Array\<.*\>$/.test(this.text);
     }
+
+    // TypeParameteredDefinition
+    typeParameters: TypeParameterDefinition[];
+    addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition = (structure) => {
+        throw new Error(`addTypeParameter is not supported on ${nameof(TypeDefinition)}`);
+    };
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    // ParameteredDefinition
+    parameters: TypeFunctionParameterDefinition[];
+    getParameter: (nameOrSearchFunction: string | ((parameter: TypeFunctionParameterDefinition) => boolean)) => TypeFunctionParameterDefinition;
+    addParameter: (structure: TypeFunctionParameterStructure) => TypeFunctionParameterDefinition = (structure) => {
+        throw new Error(`addParameter is not supported on ${nameof(TypeDefinition)}`);
+    };
 }
+
+applyMixins(TypeDefinition, BaseExpressionDefinition, [TypeParameteredDefinition, ParameteredDefinition]);

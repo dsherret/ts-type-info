@@ -2,14 +2,17 @@ import * as assert from "assert";
 import {TypeDefinition} from "./../../../../definitions";
 import {TypeTestStructure} from "./../../testStructures";
 import {ensureNotNull} from "./../../ensureNotNull";
-import {runNamedDefinitionTests, runBasePropertyDefinitionTests} from "./../base";
+import {runNamedDefinitionTests, runBasePropertyDefinitionTests, runTypeParameteredDefinitionTests, runParameteredDefinitionTests} from "./../base";
 import {runCallSignatureDefinitionTests} from "./../general";
 import {runBaseExpressionDefinitionTests} from "./runBaseExpressionDefinitionTests";
+import {runTypeFunctionParameterDefinitionTests} from "./runTypeFunctionParameterDefinitionTests";
 
 export function runTypeDefinitionTests(definition: TypeDefinition | null, structure: TypeTestStructure) {
     describe("type expression", () => {
         ensureNotNull(definition, () => {
             runBaseExpressionDefinitionTests(definition!, structure);
+            runTypeParameteredDefinitionTests(definition!, structure);
+            runParameteredDefinitionTests(runTypeFunctionParameterDefinitionTests, definition!, structure);
 
             if (structure.arrayElementType != null) {
                 describe("arrayElementType", () => {
@@ -37,8 +40,8 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
                 });
             });
 
-            it("should have the same isArray property", () => {
-                assert.equal(definition!.isArray(), structure.isArray || false);
+            it("should have the same isArrayType property", () => {
+                assert.equal(definition!.isArrayType(), structure.isArrayType || false);
             });
 
             // only bother checking these if they are explictly asked to be checked for

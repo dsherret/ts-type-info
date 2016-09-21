@@ -55,4 +55,22 @@ describe("TypeDefinition", () => {
             assert.equal(def.getTypeArgument(d => d.text === "text2"), def.typeArguments[1]);
         });
     });
+
+    describe("#addTypeParameter()", () => {
+        const def = new TypeDefinition();
+        it("should throw an error saying that addTypeParameter is not supported", () => {
+            assert.throws(() => {
+                def.addTypeParameter({ name: "T" });
+            });
+        });
+    });
+
+    describe("#addParameter()", () => {
+        const def = new TypeDefinition();
+        it("should throw an error saying that addParameter is not supported", () => {
+            assert.throws(() => {
+                def.addParameter({ name: "a" });
+            });
+        });
+    });
 });

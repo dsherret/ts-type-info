@@ -48,7 +48,7 @@ class MyClass2 {
                 isOptional: true
             }, {
                 name: "restParam",
-                type: { text: "MyClass[]", isArray: true, arrayElementType: { text: "MyClass" } },
+                type: { text: "MyClass[]", isArrayType: true, arrayElementType: { text: "MyClass" } },
                 isOptional: true,
                 isRestParameter: true
             }],

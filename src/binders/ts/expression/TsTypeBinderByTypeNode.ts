@@ -1,22 +1,17 @@
-﻿import {TsTypeNode, TsType} from "./../../../compiler";
+﻿import {TsTypeNode} from "./../../../compiler";
+import {TypeFunctionParameterDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TypeBinder} from "./../../base";
+import {TsParameteredBinderByTypeNode} from "./../base";
+import {TsTypeFunctionParameterBinder} from "./TsTypeFunctionParameterBinder";
 import {TsExpressionBinder} from "./TsExpressionBinder";
 
-// todo: try to remove TsType from here
-
 export class TsTypeBinderByTypeNode extends TypeBinder {
-    private readonly getCallSignatureAndProperties: boolean;
-    private readonly tsType: TsType;
-
     constructor(private readonly factory: TsFactory, private readonly tsTypeNode: TsTypeNode) {
-        super(new TsExpressionBinder(tsTypeNode));
-
-        this.tsType = tsTypeNode.getType();
-
-        this.getCallSignatureAndProperties = this.tsType.isAnonymousType() && !this.tsType.isReferenceType() &&
-            !this.tsType.isClassType() && !this.tsType.isInterfaceType() && !this.tsType.isUnionType() && !this.tsType.isIntersectionType() &&
-            !this.tsType.isTupleType();
+        super(
+            new TsExpressionBinder(tsTypeNode),
+            new TsParameteredBinderByTypeNode(factory, tsTypeNode, TypeFunctionParameterDefinition, TsTypeFunctionParameterBinder)
+        );
     }
 
     isArrayType() {
@@ -24,11 +19,11 @@ export class TsTypeBinderByTypeNode extends TypeBinder {
     }
 
     isIntersectionType() {
-        return this.tsType.isIntersectionType();
+        return this.tsTypeNode.isIntersectionType();
     }
 
     isUnionType() {
-        return this.tsType.isUnionType();
+        return this.tsTypeNode.isUnionType();
     }
 
     getArrayElementType() {
@@ -41,24 +36,18 @@ export class TsTypeBinderByTypeNode extends TypeBinder {
     }
 
     getCallSignatures() {
-        if (this.getCallSignatureAndProperties) {
-            return this.tsType.getCallSignatures().map(c => this.factory.getCallSignatureFromSignature(c));
-        }
-        else {
-            return [];
-        }
+        return [];
     }
 
     getProperties() {
-        if (this.getCallSignatureAndProperties) {
-            return this.tsTypeNode.getMemberNodes().map(p => this.factory.getTypePropertyFromNode(p));
-        }
-        else {
-            return [];
-        }
+        return this.tsTypeNode.getMemberNodes().map(p => this.factory.getTypePropertyFromNode(p));
     }
 
     getTypeArguments() {
         return this.tsTypeNode.getTypeArgumentsTypeNodes().map(arg => this.factory.getTypeFromTypeNode(arg));
+    }
+
+    getTypeParameters() {
+        return this.tsTypeNode.getTypeParameterNodes().map(param => this.factory.getTypeParameter(param));
     }
 }
