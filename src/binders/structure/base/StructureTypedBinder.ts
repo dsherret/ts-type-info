@@ -1,4 +1,4 @@
-import {TypeDefinition} from "./../../../definitions";
+import {TypeNodeDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {TypedStructure} from "./../../../structures";
 import {TypedBinder} from "./../../base";
@@ -10,7 +10,7 @@ export class StructureTypedBinder extends TypedBinder {
     }
 
     getType() {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         const binder = new StructureTypeBinder(this.factory, this.structure.type || "any");
         binder.bind(def);
         return def;

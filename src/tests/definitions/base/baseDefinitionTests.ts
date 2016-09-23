@@ -342,13 +342,13 @@ describe("BaseDefinition", () => {
         });
     });
 
-    describe("#isTypeDefinition()", () => {
+    describe("#isTypeNodeDefinition()", () => {
         it("should return true for the same type", () => {
-            assert.equal(new definitions.TypeDefinition().isTypeDefinition(), true);
+            assert.equal(new definitions.TypeNodeDefinition().isTypeNodeDefinition(), true);
         });
 
         it("should return false for a different type", () => {
-            assert.equal(new definitions.FileDefinition().isTypeDefinition(), false);
+            assert.equal(new definitions.FileDefinition().isTypeNodeDefinition(), false);
         });
     });
 });

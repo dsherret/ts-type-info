@@ -21,7 +21,7 @@ export abstract class InterfaceBinder implements IBaseBinder {
     }
 
     abstract getMembers(): InterfaceMemberContainer;
-    abstract getExtendsTypes(): definitions.TypeDefinition[];
+    abstract getExtendsTypes(): definitions.TypeNodeDefinition[];
 
     bind(def: definitions.InterfaceDefinition) {
         this.baseDefinitionBinder.bind(def);

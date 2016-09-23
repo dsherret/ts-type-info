@@ -24,6 +24,11 @@ export class TsTypeBinder extends TypeBinder {
         return this.tsType.isArrayType();
     }
 
+    getArrayElementType() {
+        const tsType = this.tsType.getArrayElementType();
+        return tsType == null ? null : this.factory.getType(tsType);
+    }
+
     isIntersectionType() {
         return this.tsType.isIntersectionType();
     }
@@ -32,13 +37,12 @@ export class TsTypeBinder extends TypeBinder {
         return this.tsType.isUnionType();
     }
 
-    getArrayElementType() {
-        const tsType = this.tsType.getArrayElementType();
-        return tsType == null ? null : this.factory.getType(tsType);
-    }
-
     getUnionOrIntersectionTypes() {
         return this.tsType.getUnionOrIntersectionTypes().map(t => this.factory.getType(t));
+    }
+
+    getResolvedType() {
+        return null;
     }
 
     getCallSignatures() {

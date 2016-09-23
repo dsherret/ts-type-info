@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {TypeParameteredDefinition, BaseDefinition, DefinitionType, ReturnTypedDefinition, ParameteredDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
-import {TypeDefinition} from "./../expression";
+import {TypeNodeDefinition} from "./../expression";
 import {CallSignatureParameterDefinition} from "./CallSignatureParameterDefinition";
 
 export class CallSignatureDefinition
@@ -28,7 +28,7 @@ export class CallSignatureDefinition
     parameters: CallSignatureParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
     // ReturnTyped
-    returnType: TypeDefinition;
+    returnType: TypeNodeDefinition;
     setReturnType: (text: string) => this;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];

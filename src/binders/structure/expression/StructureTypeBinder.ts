@@ -1,4 +1,4 @@
-﻿import {CallSignatureDefinition, TypeDefinition, TypePropertyDefinition, TypeParameterDefinition} from "./../../../definitions";
+﻿import {CallSignatureDefinition, TypeNodeDefinition, TypePropertyDefinition, TypeParameterDefinition} from "./../../../definitions";
 import {StructureFactory} from "./../../../factories";
 import {TypeBinder} from "./../../base";
 import {StructureParameteredBinder} from "./../base";
@@ -18,6 +18,10 @@ export class StructureTypeBinder extends TypeBinder {
         return /\[\]$/.test(this.text) || /^Array\<.*\>$/.test(this.text);
     }
 
+    getArrayElementType() {
+        return this.factory.getTypeFromText(this.text.replace(/\[\]$/, "").replace(/^Array\<(.*)\>$/, "$1"));
+    }
+
     isIntersectionType() {
         return false;
     }
@@ -26,12 +30,12 @@ export class StructureTypeBinder extends TypeBinder {
         return false;
     }
 
-    getArrayElementType() {
-        return this.factory.getTypeFromText(this.text.replace(/\[\]$/, "").replace(/^Array\<(.*)\>$/, "$1"));
+    getUnionOrIntersectionTypes(): TypeNodeDefinition[] {
+        return [];
     }
 
-    getUnionOrIntersectionTypes(): TypeDefinition[] {
-        return [];
+    getResolvedType() {
+        return null;
     }
 
     getCallSignatures(): CallSignatureDefinition[] {
@@ -42,7 +46,7 @@ export class StructureTypeBinder extends TypeBinder {
         return [];
     }
 
-    getTypeArguments(): TypeDefinition[] {
+    getTypeArguments(): TypeNodeDefinition[] {
         return [];
     }
 

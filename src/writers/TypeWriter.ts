@@ -1,8 +1,8 @@
-﻿import {TypeDefinition} from "./../definitions";
+﻿import {TypeNodeDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 
 export class TypeWriter extends BaseWriter {
-    writeWithColon(def: TypeDefinition) {
+    writeWithColon(def: TypeNodeDefinition) {
         if (def != null) {
             let text = def.text;
 

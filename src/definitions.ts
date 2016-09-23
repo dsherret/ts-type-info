@@ -11,7 +11,7 @@ export * from "./definitions/variable";
 export * from "./definitions/GlobalDefinition";
 
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/file";
-import {TypeDefinition, TypeFunctionParameterDefinition} from "./definitions/expression";
+import {TypeNodeDefinition, TypeFunctionParameterDefinition} from "./definitions/expression";
 import {FunctionDefinition, FunctionParameterDefinition} from "./definitions/function";
 import {InterfaceDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition} from "./definitions/interface";
 import {ClassDefinition, ClassMethodParameterDefinition, ClassStaticMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition,
@@ -42,7 +42,7 @@ export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | C
 export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition |
     ClassConstructorParameterDefinition | CallSignatureParameterDefinition | TypeFunctionParameterDefinition;
 export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition |
-    CallSignatureDefinition | TypeDefinition;
+    CallSignatureDefinition | TypeNodeDefinition;
 export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;

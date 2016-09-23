@@ -6,16 +6,16 @@ import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
 import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
 import {TypeFunctionParameterDefinition} from "./TypeFunctionParameterDefinition";
 
-export class TypeDefinition
+export class TypeNodeDefinition
         extends BaseExpressionDefinition
         implements TypeParameteredDefinition, ParameteredDefinition<TypeFunctionParameterDefinition, TypeFunctionParameterStructure> {
-    arrayElementType: TypeDefinition | null = null;
-    intersectionTypes: TypeDefinition[] = [];
-    unionTypes: TypeDefinition[] = [];
+    arrayElementType: TypeNodeDefinition | null = null;
+    intersectionTypes: TypeNodeDefinition[] = [];
+    unionTypes: TypeNodeDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];
     definitions: ModuleMemberDefinitions[] = [];
     properties: TypePropertyDefinition[] = [];
-    typeArguments: TypeDefinition[] = [];
+    typeArguments: TypeNodeDefinition[] = [];
     text: string;
 
     constructor() {
@@ -33,11 +33,11 @@ export class TypeDefinition
         return ArrayUtils.getUniqueItems(definitions);
     }
 
-    getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean) {
+    getIntersectionType(searchFunction: (definition: TypeNodeDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.intersectionTypes, searchFunction);
     }
 
-    getUnionType(searchFunction: (definition: TypeDefinition) => boolean) {
+    getUnionType(searchFunction: (definition: TypeNodeDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.unionTypes, searchFunction);
     }
 
@@ -53,7 +53,7 @@ export class TypeDefinition
         return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.properties, searchFunctionOrName);
     }
 
-    getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean) {
+    getTypeArgument(searchFunction: (typeArgument: TypeNodeDefinition) => boolean) {
         return DefinitionUtils.getDefinitionFromListByFunc(this.typeArguments, searchFunction);
     }
 
@@ -64,15 +64,15 @@ export class TypeDefinition
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition = (structure) => {
-        throw new Error(`addTypeParameter is not supported on ${nameof(TypeDefinition)}`);
+        throw new Error(`addTypeParameter is not supported on ${nameof(TypeNodeDefinition)}`);
     };
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     // ParameteredDefinition
     parameters: TypeFunctionParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: TypeFunctionParameterDefinition) => boolean)) => TypeFunctionParameterDefinition;
     addParameter: (structure: TypeFunctionParameterStructure) => TypeFunctionParameterDefinition = (structure) => {
-        throw new Error(`addParameter is not supported on ${nameof(TypeDefinition)}`);
+        throw new Error(`addParameter is not supported on ${nameof(TypeNodeDefinition)}`);
     };
 }
 
-applyMixins(TypeDefinition, BaseExpressionDefinition, [TypeParameteredDefinition, ParameteredDefinition]);
+applyMixins(TypeNodeDefinition, BaseExpressionDefinition, [TypeParameteredDefinition, ParameteredDefinition]);

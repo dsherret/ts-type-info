@@ -1,7 +1,7 @@
-﻿import {ReturnTypedDefinition, TypeDefinition} from "./../../../definitions";
+﻿import {ReturnTypedDefinition, TypeNodeDefinition} from "./../../../definitions";
 
 export abstract class ReturnTypedBinder {
-    abstract getReturnType(): TypeDefinition;
+    abstract getReturnType(): TypeNodeDefinition;
 
     bind(def: ReturnTypedDefinition) {
         def.returnType = this.getReturnType();

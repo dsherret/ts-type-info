@@ -8,7 +8,7 @@ import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
         AbstractableDefinition, OrderableDefinition, DefinitionType} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
-import {TypeDefinition} from "./../expression";
+import {TypeNodeDefinition} from "./../expression";
 import {InterfaceDefinition} from "./../interface";
 import {ClassConstructorDefinition} from "./ClassConstructorDefinition";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
@@ -24,8 +24,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     staticMethods: ClassStaticMethodDefinition[] = [];
     staticProperties: ClassStaticPropertyDefinition[] = [];
     constructorDef: ClassConstructorDefinition;
-    extendsTypes: TypeDefinition[] = [];
-    implementsTypes: TypeDefinition[] = [];
+    extendsTypes: TypeNodeDefinition[] = [];
+    implementsTypes: TypeNodeDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Class);
@@ -62,18 +62,18 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
         return def;
     }
 
-    addExtends(definition: ClassDefinition, typeArguments?: string[]): TypeDefinition;
-    addExtends(text: string): TypeDefinition;
+    addExtends(definition: ClassDefinition, typeArguments?: string[]): TypeNodeDefinition;
+    addExtends(text: string): TypeNodeDefinition;
     addExtends(textOrDefinition: string | ClassDefinition, typeArguments: string[] = []) {
-        const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
+        const def = DefinitionUtils.getTypeNodeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
         this.extendsTypes.push(def);
         return def;
     }
 
-    addImplements(definition: InterfaceDefinition | ClassDefinition, typeArguments?: string[]): TypeDefinition;
-    addImplements(text: string): TypeDefinition;
+    addImplements(definition: InterfaceDefinition | ClassDefinition, typeArguments?: string[]): TypeNodeDefinition;
+    addImplements(text: string): TypeNodeDefinition;
     addImplements(textOrDefinition: string | InterfaceDefinition | ClassDefinition, typeArguments: string[] = []) {
-        const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
+        const def = DefinitionUtils.getTypeNodeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
         this.implementsTypes.push(def);
         return def;
     }

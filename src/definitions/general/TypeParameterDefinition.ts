@@ -1,9 +1,9 @@
 import {applyMixins} from "./../../utils";
 import {NamedDefinition, BaseDefinition, DefinitionType} from "./../base";
-import {TypeDefinition} from "./../expression";
+import {TypeNodeDefinition} from "./../expression";
 
 export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition {
-    constraintType: TypeDefinition | null;
+    constraintType: TypeNodeDefinition | null;
 
     constructor() {
         super(DefinitionType.TypeParameter);

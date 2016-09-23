@@ -1,9 +1,9 @@
 ﻿import * as assert from "assert";
-import {TypeDefinition} from "./../../../definitions";
+import {TypeNodeDefinition} from "./../../../definitions";
 
-describe("TypeDefinition", () => {
+describe("TypeNodeDefinition", () => {
     describe("#getIntersectionType()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         def.intersectionTypes.push({ text: "" } as any, { text: "test" } as any);
 
         it("should get the correct type", () => {
@@ -12,7 +12,7 @@ describe("TypeDefinition", () => {
     });
 
     describe("#getUnionType()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         def.unionTypes.push({ text: "" } as any, { text: "test" } as any);
 
         it("should get the correct type", () => {
@@ -21,7 +21,7 @@ describe("TypeDefinition", () => {
     });
 
     describe("#getCallSignature()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         def.callSignatures.push({ parameters: [] } as any, { parameters: [{} as any] } as any);
 
         it("should get the correct call signature", () => {
@@ -30,7 +30,7 @@ describe("TypeDefinition", () => {
     });
 
     describe("#getDefinition()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         def.definitions.push({ name: "def1" } as any, { name: "def2" } as any);
 
         it("should get the correct definition", () => {
@@ -39,7 +39,7 @@ describe("TypeDefinition", () => {
     });
 
     describe("#getProperty()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         def.properties.push({ name: "prop1" } as any, { name: "prop2" } as any);
 
         it("should get the correct property", () => {
@@ -48,7 +48,7 @@ describe("TypeDefinition", () => {
     });
 
     describe("#getTypeArgument()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         def.typeArguments.push({ text: "text1" } as any, { text: "text2" } as any);
 
         it("should get the correct type argument", () => {
@@ -57,7 +57,7 @@ describe("TypeDefinition", () => {
     });
 
     describe("#addTypeParameter()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         it("should throw an error saying that addTypeParameter is not supported", () => {
             assert.throws(() => {
                 def.addTypeParameter({ name: "T" });
@@ -66,7 +66,7 @@ describe("TypeDefinition", () => {
     });
 
     describe("#addParameter()", () => {
-        const def = new TypeDefinition();
+        const def = new TypeNodeDefinition();
         it("should throw an error saying that addParameter is not supported", () => {
             assert.throws(() => {
                 def.addParameter({ name: "a" });

@@ -1,4 +1,4 @@
-import {TypeDefinition} from "./../expression";
+import {TypeNodeDefinition} from "./../expression";
 import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
 import {StructureFactory} from "./../../factories";
 import {applyMixins, DefinitionUtils} from "./../../utils";
@@ -41,10 +41,10 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     abstract addParameter(structure: ParameterStructureType): ParameterType;
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
     // ThisTypedDefinition
-    thisType: TypeDefinition | null;
+    thisType: TypeNodeDefinition | null;
     setThisType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
     // ReturnTyped
-    returnType: TypeDefinition;
+    returnType: TypeNodeDefinition;
     setReturnType: (text: string) => this;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];

@@ -12,7 +12,7 @@ export class TsFactory {
     private readonly definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
     private readonly files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
     private readonly deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
-    private readonly createdTypesWithDefinition: { type: TsType; definition: definitions.TypeDefinition; }[] = [];
+    private readonly createdTypesWithDefinition: { type: TsType; definition: definitions.TypeNodeDefinition; }[] = [];
 
     getCallSignatureFromNode(node: TsNode) {
         return this.getCallSignatureFromSignature(node.getSignatureFromThis());
@@ -107,7 +107,7 @@ export class TsFactory {
     }
 
     getTypeFromTypeNode(node: TsTypeNode) {
-        const definition = bindToDefinition(new binders.TsTypeBinderByTypeNode(this, node), new definitions.TypeDefinition());
+        const definition = bindToDefinition(new binders.TsTypeBinderByTypeNode(this, node), new definitions.TypeNodeDefinition());
         this.createdTypesWithDefinition.push({
             type: node.getType(),
             definition
@@ -116,7 +116,7 @@ export class TsFactory {
     }
 
     getType(type: TsType) {
-        const definition = bindToDefinition(new binders.TsTypeBinder(this, type), new definitions.TypeDefinition());
+        const definition = bindToDefinition(new binders.TsTypeBinder(this, type), new definitions.TypeNodeDefinition());
         this.createdTypesWithDefinition.push({
             type,
             definition

@@ -5,7 +5,7 @@ import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {TypeAliasWriter} from "./../../writers";
 import {BaseDefinition, DefinitionType} from "./../base";
-import {TypeDefinition} from "./../expression";
+import {TypeNodeDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
 import {OrderableDefinition} from "./../base/OrderableDefinition";
@@ -40,7 +40,7 @@ export class TypeAliasDefinition extends BaseDefinition
     // OrderableDefinition
     order: number;
     // TypedDefinition
-    type: TypeDefinition;
+    type: TypeNodeDefinition;
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];

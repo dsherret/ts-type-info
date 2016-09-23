@@ -1,7 +1,7 @@
 import {StructureFactory} from "./../../factories";
 import {ObjectPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
-import {TypeDefinition, ExpressionDefinition} from "./../expression";
+import {TypeNodeDefinition, ExpressionDefinition} from "./../expression";
 import {ObjectPropertyDefinition} from "./../general/ObjectPropertyDefinition";
 import {OptionallyNamedDefinition} from "./OptionallyNamedDefinition";
 import {NamedDefinition} from "./NamedDefinition";
@@ -38,7 +38,7 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     // OptionalDefinition
     isOptional: boolean;
     // TypedDefinition
-    type: TypeDefinition;
+    type: TypeNodeDefinition;
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition | null;

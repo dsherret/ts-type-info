@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {ThisTypedTestStructure} from "./../../testStructures";
 import {ThisTypedDefinition} from "./../../../../definitions";
-import {runTypeDefinitionTests} from "./../expression";
+import {runTypeNodeDefinitionTests} from "./../expression";
 
 export function runThisTypedDefinitionTests(definition: ThisTypedDefinition, structure: ThisTypedTestStructure) {
     describe("thisType", () => {
@@ -11,7 +11,7 @@ export function runThisTypedDefinitionTests(definition: ThisTypedDefinition, str
             });
         }
         else {
-            runTypeDefinitionTests(definition.thisType, structure.thisType);
+            runTypeNodeDefinitionTests(definition.thisType, structure.thisType);
         }
     });
 }

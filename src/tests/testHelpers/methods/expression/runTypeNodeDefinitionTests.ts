@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import {TypeDefinition} from "./../../../../definitions";
+import {TypeNodeDefinition} from "./../../../../definitions";
 import {TypeTestStructure} from "./../../testStructures";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runNamedDefinitionTests, runBasePropertyDefinitionTests, runTypeParameteredDefinitionTests, runParameteredDefinitionTests} from "./../base";
@@ -7,7 +7,7 @@ import {runCallSignatureDefinitionTests} from "./../general";
 import {runBaseExpressionDefinitionTests} from "./runBaseExpressionDefinitionTests";
 import {runTypeFunctionParameterDefinitionTests} from "./runTypeFunctionParameterDefinitionTests";
 
-export function runTypeDefinitionTests(definition: TypeDefinition | null, structure: TypeTestStructure) {
+export function runTypeNodeDefinitionTests(definition: TypeNodeDefinition | null, structure: TypeTestStructure) {
     describe("type expression", () => {
         ensureNotNull(definition, () => {
             runBaseExpressionDefinitionTests(definition!, structure);
@@ -16,7 +16,7 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
 
             if (structure.arrayElementType != null) {
                 describe("arrayElementType", () => {
-                    runTypeDefinitionTests(definition!.arrayElementType, structure.arrayElementType!);
+                    runTypeNodeDefinitionTests(definition!.arrayElementType, structure.arrayElementType!);
                 });
             }
 
@@ -26,7 +26,7 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
 
             describe("intersection types", () => {
                 (structure.intersectionTypes || []).forEach((intersectionStructure, i) => {
-                    runTypeDefinitionTests(definition!.intersectionTypes[i], intersectionStructure);
+                    runTypeNodeDefinitionTests(definition!.intersectionTypes[i], intersectionStructure);
                 });
             });
 
@@ -36,7 +36,7 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
 
             describe("union types", () => {
                 (structure.unionTypes || []).forEach((unionStructure, i) => {
-                    runTypeDefinitionTests(definition!.unionTypes[i], unionStructure);
+                    runTypeNodeDefinitionTests(definition!.unionTypes[i], unionStructure);
                 });
             });
 
@@ -66,7 +66,7 @@ export function runTypeDefinitionTests(definition: TypeDefinition | null, struct
 
                 structure.typeArguments.forEach((typeTestStructure, i) => {
                     describe(`type argument ${i}`, () => {
-                        runTypeDefinitionTests(definition!.typeArguments[i], typeTestStructure);
+                        runTypeNodeDefinitionTests(definition!.typeArguments[i], typeTestStructure);
                     });
                 });
             }

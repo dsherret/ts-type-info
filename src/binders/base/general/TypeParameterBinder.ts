@@ -1,4 +1,4 @@
-﻿import {TypeParameterDefinition, TypeDefinition} from "./../../../definitions";
+﻿import {TypeParameterDefinition, TypeNodeDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./../base/BaseDefinitionBinder";
 import {NamedBinder} from "./../base/NamedBinder";
 import {IBaseBinder} from "./../IBaseBinder";
@@ -10,7 +10,7 @@ export abstract class TypeParameterBinder implements IBaseBinder {
     ) {
     }
 
-    abstract getConstraintType(): TypeDefinition | null;
+    abstract getConstraintType(): TypeNodeDefinition | null;
 
     bind(def: TypeParameterDefinition) {
         this.baseDefinitionBinder.bind(def);
