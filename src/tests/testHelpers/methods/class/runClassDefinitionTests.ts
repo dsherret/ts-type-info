@@ -8,7 +8,7 @@ import {runClassMethodDefinitionTests} from "./runClassMethodDefinitionTests";
 import {runClassStaticPropertyDefinitionTests} from "./runClassStaticPropertyDefinitionTests";
 import {runClassStaticMethodDefinitionTests} from "./runClassStaticMethodDefinitionTests";
 import {runClassConstructorDefinitionTests} from "./runClassConstructorDefinitionTests";
-import {runTypeNodeDefinitionTests} from "./../expression";
+import {runTypeDefinitionTests} from "./../expression";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runClassDefinitionTests(definition: ClassDefinition, structure: ClassTestStructure) {
@@ -81,7 +81,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                 });
 
                 structure.extendsTypes!.forEach((extendTestStructure, i) => {
-                    runTypeNodeDefinitionTests(definition.extendsTypes[i], extendTestStructure);
+                    runTypeDefinitionTests(definition.extendsTypes[i], extendTestStructure);
                 });
             });
 
@@ -91,7 +91,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
                 });
 
                 structure.implementsTypes!.forEach((implementTestStructure, i) => {
-                    runTypeNodeDefinitionTests(definition.implementsTypes[i], implementTestStructure);
+                    runTypeDefinitionTests(definition.implementsTypes[i], implementTestStructure);
                 });
             });
         });

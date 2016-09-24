@@ -13,7 +13,7 @@ export abstract class BaseParameterBinder {
         private readonly baseDefinitionBinder: BaseDefinitionBinder,
         private readonly namedBinder: NamedBinder,
         private readonly optionalBinder: OptionalBinder,
-        private readonly TypedBinder: TypedBinder,
+        private readonly typedBinder: TypedBinder,
         private readonly defaultExpressionedBinder: DefaultExpressionedBinder
     ) {
     }
@@ -22,7 +22,7 @@ export abstract class BaseParameterBinder {
         this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.optionalBinder.bind(def);
-        this.TypedBinder.bind(def);
+        this.typedBinder.bind(def);
         this.defaultExpressionedBinder.bind(def);
         def.isRestParameter = this.getIsRestParameter();
         def.destructuringProperties = this.getDestructuringProperties();

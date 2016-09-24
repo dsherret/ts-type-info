@@ -1,8 +1,8 @@
 import {StructureFactory} from "./../../factories";
-import {TypeNodeDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 
 export abstract class ReturnTypedDefinition {
-    returnType: TypeNodeDefinition;
+    returnType: TypeDefinition;
 
     setReturnType(text: string) {
         this.returnType = new StructureFactory().getTypeFromText(text);

@@ -1,7 +1,7 @@
 ﻿import {TypedTestStructure} from "./../../testStructures";
 import {TypedDefinition} from "./../../../../definitions";
-import {runTypeNodeDefinitionTests} from "./../expression";
+import {runTypeDefinitionTests} from "./../expression";
 
 export function runTypedDefinitionTests(definition: TypedDefinition, structure: TypedTestStructure) {
-    runTypeNodeDefinitionTests(definition.type, structure.type || { text: "any" });
+    runTypeDefinitionTests(definition.type, structure.type || { text: "any" });
 }

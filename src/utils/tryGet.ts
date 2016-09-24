@@ -16,7 +16,7 @@ export function tryGet<T>(objOrString: TsSymbol | TsNode | string, attemptToGet:
         }
     }
 
-    if (typeof onSuccess === "function" && def != null) {
+    if (onSuccess instanceof Function && def != null) {
         onSuccess(def);
     }
 

@@ -23,8 +23,8 @@ export abstract class ClassBinder implements IBaseBinder {
     }
 
     abstract getMembers(): ClassMemberContainer;
-    abstract getExtendsTypes(): definitions.TypeNodeDefinition[];
-    abstract getImplementsTypes(): definitions.TypeNodeDefinition[];
+    abstract getExtendsTypes(): definitions.TypeDefinition[];
+    abstract getImplementsTypes(): definitions.TypeDefinition[];
 
     bind(def: definitions.ClassDefinition) {
         this.baseDefinitionBinder.bind(def);

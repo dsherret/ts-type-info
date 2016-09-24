@@ -18,7 +18,6 @@ export class TsIndexSignatureBinder extends IndexSignatureBinder {
 
     getKeyType() {
         const node = this.signature.getParameters()[0].getOnlyNode();
-        const typeNode = node.getTypeNode();
-        return typeNode == null ? this.factory.getType(node.getType()) : this.factory.getTypeFromTypeNode(typeNode);
+        return this.factory.getType(node.getType(), node.getTypeNode());
     }
 }

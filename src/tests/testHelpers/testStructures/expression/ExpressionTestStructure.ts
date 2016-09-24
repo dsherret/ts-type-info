@@ -1,4 +1,4 @@
-﻿import {BaseExpressionTestStructure} from "./BaseExpressionTestStructure";
+﻿import {BaseExpressionTestStructure} from "./base";
 
 export interface ExpressionTestStructure extends BaseExpressionTestStructure {
 }

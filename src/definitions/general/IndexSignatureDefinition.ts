@@ -1,17 +1,17 @@
 ﻿import {applyMixins} from "./../../utils";
 import {BaseDefinition, DefinitionType, ReturnTypedDefinition, ReadonlyableDefinition} from "./../base";
-import {TypeNodeDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 
 export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition, ReadonlyableDefinition {
     keyName: string;
-    keyType: TypeNodeDefinition;
+    keyType: TypeDefinition;
 
     constructor() {
         super(DefinitionType.IndexSignature);
     }
 
     // ReturnTypedDefinition
-    returnType: TypeNodeDefinition;
+    returnType: TypeDefinition;
     setReturnType: (text: string) => this;
     // ReadonlyableDefinition
     isReadonly: boolean;

@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
-import {BaseExpressionDefinition} from "./../../../../definitions";
-import {BaseExpressionTestStructure} from "./../../testStructures";
-import {runBaseDefinitionTests} from "./../base";
+import {BaseExpressionDefinition} from "./../../../../../definitions";
+import {BaseExpressionTestStructure} from "./../../../testStructures";
+import {runBaseDefinitionTests} from "./../../base";
 
 export function runBaseExpressionDefinitionTests(definition: BaseExpressionDefinition, structure: BaseExpressionTestStructure) {
     runBaseDefinitionTests(definition, structure);

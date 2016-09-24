@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {ExpressionDefinition} from "./../../../../definitions";
 import {ExpressionTestStructure} from "./../../testStructures";
-import {runBaseExpressionDefinitionTests} from "./runBaseExpressionDefinitionTests";
+import {runBaseExpressionDefinitionTests} from "./base";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runExpressionDefinitionTests(definition: ExpressionDefinition | null, structure: ExpressionTestStructure | undefined) {

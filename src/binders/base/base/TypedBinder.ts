@@ -1,7 +1,7 @@
-﻿import {TypedDefinition, TypeNodeDefinition} from "./../../../definitions";
+﻿import {TypedDefinition, TypeDefinition} from "./../../../definitions";
 
 export abstract class TypedBinder {
-    abstract getType(): TypeNodeDefinition;
+    abstract getType(): TypeDefinition;
 
     bind(def: TypedDefinition) {
         def.type = this.getType();

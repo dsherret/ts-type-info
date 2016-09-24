@@ -5,7 +5,7 @@ import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition,
     DefaultExpressionedDefinition, BaseDefinition, DefinitionType, OrderableDefinition} from "./../base";
-import {ExpressionDefinition, TypeNodeDefinition} from "./../expression";
+import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
@@ -38,7 +38,7 @@ export class VariableDefinition extends BaseDefinition
     // OrderableDefinition
     order: number;
     // TypedDefinition
-    type: TypeNodeDefinition;
+    type: TypeDefinition;
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
 }
 

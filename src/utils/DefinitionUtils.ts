@@ -1,13 +1,13 @@
-﻿import {FileDefinition, NamedDefinition, OptionallyNamedDefinition, TypeNodeDefinition, ModuledDefinition} from "./../definitions";
+﻿import {FileDefinition, NamedDefinition, OptionallyNamedDefinition, TypeDefinition, ModuledDefinition} from "./../definitions";
 import {StructureFactory} from "./../factories";
 
 export class DefinitionUtils {
     private constructor() {
     }
 
-    static getTypeNodeDefinitionFromTextOrDefinition(textOrDefinition: string | NamedDefinition, typeArguments: string[]) {
+    static getTypeDefinitionFromTextOrDefinition(textOrDefinition: string | NamedDefinition | null, typeArguments: string[]) {
         const structureFactory = new StructureFactory();
-        let def: TypeNodeDefinition;
+        let def: TypeDefinition;
 
         if (typeof textOrDefinition === "string") {
             def = structureFactory.getTypeFromText(textOrDefinition);

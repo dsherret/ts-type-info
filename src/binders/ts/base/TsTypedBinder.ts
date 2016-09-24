@@ -8,7 +8,6 @@ export class TsTypedBinder extends TypedBinder {
     }
 
     getType() {
-        const typeNode = this.node.getTypeNode();
-        return typeNode == null ? this.factory.getType(this.node.getType()) : this.factory.getTypeFromTypeNode(typeNode);
+        return this.factory.getType(this.node.getType(), this.node.getTypeNode());
     }
 }

@@ -12,7 +12,7 @@ export class TsFactory {
     private readonly definitionByNode = new KeyValueCache<TsNode, definitions.NodeDefinitions>();
     private readonly files = new KeyValueCache<TsSourceFile, definitions.FileDefinition>();
     private readonly deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
-    private readonly createdTypesWithDefinition: { type: TsType; definition: definitions.TypeNodeDefinition; }[] = [];
+    private readonly createdTypesWithDefinition: { type: TsType; definition: definitions.BaseTypeDefinition; }[] = [];
 
     getCallSignatureFromNode(node: TsNode) {
         return this.getCallSignatureFromSignature(node.getSignatureFromThis());
@@ -106,8 +106,8 @@ export class TsFactory {
         return bindToDefinition(new binders.TsTypePropertyBinder(this, node), new definitions.TypePropertyDefinition());
     }
 
-    getTypeFromTypeNode(node: TsTypeNode) {
-        const definition = bindToDefinition(new binders.TsTypeBinderByTypeNode(this, node), new definitions.TypeNodeDefinition());
+    getTypeNode(node: TsTypeNode) {
+        const definition = bindToDefinition(new binders.TsTypeNodeBinder(this, node), new definitions.TypeNodeDefinition());
         this.createdTypesWithDefinition.push({
             type: node.getType(),
             definition
@@ -115,8 +115,17 @@ export class TsFactory {
         return definition;
     }
 
-    getType(type: TsType) {
-        const definition = bindToDefinition(new binders.TsTypeBinder(this, type), new definitions.TypeNodeDefinition());
+    getTypeFromTypeNode(node: TsTypeNode) {
+        const definition = bindToDefinition(new binders.TsTypeBinder(this, node.getType(), node), new definitions.TypeDefinition());
+        this.createdTypesWithDefinition.push({
+            type: node.getType(),
+            definition
+        });
+        return definition;
+    }
+
+    getType(type: TsType, node: TsTypeNode | null) {
+        const definition = bindToDefinition(new binders.TsTypeBinder(this, type, node), new definitions.TypeDefinition());
         this.createdTypesWithDefinition.push({
             type,
             definition

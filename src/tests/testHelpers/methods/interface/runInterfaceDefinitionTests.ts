@@ -7,7 +7,7 @@ import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests} from 
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
 import {runInterfacePropertyDefinitionTests} from "./runInterfacePropertyDefinitionTests";
-import {runTypeNodeDefinitionTests} from "./../expression";
+import {runTypeDefinitionTests} from "./../expression";
 
 export function runInterfaceDefinitionTests(definition: InterfaceDefinition, structure: InterfaceTestStructure) {
     describe(`interface ${structure.name}`, () => {
@@ -84,7 +84,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
                 });
 
                 structure.extendsTypes!.forEach((extendTestStructure, i) => {
-                    runTypeNodeDefinitionTests(definition.extendsTypes[i], extendTestStructure);
+                    runTypeDefinitionTests(definition.extendsTypes[i], extendTestStructure);
                 });
             });
         });

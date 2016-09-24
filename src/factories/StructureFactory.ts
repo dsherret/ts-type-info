@@ -147,7 +147,12 @@ export class StructureFactory {
 
     getTypeFromText(text: string | undefined) {
         text = text || "any";
-        return bindToDefinition<definitions.TypeNodeDefinition>(new binders.StructureTypeBinder(this, text), new definitions.TypeNodeDefinition());
+        return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(this, text), new definitions.TypeDefinition());
+    }
+
+    getTypeNodeFromText(text: string | undefined) {
+        text = text || "any";
+        return bindToDefinition<definitions.TypeNodeDefinition>(new binders.StructureTypeNodeBinder(this, text), new definitions.TypeNodeDefinition());
     }
 
     getTypeParameter(structure: structures.TypeParameterStructure) {

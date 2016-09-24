@@ -10,7 +10,7 @@ export * from "./testStructures/namespace";
 export * from "./testStructures/variable";
 
 import {FunctionTestStructure, FunctionParameterTestStructure} from "./testStructures/function";
-import {TypeTestStructure, TypeFunctionParameterTestStructure} from "./testStructures/expression";
+import {TypeNodeTestStructure, TypeFunctionParameterTestStructure} from "./testStructures/expression";
 import {InterfaceMethodParameterTestStructure, InterfaceMethodTestStructure} from "./testStructures/interface";
 import {ClassMethodParameterTestStructure, ClassStaticMethodParameterTestStructure, ClassMethodTestStructure,
     ClassStaticMethodTestStructure, ClassConstructorTestStructure, ClassConstructorParameterTestStructure} from "./testStructures/class";
@@ -21,4 +21,4 @@ export type ClassMethodParameterTestStructures = ClassMethodParameterTestStructu
 export type ParameterTestStructures = FunctionParameterTestStructure | InterfaceMethodParameterTestStructure | ClassMethodParameterTestStructure |
     ClassStaticMethodParameterTestStructure | ClassConstructorParameterTestStructure | CallSignatureParameterTestStructure | TypeFunctionParameterTestStructure;
 export type ParameteredTestStructures = FunctionTestStructure | InterfaceMethodTestStructure | ClassMethodTestStructure | ClassConstructorTestStructure |
-    CallSignatureTestStructure | TypeTestStructure;
+    CallSignatureTestStructure | TypeNodeTestStructure;

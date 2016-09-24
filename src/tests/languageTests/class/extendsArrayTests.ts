@@ -20,9 +20,14 @@ class MyArrayExt extends Array<string> {
                 }
             }],
             extendsTypes: [{
-                text: "Array<string>",
+                text: "string[]",
                 isArrayType: true,
-                arrayElementType: { text: "string" }
+                arrayElementType: { text: "string" },
+                node: {
+                    text: "Array<string>",
+                    isArrayType: true,
+                    arrayElementType: { text: "string" }
+                }
             }]
         }]
     });

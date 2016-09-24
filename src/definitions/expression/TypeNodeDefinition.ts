@@ -1,64 +1,15 @@
-import {ModuleMemberDefinitions, TypeParameteredDefinition, TypeParameterDefinition, ParameteredDefinition} from "./../../definitions";
+import {TypeParameteredDefinition, TypeParameterDefinition, ParameteredDefinition} from "./../../definitions";
 import {TypeParameterStructure, TypeFunctionParameterStructure} from "./../../structures";
-import {ArrayUtils, DefinitionUtils, applyMixins} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {DefinitionType} from "./../base";
-import {CallSignatureDefinition, TypePropertyDefinition} from "./../general";
-import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
+import {BaseTypeDefinition} from "./base";
 import {TypeFunctionParameterDefinition} from "./TypeFunctionParameterDefinition";
 
 export class TypeNodeDefinition
-        extends BaseExpressionDefinition
+        extends BaseTypeDefinition
         implements TypeParameteredDefinition, ParameteredDefinition<TypeFunctionParameterDefinition, TypeFunctionParameterStructure> {
-    arrayElementType: TypeNodeDefinition | null = null;
-    intersectionTypes: TypeNodeDefinition[] = [];
-    unionTypes: TypeNodeDefinition[] = [];
-    callSignatures: CallSignatureDefinition[] = [];
-    definitions: ModuleMemberDefinitions[] = [];
-    properties: TypePropertyDefinition[] = [];
-    typeArguments: TypeNodeDefinition[] = [];
-    text: string;
-
     constructor() {
-        super(DefinitionType.Type);
-    }
-
-    getAllDefinitions(): ModuleMemberDefinitions[] {
-        const arraysOfDefinitions = [...this.unionTypes.map(t => t.getAllDefinitions()), ...this.intersectionTypes.map(t => t.getAllDefinitions())];
-        const definitions = [...arraysOfDefinitions.reduce((a, b) => a.concat(b), []), ...this.definitions];
-
-        if (this.arrayElementType != null) {
-            definitions.push(...this.arrayElementType.definitions);
-        }
-
-        return ArrayUtils.getUniqueItems(definitions);
-    }
-
-    getIntersectionType(searchFunction: (definition: TypeNodeDefinition) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.intersectionTypes, searchFunction);
-    }
-
-    getUnionType(searchFunction: (definition: TypeNodeDefinition) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.unionTypes, searchFunction);
-    }
-
-    getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.callSignatures, searchFunction);
-    }
-
-    getDefinition(searchFunction: (definition: ModuleMemberDefinitions) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.definitions, searchFunction);
-    }
-
-    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)) {
-        return DefinitionUtils.getDefinitionFromListByNameOrFunc(this.properties, searchFunctionOrName);
-    }
-
-    getTypeArgument(searchFunction: (typeArgument: TypeNodeDefinition) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.typeArguments, searchFunction);
-    }
-
-    isArrayType() {
-        return this.arrayElementType != null || /\[\]$/.test(this.text) || /^Array\<.*\>$/.test(this.text);
+        super(DefinitionType.TypeNode);
     }
 
     // TypeParameteredDefinition
@@ -75,4 +26,4 @@ export class TypeNodeDefinition
     };
 }
 
-applyMixins(TypeNodeDefinition, BaseExpressionDefinition, [TypeParameteredDefinition, ParameteredDefinition]);
+applyMixins(TypeNodeDefinition, BaseTypeDefinition, [TypeParameteredDefinition, ParameteredDefinition]);

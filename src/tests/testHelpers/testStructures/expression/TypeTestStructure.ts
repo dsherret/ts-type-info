@@ -1,16 +1,8 @@
-﻿import {NamedTestStructure, TypeParameteredTestStructure, ParameteredTestStructure} from "./../base";
-import {CallSignatureTestStructure, TypePropertyTestStructure} from "./../general";
-import {BaseExpressionTestStructure} from "./BaseExpressionTestStructure";
-import {TypeFunctionParameterTestStructure} from "./TypeFunctionParameterTestStructure";
+﻿import {CallSignatureTestStructure} from "./../general";
+import {BaseTypeTestStructure} from "./base";
+import {TypeNodeTestStructure} from "./TypeNodeTestStructure";
 
-export interface TypeTestStructure extends BaseExpressionTestStructure, TypeParameteredTestStructure, ParameteredTestStructure<TypeFunctionParameterTestStructure> {
-    arrayElementType?: TypeTestStructure;
-    intersectionTypes?: TypeTestStructure[];
-    unionTypes?: TypeTestStructure[];
-    isArrayType?: boolean;
+export interface TypeTestStructure extends BaseTypeTestStructure {
     callSignatures?: CallSignatureTestStructure[];
-    properties?: TypePropertyTestStructure[];
-    typeArguments?: TypeTestStructure[];
-    definitions?: NamedTestStructure[];
-    allDefinitions?: NamedTestStructure[];
+    node?: TypeNodeTestStructure;
 }

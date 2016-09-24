@@ -1,5 +1,5 @@
 ﻿import {DefinitionType} from "./../base";
-import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
+import {BaseExpressionDefinition} from "./base";
 
 export class ExpressionDefinition extends BaseExpressionDefinition {
     constructor() {

@@ -4,7 +4,7 @@ import {ClassDefinition, ClassMethodDefinition, ClassMethodParameterDefinition, 
         ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../class";
 import {InterfaceDefinition, InterfaceMethodDefinition, InterfaceMethodParameterDefinition, InterfacePropertyDefinition} from "./../interface";
 import {FileDefinition, ImportDefinition, ReExportDefinition, NamedImportPartDefinition, StarImportPartDefinition, DefaultImportPartDefinition} from "./../file";
-import {ExpressionDefinition, TypeNodeDefinition} from "./../expression";
+import {ExpressionDefinition, TypeDefinition, TypeNodeDefinition} from "./../expression";
 import {FunctionDefinition, FunctionParameterDefinition} from "./../function";
 import {NamespaceDefinition} from "./../namespace";
 import {EnumDefinition, EnumMemberDefinition} from "./../enum";
@@ -173,8 +173,12 @@ export abstract class BaseDefinition {
         return this._definitionType === DefinitionType.ObjectPropertyDefinition;
     }
 
-    isTypeNodeDefinition(): this is TypeNodeDefinition {
+    isTypeDefinition(): this is TypeDefinition {
         return this._definitionType === DefinitionType.Type;
+    }
+
+    isTypeNodeDefinition(): this is TypeNodeDefinition {
+        return this._definitionType === DefinitionType.TypeNode;
     }
 
     isExportableDefinition(): this is ExportableDefinitions {

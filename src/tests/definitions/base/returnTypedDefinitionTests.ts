@@ -1,11 +1,11 @@
 ﻿import {FunctionDefinition} from "./../../../definitions";
-import {runTypeNodeDefinitionTests} from "./../../testHelpers";
+import {runTypeDefinitionTests} from "./../../testHelpers";
 
 describe("ReturnTypedDefinition", () => {
     describe("setReturnTypedExpression", () => {
         const func = new FunctionDefinition();
         func.setReturnType("5");
 
-        runTypeNodeDefinitionTests(func.returnType, { text: "5" });
+        runTypeDefinitionTests(func.returnType, { text: "5" });
     });
 });

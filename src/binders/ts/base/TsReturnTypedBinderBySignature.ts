@@ -8,6 +8,6 @@ export class TsReturnTypedBinderBySignature extends ReturnTypedBinder {
     }
 
     getReturnType() {
-        return this.factory.getType(this.signature.getReturnType());
+        return this.factory.getType(this.signature.getReturnType(), null);
     }
 }

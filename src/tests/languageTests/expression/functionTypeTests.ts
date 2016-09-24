@@ -15,18 +15,6 @@ function myFunc(func: <T extends string>(str: T, num?: number) => void) {
                 name: "func",
                 type: {
                     text: "<T extends string>(str: T, num?: number) => void",
-                    typeParameters: [{
-                        name: "T",
-                        constraintType: { text: "string" }
-                    }],
-                    parameters: [{
-                        name: "str",
-                        type: { text: "T" }
-                    }, {
-                        name: "num",
-                        type: { text: "number" },
-                        isOptional: true
-                    }],
                     callSignatures: [{
                         minArgumentCount: 1,
                         typeParameters: [{
@@ -41,7 +29,22 @@ function myFunc(func: <T extends string>(str: T, num?: number) => void) {
                             type: { text: "number" },
                             isOptional: true
                         }]
-                    }]
+                    }],
+                    node: {
+                        text: "<T extends string>(str: T, num?: number) => void",
+                        parameters: [{
+                            name: "str",
+                            type: { text: "T" }
+                        }, {
+                            name: "num",
+                            type: { text: "number" },
+                            isOptional: true
+                        }],
+                        typeParameters: [{
+                            name: "T",
+                            constraintType: { text: "string" }
+                        }]
+                    }
                 }
             }]
         }]

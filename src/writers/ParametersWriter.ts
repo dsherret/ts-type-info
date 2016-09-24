@@ -1,5 +1,5 @@
 ﻿import {WriteFlags} from "./../WriteFlags";
-import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeNodeDefinition, BaseParameterDefinition} from "./../definitions";
+import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition, BaseParameterDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {ParameterWriter} from "./ParameterWriter";
 import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
@@ -36,7 +36,7 @@ export class ParametersWriter extends BaseWriter {
         this.writer.write(")");
     }
 
-    private writeThisType(thisType: TypeNodeDefinition | null) {
+    private writeThisType(thisType: TypeDefinition | null) {
         if (thisType != null) {
             this.writer.write("this");
             this.typeWriter.writeWithColon(thisType);

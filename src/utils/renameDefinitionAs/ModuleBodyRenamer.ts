@@ -43,7 +43,7 @@ export class ModuleBodyRenamer {
             }
         });
 
-        if (def.isTypeNodeDefinition() || def.isExpressionDefinition()) {
+        if (def.isTypeDefinition() || def.isTypeNodeDefinition() || def.isExpressionDefinition()) {
             def.text = renameDefinitionInText(def.text, this.renameInfo.fullNameFrom, this.renameInfo.fullNameTo);
         }
     }

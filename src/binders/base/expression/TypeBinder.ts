@@ -1,38 +1,16 @@
-﻿import {CallSignatureDefinition, TypeNodeDefinition, TypePropertyDefinition, TypeParameterDefinition, TypeFunctionParameterDefinition} from "./../../../definitions";
-import {ParameteredBinder} from "./../base";
-import {ExpressionBinder} from "./ExpressionBinder";
+﻿import {CallSignatureDefinition, TypeDefinition, TypeNodeDefinition} from "./../../../definitions";
+import {BaseTypeBinder} from "./base";
 
 export abstract class TypeBinder {
-    abstract isArrayType(): boolean;
-    abstract getArrayElementType(): TypeNodeDefinition | null;
-    abstract isIntersectionType(): boolean;
-    abstract isUnionType(): boolean;
-    abstract getUnionOrIntersectionTypes(): TypeNodeDefinition[];
-    abstract getResolvedType(): TypeNodeDefinition | null;
     abstract getCallSignatures(): CallSignatureDefinition[];
-    abstract getProperties(): TypePropertyDefinition[];
-    abstract getTypeArguments(): TypeNodeDefinition[];
-    abstract getTypeParameters(): TypeParameterDefinition[];
+    abstract getTypeNode(): TypeNodeDefinition | null;
 
-    constructor(
-        private readonly expressionBinder: ExpressionBinder,
-        private readonly parameterBinder: ParameteredBinder<TypeFunctionParameterDefinition>,
-    ) {
+    constructor(private readonly baseTypeBinder: BaseTypeBinder) {
     }
 
-    bind(def: TypeNodeDefinition) {
-        this.expressionBinder.bind(def);
-        this.parameterBinder.bind(def);
-
-        if (this.isUnionType())
-            def.unionTypes.push(...this.getUnionOrIntersectionTypes());
-        else if (this.isIntersectionType())
-            def.intersectionTypes.push(...this.getUnionOrIntersectionTypes());
-        if (this.isArrayType())
-            def.arrayElementType = this.getArrayElementType();
+    bind(def: TypeDefinition) {
+        this.baseTypeBinder.bind(def);
         def.callSignatures.push(...this.getCallSignatures());
-        def.properties.push(...this.getProperties());
-        def.typeArguments.push(...this.getTypeArguments());
-        def.typeParameters.push(...this.getTypeParameters());
+        def.node = this.getTypeNode();
     }
 }

@@ -7,7 +7,7 @@ import {WriteOptions} from "./../../WriteOptions";
 import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
 import {ClassDefinition} from "./../class";
-import {TypeNodeDefinition} from "./../expression";
+import {TypeDefinition} from "./../expression";
 import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 
@@ -18,7 +18,7 @@ export class InterfaceDefinition extends BaseDefinition
     indexSignatures: IndexSignatureDefinition[] = [];
     newSignatures: CallSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
-    extendsTypes: TypeNodeDefinition[] = [];
+    extendsTypes: TypeDefinition[] = [];
 
     constructor() {
         super(DefinitionType.Interface);
@@ -30,10 +30,10 @@ export class InterfaceDefinition extends BaseDefinition
         return def;
     }
 
-    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[]): TypeNodeDefinition;
-    addExtends(text: string): TypeNodeDefinition;
+    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[]): TypeDefinition;
+    addExtends(text: string): TypeDefinition;
     addExtends(textOrDefinition: string | ClassDefinition | InterfaceDefinition, typeArguments: string[] = []) {
-        const def = DefinitionUtils.getTypeNodeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
+        const def = DefinitionUtils.getTypeDefinitionFromTextOrDefinition(textOrDefinition, typeArguments);
         this.extendsTypes.push(def);
         return def;
     }

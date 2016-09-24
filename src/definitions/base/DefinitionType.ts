@@ -38,5 +38,6 @@ export const enum DefinitionType {
     UserDefinedTypeGuard = 1400,
     ObjectPropertyDefinition = 1500,
     Type = 1600,
-    TypeFunctionParameter = 1601
+    TypeFunctionParameter = 1601,
+    TypeNode = 1700
 }
