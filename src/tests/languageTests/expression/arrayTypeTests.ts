@@ -47,7 +47,7 @@ class MyClass {
                     definitions: [],
                     allDefinitions: [{
                         name: "MyClass"
-                    }],
+                    }]
                 }
             }
         }, {

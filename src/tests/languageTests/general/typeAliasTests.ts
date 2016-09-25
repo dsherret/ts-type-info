@@ -1,6 +1,5 @@
 ﻿import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
-import {VariableDeclarationType} from "./../../../definitions";
 
 describe("type alias tests", () => {
     const code = `
