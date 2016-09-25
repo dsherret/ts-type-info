@@ -1,35 +1,35 @@
 ﻿import CodeBlockWriter from "code-block-writer";
-import {WriteableDefinitions, NamedDefinition} from "./definitions";
+import * as definitions from "./definitions";
 import {ClassWriter, InterfaceWriter, FunctionWriter, FileWriter, NamespaceWriter, EnumWriter, ModuledWriter, TypeAliasWriter, VariableWriter} from "./writers";
 import {WriteFlags} from "./WriteFlags";
 import {Logger} from "./utils";
 
-export function writeDefinition(definition: WriteableDefinitions, writer: CodeBlockWriter, writeFlags = WriteFlags.Default) {
-    if (definition.isClassDefinition()) {
+export function writeDefinition(definition: definitions.WriteableDefinitions, writer: CodeBlockWriter, writeFlags = WriteFlags.Default) {
+    if (definition instanceof definitions.ClassDefinition) {
         new ClassWriter(writer).write(definition, writeFlags);
     }
-    else if (definition.isInterfaceDefinition()) {
+    else if (definition instanceof definitions.InterfaceDefinition) {
         new InterfaceWriter(writer).write(definition, writeFlags);
     }
-    else if (definition.isFunctionDefinition()) {
+    else if (definition instanceof definitions.FunctionDefinition) {
         new FunctionWriter(writer).write(definition, writeFlags);
     }
-    else if (definition.isFileDefinition()) {
+    else if (definition instanceof definitions.FileDefinition) {
         new FileWriter(writer).write(definition, writeFlags);
     }
-    else if (definition.isNamespaceDefinition()) {
+    else if (definition instanceof definitions.NamespaceDefinition) {
         new NamespaceWriter(writer, new ModuledWriter(writer)).write(definition, writeFlags);
     }
-    else if (definition.isEnumDefinition()) {
+    else if (definition instanceof definitions.EnumDefinition) {
         new EnumWriter(writer).write(definition, writeFlags);
     }
-    else if (definition.isTypeAliasDefinition()) {
+    else if (definition instanceof definitions.TypeAliasDefinition) {
         new TypeAliasWriter(writer).write(definition, writeFlags);
     }
-    else if (definition.isVariableDefinition()) {
+    else if (definition instanceof definitions.VariableDefinition) {
         new VariableWriter(writer).write(definition, writeFlags);
     }
     else {
-        Logger.warn(`Not implemented writer for definition: ${(definition as NamedDefinition).name}`);
+        Logger.warn(`Not implemented writer for definition: ${(definition as definitions.NamedDefinition).name}`);
     }
 }

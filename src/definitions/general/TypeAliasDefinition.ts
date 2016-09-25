@@ -4,7 +4,7 @@ import {applyMixins} from "./../../utils";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {TypeAliasWriter} from "./../../writers";
-import {BaseDefinition, DefinitionType} from "./../base";
+import {BaseDefinition} from "./../base";
 import {TypeDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
@@ -15,12 +15,9 @@ import {ExportableDefinition} from "./../base/ExportableDefinition";
 import {AmbientableDefinition} from "./../base/AmbientableDefinition";
 import {TypeParameterDefinition} from "./TypeParameterDefinition";
 
-export class TypeAliasDefinition extends BaseDefinition
+export class TypeAliasDefinition
+        extends BaseDefinition
         implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition {
-    constructor() {
-        super(DefinitionType.TypeAlias);
-    }
-
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
         const typeAliasWriter = new TypeAliasWriter(writer);

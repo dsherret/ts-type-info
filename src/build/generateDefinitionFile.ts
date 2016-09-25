@@ -1,6 +1,6 @@
 ﻿import * as path from "path";
 import * as fs from "fs";
-import {getInfoFromFiles, GlobalDefinition} from "./../main";
+import {getInfoFromFiles, GlobalDefinition, ModuledDefinition} from "./../main";
 
 export function generateDefinitionFile() {
     const result = getInfoFromFiles([
@@ -30,6 +30,10 @@ export function generateDefinitionFile() {
 function removeInternalProperties(result: GlobalDefinition) {
     const baseDefClass = result.getFile("BaseDefinition.ts")!.getClass("BaseDefinition")!;
     baseDefClass.properties = baseDefClass.properties.filter(p => p.name !== "___uniqueID");
+
+
+    const moduledDefinition = result.getFile(`${nameof(ModuledDefinition)}.ts`)!.getClass(nameof(ModuledDefinition))!;
+    moduledDefinition.staticMethods = moduledDefinition.staticMethods.filter(p => p.name !== nameof(ModuledDefinition.initialize))
 }
 
 function fixSetType(result: GlobalDefinition) {

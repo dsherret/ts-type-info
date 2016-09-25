@@ -2,7 +2,7 @@ import CodeBlockWriter from "code-block-writer";
 import {Scope} from "./../Scope";
 import {applyMixins} from "./../../../utils";
 import {DecoratorStructure} from "./../../../structures";
-import {AsyncableDefinition, DecoratableDefinition, DefinitionType, BaseFunctionDefinition, FunctionBodyWriteableDefinition} from "./../../base";
+import {AsyncableDefinition, DecoratableDefinition, BaseFunctionDefinition, FunctionBodyWriteableDefinition} from "./../../base";
 import {DecoratorDefinition} from "./../../general";
 import {BaseClassMethodParameterDefinition} from "./BaseClassMethodParameterDefinition";
 import {ScopedDefinition} from "./ScopedDefinition";
@@ -10,11 +10,6 @@ import {ScopedDefinition} from "./ScopedDefinition";
 export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType>
         extends BaseFunctionDefinition<ParameterType, ParameterStructureType>
         implements AsyncableDefinition, DecoratableDefinition, ScopedDefinition, FunctionBodyWriteableDefinition {
-
-    constructor(definitionType: DefinitionType) {
-        super(definitionType);
-    }
-
     // AsyncableDefinition
     isAsync: boolean;
     // FunctionBodyWriteableDefinition

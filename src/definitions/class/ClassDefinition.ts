@@ -6,7 +6,7 @@ import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
-        AbstractableDefinition, OrderableDefinition, DefinitionType} from "./../base";
+        AbstractableDefinition, OrderableDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {TypeDefinition} from "./../expression";
 import {InterfaceDefinition} from "./../interface";
@@ -26,10 +26,6 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     constructorDef: ClassConstructorDefinition;
     extendsTypes: TypeDefinition[] = [];
     implementsTypes: TypeDefinition[] = [];
-
-    constructor() {
-        super(DefinitionType.Class);
-    }
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);

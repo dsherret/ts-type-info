@@ -1,6 +1,5 @@
 ﻿import {ModuleMemberDefinitions} from "./../../../definitions";
 import {ArrayUtils, DefinitionUtils} from "./../../../utils";
-import {DefinitionType} from "./../../base";
 import {TypePropertyDefinition} from "./../../general";
 import {BaseExpressionDefinition} from "./BaseExpressionDefinition";
 import {TypeDefinition} from "./../TypeDefinition";
@@ -13,10 +12,6 @@ export abstract class BaseTypeDefinition extends BaseExpressionDefinition {
     properties: TypePropertyDefinition[] = [];
     typeArguments: TypeDefinition[] = [];
     text: string;
-
-    constructor(definitionType: DefinitionType) {
-        super(definitionType);
-    }
 
     getAllDefinitions(): ModuleMemberDefinitions[] {
         const arraysOfDefinitions = [...this.unionTypes.map(t => t.getAllDefinitions()), ...this.intersectionTypes.map(t => t.getAllDefinitions())];

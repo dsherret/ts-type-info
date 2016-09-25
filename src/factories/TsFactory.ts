@@ -139,11 +139,11 @@ export class TsFactory {
 
     getAllExportableDefinitionsBySymbol(symbol: TsSymbol) {
         symbol = symbol.isAlias() ? symbol.getAliasSymbol()! : symbol;
-        const definitions = this.getAllDefinitionsBySymbol(symbol);
+        const defs = this.getAllDefinitionsBySymbol(symbol);
         const exportableDefinitions: definitions.ExportableDefinitions[] = [];
 
         function handleDefinition(definition: (definitions.ExportableDefinitions | definitions.ReExportDefinition)) {
-            if (definition.isReExportDefinition()) {
+            if (definition instanceof definitions.ReExportDefinition) {
                 handleReExport(definition);
             }
             else {
@@ -155,7 +155,7 @@ export class TsFactory {
             reExportDefinition.getExports().forEach(handleDefinition);
         }
 
-        definitions.forEach(handleDefinition);
+        defs.forEach(handleDefinition);
 
         return exportableDefinitions;
     }

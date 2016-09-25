@@ -1,4 +1,4 @@
-﻿import {MethodDefinitions, ClassMethodDefinition} from "./../definitions";
+﻿import {MethodDefinitions, ClassMethodDefinition, ClassStaticMethodDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {CallSignatureWriter} from "./CallSignatureWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
@@ -47,7 +47,7 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     }
 
     private writeStatic(def: MethodDefinitions) {
-        if (def.isClassStaticMethodDefinition()) {
+        if (def instanceof ClassStaticMethodDefinition) {
             this.writer.write("static ");
         }
     }

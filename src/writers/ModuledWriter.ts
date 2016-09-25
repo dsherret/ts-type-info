@@ -1,4 +1,4 @@
-﻿import {ModuledDefinitions} from "./../definitions";
+﻿import * as definitions from "./../definitions";
 import {DefinitionUtils} from "./../utils";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseWriter} from "./BaseWriter";
@@ -19,8 +19,8 @@ export class ModuledWriter extends BaseWriter {
     private readonly variableWriter = new VariableWriter(this.writer);
     private readonly typeAliasWriter = new TypeAliasWriter(this.writer);
 
-    write(def: ModuledDefinitions, flags: WriteFlags) {
-        if (def.isFileDefinition() && DefinitionUtils.isDefinitionFile(def) || def.isNamespaceDefinition() && def.isAmbient) {
+    write(def: definitions.ModuledDefinitions, flags: WriteFlags) {
+        if (def instanceof definitions.FileDefinition && DefinitionUtils.isDefinitionFile(def) || def instanceof definitions.NamespaceDefinition && def.isAmbient) {
             flags = flags | WriteFlags.IsInAmbientContext;
         }
         else {
@@ -30,7 +30,7 @@ export class ModuledWriter extends BaseWriter {
         this.writeChildren(def, flags);
     }
 
-    private writeChildren(def: ModuledDefinitions, flags: WriteFlags) {
+    private writeChildren(def: definitions.ModuledDefinitions, flags: WriteFlags) {
         // order these by what should be written if order is null
         const allDefinitions = [...def.typeAliases, ...def.interfaces, ...def.enums, ...def.classes, ...def.namespaces, ...def.variables, ...def.functions];
 
@@ -47,34 +47,34 @@ export class ModuledWriter extends BaseWriter {
         });
 
         allDefinitions.forEach((d, i) => {
-            if (i > 0 && !d.isTypeAliasDefinition() && !d.isVariableDefinition()) {
+            if (i > 0 && !(d instanceof definitions.TypeAliasDefinition) && !(d instanceof definitions.VariableDefinition)) {
                 this.writer.newLine();
             }
 
-            if (d.isClassDefinition()) {
+            if (d instanceof definitions.ClassDefinition) {
                 this.classWriter.write(d, flags);
             }
-            else if (d.isInterfaceDefinition()) {
+            else if (d instanceof definitions.InterfaceDefinition) {
                 this.interfaceWriter.write(d, flags);
             }
-            else if (d.isFunctionDefinition()) {
+            else if (d instanceof definitions.FunctionDefinition) {
                 this.functionWriter.write(d, flags);
             }
-            else if (d.isNamespaceDefinition()) {
+            else if (d instanceof definitions.NamespaceDefinition) {
                 this.namespaceWriter.write(d, flags);
             }
-            else if (d.isVariableDefinition()) {
-                if (i > 0 && !allDefinitions[i - 1].isVariableDefinition()) {
+            else if (d instanceof definitions.VariableDefinition) {
+                if (i > 0 && !(allDefinitions[i - 1] instanceof definitions.VariableDefinition)) {
                     this.writer.newLine();
                 }
 
                 this.variableWriter.write(d, flags);
             }
-            else if (d.isEnumDefinition()) {
+            else if (d instanceof definitions.EnumDefinition) {
                 this.enumWriter.write(d, flags);
             }
-            else if (d.isTypeAliasDefinition()) {
-                if (i > 0 && !allDefinitions[i - 1].isTypeAliasDefinition()) {
+            else if (d instanceof definitions.TypeAliasDefinition) {
+                if (i > 0 && !(allDefinitions[i - 1] instanceof definitions.TypeAliasDefinition)) {
                     this.writer.newLine();
                 }
 

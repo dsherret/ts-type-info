@@ -10,6 +10,7 @@ export * from "./definitions/file";
 export * from "./definitions/variable";
 export * from "./definitions/GlobalDefinition";
 
+import {ModuledDefinition} from "./definitions/base";
 import {FileDefinition, ImportDefinition, ReExportDefinition} from "./definitions/file";
 import {TypeNodeDefinition, TypeFunctionParameterDefinition} from "./definitions/expression";
 import {FunctionDefinition, FunctionParameterDefinition} from "./definitions/function";
@@ -46,3 +47,14 @@ export type ParameteredDefinitions = FunctionDefinition | InterfaceMethodDefinit
 export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 export type MethodDefinitions = InterfaceMethodDefinition | ClassMethodDefinition;
 export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
+
+// initialize any definitions that need dependencies (prevents circular dependencies)
+ModuledDefinition.initialize({
+    enumType: EnumDefinition,
+    classType: ClassDefinition,
+    functionType: FunctionDefinition,
+    interfaceType: InterfaceDefinition,
+    namespaceType: NamespaceDefinition,
+    variableType: VariableDefinition,
+    typeAliasType: TypeAliasDefinition
+});

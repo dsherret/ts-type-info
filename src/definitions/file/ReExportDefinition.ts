@@ -5,7 +5,7 @@ import {DefinitionUtils} from "./../../utils";
 import {ReExportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {BaseDefinition, DefinitionType} from "./../base";
+import {BaseDefinition} from "./../base";
 import {StarImportPartDefinition} from "./StarImportPartDefinition";
 import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
@@ -14,10 +14,6 @@ export class ReExportDefinition extends BaseDefinition {
     moduleSpecifier: string;
     starExports: StarImportPartDefinition[] = [];
     namedExports: NamedImportPartDefinition[] = [];
-
-    constructor() {
-        super(DefinitionType.ReExport);
-    }
 
     getExports() {
         const exports: ExportableDefinitions[] = [];

@@ -8,7 +8,7 @@ import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {writeDefinition} from "./../../writeDefinition";
-import {ModuledDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {ModuledDefinition, BaseDefinition} from "./../base";
 import {ExpressionDefinition} from "./../expression";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
@@ -25,10 +25,6 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     imports: ImportDefinition[] = [];
     reExports: ReExportDefinition[] = [];
     defaultExportExpression: ExpressionDefinition | null;
-
-    constructor() {
-        super(DefinitionType.File);
-    }
 
     addImport(structure: ImportStructure) {
         validateImportStructure(structure);

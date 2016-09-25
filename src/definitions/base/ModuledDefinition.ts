@@ -9,8 +9,11 @@ import {InterfaceDefinition} from "./../interface";
 import {NamespaceDefinition} from "./../namespace";
 import {VariableDefinition} from "./../variable";
 import {TypeAliasDefinition} from "./../general";
+import {InstanceContainer} from "./../InstanceContainer";
 
 export abstract class ModuledDefinition {
+    private static instanceContainer: InstanceContainer;
+
     namespaces: NamespaceDefinition[] = [];
     classes: ClassDefinition[] = [];
     interfaces: InterfaceDefinition[] = [];
@@ -18,6 +21,11 @@ export abstract class ModuledDefinition {
     functions: FunctionDefinition[] = [];
     variables: VariableDefinition[] = [];
     typeAliases: TypeAliasDefinition[] = [];
+
+    // need to pass these in after initializing in order to prevent circular dependencies
+    static initialize(instanceContainer: InstanceContainer) {
+        this.instanceContainer = instanceContainer;
+    }
 
     addClass(structure: ClassStructure) {
         const def = new StructureFactory().getClass(structure);
@@ -97,25 +105,25 @@ export abstract class ModuledDefinition {
     }
 
     directlyContains(def: ModuleMemberDefinitions): boolean {
-        if (def.isClassDefinition()) {
+        if (def instanceof ModuledDefinition.instanceContainer.classType) {
             return this.getClass(d => d === def) != null;
         }
-        else if (def.isFunctionDefinition()) {
+        else if (def instanceof ModuledDefinition.instanceContainer.functionType) {
             return this.getFunction(d => d === def) != null;
         }
-        else if (def.isInterfaceDefinition()) {
+        else if (def instanceof ModuledDefinition.instanceContainer.interfaceType) {
             return this.getInterface(d => d === def) != null;
         }
-        else if (def.isNamespaceDefinition()) {
+        else if (def instanceof ModuledDefinition.instanceContainer.namespaceType) {
             return this.getNamespace(d => d === def) != null;
         }
-        else if (def.isEnumDefinition()) {
+        else if (def instanceof ModuledDefinition.instanceContainer.enumType) {
             return this.getEnum(d => d === def) != null;
         }
-        else if (def.isTypeAliasDefinition()) {
+        else if (def instanceof ModuledDefinition.instanceContainer.typeAliasType) {
             return this.getTypeAlias(d => d === def) != null;
         }
-        else if (def.isVariableDefinition()) {
+        else if (def instanceof ModuledDefinition.instanceContainer.variableType) {
             return this.getVariable(d => d === def) != null;
         }
         else {

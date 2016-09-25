@@ -1,7 +1,4 @@
-﻿import {BaseObjectPropertyDefinition, DefinitionType} from "./../base";
+﻿import {BaseObjectPropertyDefinition} from "./../base";
 
 export class ObjectPropertyDefinition extends BaseObjectPropertyDefinition {
-    constructor() {
-        super(DefinitionType.ObjectPropertyDefinition);
-    }
 }

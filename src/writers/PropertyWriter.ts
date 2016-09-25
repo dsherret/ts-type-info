@@ -1,4 +1,4 @@
-﻿import {PropertyDefinitions, ClassPropertyDefinition, ClassPropertyKind} from "./../definitions";
+﻿import {PropertyDefinitions, ClassPropertyDefinition, ClassPropertyKind, ClassStaticPropertyDefinition, InterfacePropertyDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {TypeWriter} from "./TypeWriter";
 import {ScopeWriter} from "./ScopeWriter";
@@ -19,7 +19,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
     }
 
     private static isAccessor(def: PropertyDefinitions): def is ClassPropertyDefinition {
-        return def.isClassPropertyDefinition() && def.kind !== ClassPropertyKind.Normal;
+        return def instanceof ClassPropertyDefinition && def.kind !== ClassPropertyKind.Normal;
     }
 
     protected writeDefault(def: PropertyDefinitions, flags: WriteFlags) {
@@ -86,7 +86,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.writer.write(def.name);
         this.writer.conditionalWrite(def.isOptional, "?");
 
-        if (def.isInterfacePropertyDefinition()) {
+        if (def instanceof InterfacePropertyDefinition) {
             this.typeWriter.writeWithColon(def.type);
         }
         else {
@@ -100,7 +100,7 @@ export class PropertyWriter extends BaseDefinitionWriter<PropertyDefinitions> {
         this.scopeWriter.write((def as ClassPropertyDefinition).scope);
         this.writer.spaceIfLastNotSpace();
         this.writer.conditionalWrite((def as ClassPropertyDefinition).isAbstract, "abstract ");
-        this.writer.conditionalWrite(def.isClassStaticPropertyDefinition(), "static ");
+        this.writer.conditionalWrite(def instanceof ClassStaticPropertyDefinition, "static ");
         this.writer.conditionalWrite((def as ClassPropertyDefinition).isReadonly, "readonly ");
     }
 }

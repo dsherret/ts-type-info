@@ -4,7 +4,7 @@ import {DefinitionUtils} from "./../../utils";
 import {ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {BaseDefinition, DefinitionType} from "./../base";
+import {BaseDefinition} from "./../base";
 import {DefaultImportPartDefinition} from "./DefaultImportPartDefinition";
 import {StarImportPartDefinition} from "./StarImportPartDefinition";
 import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
@@ -16,10 +16,6 @@ export class ImportDefinition extends BaseDefinition {
     defaultImport: DefaultImportPartDefinition | null;
     namedImports: NamedImportPartDefinition[] = [];
     starImports: StarImportPartDefinition[] = [];
-
-    constructor() {
-        super(DefinitionType.Import);
-    }
 
     addNamedImport(structure: NamedImportPartStructure) {
         const def = new StructureFactory().getNamedImportPart(structure);

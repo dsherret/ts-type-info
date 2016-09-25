@@ -5,17 +5,13 @@ import {applyMixins} from "./../../utils";
 import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {ExportableDefinition, AmbientableDefinition, AsyncableDefinition, DefinitionType, BaseFunctionDefinition, FunctionBodyWriteableDefinition,
+import {ExportableDefinition, AmbientableDefinition, AsyncableDefinition, BaseFunctionDefinition, FunctionBodyWriteableDefinition,
     OrderableDefinition} from "./../base";
 import {FunctionParameterDefinition} from "./FunctionParameterDefinition";
 
 export class FunctionDefinition
         extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure>
         implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition, OrderableDefinition {
-
-    constructor() {
-        super(DefinitionType.Function);
-    }
 
     addParameter(structure: FunctionParameterStructure) {
         const def = new StructureFactory().getFunctionParameter(structure);

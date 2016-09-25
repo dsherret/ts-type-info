@@ -7,7 +7,6 @@ import {BaseParameterDefinition} from "./BaseParameterDefinition";
 import {NamedDefinition} from "./NamedDefinition";
 import {TypeParameteredDefinition} from "./TypeParameteredDefinition";
 import {BaseDefinition} from "./BaseDefinition";
-import {DefinitionType} from "./DefinitionType";
 import {ParameteredDefinition} from "./ParameteredDefinition";
 import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 import {ThisTypedDefinition} from "./ThisTypedDefinition";
@@ -19,10 +18,6 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[] = [];
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
-
-    constructor(definitionType: DefinitionType) {
-        super(definitionType);
-    }
 
     addOverloadSignature(structure: CallSignatureStructure) {
         const def = new StructureFactory().getCallSignature(structure);

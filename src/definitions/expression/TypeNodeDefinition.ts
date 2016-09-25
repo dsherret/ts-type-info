@@ -1,17 +1,12 @@
 import {TypeParameteredDefinition, TypeParameterDefinition, ParameteredDefinition} from "./../../definitions";
 import {TypeParameterStructure, TypeFunctionParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
-import {DefinitionType} from "./../base";
 import {BaseTypeDefinition} from "./base";
 import {TypeFunctionParameterDefinition} from "./TypeFunctionParameterDefinition";
 
 export class TypeNodeDefinition
         extends BaseTypeDefinition
         implements TypeParameteredDefinition, ParameteredDefinition<TypeFunctionParameterDefinition, TypeFunctionParameterStructure> {
-    constructor() {
-        super(DefinitionType.TypeNode);
-    }
-
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition = (structure) => {

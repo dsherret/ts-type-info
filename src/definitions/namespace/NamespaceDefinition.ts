@@ -5,7 +5,7 @@ import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, DefinitionType, OrderableDefinition} from "./../base";
+import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, OrderableDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -17,10 +17,6 @@ import {NamespaceDeclarationType} from "./NamespaceDeclarationType";
 export class NamespaceDefinition extends BaseDefinition
         implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition {
     declarationType: NamespaceDeclarationType;
-
-    constructor() {
-        super(DefinitionType.Namespace);
-    }
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);

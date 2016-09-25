@@ -22,10 +22,10 @@ export abstract class FileBinder implements IBaseBinder {
         def.reExports = this.getReExports();
 
         this.moduledBinder.bind(def, childDef => {
-            if (childDef.isImportDefinition()) {
+            if (childDef instanceof ImportDefinition) {
                 def.imports.push(childDef);
             }
-            else if (childDef.isReExportDefinition()) {
+            else if (childDef instanceof ReExportDefinition) {
                 def.reExports.push(childDef);
             }
         });

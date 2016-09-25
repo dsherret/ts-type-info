@@ -1,5 +1,4 @@
 ﻿export * from "./base/BaseDefinition";
-export * from "./base/DefinitionType";
 export * from "./base/FunctionBodyWriteableDefinition";
 export * from "./base/NamedDefinition";
 export * from "./base/OptionallyNamedDefinition";
@@ -13,7 +12,6 @@ export * from "./base/TypedDefinition";
 export * from "./base/DefaultExpressionedDefinition";
 export * from "./base/DecoratableDefinition";
 export * from "./base/ExportableDefinition";
-export * from "./base/ModuledDefinition";
 export * from "./base/BasePropertyDefinition";
 export * from "./base/TypeParameteredDefinition";
 export * from "./base/BaseObjectPropertyDefinition";
@@ -22,3 +20,4 @@ export * from "./base/BaseParameterDefinition";
 export * from "./base/ParameteredDefinition";
 export * from "./base/ReadonlyableDefinition";
 export * from "./base/ReturnTypedDefinition";
+export * from "./base/ModuledDefinition";

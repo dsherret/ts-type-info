@@ -4,16 +4,12 @@ import {applyMixins, DefinitionUtils} from "./../../utils";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {AmbientableDefinition, ExportableDefinition, NamedDefinition, OrderableDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {AmbientableDefinition, ExportableDefinition, NamedDefinition, OrderableDefinition, BaseDefinition} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
 export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition {
     isConst: boolean;
     members: EnumMemberDefinition[] = [];
-
-    constructor() {
-        super(DefinitionType.Enum);
-    }
 
     addMember(structure: EnumMemberStructure) {
         const def = new StructureFactory().getEnumMember(structure);

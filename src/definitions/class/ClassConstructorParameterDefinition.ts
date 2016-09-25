@@ -2,15 +2,11 @@
 import {applyMixins} from "./../../utils";
 import {DecoratorStructure} from "./../../structures";
 import {DecoratorDefinition} from "./../general";
-import {DecoratableDefinition, DefinitionType, BaseParameterDefinition, ReadonlyableDefinition} from "./../base";
+import {DecoratableDefinition, BaseParameterDefinition, ReadonlyableDefinition} from "./../base";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 
 export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ReadonlyableDefinition {
     scope: ClassConstructorParameterScope;
-
-    constructor() {
-        super(DefinitionType.ClassConstructorParameter);
-    }
 
     toClassProperty() {
         const factory = new StructureFactory();

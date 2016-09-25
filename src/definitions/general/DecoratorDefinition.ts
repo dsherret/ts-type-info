@@ -1,13 +1,9 @@
 import {StructureFactory} from "./../../factories";
-import {NamedDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {NamedDefinition, BaseDefinition} from "./../base";
 import {ExpressionDefinition} from "./../expression";
 
 export class DecoratorDefinition extends BaseDefinition implements NamedDefinition {
     arguments: ExpressionDefinition[] = [];
-
-    constructor() {
-        super(DefinitionType.Decorator);
-    }
 
     addArgument(text: string) {
         const def = new StructureFactory().getTypeFromText(text);

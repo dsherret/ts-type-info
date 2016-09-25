@@ -4,17 +4,13 @@ import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition,
-    DefaultExpressionedDefinition, BaseDefinition, DefinitionType, OrderableDefinition} from "./../base";
+    DefaultExpressionedDefinition, BaseDefinition, OrderableDefinition} from "./../base";
 import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
         implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition {
     declarationType: VariableDeclarationType;
-
-    constructor() {
-        super(DefinitionType.Variable);
-    }
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);

@@ -1,5 +1,6 @@
 ﻿import {WriteFlags} from "./../WriteFlags";
-import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition, BaseParameterDefinition} from "./../definitions";
+import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition, BaseParameterDefinition,
+    ClassConstructorParameterDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
 import {ParameterWriter} from "./ParameterWriter";
 import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
@@ -20,7 +21,7 @@ export class ParametersWriter extends BaseWriter {
             this.writer.conditionalWrite(i > 0 || thisType != null, ", ");
 
             if (param.destructuringProperties.length === 0) {
-                if (param.isClassConstructorParameterDefinition()) {
+                if (param instanceof ClassConstructorParameterDefinition) {
                     if ((flags & WriteFlags.HideScopeOnParameters) === 0) {
                         this.writeScope(param.scope, flags);
                         this.writer.conditionalWrite(param.isReadonly, "readonly ");

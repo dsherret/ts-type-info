@@ -1,5 +1,5 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
-import {BaseDefinition, DefinitionType} from "./../base";
+import {BaseDefinition} from "./../base";
 import {ExpressionDefinition} from "./../expression";
 
 export class NamedImportPartDefinition extends BaseDefinition {
@@ -7,8 +7,4 @@ export class NamedImportPartDefinition extends BaseDefinition {
     expression: ExpressionDefinition | null;
     alias: string | null;
     name: string;
-
-    constructor() {
-        super(DefinitionType.NamedImportPart);
-    }
 }

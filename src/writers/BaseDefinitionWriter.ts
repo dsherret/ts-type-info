@@ -1,4 +1,4 @@
-﻿import {ExportableDefinitions, AmbientableDefinition, AsyncableDefinition, BaseDefinition, EnumDefinition} from "./../definitions";
+﻿import {ExportableDefinitions, AmbientableDefinition, AsyncableDefinition, BaseDefinition, EnumDefinition, InterfaceDefinition, TypeAliasDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseWriter} from "./BaseWriter";
 
@@ -35,7 +35,7 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
         if ((def.isExported && !def.isDefaultExportOfFile) || def.isNamedExportOfFile) {
             let shouldWrite = false;
 
-            if (def.isInterfaceDefinition() || def.isTypeAliasDefinition()) {
+            if (def instanceof InterfaceDefinition || def instanceof TypeAliasDefinition) {
                 shouldWrite = (flags & WriteFlags.IsInAmbientContext) === 0;
             }
             else {

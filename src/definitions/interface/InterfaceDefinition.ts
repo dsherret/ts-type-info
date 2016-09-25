@@ -4,7 +4,7 @@ import {applyMixins, DefinitionUtils} from "./../../utils";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, BaseDefinition, DefinitionType} from "./../base";
+import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, BaseDefinition} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
 import {ClassDefinition} from "./../class";
 import {TypeDefinition} from "./../expression";
@@ -19,10 +19,6 @@ export class InterfaceDefinition extends BaseDefinition
     newSignatures: CallSignatureDefinition[] = [];
     properties: InterfacePropertyDefinition[] = [];
     extendsTypes: TypeDefinition[] = [];
-
-    constructor() {
-        super(DefinitionType.Interface);
-    }
 
     addCallSignature(structure: CallSignatureStructure) {
         const def = new StructureFactory().getCallSignature(structure);

@@ -1,4 +1,4 @@
-﻿import {BaseDefinition, ModuledDefinition} from "./../../definitions";
+﻿import * as definitions from "./../../definitions";
 import {renameDefinitionInText} from "./renameDefinitionInText";
 import {StringHashSet} from "./../StringHashSet";
 import {RenameInfo} from "./RenameInfo";
@@ -6,10 +6,10 @@ import {RenameInfo} from "./RenameInfo";
 export class ModuleBodyRenamer {
     private lookedAtObjectsByName = new StringHashSet();
 
-    private constructor(private renameInfo: RenameInfo, private moduleDef: ModuledDefinition) {
+    private constructor(private renameInfo: RenameInfo, private moduleDef: definitions.ModuledDefinition) {
     }
 
-    static renameInModule(renameInfo: RenameInfo, moduleDef: ModuledDefinition) {
+    static renameInModule(renameInfo: RenameInfo, moduleDef: definitions.ModuledDefinition) {
         new ModuleBodyRenamer(renameInfo, moduleDef).rename();
     }
 
@@ -18,7 +18,7 @@ export class ModuleBodyRenamer {
     }
 
     private iterateObj(obj: any) {
-        const def = obj as BaseDefinition;
+        const def = obj as definitions.BaseDefinition;
 
         if (obj instanceof Array) {
             this.handleArray(obj);
@@ -32,18 +32,18 @@ export class ModuleBodyRenamer {
         obj.forEach(item => this.iterateObj(item));
     }
 
-    private handleObject(def: BaseDefinition) {
+    private handleObject(def: definitions.BaseDefinition) {
         this.lookedAtObjectsByName.add(def.__uniqueID.toString());
 
         Object.keys(def).forEach(key => {
-            const isNamespacesProperty = (def.isNamespaceDefinition() || def.isFileDefinition()) && key === "namespaces";
+            const isNamespacesProperty = (def instanceof definitions.NamespaceDefinition || def instanceof definitions.FileDefinition) && key === "namespaces";
 
             if (!isNamespacesProperty) {
                 this.iterateObj((def as any)[key]);
             }
         });
 
-        if (def.isTypeDefinition() || def.isTypeNodeDefinition() || def.isExpressionDefinition()) {
+        if (def instanceof definitions.TypeDefinition || def instanceof definitions.TypeNodeDefinition || def instanceof definitions.ExpressionDefinition) {
             def.text = renameDefinitionInText(def.text, this.renameInfo.fullNameFrom, this.renameInfo.fullNameTo);
         }
     }

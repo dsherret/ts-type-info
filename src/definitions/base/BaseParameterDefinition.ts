@@ -9,7 +9,6 @@ import {OptionalDefinition} from "./OptionalDefinition";
 import {TypedDefinition} from "./TypedDefinition";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
 import {BaseDefinition} from "./BaseDefinition";
-import {DefinitionType} from "./DefinitionType";
 
 export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
@@ -18,10 +17,6 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
 export abstract class BaseParameterDefinition extends BaseDefinition implements OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[] = [];
-
-    constructor(definitionType: DefinitionType) {
-        super(definitionType);
-    }
 
     addDestructuringProperty(structure: ObjectPropertyStructure) {
         const def = new StructureFactory().getObjectProperty(structure);
