@@ -17,7 +17,7 @@ npm install ts-type-info --save-dev
 ## Reflection
 
 ```typescript
-// V:/TestFile.ts
+// V:\TestFile.ts
 ﻿
 export class MyClass {
     myStringProperty: string;
@@ -34,7 +34,7 @@ Get the file info:
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
 
-const result = TsTypeInfo.getInfoFromFiles(["V:/TestFile.ts"]);
+const result = TsTypeInfo.getInfoFromFiles(["V:\\TestFile.ts"]);
 const property = result.getFile("TestFile.ts")
     .getClass("MyClass")                            // get first by name
     .getProperty(p => p.defaultExpression != null); // or first by what matches
