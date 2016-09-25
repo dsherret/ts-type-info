@@ -105,19 +105,21 @@ export class TsTypeNode extends TsSourceFileChild {
             return this.getTypeAtLocationByNode(declaration.type);
         }
         else {
-            return this.getTsTypeFromType(this.typeChecker.getTypeAtLocation(node));
+            return this.getTsTypeFromNode(node);
         }
     }
 
-    private getTsTypeFromType(tsType: ts.Type) {
-        return this.tsCache.getType(this.typeChecker, this.sourceFile, tsType, () => this.createType(tsType));
+    private getTsTypeFromNode(node: ts.Node) {
+        const type = this.typeChecker.getTypeAtLocation(node);
+        return this.tsCache.getType(this.typeChecker, type, node, () => this.createType(type, node));
     }
 
-    private createType(type: ts.Type): TsType {
+    private createType(type: ts.Type, node: ts.Node): TsType {
         return new TsType({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
             type,
+            node,
             tsCache: this.tsCache,
             tsSourceFile: this.tsSourceFile
         });

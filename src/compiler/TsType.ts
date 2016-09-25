@@ -6,18 +6,21 @@ import {TsSignature} from "./TsSignature";
 
 export interface TsTypeOptions extends TsSourceFileChildOptions {
     type: ts.Type;
+    node: ts.Node;
 }
 
 export class TsType extends TsSourceFileChild {
     private readonly type: ts.Type;
+    private readonly node: ts.Node;
 
     constructor(opts: TsTypeOptions) {
         super(opts);
         this.type = opts.type;
+        this.node = opts.node;
     }
 
     getText() {
-        return this.typeChecker.typeToString(this.sourceFile, this.type);
+        return this.typeChecker.typeToString(this.type, this.node);
     }
 
     getProperties(): TsSymbol[] {
@@ -31,8 +34,8 @@ export class TsType extends TsSourceFileChild {
     }
 
     getTypeArguments() {
-        const tsTypeArguments = (this.type as ts.TypeReference).typeArguments;
-        return (tsTypeArguments || []).map(arg => tryGet(this.getText(), () => this.createType(arg))!).filter(arg => arg != null);
+        const tsTypeArguments = (this.type as ts.TypeReference).typeArguments || this.type.aliasTypeArguments || [];
+        return tsTypeArguments.map(arg => tryGet(this.getText(), () => this.createType(arg))!).filter(arg => arg != null);
     }
 
     getSymbols(): TsSymbol[] {
@@ -104,12 +107,13 @@ export class TsType extends TsSourceFileChild {
     }
 
     private createType(type: ts.Type): TsType {
-        return this.tsCache.getType(this.typeChecker, this.sourceFile, type, () => new TsType({
+        return this.tsCache.getType(this.typeChecker, type, this.node, () => new TsType({
             sourceFile: this.sourceFile,
             tsSourceFile: this.tsSourceFile,
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
-            type
+            type,
+            node: this.node
         }));
     }
 
@@ -131,6 +135,7 @@ export class TsType extends TsSourceFileChild {
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
             signature: opts.signature,
+            node: this.node,
             tsSourceFile: this.tsSourceFile
         });
     }

@@ -24,9 +24,9 @@ export class TsCache {
         return this.typeNodeCache.getOrCreate(node, () => createFunc());
     }
 
-    getType(typeChecker: TsTypeChecker, sourceFile: ts.SourceFile, tsType: ts.Type, createTsType: () => TsType) {
-        const cache = this.typeCacheContainer.getCache(tsType);
-        const typeText = typeChecker.typeToString(sourceFile, tsType);
+    getType(typeChecker: TsTypeChecker, type: ts.Type, node: ts.Node, createTsType: () => TsType) {
+        const cache = this.typeCacheContainer.getCache(type);
+        const typeText = typeChecker.typeToString(type, node);
 
         return cache.getOrCreate(typeText, () => createTsType());
     }

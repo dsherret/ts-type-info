@@ -3,7 +3,7 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("generic type tests", () => {
     const code = `
-type MyType<T> = T;
+type MyType<T> = { prop: T; };
 let t: MyType<string>;
 let u: MyType<MyType<string>>;
 `;
@@ -17,7 +17,7 @@ let u: MyType<MyType<string>>;
                 name: "T"
             }],
             type: {
-                text: "T"
+                text: "{ prop: T; }"
             }
         }],
         variables: [{
@@ -37,7 +37,16 @@ let u: MyType<MyType<string>>;
                     typeArguments: [{
                         text: "string"
                     }]
-                }]
+                }],
+                node: {
+                    text: "MyType<MyType<string>>",
+                    typeArguments: [{
+                        text: "MyType<string>",
+                        typeArguments: [{
+                            text: "string"
+                        }]
+                    }]
+                }
             }
         }]
     });

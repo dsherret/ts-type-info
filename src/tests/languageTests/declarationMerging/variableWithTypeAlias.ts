@@ -20,7 +20,7 @@ const VariableDeclarationType = {
             name: "VariableDeclarationType",
             declarationType: VariableDeclarationType.Const,
             type: {
-                text: `{ Var: "var" | "let" | "const"; Let: "var" | "let" | "const"; Const: "var" | "let" | "const"; }`
+                text: `{ Var: VariableDeclarationType; Let: VariableDeclarationType; Const: VariableDeclarationType; }`
             },
             defaultExpression: {
                 text: `{\n    Var: "var" as VariableDeclarationType,\n    Let: "let" as VariableDeclarationType,\n    Const: "const" as VariableDeclarationType\n}`

@@ -17,7 +17,7 @@ class MyClass {
         variables: [{
             name: "t",
             type: {
-                text: "Array<MyClass>",
+                text: "MyClass[]",
                 isArrayType: true,
                 arrayElementType: {
                     text: "MyClass",
@@ -31,7 +31,24 @@ class MyClass {
                 definitions: [],
                 allDefinitions: [{
                     name: "MyClass"
-                }]
+                }],
+                node: {
+                    text: "Array<MyClass>",
+                    isArrayType: true,
+                    arrayElementType: {
+                        text: "MyClass",
+                        definitions: [{
+                            name: "MyClass"
+                        }],
+                        allDefinitions: [{
+                            name: "MyClass"
+                        }]
+                    },
+                    definitions: [],
+                    allDefinitions: [{
+                        name: "MyClass"
+                    }],
+                }
             }
         }, {
             name: "u",
@@ -58,13 +75,31 @@ class MyClass {
         }, {
             name: "w",
             type: {
-                text: "Array<Array<string>>",
+                text: "string[][]",
                 isArrayType: true,
                 arrayElementType: {
-                    text: "Array<string>",
+                    text: "string[]",
                     isArrayType: true,
                     arrayElementType: {
                         text: "string"
+                    }
+                },
+                node: {
+                    text: "Array<Array<string>>",
+                    isArrayType: true,
+                    arrayElementType: {
+                        text: "string[]",
+                        isArrayType: true,
+                        arrayElementType: {
+                            text: "string"
+                        },
+                        node: {
+                            text: "Array<string>",
+                            isArrayType: true,
+                            arrayElementType: {
+                                text: "string"
+                            }
+                        }
                     }
                 }
             }

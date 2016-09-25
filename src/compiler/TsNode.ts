@@ -219,9 +219,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getReturnType() {
-        const tsType = this.typeChecker.getReturnTypeOfNode(this.node);
-
-        return this.getTsTypeFromType(tsType);
+        return this.getOrCreateType(this.typeChecker.getReturnTypeOfNode(this.node), this.node);
     }
 
     getScope() {
@@ -244,7 +242,8 @@ export class TsNode extends TsSourceFileChild {
             tsSourceFile: this.tsSourceFile,
             sourceFile: this.sourceFile,
             tsCache: this.tsCache,
-            signature: this.typeChecker.getSignatureFromNode(this.node)
+            signature: this.typeChecker.getSignatureFromNode(this.node),
+            node: this.node
         });
     }
 
@@ -524,24 +523,19 @@ export class TsNode extends TsSourceFileChild {
     }
 
     private getTypeAtLocationByNode(node: ts.Node): TsType {
-        if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
-            const declaration = node as ts.TypeAliasDeclaration;
-            return this.getTypeAtLocationByNode(declaration.type);
-        }
-        else {
-            return this.getTsTypeFromType(this.typeChecker.getTypeAtLocation(node));
-        }
+        return this.getOrCreateType(this.typeChecker.getTypeAtLocation(node), node);
     }
 
-    private getTsTypeFromType(tsType: ts.Type) {
-        return this.tsCache.getType(this.typeChecker, this.sourceFile, tsType, () => this.createType(tsType));
+    private getOrCreateType(type: ts.Type, node: ts.Node) {
+        return this.tsCache.getType(this.typeChecker, type, node, () => this.createType(type, node));
     }
 
-    private createType(type: ts.Type): TsType {
+    private createType(type: ts.Type, node: ts.Node): TsType {
         return new TsType({
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
             type,
+            node,
             tsCache: this.tsCache,
             tsSourceFile: this.tsSourceFile
         });
@@ -592,11 +586,10 @@ export class TsNode extends TsSourceFileChild {
     }
 
     private forEachChildNode(callback: (node: TsNode) => void) {
-        ts.forEachChild(this.node, (node) => {
+        ts.forEachChild(this.node, node => {
             if (this.isNotDisallowedNode(node)) {
-                const declarationList = (node as ts.VariableStatement).declarationList;
-
-                if (declarationList != null) {
+                if (node.kind === ts.SyntaxKind.VariableStatement) {
+                    const declarationList = (node as ts.VariableStatement).declarationList;
                     node = declarationList.declarations[0];
 
                     if (declarationList.declarations.length > 1) {

@@ -5,10 +5,15 @@ export class TsTypeChecker {
     constructor(private readonly typeChecker: ts.TypeChecker) {
     }
 
-    typeToString(sourceFile: ts.SourceFile, type: ts.Type) {
-        const formatFlags = (ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
+    typeToString(type: ts.Type, node: ts.Node) {
+        let formatFlags = (ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
             ts.TypeFormatFlags.WriteTypeArgumentsOfSignature) as ts.TypeFormatFlags;
-        return this.typeChecker.typeToString(type, sourceFile, formatFlags);
+
+        if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
+            formatFlags |= ts.TypeFormatFlags.InTypeAlias;
+        }
+
+        return this.typeChecker.typeToString(type, node, formatFlags);
     }
 
     getSyntaxKindAsString(kind: ts.SyntaxKind) {

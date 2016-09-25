@@ -6,6 +6,7 @@ import {TsExpressionBinder} from "./../TsExpressionBinder";
 
 export class TsBaseTypeBinderByType extends BaseTypeBinder {
     private readonly getCallSignatureAndProperties: boolean;
+    private readonly text: string;
 
     constructor(private readonly factory: TsFactory, private readonly tsType: TsType) {
         super(new TsExpressionBinder(tsType));
@@ -13,6 +14,7 @@ export class TsBaseTypeBinderByType extends BaseTypeBinder {
         this.getCallSignatureAndProperties = tsType.isAnonymousType() && !tsType.isReferenceType() &&
             !tsType.isClassType() && !tsType.isInterfaceType() && !tsType.isUnionType() && !tsType.isIntersectionType() &&
             !tsType.isTupleType();
+        this.text = tsType.getText() || "";
     }
 
     isArrayType() {
@@ -25,11 +27,11 @@ export class TsBaseTypeBinderByType extends BaseTypeBinder {
     }
 
     isIntersectionType() {
-        return this.tsType.isIntersectionType();
+        return this.tsType.isIntersectionType() && this.text.indexOf("&") > 0;
     }
 
     isUnionType() {
-        return this.tsType.isUnionType();
+        return this.tsType.isUnionType() && this.text.indexOf("|") > 0;
     }
 
     getUnionOrIntersectionTypes() {

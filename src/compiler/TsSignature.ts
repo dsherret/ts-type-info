@@ -6,14 +6,17 @@ import {TsSymbol} from "./TsSymbol";
 
 interface TsSignatureOptions extends TsSourceFileChildOptions {
     signature: ts.Signature;
+    node: ts.Node;
 }
 
 export class TsSignature extends TsSourceFileChild {
     private readonly signature: ts.Signature;
+    private readonly node: ts.Node;
 
     constructor(opts: TsSignatureOptions) {
         super(opts);
         this.signature = opts.signature;
+        this.node = opts.node;
     }
 
     getDeclaration() {
@@ -36,7 +39,7 @@ export class TsSignature extends TsSourceFileChild {
     }
 
     private getTypeFromType(tsType: ts.Type) {
-        return this.tsCache.getType(this.typeChecker, this.sourceFile, tsType, () => this.createType(tsType));
+        return this.tsCache.getType(this.typeChecker, tsType, this.node, () => this.createType(tsType));
     }
 
     private createType(type: ts.Type): TsType {
@@ -44,6 +47,7 @@ export class TsSignature extends TsSourceFileChild {
             sourceFile: this.sourceFile,
             typeChecker: this.typeChecker,
             type,
+            node: this.node,
             tsCache: this.tsCache,
             tsSourceFile: this.tsSourceFile
         });

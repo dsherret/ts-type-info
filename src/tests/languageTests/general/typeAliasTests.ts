@@ -10,7 +10,7 @@ type myTypeAliasWithTypeParameter<T> = T;
 type myTypeAliasWithTypeParameterConstraint<T extends string> = T;
 export type myExportedType = string;
 type myStringLiteralTypeAlias = "some string" | "other string";
-var myVariableUsingType: myUnionTypeAlias;
+let myVariableUsingType: myUnionTypeAlias;
 `;
 
     const def = getInfoFromString(code);
@@ -18,7 +18,6 @@ var myVariableUsingType: myUnionTypeAlias;
     runFileDefinitionTests(def, {
         variables: [{
             name: "myVariableUsingType",
-            declarationType: VariableDeclarationType.Var,
             type: {
                 text: "myUnionTypeAlias"
             }

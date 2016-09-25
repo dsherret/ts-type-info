@@ -9,4 +9,4 @@ declare enum MyReferenceEnum {
 
 declare function MyReferenceFunction(): void;
 
-declare type MyReferenceType = string;
+declare type MyReferenceType = { prop: string; };

@@ -12,7 +12,7 @@ let test: string | string & number;
         variables: [{
             name: "test",
             type: {
-                text: "string | string & number",
+                text: "string | (string & number)",
                 unionTypes: [{
                     text: "string"
                 }, {
@@ -22,7 +22,20 @@ let test: string | string & number;
                     }, {
                         text: "number"
                     }]
-                }]
+                }],
+                node: {
+                    text: "string | string & number",
+                    unionTypes: [{
+                        text: "string"
+                    }, {
+                        text: "string & number",
+                        intersectionTypes: [{
+                            text: "string"
+                        }, {
+                            text: "number"
+                        }]
+                    }]
+                }
             }
         }]
     });

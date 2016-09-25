@@ -58,7 +58,10 @@ describe("multiple file definition tests", () => {
         typeAliases: [{
             name: "MyReferenceType",
             isAmbient: true,
-            hasDeclareKeyword: true
+            hasDeclareKeyword: true,
+            type: {
+                text: "{ prop: string; }"
+            }
         }]
     });
 });
