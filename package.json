@@ -42,7 +42,7 @@
     "gulp-tslint": "^5.0.0",
     "gulp-typescript": "^2.13.3",
     "mocha": "^2.3.3",
-    "ts-nameof": "^0.5.2",
+    "ts-nameof": "^0.6.3",
     "tslint": "^3.13.0"
   }
 }
