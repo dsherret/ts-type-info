@@ -18,6 +18,7 @@ export class KeyValueCache<T, U> {
     }
 
     get(key: T) {
+        // todo: make this O(1) somehow
         for (let cacheItem of this.cacheItems) {
             if (cacheItem.key === key) {
                 return cacheItem.value;
