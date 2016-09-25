@@ -8,7 +8,7 @@
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
-* [Version 5.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
+* [Version 6.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New) - TypeScript 2.0 support
 
 ```
 npm install ts-type-info --save-dev
@@ -21,7 +21,7 @@ npm install ts-type-info --save-dev
 ﻿
 export class MyClass {
     myStringProperty: string;
-    myNumberProperty = 253;
+    readonly myNumberProperty = 253;
 
     myMethod(myParameter: string) {
         return `Test: ${myParameter}`;
@@ -42,6 +42,7 @@ const property = result.getFile("TestFile.ts")
 console.log(property.name);                   // myNumberProperty
 console.log(property.type.text);              // number
 console.log(property.defaultExpression.text); // 253
+console.log(property.isReadonly);             // true
 
 // or access the arrays directly
 const myMethod = result.files[0].classes[0].methods[0];
