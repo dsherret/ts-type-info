@@ -288,6 +288,10 @@ export class TsNode extends TsSourceFileChild {
         return clause.types ? clause.types.map(expressionWithTypeArgumentsTypeNode => this.createTypeNode(expressionWithTypeArgumentsTypeNode)) : [];
     }
 
+    getParent() {
+        return this.node.parent == null ? null : this.createNode(this.node.parent);
+    }
+
     getType(): TsType {
         return this.getTypeAtLocationByNode(this.node);
     }
@@ -490,6 +494,10 @@ export class TsNode extends TsSourceFileChild {
         const namespaceImport = (importDeclaration.importClause == null) ? null : importDeclaration.importClause.namedBindings as ts.NamespaceImport;
 
         return namespaceImport != null && namespaceImport.name != null;
+    }
+
+    isTypeLiteral() {
+        return this.getKind() === ts.SyntaxKind.TypeLiteral;
     }
 
     isTypeAlias() {

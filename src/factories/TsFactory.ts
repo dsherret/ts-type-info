@@ -161,7 +161,15 @@ export class TsFactory {
     }
 
     getAllDefinitionsBySymbol(symbol: TsSymbol) {
-        return symbol.getNodes().map(node => this.getDefinitionByNode(node)!).filter(d => d != null);
+        return symbol.getNodes().map(node => {
+            if (node.isTypeLiteral()) {
+                const parentNode = node.getParent();
+                if (parentNode != null && parentNode.isTypeAlias())
+                    node = parentNode;
+            }
+
+            return this.getDefinitionByNode(node);
+        }).filter(d => d != null);
     }
 
     getDefinitionByNode(node: TsNode) {
