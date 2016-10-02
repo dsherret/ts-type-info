@@ -41,7 +41,10 @@ export class TsType extends TsSourceFileChild {
     getSymbols(): TsSymbol[] {
         const typeArray = (this.type as ts.UnionOrIntersectionType).types;
 
-        if (!this.isEnumType() && typeArray != null) {
+        if (this.type.aliasSymbol != null) {
+            return [this.createSymbol(this.type.aliasSymbol)];
+        }
+        else if (!this.isEnumType() && typeArray != null) {
             return typeArray.map(t => t.symbol).filter(s => s != null).map(s => this.createSymbol(s!));
         }
         else if (this.type.symbol != null) {
