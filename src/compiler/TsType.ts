@@ -41,7 +41,7 @@ export class TsType extends TsSourceFileChild {
     getSymbols(): TsSymbol[] {
         const typeArray = (this.type as ts.UnionOrIntersectionType).types;
 
-        if (typeArray != null) {
+        if (!this.isEnumType() && typeArray != null) {
             return typeArray.map(t => t.symbol).filter(s => s != null).map(s => this.createSymbol(s!));
         }
         else if (this.type.symbol != null) {
@@ -54,6 +54,10 @@ export class TsType extends TsSourceFileChild {
 
     isArrayType() {
         return this.getArrayElementType() != null;
+    }
+
+    isEnumType() {
+        return (this.type.flags & ts.TypeFlags.Enum) !== 0;
     }
 
     isTupleType() {

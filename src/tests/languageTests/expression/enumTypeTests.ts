@@ -4,7 +4,8 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("enum type tests", () => {
     const code = `
 enum MyEnum {
-    Value
+    Value1,
+    Value2
 }
 let e: MyEnum;
 class MyClass {
@@ -18,8 +19,11 @@ class MyClass {
         enums: [{
             name: "MyEnum",
             members: [{
-                name: "Value",
+                name: "Value1",
                 value: 0
+            }, {
+                name: "Value2",
+                value: 1
             }]
         }],
         variables: [{
