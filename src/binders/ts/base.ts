@@ -12,6 +12,7 @@ export * from "./base/TsExportableBinder";
 export * from "./base/TsFunctionBodyWriteableBinder";
 export * from "./base/TsModuledBinder";
 export * from "./base/TsNamedBinder";
+export * from "./base/TsNodedBinder";
 export * from "./base/TsOptionalBinderForParameter";
 export * from "./base/TsOptionalBinderForProperty";
 export * from "./base/TsParameteredBinderByNode";

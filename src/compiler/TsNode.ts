@@ -51,6 +51,10 @@ export class TsNode extends TsSourceFileChild {
         return name || "";
     }
 
+    getUnderlyingNode() {
+        return this.node;
+    }
+
     getSymbol() {
         return this.tsSymbol;
     }

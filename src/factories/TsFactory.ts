@@ -14,6 +14,13 @@ export class TsFactory {
     private readonly deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
     private readonly createdTypesWithDefinition: { type: TsType; definition: definitions.BaseTypeDefinition; }[] = [];
 
+    constructor(private readonly settings: { includeCompilerNodes: boolean; }) {
+    }
+
+    getShouldIncludeCompilerNodes() {
+        return this.settings.includeCompilerNodes;
+    }
+
     getCallSignatureFromNode(node: TsNode) {
         return this.getCallSignatureFromSignature(node.getSignatureFromThis());
     }

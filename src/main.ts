@@ -23,8 +23,9 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
 
     Logger.toggleEnabled(options.showDebugMessages || false);
 
+    const {includeCompilerNodes = false} = options;
     const tsMain = new TsMain(fileNames, options);
-    const tsFactory = new TsFactory();
+    const tsFactory = new TsFactory({ includeCompilerNodes });
 
     const fileDefinitions = tsMain.getSourceFiles().map(sourceFile => tsFactory.getFileDefinition(sourceFile));
 

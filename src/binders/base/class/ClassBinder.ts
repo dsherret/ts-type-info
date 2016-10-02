@@ -1,6 +1,7 @@
 ﻿import * as definitions from "./../../../definitions";
 import {IBaseBinder} from "./../IBaseBinder";
-import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, AbstractableBinder, DecoratableBinder} from "./../base";
+import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, AbstractableBinder, DecoratableBinder,
+    NodedBinder} from "./../base";
 
 export class ClassMemberContainer {
     constructorDef: definitions.ClassConstructorDefinition;
@@ -18,7 +19,8 @@ export abstract class ClassBinder implements IBaseBinder {
         private readonly ambientableBinder: AmbientableBinder,
         private readonly typeParameteredBinder: TypeParameteredBinder,
         private readonly abstractableBinder: AbstractableBinder,
-        private readonly decoratableBinder: DecoratableBinder
+        private readonly decoratableBinder: DecoratableBinder,
+        private readonly nodedBinder: NodedBinder
     ) {
     }
 
@@ -34,6 +36,7 @@ export abstract class ClassBinder implements IBaseBinder {
         this.typeParameteredBinder.bind(def);
         this.abstractableBinder.bind(def);
         this.decoratableBinder.bind(def);
+        this.nodedBinder.bind(def);
         this.bindMembers(def);
         def.extendsTypes.push(...this.getExtendsTypes());
         def.implementsTypes.push(...this.getImplementsTypes());

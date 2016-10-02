@@ -3,7 +3,7 @@ import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {ClassBinder, ClassMemberContainer} from "./../../base";
 import {TsBaseDefinitionBinder, TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsAbstractableBinder, TsTypeParameteredBinderByNode,
-    TsDecoratableBinder} from "./../base";
+    TsDecoratableBinder, TsNodedBinder} from "./../base";
 
 export class TsClassBinder extends ClassBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
@@ -14,7 +14,8 @@ export class TsClassBinder extends ClassBinder {
             new TsAmbientableBinder(node),
             new TsTypeParameteredBinderByNode(factory, node),
             new TsAbstractableBinder(node),
-            new TsDecoratableBinder(factory, node)
+            new TsDecoratableBinder(factory, node),
+            new TsNodedBinder(factory.getShouldIncludeCompilerNodes() ? node : null)
         );
     }
 

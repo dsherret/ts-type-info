@@ -1,4 +1,5 @@
 import {MainFactory, StructureFactory} from "./../../factories";
+import * as typeConstants from "./../../typeConstants";
 import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure,
     ClassStaticMethodStructure, ClassStaticPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
@@ -6,7 +7,7 @@ import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
-        AbstractableDefinition, OrderableDefinition} from "./../base";
+        AbstractableDefinition, OrderableDefinition, NodedDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {TypeDefinition} from "./../expression";
 import {InterfaceDefinition} from "./../interface";
@@ -17,7 +18,7 @@ import {ClassPropertyDefinition} from "./ClassPropertyDefinition";
 import {ClassStaticMethodDefinition} from "./ClassStaticMethodDefinition";
 import {ClassStaticPropertyDefinition} from "./ClassStaticPropertyDefinition";
 
-export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, OrderableDefinition,
+export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, OrderableDefinition, NodedDefinition,
                                         ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
@@ -114,6 +115,8 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isDefaultExportOfFile: boolean;
     // OrderableDefinition
     order: number;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
@@ -126,4 +129,4 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 }
 
 applyMixins(ClassDefinition, BaseDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition,
-    AbstractableDefinition, OrderableDefinition]);
+    NodedDefinition, AbstractableDefinition, OrderableDefinition]);

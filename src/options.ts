@@ -1,6 +1,7 @@
 ﻿export interface Options {
     compilerOptions?: CompilerOptions;
     showDebugMessages?: boolean;
+    includeCompilerNodes?: boolean;
 }
 
 // options copied from typescript.d.ts
