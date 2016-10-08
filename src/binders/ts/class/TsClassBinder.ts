@@ -15,7 +15,7 @@ export class TsClassBinder extends ClassBinder {
             new TsTypeParameteredBinderByNode(factory, node),
             new TsAbstractableBinder(node),
             new TsDecoratableBinder(factory, node),
-            new TsNodedBinder(factory.getShouldIncludeCompilerNodes() ? node : null)
+            new TsNodedBinder(factory, node)
         );
     }
 
