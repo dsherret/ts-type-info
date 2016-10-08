@@ -1,10 +1,11 @@
-﻿import {MainFactory, StructureFactory} from "./../../factories";
+﻿import * as typeConstants from "./../../typeConstants";
+import {MainFactory, StructureFactory} from "./../../factories";
 import {CallSignatureStructure, IndexSignatureStructure, InterfaceMethodStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, BaseDefinition} from "./../base";
+import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, NodedDefinition, BaseDefinition} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
 import {ClassDefinition} from "./../class";
 import {TypeDefinition} from "./../expression";
@@ -12,7 +13,7 @@ import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 
 export class InterfaceDefinition extends BaseDefinition
-        implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition {
+        implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {
     methods: InterfaceMethodDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];
     indexSignatures: IndexSignatureDefinition[] = [];
@@ -100,6 +101,8 @@ export class InterfaceDefinition extends BaseDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
-applyMixins(InterfaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition]);
+applyMixins(InterfaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition]);

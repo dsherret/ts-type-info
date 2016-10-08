@@ -2,7 +2,8 @@
 import {InterfaceStructure} from "./../../../structures";
 import {objectAssign} from "./../../../utils";
 import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
-import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureTypeParameteredBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureTypeParameteredBinder,
+    StructureNodedBinder} from "./../base";
 
 export class StructureInterfaceBinder extends InterfaceBinder {
     constructor(private readonly factory: StructureFactory, private readonly structure: InterfaceStructure) {
@@ -11,7 +12,8 @@ export class StructureInterfaceBinder extends InterfaceBinder {
             new StructureNamedBinder(structure),
             new StructureExportableBinder(structure),
             new StructureAmbientableBinder(objectAssign(structure, { isAmbient: true })),
-            new StructureTypeParameteredBinder(factory, structure)
+            new StructureTypeParameteredBinder(factory, structure),
+            new StructureNodedBinder()
         );
     }
 
