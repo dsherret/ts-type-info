@@ -1,10 +1,11 @@
-﻿import {MainFactory} from "./../../factories";
+﻿import * as typeConstants from "./../../typeConstants";
+import {MainFactory} from "./../../factories";
 import {TypeParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {TypeAliasWriter} from "./../../writers";
-import {BaseDefinition} from "./../base";
+import {BaseDefinition, NodedDefinition} from "./../base";
 import {TypeDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)
 import {NamedDefinition} from "./../base/NamedDefinition";
@@ -17,7 +18,7 @@ import {TypeParameterDefinition} from "./TypeParameterDefinition";
 
 export class TypeAliasDefinition
         extends BaseDefinition
-        implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition {
+        implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition, NodedDefinition {
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
         const typeAliasWriter = new TypeAliasWriter(writer);
@@ -43,7 +44,9 @@ export class TypeAliasDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
 applyMixins(TypeAliasDefinition, BaseDefinition, [NamedDefinition, AmbientableDefinition, OrderableDefinition, ExportableDefinition, TypedDefinition,
-    TypeParameteredDefinition]);
+    TypeParameteredDefinition, NodedDefinition]);
