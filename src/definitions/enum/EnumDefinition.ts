@@ -1,13 +1,14 @@
 ﻿import {MainFactory, StructureFactory} from "./../../factories";
+import * as typeConstants from "./../../typeConstants";
 import {EnumMemberStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {AmbientableDefinition, ExportableDefinition, NamedDefinition, OrderableDefinition, BaseDefinition} from "./../base";
+import {AmbientableDefinition, ExportableDefinition, NamedDefinition, OrderableDefinition, BaseDefinition, NodedDefinition} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
-export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition {
+export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition, NodedDefinition {
     isConst: boolean;
     members: EnumMemberDefinition[] = [];
 
@@ -39,6 +40,8 @@ export class EnumDefinition extends BaseDefinition implements AmbientableDefinit
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
-applyMixins(EnumDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition]);
+applyMixins(EnumDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition]);
