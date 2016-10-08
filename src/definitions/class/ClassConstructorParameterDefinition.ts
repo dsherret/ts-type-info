@@ -1,11 +1,12 @@
-﻿import {StructureFactory} from "./../../factories";
+﻿import * as typeConstants from "./../../typeConstants";
+import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {DecoratorStructure} from "./../../structures";
 import {DecoratorDefinition} from "./../general";
-import {DecoratableDefinition, BaseParameterDefinition, ReadonlyableDefinition} from "./../base";
+import {DecoratableDefinition, BaseParameterDefinition, ReadonlyableDefinition, NodedDefinition} from "./../base";
 import {ClassConstructorParameterScope} from "./ClassConstructorParameterScope";
 
-export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ReadonlyableDefinition {
+export class ClassConstructorParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ReadonlyableDefinition, NodedDefinition {
     scope: ClassConstructorParameterScope;
 
     toClassProperty() {
@@ -32,6 +33,8 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
     // ReadonlyableDefinition
     isReadonly: boolean;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
-applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition, ReadonlyableDefinition]);
+applyMixins(ClassConstructorParameterDefinition, BaseParameterDefinition, [DecoratableDefinition, ReadonlyableDefinition, NodedDefinition]);

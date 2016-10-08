@@ -1,12 +1,14 @@
 ﻿import * as assert from "assert";
-import {NamedDefinition, NodedDefinition} from "./../../../../definitions";
+import {OptionallyNamedDefinition, NamedDefinition, NodedDefinition} from "./../../../../definitions";
 
-export function runNodedDefinitionTests(definition: NamedDefinition & NodedDefinition) {
+export function runNodedDefinitionTests(definition: (NamedDefinition | OptionallyNamedDefinition) & NodedDefinition) {
     runNodedDefinitionTestsForNonNamed(definition);
 
-    it(`should have the correct tsNode text`, () => {
-        assert.equal(definition.tsNode!.getText().indexOf(definition.name) !== -1, true);
-    });
+    if (definition.name) {
+        it(`should have the correct tsNode text`, () => {
+            assert.equal(definition.tsNode!.getText().indexOf(definition.name!) !== -1, true);
+        });
+    }
 }
 
 export function runNodedDefinitionTestsForNonNamed(definition: NodedDefinition) {

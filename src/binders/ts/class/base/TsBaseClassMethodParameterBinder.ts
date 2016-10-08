@@ -1,7 +1,7 @@
 ﻿import {TsFactory} from "./../../../../factories";
 import {TsNode} from "./../../../../compiler";
 import {BaseClassMethodParameterBinder} from "./../../../base";
-import {TsDecoratableBinder, TsBaseParameterBinder} from "./../../base";
+import {TsDecoratableBinder, TsBaseParameterBinder, TsNodedBinder} from "./../../base";
 import {TsScopedBinder} from "./TsScopedBinder";
 
 export class TsBaseClassMethodParameterBinder extends BaseClassMethodParameterBinder {
@@ -9,7 +9,8 @@ export class TsBaseClassMethodParameterBinder extends BaseClassMethodParameterBi
         super(
             new TsBaseParameterBinder(factory, node),
             new TsDecoratableBinder(factory, node),
-            new TsScopedBinder(node)
+            new TsScopedBinder(node),
+            new TsNodedBinder(factory, node)
         );
     }
 }
