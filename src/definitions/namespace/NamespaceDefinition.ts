@@ -1,11 +1,12 @@
-﻿import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
+﻿import * as typeConstants from "./../../typeConstants";
+import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
 import {MainFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, NamespaceStructure, VariableStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, OrderableDefinition} from "./../base";
+import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, OrderableDefinition, NodedDefinition} from "./../base";
 import {ClassDefinition} from "./../class";
 import {InterfaceDefinition} from "./../interface";
 import {EnumDefinition} from "./../enum";
@@ -15,7 +16,7 @@ import {TypeAliasDefinition} from "./../general";
 import {NamespaceDeclarationType} from "./NamespaceDeclarationType";
 
 export class NamespaceDefinition extends BaseDefinition
-        implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition {
+        implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {
     declarationType: NamespaceDeclarationType;
 
     write(writeOptions?: WriteOptions) {
@@ -64,6 +65,8 @@ export class NamespaceDefinition extends BaseDefinition
     setOrderOfMember: (order: number, member: ModuleMemberDefinitions) => this;
     // OrderableDefinition
     order: number;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
-applyMixins(NamespaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition]);
+applyMixins(NamespaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition]);

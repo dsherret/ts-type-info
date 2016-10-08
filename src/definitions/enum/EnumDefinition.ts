@@ -1,5 +1,5 @@
-﻿import {MainFactory, StructureFactory} from "./../../factories";
-import * as typeConstants from "./../../typeConstants";
+﻿import * as typeConstants from "./../../typeConstants";
+import {MainFactory, StructureFactory} from "./../../factories";
 import {EnumMemberStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {EnumWriter} from "./../../writers";

@@ -24,7 +24,6 @@ export abstract class VariableBinder implements IBaseBinder {
         this.typedBinder.bind(def);
         this.defaultExpressionedBinder.bind(def);
         this.nodedBinder.bind(def);
-
         def.declarationType = this.getDeclarationType();
     }
 }
