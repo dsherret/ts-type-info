@@ -7,6 +7,7 @@ import {TsNamedBinder} from "./TsNamedBinder";
 import {TsTypeParameteredBinderByNode} from "./TsTypeParameteredBinderByNode";
 import {TsParameteredBinderByNode, TsParameterBinderByNodeConstructor} from "./TsParameteredBinderByNode";
 import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
+import {TsNodedBinder} from "./TsNodedBinder";
 
 export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
     constructor(
@@ -20,7 +21,8 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
             new TsNamedBinder(node),
             new TsTypeParameteredBinderByNode(factory, node),
             new TsParameteredBinderByNode(factory, node, paramDefinition, paramBinder),
-            new TsReturnTypedBinderByNode(factory, node)
+            new TsReturnTypedBinderByNode(factory, node),
+            new TsNodedBinder(factory, node)
         );
     }
 

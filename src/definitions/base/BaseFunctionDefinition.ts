@@ -1,7 +1,8 @@
-import {TypeDefinition} from "./../expression";
+import * as typeConstants from "./../../typeConstants";
 import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
 import {StructureFactory} from "./../../factories";
 import {applyMixins, DefinitionUtils} from "./../../utils";
+import {TypeDefinition} from "./../expression";
 import {TypeParameterDefinition, CallSignatureDefinition, UserDefinedTypeGuardDefinition} from "./../general";
 import {BaseParameterDefinition} from "./BaseParameterDefinition";
 import {NamedDefinition} from "./NamedDefinition";
@@ -10,11 +11,12 @@ import {BaseDefinition} from "./BaseDefinition";
 import {ParameteredDefinition} from "./ParameteredDefinition";
 import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 import {ThisTypedDefinition} from "./ThisTypedDefinition";
+import {NodedDefinition} from "./NodedDefinition";
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition,
-            ThisTypedDefinition {
+            ThisTypedDefinition, NodedDefinition {
     isGenerator: boolean;
     overloadSignatures: CallSignatureDefinition[] = [];
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
@@ -45,6 +47,9 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
-applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, ThisTypedDefinition]);
+applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, ThisTypedDefinition,
+    NodedDefinition]);
