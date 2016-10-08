@@ -54,7 +54,7 @@ export class TsFactory {
     }
 
     getEnumMember(node: TsNode) {
-        return bindToDefinition(new binders.TsEnumMemberBinder(node), new definitions.EnumMemberDefinition());
+        return bindToDefinition(new binders.TsEnumMemberBinder(this, node), new definitions.EnumMemberDefinition());
     }
 
     getExpression(tsExpression: TsExpression) {

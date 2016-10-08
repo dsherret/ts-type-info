@@ -1,12 +1,14 @@
 ﻿import {TsNode} from "./../../../compiler";
+import {TsFactory} from "./../../../factories";
 import {EnumMemberBinder} from "./../../base";
-import {TsBaseDefinitionBinder, TsNamedBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsNamedBinder, TsNodedBinder} from "./../base";
 
 export class TsEnumMemberBinder extends EnumMemberBinder {
-    constructor(private readonly node: TsNode) {
+    constructor(factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
-            new TsNamedBinder(node)
+            new TsNamedBinder(node),
+            new TsNodedBinder(factory, node)
         );
     }
 
