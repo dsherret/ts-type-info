@@ -1,13 +1,14 @@
 ﻿import {TsNode} from "./../../../compiler";
 import {TsFactory} from "./../../../factories";
 import {NamedBinder, DecoratorBinder} from "./../../base";
-import {TsBaseDefinitionBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsNodedBinder} from "./../base";
 
 export class TsDecoratorBinder extends DecoratorBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
-            new TsDecoratorNameBinder(node)
+            new TsDecoratorNameBinder(node),
+            new TsNodedBinder(factory, node)
         );
     }
 

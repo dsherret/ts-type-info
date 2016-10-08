@@ -1,8 +1,10 @@
+import * as typeConstants from "./../../typeConstants";
 import {StructureFactory} from "./../../factories";
-import {NamedDefinition, BaseDefinition} from "./../base";
+import {applyMixins} from "./../../utils";
+import {NamedDefinition, NodedDefinition, BaseDefinition} from "./../base";
 import {ExpressionDefinition} from "./../expression";
 
-export class DecoratorDefinition extends BaseDefinition implements NamedDefinition {
+export class DecoratorDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition {
     arguments: ExpressionDefinition[] = [];
 
     addArgument(text: string) {
@@ -13,4 +15,8 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
 
     // NamedDefinition
     name: string;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
+
+applyMixins(DecoratorDefinition, BaseDefinition, [NamedDefinition, NodedDefinition]);
