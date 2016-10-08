@@ -4,7 +4,7 @@ import {runNodedDefinitionTests} from "./../../testHelpers";
 describe("interface noded tests", () => {
     const code = `
 interface MyInterface {
-    myMethod(): string;
+    myMethod(param: string): string;
     prop: string;
 }
 `;
@@ -15,5 +15,6 @@ interface MyInterface {
 
     runNodedDefinitionTests(def.interfaces[0]);
     runNodedDefinitionTests(def.interfaces[0].methods[0]);
+    runNodedDefinitionTests(def.interfaces[0].methods[0].parameters[0]);
     runNodedDefinitionTests(def.interfaces[0].properties[0]);
 });
