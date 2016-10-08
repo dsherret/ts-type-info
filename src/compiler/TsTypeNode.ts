@@ -56,6 +56,10 @@ export class TsTypeNode extends TsSourceFileChild {
         return null;
     }
 
+    getNode() {
+        return this.createNode(this.node);
+    }
+
     getTypeArgumentsTypeNodes() {
         const typeReferenceNode = this.node as ts.TypeReferenceNode;
         const typeArgs = typeReferenceNode.typeArguments || [] as ts.TypeNode[];

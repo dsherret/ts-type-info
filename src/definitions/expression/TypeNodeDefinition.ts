@@ -1,4 +1,6 @@
-import {TypeParameteredDefinition, TypeParameterDefinition, ParameteredDefinition} from "./../../definitions";
+import * as typeConstants from "./../../typeConstants";
+import {TypeParameteredDefinition, ParameteredDefinition, NodedDefinition} from "./../base";
+import {TypeParameterDefinition} from "./../general";
 import {TypeParameterStructure, TypeFunctionParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {BaseTypeDefinition} from "./base";
@@ -6,7 +8,7 @@ import {TypeFunctionParameterDefinition} from "./TypeFunctionParameterDefinition
 
 export class TypeNodeDefinition
         extends BaseTypeDefinition
-        implements TypeParameteredDefinition, ParameteredDefinition<TypeFunctionParameterDefinition, TypeFunctionParameterStructure> {
+        implements TypeParameteredDefinition, ParameteredDefinition<TypeFunctionParameterDefinition, TypeFunctionParameterStructure>, NodedDefinition {
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition = (structure) => {
@@ -19,6 +21,8 @@ export class TypeNodeDefinition
     addParameter: (structure: TypeFunctionParameterStructure) => TypeFunctionParameterDefinition = (structure) => {
         throw new Error(`addParameter is not supported on ${nameof(TypeNodeDefinition)}`);
     };
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptTypeNode;
 }
 
-applyMixins(TypeNodeDefinition, BaseTypeDefinition, [TypeParameteredDefinition, ParameteredDefinition]);
+applyMixins(TypeNodeDefinition, BaseTypeDefinition, [TypeParameteredDefinition, ParameteredDefinition, NodedDefinition]);

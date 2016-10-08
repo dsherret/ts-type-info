@@ -1,12 +1,13 @@
 ﻿import {TypeNodeDefinition, TypeFunctionParameterDefinition} from "./../../../definitions";
-import {ParameteredBinder, TypeParameteredBinder} from "./../base";
+import {ParameteredBinder, TypeParameteredBinder, NodedBinder} from "./../base";
 import {BaseTypeBinder} from "./base";
 
 export abstract class TypeNodeBinder {
     constructor(
         private readonly baseTypeBinder: BaseTypeBinder,
         private readonly parameteredBinder: ParameteredBinder<TypeFunctionParameterDefinition> | null,
-        private readonly typeParameteredBinder: TypeParameteredBinder | null
+        private readonly typeParameteredBinder: TypeParameteredBinder | null,
+        private readonly nodedBinder: NodedBinder
     ) {
     }
 
@@ -16,5 +17,6 @@ export abstract class TypeNodeBinder {
             this.parameteredBinder.bind(def);
         if (this.typeParameteredBinder != null)
             this.typeParameteredBinder.bind(def);
+        this.nodedBinder.bind(def);
     }
 }

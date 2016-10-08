@@ -2,7 +2,7 @@
 import {TypeFunctionParameterDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TypeNodeBinder} from "./../../base";
-import {TsParameteredBinderByTypeNode, TsTypeParameteredBinderByTypeNode} from "./../base";
+import {TsParameteredBinderByTypeNode, TsTypeParameteredBinderByTypeNode, TsNodedBinder} from "./../base";
 import {TsTypeFunctionParameterBinder} from "./TsTypeFunctionParameterBinder";
 import {TsBaseTypeBinderByTypeNode} from "./base";
 
@@ -11,7 +11,8 @@ export class TsTypeNodeBinder extends TypeNodeBinder {
         super(
             new TsBaseTypeBinderByTypeNode(factory, tsTypeNode),
             new TsParameteredBinderByTypeNode(factory, tsTypeNode, TypeFunctionParameterDefinition, TsTypeFunctionParameterBinder),
-            new TsTypeParameteredBinderByTypeNode(factory, tsTypeNode)
+            new TsTypeParameteredBinderByTypeNode(factory, tsTypeNode),
+            new TsNodedBinder(factory, tsTypeNode.getNode())
         );
     }
 }
