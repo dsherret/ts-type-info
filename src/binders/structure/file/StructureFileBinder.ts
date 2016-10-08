@@ -1,13 +1,14 @@
 import {StructureFactory} from "./../../../factories";
 import {FileStructure} from "./../../../structures";
 import {FileBinder} from "./../../base";
-import {StructureBaseDefinitionBinder, StructureModuledBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureModuledBinder, StructureNodedBinder} from "./../base";
 
 export class StructureFileBinder extends FileBinder {
     constructor(private readonly factory: StructureFactory, private readonly structure: FileStructure) {
         super(
             new StructureBaseDefinitionBinder(structure),
-            new StructureModuledBinder(factory, structure)
+            new StructureModuledBinder(factory, structure),
+            new StructureNodedBinder()
         );
     }
 

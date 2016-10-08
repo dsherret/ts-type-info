@@ -1,11 +1,12 @@
 ﻿import {FileDefinition, ExpressionDefinition, ImportDefinition, ReExportDefinition} from "./../../../definitions";
-import {BaseDefinitionBinder, ModuledBinder} from "./../base";
+import {BaseDefinitionBinder, ModuledBinder, NodedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class FileBinder implements IBaseBinder {
     constructor(
         private readonly baseDefinitionBinder: BaseDefinitionBinder,
-        private readonly moduledBinder: ModuledBinder
+        private readonly moduledBinder: ModuledBinder,
+        private readonly nodedBinder: NodedBinder
     ) {
     }
 
@@ -16,6 +17,7 @@ export abstract class FileBinder implements IBaseBinder {
 
     bind(def: FileDefinition) {
         this.baseDefinitionBinder.bind(def);
+        this.nodedBinder.bind(def);
         def.fileName = this.getFileName();
         def.defaultExportExpression = this.getDefaultExportExpression();
         def.imports = this.getImports();

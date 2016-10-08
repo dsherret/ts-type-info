@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as typeConstants from "./../../typeConstants";
 import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
 import {MainFactory, StructureFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, InterfaceStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
@@ -8,7 +9,7 @@ import {FileWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {writeDefinition} from "./../../writeDefinition";
-import {ModuledDefinition, BaseDefinition} from "./../base";
+import {ModuledDefinition, NodedDefinition, BaseDefinition} from "./../base";
 import {ExpressionDefinition} from "./../expression";
 import {NamespaceDefinition} from "./../namespace";
 import {ClassDefinition} from "./../class";
@@ -20,7 +21,7 @@ import {TypeAliasDefinition} from "./../general";
 import {ReExportDefinition} from "./ReExportDefinition";
 import {ImportDefinition} from "./ImportDefinition";
 
-export class FileDefinition extends BaseDefinition implements ModuledDefinition {
+export class FileDefinition extends BaseDefinition implements ModuledDefinition, NodedDefinition {
     fileName: string;
     imports: ImportDefinition[] = [];
     reExports: ReExportDefinition[] = [];
@@ -131,6 +132,8 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition 
     getNamespacesToDefinition: (searchDef: ModuleMemberDefinitions) => (NamespaceDefinition[] | null);
     getMembers: () => ModuleMemberDefinitions[];
     setOrderOfMember: (order: number, member: ModuleMemberDefinitions) => this;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptSourceFileNode;
 }
 
-applyMixins(FileDefinition, BaseDefinition, [ModuledDefinition]);
+applyMixins(FileDefinition, BaseDefinition, [ModuledDefinition, NodedDefinition]);
