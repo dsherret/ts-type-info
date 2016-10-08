@@ -1,15 +1,16 @@
-﻿import {MainFactory} from "./../../factories";
+﻿import * as typeConstants from "./../../typeConstants";
+import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition,
-    DefaultExpressionedDefinition, BaseDefinition, OrderableDefinition} from "./../base";
+import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, OrderableDefinition,
+    NodedDefinition} from "./../base";
 import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
-        implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition {
+        implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {
     declarationType: VariableDeclarationType;
 
     write(writeOptions?: WriteOptions) {
@@ -36,7 +37,9 @@ export class VariableDefinition extends BaseDefinition
     // TypedDefinition
     type: TypeDefinition;
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
 applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition,
-    OrderableDefinition]);
+    OrderableDefinition, NodedDefinition]);

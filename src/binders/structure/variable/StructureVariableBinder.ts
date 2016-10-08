@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../../factories";
 import {VariableStructure} from "./../../../structures";
 import {VariableBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureDefaultExpressionedBinder,
-    StructureTypedBinder} from "./../base";
+    StructureTypedBinder, StructureNodedBinder} from "./../base";
 
 export class StructureVariableBinder extends VariableBinder {
     constructor(factory: StructureFactory, private readonly structure: VariableStructure) {
@@ -13,7 +13,8 @@ export class StructureVariableBinder extends VariableBinder {
             new StructureExportableBinder(structure),
             new StructureAmbientableBinder(structure),
             new StructureTypedBinder(factory, structure),
-            new StructureDefaultExpressionedBinder(structure)
+            new StructureDefaultExpressionedBinder(structure),
+            new StructureNodedBinder()
         );
     }
 
