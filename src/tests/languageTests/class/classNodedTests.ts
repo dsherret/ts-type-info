@@ -7,6 +7,8 @@ class MyClass {
     constructor() {}
     myMethod() {}
     static myStaticMethod() {}
+    prop: string;
+    static myStaticProp: string;
 }`;
 
     const def = getInfoFromString(code, {
@@ -17,4 +19,6 @@ class MyClass {
     runNodedDefinitionTestsForNonNamed(def.classes[0].constructorDef);
     runNodedDefinitionTests(def.classes[0].methods[0]);
     runNodedDefinitionTests(def.classes[0].staticMethods[0]);
+    runNodedDefinitionTests(def.classes[0].properties[0]);
+    runNodedDefinitionTests(def.classes[0].staticProperties[0]);
 });
