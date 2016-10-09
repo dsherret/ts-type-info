@@ -1,6 +1,7 @@
 ﻿import {BaseParameterDefinition, ObjectPropertyDefinition} from "./../../../definitions";
 import {BaseDefinitionBinder} from "./BaseDefinitionBinder";
 import {NamedBinder} from "./NamedBinder";
+import {NodedBinder} from "./NodedBinder";
 import {OptionalBinder} from "./OptionalBinder";
 import {TypedBinder} from "./TypedBinder";
 import {DefaultExpressionedBinder} from "./DefaultExpressionedBinder";
@@ -14,7 +15,8 @@ export abstract class BaseParameterBinder {
         private readonly namedBinder: NamedBinder,
         private readonly optionalBinder: OptionalBinder,
         private readonly typedBinder: TypedBinder,
-        private readonly defaultExpressionedBinder: DefaultExpressionedBinder
+        private readonly defaultExpressionedBinder: DefaultExpressionedBinder,
+        private readonly nodedBinder: NodedBinder
     ) {
     }
 
@@ -24,11 +26,11 @@ export abstract class BaseParameterBinder {
         this.optionalBinder.bind(def);
         this.typedBinder.bind(def);
         this.defaultExpressionedBinder.bind(def);
+        this.nodedBinder.bind(def);
         def.isRestParameter = this.getIsRestParameter();
         def.destructuringProperties = this.getDestructuringProperties();
 
-        if (def.destructuringProperties.length > 0) {
+        if (def.destructuringProperties.length > 0)
             def.name = null;
-        }
     }
 }

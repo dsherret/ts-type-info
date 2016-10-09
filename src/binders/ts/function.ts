@@ -1,2 +1,2 @@
-﻿export * from "./function/TsFunctionBinder";
+﻿export * from "./function/TsFunctionBinderByNodes";
 export * from "./function/TsFunctionParameterBinder";

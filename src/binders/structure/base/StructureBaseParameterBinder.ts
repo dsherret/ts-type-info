@@ -6,6 +6,7 @@ import {StructureDefaultExpressionedBinder} from "./StructureDefaultExpressioned
 import {StructureNamedBinder} from "./StructureNamedBinder";
 import {StructureOptionalBinder} from "./StructureOptionalBinder";
 import {StructureTypedBinder} from "./StructureTypedBinder";
+import {StructureNodedBinder} from "./StructureNodedBinder";
 
 export class StructureBaseParameterBinder extends BaseParameterBinder {
     constructor(private readonly factory: StructureFactory, private readonly structure: BaseParameterStructure) {
@@ -14,7 +15,8 @@ export class StructureBaseParameterBinder extends BaseParameterBinder {
             new StructureNamedBinder(structure),
             new StructureOptionalBinder(structure),
             new StructureTypedBinder(factory, structure),
-            new StructureDefaultExpressionedBinder(structure)
+            new StructureDefaultExpressionedBinder(structure),
+            new StructureNodedBinder()
         );
     }
 

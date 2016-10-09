@@ -7,15 +7,15 @@ import {TsClassMethodParameterBinder} from "./TsClassMethodParameterBinder";
 import {TsBaseClassMethodBinder} from "./base";
 
 export class TsClassMethodBinder extends ClassMethodBinder {
-    constructor(factory: TsFactory, node: TsNode) {
+    constructor(factory: TsFactory, nodes: TsNode[]) {
         super(
             new TsBaseClassMethodBinder(
                 factory,
-                node,
+                nodes,
                 ClassMethodParameterDefinition,
                 TsClassMethodParameterBinder
             ),
-            new TsAbstractableBinder(node)
+            new TsAbstractableBinder(nodes[nodes.length - 1])
         );
     }
 }

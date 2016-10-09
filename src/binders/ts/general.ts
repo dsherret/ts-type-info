@@ -1,4 +1,5 @@
-﻿export * from "./general/TsCallSignatureBinder";
+﻿export * from "./general/TsCallSignatureBinderBySignature";
+export * from "./general/TsCallSignatureBinderByNode";
 export * from "./general/TsCallSignatureParameterBinder";
 export * from "./general/TsDecoratorBinder";
 export * from "./general/TsIndexSignatureBinder";

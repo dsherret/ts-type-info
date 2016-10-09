@@ -27,12 +27,15 @@ export class TsInterfaceBinder extends InterfaceBinder {
     getMembers() {
         const container = new InterfaceMemberContainer();
         // because there can be multiple method signatures, the last one needs to be used
-        const methods: { [name: string]: TsNode } = {};
+        const methods: { [name: string]: TsNode[] } = {};
 
         this.node.getChildren().forEach(childNode => {
             tryGet(childNode, () => {
                 if (childNode.isMethodSignature()) {
-                    methods[childNode.getName()] = childNode;
+                    const name = childNode.getName();
+                    if (typeof methods[name] === "undefined")
+                        methods[name] = [];
+                    methods[name].push(childNode);
                 }
                 else if (childNode.isPropertySignature()) {
                     container.properties.push(this.factory.getInterfaceProperty(childNode));
@@ -68,9 +71,9 @@ export class TsInterfaceBinder extends InterfaceBinder {
         });
 
         Object.keys(methods).forEach(name => {
-            const methodNode = methods[name];
-            tryGet(methodNode, () => {
-                container.methods.push(this.factory.getInterfaceMethod(methodNode));
+            const methodNodes = methods[name];
+            tryGet(methodNodes[methodNodes.length - 1], () => {
+                container.methods.push(this.factory.getInterfaceMethod(methodNodes));
             });
         });
 

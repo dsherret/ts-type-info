@@ -1,13 +1,12 @@
 ﻿import {StructureFactory} from "./../../../factories";
 import {FunctionParameterStructure} from "./../../../structures";
 import {FunctionParameterBinder} from "./../../base";
-import {StructureBaseParameterBinder, StructureNodedBinder} from "./../base";
+import {StructureBaseParameterBinder} from "./../base";
 
 export class StructureFunctionParameterBinder extends FunctionParameterBinder {
     constructor(factory: StructureFactory, structure: FunctionParameterStructure) {
         super(
-            new StructureBaseParameterBinder(factory, structure),
-            new StructureNodedBinder()
+            new StructureBaseParameterBinder(factory, structure)
         );
     }
 }

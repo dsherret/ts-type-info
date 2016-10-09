@@ -1,3 +1,4 @@
+import * as typeConstants from "./../../typeConstants";
 import {StructureFactory} from "./../../factories";
 import {ObjectPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
@@ -5,6 +6,7 @@ import {TypeDefinition, ExpressionDefinition} from "./../expression";
 import {ObjectPropertyDefinition} from "./../general/ObjectPropertyDefinition";
 import {OptionallyNamedDefinition} from "./OptionallyNamedDefinition";
 import {NamedDefinition} from "./NamedDefinition";
+import {NodedDefinition} from "./NodedDefinition";
 import {OptionalDefinition} from "./OptionalDefinition";
 import {TypedDefinition} from "./TypedDefinition";
 import {DefaultExpressionedDefinition} from "./DefaultExpressionedDefinition";
@@ -14,7 +16,9 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
     new(): ParameterType;
 }
 
-export abstract class BaseParameterDefinition extends BaseDefinition implements OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition {
+export abstract class BaseParameterDefinition
+        extends BaseDefinition
+        implements OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition, NodedDefinition {
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[] = [];
 
@@ -38,6 +42,8 @@ export abstract class BaseParameterDefinition extends BaseDefinition implements 
     // DefaultExpressionedDefinition
     defaultExpression: ExpressionDefinition | null;
     setDefaultExpression: (text: string) => this;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
-applyMixins(BaseParameterDefinition, BaseDefinition, [OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition]);
+applyMixins(BaseParameterDefinition, BaseDefinition, [OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition, NodedDefinition]);

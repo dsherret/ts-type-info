@@ -22,23 +22,23 @@ export class TsFactory {
     }
 
     getCallSignatureFromNode(node: TsNode) {
-        return this.getCallSignatureFromSignature(node.getSignatureFromThis());
+        return bindToDefinition(new binders.TsCallSignatureBinderByNode(this, node), new definitions.CallSignatureDefinition());
     }
 
     getCallSignatureFromSignature(signature: TsSignature) {
-        return bindToDefinition(new binders.TsCallSignatureBinder(this, signature), new definitions.CallSignatureDefinition());
+        return bindToDefinition(new binders.TsCallSignatureBinderBySignature(this, signature), new definitions.CallSignatureDefinition());
     }
 
     getClassConstructor(node: TsNode) {
         return bindToDefinition(new binders.TsClassConstructorBinder(this, node), new definitions.ClassConstructorDefinition());
     }
 
-    getClassMethod(node: TsNode) {
-        return bindToDefinition(new binders.TsClassMethodBinder(this, node), new definitions.ClassMethodDefinition());
+    getClassMethod(nodes: TsNode[]) {
+        return bindToDefinition(new binders.TsClassMethodBinder(this, nodes), new definitions.ClassMethodDefinition());
     }
 
-    getClassStaticMethod(node: TsNode) {
-        return bindToDefinition(new binders.TsClassStaticMethodBinder(this, node), new definitions.ClassStaticMethodDefinition());
+    getClassStaticMethod(nodes: TsNode[]) {
+        return bindToDefinition(new binders.TsClassStaticMethodBinder(this, nodes), new definitions.ClassStaticMethodDefinition());
     }
 
     getClassProperty(nodes: TsNode[]) {
@@ -69,8 +69,8 @@ export class TsFactory {
         return bindToDefinition(new binders.TsIndexSignatureBinder(this, signature), new definitions.IndexSignatureDefinition());
     }
 
-    getInterfaceMethod(node: TsNode) {
-        return bindToDefinition(new binders.TsInterfaceMethodBinder(this, node), new definitions.InterfaceMethodDefinition());
+    getInterfaceMethod(nodes: TsNode[]) {
+        return bindToDefinition(new binders.TsInterfaceMethodBinder(this, nodes), new definitions.InterfaceMethodDefinition());
     }
 
     getInterfaceProperty(node: TsNode) {
@@ -168,19 +168,39 @@ export class TsFactory {
     }
 
     getAllDefinitionsBySymbol(symbol: TsSymbol) {
-        return symbol.getNodes().map(node => {
+        const definitions: (definitions.NodeDefinitions | null)[] = [];
+        const functionNodes: TsNode[] = [];
+
+        symbol.getNodes().map(node => {
             if (node.isTypeLiteral()) {
                 const parentNode = node.getParent();
                 if (parentNode != null && parentNode.isTypeAlias())
                     node = parentNode;
             }
 
-            return this.getDefinitionByNode(node);
-        }).filter(d => d != null);
+            if (node.isFunction())
+                functionNodes.push(node);
+            else
+                definitions.push(this.getDefinitionByNode(node));
+        });
+
+        if (functionNodes.length > 0)
+            definitions.push(this.getFunctionDefinitionByNodes(functionNodes));
+
+        return definitions.filter(d => d != null);
     }
 
     getDefinitionByNode(node: TsNode) {
         return this.definitionByNode.get(node) || this.createDefinition(node);
+    }
+
+    getFunctionDefinitionByNodes(nodes: TsNode[]) {
+        const def = this.definitionByNode.get(nodes[nodes.length - 1]) as definitions.FunctionDefinition | null;
+
+        if (def != null)
+            return def;
+
+        return bindToDefinition(new binders.TsFunctionBinderByNodes(this, nodes), new definitions.FunctionDefinition());
     }
 
     getFileDefinition(file: TsSourceFile) {
@@ -254,10 +274,7 @@ export class TsFactory {
         let definition: definitions.NodeDefinitions | null = null;
 
         // todo: all these if statements are very similar. Need to reduce the redundancy
-        if (node.isFunction()) {
-            definition = bindToDefinition(new binders.TsFunctionBinder(this, node), new definitions.FunctionDefinition());
-        }
-        else if (node.isClass()) {
+        if (node.isClass()) {
             definition = bindToDefinition(new binders.TsClassBinder(this, node), new definitions.ClassDefinition());
         }
         else if (node.isInterface()) {
@@ -274,6 +291,9 @@ export class TsFactory {
         }
         else if (node.isNamespace()) {
             definition = bindToDefinition(new binders.TsNamespaceBinder(this, node), new definitions.NamespaceDefinition());
+        }
+        else if (node.isFunction()) {
+            Logger.error(`Don't use ${nameof(TsFactory)}.${nameof<TsFactory>(f => f.createDefinition)} to get a function.`);
         }
         else if (node.isExportDeclaration()) {
             const binder = new binders.TsReExportBinder(this, node);

@@ -39,19 +39,24 @@ export class TsClassBinder extends ClassBinder {
     getMembers() {
         const container = new ClassMemberContainer();
         // because there can be multiple method signatures, the last one needs to be used
-        const methods: { [name: string]: TsNode; } = {};
-        const staticMethods: { [name: string]: TsNode; } = {};
+        const methods: { [name: string]: TsNode[]; } = {};
+        const staticMethods: { [name: string]: TsNode[]; } = {};
         // because there can be set and get accessor nodes
         const properties: { [name: string]: TsNode[]; } = {};
 
         this.node.getChildren().forEach(childNode => {
             tryGet(childNode, () => {
                 if (childNode.isMethodDeclaration()) {
+                    const name = childNode.getName();
                     if (childNode.hasStaticKeyword()) {
-                        staticMethods[childNode.getName()] = childNode;
+                        if (typeof staticMethods[name] === "undefined")
+                            staticMethods[name] = [];
+                        staticMethods[name].push(childNode);
                     }
                     else {
-                        methods[childNode.getName()] = childNode;
+                        if (typeof methods[name] === "undefined")
+                            methods[name] = [];
+                        methods[name].push(childNode);
                     }
                 }
                 else if (childNode.isPropertyDeclaration() || childNode.isGetAccessor() || childNode.isSetAccessor()) {
@@ -92,16 +97,16 @@ export class TsClassBinder extends ClassBinder {
         });
 
         Object.keys(methods).forEach(name => {
-            const childNode = methods[name];
-            tryGet(childNode, () => {
-                container.methods.push(this.factory.getClassMethod(childNode));
+            const childNodes = methods[name];
+            tryGet(childNodes[childNodes.length - 1], () => {
+                container.methods.push(this.factory.getClassMethod(childNodes));
             });
         });
 
         Object.keys(staticMethods).forEach(name => {
-            const childNode = staticMethods[name];
-            tryGet(childNode, () => {
-                container.staticMethods.push(this.factory.getClassStaticMethod(childNode));
+            const childNodes = staticMethods[name];
+            tryGet(childNodes[childNodes.length - 1], () => {
+                container.staticMethods.push(this.factory.getClassStaticMethod(childNodes));
             });
         });
 

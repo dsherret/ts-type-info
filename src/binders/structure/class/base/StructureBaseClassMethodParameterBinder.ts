@@ -1,7 +1,7 @@
 ﻿import {StructureFactory} from "./../../../../factories";
 import {BaseClassMethodParameterStructure} from "./../../../../structures";
 import {BaseClassMethodParameterBinder} from "./../../../base";
-import {StructureDecoratableBinder, StructureBaseParameterBinder, StructureNodedBinder} from "./../../base";
+import {StructureDecoratableBinder, StructureBaseParameterBinder} from "./../../base";
 import {StructureScopedBinder} from "./StructureScopedBinder";
 
 export class StructureBaseClassMethodParameterBinder extends BaseClassMethodParameterBinder {
@@ -9,8 +9,7 @@ export class StructureBaseClassMethodParameterBinder extends BaseClassMethodPara
         super(
             new StructureBaseParameterBinder(factory, structure),
             new StructureDecoratableBinder(factory, structure),
-            new StructureScopedBinder(structure),
-            new StructureNodedBinder()
+            new StructureScopedBinder(structure)
         );
     }
 }

@@ -9,21 +9,25 @@ import {TsParameteredBinderByNode, TsParameterBinderByNodeConstructor} from "./T
 import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 import {TsNodedBinder} from "./TsNodedBinder";
 
-export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
+export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
+    private readonly node: TsNode;
+
     constructor(
         private readonly factory: TsFactory,
-        private readonly node: TsNode,
+        private readonly nodes: TsNode[],
         paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
         paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
         super(
             new TsBaseDefinitionBinder(),
-            new TsNamedBinder(node),
-            new TsTypeParameteredBinderByNode(factory, node),
-            new TsParameteredBinderByNode(factory, node, paramDefinition, paramBinder),
-            new TsReturnTypedBinderByNode(factory, node),
-            new TsNodedBinder(factory, node)
+            new TsNamedBinder(nodes[nodes.length - 1]),
+            new TsTypeParameteredBinderByNode(factory, nodes[nodes.length - 1]),
+            new TsParameteredBinderByNode(factory, nodes[nodes.length - 1], paramDefinition, paramBinder),
+            new TsReturnTypedBinderByNode(factory, nodes[nodes.length - 1]),
+            new TsNodedBinder(factory, nodes[nodes.length - 1])
         );
+
+        this.node = nodes[nodes.length - 1];
     }
 
     protected getIsGenerator() {
@@ -31,14 +35,9 @@ export class TsBaseFunctionBinder<ParameterType extends BaseParameterDefinition>
     }
 
     protected getOverloadSignatures() {
-        const callSignatures = this.node.getType().getCallSignatures().filter(c => !c.getDeclaration().hasFunctionBody());
+        const overloadNodes = this.nodes.slice(0, this.nodes.length - 1);
 
-        // we need to ignore the implementation signature in these cases
-        if (this.node.isMethodSignature() || this.node.isAmbient() || this.node.hasAbstractKeyword()) {
-            callSignatures.pop();
-        }
-
-        return callSignatures.map(s => this.factory.getCallSignatureFromSignature(s));
+        return overloadNodes.map(n => this.factory.getCallSignatureFromNode(n));
     }
 
     protected getUserDefinedTypeGuard() {

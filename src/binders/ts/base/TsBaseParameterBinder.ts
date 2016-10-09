@@ -5,6 +5,7 @@ import {TsBaseDefinitionBinder} from "./TsBaseDefinitionBinder";
 import {TsDefaultExpressionedBinder} from "./TsDefaultExpressionedBinder";
 import {TsOptionalBinderForParameter} from "./TsOptionalBinderForParameter";
 import {TsNamedBinder} from "./TsNamedBinder";
+import {TsNodedBinder} from "./TsNodedBinder";
 import {TsTypedBinder} from "./TsTypedBinder";
 
 export class TsBaseParameterBinder extends BaseParameterBinder {
@@ -14,7 +15,8 @@ export class TsBaseParameterBinder extends BaseParameterBinder {
             new TsNamedBinder(node),
             new TsOptionalBinderForParameter(node),
             new TsTypedBinder(factory, node),
-            new TsDefaultExpressionedBinder(factory, node)
+            new TsDefaultExpressionedBinder(factory, node),
+            new TsNodedBinder(factory, node)
         );
     }
 

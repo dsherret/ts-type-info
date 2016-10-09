@@ -2,7 +2,7 @@
 export * from "./base/TsAmbientableBinder";
 export * from "./base/TsAsyncableBinder";
 export * from "./base/TsBaseDefinitionBinder";
-export * from "./base/TsBaseFunctionBinder";
+export * from "./base/TsBaseFunctionBinderByNodes";
 export * from "./base/TsBaseObjectPropertyBinder";
 export * from "./base/TsBaseParameterBinder";
 export * from "./base/TsBasePropertyBinder";
@@ -13,6 +13,7 @@ export * from "./base/TsFunctionBodyWriteableBinder";
 export * from "./base/TsModuledBinder";
 export * from "./base/TsNamedBinder";
 export * from "./base/TsNodedBinder";
+export * from "./base/TsNodedBinderNull";
 export * from "./base/TsOptionalBinderForParameter";
 export * from "./base/TsOptionalBinderForProperty";
 export * from "./base/TsParameteredBinderByNode";

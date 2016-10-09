@@ -1,14 +1,16 @@
+import * as typeConstants from "./../../typeConstants";
 import {TypeParameterStructure, CallSignatureParameterStructure} from "./../../structures";
 import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
-import {TypeParameteredDefinition, BaseDefinition, ReturnTypedDefinition, ParameteredDefinition} from "./../base";
+import {TypeParameteredDefinition, BaseDefinition, ReturnTypedDefinition, ParameteredDefinition, NodedDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeDefinition} from "./../expression";
 import {CallSignatureParameterDefinition} from "./CallSignatureParameterDefinition";
 
 export class CallSignatureDefinition
         extends BaseDefinition
-        implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition {
+        implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition,
+            NodedDefinition {
     addParameter(structure: CallSignatureParameterStructure) {
         const def = new StructureFactory().getCallSignatureParameter(structure);
         this.parameters.push(def);
@@ -29,6 +31,8 @@ export class CallSignatureDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
 
-applyMixins(CallSignatureDefinition, BaseDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition]);
+applyMixins(CallSignatureDefinition, BaseDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, NodedDefinition]);

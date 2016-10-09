@@ -1,8 +1,8 @@
 ﻿/* tslint:disable */
 /// <reference path="referenceStructures.d.ts" />
 
-var c: MyReferenceClass;
-var i: MyReferenceInterface;
-var f = MyReferenceFunction;
-var e: MyReferenceEnum;
-var t: MyReferenceType;
+let c: MyReferenceClass;
+let i: MyReferenceInterface;
+let f = MyReferenceFunction;
+let e: MyReferenceEnum;
+let t: MyReferenceType;
