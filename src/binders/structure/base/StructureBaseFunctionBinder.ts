@@ -8,6 +8,7 @@ import {StructureTypeParameteredBinder} from "./StructureTypeParameteredBinder";
 import {StructureParameteredBinder, StructureParameterBinderConstructor} from "./StructureParameteredBinder";
 import {StructureReturnTypedBinder} from "./StructureReturnTypedBinder";
 import {StructureNodedBinder} from "./StructureNodedBinder";
+import {StructureOverloadSignaturedBinder} from "./StructureOverloadSignaturedBinder";
 
 export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition, StructureParameterType extends BaseParameterStructure>
         extends BaseFunctionBinder<ParameterType> {
@@ -23,16 +24,13 @@ export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseP
             new StructureTypeParameteredBinder(factory, structure),
             new StructureParameteredBinder(factory, structure, paramDefinition, paramBinder),
             new StructureReturnTypedBinder(factory, structure),
-            new StructureNodedBinder()
+            new StructureNodedBinder(),
+            new StructureOverloadSignaturedBinder(factory, structure)
         );
     }
 
     protected getIsGenerator() {
         return this.structure.isGenerator || false;
-    }
-
-    protected getOverloadSignatures() {
-        return (this.structure.overloadSignatures || []).map(s => this.factory.getCallSignature(s));
     }
 
     protected getUserDefinedTypeGuard() {

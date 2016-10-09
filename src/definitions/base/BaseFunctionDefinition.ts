@@ -1,7 +1,6 @@
 import * as typeConstants from "./../../typeConstants";
 import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
-import {StructureFactory} from "./../../factories";
-import {applyMixins, DefinitionUtils} from "./../../utils";
+import {applyMixins} from "./../../utils";
 import {TypeDefinition} from "./../expression";
 import {TypeParameterDefinition, CallSignatureDefinition, UserDefinedTypeGuardDefinition} from "./../general";
 import {BaseParameterDefinition} from "./BaseParameterDefinition";
@@ -12,24 +11,14 @@ import {ParameteredDefinition} from "./ParameteredDefinition";
 import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 import {ThisTypedDefinition} from "./ThisTypedDefinition";
 import {NodedDefinition} from "./NodedDefinition";
+import {OverloadSignaturedDefinition} from "./OverloadSignaturedDefinition";
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition,
-            ThisTypedDefinition, NodedDefinition {
+            ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition {
     isGenerator: boolean;
-    overloadSignatures: CallSignatureDefinition[] = [];
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
-
-    addOverloadSignature(structure: CallSignatureStructure) {
-        const def = new StructureFactory().getCallSignature(structure);
-        this.overloadSignatures.push(def);
-        return def;
-    }
-
-    getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean) {
-        return DefinitionUtils.getDefinitionFromListByFunc(this.overloadSignatures, searchFunction);
-    }
 
     // NamedDefinition
     name: string;
@@ -49,7 +38,11 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
+    // OverloadSignaturedDefinition
+    overloadSignatures: CallSignatureDefinition[];
+    addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
+    getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
 }
 
 applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, ThisTypedDefinition,
-    NodedDefinition]);
+    NodedDefinition, OverloadSignaturedDefinition]);

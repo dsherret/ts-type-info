@@ -19,3 +19,4 @@ export * from "./base/StructureReadonlyableBinder";
 export * from "./base/StructureReturnTypedBinder";
 export * from "./base/StructureTypedBinder";
 export * from "./base/StructureTypeParameteredBinder";
+export * from "./base/StructureOverloadSignaturedBinder";

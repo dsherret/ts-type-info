@@ -5,6 +5,7 @@ import {NodedBinder} from "./NodedBinder";
 import {ParameteredBinder} from "./ParameteredBinder";
 import {TypeParameteredBinder} from "./TypeParameteredBinder";
 import {ReturnTypedBinder} from "./ReturnTypedBinder";
+import {OverloadSignaturedBinder} from "./OverloadSignaturedBinder";
 
 export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition> {
     constructor(
@@ -13,11 +14,11 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         private readonly typeParameterBinder: TypeParameteredBinder,
         private readonly parameterBinder: ParameteredBinder<ParameterType>,
         private readonly returnTypedBinder: ReturnTypedBinder,
-        private readonly nodedBinder: NodedBinder
+        private readonly nodedBinder: NodedBinder,
+        private readonly overloadSignaturedBinder: OverloadSignaturedBinder
     ) {
     }
 
-    protected abstract getOverloadSignatures(): definitions.CallSignatureDefinition[];
     protected abstract getUserDefinedTypeGuard(): definitions.UserDefinedTypeGuardDefinition | null;
     protected abstract getIsGenerator(): boolean;
 
@@ -28,6 +29,7 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         this.parameterBinder.bind(def);
         this.returnTypedBinder.bind(def);
         this.nodedBinder.bind(def);
+        this.overloadSignaturedBinder.bind(def);
 
         if (def.parameters.length > 0 && def.parameters[0].name === "this") {
             const thisParam = def.parameters.splice(0, 1)[0];
@@ -35,7 +37,6 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         }
 
         def.isGenerator = this.getIsGenerator();
-        def.overloadSignatures.push(...this.getOverloadSignatures());
         def.userDefinedTypeGuard = this.getUserDefinedTypeGuard();
 
         if (def.userDefinedTypeGuard != null) {

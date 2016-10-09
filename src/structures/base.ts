@@ -19,3 +19,4 @@ export * from "./base/BaseParameterStructure";
 export * from "./base/ParameteredStructure";
 export * from "./base/ReadonlyableStructure";
 export * from "./base/ReturnTypedStructure";
+export * from "./base/OverloadSignaturedStructure";

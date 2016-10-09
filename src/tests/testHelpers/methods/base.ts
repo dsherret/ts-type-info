@@ -21,3 +21,4 @@ export * from "./base/runBaseFunctionDefinitionTests";
 export * from "./base/runBaseParameterDefinitionTests";
 export * from "./base/runParameteredDefinitionTests";
 export * from "./base/runReturnTypedDefinitionTests";
+export * from "./base/runOverloadSignaturedDefinitionTests";

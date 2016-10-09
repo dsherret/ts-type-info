@@ -21,3 +21,4 @@ export * from "./base/BaseFunctionTestStructure";
 export * from "./base/BaseParameterTestStructure";
 export * from "./base/ParameteredTestStructure";
 export * from "./base/ReturnTypedTestStructure";
+export * from "./base/OverloadSignaturedTestStructure";

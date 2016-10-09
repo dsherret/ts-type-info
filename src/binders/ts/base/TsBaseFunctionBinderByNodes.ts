@@ -8,13 +8,14 @@ import {TsTypeParameteredBinderByNode} from "./TsTypeParameteredBinderByNode";
 import {TsParameteredBinderByNode, TsParameterBinderByNodeConstructor} from "./TsParameteredBinderByNode";
 import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 import {TsNodedBinder} from "./TsNodedBinder";
+import {TsOverloadSignaturedBinder} from "./TsOverloadSignaturedBinder";
 
 export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
     private readonly node: TsNode;
 
     constructor(
         private readonly factory: TsFactory,
-        private readonly nodes: TsNode[],
+        readonly nodes: TsNode[],
         paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
         paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
@@ -24,7 +25,8 @@ export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefi
             new TsTypeParameteredBinderByNode(factory, nodes[nodes.length - 1]),
             new TsParameteredBinderByNode(factory, nodes[nodes.length - 1], paramDefinition, paramBinder),
             new TsReturnTypedBinderByNode(factory, nodes[nodes.length - 1]),
-            new TsNodedBinder(factory, nodes[nodes.length - 1])
+            new TsNodedBinder(factory, nodes[nodes.length - 1]),
+            new TsOverloadSignaturedBinder(factory, nodes)
         );
 
         this.node = nodes[nodes.length - 1];
@@ -32,12 +34,6 @@ export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefi
 
     protected getIsGenerator() {
         return this.node.isGeneratorFunction();
-    }
-
-    protected getOverloadSignatures() {
-        const overloadNodes = this.nodes.slice(0, this.nodes.length - 1);
-
-        return overloadNodes.map(n => this.factory.getCallSignatureFromNode(n));
     }
 
     protected getUserDefinedTypeGuard() {

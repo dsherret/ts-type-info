@@ -19,3 +19,4 @@ export * from "./base/ReadonlyableBinder";
 export * from "./base/ReturnTypedBinder";
 export * from "./base/TypedBinder";
 export * from "./base/TypeParameteredBinder";
+export * from "./base/OverloadSignaturedBinder";
