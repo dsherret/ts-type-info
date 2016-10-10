@@ -89,10 +89,8 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureImportBinder(this, structure), new definitions.ImportDefinition());
     }
 
-    getImportPartByImportName(importName: string) {
-        const def = new definitions.DefaultImportPartDefinition();
-        def.name = importName;
-        return def;
+    getDefaultImportPartByName(importName: string) {
+        return bindToDefinition(new binders.StructureDefaultImportPartBinder(importName), new definitions.DefaultImportPartDefinition());
     }
 
     getIndexSignature(structure: structures.IndexSignatureStructure) {

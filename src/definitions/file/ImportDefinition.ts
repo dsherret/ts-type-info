@@ -34,7 +34,7 @@ export class ImportDefinition extends BaseDefinition implements NodedDefinition 
 
     setDefaultImport(importName: string) {
         const factory = new StructureFactory();
-        this.defaultImport = factory.getImportPartByImportName(importName);
+        this.defaultImport = factory.getDefaultImportPartByName(importName);
         return this;
     }
 

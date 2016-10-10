@@ -116,15 +116,12 @@ export class TsNode extends TsSourceFileChild {
         return propertyDeclaration.initializer != null ? this.createTsExpression(propertyDeclaration.initializer) : null;
     }
 
-    getDefaultImportNameAndSymbol() {
+    getDefaultImportNode() {
         const importDeclaration = this.node as ts.ImportDeclaration;
         const clause = importDeclaration.importClause;
 
         if (clause != null && clause.name != null) {
-            return {
-                name: clause.name.getText(),
-                symbol: this.createSymbol(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(clause.name)))
-            };
+            return this.createNode(clause.name);
         }
         else {
             return null;

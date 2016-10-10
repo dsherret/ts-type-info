@@ -1,5 +1,4 @@
-﻿import {ExportableDefinitions} from "./../../../definitions";
-import {TsFactory} from "./../../../factories";
+﻿import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {ImportBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsNodedBinder} from "./../base";
@@ -29,20 +28,8 @@ export class TsImportBinder extends ImportBinder {
     }
 
     getDefaultImport() {
-        const defaultImportNameAndSymbol = this.node.getDefaultImportNameAndSymbol();
-
-        if (defaultImportNameAndSymbol != null) {
-            const defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(defaultImportNameAndSymbol.symbol!);
-
-            return this.factory.getDefaultImportPart({
-                name: defaultImportNameAndSymbol.name,
-                definitions: defsOrExpression.definitions as ExportableDefinitions[],
-                expression: defsOrExpression.expression!
-            });
-        }
-        else {
-            return null;
-        }
+        const defaultImportNode = this.node.getDefaultImportNode();
+        return (defaultImportNode == null) ? null : this.factory.getDefaultImportPart(defaultImportNode);
     }
 
     getNamedImports() {

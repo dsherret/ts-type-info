@@ -31,7 +31,7 @@ export class StructureImportBinder extends ImportBinder {
 
     getDefaultImport() {
         if (!StringUtils.isNullOrWhiteSpace(this.structure.defaultImportName)) {
-            return this.factory.getImportPartByImportName(this.structure.defaultImportName);
+            return this.factory.getDefaultImportPartByName(this.structure.defaultImportName);
         }
         else {
             return null;
