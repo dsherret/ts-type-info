@@ -29,8 +29,8 @@ export class TsFactory {
         return bindToDefinition(new binders.TsCallSignatureBinderBySignature(this, signature), new definitions.CallSignatureDefinition());
     }
 
-    getClassConstructor(node: TsNode) {
-        return bindToDefinition(new binders.TsClassConstructorBinder(this, node), new definitions.ClassConstructorDefinition());
+    getClassConstructor(nodes: TsNode[]) {
+        return bindToDefinition(new binders.TsClassConstructorBinder(this, nodes), new definitions.ClassConstructorDefinition());
     }
 
     getClassMethod(nodes: TsNode[]) {

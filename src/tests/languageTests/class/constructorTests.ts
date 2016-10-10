@@ -26,6 +26,12 @@ class MyClass6 {
     protected constructor() {
     }
 }
+class MyClass7 {
+    constructor(param: number);
+    constructor(param: string);
+    constructor(param: any) {
+    }
+}
 `;
 
     const def = getInfoFromString(code);
@@ -78,6 +84,28 @@ class MyClass6 {
             name: "MyClass6",
             constructorDef: {
                 scope: Scope.Protected
+            }
+        }, {
+            name: "MyClass7",
+            constructorDef: {
+                parameters: [{
+                    name: "param"
+                }],
+                overloadSignatures: [{
+                    parameters: [{
+                        name: "param",
+                        type: { text: "number" }
+                    }],
+                    minArgumentCount: 1,
+                    returnType: { text: "MyClass7" }
+                }, {
+                    parameters: [{
+                        name: "param",
+                        type: { text: "string" }
+                    }],
+                    minArgumentCount: 1,
+                    returnType: { text: "MyClass7" }
+                }]
             }
         }]
     });

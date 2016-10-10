@@ -2,23 +2,24 @@
 import {ClassConstructorParameterDefinition} from "./../../../definitions";
 import {TsNode} from "./../../../compiler";
 import {ClassConstructorBinder} from "./../../base";
-import {TsBaseDefinitionBinder, TsParameteredBinderByNode, TsFunctionBodyWriteableBinder, TsNodedBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsParameteredBinderByNode, TsFunctionBodyWriteableBinder, TsNodedBinder, TsOverloadSignaturedBinder} from "./../base";
 import {TsScopedBinder} from "./base";
 import {TsClassConstructorParameterBinder} from "./TsClassConstructorParameterBinder";
 
 export class TsClassConstructorBinder extends ClassConstructorBinder {
-    constructor(factory: TsFactory, node: TsNode) {
+    constructor(factory: TsFactory, nodes: TsNode[]) {
         super(
             new TsBaseDefinitionBinder(),
             new TsParameteredBinderByNode(
                 factory,
-                node,
+                nodes[nodes.length - 1],
                 ClassConstructorParameterDefinition,
                 TsClassConstructorParameterBinder
             ),
             new TsFunctionBodyWriteableBinder(),
-            new TsScopedBinder(node),
-            new TsNodedBinder(factory, node)
+            new TsScopedBinder(nodes[nodes.length - 1]),
+            new TsNodedBinder(factory, nodes[nodes.length - 1]),
+            new TsOverloadSignaturedBinder(factory, nodes)
         );
     }
 }

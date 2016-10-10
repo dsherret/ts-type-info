@@ -38,6 +38,7 @@ export class TsClassBinder extends ClassBinder {
 
     getMembers() {
         const container = new ClassMemberContainer();
+        const constructors: TsNode[] = [];
         // because there can be multiple method signatures, the last one needs to be used
         const methods: { [name: string]: TsNode[]; } = {};
         const staticMethods: { [name: string]: TsNode[]; } = {};
@@ -70,7 +71,7 @@ export class TsClassBinder extends ClassBinder {
                     }
                 }
                 else if (childNode.isConstructor()) {
-                    container.constructorDef = this.factory.getClassConstructor(childNode);
+                    constructors.push(childNode);
                 }
                 else if (childNode.isSetAccessor()) {
                     // ignore, GetAccessor is the one that will be handled
@@ -95,6 +96,12 @@ export class TsClassBinder extends ClassBinder {
                 }
             });
         });
+
+        if (constructors.length > 0) {
+            tryGet(constructors[constructors.length - 1], () => {
+                container.constructorDef = this.factory.getClassConstructor(constructors);
+            });
+        }
 
         Object.keys(methods).forEach(name => {
             const childNodes = methods[name];
