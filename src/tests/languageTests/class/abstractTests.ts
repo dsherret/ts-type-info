@@ -1,4 +1,4 @@
-﻿import {getInfoFromString} from "./../../../main";
+﻿import {getInfoFromString, ClassPropertyKind} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class abstract tests", () => {
@@ -6,6 +6,8 @@ describe("class abstract tests", () => {
 abstract class MyAbstractClass {
     abstract myAbstractMethod(): string;
     abstract myAbstractMethod(str?: string): string;
+    abstract get myAbstractAccessor(): number;
+    abstract set myAbstractAccessor(value: number);
 }`;
 
     const def = getInfoFromString(code);
@@ -26,6 +28,12 @@ abstract class MyAbstractClass {
                 overloadSignatures: [{
                     returnType: { text: "string" }
                 }]
+            }],
+            properties: [{
+                name: "myAbstractAccessor",
+                kind: ClassPropertyKind.GetSetAccessor,
+                isAbstract: true,
+                type: { text: "number" }
             }]
         }]
     });
