@@ -15,10 +15,19 @@ export class ClassConstructorWriter extends BaseDefinitionWriter<ClassConstructo
     }
 
     protected writeDefault(def: ClassConstructorDefinition, flags: WriteFlags) {
+        def.overloadSignatures.forEach(signatureDef => {
+            this.writeStartOfConstructor(def);
+            this.parametersWriter.write(signatureDef, flags);
+            this.writer.write(";").newLine();
+        });
+        this.writeStartOfConstructor(def);
+        this.parametersWriter.write(def, flags);
+        this.functionBodyWriter.write(def, flags);
+    }
+
+    private writeStartOfConstructor(def: ClassConstructorDefinition) {
         this.scopeWriter.write(def.scope);
         this.writer.spaceIfLastNotSpace();
         this.writer.write("constructor");
-        this.parametersWriter.write(def, flags);
-        this.functionBodyWriter.write(def, flags);
     }
 }

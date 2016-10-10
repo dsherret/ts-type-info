@@ -99,6 +99,13 @@ class MyExtendsImplementsClass extends MyChildClass implements MyImplementsClass
 
 class MyExtendsArray extends Array<string> {
 }
+
+class MyClassWithOverloadSignatures {
+    constructor(param: number);
+    constructor(param: string);
+    constructor(param: any) {
+    }
+}
 `;
 
 describe("ClassDefinition", () => {
@@ -248,6 +255,20 @@ describe("ClassDefinition", () => {
 }
 `;
                 assert.equal(file.classes[6].write(), expected);
+            });
+        });
+
+        describe("MyClassWithOverloadSignatures", () => {
+            it("should contain the class written out", () => {
+                const expected =
+`class MyClassWithOverloadSignatures {
+    constructor(param: number);
+    constructor(param: string);
+    constructor(param: any) {
+    }
+}
+`;
+                assert.equal(file.classes[7].write(), expected);
             });
         });
     });
