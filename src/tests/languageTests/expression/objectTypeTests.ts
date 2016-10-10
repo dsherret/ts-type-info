@@ -3,7 +3,7 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("object type tests", () => {
     const code = `
-let obj: { myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; };
+let obj: { readonly myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; };
 
 class Note {
     prop: string;
@@ -15,10 +15,11 @@ class Note {
         variables: [{
             name: "obj",
             type: {
-                text: "{ myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
+                text: "{ readonly myString: string; myOtherType?: Note; myNext: string; myNext2: string; myReallyReallyReallyReallyReallyLongName: string; }",
                 properties: [{
                     name: "myString",
-                    type: { text: "string" }
+                    type: { text: "string" },
+                    isReadonly: true
                 }, {
                     name: "myOtherType",
                     isOptional: true,
