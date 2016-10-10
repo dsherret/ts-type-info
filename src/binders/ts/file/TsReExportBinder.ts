@@ -1,11 +1,14 @@
 ﻿import {TsFactory} from "./../../../factories";
 import {TsNode, TsSymbol} from "./../../../compiler";
 import {ReExportBinder} from "./../../base";
-import {TsBaseDefinitionBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsNodedBinder} from "./../base";
 
 export class TsReExportBinder extends ReExportBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
-        super(new TsBaseDefinitionBinder());
+        super(
+            new TsBaseDefinitionBinder(),
+            new TsNodedBinder(factory, node)
+        );
     }
 
     getFileName() {

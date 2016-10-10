@@ -1,15 +1,15 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
 import {MainFactory, StructureFactory} from "./../../factories";
 import {NamedImportPartStructure} from "./../../structures";
-import {DefinitionUtils} from "./../../utils";
+import {DefinitionUtils, applyMixins} from "./../../utils";
 import {ReExportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {BaseDefinition} from "./../base";
+import {BaseDefinition, NodedDefinition} from "./../base";
 import {StarImportPartDefinition} from "./StarImportPartDefinition";
 import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
-export class ReExportDefinition extends BaseDefinition {
+export class ReExportDefinition extends BaseDefinition implements NodedDefinition {
     fileName: string;
     moduleSpecifier: string;
     starExports: StarImportPartDefinition[] = [];
@@ -50,3 +50,5 @@ export class ReExportDefinition extends BaseDefinition {
         return writer.toString();
     }
 }
+
+applyMixins(ReExportDefinition, BaseDefinition, [NodedDefinition]);
