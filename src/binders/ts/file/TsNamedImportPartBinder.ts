@@ -1,7 +1,7 @@
 ﻿import {ExportableDefinitions, ExpressionDefinition} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {NamedImportPartBinder} from "./../../base";
-import {TsBaseDefinitionBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsNodedBinder} from "./../base";
 import {TsNode} from "./../../../compiler";
 
 export class TsNamedImportPartBinder extends NamedImportPartBinder {
@@ -11,7 +11,10 @@ export class TsNamedImportPartBinder extends NamedImportPartBinder {
     };
 
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
-        super(new TsBaseDefinitionBinder());
+        super(
+            new TsBaseDefinitionBinder(),
+            new TsNodedBinder(factory, node)
+        );
         this.defsOrExpression = this.factory.getDefinitionsOrExpressionFromExportSymbol(node.getSymbol()!);
     }
 

@@ -1,11 +1,14 @@
 ﻿import {ExportableDefinitions} from "./../../../definitions";
 import {NamedImportPartStructure} from "./../../../structures";
 import {NamedImportPartBinder} from "./../../base";
-import {StructureBaseDefinitionBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNodedBinder} from "./../base";
 
 export class StructureNamedImportPartBinder extends NamedImportPartBinder {
     constructor(private readonly structure: NamedImportPartStructure) {
-        super(new StructureBaseDefinitionBinder(structure));
+        super(
+            new StructureBaseDefinitionBinder(structure),
+            new StructureNodedBinder()
+        );
     }
 
     getName() {
