@@ -1,6 +1,8 @@
 ﻿import * as ts from "typescript";
-import {Logger} from "./../utils";
+import {Logger, Memoize} from "./../utils";
+import {NameKeyUtils} from "./utils";
 import {TsNode} from "./TsNode";
+import {TsType} from "./TsType";
 import {TsSourceFileChild, TsSourceFileChildOptions} from "./TsSourceFileChild";
 
 interface TsSymbolOptions extends TsSourceFileChildOptions {
@@ -36,8 +38,8 @@ export class TsSymbol extends TsSourceFileChild {
         });
     }
 
-    getExportSymbolsByName() {
-        const exportSymbols: { [name: string]: TsSymbol; } = {};
+    getExportSymbolsByNameKeys() {
+        const exportSymbols: { [nameKey: string]: TsSymbol; } = {};
 
         Object.keys(this.symbol.exports).forEach(memberName => {
             const symbol = this.createSymbol(this.symbol.exports![memberName]);
@@ -46,15 +48,15 @@ export class TsSymbol extends TsSourceFileChild {
             if (isStarExport) {
                 symbol.getNodes().forEach(node => {
                     const moduleSpecifierSymbol = node.getModuleSpecifierSymbol()!;
-                    const starSymbolsByName = moduleSpecifierSymbol.getExportSymbolsByName();
+                    const starSymbolsByNameKeys = moduleSpecifierSymbol.getExportSymbolsByNameKeys();
 
-                    Object.keys(starSymbolsByName).forEach(starSymbolMemberName => {
-                        exportSymbols[starSymbolMemberName] = starSymbolsByName[starSymbolMemberName];
+                    Object.keys(starSymbolsByNameKeys).forEach(memberNameKey => {
+                        exportSymbols[memberNameKey] = starSymbolsByNameKeys[memberNameKey];
                     });
                 });
             }
             else {
-                exportSymbols[memberName] = this.createSymbol(this.symbol.exports![memberName]);
+                exportSymbols[NameKeyUtils.getNameKeyFromName(memberName)] = this.createSymbol(this.symbol.exports![memberName]);
             }
         });
 
@@ -88,10 +90,6 @@ export class TsSymbol extends TsSourceFileChild {
         }
 
         return nodes[0];
-    }
-
-    getNodes(): TsNode[] {
-        return (this.symbol.getDeclarations() || []).map(declaration => this.createNode(declaration));
     }
 
     isAlias() {
@@ -129,6 +127,41 @@ export class TsSymbol extends TsSourceFileChild {
         return (this.symbol.flags & ts.SymbolFlags.SetAccessor) !== 0;
     }
 
+    isPropertyOptional() {
+        const nodes = this.getNodes();
+        if (nodes.length === 1)
+            return nodes[0].isPropertyOptional();
+
+        const bindingElement = ((this.symbol as any)["bindingElement"] as ts.BindingElement);
+        if (bindingElement != null) {
+            if (bindingElement.initializer != null || bindingElement.dotDotDotToken != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    isPropertyReadonly() {
+        const nodes = this.getNodes();
+        return (nodes.length === 1) ? nodes[0].isPropertyReadonly() : false;
+    }
+
+    @Memoize
+    getType() {
+        const type = ((this.symbol as any)["type"] as ts.Type);
+        return this.createType(type, this.getUnderlyingNodes()[0]);
+    }
+
+    @Memoize
+    getNodes(): TsNode[] {
+        return this.getUnderlyingNodes().map(declaration => this.createNode(declaration));
+    }
+
+    @Memoize
+    private getUnderlyingNodes() {
+        return this.symbol.getDeclarations() || [];
+    }
+
     private createSymbol(symbol: ts.Symbol): TsSymbol {
         return this.tsCache.getSymbol(symbol, () => new TsSymbol({
             sourceFile: this.sourceFile,
@@ -147,6 +180,17 @@ export class TsSymbol extends TsSourceFileChild {
             node,
             tsSourceFile: this.tsSourceFile
         }, this));
+    }
+
+    private createType(type: ts.Type, node: ts.Node | null): TsType {
+        return new TsType({
+            sourceFile: this.sourceFile,
+            typeChecker: this.typeChecker,
+            type,
+            node,
+            tsCache: this.tsCache,
+            tsSourceFile: this.tsSourceFile
+        });
     }
 
     private getSymbolParent(symbol: ts.Symbol) {

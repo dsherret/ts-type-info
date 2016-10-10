@@ -98,11 +98,16 @@ export class TsFactory {
     }
 
     getTypePropertyFromSymbol(symbol: TsSymbol) {
-        return this.getTypePropertyFromNode(symbol.getOnlyNode());
+        const nodes = symbol.getNodes();
+
+        if (nodes.length === 1)
+            return this.getTypePropertyFromNode(nodes[0]);
+        else
+            return bindToDefinition(new binders.TsTypePropertyBinderBySymbol(this, symbol), new definitions.TypePropertyDefinition());
     }
 
     getTypePropertyFromNode(node: TsNode) {
-        return bindToDefinition(new binders.TsTypePropertyBinder(this, node), new definitions.TypePropertyDefinition());
+        return bindToDefinition(new binders.TsTypePropertyBinderByNode(this, node), new definitions.TypePropertyDefinition());
     }
 
     getTypeNode(node: TsTypeNode) {

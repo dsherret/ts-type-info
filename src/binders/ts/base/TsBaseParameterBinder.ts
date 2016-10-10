@@ -4,17 +4,17 @@ import {BaseParameterBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./TsBaseDefinitionBinder";
 import {TsDefaultExpressionedBinder} from "./TsDefaultExpressionedBinder";
 import {TsOptionalBinderForParameter} from "./TsOptionalBinderForParameter";
-import {TsNamedBinder} from "./TsNamedBinder";
+import {TsNamedBinderByNode} from "./TsNamedBinderByNode";
 import {TsNodedBinder} from "./TsNodedBinder";
-import {TsTypedBinder} from "./TsTypedBinder";
+import {TsTypedBinderByNode} from "./TsTypedBinderByNode";
 
 export class TsBaseParameterBinder extends BaseParameterBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
-            new TsNamedBinder(node),
+            new TsNamedBinderByNode(node),
             new TsOptionalBinderForParameter(node),
-            new TsTypedBinder(factory, node),
+            new TsTypedBinderByNode(factory, node),
             new TsDefaultExpressionedBinder(factory, node),
             new TsNodedBinder(factory, node)
         );

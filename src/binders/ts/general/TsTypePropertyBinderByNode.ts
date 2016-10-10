@@ -2,13 +2,13 @@
 import {TsFactory} from "./../../../factories";
 import {TypePropertyBinder} from "./../../base";
 import {TsBaseDefinitionBinder} from "./../base/TsBaseDefinitionBinder";
-import {TsBasePropertyBinder} from "./../base/TsBasePropertyBinder";
+import {TsBasePropertyBinderByNode} from "../base/TsBasePropertyBinderByNode";
 
-export class TsTypePropertyBinder extends TypePropertyBinder {
+export class TsTypePropertyBinderByNode extends TypePropertyBinder {
     constructor(factory: TsFactory, node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
-            new TsBasePropertyBinder(factory, node)
+            new TsBasePropertyBinderByNode(factory, node)
         );
     }
 }

@@ -5,15 +5,15 @@ export class TsTypeChecker {
     constructor(private readonly typeChecker: ts.TypeChecker) {
     }
 
-    typeToString(type: ts.Type, node: ts.Node) {
+    typeToString(type: ts.Type, node: ts.Node | null) {
         let formatFlags = (ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
             ts.TypeFormatFlags.WriteTypeArgumentsOfSignature) as ts.TypeFormatFlags;
 
-        if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
+        if (node != null && node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
             formatFlags |= ts.TypeFormatFlags.InTypeAlias;
         }
 
-        return this.typeChecker.typeToString(type, node, formatFlags);
+        return this.typeChecker.typeToString(type, node || undefined, formatFlags);
     }
 
     getSyntaxKindAsString(kind: ts.SyntaxKind) {

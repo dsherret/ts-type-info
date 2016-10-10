@@ -5,7 +5,7 @@ describe("function name tests", () => {
     const code = `
 function myFunction() {
 }
-function myFunctionWithParameters(str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: MyClass[]) {
+function myFunctionWithParameters(implicitAnyParam, str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: MyClass[]) {
     return new Date();
 }
 function myFunctionWithThisType(this: string, num: number) {
@@ -34,7 +34,10 @@ class MyClass2 {
             name: "myFunction"
         }, {
             name: "myFunctionWithParameters",
-            parameters: [{
+            parameters: [
+            {
+                name: "implicitAnyParam"
+            }, {
                 name: "str",
                 type: { text: "string" }
             }, {

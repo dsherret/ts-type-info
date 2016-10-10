@@ -1,7 +1,7 @@
 ﻿import {TsNode} from "./../../../compiler";
 import {ReadonlyableBinder} from "./../../base";
 
-export class TsReadonlyableBinder extends ReadonlyableBinder {
+export class TsReadonlyableBinderByNode extends ReadonlyableBinder {
     constructor(private readonly node: TsNode) {
         super();
     }

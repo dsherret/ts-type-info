@@ -2,7 +2,7 @@
 import {TsFactory} from "./../../../factories";
 import {TypedBinder} from "./../../base";
 
-export class TsTypedBinder extends TypedBinder {
+export class TsTypedBinderByNode extends TypedBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super();
     }

@@ -6,12 +6,12 @@ import {TsSymbol} from "./TsSymbol";
 
 interface TsSignatureOptions extends TsSourceFileChildOptions {
     signature: ts.Signature;
-    node: ts.Node;
+    node: ts.Node | null;
 }
 
 export class TsSignature extends TsSourceFileChild {
     private readonly signature: ts.Signature;
-    private readonly node: ts.Node;
+    private readonly node: ts.Node | null;
 
     constructor(opts: TsSignatureOptions) {
         super(opts);
@@ -34,7 +34,7 @@ export class TsSignature extends TsSourceFileChild {
     }
 
     getTypeParameters() {
-        let typeParameters = this.signature.typeParameters;
+        const typeParameters = this.signature.typeParameters;
         return (typeParameters || []).map(typeParameter => this.createSymbol(typeParameter.symbol!));
     }
 

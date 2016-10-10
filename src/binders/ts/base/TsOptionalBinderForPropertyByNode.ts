@@ -1,7 +1,7 @@
 ﻿import {TsNode} from "./../../../compiler";
 import {OptionalBinder} from "./../../base";
 
-export class TsOptionalBinderForProperty extends OptionalBinder {
+export class TsOptionalBinderForPropertyByNode extends OptionalBinder {
     constructor(private readonly node: TsNode) {
         super();
     }

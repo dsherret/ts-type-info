@@ -39,12 +39,10 @@ export class TsBaseTypeBinderByType extends BaseTypeBinder {
     }
 
     getProperties() {
-        if (this.getCallSignatureAndProperties) {
+        if (this.getCallSignatureAndProperties)
             return this.tsType.getProperties().map(p => this.factory.getTypePropertyFromSymbol(p));
-        }
-        else {
+        else
             return [] as TypePropertyDefinition[];
-        }
     }
 
     getTypeArguments() {

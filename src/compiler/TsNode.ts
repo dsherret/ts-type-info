@@ -4,6 +4,7 @@ import {Memoize} from "./../utils/decorators";
 import {Logger} from "./../utils/Logger";
 import {TypeGuards} from "./../utils/TypeGuards";
 import {ClassConstructorParameterScope, NamespaceDeclarationType, Scope, VariableDeclarationType} from "./../definitions";
+import {NameKeyUtils} from "./utils";
 import {TsExpression} from "./TsExpression";
 import {TsSignature} from "./TsSignature";
 import {TsSymbol} from "./TsSymbol";
@@ -49,6 +50,10 @@ export class TsNode extends TsSourceFileChild {
         }
 
         return name || "";
+    }
+
+    getNameKey() {
+        return NameKeyUtils.getNameKeyFromName(this.getName());
     }
 
     getUnderlyingNode() {
@@ -454,20 +459,43 @@ export class TsNode extends TsSourceFileChild {
     isPropertyOptional(): boolean {
         const propertyDeclaration = this.node as ts.PropertyDeclaration;
 
-        if (propertyDeclaration.questionToken != null) {
-            return true;
-        }
-        else if (this.node.parent != null && this.node.parent.parent != null && this.node.parent.parent.kind === ts.SyntaxKind.Parameter) {
-            // for parameter destructuring, check to see if the type has a questionToken
+        if (this.node.parent != null && this.node.parent.parent != null && this.node.parent.parent.kind === ts.SyntaxKind.Parameter) {
+            // for parameter destructuring
             const name = this.getName();
             const prop = ArrayUtils.firstOrDefault(this.createNode(this.node.parent.parent).getType().getProperties(), p => p.getName() === name);
 
             if (prop != null) {
-                return (prop.getOnlyNode().node as ts.PropertyDeclaration).questionToken != null;
+                const nodes = prop.getNodes();
+                if (nodes.length === 1)
+                    return (nodes[0].node as ts.PropertyDeclaration).questionToken != null;
+                return prop.isPropertyOptional();
             }
-        }
 
-        return false;
+            return false;
+        }
+        else {
+            return propertyDeclaration.questionToken != null;
+        }
+    }
+
+    isPropertyReadonly(): boolean {
+        if (this.node.parent != null && this.node.parent.parent != null && this.node.parent.parent.kind === ts.SyntaxKind.Parameter) {
+            // for parameter destructuring
+            const name = this.getName();
+            const propSymbol = ArrayUtils.firstOrDefault(this.createNode(this.node.parent.parent).getType().getProperties(), p => p.getName() === name);
+
+            if (propSymbol != null) {
+                const nodes = propSymbol.getNodes();
+                if (nodes.length === 1)
+                    return nodes[0].hasReadonlyKeyword();
+                return propSymbol.isPropertyReadonly();
+            }
+
+            return false;
+        }
+        else {
+            return this.hasReadonlyKeyword();
+        }
     }
 
     isPropertyDeclaration() {

@@ -2,13 +2,13 @@
 import {TsNode} from "./../../../compiler";
 import {tryGet, Logger} from "./../../../utils";
 import {InterfaceBinder, InterfaceMemberContainer} from "./../../base";
-import {TsBaseDefinitionBinder, TsNamedBinder, TsExportableBinder, TsAmbientableBinder, TsTypeParameteredBinderByNode, TsNodedBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsNamedBinderByNode, TsExportableBinder, TsAmbientableBinder, TsTypeParameteredBinderByNode, TsNodedBinder} from "./../base";
 
 export class TsInterfaceBinder extends InterfaceBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
-            new TsNamedBinder(node),
+            new TsNamedBinderByNode(node),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
             new TsTypeParameteredBinderByNode(factory, node),
@@ -27,15 +27,16 @@ export class TsInterfaceBinder extends InterfaceBinder {
     getMembers() {
         const container = new InterfaceMemberContainer();
         // because there can be multiple method signatures, the last one needs to be used
-        const methods: { [name: string]: TsNode[] } = {};
+        const methods: { [nameKey: string]: TsNode[] } = {};
 
         this.node.getChildren().forEach(childNode => {
             tryGet(childNode, () => {
                 if (childNode.isMethodSignature()) {
-                    const name = childNode.getName();
-                    if (typeof methods[name] === "undefined")
-                        methods[name] = [];
-                    methods[name].push(childNode);
+                    // prefix to prevent collisions
+                    const key = childNode.getNameKey();
+                    if (typeof methods[key] === "undefined")
+                        methods[key] = [];
+                    methods[key].push(childNode);
                 }
                 else if (childNode.isPropertySignature()) {
                     container.properties.push(this.factory.getInterfaceProperty(childNode));
@@ -70,8 +71,8 @@ export class TsInterfaceBinder extends InterfaceBinder {
             });
         });
 
-        Object.keys(methods).forEach(name => {
-            const methodNodes = methods[name];
+        Object.keys(methods).forEach(nameKey => {
+            const methodNodes = methods[nameKey];
             tryGet(methodNodes[methodNodes.length - 1], () => {
                 container.methods.push(this.factory.getInterfaceMethod(methodNodes));
             });

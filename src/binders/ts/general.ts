@@ -6,5 +6,6 @@ export * from "./general/TsIndexSignatureBinder";
 export * from "./general/TsObjectPropertyBinder";
 export * from "./general/TsTypeAliasBinder";
 export * from "./general/TsTypeParameterBinder";
-export * from "./general/TsTypePropertyBinder";
+export * from "./general/TsTypePropertyBinderByNode";
+export * from "./general/TsTypePropertyBinderBySymbol";
 export * from "./general/TsUserDefinedTypeGuardBinder";

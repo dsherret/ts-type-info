@@ -6,12 +6,12 @@ import {TsSignature} from "./TsSignature";
 
 export interface TsTypeOptions extends TsSourceFileChildOptions {
     type: ts.Type;
-    node: ts.Node;
+    node: ts.Node | null;
 }
 
 export class TsType extends TsSourceFileChild {
     private readonly type: ts.Type;
-    private readonly node: ts.Node;
+    private readonly node: ts.Node | null;
 
     constructor(opts: TsTypeOptions) {
         super(opts);
