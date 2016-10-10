@@ -1,9 +1,12 @@
 ﻿import {ImportDefinition, DefaultImportPartDefinition, NamedImportPartDefinition, StarImportPartDefinition} from "./../../../definitions";
-import {BaseDefinitionBinder} from "./../base";
+import {BaseDefinitionBinder, NodedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class ImportBinder implements IBaseBinder {
-    constructor(private readonly baseDefinitionBinder: BaseDefinitionBinder) {
+    constructor(
+        private readonly baseDefinitionBinder: BaseDefinitionBinder,
+        private readonly nodedBinder: NodedBinder
+    ) {
     }
 
     abstract getFileName(): string;
@@ -16,6 +19,7 @@ export abstract class ImportBinder implements IBaseBinder {
 
     bind(def: ImportDefinition) {
         this.baseDefinitionBinder.bind(def);
+        this.nodedBinder.bind(def);
         def.fileName = this.getFileName();
         def.moduleSpecifier = this.getModuleSpecifier();
         def.defaultImport = this.getDefaultImport();

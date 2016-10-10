@@ -2,11 +2,12 @@
 import {runNodedDefinitionTestsForNonNamed} from "./../../testHelpers";
 
 describe("file noded tests", () => {
-    const code = ``;
+    const code = `import * as myImport from "./file";`;
 
     const def = getInfoFromString(code, {
         includeCompilerNodes: true
     });
 
     runNodedDefinitionTestsForNonNamed(def);
+    runNodedDefinitionTestsForNonNamed(def.imports[0]);
 });

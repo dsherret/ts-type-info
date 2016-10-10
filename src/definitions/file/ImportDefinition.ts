@@ -1,15 +1,16 @@
-﻿import {MainFactory, StructureFactory} from "./../../factories";
+﻿import * as typeConstants from "./../../typeConstants";
+import {MainFactory, StructureFactory} from "./../../factories";
 import {NamedImportPartStructure} from "./../../structures";
-import {DefinitionUtils} from "./../../utils";
+import {DefinitionUtils, applyMixins} from "./../../utils";
 import {ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {BaseDefinition} from "./../base";
+import {BaseDefinition, NodedDefinition} from "./../base";
 import {DefaultImportPartDefinition} from "./DefaultImportPartDefinition";
 import {StarImportPartDefinition} from "./StarImportPartDefinition";
 import {NamedImportPartDefinition} from "./NamedImportPartDefinition";
 
-export class ImportDefinition extends BaseDefinition {
+export class ImportDefinition extends BaseDefinition implements NodedDefinition {
     fileName: string;
     moduleSpecifier: string;
     starImportName: string | null;
@@ -43,4 +44,9 @@ export class ImportDefinition extends BaseDefinition {
         importWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
+
+    // NodedDefinition
+    tsNode?: typeConstants.TypeScriptNode;
 }
+
+applyMixins(ImportDefinition, BaseDefinition, [NodedDefinition]);

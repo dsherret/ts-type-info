@@ -3,11 +3,14 @@ import {StructureFactory} from "./../../../factories";
 import {ImportStructure} from "./../../../structures";
 import {StringUtils} from "./../../../utils";
 import {ImportBinder} from "./../../base";
-import {StructureBaseDefinitionBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNodedBinder} from "./../base";
 
 export class StructureImportBinder extends ImportBinder {
     constructor(private readonly factory: StructureFactory, private readonly structure: ImportStructure) {
-        super(new StructureBaseDefinitionBinder(structure));
+        super(
+            new StructureBaseDefinitionBinder(structure),
+            new StructureNodedBinder()
+        );
     }
 
     getFileName() {
