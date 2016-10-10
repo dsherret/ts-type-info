@@ -33,13 +33,7 @@ export class TsReExportBinder extends ReExportBinder {
         const starExportSymbols = moduleSymbol == null ? ({} as { [name: string]: TsSymbol; }) : moduleSymbol.getExportSymbolsByName();
 
         return Object.keys(starExportSymbols).filter(name => name !== "default").map(name => {
-            const {definitions, expression} = this.factory.getDefinitionsOrExpressionFromExportSymbol(starExportSymbols[name]);
-
-            return this.factory.getStarImportPart({
-                name,
-                definitions,
-                expression
-            });
+            return this.factory.getStarImportPart(name, starExportSymbols[name]);
         });
     }
 }

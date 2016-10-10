@@ -89,12 +89,8 @@ export class TsFactory {
         return bindToDefinition(new binders.TsDefaultImportPartBinder(this, node), new definitions.DefaultImportPartDefinition());
     }
 
-    getStarImportPart(obj: { name: string; definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition | null; }) {
-        const def = new definitions.StarImportPartDefinition();
-        def.name = obj.name;
-        def.definitions.push(...obj.definitions);
-        def.expression = obj.expression;
-        return def;
+    getStarImportPart(name: string, symbol: TsSymbol) {
+        return bindToDefinition(new binders.TsStarImportPartBinder(this, name, symbol), new definitions.StarImportPartDefinition());
     }
 
     getTypeParameter(node: TsNode) {

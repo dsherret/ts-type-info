@@ -249,27 +249,20 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getStarImportName() {
-        const importDeclaration = this.node as ts.ImportDeclaration;
-
-        if (importDeclaration.importClause != null) {
-            const namespaceImport = importDeclaration.importClause.namedBindings as ts.NamespaceImport;
-            return namespaceImport.name.getText();
-        }
-        else {
-            return null;
-        }
+        return this.getStarImportNode()!.getText();
     }
 
-    getStarSymbol() {
+    @Memoize
+    getStarImportNode() {
         const importDeclaration = this.node as ts.ImportDeclaration;
 
-        if (importDeclaration.importClause != null) {
+        if (importDeclaration.importClause != null && importDeclaration.importClause.namedBindings != null) {
             const namespaceImport = importDeclaration.importClause.namedBindings as ts.NamespaceImport;
-            return this.createSymbol(this.typeChecker.getAliasedSymbol(this.typeChecker.getSymbolAtLocation(namespaceImport.name)));
+            if (namespaceImport.name != null)
+                return this.createNode(namespaceImport.name);
         }
-        else {
-            return null;
-        }
+
+        return null;
     }
 
     getTypeParameters() {
@@ -491,10 +484,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     isStarImport() {
-        const importDeclaration = this.node as ts.ImportDeclaration;
-        const namespaceImport = (importDeclaration.importClause == null) ? null : importDeclaration.importClause.namedBindings as ts.NamespaceImport;
-
-        return namespaceImport != null && namespaceImport.name != null;
+        return this.getStarImportNode() != null;
     }
 
     isTypeLiteral() {
