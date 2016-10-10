@@ -14,10 +14,10 @@ export class TypeNodeDefinition
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition = (structure) => {
         throw new Error(`addTypeParameter is not supported on ${nameof(TypeNodeDefinition)}`);
     };
-    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => (TypeParameterDefinition | null);
     // ParameteredDefinition
     parameters: TypeFunctionParameterDefinition[];
-    getParameter: (nameOrSearchFunction: string | ((parameter: TypeFunctionParameterDefinition) => boolean)) => TypeFunctionParameterDefinition;
+    getParameter: (nameOrSearchFunction: string | ((parameter: TypeFunctionParameterDefinition) => boolean)) => (TypeFunctionParameterDefinition | null);
     addParameter: (structure: TypeFunctionParameterStructure) => TypeFunctionParameterDefinition = (structure) => {
         throw new Error(`addParameter is not supported on ${nameof(TypeNodeDefinition)}`);
     };

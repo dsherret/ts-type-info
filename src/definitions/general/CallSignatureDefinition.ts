@@ -23,14 +23,14 @@ export class CallSignatureDefinition
 
     // ParameteredDefinition
     parameters: CallSignatureParameterDefinition[];
-    getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition;
+    getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => (CallSignatureParameterDefinition | null);
     // ReturnTyped
     returnType: TypeDefinition;
     setReturnType: (text: string) => this;
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
-    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => (TypeParameterDefinition | null);
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
 }

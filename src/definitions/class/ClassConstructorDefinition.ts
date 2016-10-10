@@ -23,7 +23,7 @@ export class ClassConstructorDefinition
     onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     // ParameteredDefinition
     parameters: ClassConstructorParameterDefinition[];
-    getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition;
+    getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => (ClassConstructorParameterDefinition | null);
     // ScopedDefinition
     scope: Scope;
     // NodedDefinition
@@ -31,7 +31,7 @@ export class ClassConstructorDefinition
     // OverloadSignaturedDefinition
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
-    getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
+    getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => (CallSignatureDefinition | null);
 }
 
 applyMixins(ClassConstructorDefinition, BaseDefinition, [ParameteredDefinition, FunctionBodyWriteableDefinition, ScopedDefinition, NodedDefinition,

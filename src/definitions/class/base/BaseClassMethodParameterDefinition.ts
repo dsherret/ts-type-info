@@ -12,7 +12,7 @@ export class BaseClassMethodParameterDefinition
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
-    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => (DecoratorDefinition | null);
     // ScopedDefinition
     scope: Scope;
     // NodedDefinition

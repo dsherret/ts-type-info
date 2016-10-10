@@ -31,7 +31,7 @@ describe("TypeParameteredDefinition", () => {
         const c = new ClassDefinition();
         c.addTypeParameter({ name: "name1" });
         c.addTypeParameter({ name: "name2" });
-        runNamedDefinitionTests(c.getTypeParameter("name2"), { name: "name2" });
-        runNamedDefinitionTests(c.getTypeParameter(d => d.name === "name2"), { name: "name2" });
+        runNamedDefinitionTests(c.getTypeParameter("name2")!, { name: "name2" });
+        runNamedDefinitionTests(c.getTypeParameter(p => p.name === "name2")!, { name: "name2" });
     });
 });

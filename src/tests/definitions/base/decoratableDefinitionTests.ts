@@ -35,7 +35,7 @@ describe("DecoratableDefinition", () => {
         const c = new ClassDefinition();
         c.addDecorator({ name: "name1" });
         c.addDecorator({ name: "name2" });
-        runNamedDefinitionTests(c.getDecorator("name2"), { name: "name2" });
-        runNamedDefinitionTests(c.getDecorator(d => d.name === "name2"), { name: "name2" });
+        runNamedDefinitionTests(c.getDecorator("name2")!, { name: "name2" });
+        runNamedDefinitionTests(c.getDecorator(d => d.name === "name2")!, { name: "name2" });
     });
 });

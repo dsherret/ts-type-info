@@ -108,7 +108,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     // DecoratableDefinition
     decorators: DecoratorDefinition[];
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
-    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition;
+    getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => (DecoratorDefinition | null);
     // ExportableDefinition
     isExported: boolean;
     isNamedExportOfFile: boolean;
@@ -120,7 +120,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
-    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => (TypeParameterDefinition | null);
     // AmbientableDefinition
     isAmbient: boolean;
     hasDeclareKeyword: boolean;

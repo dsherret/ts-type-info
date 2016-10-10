@@ -25,7 +25,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     // ParameteredDefinition
     parameters: ParameterType[];
     abstract addParameter(structure: ParameterStructureType): ParameterType;
-    getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType;
+    getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => (ParameterType | null);
     // ThisTypedDefinition
     thisType: TypeDefinition | null;
     setThisType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
@@ -35,13 +35,13 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     // TypeParameteredDefinition
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
-    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition;
+    getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => (TypeParameterDefinition | null);
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
     // OverloadSignaturedDefinition
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
-    getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
+    getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => (CallSignatureDefinition | null);
 }
 
 applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, ThisTypedDefinition,
