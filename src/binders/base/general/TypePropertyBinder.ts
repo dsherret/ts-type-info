@@ -15,6 +15,6 @@ export abstract class TypePropertyBinder implements IBaseBinder {
     bind(def: TypePropertyDefinition) {
         this.baseDefinitionBinder.bind(def);
         this.basePropertyBinder.bind(def);
-        this.nodedBinder.bind(def)
+        this.nodedBinder.bind(def);
     }
 }
