@@ -5,7 +5,7 @@ import {MainFactory, StructureFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, InterfaceStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
     VariableStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils, validateImportStructure, FileUtils, StringUtils} from "./../../utils";
-import {FileWriter} from "./../../writers";
+import {FileWriter, ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {writeDefinition} from "./../../writeDefinition";
@@ -81,15 +81,17 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
         return writer.toString();
     }
 
-    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string }[]; writeOptions?: WriteOptions; }) {
+    writeExportsAsDefinitionFile(options: { imports: ImportStructure[]; writeOptions?: WriteOptions; }) {
         console.warn("writeExportsAsDefinitionFile(...) is not supported. It has not been tested.");
 
         const writer = MainFactory.createWriter(options.writeOptions);
 
         if (options && options.imports) {
-            // todo: should use an ImportWriter to write this
+            const structureFactory = new StructureFactory();
+            const importWriter = new ImportWriter(writer);
             options.imports.forEach(importStructure => {
-                writer.writeLine(`import ${importStructure.defaultImport} from "${importStructure.moduleSpecifier}";`);
+                const importDef = structureFactory.getImport(importStructure);
+                importWriter.write(importDef, WriteFlags.Default);
             });
 
             writer.newLine();

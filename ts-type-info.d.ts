@@ -1,4 +1,5 @@
 import CodeBlockWriter from "code-block-writer";
+import * as ts from "typescript";
 
 export function getInfoFromFiles(fileNames: string[], options?: Options | undefined): GlobalDefinition;
 
@@ -245,12 +246,13 @@ export class IndexSignatureDefinition extends BaseDefinition implements ReturnTy
     isReadonly: boolean;
 }
 
-export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition {
+export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition {
     constraintType: TypeDefinition | null;
     name: string;
+    tsNode?: ts.Node | undefined;
 }
 
-export class TypePropertyDefinition extends BasePropertyDefinition {
+export class TypePropertyDefinition extends BasePropertyDefinition implements NodedDefinition {
 }
 
 export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition, NodedDefinition {
@@ -280,7 +282,7 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
     addArgument(text: string): TypeDefinition;
 }
 
-export class ObjectPropertyDefinition extends BaseObjectPropertyDefinition {
+export class ObjectPropertyDefinition extends BaseObjectPropertyDefinition implements NodedDefinition {
 }
 
 export class UserDefinedTypeGuardDefinition extends BaseDefinition {
@@ -641,16 +643,17 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
     getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): ReExportDefinition | null;
     getExports(): ExportableDefinitions[];
     write(writeOptions?: WriteOptions | undefined): string;
-    writeExportsAsDefinitionFile(options: { imports: { defaultImport: string; moduleSpecifier: string; }[]; writeOptions?: WriteOptions | undefined; }): string;
+    writeExportsAsDefinitionFile(options: { imports: ImportStructure[]; writeOptions?: WriteOptions | undefined; }): string;
 }
 
-export class ImportDefinition extends BaseDefinition {
+export class ImportDefinition extends BaseDefinition implements NodedDefinition {
     fileName: string;
     moduleSpecifier: string;
     starImportName: string | null;
     defaultImport: DefaultImportPartDefinition | null;
     namedImports: NamedImportPartDefinition[];
     starImports: StarImportPartDefinition[];
+    tsNode?: ts.Node | undefined;
 
     addNamedImport(structure: NamedImportPartStructure): NamedImportPartDefinition;
     getNamedImport(searchFunction: (importPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition | null;
@@ -659,7 +662,7 @@ export class ImportDefinition extends BaseDefinition {
     write(writeOptions?: WriteOptions | undefined): string;
 }
 
-export class ReExportDefinition extends BaseDefinition {
+export class ReExportDefinition extends BaseDefinition implements NodedDefinition {
     fileName: string;
     moduleSpecifier: string;
     starExports: StarImportPartDefinition[];
@@ -672,7 +675,7 @@ export class ReExportDefinition extends BaseDefinition {
     write(writeOptions?: WriteOptions | undefined): string;
 }
 
-export class NamedImportPartDefinition extends BaseDefinition {
+export class NamedImportPartDefinition extends BaseDefinition implements NodedDefinition {
     definitions: ExportableDefinitions[];
     expression: ExpressionDefinition | null;
     alias: string | null;
@@ -685,10 +688,11 @@ export class StarImportPartDefinition extends BaseDefinition {
     name: string;
 }
 
-export class DefaultImportPartDefinition extends BaseDefinition {
+export class DefaultImportPartDefinition extends BaseDefinition implements NodedDefinition {
     definitions: ExportableDefinitions[];
-    expression: ExpressionDefinition;
+    expression: ExpressionDefinition | null;
     name: string;
+    tsNode?: ts.Node | undefined;
 }
 
 export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {

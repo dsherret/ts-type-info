@@ -19,8 +19,11 @@ export function generateDefinitionFile() {
 
     const definitionFileText = fileInfo.writeExportsAsDefinitionFile({
         imports: [{
-            defaultImport: "CodeBlockWriter",
+            defaultImportName: "CodeBlockWriter",
             moduleSpecifier: "code-block-writer"
+        }, {
+            starImportName: "ts",
+            moduleSpecifier: "typescript"
         }]
     });
 
