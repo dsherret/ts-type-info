@@ -1,6 +1,8 @@
 ﻿import * as assert from "assert";
+import * as path from "path";
 import {createVariable} from "./../../createFunctions";
 import {GlobalDefinition} from "./../../definitions";
+import {getInfoFromFiles} from "./../../main";
 
 describe("GlobalDefinition", () => {
     describe("#addDefinitionAsImportToFile()", () => {
@@ -200,6 +202,20 @@ describe("GlobalDefinition", () => {
             it("result should be null", () => {
                 assert.equal(result, null);
             });
+        });
+    });
+
+    describe("typeChecker", () => {
+        const fileName = path.join(__dirname, "../../../src/tests/testFiles/nonTsFile.js");
+
+        describe("includeCompilerNodes true", () => {
+            const result = getInfoFromFiles([fileName], { includeCompilerNodes: true });
+            assert.equal(typeof result.typeChecker !== "undefined", true);
+        });
+
+        describe("includeCompilerNodes false", () => {
+            const result = getInfoFromFiles([fileName], { includeCompilerNodes: false });
+            assert.equal(typeof result.typeChecker === "undefined", true);
         });
     });
 });

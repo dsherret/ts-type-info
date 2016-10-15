@@ -10,13 +10,15 @@ import {TsSourceFile} from "./TsSourceFile";
 export class TsMain {
     private readonly tsSourceFiles: TsSourceFile[];
     private readonly tsCache = new TsCache();
+    private readonly typeChecker: ts.TypeChecker;
 
     constructor(fileNames: string[], options: Options) {
         this.verifyFilesExist(fileNames);
 
         const compilerOptions = this.getTsCompilerOptions(options.compilerOptions);
         const program = ts.createProgram(fileNames, compilerOptions);
-        const typeChecker = new TsTypeChecker(program.getTypeChecker());
+        this.typeChecker = program.getTypeChecker();
+        const tsTypeChecker = new TsTypeChecker(this.typeChecker);
 
         this.tsSourceFiles = program.getSourceFiles().filter(file => {
             const baseName = path.basename(file.fileName);
@@ -25,14 +27,18 @@ export class TsMain {
             return new TsSourceFile({
                 tsCache: this.tsCache,
                 sourceFile,
-                symbol: typeChecker.getSymbolAtLocation(sourceFile),
-                typeChecker
+                symbol: tsTypeChecker.getSymbolAtLocation(sourceFile),
+                typeChecker: tsTypeChecker
             });
         });
     }
 
     getSourceFiles() {
         return this.tsSourceFiles;
+    }
+
+    getTypeScriptTypeChecker() {
+        return this.typeChecker;
     }
 
     private getTsCompilerOptions(compilerOptions: CompilerOptions | undefined) {

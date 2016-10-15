@@ -20,10 +20,10 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
     }
 
     options = options || {};
+    const {includeCompilerNodes = false, showDebugMessages = false} = options;
 
-    Logger.toggleEnabled(options.showDebugMessages || false);
+    Logger.toggleEnabled(showDebugMessages);
 
-    const {includeCompilerNodes = false} = options;
     const tsMain = new TsMain(fileNames, options);
     const tsFactory = new TsFactory({ includeCompilerNodes });
 
@@ -34,6 +34,8 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
 
     const globalDef = new GlobalDefinition();
     globalDef.files = fileDefinitions;
+    if (includeCompilerNodes)
+        globalDef.typeChecker = tsMain.getTypeScriptTypeChecker();
     return globalDef;
 }
 
