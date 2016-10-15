@@ -5,7 +5,7 @@ describe("namespace noded tests", () => {
     const code = `namespace MyNamespace{}`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.namespaces[0]);

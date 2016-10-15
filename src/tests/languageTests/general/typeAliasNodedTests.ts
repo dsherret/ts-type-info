@@ -5,7 +5,7 @@ describe("type alias noded tests", () => {
     const code = `type MyType = "string";`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.typeAliases[0]);

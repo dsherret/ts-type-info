@@ -10,7 +10,7 @@ export * from "./file";
 `;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTestsForNonNamed(def);

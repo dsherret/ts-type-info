@@ -8,7 +8,7 @@
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
-* [Version 6.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New) - TypeScript 2.0 support
+* [Version 6.1 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
 
 ```
 npm install ts-type-info --save-dev
@@ -123,3 +123,20 @@ abstract class MyClass {
 
 * [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code.
 * [TsObjectCreate](https://github.com/dsherret/ts-object-create) - Code generation that writes functions for creating objects with their types.
+
+## Include tsNodes
+
+In case there's something you need from the compiler that's not implemented in this library, set the `includeTsNodes` option to true.
+This will include the TypeScript compiler nodes in the `tsNode` property of most objects.
+
+```typescript
+import * as ts from "typescript";
+import * as TsTypeInfo from "ts-type-info";
+
+const result = TsTypeInfo.getInfoFromFiles(["V:\\TestFile.ts"], { includeTsNodes: true });
+const typeChecker = result.getTypeChecker(); // ts.TypeChecker in case you need it
+const myMethod = result.getFile("TestFile.ts").getClass("MyClass").getMethod("myMethod");
+const myMethodNode = myMethod.tsNode as ts.MethodDeclaration;
+
+console.log(myMethodNode.body.statements[0].getText()); // "return `Test: ${myParameter}`;"
+```

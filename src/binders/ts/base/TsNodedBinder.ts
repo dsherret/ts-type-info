@@ -8,6 +8,6 @@ export class TsNodedBinder extends NodedBinder {
     }
 
     getTsNode() {
-        return this.factory.getShouldIncludeCompilerNodes() ? this.node.getUnderlyingNode() : undefined;
+        return this.factory.getShouldincludeTsNodes() ? this.node.getUnderlyingNode() : undefined;
     }
 }

@@ -5,7 +5,7 @@ describe("type node noded tests", () => {
     const code = `var test: string;`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTestsForNonNamed(def.variables[0].type.node!);

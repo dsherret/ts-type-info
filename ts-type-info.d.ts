@@ -8,7 +8,7 @@ export function getInfoFromString(code: string, options?: Options | undefined): 
 export interface Options {
     compilerOptions?: CompilerOptions | undefined;
     showDebugMessages?: boolean | undefined;
-    includeCompilerNodes?: boolean | undefined;
+    includeTsNodes?: boolean | undefined;
 }
 
 export interface CompilerOptions {
@@ -720,6 +720,7 @@ export const VariableDeclarationType: { Var: VariableDeclarationType; Let: Varia
 
 export class GlobalDefinition {
     files: FileDefinition[];
+    typeChecker?: ts.TypeChecker | undefined;
 
     addDefinitionAsImportToFile(opts: { definition: ExportableDefinitions; file: FileDefinition; alias?: string | undefined; }): void;
     addFile(structure: FileStructure): FileDefinition;

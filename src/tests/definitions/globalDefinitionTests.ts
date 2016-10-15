@@ -208,13 +208,13 @@ describe("GlobalDefinition", () => {
     describe("typeChecker", () => {
         const fileName = path.join(__dirname, "../../../src/tests/testFiles/nonTsFile.js");
 
-        describe("includeCompilerNodes true", () => {
-            const result = getInfoFromFiles([fileName], { includeCompilerNodes: true });
+        describe("includeTsNodes true", () => {
+            const result = getInfoFromFiles([fileName], { includeTsNodes: true });
             assert.equal(typeof result.typeChecker !== "undefined", true);
         });
 
-        describe("includeCompilerNodes false", () => {
-            const result = getInfoFromFiles([fileName], { includeCompilerNodes: false });
+        describe("includeTsNodes false", () => {
+            const result = getInfoFromFiles([fileName], { includeTsNodes: false });
             assert.equal(typeof result.typeChecker === "undefined", true);
         });
     });

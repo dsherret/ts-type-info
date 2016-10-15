@@ -7,7 +7,7 @@ function myFunction(param: string): void;
 function myFunction(param: any) { }`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.functions[0]);

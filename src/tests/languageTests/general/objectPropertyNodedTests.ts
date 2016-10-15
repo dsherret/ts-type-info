@@ -5,7 +5,7 @@ describe("object property noded tests", () => {
     const code = `function myFunc({ t = 4 }: { t: number; }) {}`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.functions[0].parameters[0].destructuringProperties[0]);

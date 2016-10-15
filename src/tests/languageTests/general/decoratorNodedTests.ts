@@ -11,7 +11,7 @@ class MyClass1 {
 }`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.classes[0].decorators[0]);

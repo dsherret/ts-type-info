@@ -5,7 +5,7 @@ describe("user defined type guard noded tests", () => {
     const code = `function myFunction(obj: MyClass): obj is MyOtherClass {}`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTestsForNonNamed(def.functions[0].userDefinedTypeGuard!);

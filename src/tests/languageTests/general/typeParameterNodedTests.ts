@@ -5,7 +5,7 @@ describe("type parameter noded tests", () => {
     const code = `interface MyInterface<T> {}`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.interfaces[0].typeParameters[0]);

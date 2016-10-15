@@ -5,7 +5,7 @@ import {getInfoFromFiles} from "./../../../main";
 
 describe("Issue #184", () => {
     const fileName = path.join(__dirname, "../../../../src/tests/issues/184/testFile.ts");
-    const result = getInfoFromFiles([fileName], { includeCompilerNodes: true });
+    const result = getInfoFromFiles([fileName], { includeTsNodes: true });
     const classDef = result.getFile("testFile.ts")!.getClass("MyClass")!;
 
     classDef.methods.forEach(methodDef => {

@@ -5,7 +5,7 @@ describe("variable noded tests", () => {
     const code = `var myVar: any;`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.variables[0]);

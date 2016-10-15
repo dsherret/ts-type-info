@@ -12,7 +12,7 @@ interface MyInterface {
 `;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.interfaces[0]);

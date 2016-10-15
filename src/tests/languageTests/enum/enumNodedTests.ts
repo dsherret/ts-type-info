@@ -8,7 +8,7 @@ enum MyEnum {
 }`;
 
     const def = getInfoFromString(code, {
-        includeCompilerNodes: true
+        includeTsNodes: true
     });
 
     runNodedDefinitionTests(def.enums[0]);
