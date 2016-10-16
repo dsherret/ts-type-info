@@ -1,11 +1,12 @@
 ﻿import * as definitions from "./../../../definitions";
 import {BaseDefinitionBinder} from "./BaseDefinitionBinder";
+import {JsDocedBinder} from "./JsDocedBinder";
 import {NamedBinder} from "./NamedBinder";
 import {NodedBinder} from "./NodedBinder";
 import {ParameteredBinder} from "./ParameteredBinder";
-import {TypeParameteredBinder} from "./TypeParameteredBinder";
 import {ReturnTypedBinder} from "./ReturnTypedBinder";
 import {OverloadSignaturedBinder} from "./OverloadSignaturedBinder";
+import {TypeParameteredBinder} from "./TypeParameteredBinder";
 
 export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition> {
     constructor(
@@ -15,7 +16,8 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         private readonly parameterBinder: ParameteredBinder<ParameterType>,
         private readonly returnTypedBinder: ReturnTypedBinder,
         private readonly nodedBinder: NodedBinder,
-        private readonly overloadSignaturedBinder: OverloadSignaturedBinder
+        private readonly overloadSignaturedBinder: OverloadSignaturedBinder,
+        private readonly jsDocedBinder: JsDocedBinder
     ) {
     }
 
@@ -30,6 +32,7 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         this.returnTypedBinder.bind(def);
         this.nodedBinder.bind(def);
         this.overloadSignaturedBinder.bind(def);
+        this.jsDocedBinder.bind(def);
 
         if (def.parameters.length > 0 && def.parameters[0].name === "this") {
             const thisParam = def.parameters.splice(0, 1)[0];

@@ -12,11 +12,12 @@ import {ReturnTypedDefinition} from "./ReturnTypedDefinition";
 import {ThisTypedDefinition} from "./ThisTypedDefinition";
 import {NodedDefinition} from "./NodedDefinition";
 import {OverloadSignaturedDefinition} from "./OverloadSignaturedDefinition";
+import {JsDocedDefinition} from "./JsDocedDefinition";
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition,
-            ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition {
+            ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, JsDocedDefinition {
     isGenerator: boolean;
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
 
@@ -42,7 +43,9 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => (CallSignatureDefinition | null);
+    // JsDocedDefintiion
+    jsDocText: string;
 }
 
 applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, ThisTypedDefinition,
-    NodedDefinition, OverloadSignaturedDefinition]);
+    NodedDefinition, OverloadSignaturedDefinition, JsDocedDefinition]);

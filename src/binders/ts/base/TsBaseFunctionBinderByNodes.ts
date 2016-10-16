@@ -9,6 +9,7 @@ import {TsParameteredBinderByNode, TsParameterBinderByNodeConstructor} from "./T
 import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 import {TsNodedBinder} from "./TsNodedBinder";
 import {TsOverloadSignaturedBinder} from "./TsOverloadSignaturedBinder";
+import {TsJsDocedBinder} from "./TsJsDocedBinder";
 
 export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
     private readonly node: TsNode;
@@ -26,7 +27,8 @@ export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefi
             new TsParameteredBinderByNode(factory, nodes[nodes.length - 1], paramDefinition, paramBinder),
             new TsReturnTypedBinderByNode(factory, nodes[nodes.length - 1]),
             new TsNodedBinder(factory, nodes[nodes.length - 1]),
-            new TsOverloadSignaturedBinder(factory, nodes)
+            new TsOverloadSignaturedBinder(factory, nodes),
+            new TsJsDocedBinder(nodes[nodes.length - 1])
         );
 
         this.node = nodes[nodes.length - 1];

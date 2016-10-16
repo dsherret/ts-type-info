@@ -5,7 +5,9 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("class method", () => {
     const code = `
 class MyClass {
-    // parameters
+    /**
+      * Some description
+      */
     myParameterMethod(myParameter: string, myDefaultParameter = 15, myOptionalParameter?: string, ...myRestParameter: number[]) {
         return "";
     }
@@ -48,6 +50,7 @@ class MyClass {
             name: "MyClass",
             methods: [{
                 name: "myParameterMethod",
+                jsDocText: "/**\n      * Some description\n      */",
                 parameters: [{
                     name: "myParameter",
                     type: { text: "string" }

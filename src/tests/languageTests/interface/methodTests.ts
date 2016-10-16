@@ -4,7 +4,9 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("interface method", () => {
     const code = `
 interface MyInterface {
-    // parameters
+    /**
+      * Some description
+      */
     myParameterMethod(myParameter: string, myOptionalParameter?: number): number;
     myImplicitAnyReturnTypeMethod();
     myExplicitReturnTypeMethod(): string;
@@ -18,6 +20,7 @@ interface MyInterface {
             name: "MyInterface",
             methods: [{
                 name: "myParameterMethod",
+                jsDocText: `/**\n      * Some description\n      */`,
                 returnType: { text: "number" },
                 parameters: [{
                     name: "myParameter",

@@ -67,6 +67,10 @@ export abstract class AsyncableDefinition {
     isAsync: boolean;
 }
 
+export abstract class JsDocedDefinition {
+    jsDocText: string;
+}
+
 export abstract class ThisTypedDefinition {
     thisType: TypeDefinition | null;
 
@@ -122,7 +126,7 @@ export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinitio
     setDefaultExpression: (text: string) => this;
 }
 
-export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition, ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition {
+export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition, ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, JsDocedDefinition {
     isGenerator: boolean;
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
     name: string;
@@ -139,6 +143,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
+    jsDocText: string;
 
     abstract addParameter(structure: ParameterStructureType): ParameterType;
 }
@@ -823,6 +828,10 @@ export interface FunctionBodyWriteableStructure {
     onWriteFunctionBody?: ((writer: CodeBlockWriter) => void) | undefined;
 }
 
+export interface JsDocedStructure {
+    jsDocText?: string | undefined;
+}
+
 export interface ModuledStructure {
     namespaces?: NamespaceStructure[] | undefined;
     classes?: ClassStructure[] | undefined;
@@ -851,7 +860,7 @@ export interface TypeParameteredStructure {
     typeParameters?: TypeParameterStructure[] | undefined;
 }
 
-export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure, OverloadSignaturedStructure {
+export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure, OverloadSignaturedStructure, JsDocedStructure {
     isGenerator?: boolean | undefined;
 }
 

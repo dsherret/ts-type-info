@@ -3,6 +3,9 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("function name tests", () => {
     const code = `
+/**
+ * Some description
+ */
 function myFunction() {
 }
 function myFunctionWithParameters(implicitAnyParam, str: string, optionalParam?: string, defaultParam = new Date(), ...restParam: MyClass[]) {
@@ -31,7 +34,8 @@ class MyClass2 {
 
     runFileDefinitionTests(def, {
         functions: [{
-            name: "myFunction"
+            name: "myFunction",
+            jsDocText: `/**\n * Some description\n */`
         }, {
             name: "myFunctionWithParameters",
             parameters: [

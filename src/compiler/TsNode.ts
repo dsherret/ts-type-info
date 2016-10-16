@@ -304,6 +304,26 @@ export class TsNode extends TsSourceFileChild {
         return this.node.getText();
     }
 
+    getJsDocText() {
+        // node full start usually differs by 1 if there's no comment
+        if (this.node.getFullStart() + 1 >= this.node.getStart())
+            return "";
+
+        try {
+            const text = this.node.getFullText();
+            const ranges = ts.getLeadingCommentRanges(text, 0);
+
+            for (const range of ranges) {
+                if (range.kind === ts.SyntaxKind.MultiLineCommentTrivia)
+                    return text.substring(range.pos, range.end);
+            }
+        } catch (ex) {
+            Logger.log(ex);
+        }
+
+        return "";
+    }
+
     getVariableDeclarationType() {
         const nodeFlags = this.node.parent!.flags;
 

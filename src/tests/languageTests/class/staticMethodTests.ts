@@ -5,7 +5,9 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("class static method", () => {
     const code = `
 class MyClassWithStaticMethods {
-    // parameters
+    /**
+      * Some description
+      */
     static myParameterMethod(myParameter: string, myDefaultParameter = "some string", myOptionalParameter?: string, ...myRestParameter: number[]) {
         return "";
     }
@@ -44,6 +46,7 @@ class MyClassWithStaticMethods {
             name: "MyClassWithStaticMethods",
             staticMethods: [{
                 name: "myParameterMethod",
+                jsDocText: `/**\n      * Some description\n      */`,
                 parameters: [{
                     name: "myParameter",
                     type: { text: "string" }

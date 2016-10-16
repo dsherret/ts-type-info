@@ -17,7 +17,7 @@ export class TsFactory {
     constructor(private readonly settings: { includeTsNodes: boolean; }) {
     }
 
-    getShouldincludeTsNodes() {
+    getShouldIncludeTsNodes() {
         return this.settings.includeTsNodes;
     }
 
