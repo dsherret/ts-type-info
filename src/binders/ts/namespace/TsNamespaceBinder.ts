@@ -1,7 +1,7 @@
 import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {NamespaceBinder} from "./../../base";
-import {TsBaseDefinitionBinder, TsNamedBinderByNode, TsExportableBinder, TsAmbientableBinder, TsModuledBinder, TsNodedBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsNamedBinderByNode, TsExportableBinder, TsAmbientableBinder, TsModuledBinder, TsNodedBinder, TsJsDocedBinder} from "./../base";
 
 export class TsNamespaceBinder extends NamespaceBinder {
     constructor(factory: TsFactory, private readonly node: TsNode) {
@@ -11,7 +11,8 @@ export class TsNamespaceBinder extends NamespaceBinder {
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
             new TsModuledBinder(factory, node),
-            new TsNodedBinder(factory, node)
+            new TsNodedBinder(factory, node),
+            new TsJsDocedBinder(node)
         );
     }
 

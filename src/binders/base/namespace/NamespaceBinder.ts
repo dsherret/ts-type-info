@@ -1,5 +1,5 @@
 import {NamespaceDeclarationType, NamespaceDefinition} from "./../../../definitions";
-import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, ModuledBinder, NodedBinder} from "./../base";
+import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, ModuledBinder, NodedBinder, JsDocedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class NamespaceBinder implements IBaseBinder {
@@ -9,7 +9,8 @@ export abstract class NamespaceBinder implements IBaseBinder {
         private readonly exportableBinder: ExportableBinder,
         private readonly ambientableBinder: AmbientableBinder,
         private readonly moduledBinder: ModuledBinder,
-        private readonly nodedBinder: NodedBinder
+        private readonly nodedBinder: NodedBinder,
+        private readonly jsDocedBinder: JsDocedBinder
     ) {
     }
 
@@ -22,6 +23,7 @@ export abstract class NamespaceBinder implements IBaseBinder {
         this.ambientableBinder.bind(def);
         this.moduledBinder.bind(def);
         this.nodedBinder.bind(def);
+        this.jsDocedBinder.bind(def);
         def.declarationType = this.getNamespaceDeclarationType();
     }
 }

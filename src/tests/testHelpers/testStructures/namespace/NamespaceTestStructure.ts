@@ -1,7 +1,9 @@
-﻿import {BaseTestStructure, NamedTestStructure, ExportableTestStructure, ModuledTestStructure, AmbientableTestStructure, OrderableTestStructure} from "./../base";
+﻿import {BaseTestStructure, NamedTestStructure, ExportableTestStructure, ModuledTestStructure, AmbientableTestStructure, OrderableTestStructure,
+    JsDocedTestStructure} from "./../base";
 import {NamespaceDeclarationType} from "./../../../../definitions";
 
 export interface NamespaceTestStructure
-        extends BaseTestStructure, NamedTestStructure, ExportableTestStructure, ModuledTestStructure, AmbientableTestStructure, OrderableTestStructure {
+        extends BaseTestStructure, NamedTestStructure, ExportableTestStructure, ModuledTestStructure, AmbientableTestStructure, OrderableTestStructure,
+            JsDocedTestStructure {
     declarationType?: NamespaceDeclarationType;
 }

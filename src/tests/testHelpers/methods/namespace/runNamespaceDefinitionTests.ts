@@ -2,7 +2,7 @@
 import {NamespaceDefinition, NamespaceDeclarationType} from "./../../../../definitions";
 import {NamespaceTestStructure} from "./../../testStructures";
 import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runModuledDefinitionTests, runAmbientableDefinitionTests,
-    runOrderableDefinitionTests} from "./../base";
+    runOrderableDefinitionTests, runJsDocedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runNamespaceDefinitionTests(definition: NamespaceDefinition, structure: NamespaceTestStructure) {
@@ -16,6 +16,7 @@ export function runNamespaceDefinitionTests(definition: NamespaceDefinition, str
             runAmbientableDefinitionTests(definition, structure);
             runModuledDefinitionTests(definition, structure);
             runOrderableDefinitionTests(definition, structure);
+            runJsDocedDefinitionTests(definition, structure);
 
             it(`should have declaration type ${structure.declarationType}`, () => {
                 assert.equal(definition.declarationType, structure.declarationType);

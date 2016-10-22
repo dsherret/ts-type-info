@@ -4,6 +4,9 @@ import {NamespaceDeclarationType, VariableDeclarationType} from "./../../../defi
 
 describe("namespace tests", () => {
     const code = `
+/**
+ * Some description
+ */
 namespace MyNamespace {
     class MyModuleClass {}
     export class MyExportedModuleClass {}
@@ -33,6 +36,7 @@ export namespace MyExportedNamespace {
     runFileDefinitionTests(def, {
         namespaces: [{
             name: "MyNamespace",
+            jsDocText: "/**\n * Some description\n */",
             declarationType: NamespaceDeclarationType.Namespace,
             classes: [
                 { name: "MyModuleClass" },

@@ -3,7 +3,7 @@ import {StructureFactory} from "./../../../factories";
 import {NamespaceStructure} from "./../../../structures";
 import {NamespaceBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureModuledBinder,
-    StructureNodedBinder} from "./../base";
+    StructureNodedBinder, StructureJsDocedBinder} from "./../base";
 
 export class StructureNamespaceBinder extends NamespaceBinder {
     constructor(factory: StructureFactory, private readonly structure: NamespaceStructure) {
@@ -13,7 +13,8 @@ export class StructureNamespaceBinder extends NamespaceBinder {
             new StructureExportableBinder(structure),
             new StructureAmbientableBinder(structure),
             new StructureModuledBinder(factory, structure),
-            new StructureNodedBinder()
+            new StructureNodedBinder(),
+            new StructureJsDocedBinder(structure)
         );
     }
 

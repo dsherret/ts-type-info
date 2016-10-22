@@ -236,7 +236,8 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             namespaces: [{ name: "namespace1" }],
             typeAliases: [{ name: "typeAlias1", type: "string" }],
-            variables: [{ name: "variable1" }]
+            variables: [{ name: "variable1" }],
+            jsDocText: "text"
         });
         n.addNamespace({
             name: "namespace2"
@@ -261,7 +262,8 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             namespaces: [{ name: "namespace1", declarationType: NamespaceDeclarationType.Namespace }],
             typeAliases: [{ name: "typeAlias1", type: { text: "string" }}],
-            variables: [{ name: "variable1", declarationType: VariableDeclarationType.Let }]
+            variables: [{ name: "variable1", declarationType: VariableDeclarationType.Let }],
+            jsDocText: "text"
         });
         testHelpers.runNamespaceDefinitionTests(n.namespaces[1], {
             name: "namespace2",
