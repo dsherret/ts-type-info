@@ -5,7 +5,8 @@ import {applyMixins, DefinitionUtils} from "./../../utils";
 import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, NodedDefinition, BaseDefinition} from "./../base";
+import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, NodedDefinition, BaseDefinition,
+    JsDocedDefinition} from "./../base";
 import {CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition} from "./../general";
 import {ClassDefinition} from "./../class";
 import {TypeDefinition} from "./../expression";
@@ -13,7 +14,7 @@ import {InterfaceMethodDefinition} from "./InterfaceMethodDefinition";
 import {InterfacePropertyDefinition} from "./InterfacePropertyDefinition";
 
 export class InterfaceDefinition extends BaseDefinition
-        implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {
+        implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition, JsDocedDefinition {
     methods: InterfaceMethodDefinition[] = [];
     callSignatures: CallSignatureDefinition[] = [];
     indexSignatures: IndexSignatureDefinition[] = [];
@@ -103,6 +104,9 @@ export class InterfaceDefinition extends BaseDefinition
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => (TypeParameterDefinition | null);
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
+    // JsDocedDefinition
+    jsDocText: string;
 }
 
-applyMixins(InterfaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition]);
+applyMixins(InterfaceDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition,
+    JsDocedDefinition]);

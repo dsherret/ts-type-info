@@ -177,7 +177,8 @@ describe("ModuledDefinitionTests", () => {
             }],
             typeParameters: [{
                 name: "typeParam"
-            }]
+            }],
+            jsDocText: "text"
         });
         n.addInterface({
             name: "Interface2"
@@ -212,7 +213,8 @@ describe("ModuledDefinitionTests", () => {
             }],
             typeParameters: [{
                 name: "typeParam"
-            }]
+            }],
+            jsDocText: "text"
         });
         testHelpers.runInterfaceDefinitionTests(n.interfaces[1], {
             name: "Interface2",

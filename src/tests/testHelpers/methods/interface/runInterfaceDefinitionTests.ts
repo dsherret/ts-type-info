@@ -2,7 +2,7 @@
 import {InterfaceTestStructure} from "./../../testStructures";
 import {InterfaceDefinition} from "./../../../../definitions";
 import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runTypeParameteredDefinitionTests, runAmbientableDefinitionTests,
-    runOrderableDefinitionTests} from "./../base";
+    runOrderableDefinitionTests, runJsDocedDefinitionTests} from "./../base";
 import {runCallSignatureDefinitionTests, runIndexSignatureDefinitionTests} from "./../general";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runInterfaceMethodDefinitionTests} from "./runInterfaceMethodDefinitionTests";
@@ -27,6 +27,7 @@ export function runInterfaceDefinitionTests(definition: InterfaceDefinition, str
             runAmbientableDefinitionTests(definition, structure);
             runTypeParameteredDefinitionTests(definition, structure);
             runOrderableDefinitionTests(definition, structure);
+            runJsDocedDefinitionTests(definition, structure);
 
             describe("callSignatures", () => {
                 it("should have the expected number of callSignatures", () => {
