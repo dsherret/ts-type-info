@@ -1,5 +1,5 @@
 ﻿import {ClassConstructorDefinition, ClassConstructorParameterDefinition} from "./../../../definitions";
-import {BaseDefinitionBinder, ParameteredBinder, FunctionBodyWriteableBinder, NodedBinder, OverloadSignaturedBinder} from "./../base";
+import {BaseDefinitionBinder, ParameteredBinder, FunctionBodyWriteableBinder, NodedBinder, OverloadSignaturedBinder, JsDocedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 import {ScopedBinder} from "./base";
 
@@ -10,7 +10,8 @@ export abstract class ClassConstructorBinder implements IBaseBinder {
         private readonly functionBodyWriteableBinder: FunctionBodyWriteableBinder,
         private readonly scopedBinder: ScopedBinder,
         private readonly nodedBinder: NodedBinder,
-        private readonly overloadSignaturedBinder: OverloadSignaturedBinder
+        private readonly overloadSignaturedBinder: OverloadSignaturedBinder,
+        private readonly jsDocedBinder: JsDocedBinder
     ) {
     }
 
@@ -21,5 +22,6 @@ export abstract class ClassConstructorBinder implements IBaseBinder {
         this.scopedBinder.bind(def);
         this.nodedBinder.bind(def);
         this.overloadSignaturedBinder.bind(def);
+        this.jsDocedBinder.bind(def);
     }
 }

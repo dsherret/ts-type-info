@@ -7,6 +7,9 @@ describe("class constructor tests", () => {
 class MyClass1 {
 }
 class MyClass2 {
+    /**
+     * Some description
+    */
     constructor() {
     }
 }
@@ -41,7 +44,9 @@ class MyClass7 {
             name: "MyClass1"
         }, {
             name: "MyClass2",
-            constructorDef: {}
+            constructorDef: {
+                jsDocText: "/**\n * Some description\n */"
+            }
         }, {
             name: "MyClass3",
             constructorDef: {

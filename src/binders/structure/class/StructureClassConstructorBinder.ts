@@ -3,7 +3,7 @@ import {ClassConstructorParameterDefinition} from "./../../../definitions";
 import {ClassConstructorStructure} from "./../../../structures";
 import {ClassConstructorBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureParameteredBinder, StructureFunctionBodyWriteableBinder, StructureNodedBinder,
-    StructureOverloadSignaturedBinder} from "./../base";
+    StructureOverloadSignaturedBinder, StructureJsDocedBinder} from "./../base";
 import {StructureClassConstructorParameterBinder} from "./StructureClassConstructorParameterBinder";
 import {StructureScopedBinder} from "./base";
 
@@ -15,7 +15,8 @@ export class StructureClassConstructorBinder extends ClassConstructorBinder {
             new StructureFunctionBodyWriteableBinder(structure),
             new StructureScopedBinder(structure),
             new StructureNodedBinder(),
-            new StructureOverloadSignaturedBinder(factory, structure)
+            new StructureOverloadSignaturedBinder(factory, structure),
+            new StructureJsDocedBinder(structure)
         );
     }
 }

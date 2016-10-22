@@ -304,14 +304,16 @@ describe("ClassDefinition", () => {
         c.setConstructor({
             scope: Scope.Private,
             parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
-            onWriteFunctionBody: (writer) => writer.write("")
+            onWriteFunctionBody: (writer) => writer.write(""),
+            jsDocText: "text"
         });
 
         describe("constructor", () => {
             testHelpers.runClassConstructorDefinitionTests(c.constructorDef, {
                 scope: Scope.Private,
                 parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
-                hasOnWriteFunctionBody: true
+                hasOnWriteFunctionBody: true,
+                jsDocText: "text"
             });
         });
     });
