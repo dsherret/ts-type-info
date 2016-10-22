@@ -1,5 +1,5 @@
 ﻿import {BaseTestStructure, NamedTestStructure, DecoratableTestStructure, ExportableTestStructure, TypeParameteredTestStructure, AmbientableTestStructure,
-    AbstractableTestStructure, OrderableTestStructure} from "./../base";
+    AbstractableTestStructure, OrderableTestStructure, JsDocedTestStructure} from "./../base";
 import {TypeTestStructure} from "./../expression";
 import {ClassMethodTestStructure} from "./ClassMethodTestStructure";
 import {ClassPropertyTestStructure} from "./ClassPropertyTestStructure";
@@ -8,7 +8,7 @@ import {ClassStaticPropertyTestStructure} from "./ClassStaticPropertyTestStructu
 import {ClassConstructorTestStructure} from "./ClassConstructorTestStructure";
 
 export interface ClassTestStructure extends BaseTestStructure, NamedTestStructure, DecoratableTestStructure, ExportableTestStructure, TypeParameteredTestStructure,
-        AmbientableTestStructure, AbstractableTestStructure, OrderableTestStructure {
+        AmbientableTestStructure, AbstractableTestStructure, OrderableTestStructure, JsDocedTestStructure {
     methods?: ClassMethodTestStructure[];
     properties?: ClassPropertyTestStructure[];
     staticMethods?: ClassStaticMethodTestStructure[];

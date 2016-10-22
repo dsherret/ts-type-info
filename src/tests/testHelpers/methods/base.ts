@@ -8,6 +8,7 @@ export * from "./base/runDecoratableDefinitionTests";
 export * from "./base/runDefaultExpressionedDefinitionTests";
 export * from "./base/runExportableDefinitionTests";
 export * from "./base/runFunctionBodyWriteableDefinitionTests";
+export * from "./base/runJsDocedDefinitionTests";
 export * from "./base/runModuledDefinitionTests";
 export * from "./base/runNamedDefinitionTests";
 export * from "./base/runNodedDefinitionTests";

@@ -22,7 +22,8 @@ describe("ModuledDefinitionTests", () => {
             properties: [{ name: "prop1" }],
             staticMethods: [{ name: "staticMethod1" }],
             staticProperties: [{ name: "staticProp1" }],
-            typeParameters: [{ name: "T" }]
+            typeParameters: [{ name: "T" }],
+            jsDocText: "text"
         });
         n.addClass({
             name: "class2"
@@ -49,7 +50,8 @@ describe("ModuledDefinitionTests", () => {
             properties: [{ name: "prop1" }],
             staticMethods: [{ name: "staticMethod1" }],
             staticProperties: [{ name: "staticProp1" }],
-            typeParameters: [{ name: "T" }]
+            typeParameters: [{ name: "T" }],
+            jsDocText: "text"
         });
         testHelpers.runClassDefinitionTests(n.classes[1], {
             name: "class2",
@@ -111,7 +113,8 @@ describe("ModuledDefinitionTests", () => {
             overloadSignatures: [{
                 parameters: [{ name: "param1" }]
             }],
-            onWriteFunctionBody: (writer) => writer.write("")
+            onWriteFunctionBody: (writer) => writer.write(""),
+            jsDocText: "text"
         });
         n.addFunction({
             name: "function2"
@@ -139,7 +142,8 @@ describe("ModuledDefinitionTests", () => {
                 parameters: [{ name: "param1" }],
                 minArgumentCount: 1
             }],
-            hasOnWriteFunctionBody: true
+            hasOnWriteFunctionBody: true,
+            jsDocText: "text"
         });
         testHelpers.runFunctionDefinitionTests(n.functions[1], {
             name: "function2",

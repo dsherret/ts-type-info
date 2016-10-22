@@ -7,6 +7,13 @@ export class TsJsDocedBinder extends JsDocedBinder {
     }
 
     getJsDocText() {
-        return this.node.getJsDocText();
+        let text = this.node.getJsDocText();
+
+        // "     /*" goes to "/*"
+        text = text.replace(/^\s*\/\*\*/, "/**");
+        // "     *" goes to " *"
+        text = text.replace(/\n\s+\*/g, "\n *");
+
+        return text;
     }
 }

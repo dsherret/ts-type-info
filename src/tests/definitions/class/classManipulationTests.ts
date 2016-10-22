@@ -140,7 +140,8 @@ describe("ClassDefinition", () => {
             }],
             name: "myMethod",
             scope: Scope.Private,
-            onWriteFunctionBody: (writer) => writer.write("")
+            onWriteFunctionBody: (writer) => writer.write(""),
+            jsDocText: "text"
         });
         c.addMethod({
             name: "mySecondMethod"
@@ -166,7 +167,8 @@ describe("ClassDefinition", () => {
             }],
             name: "myMethod",
             scope: Scope.Private,
-            hasOnWriteFunctionBody: true
+            hasOnWriteFunctionBody: true,
+            jsDocText: "text"
         });
 
         testHelpers.runClassMethodDefinitionTests(c.methods[1], {
@@ -231,7 +233,8 @@ describe("ClassDefinition", () => {
                 isRestParameter: true
             }],
             name: "myStaticMethod",
-            scope: Scope.Private
+            scope: Scope.Private,
+            jsDocText: "text"
         });
         c.addStaticMethod({
             name: "mySecondStaticMethod"
@@ -255,7 +258,8 @@ describe("ClassDefinition", () => {
                 isRestParameter: true
             }],
             name: "myStaticMethod",
-            scope: Scope.Private
+            scope: Scope.Private,
+            jsDocText: "text"
         });
 
         testHelpers.runClassStaticMethodDefinitionTests(c.staticMethods[1], {

@@ -2,7 +2,7 @@
 import {ClassStructure} from "./../../../structures";
 import {ClassBinder, ClassMemberContainer} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureAbstractableBinder,
-    StructureTypeParameteredBinder, StructureDecoratableBinder, StructureNodedBinder} from "./../base";
+    StructureTypeParameteredBinder, StructureDecoratableBinder, StructureNodedBinder, StructureJsDocedBinder} from "./../base";
 
 export class StructureClassBinder extends ClassBinder {
     constructor(private readonly factory: StructureFactory, private readonly structure: ClassStructure) {
@@ -14,7 +14,8 @@ export class StructureClassBinder extends ClassBinder {
             new StructureTypeParameteredBinder(factory, structure),
             new StructureAbstractableBinder(structure),
             new StructureDecoratableBinder(factory, structure),
-            new StructureNodedBinder()
+            new StructureNodedBinder(),
+            new StructureJsDocedBinder(structure)
         );
     }
 
