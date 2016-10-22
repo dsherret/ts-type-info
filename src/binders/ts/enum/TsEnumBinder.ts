@@ -1,7 +1,7 @@
 ﻿import {TsNode} from "./../../../compiler";
 import {TsFactory} from "./../../../factories";
 import {EnumBinder} from "./../../base";
-import {TsBaseDefinitionBinder, TsNamedBinderByNode, TsExportableBinder, TsAmbientableBinder, TsNodedBinder} from "./../base";
+import {TsBaseDefinitionBinder, TsNamedBinderByNode, TsExportableBinder, TsAmbientableBinder, TsNodedBinder, TsJsDocedBinder} from "./../base";
 
 export class TsEnumBinder extends EnumBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
@@ -10,7 +10,8 @@ export class TsEnumBinder extends EnumBinder {
             new TsNamedBinderByNode(node),
             new TsExportableBinder(node),
             new TsAmbientableBinder(node),
-            new TsNodedBinder(factory, node)
+            new TsNodedBinder(factory, node),
+            new TsJsDocedBinder(node)
         );
     }
 

@@ -5,7 +5,7 @@ import {BasePropertyDefinition, NodedDefinition} from "./../base";
 export class InterfacePropertyDefinition extends BasePropertyDefinition implements NodedDefinition {
     // ReSharper disable once InconsistentNaming
     // tslint:disable-next-line:no-unused-variable
-    private _interfacePropertyBrand: string; // to make structural typing happy
+    private _interfacePropertyBrand: string; // to make structural typing happy // todo: what other type has the same structure as this?
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
 }

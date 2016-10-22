@@ -3,7 +3,13 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("enum tests", () => {
     const code = `
+/**
+ * Some description
+ */
 enum MyEnum {
+    /**
+     * Some description
+     */
     MyImplicit,
     MyExplicit = 7
 }
@@ -21,11 +27,13 @@ const enum MyConstEnum {
             name: "MyEnum",
             members: [{
                 name: "MyImplicit",
-                value: 0
+                value: 0,
+                jsDocText: "/**\n * Some description\n */"
             }, {
                 name: "MyExplicit",
                 value: 7
-            }]
+            }],
+            jsDocText: "/**\n * Some description\n */"
         }, {
             name: "MyExportedEnum",
             isExported: true,

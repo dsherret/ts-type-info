@@ -1,7 +1,8 @@
 ﻿import * as assert from "assert";
 import {EnumTestStructure} from "./../../testStructures";
 import {EnumDefinition} from "./../../../../definitions";
-import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests, runOrderableDefinitionTests} from "./../base";
+import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runAmbientableDefinitionTests, runOrderableDefinitionTests,
+    runJsDocedDefinitionTests} from "./../base";
 import {ensureNotNull} from "./../../ensureNotNull";
 import {runEnumMemberDefinitionTests} from "./runEnumMemberDefinitionTests";
 
@@ -15,6 +16,7 @@ export function runEnumDefinitionTests(definition: EnumDefinition, structure: En
             runExportableDefinitionTests(definition, structure);
             runAmbientableDefinitionTests(definition, structure);
             runOrderableDefinitionTests(definition, structure);
+            runJsDocedDefinitionTests(definition, structure);
 
             it(`should ${structure.isConst ? "be" : "not be"} a const enum`, () => {
                 assert.equal(definition.isConst, structure.isConst || false);

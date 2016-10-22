@@ -1,7 +1,7 @@
 ﻿import {StructureFactory} from "./../../../factories";
 import {EnumStructure} from "./../../../structures";
 import {EnumBinder} from "./../../base";
-import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureNodedBinder} from "./../base";
+import {StructureBaseDefinitionBinder, StructureNamedBinder, StructureExportableBinder, StructureAmbientableBinder, StructureNodedBinder, StructureJsDocedBinder} from "./../base";
 
 export class StructureEnumBinder extends EnumBinder {
     constructor(private readonly factory: StructureFactory, private readonly structure: EnumStructure) {
@@ -10,7 +10,8 @@ export class StructureEnumBinder extends EnumBinder {
             new StructureNamedBinder(structure),
             new StructureExportableBinder(structure),
             new StructureAmbientableBinder(structure),
-            new StructureNodedBinder()
+            new StructureNodedBinder(),
+            new StructureJsDocedBinder(structure)
         );
     }
 

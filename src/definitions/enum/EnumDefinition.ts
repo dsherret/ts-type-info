@@ -5,10 +5,10 @@ import {applyMixins, DefinitionUtils} from "./../../utils";
 import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {AmbientableDefinition, ExportableDefinition, NamedDefinition, OrderableDefinition, BaseDefinition, NodedDefinition} from "./../base";
+import {AmbientableDefinition, ExportableDefinition, NamedDefinition, OrderableDefinition, BaseDefinition, NodedDefinition, JsDocedDefinition} from "./../base";
 import {EnumMemberDefinition} from "./EnumMemberDefinition";
 
-export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition, NodedDefinition {
+export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition, NodedDefinition, JsDocedDefinition {
     isConst: boolean;
     members: EnumMemberDefinition[] = [];
 
@@ -42,6 +42,8 @@ export class EnumDefinition extends BaseDefinition implements AmbientableDefinit
     hasDeclareKeyword: boolean;
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
+    // JsDocedDefinition
+    jsDocText: string;
 }
 
-applyMixins(EnumDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition]);
+applyMixins(EnumDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition, JsDocedDefinition]);

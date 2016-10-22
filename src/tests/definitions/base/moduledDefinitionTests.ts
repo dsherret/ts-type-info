@@ -69,7 +69,8 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             isConst: true,
-            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
+            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }],
+            jsDocText: "text"
         });
         n.addEnum({
             name: "enum2"
@@ -88,7 +89,8 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             isConst: true,
-            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }]
+            members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }],
+            jsDocText: "text"
         });
         testHelpers.runEnumDefinitionTests(n.enums[1], {
             name: "enum2",

@@ -1,5 +1,5 @@
 ﻿import {EnumDefinition, EnumMemberDefinition} from "./../../../definitions";
-import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, NodedBinder} from "./../base";
+import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, NodedBinder, JsDocedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class EnumBinder implements IBaseBinder {
@@ -8,7 +8,8 @@ export abstract class EnumBinder implements IBaseBinder {
         private readonly namedBinder: NamedBinder,
         private readonly exportableBinder: ExportableBinder,
         private readonly ambientableBinder: AmbientableBinder,
-        private readonly nodedBinder: NodedBinder
+        private readonly nodedBinder: NodedBinder,
+        private readonly jsDocedBinder: JsDocedBinder,
     ) {
     }
 
@@ -21,6 +22,7 @@ export abstract class EnumBinder implements IBaseBinder {
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);
         this.nodedBinder.bind(def);
+        this.jsDocedBinder.bind(def);
         def.isConst = this.getIsConst();
         def.members.push(...this.getMembers());
     }
