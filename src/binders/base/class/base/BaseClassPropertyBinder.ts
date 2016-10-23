@@ -1,5 +1,5 @@
 ﻿import {BaseClassPropertyDefinition} from "./../../../../definitions";
-import {DecoratableBinder, BaseObjectPropertyBinder, NodedBinder} from "./../../base";
+import {DecoratableBinder, BaseObjectPropertyBinder, NodedBinder, JsDocedBinder} from "./../../base";
 import {ScopedBinder} from "./ScopedBinder";
 
 export abstract class BaseClassPropertyBinder {
@@ -7,7 +7,8 @@ export abstract class BaseClassPropertyBinder {
         private readonly objectPropertyBinder: BaseObjectPropertyBinder,
         private readonly decoratableBinder: DecoratableBinder,
         private readonly scopedBinder: ScopedBinder,
-        private readonly nodedBinder: NodedBinder
+        private readonly nodedBinder: NodedBinder,
+        private readonly jsDocedBinder: JsDocedBinder
     ) {
     }
 
@@ -16,5 +17,6 @@ export abstract class BaseClassPropertyBinder {
         this.decoratableBinder.bind(def);
         this.scopedBinder.bind(def);
         this.nodedBinder.bind(def);
+        this.jsDocedBinder.bind(def);
     }
 }

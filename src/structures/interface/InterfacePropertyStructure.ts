@@ -1,4 +1,4 @@
-﻿import {BasePropertyStructure} from "./../base";
+﻿import {BasePropertyStructure, JsDocedStructure} from "./../base";
 
-export interface InterfacePropertyStructure extends BasePropertyStructure {
+export interface InterfacePropertyStructure extends BasePropertyStructure, JsDocedStructure {
 }

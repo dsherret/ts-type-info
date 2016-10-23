@@ -5,6 +5,9 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("class property tests", () => {
     const code = `
 class MyClass {
+    /**
+     * Some description
+     */
     readonly myString: string;
     myImplicit = 4;
     myAny;
@@ -38,7 +41,8 @@ class MyClass {
             properties: [{
                 name: "myString",
                 isReadonly: true,
-                type: { text: "string" }
+                type: { text: "string" },
+                jsDocText: "/**\n * Some description\n */"
             }, {
                 name: "myImplicit",
                 type: { text: "number" },

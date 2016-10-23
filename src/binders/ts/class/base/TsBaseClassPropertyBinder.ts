@@ -1,7 +1,7 @@
 ﻿import {TsFactory} from "./../../../../factories";
 import {TsNode} from "./../../../../compiler";
 import {BaseClassPropertyBinder} from "./../../../base";
-import {TsDecoratableBinder, TsBaseObjectPropertyBinder, TsNodedBinder} from "./../../base";
+import {TsDecoratableBinder, TsBaseObjectPropertyBinder, TsNodedBinder, TsJsDocedBinder} from "./../../base";
 import {TsScopedBinder} from "./TsScopedBinder";
 
 export class TsBaseClassPropertyBinder extends BaseClassPropertyBinder {
@@ -10,7 +10,8 @@ export class TsBaseClassPropertyBinder extends BaseClassPropertyBinder {
             new TsBaseObjectPropertyBinder(factory, node),
             new TsDecoratableBinder(factory, node),
             new TsScopedBinder(node),
-            new TsNodedBinder(factory, node)
+            new TsNodedBinder(factory, node),
+            new TsJsDocedBinder(node)
         );
     }
 }

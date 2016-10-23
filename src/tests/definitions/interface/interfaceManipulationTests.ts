@@ -154,7 +154,8 @@ describe("InterfaceDefinition", () => {
         const returnedDef = i.addProperty({
             isOptional: true,
             name: "myProperty1",
-            type: "string"
+            type: "string",
+            jsDocText: "text"
         });
         i.addProperty({
             name: "myProperty2"
@@ -167,7 +168,8 @@ describe("InterfaceDefinition", () => {
         testHelpers.runInterfacePropertyDefinitionTests(i.properties[0], {
             isOptional: true,
             name: "myProperty1",
-            type: { text: "string" }
+            type: { text: "string" },
+            jsDocText: "text"
         });
 
         testHelpers.runInterfacePropertyDefinitionTests(i.properties[1], {

@@ -189,7 +189,8 @@ describe("ClassDefinition", () => {
             scope: Scope.Private,
             type: "string",
             onWriteGetBody: (writer) => writer.write(""),
-            onWriteSetBody: (writer) => writer.write("")
+            onWriteSetBody: (writer) => writer.write(""),
+            jsDocText: "text"
         });
         c.addProperty({
             name: "mySecondProperty"
@@ -210,7 +211,8 @@ describe("ClassDefinition", () => {
             scope: Scope.Private,
             type: { text: "string" },
             hasOnWriteGetBody: true,
-            hasOnWriteSetBody: true
+            hasOnWriteSetBody: true,
+            jsDocText: "text"
         });
         testHelpers.runClassPropertyDefinitionTests(c.properties[1], {
             name: "mySecondProperty"
@@ -275,7 +277,8 @@ describe("ClassDefinition", () => {
             isOptional: true,
             name: "myStaticProperty",
             scope: Scope.Private,
-            type: "string"
+            type: "string",
+            jsDocText: "text"
         });
         c.addStaticProperty({
             name: "mySecondStaticProperty"
@@ -291,7 +294,8 @@ describe("ClassDefinition", () => {
             isOptional: true,
             name: "myStaticProperty",
             scope: Scope.Private,
-            type: { text: "string" }
+            type: { text: "string" },
+            jsDocText: "text"
         });
         testHelpers.runClassStaticPropertyDefinitionTests(c.staticProperties[1], {
             name: "mySecondStaticProperty"

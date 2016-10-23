@@ -4,6 +4,9 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("interface property tests", () => {
     const code = `
 interface MyPropertyInterface {
+    /**
+      * Some description
+      */
     readonly myString: string;
     myAny;
     myOptional?: string;
@@ -17,7 +20,8 @@ interface MyPropertyInterface {
             properties: [{
                 name: "myString",
                 isReadonly: true,
-                type: { text: "string" }
+                type: { text: "string" },
+                jsDocText: `/**\n * Some description\n */`
             }, {
                 name: "myAny",
                 type: { text: "any" }
