@@ -284,7 +284,8 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             type: "string",
-            typeParameters: [{ name: "T" }]
+            typeParameters: [{ name: "T" }],
+            jsDocText: "text"
         });
         n.addTypeAlias({
             name: "typeAlias2",
@@ -304,7 +305,8 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             type: { text: "string" },
-            typeParameters: [{ name: "T" }]
+            typeParameters: [{ name: "T" }],
+            jsDocText: "text"
         });
         testHelpers.runTypeAliasDefinitionTests(n.typeAliases[1], {
             name: "typeAlias2",
@@ -324,7 +326,8 @@ describe("ModuledDefinitionTests", () => {
             isDefaultExportOfFile: true,
             isExported: true,
             isNamedExportOfFile: true,
-            type: "number"
+            type: "number",
+            jsDocText: "text"
         });
         n.addVariable({
             name: "myVar2"
@@ -344,7 +347,8 @@ describe("ModuledDefinitionTests", () => {
             isDefaultExportOfFile: true,
             isExported: true,
             isNamedExportOfFile: true,
-            type: { text: "number" }
+            type: { text: "number" },
+            jsDocText: "text"
         });
         testHelpers.runVariableDefinitionTests(n.variables[1], {
             name: "myVar2",

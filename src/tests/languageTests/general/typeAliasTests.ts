@@ -3,6 +3,9 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("type alias tests", () => {
     const code = `
+/**
+ * Some description
+ */
 type myStringTypeAlias = string;
 type myUnionTypeAlias = string | number;
 type myTypeAliasWithTypeParameter<T> = T;
@@ -23,7 +26,8 @@ let myVariableUsingType: myUnionTypeAlias;
         }],
         typeAliases: [{
             name: "myStringTypeAlias",
-            type: { text: "string" }
+            type: { text: "string" },
+            jsDocText: `/**\n * Some description\n */`
         }, {
             name: "myUnionTypeAlias",
             type: {

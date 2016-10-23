@@ -5,6 +5,7 @@ import {ExportableBinder} from "./../base/ExportableBinder";
 import {TypedBinder} from "./../base/TypedBinder";
 import {TypeParameteredBinder} from "./../base/TypeParameteredBinder";
 import {AmbientableBinder} from "./../base/AmbientableBinder";
+import {JsDocedBinder} from "./../base/JsDocedBinder";
 import {NodedBinder} from "./../base/NodedBinder";
 import {IBaseBinder} from "./../IBaseBinder";
 
@@ -16,7 +17,8 @@ export abstract class TypeAliasBinder implements IBaseBinder {
         private readonly typedBinder: TypedBinder,
         private readonly typeParameteredBinder: TypeParameteredBinder,
         private readonly ambientableBinder: AmbientableBinder,
-        private readonly nodedBinder: NodedBinder
+        private readonly nodedBinder: NodedBinder,
+        private readonly jsDocedBinder: JsDocedBinder
     ) {
     }
 
@@ -28,5 +30,6 @@ export abstract class TypeAliasBinder implements IBaseBinder {
         this.typeParameteredBinder.bind(def);
         this.ambientableBinder.bind(def);
         this.nodedBinder.bind(def);
+        this.jsDocedBinder.bind(def);
     }
 }

@@ -305,17 +305,22 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getJsDocText() {
+        const node = (this.isVariable()) ? this.node.parent! : this.node;
+
         // node full start usually differs by 1 if there's no comment
-        if (this.node.getFullStart() + 1 >= this.node.getStart())
+        if (node.getFullStart() + 1 >= node.getStart())
             return "";
 
         try {
-            const text = this.node.getFullText();
-            const ranges = ts.getLeadingCommentRanges(text, 0);
+            const fullText = node.getFullText();
+            const ranges = ts.getLeadingCommentRanges(fullText, 0);
 
             for (const range of ranges) {
-                if (range.kind === ts.SyntaxKind.MultiLineCommentTrivia)
-                    return text.substring(range.pos, range.end);
+                if (range.kind === ts.SyntaxKind.MultiLineCommentTrivia) {
+                    const text = fullText.substring(range.pos, range.end);
+                    if (text.indexOf("/**") === 0)
+                        return text;
+                }
             }
         } catch (ex) {
             Logger.log(ex);

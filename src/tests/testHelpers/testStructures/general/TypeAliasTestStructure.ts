@@ -1,7 +1,7 @@
 ﻿import {BaseTestStructure, NamedTestStructure, ExportableTestStructure, TypedTestStructure, TypeParameteredTestStructure, AmbientableTestStructure,
-    OrderableTestStructure} from "./../base";
+    OrderableTestStructure, JsDocedTestStructure} from "./../base";
 
 export interface TypeAliasTestStructure
     extends BaseTestStructure, NamedTestStructure, ExportableTestStructure, TypedTestStructure, TypeParameteredTestStructure, AmbientableTestStructure,
-        OrderableTestStructure {
+        OrderableTestStructure, JsDocedTestStructure {
 }

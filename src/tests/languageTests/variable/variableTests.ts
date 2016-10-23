@@ -4,6 +4,9 @@ import {VariableDeclarationType} from "./../../../definitions";
 
 describe("variable tests", () => {
     const code = `
+/**
+ * Some description
+ */
 var myImplicitAny;
 var myExplicitTypeVar: number;
 var myImplicitTypeVar = "my string";
@@ -17,7 +20,8 @@ const myConst: number;
         variables: [{
             name: "myImplicitAny",
             declarationType: VariableDeclarationType.Var,
-            type: { text: "any" }
+            type: { text: "any" },
+            jsDocText: `/**\n * Some description\n */`
         }, {
             name: "myExplicitTypeVar",
             declarationType: VariableDeclarationType.Var,
