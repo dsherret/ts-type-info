@@ -17,6 +17,18 @@ export abstract class BaseDefinitionWriter<DefinitionType extends BaseDefinition
         }
     }
 
+    writeInline(def: DefinitionType, flags: WriteFlags) {
+        if (typeof def.onBeforeWrite === "function") {
+            def.onBeforeWrite(this.writer);
+        }
+
+        this.writeDefault(def, flags);
+
+        if (typeof def.onAfterWrite === "function") {
+            def.onAfterWrite(this.writer);
+        }
+    }
+
     protected abstract writeDefault(def: DefinitionType, flags?: WriteFlags): void;
 
     protected writeAsyncKeyword(def: AsyncableDefinition) {

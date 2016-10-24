@@ -80,7 +80,9 @@ const file = TsTypeInfo.createFile({
 // add to it later
 const myClass = file.getClass("MyClass");
 myClass.isAbstract = true;
-myClass.onBeforeWrite = writer => writer.write("@MyDecorator");
+myClass.addDecorator({
+    name: "MyDecorator"
+});
 
 myClass.addProperty({
     name: "myProperty1",

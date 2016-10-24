@@ -1,6 +1,7 @@
 ﻿import * as definitions from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
+import {DecoratorWriter} from "./DecoratorWriter";
 import {ExtendsImplementsClauseWriter} from "./ExtendsImplementsClauseWriter";
 import {ClassConstructorWriter} from "./ClassConstructorWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
@@ -9,6 +10,7 @@ import {MethodWriter} from "./MethodWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
 
 export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinition> {
+    private readonly decoratorWriter = new DecoratorWriter(this.writer);
     private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
     private readonly propertyWriter = new PropertyWriter(this.writer);
     private readonly methodWriter = new MethodWriter(this.writer);
@@ -30,6 +32,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     }
 
     private writeHeader(def: definitions.ClassDefinition, flags: WriteFlags) {
+        this.writeDecorators(def, flags);
         this.writeExportKeyword(def, flags);
         this.writeDeclareKeyword(def);
         this.writeAbstract(def);
@@ -69,6 +72,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     private writeStaticProperties(def: definitions.ClassDefinition, flags: WriteFlags) {
         def.staticProperties.forEach(p => {
             if (this.shouldInclude(p, flags)) {
+                this.writeDecorators(p, flags);
                 this.propertyWriter.write(p, flags);
             }
         });
@@ -78,10 +82,12 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
         def.properties.forEach(p => {
             if (this.shouldInclude(p, flags) && !p.isConstructorParameter) {
                 const willWriteAccessorBody = PropertyWriter.willWriteAccessorBody(p);
+
                 if (willWriteAccessorBody) {
                     this.writer.newLine();
                 }
 
+                this.writeDecorators(p, flags);
                 this.propertyWriter.write(p, flags);
 
                 if (willWriteAccessorBody) {
@@ -115,6 +121,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
         }
 
         if (this.shouldInclude(def, flags)) {
+            this.writeDecorators(def, flags);
             this.methodWriter.write(def, flags);
         }
 
@@ -133,5 +140,9 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
         else {
             return true;
         }
+    }
+
+    private writeDecorators(def: definitions.DecoratableDefinition, flags: WriteFlags) {
+        def.decorators.forEach(dec => this.decoratorWriter.write(dec, flags));
     }
 }

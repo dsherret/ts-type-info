@@ -17,23 +17,23 @@ export class MethodWriter extends BaseDefinitionWriter<MethodDefinitions> {
     private readonly functionReturnTypeWriter = new FunctionReturnTypeWriter(this.writer);
 
     protected writeDefault(def: MethodDefinitions, flags: WriteFlags) {
+        const showImplementation = def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0;
+
         def.overloadSignatures.forEach(s => {
             this.writeStartOfFunctionHeader(def);
             this.callSignatureWriter.write(s, flags);
         });
-        this.writeImplementation(def, flags);
+
+        if (showImplementation)
+            this.writeImplementation(def, flags);
     }
 
     private writeImplementation(def: MethodDefinitions, flags: WriteFlags) {
-        const showImplementation = def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0;
-
-        if (showImplementation) {
-            this.writeStartOfFunctionHeader(def);
-            this.typeParametersWriter.write(def.typeParameters, flags);
-            this.parametersWriter.write(def, flags);
-            this.functionReturnTypeWriter.write(def, flags);
-            this.functionBodyWriter.write(def, flags);
-        }
+        this.writeStartOfFunctionHeader(def);
+        this.typeParametersWriter.write(def.typeParameters, flags);
+        this.parametersWriter.write(def, flags);
+        this.functionReturnTypeWriter.write(def, flags);
+        this.functionBodyWriter.write(def, flags);
     }
 
     private writeStartOfFunctionHeader(def: MethodDefinitions) {

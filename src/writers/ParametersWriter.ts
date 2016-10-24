@@ -1,12 +1,14 @@
 ﻿import {WriteFlags} from "./../WriteFlags";
 import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition, BaseParameterDefinition,
-    ClassConstructorParameterDefinition} from "./../definitions";
+    ClassConstructorParameterDefinition, BaseClassMethodParameterDefinition} from "./../definitions";
 import {BaseWriter} from "./BaseWriter";
+import {DecoratorWriter} from "./DecoratorWriter";
 import {ParameterWriter} from "./ParameterWriter";
 import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
 import {TypeWriter} from "./TypeWriter";
 
 export class ParametersWriter extends BaseWriter {
+    private readonly decoratorWriter = new DecoratorWriter(this.writer);
     private readonly parameterWriter = new ParameterWriter(this.writer);
     private readonly parameterWithDestructuringWriter = new ParameterWithDestructuringWriter(this.writer);
     private readonly typeWriter = new TypeWriter(this.writer);
@@ -19,6 +21,9 @@ export class ParametersWriter extends BaseWriter {
 
         def.parameters.forEach((param, i) => {
             this.writer.conditionalWrite(i > 0 || thisType != null, ", ");
+
+            if (param instanceof BaseClassMethodParameterDefinition || param instanceof ClassConstructorParameterDefinition)
+                param.decorators.forEach(dec => this.decoratorWriter.writeInline(dec, flags));
 
             if (param.destructuringProperties.length === 0) {
                 if (param instanceof ClassConstructorParameterDefinition) {

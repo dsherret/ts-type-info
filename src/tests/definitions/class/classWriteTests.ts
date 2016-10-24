@@ -2,9 +2,15 @@
 import {getInfoFromString} from "./../../../main";
 
 const code = `
+@ClassDecorator
+@ClassDecorator2(1, 2, "3")
 abstract class MyClass {
+    @StaticPropertyDecorator
+    @StaticPropertyDecorator2()
     static readonly myStaticString: string;
 
+    @StaticMethodDecorator
+    @StaticMethodDecorator2()
     static myStaticMethod() {
     }
 
@@ -13,6 +19,8 @@ abstract class MyClass {
 
     protected myString: string;
     private myPrivateString: string;
+    @PropertyDecorator
+    @PropertyDecorator2()
     nonOptionalString = "text";
     optionalNumber?: number;
     protected abstract readonly myAbstractReadonlyProperty: string;
@@ -47,17 +55,19 @@ abstract class MyClass {
     protected set myGetSetWithWriteDefined(value: string) {
     }
 
-    constructor(myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
+    constructor(@ParameterDecorator @ParameterDecorator2("text") myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
     abstract myAbstractMethod(): string;
     abstract myAbstractMethod2(): string;
     abstract myAbstractMethod2(str?: string): string;
 
+    @MethodDecorator
+    @MethodDecorator2()
     myMethod() {
     }
 
-    myParamTypeGuard(p: string | MyClass): p is MyClass {
+    myParamTypeGuard(@ParameterDecorator @ParameterDecorator2() p: string | MyClass): p is MyClass {
     }
 
     myThisTypeGuard(): this is MyClass {
@@ -115,9 +125,15 @@ describe("ClassDefinition", () => {
         describe("MyClass", () => {
             it("should contain the class written out", () => {
                 const expected =
-`abstract class MyClass {
+`@ClassDecorator
+@ClassDecorator2(1, 2, "3")
+abstract class MyClass {
+    @StaticPropertyDecorator
+    @StaticPropertyDecorator2()
     static readonly myStaticString: string;
 
+    @StaticMethodDecorator
+    @StaticMethodDecorator2()
     static myStaticMethod() {
     }
 
@@ -126,6 +142,8 @@ describe("ClassDefinition", () => {
 
     protected myString: string;
     private myPrivateString: string;
+    @PropertyDecorator
+    @PropertyDecorator2()
     nonOptionalString = "text";
     optionalNumber?: number;
     protected abstract readonly myAbstractReadonlyProperty: string;
@@ -151,17 +169,19 @@ describe("ClassDefinition", () => {
         alert(value);
     }
 
-    constructor(myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
+    constructor(@ParameterDecorator @ParameterDecorator2("text") myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
     abstract myAbstractMethod(): string;
     abstract myAbstractMethod2(): string;
     abstract myAbstractMethod2(str?: string): string;
 
+    @MethodDecorator
+    @MethodDecorator2()
     myMethod() {
     }
 
-    myParamTypeGuard(p: string | MyClass): p is MyClass {
+    myParamTypeGuard(@ParameterDecorator @ParameterDecorator2() p: string | MyClass): p is MyClass {
     }
 
     myThisTypeGuard(): this is MyClass {
