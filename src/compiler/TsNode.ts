@@ -112,6 +112,11 @@ export class TsNode extends TsSourceFileChild {
         return this.getArgumentsFromExpression(decorator.expression);
     }
 
+    getIsDecoratorFactory() {
+        const decorator = this.node as ts.Decorator;
+        return TypeGuards.isCallExpression(decorator.expression);
+    }
+
     getDecorators() {
         return this.node.decorators ? this.node.decorators.map(d => this.createNode(d)) : [];
     }

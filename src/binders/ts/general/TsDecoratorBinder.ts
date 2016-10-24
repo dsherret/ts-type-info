@@ -15,6 +15,10 @@ export class TsDecoratorBinder extends DecoratorBinder {
     getArguments() {
         return this.node.getDecoratorArguments().map(arg => this.factory.getExpression(arg));
     }
+
+    getIsDecoratorFactory() {
+        return this.node.getIsDecoratorFactory();
+    }
 }
 
 class TsDecoratorNameBinder extends NamedBinder {

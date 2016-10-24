@@ -10,7 +10,11 @@ describe("DecoratableDefinition", () => {
             arguments: ["5", `"test"`]
         });
         c.addDecorator({
-            name: "decorator2"
+            name: "decorator2",
+            isDecoratorFactory: true
+        });
+        c.addDecorator({
+            name: "decorator3"
         });
 
         it("the returned definition should be in the array", () => {
@@ -24,9 +28,13 @@ describe("DecoratableDefinition", () => {
                     text: "5"
                 }, {
                     text: `"test"`
-                }]
+                }],
+                isDecoratorFactory: true
             }, {
-                name: "decorator2"
+                name: "decorator2",
+                isDecoratorFactory: true
+            }, {
+                name: "decorator3"
             }]
         });
     });

@@ -15,4 +15,8 @@ export class StructureDecoratorBinder extends DecoratorBinder {
     getArguments() {
         return (this.structure.arguments || []).map(a => this.factory.getExpressionFromText(a)!).filter(a => a != null);
     }
+
+    getIsDecoratorFactory() {
+        return this.structure.isDecoratorFactory || false;
+    }
 }

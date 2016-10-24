@@ -3,11 +3,17 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("decorator arguments tests", () => {
     const code = `
+function MyDecoratorFactory() {
+    return (target: Function) => {
+    };
+}
+
 function MyClassDecorator(myArg: string) {
     return (target: Function) => {
     };
 }
 
+@MyDecoratorFactory()
 @MyClassDecorator("My Value")
 class MyClass1 {
 }
@@ -17,6 +23,11 @@ class MyClass1 {
 
     runFileDefinitionTests(def, {
         functions: [{
+            name: "MyDecoratorFactory",
+            returnType: {
+                text: "(target: Function) => void"
+            }
+        }, {
             name: "MyClassDecorator",
             parameters: [{
                 name: "myArg",
@@ -31,7 +42,11 @@ class MyClass1 {
         classes: [{
             name: "MyClass1",
             decorators: [{
+                name: "MyDecoratorFactory",
+                isDecoratorFactory: true
+            }, {
                 name: "MyClassDecorator",
+                isDecoratorFactory: true,
                 arguments: [{
                     text: `"My Value"`
                 }]

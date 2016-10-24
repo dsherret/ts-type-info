@@ -9,6 +9,7 @@ export function runDecoratorDefinitionTests(definition: DecoratorDefinition, str
     describe(`decorator ${structure.name}`, () => {
         ensureNotNull(definition, () => {
             structure.arguments = structure.arguments || [];
+            structure.isDecoratorFactory = structure.isDecoratorFactory || false;
 
             runBaseDefinitionTests(definition, structure);
             runNamedDefinitionTests(definition, structure);
@@ -21,6 +22,10 @@ export function runDecoratorDefinitionTests(definition: DecoratorDefinition, str
                 describe(`argument ${argumentTestStructure.text}`, () => {
                     runExpressionDefinitionTests(definition.arguments[i], argumentTestStructure);
                 });
+            });
+
+            it(`should have the same ${nameof(structure.isDecoratorFactory)} property`, () => {
+                assert.equal(definition.isDecoratorFactory, structure.isDecoratorFactory);
             });
         });
     });

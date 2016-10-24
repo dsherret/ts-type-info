@@ -13,11 +13,13 @@ export abstract class DecoratorBinder implements IBaseBinder {
     }
 
     abstract getArguments(): ExpressionDefinition[];
+    abstract getIsDecoratorFactory(): boolean;
 
     bind(def: DecoratorDefinition) {
         this.baseDefinitionBinder.bind(def);
         this.namedBinder.bind(def);
         this.nodedBinder.bind(def);
         def.arguments.push(...this.getArguments());
+        def.isDecoratorFactory = this.getIsDecoratorFactory();
     }
 }

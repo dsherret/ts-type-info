@@ -1,7 +1,7 @@
 import {getInfoFromString} from "./../../../main";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
-describe("decorator arguments tests", () => {
+describe("decorator tests", () => {
     const code = `
 function MyClassDecorator(target: Function) {
 }
