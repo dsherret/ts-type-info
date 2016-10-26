@@ -2,6 +2,9 @@
 import {getInfoFromString} from "./../../../main";
 
 const code = `
+/**
+ * Some description
+ */
 enum MyEnum {
     enumMember1 = 1,
     enumMember2
@@ -16,9 +19,12 @@ describe("EnumDefinition", () => {
     const file = getInfoFromString(code);
 
     describe("#write()", () => {
-        it("should contain the enum written out", () => {
+        it("should contain the enum written out with jsdoc", () => {
             const expected =
-`enum MyEnum {
+`/**
+ * Some description
+ */
+enum MyEnum {
     enumMember1 = 1,
     enumMember2 = 2
 }
