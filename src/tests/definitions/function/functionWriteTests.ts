@@ -2,6 +2,9 @@
 import {getInfoFromString} from "./../../../main";
 
 const code = `
+/**
+ * Some description
+ */
 function myFunction(str: string) {
     return "";
 }
@@ -39,7 +42,10 @@ describe("FunctionDefinition", () => {
         describe("myFunction", () => {
             it("should contain the function written out", () => {
                 const expected =
-`function myFunction(str: string) {
+`/**
+ * Some description
+ */
+function myFunction(str: string) {
 }
 `;
                 assert.equal(file.functions[0].write(), expected);

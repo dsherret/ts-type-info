@@ -9,7 +9,7 @@ describe("EnumDefinition", () => {
         const returnedDef = e.addMember({
             name: "member1",
             value: 5,
-            jsDocText: "text"
+            documentationComment: "text"
         });
         e.addMember({
             name: "member2",
@@ -23,7 +23,7 @@ describe("EnumDefinition", () => {
         runEnumMemberDefinitionTests(e.members[0], {
             name: "member1",
             value: 5,
-            jsDocText: "text"
+            documentationComment: "text"
         });
         runEnumMemberDefinitionTests(e.members[1], {
             name: "member2",

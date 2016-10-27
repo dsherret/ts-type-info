@@ -28,12 +28,12 @@ const enum MyConstEnum {
             members: [{
                 name: "MyImplicit",
                 value: 0,
-                jsDocText: "/**\n * Some description\n */"
+                documentationComment: "/**\n * Some description\n */"
             }, {
                 name: "MyExplicit",
                 value: 7
             }],
-            jsDocText: "/**\n * Some description\n */"
+            documentationComment: "/**\n * Some description\n */"
         }, {
             name: "MyExportedEnum",
             isExported: true,

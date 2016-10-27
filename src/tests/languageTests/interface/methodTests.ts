@@ -20,7 +20,7 @@ interface MyInterface {
             name: "MyInterface",
             methods: [{
                 name: "myParameterMethod",
-                jsDocText: `/**\n * Some description\n */`,
+                documentationComment: `/**\n * Some description\n */`,
                 returnType: { text: "number" },
                 parameters: [{
                     name: "myParameter",

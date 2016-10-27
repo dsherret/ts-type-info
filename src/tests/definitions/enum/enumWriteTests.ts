@@ -6,6 +6,9 @@ const code = `
  * Some description
  */
 enum MyEnum {
+    /**
+     * Some enum member description
+     */
     enumMember1 = 1,
     enumMember2
 }
@@ -19,12 +22,15 @@ describe("EnumDefinition", () => {
     const file = getInfoFromString(code);
 
     describe("#write()", () => {
-        it("should contain the enum written out with jsdoc", () => {
+        it("should contain the enum written out with documentation comment", () => {
             const expected =
 `/**
  * Some description
  */
 enum MyEnum {
+    /**
+     * Some enum member description
+     */
     enumMember1 = 1,
     enumMember2 = 2
 }

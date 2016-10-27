@@ -2,7 +2,7 @@
 import {ClassTestStructure} from "./../../testStructures";
 import {ClassDefinition} from "./../../../../definitions";
 import {runBaseDefinitionTests, runNamedDefinitionTests, runExportableDefinitionTests, runDecoratableDefinitionTests, runTypeParameteredDefinitionTests,
-    runAmbientableDefinitionTests, runAbstractableDefinitionTests, runOrderableDefinitionTests, runJsDocedDefinitionTests} from "./../base";
+    runAmbientableDefinitionTests, runAbstractableDefinitionTests, runOrderableDefinitionTests, runDocumentationedDefinitionTests} from "./../base";
 import {runClassPropertyDefinitionTests} from "./runClassPropertyDefinitionTests";
 import {runClassMethodDefinitionTests} from "./runClassMethodDefinitionTests";
 import {runClassStaticPropertyDefinitionTests} from "./runClassStaticPropertyDefinitionTests";
@@ -30,7 +30,7 @@ export function runClassDefinitionTests(definition: ClassDefinition, structure: 
             runAmbientableDefinitionTests(definition, structure);
             runClassConstructorDefinitionTests(definition.constructorDef, structure.constructorDef);
             runOrderableDefinitionTests(definition, structure);
-            runJsDocedDefinitionTests(definition, structure);
+            runDocumentationedDefinitionTests(definition, structure);
 
             it(`should ${structure.isAbstract ? "be" : "not be"} abstract.`, () => {
                 assert.equal(definition.isAbstract, structure.isAbstract || false);

@@ -36,7 +36,7 @@ export namespace MyExportedNamespace {
     runFileDefinitionTests(def, {
         namespaces: [{
             name: "MyNamespace",
-            jsDocText: "/**\n * Some description\n */",
+            documentationComment: "/**\n * Some description\n */",
             declarationType: NamespaceDeclarationType.Namespace,
             classes: [
                 { name: "MyModuleClass" },

@@ -27,7 +27,7 @@ let myVariableUsingType: myUnionTypeAlias;
         typeAliases: [{
             name: "myStringTypeAlias",
             type: { text: "string" },
-            jsDocText: `/**\n * Some description\n */`
+            documentationComment: `/**\n * Some description\n */`
         }, {
             name: "myUnionTypeAlias",
             type: {

@@ -4,6 +4,7 @@ import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {DecoratorWriter} from "./DecoratorWriter";
 import {ExtendsImplementsClauseWriter} from "./ExtendsImplementsClauseWriter";
 import {ClassConstructorWriter} from "./ClassConstructorWriter";
+import {DocumentationedWriter} from "./DocumentationedWriter";
 import {TypeParametersWriter} from "./TypeParametersWriter";
 import {PropertyWriter} from "./PropertyWriter";
 import {MethodWriter} from "./MethodWriter";
@@ -11,6 +12,7 @@ import {FunctionBodyWriter} from "./FunctionBodyWriter";
 
 export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinition> {
     private readonly decoratorWriter = new DecoratorWriter(this.writer);
+    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
     private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
     private readonly propertyWriter = new PropertyWriter(this.writer);
     private readonly methodWriter = new MethodWriter(this.writer);
@@ -32,6 +34,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     }
 
     private writeHeader(def: definitions.ClassDefinition, flags: WriteFlags) {
+        this.documentationedWriter.write(def);
         this.writeDecorators(def, flags);
         this.writeExportKeyword(def, flags);
         this.writeDeclareKeyword(def);
@@ -72,6 +75,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
     private writeStaticProperties(def: definitions.ClassDefinition, flags: WriteFlags) {
         def.staticProperties.forEach(p => {
             if (this.shouldInclude(p, flags)) {
+                this.documentationedWriter.write(p);
                 this.writeDecorators(p, flags);
                 this.propertyWriter.write(p, flags);
             }
@@ -87,6 +91,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
                     this.writer.newLine();
                 }
 
+                this.documentationedWriter.write(p);
                 this.writeDecorators(p, flags);
                 this.propertyWriter.write(p, flags);
 
@@ -121,6 +126,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
         }
 
         if (this.shouldInclude(def, flags)) {
+            this.documentationedWriter.write(def);
             this.writeDecorators(def, flags);
             this.methodWriter.write(def, flags);
         }

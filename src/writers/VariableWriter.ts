@@ -1,12 +1,15 @@
 ﻿import {VariableDefinition, VariableDeclarationType} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
+import {DocumentationedWriter} from "./DocumentationedWriter";
 import {TypeWithDefaultExpressionWriter} from "./TypeWithDefaultExpressionWriter";
 
 export class VariableWriter extends BaseDefinitionWriter<VariableDefinition> {
+    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
     private readonly typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
 
     protected writeDefault(def: VariableDefinition, flags: WriteFlags) {
+        this.documentationedWriter.write(def);
         this.writeDeclareKeyword(def);
         this.writeExportKeyword(def, flags);
         this.writeDeclarationType(def.declarationType);

@@ -2,7 +2,7 @@
 import {TsFactory} from "./../../../factories";
 import {VariableBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsNamedBinderByNode, TsExportableBinder, TsAmbientableBinder, TsDefaultExpressionedBinder, TsTypedBinderByNode, TsNodedBinder,
-    TsJsDocedBinder} from "./../base";
+    TsDocumentationedBinder} from "./../base";
 
 export class TsVariableBinder extends VariableBinder {
     constructor(factory: TsFactory, private readonly node: TsNode) {
@@ -14,7 +14,7 @@ export class TsVariableBinder extends VariableBinder {
             new TsTypedBinderByNode(factory, node),
             new TsDefaultExpressionedBinder(factory, node),
             new TsNodedBinder(factory, node),
-            new TsJsDocedBinder(node)
+            new TsDocumentationedBinder(node)
         );
     }
 

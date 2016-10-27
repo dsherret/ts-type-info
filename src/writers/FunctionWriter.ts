@@ -6,6 +6,7 @@ import {ParametersWriter} from "./ParametersWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
 import {FunctionReturnTypeWriter} from "./FunctionReturnTypeWriter";
+import {DocumentationedWriter} from "./DocumentationedWriter";
 
 export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
     private readonly callSignatureWriter = new CallSignatureWriter(this.writer);
@@ -13,8 +14,10 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
     private readonly parametersWriter = new ParametersWriter(this.writer);
     private readonly functionBodyWriter = new FunctionBodyWriter(this.writer);
     private readonly functionReturnTypeWriter = new FunctionReturnTypeWriter(this.writer);
+    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
 
     protected writeDefault(def: FunctionDefinition, flags: WriteFlags) {
+        this.documentationedWriter.write(def);
         (def.overloadSignatures || []).forEach(s => {
             this.writeStartOfFunctionHeader(def, flags);
             this.callSignatureWriter.write(s, flags);

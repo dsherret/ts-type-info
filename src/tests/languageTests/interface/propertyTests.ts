@@ -21,7 +21,7 @@ interface MyPropertyInterface {
                 name: "myString",
                 isReadonly: true,
                 type: { text: "string" },
-                jsDocText: `/**\n * Some description\n */`
+                documentationComment: `/**\n * Some description\n */`
             }, {
                 name: "myAny",
                 type: { text: "any" }

@@ -3,9 +3,11 @@ import {WriteFlags} from "./../WriteFlags";
 import {ParametersWriter} from "./ParametersWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {FunctionBodyWriter} from "./FunctionBodyWriter";
+import {DocumentationedWriter} from "./DocumentationedWriter";
 import {ScopeWriter} from "./ScopeWriter";
 
 export class ClassConstructorWriter extends BaseDefinitionWriter<ClassConstructorDefinition> {
+    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
     private readonly parametersWriter = new ParametersWriter(this.writer);
     private readonly functionBodyWriter = new FunctionBodyWriter(this.writer);
     private readonly scopeWriter = new ScopeWriter(this.writer);
@@ -15,6 +17,7 @@ export class ClassConstructorWriter extends BaseDefinitionWriter<ClassConstructo
     }
 
     protected writeDefault(def: ClassConstructorDefinition, flags: WriteFlags) {
+        this.documentationedWriter.write(def);
         def.overloadSignatures.forEach(signatureDef => {
             this.writeStartOfConstructor(def);
             this.parametersWriter.write(signatureDef, flags);

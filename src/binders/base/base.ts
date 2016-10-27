@@ -10,7 +10,7 @@ export * from "./base/DecoratableBinder";
 export * from "./base/DefaultExpressionedBinder";
 export * from "./base/ExportableBinder";
 export * from "./base/FunctionBodyWriteableBinder";
-export * from "./base/JsDocedBinder";
+export * from "./base/DocumentationedBinder";
 export * from "./base/ModuledBinder";
 export * from "./base/NamedBinder";
 export * from "./base/NodedBinder";

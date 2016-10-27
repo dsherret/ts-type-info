@@ -1,5 +1,5 @@
-﻿import {BaseStructure, NamedStructure, JsDocedStructure} from "./../base";
+﻿import {BaseStructure, NamedStructure, DocumentationedStructure} from "./../base";
 
-export interface EnumMemberStructure extends BaseStructure, NamedStructure, JsDocedStructure {
+export interface EnumMemberStructure extends BaseStructure, NamedStructure, DocumentationedStructure {
     value: number;
 }

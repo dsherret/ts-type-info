@@ -309,7 +309,7 @@ export class TsNode extends TsSourceFileChild {
         return this.node.getText();
     }
 
-    getJsDocText() {
+    getDocumentationComment() {
         const node = (this.isVariable()) ? this.node.parent! : this.node;
 
         // node full start usually differs by 1 if there's no comment

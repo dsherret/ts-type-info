@@ -9,7 +9,7 @@ import {StructureParameteredBinder, StructureParameterBinderConstructor} from ".
 import {StructureReturnTypedBinder} from "./StructureReturnTypedBinder";
 import {StructureNodedBinder} from "./StructureNodedBinder";
 import {StructureOverloadSignaturedBinder} from "./StructureOverloadSignaturedBinder";
-import {StructureJsDocedBinder} from "./StructureJsDocedBinder";
+import {StructureDocumentationedBinder} from "./StructureDocumentationedBinder";
 
 export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition, StructureParameterType extends BaseParameterStructure>
         extends BaseFunctionBinder<ParameterType> {
@@ -27,7 +27,7 @@ export class StructureBaseFunctionBinder<ParameterType extends definitions.BaseP
             new StructureReturnTypedBinder(factory, structure),
             new StructureNodedBinder(),
             new StructureOverloadSignaturedBinder(factory, structure),
-            new StructureJsDocedBinder(structure)
+            new StructureDocumentationedBinder(structure)
         );
     }
 

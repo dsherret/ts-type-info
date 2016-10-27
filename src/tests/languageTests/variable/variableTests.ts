@@ -21,7 +21,7 @@ const myConst: number;
             name: "myImplicitAny",
             declarationType: VariableDeclarationType.Var,
             type: { text: "any" },
-            jsDocText: `/**\n * Some description\n */`
+            documentationComment: `/**\n * Some description\n */`
         }, {
             name: "myExplicitTypeVar",
             declarationType: VariableDeclarationType.Var,

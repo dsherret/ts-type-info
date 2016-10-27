@@ -8,7 +8,7 @@ import {runReturnTypedDefinitionTests} from "./runReturnTypedDefinitionTests";
 import {runParameteredDefinitionTests} from "./runParameteredDefinitionTests";
 import {runThisTypedDefinitionTests} from "./runThisTypedDefinitionTests";
 import {runOverloadSignaturedDefinitionTests} from "./runOverloadSignaturedDefinitionTests";
-import {runJsDocedDefinitionTests} from "./runJsDocedDefinitionTests";
+import {runDocumentationedDefinitionTests} from "./runDocumentationedDefinitionTests";
 
 export function runBaseFunctionDefinitionTests(
     runParameterDefinitionTests: (definition: ParameterDefinitions, structure: ParameterTestStructures) => void,
@@ -22,7 +22,7 @@ export function runBaseFunctionDefinitionTests(
     runUserDefinedTypeGuardTests(definition.userDefinedTypeGuard, structure.userDefinedTypeGuard);
     runThisTypedDefinitionTests(definition, structure);
     runOverloadSignaturedDefinitionTests(definition, structure);
-    runJsDocedDefinitionTests(definition, structure);
+    runDocumentationedDefinitionTests(definition, structure);
 
     it(`${structure.isGenerator ? "should" : "should not"} be a generator function`, () => {
         assert.equal(definition.isGenerator, structure.isGenerator || false);

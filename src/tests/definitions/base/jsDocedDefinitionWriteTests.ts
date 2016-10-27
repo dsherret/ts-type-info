@@ -3,11 +3,11 @@ import {getInfoFromString} from "./../../../main";
 
 const code = `enum MyEnum {}`;
 
-describe("JsDocedDefinition write tests", () => {
+describe("DocumentationedDefinition write tests", () => {
     const file = getInfoFromString(code);
 
     describe("#write()", () => {
-        it("should contain the definition written out with jsdoc when providing a properly formatted jsdoc", () => {
+        it("should contain the definition written out with documentation comment when providing a properly formatted one", () => {
             const expected =
 `/**
  * Some description
@@ -15,11 +15,11 @@ describe("JsDocedDefinition write tests", () => {
 enum MyEnum {
 }
 `;
-            file.enums[0].jsDocText = "/**\n * Some description\n */";
+            file.enums[0].documentationComment = "/**\n * Some description\n */";
             assert.equal(file.enums[0].write(), expected);
         });
 
-        it("should contain the definition written out with jsdoc when not providing a properly formatted jsdoc", () => {
+        it("should contain the definition written out with documentation comment when not providing a properly formatted one", () => {
             const expected =
 `/**
  * Some description
@@ -29,7 +29,7 @@ enum MyEnum {
 enum MyEnum {
 }
 `;
-            file.enums[0].jsDocText = "Some description\nOver multiple lines\r\nAnd more lines";
+            file.enums[0].documentationComment = "Some description\nOver multiple lines\r\nAnd more lines";
             assert.equal(file.enums[0].write(), expected);
         });
     });

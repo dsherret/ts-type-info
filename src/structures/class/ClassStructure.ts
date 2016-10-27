@@ -1,5 +1,5 @@
 ﻿import {BaseStructure, NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure,
-    AbstractableStructure, JsDocedStructure} from "./../base";
+    AbstractableStructure, DocumentationedStructure} from "./../base";
 import {ClassMethodStructure} from "./ClassMethodStructure";
 import {ClassPropertyStructure} from "./ClassPropertyStructure";
 import {ClassStaticMethodStructure} from "./ClassStaticMethodStructure";
@@ -8,7 +8,7 @@ import {ClassConstructorStructure} from "./ClassConstructorStructure";
 
 export interface ClassStructure
         extends BaseStructure, NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, AbstractableStructure,
-            JsDocedStructure {
+            DocumentationedStructure {
     methods?: ClassMethodStructure[];
     properties?: ClassPropertyStructure[];
     staticMethods?: ClassStaticMethodStructure[];

@@ -1,4 +1,4 @@
-﻿import {BasePropertyTestStructure, JsDocedTestStructure} from "./../base";
+﻿import {BasePropertyTestStructure, DocumentationedTestStructure} from "./../base";
 
-export interface InterfacePropertyTestStructure extends BasePropertyTestStructure, JsDocedTestStructure {
+export interface InterfacePropertyTestStructure extends BasePropertyTestStructure, DocumentationedTestStructure {
 }

@@ -2,6 +2,9 @@
 import {getInfoFromString} from "./../../../main";
 
 const code = `
+/**
+ * Some description
+ */
 type myTypeAlias = string | number;
 type myTypeParameteredTypeAlias<T> = T[];
 type myStringLiteralTypeAlias = "some string" | "other string";
@@ -13,7 +16,7 @@ describe("TypeAliasDefinition", () => {
     describe("#write()", () => {
         describe("myTypeAlias", () => {
             it("should contain everything written out", () => {
-                const expected = `type myTypeAlias = string | number;\n`;
+                const expected = `/**\n * Some description\n */\ntype myTypeAlias = string | number;\n`;
                 assert.equal(myFile.typeAliases[0].write(), expected);
             });
         });

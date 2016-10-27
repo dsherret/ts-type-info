@@ -1,5 +1,5 @@
-﻿import {BaseTestStructure, NamedTestStructure, JsDocedTestStructure} from "./../base";
+﻿import {BaseTestStructure, NamedTestStructure, DocumentationedTestStructure} from "./../base";
 
-export interface EnumMemberTestStructure extends BaseTestStructure, NamedTestStructure, JsDocedTestStructure {
+export interface EnumMemberTestStructure extends BaseTestStructure, NamedTestStructure, DocumentationedTestStructure {
     value: number;
 }

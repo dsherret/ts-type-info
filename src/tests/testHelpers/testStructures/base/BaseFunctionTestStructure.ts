@@ -5,12 +5,12 @@ import {TypeParameteredTestStructure} from "./TypeParameteredTestStructure";
 import {ParameteredTestStructure} from "./ParameteredTestStructure";
 import {ReturnTypedTestStructure} from "./ReturnTypedTestStructure";
 import {OverloadSignaturedTestStructure} from "./OverloadSignaturedTestStructure";
-import {JsDocedTestStructure} from "./JsDocedTestStructure";
+import {DocumentationedTestStructure} from "./DocumentationedTestStructure";
 import {UserDefinedTypeGuardTestStructure} from "./../general";
 
 export interface BaseFunctionTestStructure<T extends BaseParameterTestStructure>
         extends BaseTestStructure, NamedTestStructure, TypeParameteredTestStructure, ParameteredTestStructure<T>, ReturnTypedTestStructure, OverloadSignaturedTestStructure,
-            JsDocedTestStructure {
+            DocumentationedTestStructure {
     userDefinedTypeGuard?: UserDefinedTypeGuardTestStructure;
     isGenerator?: boolean;
 }

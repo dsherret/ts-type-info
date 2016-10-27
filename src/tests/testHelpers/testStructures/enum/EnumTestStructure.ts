@@ -1,9 +1,9 @@
-﻿import {BaseTestStructure, NamedTestStructure, ExportableTestStructure, AmbientableTestStructure, OrderableTestStructure, JsDocedTestStructure} from "./../base";
+﻿import {BaseTestStructure, NamedTestStructure, ExportableTestStructure, AmbientableTestStructure, OrderableTestStructure, DocumentationedTestStructure} from "./../base";
 import {EnumMemberTestStructure} from "./EnumMemberTestStructure";
 
 export interface EnumTestStructure
     extends BaseTestStructure, NamedTestStructure, ExportableTestStructure, AmbientableTestStructure, OrderableTestStructure,
-        JsDocedTestStructure {
+        DocumentationedTestStructure {
     isConst?: boolean;
     members?: EnumMemberTestStructure[];
 }

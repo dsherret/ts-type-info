@@ -1,5 +1,5 @@
-import {DecoratableStructure, BaseObjectPropertyStructure, JsDocedStructure} from "./../../base";
+import {DecoratableStructure, BaseObjectPropertyStructure, DocumentationedStructure} from "./../../base";
 import {ScopedStructure} from "./ScopedStructure";
 
-export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure, DecoratableStructure, ScopedStructure, JsDocedStructure {
+export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure, DecoratableStructure, ScopedStructure, DocumentationedStructure {
 }

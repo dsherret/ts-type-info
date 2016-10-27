@@ -14,13 +14,13 @@ import {TypeParameteredDefinition} from "./../base/TypeParameteredDefinition";
 import {TypedDefinition} from "./../base/TypedDefinition";
 import {ExportableDefinition} from "./../base/ExportableDefinition";
 import {AmbientableDefinition} from "./../base/AmbientableDefinition";
-import {JsDocedDefinition} from "./../base/JsDocedDefinition";
+import {DocumentationedDefinition} from "./../base/DocumentationedDefinition";
 import {TypeParameterDefinition} from "./TypeParameterDefinition";
 
 export class TypeAliasDefinition
         extends BaseDefinition
         implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition, NodedDefinition,
-            JsDocedDefinition {
+            DocumentationedDefinition {
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
         const typeAliasWriter = new TypeAliasWriter(writer);
@@ -48,9 +48,9 @@ export class TypeAliasDefinition
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => (TypeParameterDefinition | null);
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
-    // JsDocedDefinition
-    jsDocText: string;
+    // DocumentationedDefinition
+    documentationComment: string;
 }
 
 applyMixins(TypeAliasDefinition, BaseDefinition, [NamedDefinition, AmbientableDefinition, OrderableDefinition, ExportableDefinition, TypedDefinition,
-    TypeParameteredDefinition, NodedDefinition, JsDocedDefinition]);
+    TypeParameteredDefinition, NodedDefinition, DocumentationedDefinition]);

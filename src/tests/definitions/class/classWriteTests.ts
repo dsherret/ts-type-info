@@ -1,14 +1,22 @@
 ﻿import * as assert from "assert";
 import {getInfoFromString} from "./../../../main";
 
-const code = `
+const code = `/**
+ * Some class description
+ */
 @ClassDecorator
 @ClassDecorator2(1, 2, "3")
 abstract class MyClass {
+    /**
+     * Some static property description
+     */
     @StaticPropertyDecorator
     @StaticPropertyDecorator2()
     static readonly myStaticString: string;
 
+    /**
+     * Some static method description
+     */
     @StaticMethodDecorator
     @StaticMethodDecorator2()
     static myStaticMethod() {
@@ -19,6 +27,9 @@ abstract class MyClass {
 
     protected myString: string;
     private myPrivateString: string;
+    /**
+     * Some property description
+     */
     @PropertyDecorator
     @PropertyDecorator2()
     nonOptionalString = "text";
@@ -55,6 +66,9 @@ abstract class MyClass {
     protected set myGetSetWithWriteDefined(value: string) {
     }
 
+    /**
+     * Some constructure description
+     */
     constructor(@ParameterDecorator @ParameterDecorator2("text") myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
@@ -62,6 +76,9 @@ abstract class MyClass {
     abstract myAbstractMethod2(): string;
     abstract myAbstractMethod2(str?: string): string;
 
+    /**
+     * Some method description
+     */
     @MethodDecorator
     @MethodDecorator2()
     myMethod() {
@@ -125,13 +142,22 @@ describe("ClassDefinition", () => {
         describe("MyClass", () => {
             it("should contain the class written out", () => {
                 const expected =
-`@ClassDecorator
+`/**
+ * Some class description
+ */
+@ClassDecorator
 @ClassDecorator2(1, 2, "3")
 abstract class MyClass {
+    /**
+     * Some static property description
+     */
     @StaticPropertyDecorator
     @StaticPropertyDecorator2()
     static readonly myStaticString: string;
 
+    /**
+     * Some static method description
+     */
     @StaticMethodDecorator
     @StaticMethodDecorator2()
     static myStaticMethod() {
@@ -142,6 +168,9 @@ abstract class MyClass {
 
     protected myString: string;
     private myPrivateString: string;
+    /**
+     * Some property description
+     */
     @PropertyDecorator
     @PropertyDecorator2()
     nonOptionalString = "text";
@@ -169,6 +198,9 @@ abstract class MyClass {
         alert(value);
     }
 
+    /**
+     * Some constructure description
+     */
     constructor(@ParameterDecorator @ParameterDecorator2("text") myParam: string, public readonly myPublicParam: any, protected myProtectedParam: any, private myPrivateParam: any) {
     }
 
@@ -176,6 +208,9 @@ abstract class MyClass {
     abstract myAbstractMethod2(): string;
     abstract myAbstractMethod2(str?: string): string;
 
+    /**
+     * Some method description
+     */
     @MethodDecorator
     @MethodDecorator2()
     myMethod() {

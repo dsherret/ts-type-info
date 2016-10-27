@@ -67,8 +67,8 @@ export abstract class AsyncableDefinition {
     isAsync: boolean;
 }
 
-export abstract class JsDocedDefinition {
-    jsDocText: string;
+export abstract class DocumentationedDefinition {
+    documentationComment: string;
 }
 
 export abstract class ThisTypedDefinition {
@@ -126,7 +126,7 @@ export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinitio
     setDefaultExpression: (text: string) => this;
 }
 
-export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition, ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, JsDocedDefinition {
+export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition, ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition {
     isGenerator: boolean;
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
     name: string;
@@ -143,7 +143,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
-    jsDocText: string;
+    documentationComment: string;
 
     abstract addParameter(structure: ParameterStructureType): ParameterType;
 }
@@ -260,7 +260,7 @@ export class TypeParameterDefinition extends BaseDefinition implements NamedDefi
 export class TypePropertyDefinition extends BasePropertyDefinition implements NodedDefinition {
 }
 
-export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition, NodedDefinition {
+export class TypeAliasDefinition extends BaseDefinition implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition, NodedDefinition, DocumentationedDefinition {
     name: string;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
@@ -273,6 +273,7 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 
     write(writeOptions?: WriteOptions | undefined): string;
     setType(definition: NamedDefinition, typeArguments?: string[]): this;
@@ -281,6 +282,7 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
 
 export class DecoratorDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition {
     arguments: ExpressionDefinition[];
+    isDecoratorFactory: boolean;
     name: string;
     tsNode?: ts.Node | undefined;
 
@@ -377,19 +379,20 @@ export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassM
     abstract addParameter(structure: ParameterStructureType): ParameterType;
 }
 
-export class BaseClassPropertyDefinition extends BaseObjectPropertyDefinition implements DecoratableDefinition, ScopedDefinition, NodedDefinition {
+export class BaseClassPropertyDefinition extends BaseObjectPropertyDefinition implements DecoratableDefinition, ScopedDefinition, NodedDefinition, DocumentationedDefinition {
     decorators: DecoratorDefinition[];
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition | null;
     scope: Scope;
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 }
 
 export abstract class ScopedDefinition {
     scope: Scope;
 }
 
-export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, OrderableDefinition, NodedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition {
+export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, OrderableDefinition, NodedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition, DocumentationedDefinition {
     methods: ClassMethodDefinition[];
     properties: ClassPropertyDefinition[];
     staticMethods: ClassStaticMethodDefinition[];
@@ -412,6 +415,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     isAbstract: boolean;
+    documentationComment: string;
 
     write(writeOptions?: WriteOptions | undefined): string;
     addMethod(structure: ClassMethodStructure): ClassMethodDefinition;
@@ -454,7 +458,7 @@ export enum ClassPropertyKind {
     GetSetAccessor = 3
 }
 
-export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition, ScopedDefinition, NodedDefinition, OverloadSignaturedDefinition {
+export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition, ScopedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition {
     onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition | null;
@@ -463,6 +467,7 @@ export class ClassConstructorDefinition extends BaseDefinition implements Parame
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
+    documentationComment: string;
 
     addParameter(structure: ClassConstructorParameterStructure): ClassConstructorParameterDefinition;
 }
@@ -496,7 +501,7 @@ export type Scope = "public" | "protected" | "private";
 
 export const Scope: { Public: Scope; Protected: Scope; Private: Scope; };
 
-export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {
+export class InterfaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition, DocumentationedDefinition {
     methods: InterfaceMethodDefinition[];
     callSignatures: CallSignatureDefinition[];
     indexSignatures: IndexSignatureDefinition[];
@@ -514,6 +519,7 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 
     addCallSignature(structure: CallSignatureStructure): CallSignatureDefinition;
     addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[] | undefined): TypeDefinition;
@@ -538,11 +544,12 @@ export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceM
     addParameter(structure: InterfaceMethodParameterStructure): InterfaceMethodParameterDefinition;
 }
 
-export class InterfacePropertyDefinition extends BasePropertyDefinition implements NodedDefinition {
+export class InterfacePropertyDefinition extends BasePropertyDefinition implements NodedDefinition, DocumentationedDefinition {
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 }
 
-export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition, NodedDefinition {
+export class EnumDefinition extends BaseDefinition implements AmbientableDefinition, ExportableDefinition, OrderableDefinition, NodedDefinition, DocumentationedDefinition {
     isConst: boolean;
     members: EnumMemberDefinition[];
     name: string;
@@ -553,23 +560,25 @@ export class EnumDefinition extends BaseDefinition implements AmbientableDefinit
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 
     addMember(structure: EnumMemberStructure): EnumMemberDefinition;
     getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): EnumMemberDefinition | null;
     write(writeOptions?: WriteOptions | undefined): string;
 }
 
-export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition {
+export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition, DocumentationedDefinition {
     value: number;
     name: string;
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 }
 
 export type NamespaceDeclarationType = "namespace" | "module";
 
 export const NamespaceDeclarationType: { Namespace: NamespaceDeclarationType; Module: NamespaceDeclarationType; };
 
-export class NamespaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {
+export class NamespaceDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, ModuledDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition, DocumentationedDefinition {
     declarationType: NamespaceDeclarationType;
     name: string;
     isAmbient: boolean;
@@ -605,6 +614,7 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     setOrderOfMember: (order: number, member: ExportableDefinitions) => this;
     order: number;
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 
     write(writeOptions?: WriteOptions | undefined): string;
 }
@@ -700,7 +710,7 @@ export class DefaultImportPartDefinition extends BaseDefinition implements Noded
     tsNode?: ts.Node | undefined;
 }
 
-export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition {
+export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition, DocumentationedDefinition {
     declarationType: VariableDeclarationType;
     name: string;
     isAmbient: boolean;
@@ -713,6 +723,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     order: number;
     type: TypeDefinition;
     tsNode?: ts.Node | undefined;
+    documentationComment: string;
 
     write(writeOptions?: WriteOptions | undefined): string;
     setType(definition: NamedDefinition, typeArguments?: string[]): this;
@@ -828,8 +839,8 @@ export interface FunctionBodyWriteableStructure {
     onWriteFunctionBody?: ((writer: CodeBlockWriter) => void) | undefined;
 }
 
-export interface JsDocedStructure {
-    jsDocText?: string | undefined;
+export interface DocumentationedStructure {
+    documentationComment?: string | undefined;
 }
 
 export interface ModuledStructure {
@@ -860,7 +871,7 @@ export interface TypeParameteredStructure {
     typeParameters?: TypeParameterStructure[] | undefined;
 }
 
-export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure, OverloadSignaturedStructure, JsDocedStructure {
+export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure, OverloadSignaturedStructure, DocumentationedStructure {
     isGenerator?: boolean | undefined;
 }
 
@@ -893,6 +904,7 @@ export interface CallSignatureParameterStructure extends BaseParameterStructure 
 
 export interface DecoratorStructure extends BaseStructure, NamedStructure {
     arguments?: string[] | undefined;
+    isDecoratorFactory?: boolean | undefined;
 }
 
 export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStructure, ReadonlyableStructure {
@@ -904,7 +916,7 @@ export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStruc
 export interface ObjectPropertyStructure extends BaseObjectPropertyStructure {
 }
 
-export interface TypeAliasStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, TypeParameteredStructure, AmbientableStructure {
+export interface TypeAliasStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, TypeParameteredStructure, AmbientableStructure, DocumentationedStructure {
     type: string;
 }
 
@@ -921,7 +933,7 @@ export interface BaseClassMethodStructure<ParameterType extends BaseClassMethodP
 export interface BaseClassMethodParameterStructure extends BaseParameterStructure, DecoratableStructure {
 }
 
-export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure, DecoratableStructure, ScopedStructure {
+export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure, DecoratableStructure, ScopedStructure, DocumentationedStructure {
 }
 
 export interface ScopedStructure {
@@ -940,7 +952,7 @@ export interface ClassPropertyStructure extends BaseClassPropertyStructure, Abst
     onWriteSetBody?: ((writer: CodeBlockWriter) => void) | undefined;
 }
 
-export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure, ScopedStructure {
+export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure, ScopedStructure, DocumentationedStructure {
 }
 
 export interface ClassConstructorParameterStructure extends BaseParameterStructure, ReadonlyableStructure {
@@ -956,7 +968,7 @@ export interface ClassStaticMethodStructure extends BaseClassMethodStructure<Cla
 export interface ClassStaticPropertyStructure extends BaseClassPropertyStructure {
 }
 
-export interface ClassStructure extends BaseStructure, NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, AbstractableStructure {
+export interface ClassStructure extends BaseStructure, NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, AbstractableStructure, DocumentationedStructure {
     methods?: ClassMethodStructure[] | undefined;
     properties?: ClassPropertyStructure[] | undefined;
     staticMethods?: ClassStaticMethodStructure[] | undefined;
@@ -966,12 +978,12 @@ export interface ClassStructure extends BaseStructure, NamedStructure, Decoratab
     implementsTypes?: string[] | undefined;
 }
 
-export interface EnumStructure extends BaseStructure, NamedStructure, ExportableStructure, AmbientableStructure {
+export interface EnumStructure extends BaseStructure, NamedStructure, ExportableStructure, AmbientableStructure, DocumentationedStructure {
     isConst?: boolean | undefined;
     members?: EnumMemberStructure[] | undefined;
 }
 
-export interface EnumMemberStructure extends BaseStructure, NamedStructure {
+export interface EnumMemberStructure extends BaseStructure, NamedStructure, DocumentationedStructure {
     value: number;
 }
 
@@ -1014,10 +1026,10 @@ export interface InterfaceMethodStructure extends BaseFunctionStructure<Interfac
 export interface InterfaceMethodParameterStructure extends BaseParameterStructure {
 }
 
-export interface InterfacePropertyStructure extends BasePropertyStructure {
+export interface InterfacePropertyStructure extends BasePropertyStructure, DocumentationedStructure {
 }
 
-export interface InterfaceStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure {
+export interface InterfaceStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, DocumentationedStructure {
     callSignatures?: CallSignatureStructure[] | undefined;
     extendsTypes?: string[] | undefined;
     methods?: InterfaceMethodStructure[] | undefined;
@@ -1025,11 +1037,11 @@ export interface InterfaceStructure extends BaseStructure, NamedStructure, Expor
     properties?: InterfacePropertyStructure[] | undefined;
 }
 
-export interface NamespaceStructure extends BaseStructure, NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure {
+export interface NamespaceStructure extends BaseStructure, NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure, DocumentationedStructure {
     declarationType?: "namespace" | "module" | undefined;
 }
 
-export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, DefaultExpressionedStructure, AmbientableStructure {
+export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, DefaultExpressionedStructure, AmbientableStructure, DocumentationedStructure {
     declarationType?: "var" | "let" | "const" | undefined;
 }
 

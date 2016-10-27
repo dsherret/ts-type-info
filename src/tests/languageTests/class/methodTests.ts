@@ -50,7 +50,7 @@ class MyClass {
             name: "MyClass",
             methods: [{
                 name: "myParameterMethod",
-                jsDocText: "/**\n * Some description\n */",
+                documentationComment: "/**\n * Some description\n */",
                 parameters: [{
                     name: "myParameter",
                     type: { text: "string" }

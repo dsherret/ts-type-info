@@ -2,6 +2,9 @@
 import {getInfoFromString} from "./../../../main";
 
 const code = `
+/**
+ * Some description
+ */
 namespace MyNamespace {
     type myType = string;
     type mySecondType = string | number;
@@ -33,7 +36,10 @@ describe("NamespaceDefinition", () => {
         describe("MyNamespace", () => {
             it("should contain everything written out", () => {
                 const expected =
-`namespace MyNamespace {
+`/**
+ * Some description
+ */
+namespace MyNamespace {
     type myType = string;
     type mySecondType = string | number;
 

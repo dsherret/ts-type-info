@@ -45,7 +45,7 @@ class MyClass7 {
         }, {
             name: "MyClass2",
             constructorDef: {
-                jsDocText: "/**\n * Some description\n */"
+                documentationComment: "/**\n * Some description\n */"
             }
         }, {
             name: "MyClass3",

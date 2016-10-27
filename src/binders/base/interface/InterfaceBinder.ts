@@ -1,5 +1,5 @@
 ﻿import * as definitions from "./../../../definitions";
-import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, NodedBinder, JsDocedBinder} from "./../base";
+import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, NodedBinder, DocumentationedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export class InterfaceMemberContainer {
@@ -18,7 +18,7 @@ export abstract class InterfaceBinder implements IBaseBinder {
         private readonly ambientableBinder: AmbientableBinder,
         private readonly typeParameteredBinder: TypeParameteredBinder,
         private readonly nodedBinder: NodedBinder,
-        private readonly jsDocedBinder: JsDocedBinder
+        private readonly documentationedBinder: DocumentationedBinder
     ) {
     }
 
@@ -31,7 +31,7 @@ export abstract class InterfaceBinder implements IBaseBinder {
         this.exportableBinder.bind(def);
         this.ambientableBinder.bind(def);
         this.typeParameteredBinder.bind(def);
-        this.jsDocedBinder.bind(def);
+        this.documentationedBinder.bind(def);
         this.bindMembers(def);
         this.nodedBinder.bind(def);
         def.extendsTypes.push(...this.getExtendsTypes());

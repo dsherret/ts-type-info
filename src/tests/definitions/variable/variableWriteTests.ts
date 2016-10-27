@@ -2,6 +2,9 @@
 import {getInfoFromString} from "./../../../main";
 
 const code = `
+/**
+ * Some description
+ */
 var myImplicitAny;
 var myExplicitTypeVar: number;
 var myImplicitTypeVar = "my string";
@@ -15,7 +18,7 @@ describe("VariableDefinition", () => {
     describe("write()", () => {
         describe("myImplicitAny", () => {
             it("should contain everything written out", () => {
-                const expected = `var myImplicitAny: any;\n`;
+                const expected = `/**\n * Some description\n */\nvar myImplicitAny: any;\n`;
                 assert.equal(myFile.variables[0].write(), expected);
             });
         });

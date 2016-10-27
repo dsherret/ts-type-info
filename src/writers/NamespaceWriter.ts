@@ -3,13 +3,17 @@ import {NamespaceDefinition, NamespaceDeclarationType} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ModuledWriter} from "./ModuledWriter";
+import {DocumentationedWriter} from "./DocumentationedWriter";
 
 export class NamespaceWriter extends BaseDefinitionWriter<NamespaceDefinition> {
+    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
+
     constructor(writer: CodeBlockWriter, private moduledWriter: ModuledWriter) {
         super(writer);
     }
 
     protected writeDefault(def: NamespaceDefinition, flags: WriteFlags) {
+        this.documentationedWriter.write(def);
         this.writeExportKeyword(def, flags);
         this.writeDeclareKeyword(def);
         this.writer.write(this.getDeclarationTypeAsString(def.declarationType)).write(` ${def.name}`).block(() => {

@@ -7,7 +7,7 @@ import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,
-        AbstractableDefinition, OrderableDefinition, NodedDefinition, JsDocedDefinition} from "./../base";
+        AbstractableDefinition, OrderableDefinition, NodedDefinition, DocumentationedDefinition} from "./../base";
 import {TypeParameterDefinition, DecoratorDefinition} from "./../general";
 import {TypeDefinition} from "./../expression";
 import {InterfaceDefinition} from "./../interface";
@@ -19,7 +19,7 @@ import {ClassStaticMethodDefinition} from "./ClassStaticMethodDefinition";
 import {ClassStaticPropertyDefinition} from "./ClassStaticPropertyDefinition";
 
 export class ClassDefinition extends BaseDefinition implements NamedDefinition, DecoratableDefinition, OrderableDefinition, NodedDefinition,
-        ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition, JsDocedDefinition {
+        ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition, AbstractableDefinition, DocumentationedDefinition {
     methods: ClassMethodDefinition[] = [];
     properties: ClassPropertyDefinition[] = [];
     staticMethods: ClassStaticMethodDefinition[] = [];
@@ -126,9 +126,9 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     hasDeclareKeyword: boolean;
     // AbstractableDefinition
     isAbstract: boolean;
-    // JsDocedDefinition
-    jsDocText: string;
+    // DocumentationedDefinition
+    documentationComment: string;
 }
 
 applyMixins(ClassDefinition, BaseDefinition, [NamedDefinition, DecoratableDefinition, ExportableDefinition, TypeParameteredDefinition, AmbientableDefinition,
-    NodedDefinition, AbstractableDefinition, OrderableDefinition, JsDocedDefinition]);
+    NodedDefinition, AbstractableDefinition, OrderableDefinition, DocumentationedDefinition]);

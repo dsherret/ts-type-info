@@ -23,7 +23,7 @@ describe("ModuledDefinitionTests", () => {
             staticMethods: [{ name: "staticMethod1" }],
             staticProperties: [{ name: "staticProp1" }],
             typeParameters: [{ name: "T" }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         n.addClass({
             name: "class2"
@@ -51,7 +51,7 @@ describe("ModuledDefinitionTests", () => {
             staticMethods: [{ name: "staticMethod1" }],
             staticProperties: [{ name: "staticProp1" }],
             typeParameters: [{ name: "T" }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runClassDefinitionTests(n.classes[1], {
             name: "class2",
@@ -70,7 +70,7 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             isConst: true,
             members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         n.addEnum({
             name: "enum2"
@@ -90,7 +90,7 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             isConst: true,
             members: [{ name: "member1", value: 1 }, { name: "member2", value: 2 }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runEnumDefinitionTests(n.enums[1], {
             name: "enum2",
@@ -116,7 +116,7 @@ describe("ModuledDefinitionTests", () => {
                 parameters: [{ name: "param1" }]
             }],
             onWriteFunctionBody: (writer) => writer.write(""),
-            jsDocText: "text"
+            documentationComment: "text"
         });
         n.addFunction({
             name: "function2"
@@ -145,7 +145,7 @@ describe("ModuledDefinitionTests", () => {
                 minArgumentCount: 1
             }],
             hasOnWriteFunctionBody: true,
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runFunctionDefinitionTests(n.functions[1], {
             name: "function2",
@@ -178,7 +178,7 @@ describe("ModuledDefinitionTests", () => {
             typeParameters: [{
                 name: "typeParam"
             }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         n.addInterface({
             name: "Interface2"
@@ -214,7 +214,7 @@ describe("ModuledDefinitionTests", () => {
             typeParameters: [{
                 name: "typeParam"
             }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runInterfaceDefinitionTests(n.interfaces[1], {
             name: "Interface2",
@@ -239,7 +239,7 @@ describe("ModuledDefinitionTests", () => {
             namespaces: [{ name: "namespace1" }],
             typeAliases: [{ name: "typeAlias1", type: "string" }],
             variables: [{ name: "variable1" }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         n.addNamespace({
             name: "namespace2"
@@ -265,7 +265,7 @@ describe("ModuledDefinitionTests", () => {
             namespaces: [{ name: "namespace1", declarationType: NamespaceDeclarationType.Namespace }],
             typeAliases: [{ name: "typeAlias1", type: { text: "string" }}],
             variables: [{ name: "variable1", declarationType: VariableDeclarationType.Let }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runNamespaceDefinitionTests(n.namespaces[1], {
             name: "namespace2",
@@ -285,7 +285,7 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             type: "string",
             typeParameters: [{ name: "T" }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         n.addTypeAlias({
             name: "typeAlias2",
@@ -306,7 +306,7 @@ describe("ModuledDefinitionTests", () => {
             isNamedExportOfFile: true,
             type: { text: "string" },
             typeParameters: [{ name: "T" }],
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runTypeAliasDefinitionTests(n.typeAliases[1], {
             name: "typeAlias2",
@@ -327,7 +327,7 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             type: "number",
-            jsDocText: "text"
+            documentationComment: "text"
         });
         n.addVariable({
             name: "myVar2"
@@ -348,7 +348,7 @@ describe("ModuledDefinitionTests", () => {
             isExported: true,
             isNamedExportOfFile: true,
             type: { text: "number" },
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runVariableDefinitionTests(n.variables[1], {
             name: "myVar2",

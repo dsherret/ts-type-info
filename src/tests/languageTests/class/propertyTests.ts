@@ -42,7 +42,7 @@ class MyClass {
                 name: "myString",
                 isReadonly: true,
                 type: { text: "string" },
-                jsDocText: "/**\n * Some description\n */"
+                documentationComment: "/**\n * Some description\n */"
             }, {
                 name: "myImplicit",
                 type: { text: "number" },

@@ -11,7 +11,7 @@ export * from "./base/TsDecoratableBinder";
 export * from "./base/TsDefaultExpressionedBinder";
 export * from "./base/TsExportableBinder";
 export * from "./base/TsFunctionBodyWriteableBinder";
-export * from "./base/TsJsDocedBinder";
+export * from "./base/TsDocumentationedBinder";
 export * from "./base/TsModuledBinder";
 export * from "./base/TsNamedBinderByNode";
 export * from "./base/TsNamedBinderBySymbol";

@@ -14,7 +14,7 @@ class MyClass {
     runFileDefinitionTests(def, {
         classes: [{
             name: "MyClass",
-            jsDocText: "/**\n * Some description\n */"
+            documentationComment: "/**\n * Some description\n */"
         }]
     });
 });

@@ -14,7 +14,7 @@ interface MyInterface {
     runFileDefinitionTests(def, {
         interfaces: [{
             name: "MyInterface",
-            jsDocText: "/**\n * Some description\n */"
+            documentationComment: "/**\n * Some description\n */"
         }]
     });
 });

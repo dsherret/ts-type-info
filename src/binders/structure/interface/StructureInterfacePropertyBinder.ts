@@ -1,14 +1,14 @@
 ﻿import {StructureFactory} from "./../../../factories";
 import {InterfacePropertyStructure} from "./../../../structures";
 import {InterfacePropertyBinder} from "./../../base";
-import {StructureBasePropertyBinder, StructureNodedBinder, StructureJsDocedBinder} from "./../base";
+import {StructureBasePropertyBinder, StructureNodedBinder, StructureDocumentationedBinder} from "./../base";
 
 export class StructureInterfacePropertyBinder extends InterfacePropertyBinder {
     constructor(factory: StructureFactory, structure: InterfacePropertyStructure) {
         super(
             new StructureBasePropertyBinder(factory, structure),
             new StructureNodedBinder(),
-            new StructureJsDocedBinder(structure)
+            new StructureDocumentationedBinder(structure)
         );
     }
 }

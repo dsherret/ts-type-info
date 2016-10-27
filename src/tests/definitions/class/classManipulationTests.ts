@@ -141,7 +141,7 @@ describe("ClassDefinition", () => {
             name: "myMethod",
             scope: Scope.Private,
             onWriteFunctionBody: (writer) => writer.write(""),
-            jsDocText: "text"
+            documentationComment: "text"
         });
         c.addMethod({
             name: "mySecondMethod"
@@ -168,7 +168,7 @@ describe("ClassDefinition", () => {
             name: "myMethod",
             scope: Scope.Private,
             hasOnWriteFunctionBody: true,
-            jsDocText: "text"
+            documentationComment: "text"
         });
 
         testHelpers.runClassMethodDefinitionTests(c.methods[1], {
@@ -190,7 +190,7 @@ describe("ClassDefinition", () => {
             type: "string",
             onWriteGetBody: (writer) => writer.write(""),
             onWriteSetBody: (writer) => writer.write(""),
-            jsDocText: "text"
+            documentationComment: "text"
         });
         c.addProperty({
             name: "mySecondProperty"
@@ -212,7 +212,7 @@ describe("ClassDefinition", () => {
             type: { text: "string" },
             hasOnWriteGetBody: true,
             hasOnWriteSetBody: true,
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runClassPropertyDefinitionTests(c.properties[1], {
             name: "mySecondProperty"
@@ -236,7 +236,7 @@ describe("ClassDefinition", () => {
             }],
             name: "myStaticMethod",
             scope: Scope.Private,
-            jsDocText: "text"
+            documentationComment: "text"
         });
         c.addStaticMethod({
             name: "mySecondStaticMethod"
@@ -261,7 +261,7 @@ describe("ClassDefinition", () => {
             }],
             name: "myStaticMethod",
             scope: Scope.Private,
-            jsDocText: "text"
+            documentationComment: "text"
         });
 
         testHelpers.runClassStaticMethodDefinitionTests(c.staticMethods[1], {
@@ -278,7 +278,7 @@ describe("ClassDefinition", () => {
             name: "myStaticProperty",
             scope: Scope.Private,
             type: "string",
-            jsDocText: "text"
+            documentationComment: "text"
         });
         c.addStaticProperty({
             name: "mySecondStaticProperty"
@@ -295,7 +295,7 @@ describe("ClassDefinition", () => {
             name: "myStaticProperty",
             scope: Scope.Private,
             type: { text: "string" },
-            jsDocText: "text"
+            documentationComment: "text"
         });
         testHelpers.runClassStaticPropertyDefinitionTests(c.staticProperties[1], {
             name: "mySecondStaticProperty"
@@ -309,7 +309,7 @@ describe("ClassDefinition", () => {
             scope: Scope.Private,
             parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
             onWriteFunctionBody: (writer) => writer.write(""),
-            jsDocText: "text"
+            documentationComment: "text"
         });
 
         describe("constructor", () => {
@@ -317,7 +317,7 @@ describe("ClassDefinition", () => {
                 scope: Scope.Private,
                 parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
                 hasOnWriteFunctionBody: true,
-                jsDocText: "text"
+                documentationComment: "text"
             });
         });
     });

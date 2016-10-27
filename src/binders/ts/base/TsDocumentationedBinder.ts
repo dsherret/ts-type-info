@@ -1,13 +1,13 @@
 ﻿import {TsNode} from "./../../../compiler";
-import {JsDocedBinder} from "./../../base";
+import {DocumentationedBinder} from "./../../base";
 
-export class TsJsDocedBinder extends JsDocedBinder {
+export class TsDocumentationedBinder extends DocumentationedBinder {
     constructor(private readonly node: TsNode) {
         super();
     }
 
-    getJsDocText() {
-        let text = this.node.getJsDocText();
+    getDocumentationComment() {
+        let text = this.node.getDocumentationComment();
 
         // "     /*" goes to "/*"
         text = text.replace(/^\s*\/\*\*/, "/**");

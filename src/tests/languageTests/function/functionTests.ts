@@ -35,7 +35,7 @@ class MyClass2 {
     runFileDefinitionTests(def, {
         functions: [{
             name: "myFunction",
-            jsDocText: `/**\n * Some description\n */`
+            documentationComment: `/**\n * Some description\n */`
         }, {
             name: "myFunctionWithParameters",
             parameters: [

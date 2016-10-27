@@ -5,13 +5,13 @@ import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, OrderableDefinition,
-    NodedDefinition, JsDocedDefinition} from "./../base";
+    NodedDefinition, DocumentationedDefinition} from "./../base";
 import {ExpressionDefinition, TypeDefinition} from "./../expression";
 import {VariableDeclarationType} from "./VariableDeclarationType";
 
 export class VariableDefinition extends BaseDefinition
         implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition,
-            JsDocedDefinition {
+            DocumentationedDefinition {
     declarationType: VariableDeclarationType;
 
     write(writeOptions?: WriteOptions) {
@@ -40,9 +40,9 @@ export class VariableDefinition extends BaseDefinition
     setType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[]) => this;
     // NodedDefinition
     tsNode?: typeConstants.TypeScriptNode;
-    // JsDocedDefinition
-    jsDocText: string;
+    // DocumentationedDefinition
+    documentationComment: string;
 }
 
 applyMixins(VariableDefinition, BaseDefinition, [NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition,
-    OrderableDefinition, NodedDefinition, JsDocedDefinition]);
+    OrderableDefinition, NodedDefinition, DocumentationedDefinition]);
