@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/ts-type-info.svg)](https://badge.fury.io/js/ts-type-info) [![Build Status](https://travis-ci.org/dsherret/ts-type-info.svg?branch=master)](https://travis-ci.org/dsherret/ts-type-info?branch=master)
 [![Coverage Status](https://coveralls.io/repos/dsherret/ts-type-info/badge.svg?branch=master&service=github)](https://coveralls.io/github/dsherret/ts-type-info?branch=master)
 
-"Reflection" and code generation in TypeScript.
+Simple TypeScript AST and code generator.
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
@@ -14,7 +14,7 @@ Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/
 npm install ts-type-info --save-dev
 ```
 
-## Reflection
+## AST
 
 ```typescript
 // V:\TestFile.ts
@@ -54,7 +54,7 @@ If you notice a language feature missing please open [an issue](https://github.c
 
 ## Code Generation
 
-You can work with objects retrieved from "reflection" or start with your own new file definition:
+You can work with objects retrieved from the AST or start with your own new file definition:
 
 ```typescript
 import * as TsTypeInfo from "ts-type-info";
