@@ -39,7 +39,7 @@ export class TsSignature extends TsSourceFileChild {
     }
 
     private getTypeFromType(tsType: ts.Type) {
-        return this.tsCache.getType(this.typeChecker, tsType, this.node, () => this.createType(tsType));
+        return this.createType(tsType);
     }
 
     private createType(type: ts.Type): TsType {

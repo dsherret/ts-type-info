@@ -115,7 +115,7 @@ export class TsTypeNode extends TsSourceFileChild {
 
     private getTsTypeFromNode(node: ts.Node) {
         const type = this.typeChecker.getTypeAtLocation(node);
-        return this.tsCache.getType(this.typeChecker, type, node, () => this.createType(type, node));
+        return this.createType(type, node);
     }
 
     private createType(type: ts.Type, node: ts.Node): TsType {

@@ -5,17 +5,6 @@ export class TsTypeChecker {
     constructor(private readonly typeChecker: ts.TypeChecker) {
     }
 
-    typeToString(type: ts.Type, node: ts.Node | null) {
-        let formatFlags = (ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
-            ts.TypeFormatFlags.WriteTypeArgumentsOfSignature) as ts.TypeFormatFlags;
-
-        if (node != null && node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
-            formatFlags |= ts.TypeFormatFlags.InTypeAlias;
-        }
-
-        return this.typeChecker.typeToString(type, node || undefined, formatFlags);
-    }
-
     getSyntaxKindAsString(kind: ts.SyntaxKind) {
         return (ts as any).SyntaxKind[kind] as string;
     }
@@ -30,6 +19,10 @@ export class TsTypeChecker {
 
     getTypeAtLocation(node: ts.Node) {
         return this.typeChecker.getTypeAtLocation(node);
+    }
+
+    getTypeOfSymbolAtLocation(symbol: ts.Symbol, node: ts.Node) {
+        return this.typeChecker.getTypeOfSymbolAtLocation(symbol, node);
     }
 
     getDeclarationFromSymbol(symbol: ts.Symbol) {
@@ -127,6 +120,10 @@ export class TsTypeChecker {
         }
 
         return isDefaultExportOfFile;
+    }
+
+    typeToString(type: ts.Type, node: ts.Node | null, formatFlags: ts.TypeFormatFlags) {
+        return this.typeChecker.typeToString(type, node || undefined, formatFlags);
     }
 
     symbolHasFlag(symbol: ts.Symbol, flag: ts.SymbolFlags) {

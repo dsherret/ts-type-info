@@ -4,7 +4,7 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 describe("type alias type tests", () => {
     const code = `
 type MyTypeAlias = { prop: string; };
-type MyUnionTypeAlias = { prop: string; } | string;
+type MyUnionTypeAlias = { prop: string; } | string | MyTypeAlias;
 let a: MyTypeAlias;
 let b: MyUnionTypeAlias;
 `;
@@ -20,9 +20,11 @@ let b: MyUnionTypeAlias;
         }, {
             name: "MyUnionTypeAlias",
             type: {
-                text: "string | { prop: string; }",
+                text: "string | MyTypeAlias | { prop: string; }",
                 unionTypes: [{
                     text: "string"
+                }, {
+                    text: "MyTypeAlias"
                 }, {
                     text: "{ prop: string; }"
                 }]

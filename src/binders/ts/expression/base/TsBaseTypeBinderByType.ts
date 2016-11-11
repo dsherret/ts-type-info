@@ -46,6 +46,7 @@ export class TsBaseTypeBinderByType extends BaseTypeBinder {
     }
 
     getTypeArguments() {
-        return this.tsType.getTypeArguments().map(arg => this.factory.getType(arg, null));
+        const args = [...this.tsType.getTypeArguments(), ...this.tsType.getAliasTypeArguments()];
+        return args.map(arg => this.factory.getType(arg, null));
     }
 }

@@ -148,8 +148,11 @@ export class TsSymbol extends TsSourceFileChild {
 
     @Memoize
     getType() {
-        const type = ((this.symbol as any)["type"] as ts.Type);
-        return this.createType(type, this.getUnderlyingNodes()[0]);
+        const node = this.getUnderlyingNodes()[0];
+        let type = ((this.symbol as any)["type"] as ts.Type);
+        if (type == null)
+            type = this.typeChecker.getTypeOfSymbolAtLocation(this.symbol, node);
+        return this.createType(type, node);
     }
 
     @Memoize

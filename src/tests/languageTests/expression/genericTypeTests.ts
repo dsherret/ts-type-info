@@ -26,7 +26,13 @@ let u: MyType<MyType<string>>;
                 text: "MyType<string>",
                 typeArguments: [{
                     text: "string"
-                }]
+                }],
+                node: {
+                    text: "MyType<string>",
+                    typeArguments: [{
+                        text: "string"
+                    }]
+                }
             }
         }, {
             name: "u",

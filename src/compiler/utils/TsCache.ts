@@ -10,7 +10,6 @@ export class TsCache {
     private readonly nodeCache = new KeyValueCache<ts.Node, TsNode>();
     private readonly typeNodeCache = new KeyValueCache<ts.TypeNode, TsTypeNode>();
     private readonly symbolCache = new KeyValueCache<ts.Symbol, TsSymbol>();
-    private readonly typeCacheContainer = new TypeCacheContainer<TsType>();
 
     getSymbol(symbol: ts.Symbol, createFunc: () => TsSymbol) {
         return this.symbolCache.getOrCreate(symbol, () => createFunc());
@@ -23,15 +22,9 @@ export class TsCache {
     getTypeNode(node: ts.TypeNode, createFunc: () => TsTypeNode) {
         return this.typeNodeCache.getOrCreate(node, () => createFunc());
     }
-
-    getType(typeChecker: TsTypeChecker, type: ts.Type, node: ts.Node | null, createTsType: () => TsType) {
-        const cache = this.typeCacheContainer.getCache(type);
-        const typeText = typeChecker.typeToString(type, node);
-
-        return cache.getOrCreate(typeText, () => createTsType());
-    }
 }
 
+// todo: remove this
 class TypeCacheContainer<T> {
     private readonly fileCache = new KeyValueCache<string, KeyValueCache<string, T>>();
     private readonly typeCache = new KeyValueCache<string, T>();

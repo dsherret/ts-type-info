@@ -1,8 +1,9 @@
 ﻿import * as ts from "typescript";
-import {tryGet} from "./../utils";
+import {tryGet, Memoize, Logger} from "./../utils";
 import {TsSourceFileChild, TsSourceFileChildOptions} from "./TsSourceFileChild";
 import {TsSymbol} from "./TsSymbol";
 import {TsSignature} from "./TsSignature";
+import {TypeToStringWriter} from "./TypeToStringWriter";
 
 export interface TsTypeOptions extends TsSourceFileChildOptions {
     type: ts.Type;
@@ -12,6 +13,7 @@ export interface TsTypeOptions extends TsSourceFileChildOptions {
 export class TsType extends TsSourceFileChild {
     private readonly type: ts.Type;
     private readonly node: ts.Node | null;
+    private readonly typeToStringWriter = new TypeToStringWriter();
 
     constructor(opts: TsTypeOptions) {
         super(opts);
@@ -19,8 +21,33 @@ export class TsType extends TsSourceFileChild {
         this.node = opts.node;
     }
 
+    @Memoize
     getText() {
-        return this.typeChecker.typeToString(this.type, this.node);
+        let text = "";
+
+        try {
+            text = this.typeToStringWriter.getString(this);
+        } catch (ex) {
+            Logger.log(ex);
+        }
+
+        return text || this.getTypeCheckerTypeText();
+    }
+
+    @Memoize
+    getTypeCheckerTypeText() {
+        let formatFlags = (ts.TypeFormatFlags.UseTypeOfFunction | ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseFullyQualifiedType |
+            ts.TypeFormatFlags.WriteTypeArgumentsOfSignature) as ts.TypeFormatFlags;
+
+        if (this.isMainTypeAliasType()) {
+            formatFlags |= ts.TypeFormatFlags.InTypeAlias;
+        }
+
+        return this.typeChecker.typeToString(this.type, this.node, formatFlags) || "";
+    }
+
+    getLiteralText() {
+        return (this.type as ts.LiteralType).text || "";
     }
 
     getProperties(): TsSymbol[] {
@@ -34,8 +61,21 @@ export class TsType extends TsSourceFileChild {
     }
 
     getTypeArguments() {
-        const tsTypeArguments = (this.type as ts.TypeReference).typeArguments || this.type.aliasTypeArguments || [];
-        return tsTypeArguments.map(arg => tryGet(this.getText(), () => this.createType(arg))!).filter(arg => arg != null);
+        const tsTypeArguments = (this.type as ts.TypeReference).typeArguments || [];
+        return tsTypeArguments.map(arg => tryGet(this.getTypeCheckerTypeText(), () => this.createType(arg))!).filter(arg => arg != null);
+    }
+
+    getAliasTypeArguments() {
+        const tsTypeArguments = this.type.aliasTypeArguments || [];
+        return tsTypeArguments.map(arg => tryGet(this.getTypeCheckerTypeText(), () => this.createType(arg))!).filter(arg => arg != null);
+    }
+
+    getAliasSymbol() {
+        return this.type.aliasSymbol == null ? null : this.createSymbol(this.type.aliasSymbol);
+    }
+
+    getSymbol() {
+        return this.type.symbol == null ? null : this.createSymbol(this.type.symbol);
     }
 
     getSymbols(): TsSymbol[] {
@@ -55,12 +95,29 @@ export class TsType extends TsSourceFileChild {
         }
     }
 
+    getUnionOrIntersectionTypes() {
+        return ((this.type as ts.UnionOrIntersectionType).types || []).map(t => this.createType(t));
+    }
+
+    getArrayElementType() {
+        const type = (this.type as any).elementType as ts.Type || this.getArrayTypeArgument();
+        return type == null ? null : this.createType(type);
+    }
+
     isArrayType() {
         return this.getArrayElementType() != null;
     }
 
+    isBooleanType() {
+        return (this.type.flags & ts.TypeFlags.Boolean) !== 0;
+    }
+
     isEnumType() {
         return (this.type.flags & ts.TypeFlags.Enum) !== 0;
+    }
+
+    isThisType() {
+        return (this.type.flags & ts.TypeFlags.ThisType) !== 0;
     }
 
     isTupleType() {
@@ -68,11 +125,11 @@ export class TsType extends TsSourceFileChild {
     }
 
     isIntersectionType() {
-        return (this.type.flags & ts.TypeFlags.Intersection) !== 0;
+        return (this.type.flags & ts.TypeFlags.Intersection) !== 0 && !this.isEnumType() && !this.isBooleanType();
     }
 
     isUnionType() {
-        return (this.type.flags & ts.TypeFlags.Union) !== 0;
+        return (this.type.flags & ts.TypeFlags.Union) !== 0 && !this.isEnumType() && !this.isBooleanType();
     }
 
     isAnonymousType() {
@@ -91,13 +148,8 @@ export class TsType extends TsSourceFileChild {
         return (this.type.flags & ts.TypeFlags.Interface) !== 0;
     }
 
-    getUnionOrIntersectionTypes() {
-        return ((this.type as ts.UnionOrIntersectionType).types || []).map(t => this.createType(t));
-    }
-
-    getArrayElementType() {
-        const type = (this.type as any).elementType as ts.Type || this.getArrayTypeArgument();
-        return type == null ? null : this.createType(type);
+    isMainTypeAliasType() {
+        return this.node != null && this.node.kind === ts.SyntaxKind.TypeAliasDeclaration && this.typeChecker.getTypeAtLocation(this.node) === this.type;
     }
 
     private getArrayTypeArgument() {
@@ -114,14 +166,14 @@ export class TsType extends TsSourceFileChild {
     }
 
     private createType(type: ts.Type): TsType {
-        return this.tsCache.getType(this.typeChecker, type, this.node, () => new TsType({
+        return new TsType({
             sourceFile: this.sourceFile,
             tsSourceFile: this.tsSourceFile,
             typeChecker: this.typeChecker,
             tsCache: this.tsCache,
             type,
             node: this.node
-        }));
+        });
     }
 
     private createSymbol(symbol: ts.Symbol) {

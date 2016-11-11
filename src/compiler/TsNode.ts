@@ -296,7 +296,7 @@ export class TsNode extends TsSourceFileChild {
         return this.node.parent == null ? null : this.createNode(this.node.parent);
     }
 
-    getType(): TsType {
+    getType() {
         return this.getTypeAtLocationByNode(this.node);
     }
 
@@ -584,7 +584,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     private getOrCreateType(type: ts.Type, node: ts.Node) {
-        return this.tsCache.getType(this.typeChecker, type, node, () => this.createType(type, node));
+        return this.createType(type, node);
     }
 
     private createType(type: ts.Type, node: ts.Node): TsType {
