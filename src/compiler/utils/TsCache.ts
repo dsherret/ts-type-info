@@ -1,10 +1,8 @@
 ﻿import * as ts from "typescript";
 import {KeyValueCache, Logger} from "./../../utils";
-import {TsType} from "./../TsType";
 import {TsSymbol} from "./../TsSymbol";
 import {TsNode} from "./../TsNode";
 import {TsTypeNode} from "./../TsTypeNode";
-import {TsTypeChecker} from "./TsTypeChecker";
 
 export class TsCache {
     private readonly nodeCache = new KeyValueCache<ts.Node, TsNode>();

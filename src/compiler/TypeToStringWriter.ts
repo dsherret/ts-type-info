@@ -1,5 +1,4 @@
-﻿import * as ts from "typescript";
-import {TsSymbol} from "./TsSymbol";
+﻿import {TsSymbol} from "./TsSymbol";
 import {TsType} from "./TsType";
 
 enum FormatFlags {
