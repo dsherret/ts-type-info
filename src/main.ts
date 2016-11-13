@@ -22,7 +22,7 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
     options = options || {};
     const {includeTsNodes = false, showDebugMessages = false} = options;
 
-    Logger.toggleEnabled(showDebugMessages);
+    Logger.setEnabled(showDebugMessages);
 
     const tsMain = new TsMain(fileNames, options);
     const tsFactory = new TsFactory({ includeTsNodes });

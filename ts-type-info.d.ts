@@ -1,41 +1,34 @@
 import CodeBlockWriter from "code-block-writer";
 import * as ts from "typescript";
 
-export function getInfoFromFiles(fileNames: string[], options?: Options | undefined): GlobalDefinition;
+export function getInfoFromFiles(fileNames: string[], options?: undefined | Options): GlobalDefinition;
 
-export function getInfoFromString(code: string, options?: Options | undefined): FileDefinition;
+export function getInfoFromString(code: string, options?: undefined | Options): FileDefinition;
 
 export interface Options {
-    compilerOptions?: CompilerOptions | undefined;
-    showDebugMessages?: boolean | undefined;
-    includeTsNodes?: boolean | undefined;
+    compilerOptions?: undefined | CompilerOptions;
+    showDebugMessages?: undefined | true | false;
+    includeTsNodes?: undefined | true | false;
 }
 
-export interface CompilerOptions {
-    [option: string]: string | number | boolean | string[] | (string | number)[] | undefined;
-    allowJs?: boolean | undefined;
-    charset?: string | undefined;
-    locale?: string | undefined;
-    project?: string | undefined;
-    rootDir?: string | undefined;
-    strictNullChecks?: boolean | undefined;
+export interface CompilerOptions extends ts.CompilerOptions {
 }
 
 export interface WriteOptions {
-    newLine?: string | undefined;
-    indentNumberOfSpaces?: number | undefined;
-    useTabs?: boolean | undefined;
+    newLine?: undefined | string;
+    indentNumberOfSpaces?: undefined | number;
+    useTabs?: undefined | true | false;
 }
 
 export abstract class BaseDefinition {
-    onBeforeWrite: ((writer: CodeBlockWriter) => void) | null;
-    onAfterWrite: ((writer: CodeBlockWriter) => void) | null;
+    onBeforeWrite: null | ((writer: CodeBlockWriter) => void);
+    onAfterWrite: null | ((writer: CodeBlockWriter) => void);
 
     constructor();
 }
 
 export class FunctionBodyWriteableDefinition {
-    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
+    onWriteFunctionBody: null | ((writer: CodeBlockWriter) => void);
 }
 
 export abstract class NamedDefinition {
@@ -43,7 +36,7 @@ export abstract class NamedDefinition {
 }
 
 export abstract class OptionallyNamedDefinition {
-    name: string | null;
+    name: null | string;
 }
 
 export abstract class OrderableDefinition {
@@ -72,21 +65,21 @@ export abstract class DocumentationedDefinition {
 }
 
 export abstract class ThisTypedDefinition {
-    thisType: TypeDefinition | null;
+    thisType: null | TypeDefinition;
 
-    setThisType(definition: NamedDefinition, typeArguments?: string[] | undefined): this;
+    setThisType(definition: NamedDefinition, typeArguments?: undefined | string[]): this;
     setThisType(text: string): this;
 }
 
 export abstract class TypedDefinition {
     type: TypeDefinition;
 
-    setType(definition: NamedDefinition, typeArguments?: string[] | undefined): this;
+    setType(definition: NamedDefinition, typeArguments?: undefined | string[]): this;
     setType(text: string): this;
 }
 
 export abstract class DefaultExpressionedDefinition {
-    defaultExpression: ExpressionDefinition | null;
+    defaultExpression: null | ExpressionDefinition;
 
     setDefaultExpression(text: string): this;
 }
@@ -95,7 +88,7 @@ export abstract class DecoratableDefinition {
     decorators: DecoratorDefinition[];
 
     addDecorator(structure: DecoratorStructure): DecoratorDefinition;
-    getDecorator(nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)): DecoratorDefinition | null;
+    getDecorator(nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)): null | DecoratorDefinition;
 }
 
 export abstract class ExportableDefinition {
@@ -118,28 +111,28 @@ export abstract class TypeParameteredDefinition {
     typeParameters: TypeParameterDefinition[];
 
     addTypeParameter(structure: TypeParameterStructure): TypeParameterDefinition;
-    getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)): TypeParameterDefinition | null;
+    getTypeParameter(nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)): null | TypeParameterDefinition;
 }
 
 export abstract class BaseObjectPropertyDefinition extends BasePropertyDefinition implements DefaultExpressionedDefinition {
-    defaultExpression: ExpressionDefinition | null;
+    defaultExpression: null | ExpressionDefinition;
     setDefaultExpression: (text: string) => this;
 }
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType> extends BaseDefinition implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition, ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition {
     isGenerator: boolean;
-    userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
+    userDefinedTypeGuard: null | UserDefinedTypeGuardDefinition;
     name: string;
     parameters: ParameterType[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)) => ParameterType | null;
-    thisType: TypeDefinition | null;
+    thisType: null | TypeDefinition;
     setThisType: (textOrDefinition: string | NamedDefinition, typeArguments?: string[] | undefined) => this;
     returnType: TypeDefinition;
     setReturnType: (text: string) => this;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
@@ -155,15 +148,15 @@ export interface BaseParameterDefinitionConstructor<ParameterType> {
 export abstract class BaseParameterDefinition extends BaseDefinition implements OptionallyNamedDefinition, OptionalDefinition, TypedDefinition, DefaultExpressionedDefinition, NodedDefinition {
     isRestParameter: boolean;
     destructuringProperties: ObjectPropertyDefinition[];
-    name: string | null;
+    name: null | string;
     isOptional: boolean;
     type: TypeDefinition;
-    defaultExpression: ExpressionDefinition | null;
+    defaultExpression: null | ExpressionDefinition;
     setDefaultExpression: (text: string) => this;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 
     addDestructuringProperty(structure: ObjectPropertyStructure): ObjectPropertyDefinition;
-    getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): ObjectPropertyDefinition | null;
+    getDestructuringProperty(nameOrSearchFunction: string | ((property: ObjectPropertyDefinition) => boolean)): null | ObjectPropertyDefinition;
     setType(definition: NamedDefinition, typeArguments?: string[]): this;
     setType(text: string): this;
 }
@@ -172,7 +165,7 @@ export abstract class ParameteredDefinition<ParameterType extends BaseParameterD
     parameters: ParameterType[];
 
     abstract addParameter(structure: ParameterStructureType): ParameterType;
-    getParameter(nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)): ParameterType | null;
+    getParameter(nameOrSearchFunction: string | ((parameter: ParameterType) => boolean)): null | ParameterType;
 }
 
 export abstract class ReadonlyableDefinition {
@@ -201,29 +194,29 @@ export abstract class ModuledDefinition {
     addNamespace(structure: NamespaceStructure): NamespaceDefinition;
     addTypeAlias(structure: TypeAliasStructure): TypeAliasDefinition;
     addVariable(structure: VariableStructure): VariableDefinition;
-    getClass(nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)): ClassDefinition | null;
-    getEnum(nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)): EnumDefinition | null;
-    getFunction(nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)): FunctionDefinition | null;
-    getInterface(nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)): InterfaceDefinition | null;
-    getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)): NamespaceDefinition | null;
-    getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)): TypeAliasDefinition | null;
-    getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)): VariableDefinition | null;
+    getClass(nameOrSearchFunction: string | ((classDef: ClassDefinition) => boolean)): null | ClassDefinition;
+    getEnum(nameOrSearchFunction: string | ((enumDef: EnumDefinition) => boolean)): null | EnumDefinition;
+    getFunction(nameOrSearchFunction: string | ((functionDef: FunctionDefinition) => boolean)): null | FunctionDefinition;
+    getInterface(nameOrSearchFunction: string | ((interfaceDef: InterfaceDefinition) => boolean)): null | InterfaceDefinition;
+    getNamespace(nameOrSearchFunction: string | ((namespaceDef: NamespaceDefinition) => boolean)): null | NamespaceDefinition;
+    getTypeAlias(nameOrSearchFunction: string | ((typeAliasDef: TypeAliasDefinition) => boolean)): null | TypeAliasDefinition;
+    getVariable(nameOrSearchFunction: string | ((variableDef: VariableDefinition) => boolean)): null | VariableDefinition;
     directlyContains(def: ExportableDefinitions): boolean;
-    getNamespacesToDefinition(searchDef: ExportableDefinitions): NamespaceDefinition[] | null;
+    getNamespacesToDefinition(searchDef: ExportableDefinitions): null | NamespaceDefinition[];
     getExports(): ExportableDefinitions[];
     getMembers(): ExportableDefinitions[];
     setOrderOfMember(order: number, member: ExportableDefinitions): this;
 }
 
 export abstract class NodedDefinition {
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 }
 
 export abstract class OverloadSignaturedDefinition {
     overloadSignatures: CallSignatureDefinition[];
 
     addOverloadSignature(structure: CallSignatureStructure): CallSignatureDefinition;
-    getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
+    getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean): null | CallSignatureDefinition;
 }
 
 export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition, NodedDefinition {
@@ -234,7 +227,7 @@ export class CallSignatureDefinition extends BaseDefinition implements TypeParam
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 
     addParameter(structure: CallSignatureParameterStructure): CallSignatureParameterDefinition;
     getMinArgumentCount(): number;
@@ -252,9 +245,9 @@ export class IndexSignatureDefinition extends BaseDefinition implements ReturnTy
 }
 
 export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition {
-    constraintType: TypeDefinition | null;
+    constraintType: null | TypeDefinition;
     name: string;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 }
 
 export class TypePropertyDefinition extends BasePropertyDefinition implements NodedDefinition {
@@ -272,10 +265,10 @@ export class TypeAliasDefinition extends BaseDefinition implements NamedDefiniti
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 
-    write(writeOptions?: WriteOptions | undefined): string;
+    write(writeOptions?: undefined | WriteOptions): string;
     setType(definition: NamedDefinition, typeArguments?: string[]): this;
     setType(text: string): this;
 }
@@ -284,7 +277,7 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
     arguments: ExpressionDefinition[];
     isDecoratorFactory: boolean;
     name: string;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 
     addArgument(text: string): TypeDefinition;
 }
@@ -302,20 +295,20 @@ export class BaseExpressionDefinition extends BaseDefinition {
 }
 
 export abstract class BaseTypeDefinition extends BaseExpressionDefinition {
-    arrayElementType: TypeDefinition | null;
+    arrayElementType: null | TypeDefinition;
     intersectionTypes: TypeDefinition[];
     unionTypes: TypeDefinition[];
-    definitions: ExportableDefinitions[];
+    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
     properties: TypePropertyDefinition[];
     typeArguments: TypeDefinition[];
     text: string;
 
-    getAllDefinitions(): ExportableDefinitions[];
-    getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition | null;
-    getUnionType(searchFunction: (definition: TypeDefinition) => boolean): TypeDefinition | null;
-    getDefinition(searchFunction: (definition: ExportableDefinitions) => boolean): ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition | null;
-    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): TypePropertyDefinition | null;
-    getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): TypeDefinition | null;
+    getAllDefinitions(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean): null | TypeDefinition;
+    getUnionType(searchFunction: (definition: TypeDefinition) => boolean): null | TypeDefinition;
+    getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): null | ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+    getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): null | TypePropertyDefinition;
+    getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): null | TypeDefinition;
     isArrayType(): boolean;
 }
 
@@ -324,9 +317,9 @@ export class ExpressionDefinition extends BaseExpressionDefinition {
 
 export class TypeDefinition extends BaseTypeDefinition {
     callSignatures: CallSignatureDefinition[];
-    node: TypeNodeDefinition | null;
+    node: null | TypeNodeDefinition;
 
-    getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
+    getCallSignature(searchFunction: (typeDefinition: CallSignatureDefinition) => boolean): null | CallSignatureDefinition;
 }
 
 export class TypeNodeDefinition extends BaseTypeDefinition implements TypeParameteredDefinition, ParameteredDefinition<TypeFunctionParameterDefinition, TypeFunctionParameterStructure>, NodedDefinition {
@@ -336,7 +329,7 @@ export class TypeNodeDefinition extends BaseTypeDefinition implements TypeParame
     parameters: TypeFunctionParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: TypeFunctionParameterDefinition) => boolean)) => TypeFunctionParameterDefinition | null;
     addParameter: (structure: TypeFunctionParameterStructure) => TypeFunctionParameterDefinition;
-    tsNode?: ts.TypeNode | undefined;
+    tsNode?: undefined | ts.TypeNode;
 }
 
 export class TypeFunctionParameterDefinition extends BaseParameterDefinition {
@@ -344,7 +337,7 @@ export class TypeFunctionParameterDefinition extends BaseParameterDefinition {
 
 export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameterDefinition, FunctionParameterStructure> implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition, OrderableDefinition {
     isAsync: boolean;
-    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
+    onWriteFunctionBody: null | ((writer: CodeBlockWriter) => void);
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
@@ -353,11 +346,11 @@ export class FunctionDefinition extends BaseFunctionDefinition<FunctionParameter
     order: number;
 
     addParameter(structure: FunctionParameterStructure): FunctionParameterDefinition;
-    write(writeOptions?: WriteOptions | undefined): string;
+    write(writeOptions?: undefined | WriteOptions): string;
 }
 
 export class FunctionParameterDefinition extends BaseParameterDefinition implements NodedDefinition {
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 }
 
 export class BaseClassMethodParameterDefinition extends BaseParameterDefinition implements DecoratableDefinition, ScopedDefinition, NodedDefinition {
@@ -365,12 +358,12 @@ export class BaseClassMethodParameterDefinition extends BaseParameterDefinition 
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition | null;
     scope: Scope;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 }
 
 export abstract class BaseClassMethodDefinition<ParameterType extends BaseClassMethodParameterDefinition, ParameterStructureType> extends BaseFunctionDefinition<ParameterType, ParameterStructureType> implements AsyncableDefinition, DecoratableDefinition, ScopedDefinition, FunctionBodyWriteableDefinition {
     isAsync: boolean;
-    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
+    onWriteFunctionBody: null | ((writer: CodeBlockWriter) => void);
     decorators: DecoratorDefinition[];
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition | null;
@@ -384,7 +377,7 @@ export class BaseClassPropertyDefinition extends BaseObjectPropertyDefinition im
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition | null;
     scope: Scope;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 }
 
@@ -408,7 +401,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     order: number;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
@@ -417,20 +410,20 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     isAbstract: boolean;
     documentationComment: string;
 
-    write(writeOptions?: WriteOptions | undefined): string;
+    write(writeOptions?: undefined | WriteOptions): string;
     addMethod(structure: ClassMethodStructure): ClassMethodDefinition;
     addProperty(structure: ClassPropertyStructure): ClassPropertyDefinition;
     addStaticMethod(structure: ClassStaticMethodStructure): ClassStaticMethodDefinition;
     addStaticProperty(structure: ClassStaticPropertyStructure): ClassStaticPropertyDefinition;
-    addExtends(definition: ClassDefinition, typeArguments?: string[] | undefined): TypeDefinition;
+    addExtends(definition: ClassDefinition, typeArguments?: undefined | string[]): TypeDefinition;
     addExtends(text: string): TypeDefinition;
-    addImplements(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[] | undefined): TypeDefinition;
+    addImplements(definition: ClassDefinition | InterfaceDefinition, typeArguments?: undefined | string[]): TypeDefinition;
     addImplements(text: string): TypeDefinition;
     getPropertiesAndConstructorParameters(): (ClassPropertyDefinition | ClassConstructorParameterDefinition)[];
-    getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): ClassMethodDefinition | null;
-    getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): ClassStaticMethodDefinition | null;
-    getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): ClassPropertyDefinition | null;
-    getStaticProperty(nameOrSearchFunction: string | ((staticProperty: ClassStaticPropertyDefinition) => boolean)): ClassStaticPropertyDefinition | null;
+    getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): null | ClassMethodDefinition;
+    getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): null | ClassStaticMethodDefinition;
+    getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): null | ClassPropertyDefinition;
+    getStaticProperty(nameOrSearchFunction: string | ((staticProperty: ClassStaticPropertyDefinition) => boolean)): null | ClassStaticPropertyDefinition;
     setConstructor(structure: ClassConstructorStructure): this;
 }
 
@@ -446,8 +439,8 @@ export class ClassMethodParameterDefinition extends BaseClassMethodParameterDefi
 export class ClassPropertyDefinition extends BaseClassPropertyDefinition implements AbstractableDefinition {
     kind: ClassPropertyKind;
     isConstructorParameter: boolean;
-    onWriteGetBody: ((writer: CodeBlockWriter) => void) | null;
-    onWriteSetBody: ((writer: CodeBlockWriter) => void) | null;
+    onWriteGetBody: null | ((writer: CodeBlockWriter) => void);
+    onWriteSetBody: null | ((writer: CodeBlockWriter) => void);
     isAbstract: boolean;
 }
 
@@ -459,11 +452,11 @@ export enum ClassPropertyKind {
 }
 
 export class ClassConstructorDefinition extends BaseDefinition implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition, ScopedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition {
-    onWriteFunctionBody: ((writer: CodeBlockWriter) => void) | null;
+    onWriteFunctionBody: null | ((writer: CodeBlockWriter) => void);
     parameters: ClassConstructorParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: ClassConstructorParameterDefinition) => boolean)) => ClassConstructorParameterDefinition | null;
     scope: Scope;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     overloadSignatures: CallSignatureDefinition[];
     addOverloadSignature: (structure: CallSignatureStructure) => CallSignatureDefinition;
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
@@ -478,7 +471,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     addDecorator: (structure: DecoratorStructure) => DecoratorDefinition;
     getDecorator: (nameOrSearchFunction: string | ((decorator: DecoratorDefinition) => boolean)) => DecoratorDefinition | null;
     isReadonly: boolean;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 
     toClassProperty(): ClassPropertyDefinition;
 }
@@ -518,26 +511,26 @@ export class InterfaceDefinition extends BaseDefinition implements NamedDefiniti
     typeParameters: TypeParameterDefinition[];
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 
     addCallSignature(structure: CallSignatureStructure): CallSignatureDefinition;
-    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: string[] | undefined): TypeDefinition;
+    addExtends(definition: ClassDefinition | InterfaceDefinition, typeArguments?: undefined | string[]): TypeDefinition;
     addExtends(text: string): TypeDefinition;
     addIndexSignature(structure: IndexSignatureStructure): IndexSignatureDefinition;
     addMethod(structure: InterfaceMethodStructure): InterfaceMethodDefinition;
     addNewSignature(structure: CallSignatureStructure): CallSignatureDefinition;
     addProperty(structure: InterfacePropertyStructure): InterfacePropertyDefinition;
-    getCallSignature(searchFunction: (callSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
-    getIndexSignature(searchFunction: (indexSignature: IndexSignatureDefinition) => boolean): IndexSignatureDefinition | null;
-    getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)): InterfaceMethodDefinition | null;
-    getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean): CallSignatureDefinition | null;
-    getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)): InterfacePropertyDefinition | null;
-    write(writeOptions?: WriteOptions | undefined): string;
+    getCallSignature(searchFunction: (callSignature: CallSignatureDefinition) => boolean): null | CallSignatureDefinition;
+    getIndexSignature(searchFunction: (indexSignature: IndexSignatureDefinition) => boolean): null | IndexSignatureDefinition;
+    getMethod(nameOrSearchFunction: string | ((method: InterfaceMethodDefinition) => boolean)): null | InterfaceMethodDefinition;
+    getNewSignature(searchFunction: (newSignature: CallSignatureDefinition) => boolean): null | CallSignatureDefinition;
+    getProperty(nameOrSearchFunction: string | ((property: InterfacePropertyDefinition) => boolean)): null | InterfacePropertyDefinition;
+    write(writeOptions?: undefined | WriteOptions): string;
 }
 
 export class InterfaceMethodParameterDefinition extends BaseParameterDefinition implements NodedDefinition {
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 }
 
 export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceMethodParameterDefinition, InterfaceMethodParameterStructure> {
@@ -545,7 +538,7 @@ export class InterfaceMethodDefinition extends BaseFunctionDefinition<InterfaceM
 }
 
 export class InterfacePropertyDefinition extends BasePropertyDefinition implements NodedDefinition, DocumentationedDefinition {
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 }
 
@@ -559,18 +552,18 @@ export class EnumDefinition extends BaseDefinition implements AmbientableDefinit
     order: number;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 
     addMember(structure: EnumMemberStructure): EnumMemberDefinition;
-    getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): EnumMemberDefinition | null;
-    write(writeOptions?: WriteOptions | undefined): string;
+    getMember(nameOrSearchFunction: string | ((member: EnumMemberDefinition) => boolean)): null | EnumMemberDefinition;
+    write(writeOptions?: undefined | WriteOptions): string;
 }
 
 export class EnumMemberDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition, DocumentationedDefinition {
     value: number;
     name: string;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 }
 
@@ -613,17 +606,17 @@ export class NamespaceDefinition extends BaseDefinition implements NamedDefiniti
     getMembers: () => ExportableDefinitions[];
     setOrderOfMember: (order: number, member: ExportableDefinitions) => this;
     order: number;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 
-    write(writeOptions?: WriteOptions | undefined): string;
+    write(writeOptions?: undefined | WriteOptions): string;
 }
 
 export class FileDefinition extends BaseDefinition implements ModuledDefinition, NodedDefinition {
     fileName: string;
     imports: ImportDefinition[];
     reExports: ReExportDefinition[];
-    defaultExportExpression: ExpressionDefinition | null;
+    defaultExportExpression: null | ExpressionDefinition;
     namespaces: NamespaceDefinition[];
     classes: ClassDefinition[];
     interfaces: InterfaceDefinition[];
@@ -649,32 +642,32 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
     getNamespacesToDefinition: (searchDef: ExportableDefinitions) => NamespaceDefinition[] | null;
     getMembers: () => ExportableDefinitions[];
     setOrderOfMember: (order: number, member: ExportableDefinitions) => this;
-    tsNode?: ts.SourceFile | undefined;
+    tsNode?: undefined | ts.SourceFile;
 
     addImport(structure: ImportStructure): ImportDefinition;
     addReExport(structure: ReExportStructure): ReExportDefinition;
     getModuleSpecifierToFile(file: FileDefinition): string;
-    getImport(searchFunction: (importDef: ImportDefinition) => boolean): ImportDefinition | null;
-    getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): ReExportDefinition | null;
+    getImport(searchFunction: (importDef: ImportDefinition) => boolean): null | ImportDefinition;
+    getReExport(searchFunction: (reExportDef: ReExportDefinition) => boolean): null | ReExportDefinition;
     getExports(): ExportableDefinitions[];
-    write(writeOptions?: WriteOptions | undefined): string;
+    write(writeOptions?: undefined | WriteOptions): string;
     writeExportsAsDefinitionFile(options: { imports: ImportStructure[]; writeOptions?: WriteOptions | undefined; }): string;
 }
 
 export class ImportDefinition extends BaseDefinition implements NodedDefinition {
     fileName: string;
     moduleSpecifier: string;
-    starImportName: string | null;
-    defaultImport: DefaultImportPartDefinition | null;
+    starImportName: null | string;
+    defaultImport: null | DefaultImportPartDefinition;
     namedImports: NamedImportPartDefinition[];
     starImports: StarImportPartDefinition[];
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 
     addNamedImport(structure: NamedImportPartStructure): NamedImportPartDefinition;
-    getNamedImport(searchFunction: (importPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition | null;
-    getStarImport(searchFunction: (importPart: StarImportPartDefinition) => boolean): StarImportPartDefinition | null;
+    getNamedImport(searchFunction: (importPart: NamedImportPartDefinition) => boolean): null | NamedImportPartDefinition;
+    getStarImport(searchFunction: (importPart: StarImportPartDefinition) => boolean): null | StarImportPartDefinition;
     setDefaultImport(importName: string): this;
-    write(writeOptions?: WriteOptions | undefined): string;
+    write(writeOptions?: undefined | WriteOptions): string;
 }
 
 export class ReExportDefinition extends BaseDefinition implements NodedDefinition {
@@ -685,29 +678,29 @@ export class ReExportDefinition extends BaseDefinition implements NodedDefinitio
 
     getExports(): ExportableDefinitions[];
     addNamedExport(structure: NamedImportPartStructure): NamedImportPartDefinition;
-    getNamedExport(searchFunction: (exportPart: NamedImportPartDefinition) => boolean): NamedImportPartDefinition | null;
-    getStarExport(searchFunction: (exportPart: StarImportPartDefinition) => boolean): StarImportPartDefinition | null;
-    write(writeOptions?: WriteOptions | undefined): string;
+    getNamedExport(searchFunction: (exportPart: NamedImportPartDefinition) => boolean): null | NamedImportPartDefinition;
+    getStarExport(searchFunction: (exportPart: StarImportPartDefinition) => boolean): null | StarImportPartDefinition;
+    write(writeOptions?: undefined | WriteOptions): string;
 }
 
 export class NamedImportPartDefinition extends BaseDefinition implements NodedDefinition {
     definitions: ExportableDefinitions[];
-    expression: ExpressionDefinition | null;
-    alias: string | null;
+    expression: null | ExpressionDefinition;
+    alias: null | string;
     name: string;
 }
 
 export class StarImportPartDefinition extends BaseDefinition {
     definitions: ExportableDefinitions[];
-    expression: ExpressionDefinition | null;
+    expression: null | ExpressionDefinition;
     name: string;
 }
 
 export class DefaultImportPartDefinition extends BaseDefinition implements NodedDefinition {
     definitions: ExportableDefinitions[];
-    expression: ExpressionDefinition | null;
+    expression: null | ExpressionDefinition;
     name: string;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
 }
 
 export class VariableDefinition extends BaseDefinition implements NamedDefinition, ExportableDefinition, TypedDefinition, DefaultExpressionedDefinition, AmbientableDefinition, OrderableDefinition, NodedDefinition, DocumentationedDefinition {
@@ -715,17 +708,17 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     name: string;
     isAmbient: boolean;
     hasDeclareKeyword: boolean;
-    defaultExpression: ExpressionDefinition | null;
+    defaultExpression: null | ExpressionDefinition;
     setDefaultExpression: (text: string) => this;
     isExported: boolean;
     isNamedExportOfFile: boolean;
     isDefaultExportOfFile: boolean;
     order: number;
     type: TypeDefinition;
-    tsNode?: ts.Node | undefined;
+    tsNode?: undefined | ts.Node;
     documentationComment: string;
 
-    write(writeOptions?: WriteOptions | undefined): string;
+    write(writeOptions?: undefined | WriteOptions): string;
     setType(definition: NamedDefinition, typeArguments?: string[]): this;
     setType(text: string): this;
 }
@@ -736,13 +729,13 @@ export const VariableDeclarationType: { Var: VariableDeclarationType; Let: Varia
 
 export class GlobalDefinition {
     files: FileDefinition[];
-    typeChecker?: ts.TypeChecker | undefined;
+    typeChecker?: undefined | ts.TypeChecker;
 
-    addDefinitionAsImportToFile(opts: { definition: ExportableDefinitions; file: FileDefinition; alias?: string | undefined; }): void;
+    addDefinitionAsImportToFile(opts: { definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition; file: FileDefinition; alias?: string | undefined; }): void;
     addFile(structure: FileStructure): FileDefinition;
-    getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): FileDefinition | null;
-    getFileOfDefinition(def: ExportableDefinitions): FileDefinition | null;
-    getFileAndNamespacesToDefinition(def: ExportableDefinitions): { file: FileDefinition; namespaces: NamespaceDefinition[]; } | null;
+    getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): null | FileDefinition;
+    getFileOfDefinition(def: ExportableDefinitions): null | FileDefinition;
+    getFileAndNamespacesToDefinition(def: ExportableDefinitions): null | { file: FileDefinition; namespaces: NamespaceDefinition[]; };
     renameDefinitionAs(definition: ExportableDefinitions, newName: string): void;
 }
 
@@ -796,8 +789,8 @@ export class FileNotFoundError extends BaseError {
 }
 
 export interface BaseStructure {
-    onBeforeWrite?: ((writer: CodeBlockWriter) => void) | undefined;
-    onAfterWrite?: ((writer: CodeBlockWriter) => void) | undefined;
+    onBeforeWrite?: undefined | ((writer: CodeBlockWriter) => void);
+    onAfterWrite?: undefined | ((writer: CodeBlockWriter) => void);
 }
 
 export interface NamedStructure {
@@ -805,95 +798,95 @@ export interface NamedStructure {
 }
 
 export interface OptionallyNamedStructure {
-    name?: string | undefined;
+    name?: undefined | string;
 }
 
 export interface AbstractableStructure {
-    isAbstract?: boolean | undefined;
+    isAbstract?: undefined | true | false;
 }
 
 export interface AmbientableStructure {
-    isAmbient?: boolean | undefined;
-    hasDeclareKeyword?: boolean | undefined;
+    isAmbient?: undefined | true | false;
+    hasDeclareKeyword?: undefined | true | false;
 }
 
 export interface AsyncableStructure {
-    isAsync?: boolean | undefined;
+    isAsync?: undefined | true | false;
 }
 
 export interface DefaultExpressionedStructure {
-    defaultExpression?: string | undefined;
+    defaultExpression?: undefined | string;
 }
 
 export interface DecoratableStructure {
-    decorators?: DecoratorStructure[] | undefined;
+    decorators?: undefined | DecoratorStructure[];
 }
 
 export interface ExportableStructure {
-    isExported?: boolean | undefined;
-    isNamedExportOfFile?: boolean | undefined;
-    isDefaultExportOfFile?: boolean | undefined;
+    isExported?: undefined | true | false;
+    isNamedExportOfFile?: undefined | true | false;
+    isDefaultExportOfFile?: undefined | true | false;
 }
 
 export interface FunctionBodyWriteableStructure {
-    onWriteFunctionBody?: ((writer: CodeBlockWriter) => void) | undefined;
+    onWriteFunctionBody?: undefined | ((writer: CodeBlockWriter) => void);
 }
 
 export interface DocumentationedStructure {
-    documentationComment?: string | undefined;
+    documentationComment?: undefined | string;
 }
 
 export interface ModuledStructure {
-    namespaces?: NamespaceStructure[] | undefined;
-    classes?: ClassStructure[] | undefined;
-    interfaces?: InterfaceStructure[] | undefined;
-    functions?: FunctionStructure[] | undefined;
-    enums?: EnumStructure[] | undefined;
-    variables?: VariableStructure[] | undefined;
-    typeAliases?: TypeAliasStructure[] | undefined;
+    namespaces?: undefined | NamespaceStructure[];
+    classes?: undefined | ClassStructure[];
+    interfaces?: undefined | InterfaceStructure[];
+    functions?: undefined | FunctionStructure[];
+    enums?: undefined | EnumStructure[];
+    variables?: undefined | VariableStructure[];
+    typeAliases?: undefined | TypeAliasStructure[];
 }
 
 export interface OptionalStructure {
-    isOptional?: boolean | undefined;
+    isOptional?: undefined | true | false;
 }
 
 export interface BaseObjectPropertyStructure extends BasePropertyStructure, DefaultExpressionedStructure {
 }
 
 export interface TypedStructure {
-    type?: string | undefined;
+    type?: undefined | string;
 }
 
 export interface BasePropertyStructure extends BaseStructure, NamedStructure, OptionalStructure, TypedStructure, ReadonlyableStructure {
 }
 
 export interface TypeParameteredStructure {
-    typeParameters?: TypeParameterStructure[] | undefined;
+    typeParameters?: undefined | TypeParameterStructure[];
 }
 
 export interface BaseFunctionStructure<T extends BaseParameterStructure> extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure, OverloadSignaturedStructure, DocumentationedStructure {
-    isGenerator?: boolean | undefined;
+    isGenerator?: undefined | true | false;
 }
 
 export interface BaseParameterStructure extends BaseStructure, OptionallyNamedStructure, OptionalStructure, TypedStructure, DefaultExpressionedStructure {
-    isRestParameter?: boolean | undefined;
-    destructuringProperties?: ObjectPropertyStructure[] | undefined;
+    isRestParameter?: undefined | true | false;
+    destructuringProperties?: undefined | ObjectPropertyStructure[];
 }
 
 export interface ParameteredStructure<T extends BaseParameterStructure> {
-    parameters?: T[] | undefined;
+    parameters?: undefined | T[];
 }
 
 export interface ReadonlyableStructure {
-    isReadonly?: boolean | undefined;
+    isReadonly?: undefined | true | false;
 }
 
 export interface ReturnTypedStructure {
-    returnType?: string | undefined;
+    returnType?: undefined | string;
 }
 
 export interface OverloadSignaturedStructure {
-    overloadSignatures?: CallSignatureStructure[] | undefined;
+    overloadSignatures?: undefined | CallSignatureStructure[];
 }
 
 export interface CallSignatureStructure extends BaseStructure, TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
@@ -903,13 +896,13 @@ export interface CallSignatureParameterStructure extends BaseParameterStructure 
 }
 
 export interface DecoratorStructure extends BaseStructure, NamedStructure {
-    arguments?: string[] | undefined;
-    isDecoratorFactory?: boolean | undefined;
+    arguments?: undefined | string[];
+    isDecoratorFactory?: undefined | true | false;
 }
 
 export interface IndexSignatureStructure extends BaseStructure, ReturnTypedStructure, ReadonlyableStructure {
     keyName: string;
-    keyType?: string | undefined;
+    keyType?: undefined | string;
     returnType: string;
 }
 
@@ -921,7 +914,7 @@ export interface TypeAliasStructure extends BaseStructure, NamedStructure, Expor
 }
 
 export interface TypeParameterStructure extends BaseStructure, NamedStructure {
-    constraintType?: string | undefined;
+    constraintType?: undefined | string;
 }
 
 export interface TypePropertyStructure extends BasePropertyStructure {
@@ -937,7 +930,7 @@ export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure,
 }
 
 export interface ScopedStructure {
-    scope?: "public" | "protected" | "private" | undefined;
+    scope?: undefined | "public" | "protected" | "private";
 }
 
 export interface ClassMethodParameterStructure extends BaseClassMethodParameterStructure {
@@ -947,16 +940,16 @@ export interface ClassMethodStructure extends BaseClassMethodStructure<ClassMeth
 }
 
 export interface ClassPropertyStructure extends BaseClassPropertyStructure, AbstractableStructure {
-    kind?: ClassPropertyKind | undefined;
-    onWriteGetBody?: ((writer: CodeBlockWriter) => void) | undefined;
-    onWriteSetBody?: ((writer: CodeBlockWriter) => void) | undefined;
+    kind?: undefined | ClassPropertyKind;
+    onWriteGetBody?: undefined | ((writer: CodeBlockWriter) => void);
+    onWriteSetBody?: undefined | ((writer: CodeBlockWriter) => void);
 }
 
 export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure, ScopedStructure, DocumentationedStructure {
 }
 
 export interface ClassConstructorParameterStructure extends BaseParameterStructure, ReadonlyableStructure {
-    scope?: "public" | "protected" | "private" | "none" | undefined;
+    scope?: undefined | "public" | "protected" | "private" | "none";
 }
 
 export interface ClassStaticMethodParameterStructure extends BaseClassMethodParameterStructure {
@@ -969,18 +962,18 @@ export interface ClassStaticPropertyStructure extends BaseClassPropertyStructure
 }
 
 export interface ClassStructure extends BaseStructure, NamedStructure, DecoratableStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, AbstractableStructure, DocumentationedStructure {
-    methods?: ClassMethodStructure[] | undefined;
-    properties?: ClassPropertyStructure[] | undefined;
-    staticMethods?: ClassStaticMethodStructure[] | undefined;
-    staticProperties?: ClassStaticPropertyStructure[] | undefined;
-    constructorDef?: ClassConstructorStructure | undefined;
-    extendsTypes?: string[] | undefined;
-    implementsTypes?: string[] | undefined;
+    methods?: undefined | ClassMethodStructure[];
+    properties?: undefined | ClassPropertyStructure[];
+    staticMethods?: undefined | ClassStaticMethodStructure[];
+    staticProperties?: undefined | ClassStaticPropertyStructure[];
+    constructorDef?: undefined | ClassConstructorStructure;
+    extendsTypes?: undefined | string[];
+    implementsTypes?: undefined | string[];
 }
 
 export interface EnumStructure extends BaseStructure, NamedStructure, ExportableStructure, AmbientableStructure, DocumentationedStructure {
-    isConst?: boolean | undefined;
-    members?: EnumMemberStructure[] | undefined;
+    isConst?: undefined | true | false;
+    members?: undefined | EnumMemberStructure[];
 }
 
 export interface EnumMemberStructure extends BaseStructure, NamedStructure, DocumentationedStructure {
@@ -991,27 +984,27 @@ export interface TypeFunctionParameterStructure extends BaseParameterStructure {
 }
 
 export interface FileStructure extends BaseStructure, ModuledStructure {
-    imports?: ImportStructure[] | undefined;
-    reExports?: ReExportStructure[] | undefined;
-    fileName?: string | undefined;
-    defaultExportExpression?: string | undefined;
+    imports?: undefined | ImportStructure[];
+    reExports?: undefined | ReExportStructure[];
+    fileName?: undefined | string;
+    defaultExportExpression?: undefined | string;
 }
 
 export interface NamedImportPartStructure {
     name: string;
-    alias?: string | undefined;
+    alias?: undefined | string;
 }
 
 export interface ImportStructure extends BaseStructure {
     moduleSpecifier: string;
-    starImportName?: string | undefined;
-    defaultImportName?: string | undefined;
-    namedImports?: NamedImportPartStructure[] | undefined;
+    starImportName?: undefined | string;
+    defaultImportName?: undefined | string;
+    namedImports?: undefined | NamedImportPartStructure[];
 }
 
 export interface ReExportStructure extends BaseStructure {
     moduleSpecifier: string;
-    namedExports?: NamedImportPartStructure[] | undefined;
+    namedExports?: undefined | NamedImportPartStructure[];
 }
 
 export interface FunctionStructure extends BaseFunctionStructure<FunctionParameterStructure>, AmbientableStructure, AsyncableStructure, ExportableStructure, FunctionBodyWriteableStructure {
@@ -1030,19 +1023,19 @@ export interface InterfacePropertyStructure extends BasePropertyStructure, Docum
 }
 
 export interface InterfaceStructure extends BaseStructure, NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, DocumentationedStructure {
-    callSignatures?: CallSignatureStructure[] | undefined;
-    extendsTypes?: string[] | undefined;
-    methods?: InterfaceMethodStructure[] | undefined;
-    newSignatures?: CallSignatureStructure[] | undefined;
-    properties?: InterfacePropertyStructure[] | undefined;
+    callSignatures?: undefined | CallSignatureStructure[];
+    extendsTypes?: undefined | string[];
+    methods?: undefined | InterfaceMethodStructure[];
+    newSignatures?: undefined | CallSignatureStructure[];
+    properties?: undefined | InterfacePropertyStructure[];
 }
 
 export interface NamespaceStructure extends BaseStructure, NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure, DocumentationedStructure {
-    declarationType?: "namespace" | "module" | undefined;
+    declarationType?: undefined | "namespace" | "module";
 }
 
 export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, DefaultExpressionedStructure, AmbientableStructure, DocumentationedStructure {
-    declarationType?: "var" | "let" | "const" | undefined;
+    declarationType?: undefined | "var" | "let" | "const";
 }
 
 export function createCallSignature(structure?: CallSignatureStructure): CallSignatureDefinition;
