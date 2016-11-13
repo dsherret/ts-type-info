@@ -9,6 +9,10 @@ export class FileUtils {
         return path.resolve(filePath);
     }
 
+    static readFileSync(filePath: string) {
+        return fs.readFileSync(filePath, "utf-8");
+    }
+
     static fileExistsSync(filePath: string) {
         try {
             return fs.statSync(filePath).isFile();

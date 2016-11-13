@@ -1,5 +1,6 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
+import {CompilerOptionsResolver} from "./compiler/utils/CompilerOptionsResolver";
 import {TsMain} from "./compiler/TsMain";
 import {ArgumentTypeError} from "./errors";
 import {FileDefinition, GlobalDefinition} from "./definitions";
@@ -24,7 +25,7 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
 
     Logger.setEnabled(showDebugMessages);
 
-    const tsMain = new TsMain(fileNames, options);
+    const tsMain = new TsMain(new CompilerOptionsResolver(), fileNames, options);
     const tsFactory = new TsFactory({ includeTsNodes });
 
     const fileDefinitions = tsMain.getSourceFiles().map(sourceFile => tsFactory.getFileDefinition(sourceFile));

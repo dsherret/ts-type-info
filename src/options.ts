@@ -3,6 +3,7 @@
 export interface Options {
     compilerOptions?: CompilerOptions;
     compilerHost?: typeConstants.TypeScriptCompilerHost;
+    tsConfigFilePath?: string;
     showDebugMessages?: boolean;
     includeTsNodes?: boolean;
 }
