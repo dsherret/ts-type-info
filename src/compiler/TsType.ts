@@ -138,7 +138,7 @@ export class TsType extends TsSourceFileChild {
         if (!this.isAnonymousType() || symbol == null)
             return false;
 
-        const node = symbol.getNodes()[0]
+        const node = symbol.getNodes()[0];
 
         if (node == null)
             return false;

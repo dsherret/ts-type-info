@@ -16,7 +16,7 @@ export class TsMain {
         this.verifyFilesExist(fileNames);
 
         const compilerOptions = this.getTsCompilerOptions(options.compilerOptions);
-        const program = ts.createProgram(fileNames, compilerOptions);
+        const program = ts.createProgram(fileNames, compilerOptions, options.compilerHost);
         this.typeChecker = program.getTypeChecker();
         const tsTypeChecker = new TsTypeChecker(this.typeChecker);
 

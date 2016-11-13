@@ -7,6 +7,7 @@ export function getInfoFromString(code: string, options?: undefined | Options): 
 
 export interface Options {
     compilerOptions?: undefined | CompilerOptions;
+    compilerHost?: undefined | ts.CompilerHost;
     showDebugMessages?: undefined | true | false;
     includeTsNodes?: undefined | true | false;
 }
