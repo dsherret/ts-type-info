@@ -28,7 +28,7 @@ export class TypeToStringWriter {
         else
             formatFlags &= ~FormatFlags.InTypeAlias;
 
-        if (type.isUnionType() && !type.isEnumType())
+        if (type.isUnionType())
             return this.getUnionType(type, formatFlags);
         else if (type.isIntersectionType())
             return this.getIntersectionType(type, formatFlags);
@@ -70,7 +70,7 @@ export class TypeToStringWriter {
         const parentSymbol = symbol.getParentSymbol();
         let name = symbol.getName();
 
-        if (parentSymbol != null)
+        if (parentSymbol != null && !parentSymbol.isFileSymbol())
             name = `${this.getTypeFromSymbol(parentSymbol, [])}.${name}`;
 
         if (typeArguments.length === 0)
@@ -81,7 +81,8 @@ export class TypeToStringWriter {
 
     private getUnionType(type: TsType, flags: FormatFlags) {
         const childFlags = (flags & ~FormatFlags.ParentIntersection) | FormatFlags.ParentUnion | FormatFlags.InUnionOrIntersection;
-        const str = type.getUnionOrIntersectionTypes().map(t => this.getStringInternal(t, childFlags)).join(" | ");
+        const unionTypes = type.getUnionOrIntersectionTypes();
+        const str = unionTypes.map(t => this.getStringInternal(t, childFlags)).join(" | ");
 
         if (flags & FormatFlags.ParentIntersection)
             return `(${str})`;

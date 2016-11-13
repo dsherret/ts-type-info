@@ -96,6 +96,15 @@ export class TsSymbol extends TsSourceFileChild {
         return this.typeChecker.symbolHasFlag(this.symbol, ts.SymbolFlags.Alias);
     }
 
+    isFileSymbol() {
+        const declaration = this.symbol.getDeclarations()[0];
+
+        if (declaration == null)
+            return false;
+
+        return declaration.kind === ts.SyntaxKind.SourceFile;
+    }
+
     isDefaultExport() {
         return this.typeChecker.isSymbolDefaultExportOfFile(this.symbol, this.sourceFile);
     }
