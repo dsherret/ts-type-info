@@ -132,6 +132,20 @@ export class TsType extends TsSourceFileChild {
         return (this.type.flags & ts.TypeFlags.Union) !== 0 && !this.isEnumType() && !this.isBooleanType();
     }
 
+    isAnonymousFunctionType() {
+        const symbol = this.getSymbol();
+
+        if (!this.isAnonymousType() || symbol == null)
+            return false;
+
+        const node = symbol.getNodes()[0]
+
+        if (node == null)
+            return false;
+
+        return node.isFunctionType();
+    }
+
     isAnonymousType() {
         return (this.type.flags & ts.TypeFlags.Anonymous) !== 0;
     }

@@ -12,14 +12,14 @@
     }
 
     static enable() {
-        this.toggleEnabled(true);
+        this.setEnabled(true);
     }
 
     static disable() {
-        this.toggleEnabled(false);
+        this.setEnabled(false);
     }
 
-    static toggleEnabled(isEnabled: boolean) {
+    static setEnabled(isEnabled: boolean) {
         this.isEnabled = isEnabled;
     }
 

@@ -101,7 +101,7 @@ export class TsSymbol extends TsSourceFileChild {
     }
 
     isExported() {
-        let parentSymbol = this.getSymbolParent(this.symbol);
+        const parentSymbol = this.getParentOfSymbol(this.symbol);
 
         if (parentSymbol == null) {
             return this.isDefaultExport();
@@ -144,6 +144,11 @@ export class TsSymbol extends TsSourceFileChild {
     isPropertyReadonly() {
         const nodes = this.getNodes();
         return (nodes.length === 1) ? nodes[0].isPropertyReadonly() : false;
+    }
+
+    getParentSymbol() {
+        const parentSymbol = this.getParentOfSymbol(this.symbol);
+        return parentSymbol == null ? null : this.createSymbol(parentSymbol);
     }
 
     @Memoize
@@ -196,7 +201,7 @@ export class TsSymbol extends TsSourceFileChild {
         });
     }
 
-    private getSymbolParent(symbol: ts.Symbol) {
+    private getParentOfSymbol(symbol: ts.Symbol) {
         return symbol == null ? null : (symbol as any).parent as ts.Symbol;
     }
 }

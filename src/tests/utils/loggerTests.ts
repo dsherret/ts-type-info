@@ -15,7 +15,7 @@ describe("logger", () => {
 
     after(() => {
         // reset
-        Logger.toggleEnabled(wasEnabled);
+        Logger.setEnabled(wasEnabled);
         Logger.setLogFunction(console.log);
         Logger.setWarnFunction(console.warn);
         Logger.setErrorFunction(console.error);

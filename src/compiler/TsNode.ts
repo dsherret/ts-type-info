@@ -230,7 +230,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getReturnType() {
-        return this.getOrCreateType(this.typeChecker.getReturnTypeOfNode(this.node), this.node);
+        return this.createType(this.typeChecker.getReturnTypeOfNode(this.node), this.node);
     }
 
     getScope() {
@@ -580,11 +580,7 @@ export class TsNode extends TsSourceFileChild {
     }
 
     private getTypeAtLocationByNode(node: ts.Node): TsType {
-        return this.getOrCreateType(this.typeChecker.getTypeAtLocation(node), node);
-    }
-
-    private getOrCreateType(type: ts.Type, node: ts.Node) {
-        return this.createType(type, node);
+        return this.createType(this.typeChecker.getTypeAtLocation(node), node);
     }
 
     private createType(type: ts.Type, node: ts.Node): TsType {

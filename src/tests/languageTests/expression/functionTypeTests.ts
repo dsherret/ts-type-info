@@ -3,50 +3,58 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("function type tests", () => {
     const code = `
-function myFunc(func: <T extends string>(str: T, num?: number) => void) {
-}`;
+let func: <T extends string>(str: T, num?: number) => void;
+let func2: string | (() => void);
+`;
 
     const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
-        functions: [{
-            name: "myFunc",
-            parameters: [{
-                name: "func",
-                type: {
-                    text: "<T extends string>(str: T, num?: number) => void",
-                    callSignatures: [{
-                        minArgumentCount: 1,
-                        typeParameters: [{
-                            name: "T",
-                            constraintType: { text: "string" }
-                        }],
-                        parameters: [{
-                            name: "str",
-                            type: { text: "T" }
-                        }, {
-                            name: "num",
-                            type: { text: "number" },
-                            isOptional: true
-                        }]
+        variables: [{
+            name: "func",
+            type: {
+                text: "<T extends string>(str: T, num?: number) => void",
+                callSignatures: [{
+                    minArgumentCount: 1,
+                    typeParameters: [{
+                        name: "T",
+                        constraintType: { text: "string" }
                     }],
-                    node: {
-                        text: "<T extends string>(str: T, num?: number) => void",
-                        parameters: [{
-                            name: "str",
-                            type: { text: "T" }
-                        }, {
-                            name: "num",
-                            type: { text: "number" },
-                            isOptional: true
-                        }],
-                        typeParameters: [{
-                            name: "T",
-                            constraintType: { text: "string" }
-                        }]
-                    }
+                    parameters: [{
+                        name: "str",
+                        type: { text: "T" }
+                    }, {
+                        name: "num",
+                        type: { text: "number" },
+                        isOptional: true
+                    }]
+                }],
+                node: {
+                    text: "<T extends string>(str: T, num?: number) => void",
+                    parameters: [{
+                        name: "str",
+                        type: { text: "T" }
+                    }, {
+                        name: "num",
+                        type: { text: "number" },
+                        isOptional: true
+                    }],
+                    typeParameters: [{
+                        name: "T",
+                        constraintType: { text: "string" }
+                    }]
                 }
-            }]
+            }
+        }, {
+            name: "func2",
+            type: {
+                text: "string | (() => void)",
+                unionTypes: [{
+                    text: "string"
+                }, {
+                    text: "() => void"
+                }]
+            }
         }]
     });
 });

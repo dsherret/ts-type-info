@@ -13,7 +13,7 @@ describe("logError", () => {
 
     after(() => {
         Logger.setLogFunction(logFunc);
-        Logger.toggleEnabled(wasLoggerEnabled);
+        Logger.setEnabled(wasLoggerEnabled);
     });
 
     it("should log the name", () => {
