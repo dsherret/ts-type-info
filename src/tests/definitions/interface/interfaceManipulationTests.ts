@@ -9,7 +9,8 @@ describe("InterfaceDefinition", () => {
         const returnedDef = i.addCallSignature({
             returnType: "string",
             parameters: [{ name: "myParam" }],
-            typeParameters: [{ name: "T" }]
+            typeParameters: [{ name: "T" }],
+            documentationComment: "test"
         });
         i.addCallSignature({
             returnType: "number"
@@ -23,7 +24,8 @@ describe("InterfaceDefinition", () => {
             returnType: { text: "string" },
             parameters: [{ name: "myParam" }],
             typeParameters: [{ name: "T" }],
-            minArgumentCount: 1
+            minArgumentCount: 1,
+            documentationComment: "test"
         });
 
         testHelpers.runCallSignatureDefinitionTests(i.callSignatures[1], {

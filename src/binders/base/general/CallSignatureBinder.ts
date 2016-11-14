@@ -1,5 +1,5 @@
 ﻿import {CallSignatureDefinition, CallSignatureParameterDefinition} from "./../../../definitions";
-import {BaseDefinitionBinder, ParameteredBinder, TypeParameteredBinder, ReturnTypedBinder, NodedBinder} from "./../base";
+import {BaseDefinitionBinder, ParameteredBinder, TypeParameteredBinder, ReturnTypedBinder, NodedBinder, DocumentationedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
 export abstract class CallSignatureBinder implements IBaseBinder {
@@ -8,7 +8,8 @@ export abstract class CallSignatureBinder implements IBaseBinder {
         private readonly typeParameterBinder: TypeParameteredBinder,
         private readonly parameterBinder: ParameteredBinder<CallSignatureParameterDefinition>,
         private readonly returnTypedBinder: ReturnTypedBinder,
-        private readonly nodedBinder: NodedBinder
+        private readonly nodedBinder: NodedBinder,
+        private readonly documentationedBinder: DocumentationedBinder
     ) {
     }
 
@@ -18,5 +19,6 @@ export abstract class CallSignatureBinder implements IBaseBinder {
         this.parameterBinder.bind(def);
         this.returnTypedBinder.bind(def);
         this.nodedBinder.bind(def);
+        this.documentationedBinder.bind(def);
     }
 }

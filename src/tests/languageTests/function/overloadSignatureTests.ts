@@ -3,8 +3,17 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("function overload signature tests", () => {
     const code = `
+/**
+ * Some description overload 1
+ */
 function myFunction<T>(num: number, t: T): number;
+/**
+ * Some description overload 2
+ */
 function myFunction<T>(str: string, t: T): string;
+/**
+ * Some description
+ */
 function myFunction<T>(myStringOrNumber: string | number, t: T): string {
     return "str";
 }
@@ -15,6 +24,7 @@ function myFunction<T>(myStringOrNumber: string | number, t: T): string {
     runFileDefinitionTests(def, {
         functions: [{
             name: "myFunction",
+            documentationComment: `/**\n * Some description\n */`,
             overloadSignatures: [{
                 parameters: [{
                     name: "num",
@@ -27,7 +37,8 @@ function myFunction<T>(myStringOrNumber: string | number, t: T): string {
                     name: "T"
                 }],
                 returnType: { text: "number" },
-                minArgumentCount: 2
+                minArgumentCount: 2,
+                documentationComment: `/**\n * Some description overload 1\n */`
             }, {
                 parameters: [{
                     name: "str",
@@ -40,7 +51,8 @@ function myFunction<T>(myStringOrNumber: string | number, t: T): string {
                     name: "T"
                 }],
                 returnType: { text: "string" },
-                minArgumentCount: 2
+                minArgumentCount: 2,
+                documentationComment: `/**\n * Some description overload 2\n */`
             }],
             parameters: [{
                 name: "myStringOrNumber",

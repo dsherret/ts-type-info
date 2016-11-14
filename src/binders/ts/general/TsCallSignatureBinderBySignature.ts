@@ -2,7 +2,8 @@
 import {CallSignatureParameterDefinition} from "./../../../definitions";
 import {TsSignature} from "./../../../compiler";
 import {CallSignatureBinder} from "./../../base";
-import {TsBaseDefinitionBinder, TsTypeParameteredBinderBySignature, TsParameteredBinderBySignature, TsReturnTypedBinderBySignature, TsNodedBinderNull} from "./../base";
+import {TsBaseDefinitionBinder, TsTypeParameteredBinderBySignature, TsParameteredBinderBySignature, TsReturnTypedBinderBySignature, TsNodedBinderNull,
+    TsDocumentationedBinderNull} from "./../base";
 import {TsCallSignatureParameterBinder} from "./TsCallSignatureParameterBinder";
 
 export class TsCallSignatureBinderBySignature extends CallSignatureBinder {
@@ -12,7 +13,8 @@ export class TsCallSignatureBinderBySignature extends CallSignatureBinder {
             new TsTypeParameteredBinderBySignature(factory, signature),
             new TsParameteredBinderBySignature(factory, signature, CallSignatureParameterDefinition, TsCallSignatureParameterBinder),
             new TsReturnTypedBinderBySignature(factory, signature),
-            new TsNodedBinderNull()
+            new TsNodedBinderNull(),
+            new TsDocumentationedBinderNull()
         );
     }
 }

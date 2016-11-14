@@ -1,5 +1,6 @@
-﻿import {BaseStructure, TypeParameteredStructure, ParameteredStructure, ReturnTypedStructure} from "./../base";
+﻿import {BaseStructure, TypeParameteredStructure, ParameteredStructure, ReturnTypedStructure, DocumentationedStructure} from "./../base";
 import {CallSignatureParameterStructure} from "./CallSignatureParameterStructure";
 
-export interface CallSignatureStructure extends BaseStructure, TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
+export interface CallSignatureStructure
+    extends BaseStructure, TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure, DocumentationedStructure {
 }
