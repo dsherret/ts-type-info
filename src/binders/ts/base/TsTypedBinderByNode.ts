@@ -8,6 +8,11 @@ export class TsTypedBinderByNode extends TypedBinder {
     }
 
     getType() {
-        return this.factory.getType(this.node.getType(), this.node.getTypeNode());
+        const type = this.node.getType();
+
+        if (type == null)
+            return this.factory.getTypeFromText("any");
+
+        return this.factory.getType(type, this.node.getTypeNode());
     }
 }

@@ -2,6 +2,7 @@
 import {TsSourceFile, TsNode, TsTypeNode, TsSignature, TsType, TsSymbol, TsExpression} from "./../compiler";
 import * as definitions from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
+import {StructureFactory} from "./StructureFactory";
 
 function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
@@ -135,6 +136,11 @@ export class TsFactory {
             definition
         });
         return definition;
+    }
+
+    getTypeFromText(text: string | undefined) {
+        text = text || "any";
+        return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(new StructureFactory(), text), new definitions.TypeDefinition());
     }
 
     getUserDefinedTypeGuardFromNode(node: TsNode) {

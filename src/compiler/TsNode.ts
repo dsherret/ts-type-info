@@ -384,6 +384,10 @@ export class TsNode extends TsSourceFileChild {
         return this.hasModifierWithSyntaxKind(ts.SyntaxKind.StaticKeyword);
     }
 
+    isAbstractKeyword() {
+        return this.getKind() === ts.SyntaxKind.AbstractKeyword;
+    }
+
     isAmbient() {
         if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias()) {
             return true;
@@ -492,7 +496,13 @@ export class TsNode extends TsSourceFileChild {
         if (this.node.parent != null && this.node.parent.parent != null && this.node.parent.parent.kind === ts.SyntaxKind.Parameter) {
             // for parameter destructuring
             const name = this.getName();
-            const prop = ArrayUtils.firstOrDefault(this.createNode(this.node.parent.parent).getType().getProperties(), p => p.getName() === name);
+            const grandParentNode = this.createNode(this.node.parent.parent);
+            const grandParentType = grandParentNode.getType();
+
+            if (grandParentType == null)
+                return false;
+
+            const prop = ArrayUtils.firstOrDefault(grandParentType.getProperties(), p => p.getName() === name);
 
             if (prop != null) {
                 const nodes = prop.getNodes();
@@ -512,7 +522,13 @@ export class TsNode extends TsSourceFileChild {
         if (this.node.parent != null && this.node.parent.parent != null && this.node.parent.parent.kind === ts.SyntaxKind.Parameter) {
             // for parameter destructuring
             const name = this.getName();
-            const propSymbol = ArrayUtils.firstOrDefault(this.createNode(this.node.parent.parent).getType().getProperties(), p => p.getName() === name);
+            const grandParentNode = this.createNode(this.node.parent.parent);
+            const grandParentType = grandParentNode.getType();
+
+            if (grandParentType == null)
+                return false;
+
+            const propSymbol = ArrayUtils.firstOrDefault(grandParentType.getProperties(), p => p.getName() === name);
 
             if (propSymbol != null) {
                 const nodes = propSymbol.getNodes();
@@ -579,8 +595,9 @@ export class TsNode extends TsSourceFileChild {
         return propertyName != null ? propertyName.text : null;
     }
 
-    private getTypeAtLocationByNode(node: ts.Node): TsType {
-        return this.createType(this.typeChecker.getTypeAtLocation(node), node);
+    private getTypeAtLocationByNode(node: ts.Node): TsType | null {
+        const type = this.typeChecker.getTypeAtLocation(node);
+        return type == null ? null : this.createType(type, node);
     }
 
     private createType(type: ts.Type, node: ts.Node): TsType {

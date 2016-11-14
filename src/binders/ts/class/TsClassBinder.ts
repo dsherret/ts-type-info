@@ -93,6 +93,9 @@ export class TsClassBinder extends ClassBinder {
                 else if (childNode.isHeritageClause()) {
                     // ignore, handled elsewhere
                 }
+                else if (childNode.isAbstractKeyword()) {
+                    // ignore, handled elsewhere
+                }
                 else {
                     Logger.warn(`Unknown class child kind: ${childNode.nodeKindToString()}`);
                 }

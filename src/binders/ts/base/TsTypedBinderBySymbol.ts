@@ -1,4 +1,4 @@
-﻿import {TsSymbol} from "./../../../compiler";
+﻿import {TsSymbol, TsType, TsTypeNode} from "./../../../compiler";
 import {TsFactory} from "./../../../factories";
 import {TypedBinder} from "./../../base";
 
@@ -11,8 +11,15 @@ export class TsTypedBinderBySymbol extends TypedBinder {
         const nodes = this.symbol.getNodes();
 
         if (nodes.length === 1)
-            return this.factory.getType(nodes[0].getType(), nodes[0].getTypeNode());
+            return this.getTypeFromTypeAndNode(nodes[0].getType(), nodes[0].getTypeNode());
         else
-            return this.factory.getType(this.symbol.getType(), null);
+            return this.getTypeFromTypeAndNode(this.symbol.getType(), null);
+    }
+
+    private getTypeFromTypeAndNode(type: TsType | null, node: TsTypeNode | null) {
+        if (type == null)
+            return this.factory.getTypeFromText("any");
+
+        return this.factory.getType(type, node);
     }
 }
