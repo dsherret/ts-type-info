@@ -8,7 +8,7 @@ Simple TypeScript AST and code generator.
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
-* [Version 6.1 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
+* [Version 6.2 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
 
 ```
 npm install ts-type-info --save-dev
