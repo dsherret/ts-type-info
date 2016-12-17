@@ -389,12 +389,10 @@ export class TsNode extends TsSourceFileChild {
     }
 
     isAmbient() {
-        if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias()) {
+        if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias())
             return true;
-        }
-        else {
+        else
             return this.isAnyParentAmbient();
-        }
     }
 
     isClass() {
@@ -686,16 +684,19 @@ export class TsNode extends TsSourceFileChild {
 
     private isAnyParentAmbient() {
         let declaration = this.node.parent;
+        let pastDeclaration = declaration;
 
         while (declaration != null) {
             if (declaration.flags & ts.NodeFlags.Ambient) {
                 return true;
             }
 
+            pastDeclaration = declaration;
             declaration = declaration.parent;
         }
 
-        return false;
+        const sourceFile = pastDeclaration as ts.SourceFile;
+        return sourceFile != null && (sourceFile.isDeclarationFile || false);
     }
 
     private getArgumentsFromExpression(expression: ts.LeftHandSideExpression) {

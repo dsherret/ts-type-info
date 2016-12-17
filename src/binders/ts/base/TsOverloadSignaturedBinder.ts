@@ -11,8 +11,7 @@ export class TsOverloadSignaturedBinder extends OverloadSignaturedBinder {
     }
 
     protected getOverloadSignatures() {
-        const overloadNodes = this.nodes.slice(0, this.nodes.length - 1);
-
+        const overloadNodes = this.nodes.length > 1 && this.nodes[0].isAmbient() ? this.nodes : this.nodes.slice(0, this.nodes.length - 1);
         return overloadNodes.map(n => this.factory.getCallSignatureFromNode(n));
     }
 }
