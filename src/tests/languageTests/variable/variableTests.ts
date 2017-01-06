@@ -23,7 +23,7 @@ let myMultilineLet1: number,
     myMultilineLet2;
 
 const myConst: number;
-const myMultilineConst1 = 10,
+const myMultilineConst1: number,
       myMultilineConst2: string;
 `;
 
@@ -93,8 +93,7 @@ const myMultilineConst1 = 10,
         }, {
             name: "myMultilineConst1",
             declarationType: VariableDeclarationType.Const,
-            type: { text: "number" },
-            defaultExpression: { text: "10" }
+            type: { text: "number" }
         }, {
             name: "myMultilineConst2",
             declarationType: VariableDeclarationType.Const,
