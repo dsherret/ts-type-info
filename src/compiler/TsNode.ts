@@ -662,14 +662,14 @@ export class TsNode extends TsSourceFileChild {
             if (this.isNotDisallowedNode(node)) {
                 if (node.kind === ts.SyntaxKind.VariableStatement) {
                     const declarationList = (node as ts.VariableStatement).declarationList;
-                    node = declarationList.declarations[0];
 
-                    if (declarationList.declarations.length > 1) {
-                        Logger.warn(`Unknown situation where declaration list was greater than 1 for ${node.getText(this.sourceFile)}`);
+                    for (const declaredNode of declarationList.declarations) {
+                        callback(this.createNode(declaredNode));
                     }
                 }
-
-                callback(this.createNode(node));
+                else {
+                    callback(this.createNode(node));
+                }
             }
         });
     }
