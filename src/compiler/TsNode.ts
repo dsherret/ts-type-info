@@ -82,15 +82,15 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getClassConstructorParameterScope() {
-        const nodeFlags = this.node.flags;
+        const modifierFlags = this.getModifierFlags();
 
-        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+        if ((modifierFlags & ts.ModifierFlags.Private) !== 0) {
             return ClassConstructorParameterScope.Private;
         }
-        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Protected) !== 0) {
             return ClassConstructorParameterScope.Protected;
         }
-        else if ((nodeFlags & ts.NodeFlags.Public) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Public) !== 0) {
             return ClassConstructorParameterScope.Public;
         }
         else {
@@ -194,7 +194,7 @@ export class TsNode extends TsSourceFileChild {
 
     getReExportNamedExportNodes() {
         const exportDeclaration = this.node as ts.ExportDeclaration;
-        const exportClause = exportDeclaration.exportClause || {} as ts.NamedImports;
+        const exportClause = (exportDeclaration.exportClause || {}) as ts.NamedImports;
         return (exportClause.elements || []).map(e => this.createNode(e));
     }
 
@@ -234,12 +234,12 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getScope() {
-        const nodeFlags = this.node.flags;
+        const modifierFlags = this.getModifierFlags();
 
-        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+        if ((modifierFlags & ts.ModifierFlags.Private) !== 0) {
             return Scope.Private;
         }
-        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Protected) !== 0) {
             return Scope.Protected;
         }
         else {
@@ -328,7 +328,7 @@ export class TsNode extends TsSourceFileChild {
                 }
             }
         } catch (ex) {
-            Logger.log(ex);
+            Logger.warn(ex);
         }
 
         return "";
@@ -593,6 +593,10 @@ export class TsNode extends TsSourceFileChild {
         return propertyName != null ? propertyName.text : null;
     }
 
+    private getModifierFlags() {
+        return ts.getCombinedModifierFlags(this.node);
+    }
+
     private getTypeAtLocationByNode(node: ts.Node): TsType | null {
         const type = this.typeChecker.getTypeAtLocation(node);
         return type == null ? null : this.createType(type, node);
@@ -687,9 +691,9 @@ export class TsNode extends TsSourceFileChild {
         let pastDeclaration = declaration;
 
         while (declaration != null) {
-            if (declaration.flags & ts.NodeFlags.Ambient) {
+            const modifierFlags = ts.getCombinedModifierFlags(declaration);
+            if (modifierFlags & ts.ModifierFlags.Ambient)
                 return true;
-            }
 
             pastDeclaration = declaration;
             declaration = declaration.parent;

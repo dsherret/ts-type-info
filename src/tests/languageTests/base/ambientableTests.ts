@@ -37,12 +37,14 @@ declare module MyAmbientModule {
             hasDeclareKeyword: true,
             overloadSignatures: [{
                 parameters: []
+            }, {
+                parameters: [{
+                    name: "str",
+                    isOptional: true,
+                    type: { text: "string" }
+                }]
             }],
-            parameters: [{
-                name: "str",
-                isOptional: true,
-                type: { text: "string" }
-            }]
+            parameters: []
         }],
         variables: [{
             name: "MyAmbientVariable",

@@ -1,12 +1,11 @@
 import * as assert from "assert";
 import * as path from "path";
 import * as tsTypeInfo from "./../main";
-import {ArgumentTypeError, FileNotFoundError} from "./../errors";
 
 describe("Main", () => {
     describe("#getInfoFromFiles()", () => {
         it("should throw an error when not providing an array", () => {
-            assert.throws(() => tsTypeInfo.getInfoFromFiles("" as any), ArgumentTypeError);
+            assert.throws(() => tsTypeInfo.getInfoFromFiles("" as any));
         });
 
         it("should not handle a js file when specifying to not allow them", () => {
@@ -26,13 +25,13 @@ describe("Main", () => {
         it("should throw an error when a file isn't found", () => {
             assert.throws(() => {
                 tsTypeInfo.getInfoFromFiles(["nonExistentFile.txt"]);
-            }, FileNotFoundError, "File not found: nonExistentFile.txt");
+            });
         });
     });
 
     describe("#getInfoFromString()", () => {
         it("should throw an error when not providing a string", () => {
-            assert.throws(() => tsTypeInfo.getInfoFromString([] as any), ArgumentTypeError);
+            assert.throws(() => tsTypeInfo.getInfoFromString([] as any));
         });
 
         it("should allow changing the compiler options", () => {

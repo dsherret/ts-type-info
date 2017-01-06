@@ -25,7 +25,7 @@ namespace MyNamespace {
     }
     export namespace MyInnerExportedNamespace {
         export class MyInnerNamespaceClass {}
-        export const myInnerVariable = "string";
+        export const myInnerVariable = "my string";
     }
 }
 export namespace MyExportedNamespace {
@@ -82,10 +82,10 @@ export namespace MyExportedNamespace {
                     isExported: true,
                     declarationType: VariableDeclarationType.Const,
                     defaultExpression: {
-                        text: `"string"`
+                        text: `"my string"`
                     },
                     type: {
-                        text: "string"
+                        text: `"my string"`
                     }
                 }],
                 exports: [{
