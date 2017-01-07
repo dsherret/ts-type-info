@@ -36,7 +36,8 @@ class Note {
                 }, {
                     name: "myReallyReallyReallyReallyReallyLongName",
                     type: { text: "string" }
-                }]
+                }],
+                allDefinitions: [{ name: "Note" }]
             }
         }],
         classes: [{
