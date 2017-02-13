@@ -43,6 +43,7 @@
     "gulp-typescript": "^2.13.3",
     "mocha": "^2.3.3",
     "ts-nameof": "^0.7.0",
+    "ts-state-test-generator": "^0.3.0",
     "tslint": "^3.13.0"
   }
 }

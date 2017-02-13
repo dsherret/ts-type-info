@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {OptionallyNamedDefinition, NamedDefinition, NodedDefinition} from "./../../../../definitions";
+import {OptionallyNamedDefinition, NamedDefinition, NodedDefinition} from "./../../definitions";
 
 export function runNodedDefinitionTests(definition: (NamedDefinition | OptionallyNamedDefinition) & NodedDefinition) {
     runNodedDefinitionTestsForNonNamed(definition);
