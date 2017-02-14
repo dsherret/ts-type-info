@@ -105,9 +105,7 @@ describe("file re-export tests", () => {
         }, {
             name: "NamedExport1"
         }, {
-            name: "DefaultExport",
-            isNamedExportOfFile: false,
-            isDefaultExportOfFile: true
+            name: "DefaultExport"
         }, {
             name: "NamedExportEnum"
         }, {

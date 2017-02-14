@@ -19,10 +19,10 @@ class MyClass {
     });
 
     runNodedDefinitionTests(def.classes[0]);
-    runNodedDefinitionTestsForNonNamed(def.classes[0].constructorDef);
-    runNodedDefinitionTests(def.classes[0].constructorDef.parameters[0]);
-    runNodedDefinitionTestsForNonNamed(def.classes[0].constructorDef.overloadSignatures[0]);
-    runNodedDefinitionTests(def.classes[0].constructorDef.overloadSignatures[0].parameters[0]);
+    runNodedDefinitionTestsForNonNamed(def.classes[0].constructorDef!);
+    runNodedDefinitionTests(def.classes[0].constructorDef!.parameters[0]);
+    runNodedDefinitionTestsForNonNamed(def.classes[0].constructorDef!.overloadSignatures[0]);
+    runNodedDefinitionTests(def.classes[0].constructorDef!.overloadSignatures[0].parameters[0]);
     runNodedDefinitionTests(def.classes[0].methods[0]);
     runNodedDefinitionTests(def.classes[0].methods[0].parameters[0]);
     runNodedDefinitionTestsForNonNamed(def.classes[0].methods[0].overloadSignatures[0]);

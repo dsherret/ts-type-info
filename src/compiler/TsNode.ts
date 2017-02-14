@@ -216,7 +216,7 @@ export class TsNode extends TsSourceFileChild {
 
     getUserDefinedTypeGuardParameterName() {
         const typePredicateNode = (this.node as ts.TypePredicateNode);
-        return (typePredicateNode.parameterName as ts.Identifier).text;
+        return (typePredicateNode.parameterName as ts.Identifier).text || null;
     }
 
     getUserDefinedTypeGuardTypeNode() {

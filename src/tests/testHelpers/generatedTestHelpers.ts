@@ -2931,23 +2931,25 @@ export class TypeDefinitionTestRunner implements TestRunner<TypeDefinition, Type
         this.assertions.describe("TypeDefinition", () => {
             if (this.assertions.isNull(actual, expected)) return;
             this.BaseTypeDefinitionTestRunner.runTest(actual, expected);
-            this.assertions.describe("callSignatures", () => {
-                let actualValue = actual.callSignatures;
-                let expectedValue = expected.callSignatures;
-                if (typeof expectedValue === "undefined") {
-                    expectedValue = [];
-                }
-                this.assertions.it("should have the same length", () => {
-                    this.assertions.strictEqual(actualValue!.length, expectedValue!.length);
+            if (typeof expected.callSignatures !== "undefined") {
+                this.assertions.describe("callSignatures", () => {
+                    let actualValue = actual.callSignatures;
+                    let expectedValue = expected.callSignatures;
+                    if (typeof expectedValue === "undefined") {
+                        expectedValue = [];
+                    }
+                    this.assertions.it("should have the same length", () => {
+                        this.assertions.strictEqual(actualValue!.length, expectedValue!.length);
+                    });
+                    for (let i = 0; i < (expectedValue || []).length; i++) {
+                        ((actualValue, expectedValue, i) => {
+                            this.assertions.describe(`index ${i}`, () => {
+                                this.CallSignatureDefinitionTestRunner.runTest(actualValue as any as CallSignatureDefinition, expectedValue as any as CallSignatureDefinitionTestStructure);
+                            });
+                        })(actualValue[i], expectedValue![i], i);
+                    }
                 });
-                for (let i = 0; i < (expectedValue || []).length; i++) {
-                    ((actualValue, expectedValue, i) => {
-                        this.assertions.describe(`index ${i}`, () => {
-                            this.CallSignatureDefinitionTestRunner.runTest(actualValue as any as CallSignatureDefinition, expectedValue as any as CallSignatureDefinitionTestStructure);
-                        });
-                    })(actualValue[i], expectedValue![i], i);
-                }
-            });
+            }
             if (typeof expected.node !== "undefined") {
                 this.assertions.describe("node", () => {
                     let actualValue = actual.node;
@@ -2972,7 +2974,7 @@ export class TypeDefinitionTestRunner implements TestRunner<TypeDefinition, Type
 }
 
 export interface UserDefinedTypeGuardDefinitionTestStructure extends BaseDefinitionTestStructure {
-    parameterName?: string;
+    parameterName?: (null | string);
     type?: TypeDefinitionTestStructure;
 }
 
@@ -2996,10 +2998,22 @@ export class UserDefinedTypeGuardDefinitionTestRunner implements TestRunner<User
                 let actualValue = actual.parameterName;
                 let expectedValue = expected.parameterName;
                 if (typeof expectedValue === "undefined") {
-                    expectedValue = "this";
+                    expectedValue = null;
                 }
-                this.assertions.it("should have the same value", () => {
-                    this.assertions.strictEqual(actualValue, expectedValue);
+                this.assertions.it("should equal one of the union types", () => {
+                    this.assertions.assertAny(() => {
+                        ((actualValue, expectedValue) => {
+                            this.assertions.it("should have the same value", () => {
+                                this.assertions.strictEqual(actualValue, expectedValue);
+                            });
+                        })(actualValue as null, expectedValue as null);
+                    }, () => {
+                        ((actualValue, expectedValue) => {
+                            this.assertions.it("should have the same value", () => {
+                                this.assertions.strictEqual(actualValue, expectedValue);
+                            });
+                        })(actualValue as string, expectedValue as string);
+                    });
                 });
             });
             this.assertions.describe("type", () => {
@@ -3098,40 +3112,44 @@ export class BaseTypeDefinitionTestRunner implements TestRunner<BaseTypeDefiniti
                     })(actualValue[i], expectedValue![i], i);
                 }
             });
-            this.assertions.describe("properties", () => {
-                let actualValue = actual.properties;
-                let expectedValue = expected.properties;
-                if (typeof expectedValue === "undefined") {
-                    expectedValue = [];
-                }
-                this.assertions.it("should have the same length", () => {
-                    this.assertions.strictEqual(actualValue!.length, expectedValue!.length);
+            if (typeof expected.properties !== "undefined") {
+                this.assertions.describe("properties", () => {
+                    let actualValue = actual.properties;
+                    let expectedValue = expected.properties;
+                    if (typeof expectedValue === "undefined") {
+                        expectedValue = [];
+                    }
+                    this.assertions.it("should have the same length", () => {
+                        this.assertions.strictEqual(actualValue!.length, expectedValue!.length);
+                    });
+                    for (let i = 0; i < (expectedValue || []).length; i++) {
+                        ((actualValue, expectedValue, i) => {
+                            this.assertions.describe(`index ${i}`, () => {
+                                this.TypePropertyDefinitionTestRunner.runTest(actualValue as any as TypePropertyDefinition, expectedValue as any as TypePropertyDefinitionTestStructure);
+                            });
+                        })(actualValue[i], expectedValue![i], i);
+                    }
                 });
-                for (let i = 0; i < (expectedValue || []).length; i++) {
-                    ((actualValue, expectedValue, i) => {
-                        this.assertions.describe(`index ${i}`, () => {
-                            this.TypePropertyDefinitionTestRunner.runTest(actualValue as any as TypePropertyDefinition, expectedValue as any as TypePropertyDefinitionTestStructure);
-                        });
-                    })(actualValue[i], expectedValue![i], i);
-                }
-            });
-            this.assertions.describe("typeArguments", () => {
-                let actualValue = actual.typeArguments;
-                let expectedValue = expected.typeArguments;
-                if (typeof expectedValue === "undefined") {
-                    expectedValue = [];
-                }
-                this.assertions.it("should have the same length", () => {
-                    this.assertions.strictEqual(actualValue!.length, expectedValue!.length);
+            }
+            if (typeof expected.typeArguments !== "undefined") {
+                this.assertions.describe("typeArguments", () => {
+                    let actualValue = actual.typeArguments;
+                    let expectedValue = expected.typeArguments;
+                    if (typeof expectedValue === "undefined") {
+                        expectedValue = [];
+                    }
+                    this.assertions.it("should have the same length", () => {
+                        this.assertions.strictEqual(actualValue!.length, expectedValue!.length);
+                    });
+                    for (let i = 0; i < (expectedValue || []).length; i++) {
+                        ((actualValue, expectedValue, i) => {
+                            this.assertions.describe(`index ${i}`, () => {
+                                this.TypeDefinitionTestRunner.runTest(actualValue as any as TypeDefinition, expectedValue as any as TypeDefinitionTestStructure);
+                            });
+                        })(actualValue[i], expectedValue![i], i);
+                    }
                 });
-                for (let i = 0; i < (expectedValue || []).length; i++) {
-                    ((actualValue, expectedValue, i) => {
-                        this.assertions.describe(`index ${i}`, () => {
-                            this.TypeDefinitionTestRunner.runTest(actualValue as any as TypeDefinition, expectedValue as any as TypeDefinitionTestStructure);
-                        });
-                    })(actualValue[i], expectedValue![i], i);
-                }
-            });
+            }
             this.assertions.describe("text", () => {
                 let actualValue = actual.text;
                 let expectedValue = expected.text;
@@ -4818,7 +4836,7 @@ export interface ClassDefinitionTestStructure extends BaseDefinitionTestStructur
     properties?: ClassPropertyDefinitionTestStructure[];
     staticMethods?: ClassStaticMethodDefinitionTestStructure[];
     staticProperties?: ClassStaticPropertyDefinitionTestStructure[];
-    constructorDef?: ClassConstructorDefinitionTestStructure;
+    constructorDef?: (null | ClassConstructorDefinitionTestStructure);
     extendsTypes?: TypeDefinitionTestStructure[];
     implementsTypes?: TypeDefinitionTestStructure[];
     name: string;
@@ -4936,9 +4954,21 @@ export class ClassDefinitionTestRunner implements TestRunner<ClassDefinition, Cl
                 let actualValue = actual.constructorDef;
                 let expectedValue = expected.constructorDef;
                 if (typeof expectedValue === "undefined") {
-                    expectedValue = {};
+                    expectedValue = null;
                 }
-                this.ClassConstructorDefinitionTestRunner.runTest(actualValue as any as ClassConstructorDefinition, expectedValue as any as ClassConstructorDefinitionTestStructure);
+                this.assertions.it("should equal one of the union types", () => {
+                    this.assertions.assertAny(() => {
+                        ((actualValue, expectedValue) => {
+                            this.assertions.it("should have the same value", () => {
+                                this.assertions.strictEqual(actualValue, expectedValue);
+                            });
+                        })(actualValue as null, expectedValue as null);
+                    }, () => {
+                        ((actualValue, expectedValue) => {
+                            this.ClassConstructorDefinitionTestRunner.runTest(actualValue as any as ClassConstructorDefinition, expectedValue as any as ClassConstructorDefinitionTestStructure);
+                        })(actualValue as ClassConstructorDefinition, expectedValue as ClassConstructorDefinitionTestStructure);
+                    });
+                });
             });
             this.assertions.describe("extendsTypes", () => {
                 let actualValue = actual.extendsTypes;
@@ -5391,6 +5421,7 @@ export interface NamespaceDefinitionTestStructure extends BaseDefinitionTestStru
     typeAliases?: TypeAliasDefinitionTestStructure[];
     order?: number;
     documentationComment?: string;
+    exports?: { name: string; }[];
 }
 
 export class NamespaceDefinitionTestRunner implements TestRunner<NamespaceDefinition, NamespaceDefinitionTestStructure> {
@@ -5624,6 +5655,15 @@ export class NamespaceDefinitionTestRunner implements TestRunner<NamespaceDefini
                     this.assertions.strictEqual(actualValue, expectedValue);
                 });
             });
+            this.assertions.describe("#getExports()", () => {
+                let actualExports = actual.getExports();
+                let expectedExports = expected.exports!;
+                for (let i = 0; i < actualExports.length; i++) {
+                    this.assertions.it("should have the same value", () => {
+                        this.assertions.strictEqual(actualExports[i].name, expectedExports[i].name);
+                    });
+                }
+            });
         });
     }
 }
@@ -5636,7 +5676,6 @@ export interface ModuledDefinitionTestStructure {
     functions?: FunctionDefinitionTestStructure[];
     variables?: VariableDefinitionTestStructure[];
     typeAliases?: TypeAliasDefinitionTestStructure[];
-    exports?: { name: string; }[];
 }
 
 export class ModuledDefinitionTestRunner implements TestRunner<ModuledDefinition, ModuledDefinitionTestStructure> {
@@ -5781,15 +5820,6 @@ export class ModuledDefinitionTestRunner implements TestRunner<ModuledDefinition
                             this.TypeAliasDefinitionTestRunner.runTest(actualValue as any as TypeAliasDefinition, expectedValue as any as TypeAliasDefinitionTestStructure);
                         });
                     })(actualValue[i], expectedValue![i], i);
-                }
-            });
-            this.assertions.describe("#getExports()", () => {
-                let actualExports = actual.getExports();
-                let expectedExports = expected.exports!;
-                for (let i = 0; i < actualExports.length; i++) {
-                    this.assertions.it("should have the same value", () => {
-                        this.assertions.strictEqual(actualExports[i].name, expectedExports[i].name);
-                    });
                 }
             });
         });
@@ -6242,6 +6272,7 @@ export interface FileDefinitionTestStructure extends BaseDefinitionTestStructure
     functions?: FunctionDefinitionTestStructure[];
     variables?: VariableDefinitionTestStructure[];
     typeAliases?: TypeAliasDefinitionTestStructure[];
+    exports?: { name: string; }[];
 }
 
 export class FileDefinitionTestRunner implements TestRunner<FileDefinition, FileDefinitionTestStructure> {
@@ -6459,6 +6490,15 @@ export class FileDefinitionTestRunner implements TestRunner<FileDefinition, File
                             this.TypeAliasDefinitionTestRunner.runTest(actualValue as any as TypeAliasDefinition, expectedValue as any as TypeAliasDefinitionTestStructure);
                         });
                     })(actualValue[i], expectedValue![i], i);
+                }
+            });
+            this.assertions.describe("#getExports()", () => {
+                let actualExports = actual.getExports();
+                let expectedExports = expected.exports!;
+                for (let i = 0; i < actualExports.length; i++) {
+                    this.assertions.it("should have the same value", () => {
+                        this.assertions.strictEqual(actualExports[i].name, expectedExports[i].name);
+                    });
                 }
             });
         });

@@ -2,7 +2,7 @@ import {getInfoFromString} from "./../../../main";
 import {Scope} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
-describe("class method", () => {
+describe("class method tests", () => {
     const code = `
 class MyClass {
     /**
@@ -99,7 +99,7 @@ class MyClass {
             }, {
                 name: "myUserDefinedTypeGuard",
                 userDefinedTypeGuard: {
-                    type: "MyClass"
+                    type: { text: "MyClass" }
                 },
                 returnType: {
                     text: "this is MyClass"

@@ -159,7 +159,7 @@ describe("ClassDefinition", () => {
             typeParameters: [{ name: "TypeParam", constraintType: { text: "string" } }],
             parameters: [{
                 name: "myParam",
-                decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }] }],
+                decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }], isDecoratorFactory: true }],
                 defaultExpression: { text: "5" },
                 type: { text: "number" },
                 isOptional: true,
@@ -253,7 +253,7 @@ describe("ClassDefinition", () => {
             typeParameters: [{ name: "TypeParam", constraintType: { text: "string" } }],
             parameters: [{
                 name: "myParam",
-                decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }] }],
+                decorators: [{ name: "paramDecorator", arguments: [{ text: `"test"` }], isDecoratorFactory: true }],
                 defaultExpression: { text: "5" },
                 type: { text: "number" },
                 isOptional: true,
@@ -313,7 +313,7 @@ describe("ClassDefinition", () => {
         });
 
         describe("constructor", () => {
-            testHelpers.runClassConstructorDefinitionTests(c.constructorDef, {
+            testHelpers.runClassConstructorDefinitionTests(c.constructorDef!, {
                 scope: Scope.Private,
                 parameters: [{ name: "param1" }, { name: "param2", scope: ClassConstructorParameterScope.Private }],
                 hasOnWriteFunctionBody: true,

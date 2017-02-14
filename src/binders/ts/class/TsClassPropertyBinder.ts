@@ -16,6 +16,10 @@ export class TsClassPropertyBinder extends ClassPropertyBinder {
         this.symbols = nodes.map(node => node.getSymbol()!);
     }
 
+    getIsConstructorParameter() {
+        return false;
+    }
+
     getKind() {
         let kind = ClassPropertyKind.Normal;
 

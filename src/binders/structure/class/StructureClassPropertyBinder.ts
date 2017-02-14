@@ -13,6 +13,10 @@ export class StructureClassPropertyBinder extends ClassPropertyBinder {
         );
     }
 
+    getIsConstructorParameter() {
+        return false;
+    }
+
     getKind() {
         return this.structure.kind || ClassPropertyKind.Normal;
     }

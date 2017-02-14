@@ -79,8 +79,7 @@ declare module MyAmbientModule {
                 isExported: true // anything within an ambient definition is exported
             }],
             exports: [{
-                name: "MyClass",
-                isExported: true
+                name: "MyClass"
             }]
         }]
     });

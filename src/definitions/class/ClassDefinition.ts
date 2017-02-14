@@ -24,7 +24,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     properties: ClassPropertyDefinition[] = [];
     staticMethods: ClassStaticMethodDefinition[] = [];
     staticProperties: ClassStaticPropertyDefinition[] = [];
-    constructorDef: ClassConstructorDefinition;
+    constructorDef: ClassConstructorDefinition | null = null;
     extendsTypes: TypeDefinition[] = [];
     implementsTypes: TypeDefinition[] = [];
 

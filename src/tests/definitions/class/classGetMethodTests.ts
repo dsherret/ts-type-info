@@ -56,7 +56,7 @@ describe("ClassDefinition", () => {
             });
 
             it("should have the constructor parameter first", () => {
-                assert.equal(allProps[0], c.constructorDef.parameters[1]);
+                assert.equal(allProps[0], c.constructorDef!.parameters[1]);
             });
 
             it("should have the first property second", () => {

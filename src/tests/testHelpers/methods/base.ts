@@ -11,7 +11,6 @@ export * from "./base/runFunctionBodyWriteableDefinitionTests";
 export * from "./base/runDocumentationedDefinitionTests";
 export * from "./base/runModuledDefinitionTests";
 export * from "./base/runNamedDefinitionTests";
-export * from "./base/runNodedDefinitionTests";
 export * from "./base/runOptionalDefinitionTests";
 export * from "./base/runOrderableDefinitionTests";
 export * from "./base/runReadonlyableDefinitionTests";

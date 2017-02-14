@@ -4,7 +4,7 @@ import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, 
     NodedBinder, DocumentationedBinder} from "./../base";
 
 export class ClassMemberContainer {
-    constructorDef: definitions.ClassConstructorDefinition;
+    constructorDef: definitions.ClassConstructorDefinition | null = null;
     methods: definitions.ClassMethodDefinition[] = [];
     properties: definitions.ClassPropertyDefinition[] = [];
     staticMethods: definitions.ClassStaticMethodDefinition[] = [];

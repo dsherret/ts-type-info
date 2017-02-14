@@ -6,7 +6,7 @@ describe("ImportDefinition", () => {
     describe("#setDefaultImport()", () => {
         const importDef = new ImportDefinition();
         importDef.setDefaultImport("defaultImportName");
-        runDefaultImportPartDefinitionTests(importDef.defaultImport, { name: "defaultImportName" });
+        runDefaultImportPartDefinitionTests(importDef.defaultImport!, { name: "defaultImportName" });
     });
 
     describe("#addNamedImport()", () => {

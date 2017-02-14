@@ -2,6 +2,6 @@
 import {TypeDefinition} from "./../expression/TypeDefinition";
 
 export class UserDefinedTypeGuardDefinition extends BaseDefinition {
-    parameterName: string;
+    parameterName: string | null;
     type: TypeDefinition;
 }

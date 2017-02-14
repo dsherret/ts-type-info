@@ -12,7 +12,7 @@ export abstract class ImportBinder implements IBaseBinder {
     abstract getFileName(): string;
     abstract getModuleSpecifier(): string;
     abstract getIsStarImport(): boolean;
-    abstract getStarImportName(): string;
+    abstract getStarImportName(): string | null;
     abstract getDefaultImport(): DefaultImportPartDefinition | null;
     abstract getNamedImports(): NamedImportPartDefinition[];
     abstract getStarImports(): StarImportPartDefinition[];
@@ -30,6 +30,7 @@ export abstract class ImportBinder implements IBaseBinder {
         }
         else {
             def.namedImports = this.getNamedImports();
+            def.starImportName = null;
         }
     }
 }

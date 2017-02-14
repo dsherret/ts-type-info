@@ -52,7 +52,7 @@ export class ClassWriter extends BaseDefinitionWriter<definitions.ClassDefinitio
         }
     }
 
-    private writeConstructor(constructorDef: definitions.ClassConstructorDefinition, flags: WriteFlags) {
+    private writeConstructor(constructorDef: definitions.ClassConstructorDefinition | null, flags: WriteFlags) {
         if (constructorDef != null && ClassConstructorWriter.shouldWriteConstructor(constructorDef, flags)) {
             const willWriteFunctionBody = FunctionBodyWriter.willWriteFunctionBody(constructorDef, flags);
 

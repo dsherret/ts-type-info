@@ -26,7 +26,7 @@ export class StructureImportBinder extends ImportBinder {
     }
 
     getStarImportName() {
-        return this.structure.starImportName || "";
+        return this.structure.starImportName || null;
     }
 
     getDefaultImport() {

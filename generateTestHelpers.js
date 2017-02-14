@@ -40,6 +40,9 @@ generator.addOptInPropertyTransform(prop => prop.name === "order");
 generator.addOptInPropertyTransform(prop => prop.name === "node");
 generator.addOptInPropertyTransform((prop, classDef) => prop.name === "expression" && classDef.name === "StarImportPartDefinition");
 generator.addOptInPropertyTransform((prop, classDef) => prop.name === "expression" && classDef.name === "NamedImportPartDefinition");
+generator.addOptInPropertyTransform((prop, classDef) => prop.name === "properties" && classDef.name === "BaseTypeDefinition");
+generator.addOptInPropertyTransform((prop, classDef) => prop.name === "typeArguments" && classDef.name === "BaseTypeDefinition");
+generator.addOptInPropertyTransform((prop, classDef) => prop.name === "callSignatures" && classDef.name === "TypeDefinition");
 generator.addDefaultValue(prop => prop.name === "intersectionTypes", `[]`);
 generator.addDefaultValue(prop => prop.name === "unionTypes", `[]`);
 generator.addDefaultValue(prop => prop.name === "properties", `[]`);
@@ -59,7 +62,7 @@ generator.addDefaultValue(prop => prop.name === "isExported", `false`);
 generator.addDefaultValue(prop => prop.name === "isNamedExportOfFile", `false`);
 generator.addDefaultValue(prop => prop.name === "isDefaultExportOfFile", `false`);
 generator.addDefaultValue(prop => prop.name === "isDecoratorFactory", `false`);
-generator.addDefaultValue((prop, classDef) => prop.name === "parameterName" && classDef.name === "UserDefinedTypeGuardDefinition", `"this"`);
+generator.addDefaultValue((prop, classDef) => prop.name === "parameterName" && classDef.name === "UserDefinedTypeGuardDefinition", `null`);
 generator.addDefaultValue(prop => prop.name === "documentationComment", `""`);
 generator.addDefaultValue(prop => prop.name === "parameters", `[]`);
 generator.addDefaultValue(prop => prop.name === "returnType", `{ text: "void" }`);
@@ -88,7 +91,7 @@ generator.addDefaultValue(prop => prop.name === "kind" && prop.type.text === "Cl
 generator.addDefaultValue(prop => prop.name === "isConstructorParameter", `false`);
 generator.addDefaultValue(prop => prop.name === "staticMethods", `[]`);
 generator.addDefaultValue(prop => prop.name === "staticProperties", `[]`);
-generator.addDefaultValue(prop => prop.name === "constructorDef", `{}`);
+generator.addDefaultValue(prop => prop.name === "constructorDef", `null`);
 generator.addDefaultValue(prop => prop.name === "declarationType" && prop.type.text === "VariableDeclarationType", `VariableDeclarationType.Let`);
 generator.addDefaultValue(prop => prop.name === "declarationType" && prop.type.text === "NamespaceDeclarationType", `NamespaceDeclarationType.Namespace`);
 generator.addDefaultValue(prop => prop.name === "namespaces", `[]`);
@@ -196,10 +199,10 @@ generator.addCustomTestTransform(
 );
 
 generator.addTestStructureTransform(
-    def => def.name === "ModuledDefinition",
+    def => def.name === "FileDefinition" || def.name === "NamespaceDefinition",
     structure => structure.addProperty({ name: "exports", isOptional: true, type: "{ name: string; }[]" }));
 generator.addCustomTestTransform(
-    def => def.name === "ModuledDefinition",
+    def => def.name === "FileDefinition" || def.name === "NamespaceDefinition",
     writer => {
         writer.write(`this.assertions.describe("#getExports()", () => `).inlineBlock(() => {
             writer.writeLine("let actualExports = actual.getExports();")

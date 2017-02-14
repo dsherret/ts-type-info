@@ -4,7 +4,7 @@ import {BaseDefinitionBinder} from "./../base/BaseDefinitionBinder";
 import {NodedBinder} from "./../base/NodedBinder";
 
 export abstract class UserDefinedTypeGuardBinder implements IBaseBinder {
-    protected abstract getParameterName(): string;
+    protected abstract getParameterName(): string | null;
     protected abstract getType(): TypeDefinition;
 
     constructor(

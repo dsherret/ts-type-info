@@ -11,6 +11,7 @@ export abstract class ClassPropertyBinder implements IBaseBinder {
     ) {
     }
 
+    abstract getIsConstructorParameter(): boolean;
     abstract getKind(): ClassPropertyKind;
     abstract getOnWriteGetBody(): ((writer: CodeBlockWriter) => void) | null;
     abstract getOnWriteSetBody(): ((writer: CodeBlockWriter) => void) | null;
@@ -18,6 +19,7 @@ export abstract class ClassPropertyBinder implements IBaseBinder {
     bind(def: ClassPropertyDefinition) {
         this.baseClassPropertyBinder.bind(def);
         this.abstractableBinder.bind(def);
+        def.isConstructorParameter = this.getIsConstructorParameter();
         def.kind = this.getKind();
         def.onWriteGetBody = this.getOnWriteGetBody();
         def.onWriteSetBody = this.getOnWriteSetBody();

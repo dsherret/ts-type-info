@@ -59,9 +59,7 @@ class MyClass2 {
                 isOptional: true,
                 isRestParameter: true
             }],
-            returnType: {
-                text: "Date"
-            }
+            returnType: { text: "Date" }
         }, {
             name: "myFunctionWithThisType",
             thisType: { text: "string" },
@@ -76,24 +74,27 @@ class MyClass2 {
         }, {
             name: "typeGuardFunction",
             parameters: [{ name: "def" }],
-            returnType: {
-                text: "def is MyClass"
-            },
+            returnType: { text: "def is MyClass" },
             userDefinedTypeGuard: {
                 parameterName: "def",
-                type: "MyClass"
+                type: { text: "MyClass" }
             }
         }, {
             name: "typeGuardFunctionIntersect",
             parameters: [{ name: "def" }],
-            returnType: {
-                text: "def is MyClass & MyClass2"
-            },
+            returnType: { text: "def is MyClass & MyClass2" },
             userDefinedTypeGuard: {
                 parameterName: "def",
-                type: "MyClass & MyClass2"
+                type: {
+                    text: "MyClass & MyClass2",
+                    intersectionTypes: [{
+                        text: "MyClass"
+                    }, {
+                        text: "MyClass2"
+                    }]
+                }
             }
-            }, {
+        }, {
             name: "myGeneratorFunction",
             isGenerator: true,
             returnType: { text: `IterableIterator<"test">` }
