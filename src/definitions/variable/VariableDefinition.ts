@@ -1,7 +1,6 @@
 ﻿import * as typeConstants from "./../../typeConstants";
 import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
-import {VariableWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {AmbientableDefinition, NamedDefinition, TypedDefinition, ExportableDefinition, DefaultExpressionedDefinition, BaseDefinition, OrderableDefinition,

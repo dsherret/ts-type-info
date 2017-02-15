@@ -3,7 +3,6 @@ import * as typeConstants from "./../../typeConstants";
 import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure,
     ClassStaticMethodStructure, ClassStaticPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
-import {ClassWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NamedDefinition, DecoratableDefinition, AmbientableDefinition, ExportableDefinition, TypeParameteredDefinition,

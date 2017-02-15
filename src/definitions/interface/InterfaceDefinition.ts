@@ -2,7 +2,6 @@
 import {MainFactory, StructureFactory} from "./../../factories";
 import {CallSignatureStructure, IndexSignatureStructure, InterfaceMethodStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
-import {InterfaceWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {NamedDefinition, ExportableDefinition, AmbientableDefinition, OrderableDefinition, TypeParameteredDefinition, NodedDefinition, BaseDefinition,

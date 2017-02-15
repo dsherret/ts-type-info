@@ -3,7 +3,6 @@ import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definition
 import {MainFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, TypeAliasStructure, NamespaceStructure, VariableStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
-import {NamespaceWriter, ModuledWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {ModuledDefinition, NamedDefinition, ExportableDefinition, AmbientableDefinition, BaseDefinition, OrderableDefinition, NodedDefinition,

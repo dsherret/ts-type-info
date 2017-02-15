@@ -4,7 +4,6 @@ import {TypeParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
-import {TypeAliasWriter} from "./../../writers";
 import {BaseDefinition, NodedDefinition} from "./../base";
 import {TypeDefinition} from "./../expression";
 // specify of specific file here to prevent errors (due to type-parameter being referenced in type-parametered-definition)

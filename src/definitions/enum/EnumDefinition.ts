@@ -2,7 +2,6 @@
 import {MainFactory, StructureFactory} from "./../../factories";
 import {EnumMemberStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
-import {EnumWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {AmbientableDefinition, ExportableDefinition, NamedDefinition, OrderableDefinition, BaseDefinition, NodedDefinition, DocumentationedDefinition} from "./../base";

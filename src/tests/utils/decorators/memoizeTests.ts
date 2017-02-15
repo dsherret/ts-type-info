@@ -41,9 +41,10 @@ describe(nameof(Memoize), () => {
     it("should throw when using memoize on a set accessor", () => {
         expect(() => {
             class MyClass {
+                private value: string;
                 @Memoize
                 set test(value: string) {
-                    console.log(value);
+                    this.value = value;
                 }
             }
         }).to.throw(Error);

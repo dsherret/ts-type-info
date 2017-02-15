@@ -2,7 +2,6 @@
 import {MainFactory, StructureFactory} from "./../../factories";
 import {NamedImportPartStructure} from "./../../structures";
 import {DefinitionUtils, applyMixins} from "./../../utils";
-import {ImportWriter} from "./../../writers";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NodedDefinition} from "./../base";
 import {DefaultImportPartDefinition} from "./DefaultImportPartDefinition";

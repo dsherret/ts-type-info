@@ -2,7 +2,6 @@ import CodeBlockWriter from "code-block-writer";
 import {MainFactory, StructureFactory} from "./../../factories";
 import {FunctionParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
-import {FunctionWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {ExportableDefinition, AmbientableDefinition, AsyncableDefinition, BaseFunctionDefinition, FunctionBodyWriteableDefinition,

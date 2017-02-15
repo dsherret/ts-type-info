@@ -5,7 +5,6 @@ import {MainFactory, StructureFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, InterfaceStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
     VariableStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils, validateImportStructure, FileUtils, StringUtils} from "./../../utils";
-import {FileWriter, ImportWriter} from "./../../writers";
 import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {writeDefinition} from "./../../writeDefinition";

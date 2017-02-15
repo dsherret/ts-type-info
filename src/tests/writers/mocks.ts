@@ -64,7 +64,7 @@ export function getClassConstructorWriter(writer: CodeBlockWriter, def: definiti
             writer.write(`{class-constructor:${flags}}`);
         }
 
-        shouldWriteConstructor(def: definitions.ClassConstructorDefinition, flags: WriteFlags) {
+        shouldWriteConstructor(passedInDef: definitions.ClassConstructorDefinition, flags: WriteFlags) {
             return shouldWriteConstructor;
         }
     }

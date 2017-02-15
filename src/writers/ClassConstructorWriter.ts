@@ -19,7 +19,7 @@ export class ClassConstructorWriter {
     }
 
     shouldWriteConstructor(def: ClassConstructorDefinition, flags: WriteFlags) {
-        const isOnWriteFunctionBodyDefined = typeof def.onWriteFunctionBody === "function"
+        const isOnWriteFunctionBodyDefined = typeof def.onWriteFunctionBody === "function";
         return (def.scope !== Scope.Public || def.parameters.length > 0 || isOnWriteFunctionBodyDefined);
     }
 
