@@ -1,16 +1,22 @@
-﻿import {IndexSignatureDefinition} from "./../definitions";
-import {TypeWriter} from "./TypeWriter";
+﻿import CodeBlockWriter from "code-block-writer";
+import {IndexSignatureDefinition} from "./../definitions";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
+import {TypeWriter} from "./TypeWriter";
 
-export class IndexSignatureWriter extends BaseDefinitionWriter<IndexSignatureDefinition> {
-    private readonly typeWriter = new TypeWriter(this.writer);
+export class IndexSignatureWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly baseDefinitionWriter: BaseDefinitionWriter,
+        private readonly typeWriter: TypeWriter) {
+    }
 
-    protected writeDefault(def: IndexSignatureDefinition) {
-        this.writer.conditionalWrite(def.isReadonly, "readonly ");
-        this.writer.write(`[${def.keyName}`);
-        this.typeWriter.writeWithColon(def.keyType);
-        this.writer.write("]");
-        this.typeWriter.writeWithColon(def.returnType);
-        this.writer.write(";").newLine();
+    write(def: IndexSignatureDefinition) {
+        this.baseDefinitionWriter.writeWrap(def, () => {
+            this.writer.conditionalWrite(def.isReadonly, "readonly ");
+            this.writer.write(`[${def.keyName}`);
+            this.typeWriter.writeWithColon(def.keyType, "any");
+            this.writer.write("]");
+            this.typeWriter.writeWithColon(def.returnType, "any");
+        });
     }
 }

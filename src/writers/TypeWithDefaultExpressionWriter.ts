@@ -1,47 +1,43 @@
-﻿import {TypedDefinition, DefaultExpressionedDefinition, OptionalDefinition, BaseDefinition} from "./../definitions";
+﻿import CodeBlockWriter from "code-block-writer";
+import {TypedDefinition, DefaultExpressionedDefinition, OptionalDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {TypeWriter} from "./TypeWriter";
-import {ExpressionWriter} from "./ExpressionWriter";
-import {BaseWriter} from "./BaseWriter";
+import {DefaultExpressionedWriter} from "./DefaultExpressionedWriter";
 
-type typeWithDefault = TypedDefinition & DefaultExpressionedDefinition & BaseDefinition;
+type typeWithDefault = TypedDefinition & DefaultExpressionedDefinition;
 
-export class TypeWithDefaultExpressionWriter extends BaseWriter {
-    private readonly typeWriter = new TypeWriter(this.writer);
-    private readonly expressionWriter = new ExpressionWriter(this.writer);
-
-    write(def: typeWithDefault, flags: WriteFlags) {
-        const shouldWriteDefaultExpression = this.getShouldWriteDefaultExpression(def, flags);
-
-        if (shouldWriteDefaultExpression) {
-            this.writeDefaultExpression(def);
-        }
-        else {
-            this.writeType(def);
-        }
+export class TypeWithDefaultExpressionWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly typeWriter: TypeWriter,
+        private readonly defaultExpressionedWriter: DefaultExpressionedWriter
+    ) {
     }
 
-    writeWithOptionalCheck(def: typeWithDefault & OptionalDefinition, flags: WriteFlags) {
-        const shouldWriteDefaultExpression = this.getShouldWriteDefaultExpression(def, flags);
+    write(def: typeWithDefault, flags: WriteFlags, fallbackType: string) {
+        const shouldWriteDefaultExpression = this.defaultExpressionedWriter.getShouldWriteDefaultExpression(def, flags);
 
-        if (!shouldWriteDefaultExpression || def.isOptional === true) {
-            this.writeType(def);
-        }
-
-        if (shouldWriteDefaultExpression) {
-            this.writeDefaultExpression(def);
-        }
+        if (shouldWriteDefaultExpression)
+            this.writeDefaultExpression(def, flags);
+        else
+            this.writeType(def, fallbackType);
     }
 
-    private getShouldWriteDefaultExpression(def: DefaultExpressionedDefinition, flags: WriteFlags) {
-        return ExpressionWriter.willWriteDefaultExpression(def, flags);
+    writeWithOptionalCheck(def: typeWithDefault & OptionalDefinition, flags: WriteFlags, fallbackType: string) {
+        const shouldWriteDefaultExpression = this.defaultExpressionedWriter.getShouldWriteDefaultExpression(def, flags);
+
+        if (!shouldWriteDefaultExpression || def.isOptional)
+            this.writeType(def, fallbackType);
+
+        if (shouldWriteDefaultExpression)
+            this.writeDefaultExpression(def, flags);
     }
 
-    private writeType(def: TypedDefinition) {
-        this.typeWriter.writeWithColon(def.type);
+    private writeType(def: TypedDefinition, fallbackType: string) {
+        this.typeWriter.writeWithColon(def.type, fallbackType);
     }
 
-    private writeDefaultExpression(def: DefaultExpressionedDefinition) {
-        this.expressionWriter.writeWithEqualsSign(def.defaultExpression);
+    private writeDefaultExpression(def: DefaultExpressionedDefinition, flags: WriteFlags) {
+        this.defaultExpressionedWriter.writeWithEqualsSign(def, flags);
     }
 }

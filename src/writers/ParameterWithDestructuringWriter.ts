@@ -1,17 +1,25 @@
-﻿import {ParameterDefinitions} from "./../definitions";
+﻿import CodeBlockWriter from "code-block-writer";
+import {ParameterDefinitions} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
-import {ExpressionWriter} from "./ExpressionWriter";
+import {DefaultExpressionedWriter} from "./DefaultExpressionedWriter";
 import {TypeWriter} from "./TypeWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
-export class ParameterWithDestructuringWriter extends BaseDefinitionWriter<ParameterDefinitions> {
-    private readonly expressionWriter = new ExpressionWriter(this.writer);
-    private readonly typeWriter = new TypeWriter(this.writer);
+export class ParameterWithDestructuringWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly baseDefinitionWriter: BaseDefinitionWriter,
+        private readonly defaultExpressionedWriter: DefaultExpressionedWriter,
+        private readonly typeWriter: TypeWriter
+    ) {
+    }
 
-    protected writeDefault(param: ParameterDefinitions, flags: WriteFlags) {
-        this.writeLeftSide(param, flags);
-        this.writer.write(": ");
-        this.writeRightSide(param);
+    write(param: ParameterDefinitions, flags: WriteFlags) {
+        this.baseDefinitionWriter.writeWrap(param, () => {
+            this.writeLeftSide(param, flags);
+            this.writer.write(": ");
+            this.writeRightSide(param);
+        });
     }
 
     private writeLeftSide(param: ParameterDefinitions, flags: WriteFlags) {
@@ -20,9 +28,8 @@ export class ParameterWithDestructuringWriter extends BaseDefinitionWriter<Param
                 this.writer.conditionalWrite(i > 0, ", ");
                 this.writer.write(p.name);
 
-                if (ExpressionWriter.willWriteDefaultExpression(p, flags) && p.defaultExpression != null) {
-                    this.expressionWriter.writeWithEqualsSign(p.defaultExpression);
-                }
+                if (this.defaultExpressionedWriter.getShouldWriteDefaultExpression(p, flags))
+                    this.defaultExpressionedWriter.writeWithEqualsSign(p, flags);
             });
         });
     }
@@ -31,9 +38,10 @@ export class ParameterWithDestructuringWriter extends BaseDefinitionWriter<Param
         this.surroundInBrances(() => {
             param.destructuringProperties.forEach((p, i) => {
                 this.writer.conditionalWrite(i > 0, " ");
+                this.writer.conditionalWrite(p.isReadonly, "readonly ");
                 this.writer.write(p.name);
                 this.writer.conditionalWrite(p.isOptional, "?");
-                this.typeWriter.writeWithColon(p.type);
+                this.typeWriter.writeWithColon(p.type, "any");
                 this.writer.write(";");
             });
         });

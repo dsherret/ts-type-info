@@ -82,7 +82,7 @@ export class InterfaceDefinition extends BaseDefinition
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const interfaceWriter = new InterfaceWriter(writer);
+        const interfaceWriter = MainFactory.createWriteFactory(writer).getInterfaceWriter();
         interfaceWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }

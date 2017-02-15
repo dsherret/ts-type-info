@@ -28,6 +28,7 @@ export class StructureInterfaceBinder extends InterfaceBinder {
         container.properties.push(...(this.structure.properties || []).map(p => this.factory.getInterfaceProperty(p)));
         container.newSignatures.push(...(this.structure.newSignatures || []).map(s => this.factory.getCallSignature(s)));
         container.callSignatures.push(...(this.structure.callSignatures || []).map(s => this.factory.getCallSignature(s)));
+        container.indexSignatures.push(...(this.structure.indexSignatures || []).map(s => this.factory.getIndexSignature(s)));
         return container;
     }
 }

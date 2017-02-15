@@ -3,7 +3,6 @@ import {MainFactory, StructureFactory} from "./../../factories";
 import {NamedImportPartStructure} from "./../../structures";
 import {DefinitionUtils, applyMixins} from "./../../utils";
 import {ImportWriter} from "./../../writers";
-import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NodedDefinition} from "./../base";
 import {DefaultImportPartDefinition} from "./DefaultImportPartDefinition";
@@ -40,8 +39,8 @@ export class ImportDefinition extends BaseDefinition implements NodedDefinition 
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const importWriter = new ImportWriter(writer);
-        importWriter.write(this, WriteFlags.Default);
+        const importWriter = MainFactory.createWriteFactory(writer).getImportWriter();
+        importWriter.write(this);
         return writer.toString();
     }
 

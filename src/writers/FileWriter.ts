@@ -1,33 +1,45 @@
-﻿import {FileDefinition, ExpressionDefinition} from "./../definitions";
+﻿import CodeBlockWriter from "code-block-writer";
+import {FileDefinition, ExpressionDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {ImportWriter} from "./ImportWriter";
 import {ReExportWriter} from "./ReExportWriter";
 import {ModuledWriter} from "./ModuledWriter";
 
-export class FileWriter extends BaseDefinitionWriter<FileDefinition> {
-    private readonly importWriter = new ImportWriter(this.writer);
-    private readonly reExportWriter = new ReExportWriter(this.writer);
-    private readonly moduledWriter = new ModuledWriter(this.writer);
+// todo: tests
 
-    protected writeDefault(def: FileDefinition, flags: WriteFlags) {
-        this.writeImports(def, flags);
-        this.writer.newLine();
-        this.writeReExports(def, flags);
-        this.writer.newLine();
-        this.moduledWriter.write(def, flags);
-        this.writeDefaultExportExpression(def.defaultExportExpression);
+export class FileWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly baseDefinitionWriter: BaseDefinitionWriter,
+        private readonly importWriter: ImportWriter,
+        private readonly reExportWriter: ReExportWriter,
+        private readonly moduledWriter: ModuledWriter
+    ) {
+    }
+
+    write(def: FileDefinition, flags: WriteFlags) {
+        this.baseDefinitionWriter.writeWrap(def, () => {
+            this.writeImports(def, flags);
+            this.writer.newLine();
+            this.writeReExports(def);
+            this.writer.newLine();
+            this.moduledWriter.write(def, flags);
+            this.writeDefaultExportExpression(def.defaultExportExpression);
+        });
     }
 
     private writeImports(fileDef: FileDefinition, flags: WriteFlags) {
         fileDef.imports.forEach(importDef => {
-            this.importWriter.write(importDef, flags);
+            this.importWriter.write(importDef);
+            this.writer.newLine();
         });
     }
 
-    private writeReExports(fileDef: FileDefinition, flags: WriteFlags) {
+    private writeReExports(fileDef: FileDefinition) {
         fileDef.reExports.forEach(reExportDef => {
-            this.reExportWriter.write(reExportDef, flags);
+            this.reExportWriter.write(reExportDef);
+            this.writer.newLine();
         });
     }
 

@@ -16,7 +16,7 @@ export class VariableDefinition extends BaseDefinition
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const variableWriter = new VariableWriter(writer);
+        const variableWriter = MainFactory.createWriteFactory(writer).getVariableWriter();
         variableWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }

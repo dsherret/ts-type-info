@@ -24,7 +24,7 @@ export class EnumDefinition extends BaseDefinition implements AmbientableDefinit
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const enumWriter = new EnumWriter(writer);
+        const enumWriter = MainFactory.createWriteFactory(writer).getEnumWriter();
         enumWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }

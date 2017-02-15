@@ -1,19 +1,25 @@
-﻿import {CallSignatureDefinition} from "./../definitions";
+﻿import CodeBlockWriter from "code-block-writer";
+import {CallSignatureDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
-import {TypeParametersWriter} from "./TypeParametersWriter";
 import {TypeWriter} from "./TypeWriter";
-import {ParametersWriter} from "./ParametersWriter";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
+import {TypeParametersWriter} from "./TypeParametersWriter";
+import {ParametersWriter} from "./ParametersWriter";
 
-export class CallSignatureWriter extends BaseDefinitionWriter<CallSignatureDefinition> {
-    private readonly typeParametersWriter = new TypeParametersWriter(this.writer);
-    private readonly typeWriter = new TypeWriter(this.writer);
-    private readonly parametersWriter = new ParametersWriter(this.writer);
+export class CallSignatureWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly baseDefinitionWriter: BaseDefinitionWriter,
+        private readonly typeParametersWriter: TypeParametersWriter,
+        private readonly typeWriter: TypeWriter,
+        private readonly parametersWriter: ParametersWriter) {
+    }
 
-    protected writeDefault(def: CallSignatureDefinition, flags: WriteFlags) {
-        this.typeParametersWriter.write(def.typeParameters, flags);
-        this.parametersWriter.write(def, flags);
-        this.typeWriter.writeWithColon(def.returnType);
-        this.writer.write(";").newLine();
+    write(def: CallSignatureDefinition, flags: WriteFlags) {
+        this.baseDefinitionWriter.writeWrap(def, () => {
+            this.typeParametersWriter.write(def.typeParameters);
+            this.parametersWriter.write(def, flags);
+            this.typeWriter.writeWithColon(def.returnType, "any");
+        });
     }
 }

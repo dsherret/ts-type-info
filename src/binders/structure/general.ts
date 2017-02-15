@@ -5,3 +5,4 @@ export * from "./general/StructureIndexSignatureBinder";
 export * from "./general/StructureObjectPropertyBinder";
 export * from "./general/StructureTypeAliasBinder";
 export * from "./general/StructureTypeParameterBinder";
+export * from "./general/StructureUserDefinedTypeGuardBinder";

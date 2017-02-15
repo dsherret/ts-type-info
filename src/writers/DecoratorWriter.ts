@@ -1,26 +1,25 @@
-﻿import {DecoratorDefinition} from "./../definitions";
+﻿import CodeBlockWriter from "code-block-writer";
+import {DecoratorDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 
-export class DecoratorWriter extends BaseDefinitionWriter<DecoratorDefinition> {
+export class DecoratorWriter {
+    constructor(
+        private writer: CodeBlockWriter,
+        private baseDefinitionWriter: BaseDefinitionWriter
+    ) {
+    }
+
     write(def: DecoratorDefinition, flags: WriteFlags) {
-        super.write(def, flags);
-        this.writer.newLine();
-    }
-
-    writeInline(def: DecoratorDefinition, flags: WriteFlags) {
-        super.writeInline(def, flags);
-        this.writer.write(" ");
-    }
-
-    protected writeDefault(def: DecoratorDefinition, flags: WriteFlags) {
         if (flags & WriteFlags.HideFunctionImplementations)
             return;
 
-        this.writer.write("@");
-        this.writer.write(def.name);
-        if (def.isDecoratorFactory)
-            this.writeArgs(def);
+        this.baseDefinitionWriter.writeWrap(def, () => {
+            this.writer.write("@");
+            this.writer.write(def.name);
+            if (def.isDecoratorFactory)
+                this.writeArgs(def);
+        });
     }
 
     private writeArgs(def: DecoratorDefinition) {

@@ -1,4 +1,5 @@
 ﻿import * as assert from "assert";
+import {expect} from "chai";
 import {FunctionDefinition} from "./../../../definitions";
 import {runCallSignatureDefinitionTests} from "./../../testHelpers";
 
@@ -36,6 +37,27 @@ describe("BaseFunctionDefinition", () => {
         f.addOverloadSignature({ returnType: "number" });
         it("should match the right definition", () => {
             assert.equal(f.getOverloadSignature(s => s.returnType.text === "number"), f.overloadSignatures[1]);
+        });
+    });
+
+    describe(`#${nameof<FunctionDefinition>(f => f.setUserDefinedTypeGuard)}`, () => {
+        it("should create a user defined type guard with a parameter name", () => {
+            const f = new FunctionDefinition();
+            f.setUserDefinedTypeGuard({
+                parameterName: "paramname",
+                type: "BaseDefinition"
+            });
+            expect(f.userDefinedTypeGuard!.parameterName).to.equal("paramname");
+            expect(f.userDefinedTypeGuard!.type.text).to.equal("BaseDefinition");
+        });
+
+        it("should create a user defined type guard without a parameter name that has the this type", () => {
+            const f = new FunctionDefinition();
+            f.setUserDefinedTypeGuard({
+                type: "BaseDefinition"
+            });
+            expect(f.userDefinedTypeGuard!.parameterName).to.equal("this");
+            expect(f.userDefinedTypeGuard!.type.text).to.equal("BaseDefinition");
         });
     });
 });

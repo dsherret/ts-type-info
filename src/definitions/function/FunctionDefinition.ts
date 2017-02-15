@@ -21,7 +21,7 @@ export class FunctionDefinition
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const functionWriter = new FunctionWriter(writer);
+        const functionWriter = MainFactory.createWriteFactory(writer).getFunctionWriter();
         functionWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }

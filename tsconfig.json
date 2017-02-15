@@ -11,7 +11,9 @@
         "experimentalDecorators": true,
         "strictNullChecks": true,
         "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "typeRoots": [ "node_modules/@types/" ],
+        "types": [ "node", "mocha", "tmp" ]
     },
     "compileOnSave": false
 }

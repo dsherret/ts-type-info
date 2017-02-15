@@ -1,16 +1,17 @@
-﻿import * as assert from "assert";
+﻿import {expect} from "chai";
 import {Memoize} from "./../../../utils/decorators/Memoize";
 
-describe("Memoize", () => {
+describe(nameof(Memoize), () => {
+    let val = 0;
     class MyClass {
         @Memoize
         getNumber() {
-            return Math.random();
+            return ++val;
         }
 
         @Memoize
         get value() {
-            return Math.random();
+            return ++val;
         }
     }
 
@@ -18,18 +19,33 @@ describe("Memoize", () => {
     const b = new MyClass();
 
     it("method should be memoized", () => {
-        assert.equal(a.getNumber(), a.getNumber());
+        expect(a.getNumber()).to.equal(a.getNumber());
     });
 
     it("accessor should be memoized", () => {
-        assert.equal(a.value, a.value);
+        expect(a.value).to.equal(a.value);
     });
 
     it("multiple instances shouldn't share values for methods", () => {
-        assert.notEqual(a.getNumber(), b.getNumber());
+        expect(a.getNumber()).to.not.equal(b.getNumber());
     });
 
     it("multiple instances shouldn't share values for accessors", () => {
-        assert.notEqual(a.value, b.value);
+        expect(a.value).to.not.equal(b.value);
+    });
+
+    it("should throw if supplying arguments", () => {
+        expect(() => (a as any).getNumber(2)).to.throw(Error);
+    });
+
+    it("should throw when using memoize on a set accessor", () => {
+        expect(() => {
+            class MyClass {
+                @Memoize
+                set test(value: string) {
+                    console.log(value);
+                }
+            }
+        }).to.throw(Error);
     });
 });

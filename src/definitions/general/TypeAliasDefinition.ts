@@ -21,9 +21,10 @@ export class TypeAliasDefinition
         extends BaseDefinition
         implements NamedDefinition, AmbientableDefinition, ExportableDefinition, OrderableDefinition, TypedDefinition, TypeParameteredDefinition, NodedDefinition,
             DocumentationedDefinition {
+
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const typeAliasWriter = new TypeAliasWriter(writer);
+        const typeAliasWriter = MainFactory.createWriteFactory(writer).getTypeAliasWriter();
         typeAliasWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }

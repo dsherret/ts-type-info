@@ -1,12 +1,27 @@
-﻿import {TypeDefinition} from "./../definitions";
-import {BaseWriter} from "./BaseWriter";
+﻿import CodeBlockWriter from "code-block-writer";
+import {TypeDefinition} from "./../definitions";
+import {StringUtils} from "./../utils";
 
-export class TypeWriter extends BaseWriter {
-    writeWithColon(def: TypeDefinition | null) {
-        if (def != null) {
-            let text = def.text;
+export class TypeWriter {
+    constructor(private readonly writer: CodeBlockWriter) {
+    }
 
-            this.writer.write(`: ${text}`);
-        }
+    writeWithColon(def: TypeDefinition | null, fallbackType: string) {
+        this.writer.write(": ");
+        this.write(def, fallbackType);
+    }
+
+    writeWithEqualsSign(def: TypeDefinition | null, fallbackType: string) {
+        this.writer.write(" = ");
+        this.write(def, fallbackType);
+    }
+
+    write(def: TypeDefinition | null, fallbackType: string) {
+        let text = fallbackType;
+
+        if (def != null && def.text != null && !StringUtils.isNullOrWhiteSpace(def.text))
+            text = def.text;
+
+        this.writer.write(text);
     }
 }

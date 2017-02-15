@@ -2,6 +2,7 @@
 import {BaseDefinitionBinder, NamedBinder, ExportableBinder, AmbientableBinder, TypeParameteredBinder, NodedBinder, DocumentationedBinder} from "./../base";
 import {IBaseBinder} from "./../IBaseBinder";
 
+// todo: need a way to make the users of this class be forced to provide a value for each one of these
 export class InterfaceMemberContainer {
     callSignatures: definitions.CallSignatureDefinition[] = [];
     indexSignatures: definitions.IndexSignatureDefinition[] = [];

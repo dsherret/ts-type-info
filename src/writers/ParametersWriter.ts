@@ -1,63 +1,44 @@
-﻿import {WriteFlags} from "./../WriteFlags";
-import {ParameteredDefinition, ClassConstructorParameterScope, ThisTypedDefinition, TypeDefinition, BaseParameterDefinition,
-    ClassConstructorParameterDefinition, BaseClassMethodParameterDefinition} from "./../definitions";
-import {BaseWriter} from "./BaseWriter";
-import {DecoratorWriter} from "./DecoratorWriter";
+﻿import CodeBlockWriter from "code-block-writer";
+import {WriteFlags} from "./../WriteFlags";
+import {ParameteredDefinition, ThisTypedDefinition, TypeDefinition, BaseParameterDefinition,
+    ParameterDefinitions} from "./../definitions";
 import {ParameterWriter} from "./ParameterWriter";
 import {ParameterWithDestructuringWriter} from "./ParameterWithDestructuringWriter";
 import {TypeWriter} from "./TypeWriter";
 
-export class ParametersWriter extends BaseWriter {
-    private readonly decoratorWriter = new DecoratorWriter(this.writer);
-    private readonly parameterWriter = new ParameterWriter(this.writer);
-    private readonly parameterWithDestructuringWriter = new ParameterWithDestructuringWriter(this.writer);
-    private readonly typeWriter = new TypeWriter(this.writer);
+export class ParametersWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly parameterWriter: ParameterWriter,
+        private readonly parameterWithDestructuringWriter: ParameterWithDestructuringWriter,
+        private readonly typeWriter: TypeWriter
+    ) {
+    }
 
     write(def: ParameteredDefinition<BaseParameterDefinition, any>, flags: WriteFlags) {
         const thisType = (def as any as ThisTypedDefinition).thisType;
 
         this.writer.write("(");
         this.writeThisType(thisType);
-
         def.parameters.forEach((param, i) => {
             this.writer.conditionalWrite(i > 0 || thisType != null, ", ");
-
-            if (param instanceof BaseClassMethodParameterDefinition || param instanceof ClassConstructorParameterDefinition)
-                param.decorators.forEach(dec => this.decoratorWriter.writeInline(dec, flags));
-
-            if (param.destructuringProperties.length === 0) {
-                if (param instanceof ClassConstructorParameterDefinition) {
-                    if ((flags & WriteFlags.HideScopeOnParameters) === 0) {
-                        this.writeScope(param.scope, flags);
-                        this.writer.conditionalWrite(param.isReadonly, "readonly ");
-                    }
-                }
-
-                this.parameterWriter.write(param, flags);
-            }
-            else {
-                this.parameterWithDestructuringWriter.write(param, flags);
-            }
+            this.writeParameter(param, flags);
         });
         this.writer.write(")");
     }
 
-    private writeThisType(thisType: TypeDefinition | null) {
-        if (thisType != null) {
-            this.writer.write("this");
-            this.typeWriter.writeWithColon(thisType);
-        }
+    private writeParameter(param: ParameterDefinitions, flags: WriteFlags) {
+        if (param.destructuringProperties.length === 0)
+            this.parameterWriter.write(param, flags);
+        else
+            this.parameterWithDestructuringWriter.write(param, flags);
     }
 
-    private writeScope(scope: ClassConstructorParameterScope, flags: WriteFlags) {
-        if (scope === ClassConstructorParameterScope.Private) {
-            this.writer.write("private ");
-        }
-        else if (scope === ClassConstructorParameterScope.Protected) {
-            this.writer.write("protected ");
-        }
-        else if (scope === ClassConstructorParameterScope.Public) {
-            this.writer.write("public ");
-        }
+    private writeThisType(thisType: TypeDefinition | null) {
+        if (thisType == null)
+            return;
+
+        this.writer.write("this");
+        this.typeWriter.writeWithColon(thisType, "any");
     }
 }

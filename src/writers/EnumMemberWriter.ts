@@ -1,12 +1,20 @@
-﻿import {EnumMemberDefinition} from "./../definitions";
+﻿import CodeBlockWriter from "code-block-writer";
+import {EnumMemberDefinition} from "./../definitions";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {DocumentationedWriter} from "./DocumentationedWriter";
 
-export class EnumMemberWriter extends BaseDefinitionWriter<EnumMemberDefinition> {
-    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
+export class EnumMemberWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly baseDefinitionWriter: BaseDefinitionWriter,
+        private readonly documentationedWriter: DocumentationedWriter
+    ) {
+    }
 
-    protected writeDefault(member: EnumMemberDefinition) {
-        this.documentationedWriter.write(member);
-        this.writer.write(member.name + " = " + member.value);
+    write(member: EnumMemberDefinition) {
+        this.baseDefinitionWriter.writeWrap(member, () => {
+            this.documentationedWriter.write(member);
+            this.writer.write(member.name + " = " + member.value);
+        });
     }
 }

@@ -1,25 +1,27 @@
-﻿import {ExpressionDefinition, DefaultExpressionedDefinition} from "./../definitions";
-import {WriteFlags} from "./../WriteFlags";
+﻿import CodeBlockWriter from "code-block-writer";
+import {ExpressionDefinition} from "./../definitions";
 import {StringUtils} from "./../utils";
-import {BaseWriter} from "./BaseWriter";
 
-export class ExpressionWriter extends BaseWriter {
-    static willWriteDefaultExpression(def: DefaultExpressionedDefinition, flags: WriteFlags) {
-        return ((flags & WriteFlags.HideExpressions) === 0 &&
-            def.defaultExpression != null &&
-            !StringUtils.isNullOrWhiteSpace(def.defaultExpression.text));
+export class ExpressionWriter {
+    constructor(private readonly writer: CodeBlockWriter) {
     }
 
     writeWithEqualsSign(def: ExpressionDefinition | null) {
-        if (def != null) {
-            this.writer.write(" = ");
-            this.write(def);
-        }
+        if (!this.shouldWrite(def))
+            return;
+
+        this.writer.write(" = ");
+        this.write(def);
     }
 
     write(def: ExpressionDefinition | null) {
-        if (def != null) {
-            this.writer.write(def.text);
-        }
+        if (!this.shouldWrite(def))
+            return;
+
+        this.writer.write(def.text);
+    }
+
+    private shouldWrite(def: ExpressionDefinition | null): def is ExpressionDefinition {
+        return def != null && !StringUtils.isNullOrWhiteSpace(def.text);
     }
 }

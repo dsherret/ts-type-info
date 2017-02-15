@@ -1,5 +1,5 @@
 ﻿import {BaseStructure, NamedStructure, ExportableStructure, TypeParameteredStructure, AmbientableStructure, DocumentationedStructure} from "./../base";
-import {CallSignatureStructure} from "./../general";
+import {CallSignatureStructure, IndexSignatureStructure} from "./../general";
 import {InterfaceMethodStructure} from "./InterfaceMethodStructure";
 import {InterfacePropertyStructure} from "./InterfacePropertyStructure";
 
@@ -8,5 +8,6 @@ export interface InterfaceStructure extends BaseStructure, NamedStructure, Expor
     extendsTypes?: string[];
     methods?: InterfaceMethodStructure[];
     newSignatures?: CallSignatureStructure[];
+    indexSignatures?: IndexSignatureStructure[];
     properties?: InterfacePropertyStructure[];
 }

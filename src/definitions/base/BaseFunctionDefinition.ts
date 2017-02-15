@@ -1,5 +1,6 @@
 import * as typeConstants from "./../../typeConstants";
-import {CallSignatureStructure, TypeParameterStructure} from "./../../structures";
+import {CallSignatureStructure, TypeParameterStructure, UserDefinedTypeGuardStructure} from "./../../structures";
+import {StructureFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {TypeDefinition} from "./../expression";
 import {TypeParameterDefinition, CallSignatureDefinition, UserDefinedTypeGuardDefinition} from "./../general";
@@ -20,6 +21,11 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
             ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition {
     isGenerator: boolean;
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
+
+    setUserDefinedTypeGuard(structure: UserDefinedTypeGuardStructure) {
+        this.userDefinedTypeGuard = new StructureFactory().getUserDefinedTypeGuard(structure);
+        return this;
+    }
 
     // NamedDefinition
     name: string;

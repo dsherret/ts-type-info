@@ -142,4 +142,12 @@ describe("createFunctions", () => {
     describe("createVariable()", () => {
         testHelpers.runVariableDefinitionTests(createFunctions.createVariable({ name: "name" }), { name: "name" });
     });
+
+    describe(nameof(createFunctions.createTypeParameter), () => {
+        testHelpers.runTypeParameterDefinitionTests(createFunctions.createTypeParameter({ name: "name" }), { name: "name" });
+    });
+
+    describe(nameof(createFunctions.createNamedImportPart), () => {
+        testHelpers.runNamedImportPartDefinitionTests(createFunctions.createNamedImportPart({ name: "name" }), { name: "name" });
+    });
 });

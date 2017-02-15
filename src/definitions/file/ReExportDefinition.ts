@@ -3,7 +3,6 @@ import {MainFactory, StructureFactory} from "./../../factories";
 import {NamedImportPartStructure} from "./../../structures";
 import {DefinitionUtils, applyMixins} from "./../../utils";
 import {ReExportWriter} from "./../../writers";
-import {WriteFlags} from "./../../WriteFlags";
 import {WriteOptions} from "./../../WriteOptions";
 import {BaseDefinition, NodedDefinition} from "./../base";
 import {StarImportPartDefinition} from "./StarImportPartDefinition";
@@ -45,8 +44,8 @@ export class ReExportDefinition extends BaseDefinition implements NodedDefinitio
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const exportWriter = new ReExportWriter(writer);
-        exportWriter.write(this, WriteFlags.Default);
+        const exportWriter = MainFactory.createWriteFactory(writer).getReExportWriter();
+        exportWriter.write(this);
         return writer.toString();
     }
 }

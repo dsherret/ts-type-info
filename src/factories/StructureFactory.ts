@@ -157,6 +157,10 @@ export class StructureFactory {
         return bindToDefinition(new binders.StructureTypeParameterBinder(this, structure), new definitions.TypeParameterDefinition());
     }
 
+    getUserDefinedTypeGuard(structure: structures.UserDefinedTypeGuardStructure) {
+        return bindToDefinition(new binders.StructureUserDefinedTypeGuardBinder(this, structure), new definitions.UserDefinedTypeGuardDefinition());
+    }
+
     getVariable(structure: structures.VariableStructure) {
         return bindToDefinition(new binders.StructureVariableBinder(this, structure), new definitions.VariableDefinition());
     }

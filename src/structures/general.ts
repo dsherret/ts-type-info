@@ -6,3 +6,4 @@ export * from "./general/ObjectPropertyStructure";
 export * from "./general/TypeAliasStructure";
 export * from "./general/TypeParameterStructure";
 export * from "./general/TypePropertyStructure";
+export * from "./general/UserDefinedTypeGuardStructure";

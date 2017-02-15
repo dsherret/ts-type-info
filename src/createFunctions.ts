@@ -105,6 +105,14 @@ export function createTypeAlias(structure: structures.TypeAliasStructure) {
     return new StructureFactory().getTypeAlias(structure);
 }
 
+export function createTypeParameter(structure: structures.TypeParameterStructure) {
+    return new StructureFactory().getTypeParameter(structure);
+}
+
+export function createNamedImportPart(structure: structures.NamedImportPartStructure) {
+    return new StructureFactory().getNamedImportPart(structure);
+}
+
 export function createVariable(structure: structures.VariableStructure) {
     return new StructureFactory().getVariable(structure);
 }

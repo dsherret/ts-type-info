@@ -1,36 +1,34 @@
-﻿import {VariableDefinition, VariableDeclarationType} from "./../definitions";
+﻿import CodeBlockWriter from "code-block-writer";
+import {VariableDefinition} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
 import {DocumentationedWriter} from "./DocumentationedWriter";
+import {AmbientableWriter} from "./AmbientableWriter";
+import {ExportableWriter} from "./ExportableWriter";
 import {TypeWithDefaultExpressionWriter} from "./TypeWithDefaultExpressionWriter";
+import {VariableDeclarationTypeWriter} from "./VariableDeclarationTypeWriter";
 
-export class VariableWriter extends BaseDefinitionWriter<VariableDefinition> {
-    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
-    private readonly typeWithDefaultExpressionWriter = new TypeWithDefaultExpressionWriter(this.writer);
-
-    protected writeDefault(def: VariableDefinition, flags: WriteFlags) {
-        this.documentationedWriter.write(def);
-        this.writeDeclareKeyword(def);
-        this.writeExportKeyword(def, flags);
-        this.writeDeclarationType(def.declarationType);
-        this.writer.spaceIfLastNotSpace().write(def.name);
-        this.typeWithDefaultExpressionWriter.write(def, flags);
-        this.writer.write(";").newLine();
+export class VariableWriter {
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly baseDefinitionWriter: BaseDefinitionWriter,
+        private readonly documentationedWriter: DocumentationedWriter,
+        private readonly exportableWriter: ExportableWriter,
+        private readonly ambientableWriter: AmbientableWriter,
+        private readonly typeWithDefaultExpressionWriter: TypeWithDefaultExpressionWriter,
+        private readonly variableDeclarationTypeWriter: VariableDeclarationTypeWriter
+    ) {
     }
 
-    private writeDeclarationType(declarationType: VariableDeclarationType) {
-        switch (declarationType) {
-            case VariableDeclarationType.Var:
-                this.writer.write("var");
-                break;
-            case VariableDeclarationType.Let:
-                this.writer.write("let");
-                break;
-            case VariableDeclarationType.Const:
-                this.writer.write("const");
-                break;
-            default:
-                break;
-        }
+    write(def: VariableDefinition, flags: WriteFlags) {
+        this.baseDefinitionWriter.writeWrap(def, () => {
+            this.documentationedWriter.write(def);
+            this.exportableWriter.writeExportKeyword(def, flags);
+            this.ambientableWriter.writeDeclareKeyword(def);
+            this.variableDeclarationTypeWriter.writeDeclarationType(def.declarationType);
+            this.writer.spaceIfLastNotSpace().write(def.name);
+            this.typeWithDefaultExpressionWriter.write(def, flags, "any");
+            this.writer.write(";");
+        });
     }
 }

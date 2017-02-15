@@ -76,7 +76,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const fileWriter = new FileWriter(writer);
+        const fileWriter = MainFactory.createWriteFactory(writer).getFileWriter();
         fileWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
@@ -88,10 +88,10 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
 
         if (options && options.imports) {
             const structureFactory = new StructureFactory();
-            const importWriter = new ImportWriter(writer);
+            const importWriter = MainFactory.createWriteFactory(writer).getImportWriter();
             options.imports.forEach(importStructure => {
                 const importDef = structureFactory.getImport(importStructure);
-                importWriter.write(importDef, WriteFlags.Default);
+                importWriter.write(importDef);
             });
 
             writer.newLine();

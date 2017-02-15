@@ -2,33 +2,46 @@
 import {NamespaceDefinition, NamespaceDeclarationType} from "./../definitions";
 import {WriteFlags} from "./../WriteFlags";
 import {BaseDefinitionWriter} from "./BaseDefinitionWriter";
-import {ModuledWriter} from "./ModuledWriter";
+import {ExportableWriter} from "./ExportableWriter";
+import {AmbientableWriter} from "./AmbientableWriter";
 import {DocumentationedWriter} from "./DocumentationedWriter";
+import {ModuledWriter} from "./ModuledWriter";
 
-export class NamespaceWriter extends BaseDefinitionWriter<NamespaceDefinition> {
-    private readonly documentationedWriter = new DocumentationedWriter(this.writer);
+// todo: tests
 
-    constructor(writer: CodeBlockWriter, private moduledWriter: ModuledWriter) {
-        super(writer);
+export class NamespaceWriter {
+    private moduledWriter: ModuledWriter;
+
+    constructor(
+        private readonly writer: CodeBlockWriter,
+        private readonly baseDefinitionWriter: BaseDefinitionWriter,
+        private readonly documentationedWriter: DocumentationedWriter,
+        private readonly exportableWriter: ExportableWriter,
+        private readonly ambientableWriter: AmbientableWriter) {
     }
 
-    protected writeDefault(def: NamespaceDefinition, flags: WriteFlags) {
-        this.documentationedWriter.write(def);
-        this.writeExportKeyword(def, flags);
-        this.writeDeclareKeyword(def);
-        this.writer.write(this.getDeclarationTypeAsString(def.declarationType)).write(` ${def.name}`).block(() => {
-            this.moduledWriter.write(def, flags);
+    initialize(moduledWriter: ModuledWriter) {
+        // this was the only way I could think of to handle the circular dependency caused by the
+        // circular nature of the problem... maybe there's a better way
+        this.moduledWriter = moduledWriter;
+    }
+
+    write(def: NamespaceDefinition, flags: WriteFlags) {
+        this.baseDefinitionWriter.writeWrap(def, () => {
+            this.documentationedWriter.write(def);
+            this.exportableWriter.writeExportKeyword(def, flags);
+            this.ambientableWriter.writeDeclareKeyword(def);
+            this.writer.write(this.getDeclarationTypeAsString(def.declarationType));
+            this.writer.write(` ${def.name}`).block(() => {
+                this.moduledWriter.write(def, flags);
+            });
         });
     }
 
     private getDeclarationTypeAsString(declarationType: NamespaceDeclarationType) {
-        switch (declarationType) {
-            case NamespaceDeclarationType.Module:
-                return "module";
-            case NamespaceDeclarationType.Namespace:
-                return "namespace";
-            default:
-                throw `Not implemented NamespaceDeclarationType: ${declarationType}`;
-        }
+        if (declarationType === NamespaceDeclarationType.Module)
+            return "module";
+
+        return "namespace";
     }
 }

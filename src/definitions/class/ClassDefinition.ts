@@ -30,7 +30,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const classWriter = new ClassWriter(writer);
+        const classWriter = MainFactory.createWriteFactory(writer).getClassWriter();
         classWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }

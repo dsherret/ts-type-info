@@ -22,9 +22,8 @@ export class NamespaceDefinition extends BaseDefinition
 
     write(writeOptions?: WriteOptions) {
         const writer = MainFactory.createWriter(writeOptions);
-        const flags = WriteFlags.Default;
-        const namespaceWriter = new NamespaceWriter(writer, new ModuledWriter(writer));
-        namespaceWriter.write(this, flags);
+        const namespaceWriter = MainFactory.createWriteFactory(writer).getNamespaceWriter();
+        namespaceWriter.write(this, WriteFlags.Default);
         return writer.toString();
     }
 
