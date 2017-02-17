@@ -36,11 +36,15 @@ export class FunctionWriter {
         this.baseDefinitionWriter.writeWrap(def, () => {
             const shouldWriteImplementation = def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0;
 
-            (def.overloadSignatures || []).forEach(s => {
+            (def.overloadSignatures || []).forEach((s, i) => {
                 this.documentationedWriter.write(s);
                 this.writeStartOfFunctionHeader(def, flags);
                 this.callSignatureWriter.write(s, flags);
-                this.writer.write(";").newLine();
+                this.writer.write(";");
+
+                const isLast = i === def.overloadSignatures.length - 1;
+                if (!isLast || shouldWriteImplementation)
+                    this.writer.newLine();
             });
 
             // todo: look at this more

@@ -25,8 +25,6 @@ export interface WriteOptions {
 export abstract class BaseDefinition {
     onBeforeWrite: null | ((writer: CodeBlockWriter) => void);
     onAfterWrite: null | ((writer: CodeBlockWriter) => void);
-
-    constructor();
 }
 
 export class FunctionBodyWriteableDefinition {
@@ -140,6 +138,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => CallSignatureDefinition | null;
     documentationComment: string;
 
+    setUserDefinedTypeGuard(structure: UserDefinedTypeGuardStructure): this;
     abstract addParameter(structure: ParameterStructureType): ParameterType;
 }
 
@@ -221,7 +220,7 @@ export abstract class OverloadSignaturedDefinition {
     getOverloadSignature(searchFunction: (method: CallSignatureDefinition) => boolean): null | CallSignatureDefinition;
 }
 
-export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition, NodedDefinition {
+export class CallSignatureDefinition extends BaseDefinition implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition, NodedDefinition, DocumentationedDefinition {
     parameters: CallSignatureParameterDefinition[];
     getParameter: (nameOrSearchFunction: string | ((parameter: CallSignatureParameterDefinition) => boolean)) => CallSignatureParameterDefinition | null;
     returnType: TypeDefinition;
@@ -230,6 +229,7 @@ export class CallSignatureDefinition extends BaseDefinition implements TypeParam
     addTypeParameter: (structure: TypeParameterStructure) => TypeParameterDefinition;
     getTypeParameter: (nameOrSearchFunction: string | ((typeParameter: TypeParameterDefinition) => boolean)) => TypeParameterDefinition | null;
     tsNode?: undefined | ts.Node;
+    documentationComment: string;
 
     addParameter(structure: CallSignatureParameterStructure): CallSignatureParameterDefinition;
     getMinArgumentCount(): number;
@@ -244,12 +244,17 @@ export class IndexSignatureDefinition extends BaseDefinition implements ReturnTy
     returnType: TypeDefinition;
     setReturnType: (text: string) => this;
     isReadonly: boolean;
+
+    setKeyType(text: string): this;
 }
 
 export class TypeParameterDefinition extends BaseDefinition implements NamedDefinition, NodedDefinition {
     constraintType: null | TypeDefinition;
     name: string;
     tsNode?: undefined | ts.Node;
+
+    setConstraintType(definition: NamedDefinition, typeArguments?: undefined | string[]): this;
+    setConstraintType(text: string): this;
 }
 
 export class TypePropertyDefinition extends BasePropertyDefinition implements NodedDefinition {
@@ -288,7 +293,7 @@ export class ObjectPropertyDefinition extends BaseObjectPropertyDefinition imple
 }
 
 export class UserDefinedTypeGuardDefinition extends BaseDefinition {
-    parameterName: string;
+    parameterName: null | string;
     type: TypeDefinition;
 }
 
@@ -300,15 +305,15 @@ export abstract class BaseTypeDefinition extends BaseExpressionDefinition {
     arrayElementType: null | TypeDefinition;
     intersectionTypes: TypeDefinition[];
     unionTypes: TypeDefinition[];
-    definitions: (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    definitions: (EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition)[];
     properties: TypePropertyDefinition[];
     typeArguments: TypeDefinition[];
     text: string;
 
-    getAllDefinitions(): (ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition)[];
+    getAllDefinitions(): (EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition)[];
     getIntersectionType(searchFunction: (definition: TypeDefinition) => boolean): null | TypeDefinition;
     getUnionType(searchFunction: (definition: TypeDefinition) => boolean): null | TypeDefinition;
-    getDefinition(searchFunction: (definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition) => boolean): null | ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+    getDefinition(searchFunction: (definition: EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition) => boolean): null | EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition;
     getProperty(searchFunctionOrName: string | ((property: TypePropertyDefinition) => boolean)): null | TypePropertyDefinition;
     getTypeArgument(searchFunction: (typeArgument: TypeDefinition) => boolean): null | TypeDefinition;
     isArrayType(): boolean;
@@ -392,7 +397,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     properties: ClassPropertyDefinition[];
     staticMethods: ClassStaticMethodDefinition[];
     staticProperties: ClassStaticPropertyDefinition[];
-    constructorDef: ClassConstructorDefinition;
+    constructorDef: null | ClassConstructorDefinition;
     extendsTypes: TypeDefinition[];
     implementsTypes: TypeDefinition[];
     name: string;
@@ -421,7 +426,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     addExtends(text: string): TypeDefinition;
     addImplements(definition: ClassDefinition | InterfaceDefinition, typeArguments?: undefined | string[]): TypeDefinition;
     addImplements(text: string): TypeDefinition;
-    getPropertiesAndConstructorParameters(): (ClassPropertyDefinition | ClassConstructorParameterDefinition)[];
+    getPropertiesAndConstructorParameters(): (ClassConstructorParameterDefinition | ClassPropertyDefinition)[];
     getMethod(nameOrSearchFunction: string | ((method: ClassMethodDefinition) => boolean)): null | ClassMethodDefinition;
     getStaticMethod(nameOrSearchFunction: string | ((staticMethod: ClassStaticMethodDefinition) => boolean)): null | ClassStaticMethodDefinition;
     getProperty(nameOrSearchFunction: string | ((property: ClassPropertyDefinition) => boolean)): null | ClassPropertyDefinition;
@@ -478,7 +483,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     toClassProperty(): ClassPropertyDefinition;
 }
 
-export type ClassConstructorParameterScope = "public" | "protected" | "private" | "none";
+export type ClassConstructorParameterScope = "none" | "public" | "private" | "protected";
 
 export const ClassConstructorParameterScope: { None: ClassConstructorParameterScope; Public: ClassConstructorParameterScope; Protected: ClassConstructorParameterScope; Private: ClassConstructorParameterScope; toScope(scope: ClassConstructorParameterScope): Scope; };
 
@@ -492,7 +497,7 @@ export class ClassStaticPropertyDefinition extends BaseClassPropertyDefinition {
 export class ClassStaticMethodParameterDefinition extends BaseClassMethodParameterDefinition {
 }
 
-export type Scope = "public" | "protected" | "private";
+export type Scope = "public" | "private" | "protected";
 
 export const Scope: { Public: Scope; Protected: Scope; Private: Scope; };
 
@@ -569,7 +574,7 @@ export class EnumMemberDefinition extends BaseDefinition implements NamedDefinit
     documentationComment: string;
 }
 
-export type NamespaceDeclarationType = "namespace" | "module";
+export type NamespaceDeclarationType = "module" | "namespace";
 
 export const NamespaceDeclarationType: { Namespace: NamespaceDeclarationType; Module: NamespaceDeclarationType; };
 
@@ -725,7 +730,7 @@ export class VariableDefinition extends BaseDefinition implements NamedDefinitio
     setType(text: string): this;
 }
 
-export type VariableDeclarationType = "var" | "let" | "const";
+export type VariableDeclarationType = "const" | "var" | "let";
 
 export const VariableDeclarationType: { Var: VariableDeclarationType; Let: VariableDeclarationType; Const: VariableDeclarationType; };
 
@@ -733,44 +738,44 @@ export class GlobalDefinition {
     files: FileDefinition[];
     typeChecker?: undefined | ts.TypeChecker;
 
-    addDefinitionAsImportToFile(opts: { definition: ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition; file: FileDefinition; alias?: string | undefined; }): void;
+    addDefinitionAsImportToFile(opts: { definition: EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition; file: FileDefinition; alias?: string | undefined; }): void;
     addFile(structure: FileStructure): FileDefinition;
     getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): null | FileDefinition;
     getFileOfDefinition(def: ExportableDefinitions): null | FileDefinition;
     getFileAndNamespacesToDefinition(def: ExportableDefinitions): null | { file: FileDefinition; namespaces: NamespaceDefinition[]; };
 }
 
-export type DecoratedDefinitions = ClassDefinition | ClassMethodDefinition | ClassPropertyDefinition | ClassStaticMethodDefinition | ClassStaticPropertyDefinition | ClassConstructorParameterDefinition | ClassMethodParameterDefinition;
+export type DecoratedDefinitions = ClassMethodParameterDefinition | ClassConstructorParameterDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 
-export type TypeParameteredDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | TypeAliasDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | InterfaceMethodDefinition;
+export type TypeParameteredDefinitions = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | InterfaceMethodDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition;
 
 export type ModuledDefinitions = NamespaceDefinition | FileDefinition;
 
-export type WriteableDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition | FileDefinition;
+export type WriteableDefinitions = EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition | FileDefinition;
 
-export type ExportableDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+export type ExportableDefinitions = EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition;
 
-export type NodeDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition | ImportDefinition | ReExportDefinition;
+export type NodeDefinitions = EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ReExportDefinition | ClassDefinition | InterfaceDefinition | ImportDefinition | NamespaceDefinition;
 
-export type ModuleMemberDefinitions = ClassDefinition | FunctionDefinition | InterfaceDefinition | EnumDefinition | NamespaceDefinition | VariableDefinition | TypeAliasDefinition;
+export type ModuleMemberDefinitions = EnumDefinition | FunctionDefinition | VariableDefinition | TypeAliasDefinition | ClassDefinition | InterfaceDefinition | NamespaceDefinition;
 
 export type BaseFunctionDefinitions = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | InterfaceMethodDefinition;
 
-export type FunctionBodyWriteableDefinitions = FunctionDefinition | ClassConstructorDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | InterfaceMethodDefinition;
+export type FunctionBodyWriteableDefinitions = FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition | InterfaceMethodDefinition;
 
 export type ClassMethodDefinitions = ClassMethodDefinition | ClassStaticMethodDefinition;
 
 export type ClassMethodParameterDefinitions = ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition;
 
-export type ParameterDefinitions = ClassConstructorParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition | TypeFunctionParameterDefinition | FunctionParameterDefinition | CallSignatureParameterDefinition | InterfaceMethodParameterDefinition;
+export type ParameterDefinitions = FunctionParameterDefinition | InterfaceMethodParameterDefinition | ClassMethodParameterDefinition | ClassStaticMethodParameterDefinition | ClassConstructorParameterDefinition | CallSignatureParameterDefinition | TypeFunctionParameterDefinition;
 
-export type ParameteredDefinitions = CallSignatureDefinition | FunctionDefinition | ClassConstructorDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | TypeNodeDefinition | InterfaceMethodDefinition;
+export type ParameteredDefinitions = CallSignatureDefinition | FunctionDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassConstructorDefinition | InterfaceMethodDefinition | TypeNodeDefinition;
 
-export type PropertyDefinitions = ClassPropertyDefinition | ClassStaticPropertyDefinition | InterfacePropertyDefinition;
+export type PropertyDefinitions = InterfacePropertyDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
 
 export type MethodDefinitions = ClassMethodDefinition | InterfaceMethodDefinition;
 
-export type MethodParameterDefinitions = ClassMethodParameterDefinition | InterfaceMethodParameterDefinition;
+export type MethodParameterDefinitions = InterfaceMethodParameterDefinition | ClassMethodParameterDefinition;
 
 export abstract class BaseError extends Error {
     constructor(message: string);
@@ -890,7 +895,7 @@ export interface OverloadSignaturedStructure {
     overloadSignatures?: undefined | CallSignatureStructure[];
 }
 
-export interface CallSignatureStructure extends BaseStructure, TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure {
+export interface CallSignatureStructure extends BaseStructure, TypeParameteredStructure, ParameteredStructure<CallSignatureParameterStructure>, ReturnTypedStructure, DocumentationedStructure {
 }
 
 export interface CallSignatureParameterStructure extends BaseParameterStructure {
@@ -921,6 +926,11 @@ export interface TypeParameterStructure extends BaseStructure, NamedStructure {
 export interface TypePropertyStructure extends BasePropertyStructure {
 }
 
+export interface UserDefinedTypeGuardStructure extends BaseStructure {
+    parameterName?: undefined | string;
+    type: string;
+}
+
 export interface BaseClassMethodStructure<ParameterType extends BaseClassMethodParameterStructure> extends BaseFunctionStructure<ParameterType>, AsyncableStructure, DecoratableStructure, ScopedStructure, FunctionBodyWriteableStructure {
 }
 
@@ -931,7 +941,7 @@ export interface BaseClassPropertyStructure extends BaseObjectPropertyStructure,
 }
 
 export interface ScopedStructure {
-    scope?: undefined | "public" | "protected" | "private";
+    scope?: undefined | "public" | "private" | "protected";
 }
 
 export interface ClassMethodParameterStructure extends BaseClassMethodParameterStructure {
@@ -946,11 +956,11 @@ export interface ClassPropertyStructure extends BaseClassPropertyStructure, Abst
     onWriteSetBody?: undefined | ((writer: CodeBlockWriter) => void);
 }
 
-export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure, ScopedStructure, DocumentationedStructure {
+export interface ClassConstructorStructure extends BaseStructure, ParameteredStructure<ClassConstructorParameterStructure>, FunctionBodyWriteableStructure, ScopedStructure, DocumentationedStructure, OverloadSignaturedStructure {
 }
 
 export interface ClassConstructorParameterStructure extends BaseParameterStructure, ReadonlyableStructure {
-    scope?: undefined | "public" | "protected" | "private" | "none";
+    scope?: undefined | "none" | "public" | "private" | "protected";
 }
 
 export interface ClassStaticMethodParameterStructure extends BaseClassMethodParameterStructure {
@@ -1028,15 +1038,16 @@ export interface InterfaceStructure extends BaseStructure, NamedStructure, Expor
     extendsTypes?: undefined | string[];
     methods?: undefined | InterfaceMethodStructure[];
     newSignatures?: undefined | CallSignatureStructure[];
+    indexSignatures?: undefined | IndexSignatureStructure[];
     properties?: undefined | InterfacePropertyStructure[];
 }
 
 export interface NamespaceStructure extends BaseStructure, NamedStructure, ExportableStructure, ModuledStructure, AmbientableStructure, DocumentationedStructure {
-    declarationType?: undefined | "namespace" | "module";
+    declarationType?: undefined | "module" | "namespace";
 }
 
 export interface VariableStructure extends BaseStructure, NamedStructure, ExportableStructure, TypedStructure, DefaultExpressionedStructure, AmbientableStructure, DocumentationedStructure {
-    declarationType?: undefined | "var" | "let" | "const";
+    declarationType?: undefined | "const" | "var" | "let";
 }
 
 export function createCallSignature(structure?: CallSignatureStructure): CallSignatureDefinition;
@@ -1090,5 +1101,9 @@ export function createNamespace(structure: NamespaceStructure): NamespaceDefinit
 export function createReExport(structure: ReExportStructure): ReExportDefinition;
 
 export function createTypeAlias(structure: TypeAliasStructure): TypeAliasDefinition;
+
+export function createTypeParameter(structure: TypeParameterStructure): TypeParameterDefinition;
+
+export function createNamedImportPart(structure: NamedImportPartStructure): NamedImportPartDefinition;
 
 export function createVariable(structure: VariableStructure): VariableDefinition;

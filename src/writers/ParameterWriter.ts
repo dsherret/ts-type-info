@@ -22,10 +22,10 @@ export class ParameterWriter {
                 this.writeDecorators(param, flags);
 
             if (param instanceof ClassConstructorParameterDefinition) {
-                if ((flags & WriteFlags.HideScopeOnParameters) === 0)
+                if ((flags & WriteFlags.HideScopeOnParameters) === 0) {
                     this.classConstructorParameterScopeWriter.writeScope(param.scope);
-
-                this.writer.conditionalWrite(param.isReadonly, "readonly ");
+                    this.writer.conditionalWrite(param.isReadonly, "readonly ");
+                }
             }
 
             if (param.isRestParameter)

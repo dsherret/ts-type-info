@@ -76,8 +76,10 @@ export class ClassWriter {
 
         // if the function body won't be written, the scoped constructor parameters need to be written out as properties
         if (!willWriteFunctionBody) {
+            this.writer.blankLine();
             (constructorDef.parameters || []).filter(p => p.scope !== definitions.ClassConstructorParameterScope.None).forEach(p => {
                 this.propertyWriter.write(p.toClassProperty(), flags);
+                this.writer.newLine();
             });
         }
     }

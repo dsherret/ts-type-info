@@ -91,9 +91,10 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
             options.imports.forEach(importStructure => {
                 const importDef = structureFactory.getImport(importStructure);
                 importWriter.write(importDef);
+                writer.newLine();
             });
 
-            writer.newLine();
+            writer.blankLine();
         }
 
         const writeFlags = WriteFlags.HideFunctionBodies | WriteFlags.HideExpressions | WriteFlags.HidePrivateMembers | WriteFlags.HideProtectedMembers |
@@ -101,7 +102,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
 
         this.getExports().forEach((exportDef) => {
             writeDefinition(exportDef, writer, writeFlags);
-            writer.newLine();
+            writer.blankLine();
         });
 
         return writer.toString();

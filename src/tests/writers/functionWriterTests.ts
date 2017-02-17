@@ -77,7 +77,7 @@ describe(nameof(FunctionWriter), () => {
                 });
                 const {writer, defWriter} = createObjects(def);
                 defWriter.write(def, WriteFlags.HideFunctionImplementations);
-                const expected = `${prefix}${callSignatureStart(64)}function Name{call-signature:64};\n${suffix}`;
+                const expected = `${prefix}${callSignatureStart(64)}function Name{call-signature:64};${suffix}`;
                 expect(writer.toString()).to.equal(expected);
             });
 

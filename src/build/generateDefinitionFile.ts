@@ -4,13 +4,10 @@ import {getInfoFromFiles, GlobalDefinition, ModuledDefinition} from "./../main";
 
 export function generateDefinitionFile() {
     const result = getInfoFromFiles([
-        path.join(__dirname, "../../src/main.ts"),
-        path.join(__dirname, "../../src/typings/index.d.ts")
+        path.join(__dirname, "../../src/main.ts")
     ], {
         showDebugMessages: false,
-        compilerOptions: {
-            strictNullChecks: true
-        }
+        tsConfigFilePath: path.join(__dirname, "../../tsconfig.json")
     });
     const fileInfo = result.getFile("main.ts")!;
 

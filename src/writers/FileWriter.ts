@@ -21,9 +21,9 @@ export class FileWriter {
     write(def: FileDefinition, flags: WriteFlags) {
         this.baseDefinitionWriter.writeWrap(def, () => {
             this.writeImports(def, flags);
-            this.writer.newLine();
+            this.writer.blankLine();
             this.writeReExports(def);
-            this.writer.newLine();
+            this.writer.blankLine();
             this.moduledWriter.write(def, flags);
             this.writeDefaultExportExpression(def.defaultExportExpression);
         });
@@ -44,12 +44,13 @@ export class FileWriter {
     }
 
     private writeDefaultExportExpression(expression: ExpressionDefinition | null) {
-        if (expression != null) {
-            this.writer.newLine();
-            this.writer.write("export default ")
-                .write(expression.text)
-                .write(";")
-                .newLine();
-        }
+        if (expression == null)
+            return;
+
+        this.writer.blankLine();
+        this.writer.write("export default ")
+            .write(expression.text)
+            .write(";")
+            .newLine();
     }
 }
