@@ -33,9 +33,13 @@ export class InterfaceWriter {
             this.writeHeader(def, flags);
             this.writer.block(() => {
                 this.writeNewSignatures(def, flags);
+                this.writer.blankLine();
                 this.writeCallSignatures(def, flags);
+                this.writer.blankLine();
                 this.writeIndexSignatures(def);
+                this.writer.blankLine();
                 this.writeProperties(def, flags);
+                this.writer.blankLine();
                 this.writeMethods(def, flags);
             });
         });

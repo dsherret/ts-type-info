@@ -27,7 +27,7 @@
     "definition": "ts-type-info.d.ts"
   },
   "dependencies": {
-    "code-block-writer": "^4.0.0",
+    "code-block-writer": "^4.1.0",
     "tmp": "0.0.28",
     "typescript": "^2.1.4"
   },
@@ -36,6 +36,7 @@
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.5",
     "@types/tmp": "0.0.32",
+    "chai": "^3.5.0",
     "coveralls": "^2.11.6",
     "del": "^2.0.2",
     "gulp": "^3.9.1",
@@ -47,7 +48,6 @@
     "gulp-typescript": "^2.13.3",
     "mocha": "^2.3.3",
     "ts-nameof": "^0.7.0",
-    "ts-state-test-generator": "^0.3.0",
     "tslint": "^3.13.0"
   }
 }

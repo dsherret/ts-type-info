@@ -37,13 +37,13 @@ export class ClassWriter {
             this.writeHeader(def, flags);
             this.writer.block(() => {
                 this.writeStaticProperties(def, flags);
-                this.writer.newLine();
+                this.writer.blankLine();
                 this.writeStaticMethods(def, flags);
-                this.writer.newLine();
+                this.writer.blankLine();
                 this.writeProperties(def, flags);
-                this.writer.newLine();
+                this.writer.blankLine();
                 this.writeConstructor(def.constructorDef, flags);
-                this.writer.newLine();
+                this.writer.blankLine();
                 this.writeMethods(def, flags);
             });
         });
@@ -54,17 +54,12 @@ export class ClassWriter {
         this.decoratorsWriter.write(def, flags);
         this.exportableWriter.writeExportKeyword(def, flags);
         this.ambientableWriter.writeDeclareKeyword(def);
-        this.writeAbstract(def);
+        this.writer.conditionalWrite(def.isAbstract, "abstract ");
         this.writer.write("class ").write(def.name);
         this.typeParametersWriter.write(def.typeParameters);
 
         this.extendsImplementsWriter.writeExtends(def);
         this.extendsImplementsWriter.writeImplements(def);
-    }
-
-    private writeAbstract(def: definitions.ClassDefinition) {
-        if (def.isAbstract)
-            this.writer.write("abstract ");
     }
 
     private writeConstructor(constructorDef: definitions.ClassConstructorDefinition | null, flags: WriteFlags) {
@@ -105,12 +100,13 @@ export class ClassWriter {
             const willWriteAccessorBody = this.propertyWriter.willWriteAccessorBody(p);
 
             if (willWriteAccessorBody)
-                this.writer.newLine();
+                this.writer.blankLine();
 
             this.propertyWriter.write(p, flags);
-            this.writer.newLine();
 
             if (willWriteAccessorBody)
+                this.writer.blankLine();
+            else
                 this.writer.newLine();
         });
     }
@@ -136,11 +132,13 @@ export class ClassWriter {
         const thisHasBlankLine = this.functionBodyWriter.willWriteFunctionBody(def, flags);
 
         if (thisHasBlankLine)
-            this.writer.newLine();
+            this.writer.blankLine();
 
         this.methodWriter.write(def, flags);
 
         if (thisHasBlankLine)
+            this.writer.blankLine();
+        else
             this.writer.newLine();
     }
 

@@ -49,13 +49,13 @@ describe(nameof(InterfaceWriter), () => {
             const {writer, defWriter} = createObjects(def);
             defWriter.write(def, WriteFlags.None);
             const expectedBody = `    new{call-signature:0};\n` +
-                `    new{call-signature:0};\n` +
+                `    new{call-signature:0};\n\n` +
                 `    {call-signature:0};\n` +
-                `    {call-signature:0};\n` +
+                `    {call-signature:0};\n\n` +
                 `    {index-signature:s};\n` +
-                `    {index-signature:t};\n` +
+                `    {index-signature:t};\n\n` +
                 `    {property:prop1:0}\n` +
-                `    {property:prop2:0}\n` +
+                `    {property:prop2:0}\n\n` +
                 `    {function:method1:0}\n` +
                 `    {function:method2:0}\n`;
             expect(writer.toString()).to.equal(`${prefix}${expectedBody}${suffix}`);

@@ -13,7 +13,7 @@ describe("BaseDefinition", () => {
     describe("onBeforeWrite", () => {
         it(`should write the function with the before text`, () => {
             funcDef.onBeforeWrite = (writer) => {
-                writer.write(`@MyEnumerable`);
+                writer.write(`@MyEnumerable\n`);
             };
             funcDef.onAfterWrite = null;
 
@@ -29,7 +29,7 @@ describe("BaseDefinition", () => {
                 writer.write(`// something`);
             };
 
-            const expected = `function myFunction() {\n}\n// something\n`;
+            const expected = `function myFunction() {\n}\n// something`;
             assert.equal(funcDef.write(), expected);
         });
     });

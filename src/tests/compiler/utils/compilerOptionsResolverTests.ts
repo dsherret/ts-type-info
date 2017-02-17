@@ -68,6 +68,7 @@ function getDefaultCompilerOptions() {
         strictNullChecks: false,
         suppressExcessPropertyErrors: true,
         suppressImplicitAnyIndexErrors: true,
-        target: 2
+        target: 2,
+        types: []
     };
 }

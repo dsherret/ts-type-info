@@ -9,9 +9,7 @@ describe("ReExportDefinition", () => {
 
     describe("write()", () => {
         it("should contain the import written out", () => {
-            const expected =
-`export * from "./test";
-`;
+            const expected = `export * from "./test";`;
             assert.equal(file.reExports[0].write(), expected);
         });
     });

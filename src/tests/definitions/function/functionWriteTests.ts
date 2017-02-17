@@ -98,9 +98,7 @@ declare function myDeclareMultipleSignatures(str?: string): string;
 
         describe("myDeclareAsyncFunction", () => {
             it("should contain the function written out", () => {
-                const expected =
-`declare async function myDeclareAsyncFunction(): any;
-`;
+                const expected = `declare async function myDeclareAsyncFunction(): any;`;
                 assert.equal(file.functions[5].write(), expected);
             });
         });
@@ -138,7 +136,7 @@ declare function myDeclareMultipleSignatures(str?: string): string;
         describe("myGeneratorFunction", () => {
             it("should contain the function written out", () => {
                 const expected =
-`function *myGeneratorFunction() {
+`function* myGeneratorFunction() {
 }
 `;
                 assert.equal(file.functions[9].write(), expected);

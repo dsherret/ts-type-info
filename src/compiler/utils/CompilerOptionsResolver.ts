@@ -51,6 +51,7 @@ export class CompilerOptionsResolver {
         combinedOptions.target = getValue(combinedOptions.target, ts.ScriptTarget.ES2015);
         combinedOptions.moduleResolution = getValue(combinedOptions.moduleResolution, ts.ModuleResolutionKind.NodeJs);
         combinedOptions.strictNullChecks = getValue(combinedOptions.strictNullChecks, false);
+        combinedOptions.types = getValue(combinedOptions.types, []);
 
         return combinedOptions;
     }

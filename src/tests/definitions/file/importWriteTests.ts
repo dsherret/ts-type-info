@@ -9,9 +9,7 @@ describe("ImportDefinition", () => {
 
     describe("write()", () => {
         it("should contain the import written out", () => {
-            const expected =
-`import "./test";
-`;
+            const expected = `import "./test";`;
             assert.equal(file.imports[0].write(), expected);
         });
     });
