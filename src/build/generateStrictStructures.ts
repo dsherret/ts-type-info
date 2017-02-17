@@ -8,7 +8,7 @@ export function generateStrictStructures() {
 
     result.files.filter(f => f.fileName.indexOf("structures") >= 0).forEach(f => {
         f.interfaces.forEach(i => {
-            result.renameDefinitionAs(i, "Strict" + i.name);
+            i.name = "Strict" + i.name;
 
             i.properties.forEach(p => {
                 p.isOptional = false;
