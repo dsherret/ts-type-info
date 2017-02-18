@@ -132,6 +132,10 @@ describe("createFunctions", () => {
         testHelpers.runReExportDefinitionTests(createFunctions.createReExport({ moduleSpecifier: "name" }), { moduleSpecifier: "name" });
     });
 
+    describe("createReExport()", () => {
+        testHelpers.runTypeDefinitionTests(createFunctions.createType("string"), { text: "string" });
+    });
+
     describe("createTypeAlias()", () => {
         testHelpers.runTypeAliasDefinitionTests(
             createFunctions.createTypeAlias({ name: "name", type: "string" }),

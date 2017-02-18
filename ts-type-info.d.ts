@@ -1100,6 +1100,8 @@ export function createNamespace(structure: NamespaceStructure): NamespaceDefinit
 
 export function createReExport(structure: ReExportStructure): ReExportDefinition;
 
+export function createType(text: string): TypeDefinition;
+
 export function createTypeAlias(structure: TypeAliasStructure): TypeAliasDefinition;
 
 export function createTypeParameter(structure: TypeParameterStructure): TypeParameterDefinition;

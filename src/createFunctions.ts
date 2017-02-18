@@ -101,6 +101,10 @@ export function createReExport(structure: structures.ReExportStructure) {
     return new StructureFactory().getReExport(structure);
 }
 
+export function createType(text: string) {
+    return new StructureFactory().getTypeFromText(text);
+}
+
 export function createTypeAlias(structure: structures.TypeAliasStructure) {
     return new StructureFactory().getTypeAlias(structure);
 }
