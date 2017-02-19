@@ -7,14 +7,14 @@
 
 import {TypeDefinition, BaseTypeDefinition, BaseExpressionDefinition, BaseDefinition} from "./definitions";
 
-function getTypeDefinitionClone(definition: TypeDefinition) {
+export function getTypeDefinitionClone(definition: TypeDefinition) {
     const proto = Object.getPrototypeOf(definition);
     const obj: TypeDefinition = Object.create(proto);
     fillTypeDefinition(definition, obj);
     return obj;
 }
 
-function fillTypeDefinition(from: TypeDefinition, to: TypeDefinition) {
+export function fillTypeDefinition(from: TypeDefinition, to: TypeDefinition) {
     fillBaseTypeDefinition(from, to);
 
     to.callSignatures = []
@@ -24,14 +24,14 @@ function fillTypeDefinition(from: TypeDefinition, to: TypeDefinition) {
     to.node = from.node;
 }
 
-function getBaseTypeDefinitionClone(definition: BaseTypeDefinition) {
+export function getBaseTypeDefinitionClone(definition: BaseTypeDefinition) {
     const proto = Object.getPrototypeOf(definition);
     const obj: BaseTypeDefinition = Object.create(proto);
     fillBaseTypeDefinition(definition, obj);
     return obj;
 }
 
-function fillBaseTypeDefinition(from: BaseTypeDefinition, to: BaseTypeDefinition) {
+export function fillBaseTypeDefinition(from: BaseTypeDefinition, to: BaseTypeDefinition) {
     fillBaseExpressionDefinition(from, to);
 
     if (from.arrayElementType == null) {
@@ -63,27 +63,27 @@ function fillBaseTypeDefinition(from: BaseTypeDefinition, to: BaseTypeDefinition
     to.text = from.text;
 }
 
-function getBaseExpressionDefinitionClone(definition: BaseExpressionDefinition) {
+export function getBaseExpressionDefinitionClone(definition: BaseExpressionDefinition) {
     const proto = Object.getPrototypeOf(definition);
     const obj: BaseExpressionDefinition = Object.create(proto);
     fillBaseExpressionDefinition(definition, obj);
     return obj;
 }
 
-function fillBaseExpressionDefinition(from: BaseExpressionDefinition, to: BaseExpressionDefinition) {
+export function fillBaseExpressionDefinition(from: BaseExpressionDefinition, to: BaseExpressionDefinition) {
     fillBaseDefinition(from, to);
 
     to.text = from.text;
 }
 
-function getBaseDefinitionClone(definition: BaseDefinition) {
+export function getBaseDefinitionClone(definition: BaseDefinition) {
     const proto = Object.getPrototypeOf(definition);
     const obj: BaseDefinition = Object.create(proto);
     fillBaseDefinition(definition, obj);
     return obj;
 }
 
-function fillBaseDefinition(from: BaseDefinition, to: BaseDefinition) {
+export function fillBaseDefinition(from: BaseDefinition, to: BaseDefinition) {
     to.__uniqueID = ++BaseDefinition._uniqueID;
     to.onBeforeWrite = from.onBeforeWrite;
     to.onAfterWrite = from.onAfterWrite;

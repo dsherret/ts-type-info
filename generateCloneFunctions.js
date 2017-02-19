@@ -29,7 +29,7 @@ testFile.onBeforeWrite = writer => {
         .writeLine("/* tslint:disable */")
         .writeLine("/*")
         .writeLine("*************************************************************************")
-        .writeLine("* AUTO GENERATED CODE BY generateCloneableFunctions.js -- DO NOT EDIT!! *")
+        .writeLine("* AUTO GENERATED CODE BY generateCloneFunctions.js -- DO NOT EDIT!! *")
         .writeLine("*************************************************************************")
         .writeLine("*/")
         .newLine();
