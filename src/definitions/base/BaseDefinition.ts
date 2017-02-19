@@ -9,7 +9,7 @@ function runMixin(instance: BaseDefinition, mixin: any) {
 
 export abstract class BaseDefinition {
     // ReSharper disable once InconsistentNaming
-    private static _uniqueID = 0;
+    static _uniqueID = 0;
     // ReSharper disable once InconsistentNaming
     __uniqueID: number;
 
