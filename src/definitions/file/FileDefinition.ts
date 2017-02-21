@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as typeConstants from "./../../typeConstants";
 import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
-import {MainFactory, StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, ImportStructure, InterfaceStructure, NamespaceStructure, ReExportStructure, TypeAliasStructure,
     VariableStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils, validateImportStructure, FileUtils, StringUtils} from "./../../utils";
@@ -28,13 +28,13 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
 
     addImport(structure: ImportStructure) {
         validateImportStructure(structure);
-        const def = new StructureFactory().getImport(structure);
+        const def = new MainFactory().createStructureFactory().getImport(structure);
         this.imports.push(def);
         return def;
     }
 
     addReExport(structure: ReExportStructure) {
-        const def = new StructureFactory().getReExport(structure);
+        const def = new MainFactory().createStructureFactory().getReExport(structure);
         this.reExports.push(def);
         return def;
     }
@@ -86,7 +86,7 @@ export class FileDefinition extends BaseDefinition implements ModuledDefinition,
         const writer = MainFactory.createWriter(options.writeOptions);
 
         if (options && options.imports) {
-            const structureFactory = new StructureFactory();
+            const structureFactory = new MainFactory().createStructureFactory();
             const importWriter = MainFactory.createWriteFactory(writer).getImportWriter();
             options.imports.forEach(importStructure => {
                 const importDef = structureFactory.getImport(importStructure);

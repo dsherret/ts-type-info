@@ -4,7 +4,7 @@ import {CompilerOptionsResolver} from "./compiler/utils/CompilerOptionsResolver"
 import {TsMain} from "./compiler/TsMain";
 import {ArgumentTypeError} from "./errors";
 import {FileDefinition, GlobalDefinition} from "./definitions";
-import {TsFactory} from "./factories";
+import {MainFactory} from "./factories";
 import {Options} from "./options";
 import {StringUtils, Logger} from "./utils";
 
@@ -21,12 +21,12 @@ export function getInfoFromFiles(fileNames: string[], options?: Options): Global
     }
 
     options = options || {};
-    const {includeTsNodes = false, showDebugMessages = false} = options;
+    const {includeTsNodes = false, showDebugMessages = false, getTypesFromTypeNodes = false} = options;
 
     Logger.setEnabled(showDebugMessages);
 
     const tsMain = new TsMain(new CompilerOptionsResolver(), fileNames, options);
-    const tsFactory = new TsFactory({ includeTsNodes });
+    const tsFactory = new MainFactory().createTsFactory({ includeTsNodes, getTypesFromTypeNodes });
 
     const fileDefinitions = tsMain.getSourceFiles().map(sourceFile => tsFactory.getFileDefinition(sourceFile));
 

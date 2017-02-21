@@ -1,4 +1,4 @@
-import {MainFactory, StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import * as typeConstants from "./../../typeConstants";
 import {ClassMethodStructure, ClassPropertyStructure, ClassConstructorStructure, DecoratorStructure, TypeParameterStructure,
     ClassStaticMethodStructure, ClassStaticPropertyStructure} from "./../../structures";
@@ -35,25 +35,25 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     }
 
     addMethod(structure: ClassMethodStructure) {
-        const def = new StructureFactory().getClassMethod(structure);
+        const def = new MainFactory().createStructureFactory().getClassMethod(structure);
         this.methods.push(def);
         return def;
     }
 
     addProperty(structure: ClassPropertyStructure) {
-        const def = new StructureFactory().getClassProperty(structure);
+        const def = new MainFactory().createStructureFactory().getClassProperty(structure);
         this.properties.push(def);
         return def;
     }
 
     addStaticMethod(structure: ClassStaticMethodStructure) {
-        const def = new StructureFactory().getClassStaticMethod(structure);
+        const def = new MainFactory().createStructureFactory().getClassStaticMethod(structure);
         this.staticMethods.push(def);
         return def;
     }
 
     addStaticProperty(structure: ClassStaticPropertyStructure) {
-        const def = new StructureFactory().getClassStaticProperty(structure);
+        const def = new MainFactory().createStructureFactory().getClassStaticProperty(structure);
         this.staticProperties.push(def);
         return def;
     }
@@ -98,7 +98,7 @@ export class ClassDefinition extends BaseDefinition implements NamedDefinition, 
     }
 
     setConstructor(structure: ClassConstructorStructure) {
-        this.constructorDef = new StructureFactory().getClassConstructor(structure);
+        this.constructorDef = new MainFactory().createStructureFactory().getClassConstructor(structure);
         return this;
     }
 

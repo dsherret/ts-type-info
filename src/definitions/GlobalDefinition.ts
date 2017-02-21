@@ -1,6 +1,6 @@
 ﻿import * as typeConstants from "./../typeConstants";
 import {ModuleMemberDefinitions} from "./../definitions";
-import {StructureFactory} from "./../factories";
+import {MainFactory} from "./../factories";
 import {FileStructure} from "./../structures";
 import {DefinitionUtils, FileUtils} from "./../utils";
 import {FileDefinition} from "./file";
@@ -34,7 +34,7 @@ export class GlobalDefinition {
     }
 
     addFile(structure: FileStructure) {
-        const def = new StructureFactory().getFile(structure);
+        const def = new MainFactory().createStructureFactory().getFile(structure);
         this.files.push(def);
         return def;
     }

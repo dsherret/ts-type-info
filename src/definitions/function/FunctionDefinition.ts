@@ -1,5 +1,5 @@
 import CodeBlockWriter from "code-block-writer";
-import {MainFactory, StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {FunctionParameterStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {WriteFlags} from "./../../WriteFlags";
@@ -13,7 +13,7 @@ export class FunctionDefinition
         implements ExportableDefinition, AmbientableDefinition, AsyncableDefinition, FunctionBodyWriteableDefinition, OrderableDefinition {
 
     addParameter(structure: FunctionParameterStructure) {
-        const def = new StructureFactory().getFunctionParameter(structure);
+        const def = new MainFactory().createStructureFactory().getFunctionParameter(structure);
         this.parameters.push(def);
         return def;
     }

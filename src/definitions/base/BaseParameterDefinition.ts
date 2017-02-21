@@ -1,5 +1,5 @@
 import * as typeConstants from "./../../typeConstants";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ObjectPropertyStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {TypeDefinition, ExpressionDefinition} from "./../expression";
@@ -23,7 +23,7 @@ export abstract class BaseParameterDefinition
     destructuringProperties: ObjectPropertyDefinition[] = [];
 
     addDestructuringProperty(structure: ObjectPropertyStructure) {
-        const def = new StructureFactory().getObjectProperty(structure);
+        const def = new MainFactory().createStructureFactory().getObjectProperty(structure);
         this.destructuringProperties.push(def);
         return def;
     }

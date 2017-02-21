@@ -1,5 +1,5 @@
 ﻿import * as typeConstants from "./../../typeConstants";
-import {MainFactory, StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {NamedImportPartStructure} from "./../../structures";
 import {DefinitionUtils, applyMixins} from "./../../utils";
 import {WriteOptions} from "./../../WriteOptions";
@@ -17,7 +17,7 @@ export class ImportDefinition extends BaseDefinition implements NodedDefinition 
     starImports: StarImportPartDefinition[] = [];
 
     addNamedImport(structure: NamedImportPartStructure) {
-        const def = new StructureFactory().getNamedImportPart(structure);
+        const def = new MainFactory().createStructureFactory().getNamedImportPart(structure);
         this.namedImports.push(def);
         return def;
     }
@@ -31,7 +31,7 @@ export class ImportDefinition extends BaseDefinition implements NodedDefinition 
     }
 
     setDefaultImport(importName: string) {
-        const factory = new StructureFactory();
+        const factory = new MainFactory().createStructureFactory();
         this.defaultImport = factory.getDefaultImportPartByName(importName);
         return this;
     }

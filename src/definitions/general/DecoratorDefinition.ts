@@ -1,5 +1,5 @@
 import * as typeConstants from "./../../typeConstants";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {NamedDefinition, NodedDefinition, BaseDefinition} from "./../base";
 import {ExpressionDefinition} from "./../expression";
@@ -19,7 +19,7 @@ export class DecoratorDefinition extends BaseDefinition implements NamedDefiniti
     }
 
     addArgument(text: string) {
-        const def = new StructureFactory().getTypeFromText(text);
+        const def = new MainFactory().createStructureFactory().getTypeFromText(text);
         this.arguments.push(def);
         return def;
     }

@@ -2,11 +2,16 @@
 import {TsSourceFile, TsNode, TsTypeNode, TsSignature, TsType, TsSymbol, TsExpression} from "./../compiler";
 import * as definitions from "./../definitions";
 import {KeyValueCache, Logger} from "./../utils";
-import {StructureFactory} from "./StructureFactory";
+import {MainFactory} from "./MainFactory";
 
 function bindToDefinition<DefType>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
     return def;
+}
+
+export interface TsFactoryOptions {
+    includeTsNodes: boolean;
+    getTypesFromTypeNodes: boolean;
 }
 
 export class TsFactory {
@@ -15,11 +20,11 @@ export class TsFactory {
     private readonly deferredBindings: { binder: binders.IBaseBinder; definition: definitions.BaseDefinition; }[] = [];
     private readonly createdTypesWithDefinition: { type: TsType; definition: definitions.BaseTypeDefinition; }[] = [];
 
-    constructor(private readonly settings: { includeTsNodes: boolean; }) {
+    constructor(private readonly mainFactory: MainFactory, private readonly options: TsFactoryOptions) {
     }
 
     getShouldIncludeTsNodes() {
-        return this.settings.includeTsNodes;
+        return this.options.includeTsNodes;
     }
 
     getCallSignatureFromNode(node: TsNode) {
@@ -129,7 +134,18 @@ export class TsFactory {
         return definition;
     }
 
+    getTypeFromOnlyTypeNode(node: TsTypeNode) {
+        return ;
+    }
+
     getType(type: TsType, node: TsTypeNode | null) {
+        if (this.options.getTypesFromTypeNodes === true && node != null)
+            return bindToDefinition(new binders.TsTypeBinderByTypeNode(this, node), new definitions.TypeDefinition());
+        else
+            return this.getTypeFromType(type, node);
+    }
+
+    private getTypeFromType(type: TsType, node: TsTypeNode | null) {
         const definition = bindToDefinition(new binders.TsTypeBinder(this, type, node), new definitions.TypeDefinition());
         this.createdTypesWithDefinition.push({
             type,
@@ -139,8 +155,7 @@ export class TsFactory {
     }
 
     getTypeFromText(text: string | undefined) {
-        text = text || "any";
-        return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(new StructureFactory(), text), new definitions.TypeDefinition());
+        return this.mainFactory.createStructureFactory().getTypeFromText(text);
     }
 
     getUserDefinedTypeGuardFromNode(node: TsNode) {

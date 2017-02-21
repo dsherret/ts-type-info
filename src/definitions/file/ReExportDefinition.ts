@@ -1,5 +1,5 @@
 ﻿import {ExportableDefinitions} from "./../../definitions";
-import {MainFactory, StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {NamedImportPartStructure} from "./../../structures";
 import {DefinitionUtils, applyMixins} from "./../../utils";
 import {WriteOptions} from "./../../WriteOptions";
@@ -28,7 +28,7 @@ export class ReExportDefinition extends BaseDefinition implements NodedDefinitio
     }
 
     addNamedExport(structure: NamedImportPartStructure) {
-        const def = new StructureFactory().getNamedImportPart(structure);
+        const def = new MainFactory().createStructureFactory().getNamedImportPart(structure);
         this.namedExports.push(def);
         return def;
     }

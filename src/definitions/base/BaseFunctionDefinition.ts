@@ -1,6 +1,6 @@
 import * as typeConstants from "./../../typeConstants";
 import {CallSignatureStructure, TypeParameterStructure, UserDefinedTypeGuardStructure} from "./../../structures";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {TypeDefinition} from "./../expression";
 import {TypeParameterDefinition, CallSignatureDefinition, UserDefinedTypeGuardDefinition} from "./../general";
@@ -23,7 +23,7 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
 
     setUserDefinedTypeGuard(structure: UserDefinedTypeGuardStructure) {
-        this.userDefinedTypeGuard = new StructureFactory().getUserDefinedTypeGuard(structure);
+        this.userDefinedTypeGuard = new MainFactory().createStructureFactory().getUserDefinedTypeGuard(structure);
         return this;
     }
 

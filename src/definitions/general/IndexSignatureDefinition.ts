@@ -1,14 +1,14 @@
 ﻿import {applyMixins} from "./../../utils";
 import {BaseDefinition, ReturnTypedDefinition, ReadonlyableDefinition} from "./../base";
 import {TypeDefinition} from "./../expression";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 
 export class IndexSignatureDefinition extends BaseDefinition implements ReturnTypedDefinition, ReadonlyableDefinition {
     keyName: string;
     keyType: TypeDefinition;
 
     setKeyType(text: string) {
-        this.keyType = new StructureFactory().getTypeFromText(text);
+        this.keyType = new MainFactory().createStructureFactory().getTypeFromText(text);
         return this;
     }
 

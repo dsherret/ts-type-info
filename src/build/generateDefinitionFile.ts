@@ -1,6 +1,6 @@
 ﻿import * as path from "path";
 import * as fs from "fs";
-import {getInfoFromFiles, GlobalDefinition, ModuledDefinition} from "./../main";
+import {getInfoFromFiles, GlobalDefinition, ModuledDefinition, Options} from "./../main";
 
 export function generateDefinitionFile() {
     const result = getInfoFromFiles([
@@ -33,6 +33,9 @@ function removeInternalProperties(result: GlobalDefinition) {
 
     const moduledDefinition = result.getFile(`${nameof(ModuledDefinition)}.ts`)!.getClass(nameof(ModuledDefinition))!;
     moduledDefinition.staticMethods = moduledDefinition.staticMethods.filter(p => p.name !== nameof(ModuledDefinition.initialize));
+
+    const optionsInterface = result.getFile("options.ts")!.getInterface(nameof<Options>())!;
+    optionsInterface.properties = optionsInterface.properties.filter(p => p.name !== nameof<Options>(o => o.getTypesFromTypeNodes));
 }
 
 function fixSetType(result: GlobalDefinition) {

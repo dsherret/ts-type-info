@@ -1,5 +1,5 @@
 ﻿import * as typeConstants from "./../../typeConstants";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {DecoratorStructure} from "./../../structures";
 import {DecoratorDefinition} from "./../general";
@@ -10,7 +10,7 @@ export class ClassConstructorParameterDefinition extends BaseParameterDefinition
     scope: ClassConstructorParameterScope;
 
     toClassProperty() {
-        const factory = new StructureFactory();
+        const factory = new MainFactory().createStructureFactory();
         const def = factory.getClassProperty({
             name: this.name!,
             scope: ClassConstructorParameterScope.toScope(this.scope),

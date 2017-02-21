@@ -1,5 +1,5 @@
 ﻿import {ExportableDefinitions, ModuleMemberDefinitions} from "./../../definitions";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ClassStructure, EnumStructure, FunctionStructure, InterfaceStructure, NamespaceStructure, TypeAliasStructure, VariableStructure} from "./../../structures";
 import {DefinitionUtils} from "./../../utils";
 import {EnumDefinition} from "./../enum";
@@ -28,49 +28,49 @@ export abstract class ModuledDefinition {
     }
 
     addClass(structure: ClassStructure) {
-        const def = new StructureFactory().getClass(structure);
+        const def = new MainFactory().createStructureFactory().getClass(structure);
         def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.classes.push(def);
         return def;
     }
 
     addEnum(structure: EnumStructure) {
-        const def = new StructureFactory().getEnum(structure);
+        const def = new MainFactory().createStructureFactory().getEnum(structure);
         def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.enums.push(def);
         return def;
     }
 
     addFunction(structure: FunctionStructure) {
-        const def = new StructureFactory().getFunction(structure);
+        const def = new MainFactory().createStructureFactory().getFunction(structure);
         def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.functions.push(def);
         return def;
     }
 
     addInterface(structure: InterfaceStructure) {
-        const def = new StructureFactory().getInterface(structure);
+        const def = new MainFactory().createStructureFactory().getInterface(structure);
         def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.interfaces.push(def);
         return def;
     }
 
     addNamespace(structure: NamespaceStructure) {
-        const def = new StructureFactory().getNamespace(structure);
+        const def = new MainFactory().createStructureFactory().getNamespace(structure);
         def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.namespaces.push(def);
         return def;
     }
 
     addTypeAlias(structure: TypeAliasStructure) {
-        const def = new StructureFactory().getTypeAlias(structure);
+        const def = new MainFactory().createStructureFactory().getTypeAlias(structure);
         def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.typeAliases.push(def);
         return def;
     }
 
     addVariable(structure: VariableStructure) {
-        const def = new StructureFactory().getVariable(structure);
+        const def = new MainFactory().createStructureFactory().getVariable(structure);
         def.order = DefinitionUtils.getNextOrderOfModule(this);
         this.variables.push(def);
         return def;

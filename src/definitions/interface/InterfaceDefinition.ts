@@ -1,5 +1,5 @@
 ﻿import * as typeConstants from "./../../typeConstants";
-import {MainFactory, StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {CallSignatureStructure, IndexSignatureStructure, InterfaceMethodStructure, InterfacePropertyStructure, TypeParameterStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {WriteFlags} from "./../../WriteFlags";
@@ -22,7 +22,7 @@ export class InterfaceDefinition extends BaseDefinition
     extendsTypes: TypeDefinition[] = [];
 
     addCallSignature(structure: CallSignatureStructure) {
-        const def = new StructureFactory().getCallSignature(structure);
+        const def = new MainFactory().createStructureFactory().getCallSignature(structure);
         this.callSignatures.push(def);
         return def;
     }
@@ -36,25 +36,25 @@ export class InterfaceDefinition extends BaseDefinition
     }
 
     addIndexSignature(structure: IndexSignatureStructure) {
-        const def = new StructureFactory().getIndexSignature(structure);
+        const def = new MainFactory().createStructureFactory().getIndexSignature(structure);
         this.indexSignatures.push(def);
         return def;
     }
 
     addMethod(structure: InterfaceMethodStructure) {
-        const def = new StructureFactory().getInterfaceMethod(structure);
+        const def = new MainFactory().createStructureFactory().getInterfaceMethod(structure);
         this.methods.push(def);
         return def;
     }
 
     addNewSignature(structure: CallSignatureStructure) {
-        const def = new StructureFactory().getCallSignature(structure);
+        const def = new MainFactory().createStructureFactory().getCallSignature(structure);
         this.newSignatures.push(def);
         return def;
     }
 
     addProperty(structure: InterfacePropertyStructure) {
-        const def = new StructureFactory().getInterfaceProperty(structure);
+        const def = new MainFactory().createStructureFactory().getInterfaceProperty(structure);
         this.properties.push(def);
         return def;
     }

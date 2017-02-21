@@ -1,6 +1,6 @@
 import * as typeConstants from "./../../typeConstants";
 import {TypeParameterStructure, CallSignatureParameterStructure} from "./../../structures";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {TypeParameteredDefinition, BaseDefinition, ReturnTypedDefinition, ParameteredDefinition, NodedDefinition, DocumentationedDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
@@ -12,7 +12,7 @@ export class CallSignatureDefinition
         implements TypeParameteredDefinition, ParameteredDefinition<CallSignatureParameterDefinition, CallSignatureParameterStructure>, ReturnTypedDefinition,
             NodedDefinition, DocumentationedDefinition {
     addParameter(structure: CallSignatureParameterStructure) {
-        const def = new StructureFactory().getCallSignatureParameter(structure);
+        const def = new MainFactory().createStructureFactory().getCallSignatureParameter(structure);
         this.parameters.push(def);
         return def;
     }

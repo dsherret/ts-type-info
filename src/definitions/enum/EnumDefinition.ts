@@ -1,5 +1,5 @@
 ﻿import * as typeConstants from "./../../typeConstants";
-import {MainFactory, StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {EnumMemberStructure} from "./../../structures";
 import {applyMixins, DefinitionUtils} from "./../../utils";
 import {WriteFlags} from "./../../WriteFlags";
@@ -12,7 +12,7 @@ export class EnumDefinition extends BaseDefinition implements AmbientableDefinit
     members: EnumMemberDefinition[] = [];
 
     addMember(structure: EnumMemberStructure) {
-        const def = new StructureFactory().getEnumMember(structure);
+        const def = new MainFactory().createStructureFactory().getEnumMember(structure);
         this.members.push(def);
         return def;
     }

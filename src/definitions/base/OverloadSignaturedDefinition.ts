@@ -1,5 +1,5 @@
 ﻿import {CallSignatureStructure} from "./../../structures";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {DefinitionUtils} from "./../../utils";
 import {CallSignatureDefinition} from "./../general/CallSignatureDefinition";
 
@@ -7,7 +7,7 @@ export abstract class OverloadSignaturedDefinition {
     overloadSignatures: CallSignatureDefinition[] = [];
 
     addOverloadSignature(structure: CallSignatureStructure) {
-        const def = new StructureFactory().getCallSignature(structure);
+        const def = new MainFactory().createStructureFactory().getCallSignature(structure);
         this.overloadSignatures.push(def);
         return def;
     }

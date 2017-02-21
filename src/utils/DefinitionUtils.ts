@@ -1,12 +1,12 @@
 ﻿import {FileDefinition, NamedDefinition, OptionallyNamedDefinition, TypeDefinition, ModuledDefinition} from "./../definitions";
-import {StructureFactory} from "./../factories";
+import {MainFactory} from "./../factories";
 
 export class DefinitionUtils {
     private constructor() {
     }
 
     static getTypeDefinitionFromTextOrDefinition(textOrDefinition: string | NamedDefinition | null, typeArguments: string[]) {
-        const structureFactory = new StructureFactory();
+        const structureFactory = new MainFactory().createStructureFactory();
         let def: TypeDefinition;
 
         if (typeof textOrDefinition === "string") {

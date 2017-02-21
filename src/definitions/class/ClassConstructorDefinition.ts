@@ -1,6 +1,6 @@
 import CodeBlockWriter from "code-block-writer";
 import * as typeConstants from "./../../typeConstants";
-import {StructureFactory} from "./../../factories";
+import {MainFactory} from "./../../factories";
 import {ClassConstructorParameterStructure, CallSignatureStructure} from "./../../structures";
 import {applyMixins} from "./../../utils";
 import {BaseDefinition, ParameteredDefinition, FunctionBodyWriteableDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition} from "./../base";
@@ -14,7 +14,7 @@ export class ClassConstructorDefinition
         implements ParameteredDefinition<ClassConstructorParameterDefinition, ClassConstructorParameterStructure>, FunctionBodyWriteableDefinition,
             ScopedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition {
     addParameter(structure: ClassConstructorParameterStructure) {
-        const def = new StructureFactory().getClassConstructorParameter(structure);
+        const def = new MainFactory().createStructureFactory().getClassConstructorParameter(structure);
         this.parameters.push(def);
         return def;
     }

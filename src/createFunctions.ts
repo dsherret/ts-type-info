@@ -1,122 +1,122 @@
 ﻿import * as structures from "./structures";
-import {StructureFactory} from "./factories";
+import {MainFactory} from "./factories";
 
 export function createCallSignature(structure: structures.CallSignatureStructure = {}) {
-    return new StructureFactory().getCallSignature(structure);
+    return new MainFactory().createStructureFactory().getCallSignature(structure);
 }
 
 export function createCallSignatureParameter(structure: structures.CallSignatureParameterStructure) {
-    return new StructureFactory().getCallSignatureParameter(structure);
+    return new MainFactory().createStructureFactory().getCallSignatureParameter(structure);
 }
 
 export function createClass(structure: structures.ClassStructure) {
-    return new StructureFactory().getClass(structure);
+    return new MainFactory().createStructureFactory().getClass(structure);
 }
 
 export function createClassConstructor(structure: structures.ClassConstructorStructure = {}) {
-    return new StructureFactory().getClassConstructor(structure);
+    return new MainFactory().createStructureFactory().getClassConstructor(structure);
 }
 
 export function createClassConstructorParameter(structure: structures.ClassConstructorParameterStructure) {
-    return new StructureFactory().getClassConstructorParameter(structure);
+    return new MainFactory().createStructureFactory().getClassConstructorParameter(structure);
 }
 
 export function createClassMethod(structure: structures.ClassMethodStructure) {
-    return new StructureFactory().getClassMethod(structure);
+    return new MainFactory().createStructureFactory().getClassMethod(structure);
 }
 
 export function createClassMethodParameter(structure: structures.ClassMethodParameterStructure) {
-    return new StructureFactory().getClassMethodParameter(structure);
+    return new MainFactory().createStructureFactory().getClassMethodParameter(structure);
 }
 
 export function createClassProperty(structure: structures.ClassPropertyStructure) {
-    return new StructureFactory().getClassProperty(structure);
+    return new MainFactory().createStructureFactory().getClassProperty(structure);
 }
 
 export function createClassStaticMethod(structure: structures.ClassStaticMethodStructure) {
-    return new StructureFactory().getClassStaticMethod(structure);
+    return new MainFactory().createStructureFactory().getClassStaticMethod(structure);
 }
 
 export function createClassStaticMethodParameter(structure: structures.ClassStaticMethodParameterStructure) {
-    return new StructureFactory().getClassStaticMethodParameter(structure);
+    return new MainFactory().createStructureFactory().getClassStaticMethodParameter(structure);
 }
 
 export function createClassStaticProperty(structure: structures.ClassStaticPropertyStructure) {
-    return new StructureFactory().getClassStaticProperty(structure);
+    return new MainFactory().createStructureFactory().getClassStaticProperty(structure);
 }
 
 export function createDecorator(structure: structures.DecoratorStructure) {
-    return new StructureFactory().getDecorator(structure);
+    return new MainFactory().createStructureFactory().getDecorator(structure);
 }
 
 export function createEnum(structure: structures.EnumStructure) {
-    return new StructureFactory().getEnum(structure);
+    return new MainFactory().createStructureFactory().getEnum(structure);
 }
 
 export function createEnumMember(structure: structures.EnumMemberStructure) {
-    return new StructureFactory().getEnumMember(structure);
+    return new MainFactory().createStructureFactory().getEnumMember(structure);
 }
 
 export function createFile(structure: structures.FileStructure = {}) {
-    return new StructureFactory().getFile(structure);
+    return new MainFactory().createStructureFactory().getFile(structure);
 }
 
 export function createFunction(structure: structures.FunctionStructure) {
-    return new StructureFactory().getFunction(structure);
+    return new MainFactory().createStructureFactory().getFunction(structure);
 }
 
 export function createFunctionParameter(structure: structures.FunctionParameterStructure) {
-    return new StructureFactory().getFunctionParameter(structure);
+    return new MainFactory().createStructureFactory().getFunctionParameter(structure);
 }
 
 export function createImport(structure: structures.ImportStructure) {
-    return new StructureFactory().getImport(structure);
+    return new MainFactory().createStructureFactory().getImport(structure);
 }
 
 export function createIndexSignature(structure: structures.IndexSignatureStructure) {
-    return new StructureFactory().getIndexSignature(structure);
+    return new MainFactory().createStructureFactory().getIndexSignature(structure);
 }
 
 export function createInterface(structure: structures.InterfaceStructure) {
-    return new StructureFactory().getInterface(structure);
+    return new MainFactory().createStructureFactory().getInterface(structure);
 }
 
 export function createInterfaceMethod(structure: structures.InterfaceMethodStructure) {
-    return new StructureFactory().getInterfaceMethod(structure);
+    return new MainFactory().createStructureFactory().getInterfaceMethod(structure);
 }
 
 export function createInterfaceMethodParameter(structure: structures.InterfaceMethodParameterStructure) {
-    return new StructureFactory().getInterfaceMethodParameter(structure);
+    return new MainFactory().createStructureFactory().getInterfaceMethodParameter(structure);
 }
 
 export function createInterfaceProperty(structure: structures.InterfacePropertyStructure) {
-    return new StructureFactory().getInterfaceProperty(structure);
+    return new MainFactory().createStructureFactory().getInterfaceProperty(structure);
 }
 
 export function createNamespace(structure: structures.NamespaceStructure) {
-    return new StructureFactory().getNamespace(structure);
+    return new MainFactory().createStructureFactory().getNamespace(structure);
 }
 
 export function createReExport(structure: structures.ReExportStructure) {
-    return new StructureFactory().getReExport(structure);
+    return new MainFactory().createStructureFactory().getReExport(structure);
 }
 
 export function createType(text: string) {
-    return new StructureFactory().getTypeFromText(text);
+    return new MainFactory().createStructureFactory().getTypeFromText(text);
 }
 
 export function createTypeAlias(structure: structures.TypeAliasStructure) {
-    return new StructureFactory().getTypeAlias(structure);
+    return new MainFactory().createStructureFactory().getTypeAlias(structure);
 }
 
 export function createTypeParameter(structure: structures.TypeParameterStructure) {
-    return new StructureFactory().getTypeParameter(structure);
+    return new MainFactory().createStructureFactory().getTypeParameter(structure);
 }
 
 export function createNamedImportPart(structure: structures.NamedImportPartStructure) {
-    return new StructureFactory().getNamedImportPart(structure);
+    return new MainFactory().createStructureFactory().getNamedImportPart(structure);
 }
 
 export function createVariable(structure: structures.VariableStructure) {
-    return new StructureFactory().getVariable(structure);
+    return new MainFactory().createStructureFactory().getVariable(structure);
 }
