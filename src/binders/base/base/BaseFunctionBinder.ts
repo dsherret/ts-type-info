@@ -43,7 +43,7 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         def.userDefinedTypeGuard = this.getUserDefinedTypeGuard();
 
         if (def.userDefinedTypeGuard != null) {
-            def.returnType.text = (def.userDefinedTypeGuard.parameterName || "this") + " is " + def.userDefinedTypeGuard.type.text;
+            def.returnType._text = (def.userDefinedTypeGuard.parameterName || "this") + " is " + def.userDefinedTypeGuard.type.text;
         }
     }
 }

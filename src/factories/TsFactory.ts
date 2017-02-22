@@ -126,16 +126,7 @@ export class TsFactory {
     }
 
     getTypeFromTypeNode(node: TsTypeNode) {
-        const definition = bindToDefinition(new binders.TsTypeBinder(this, node.getType(), node), new definitions.TypeDefinition());
-        this.createdTypesWithDefinition.push({
-            type: node.getType(),
-            definition
-        });
-        return definition;
-    }
-
-    getTypeFromOnlyTypeNode(node: TsTypeNode) {
-        return ;
+        return this.getType(node.getType(), node);
     }
 
     getType(type: TsType, node: TsTypeNode | null) {

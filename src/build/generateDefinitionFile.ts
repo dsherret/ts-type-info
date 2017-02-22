@@ -1,6 +1,6 @@
 ﻿import * as path from "path";
 import * as fs from "fs";
-import {getInfoFromFiles, GlobalDefinition, ModuledDefinition, Options} from "./../main";
+import {getInfoFromFiles, GlobalDefinition, ModuledDefinition, Options, BaseExpressionDefinition} from "./../main";
 
 export function generateDefinitionFile() {
     const result = getInfoFromFiles([
@@ -36,6 +36,9 @@ function removeInternalProperties(result: GlobalDefinition) {
 
     const optionsInterface = result.getFile("options.ts")!.getInterface(nameof<Options>())!;
     optionsInterface.properties = optionsInterface.properties.filter(p => p.name !== nameof<Options>(o => o.getTypesFromTypeNodes));
+
+    const baseExpressionDefinition = result.getFile("BaseExpressionDefinition.ts")!.getInterface(nameof(BaseExpressionDefinition))!;
+    baseExpressionDefinition.properties = baseExpressionDefinition.properties.filter(p => p.name !== nameof<BaseExpressionDefinition>(t => t._text));
 }
 
 function fixSetType(result: GlobalDefinition) {

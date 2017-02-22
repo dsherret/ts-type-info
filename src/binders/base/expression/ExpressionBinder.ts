@@ -9,6 +9,6 @@ export abstract class ExpressionBinder {
 
     bind(def: ExpressionDefinition) {
         this.baseDefinitionBinder.bind(def);
-        def.text = this.getText();
+        def._text = this.getText();
     }
 }

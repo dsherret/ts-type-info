@@ -24,6 +24,8 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
 
     setUserDefinedTypeGuard(structure: UserDefinedTypeGuardStructure) {
         this.userDefinedTypeGuard = new MainFactory().createStructureFactory().getUserDefinedTypeGuard(structure);
+        this.returnType = new MainFactory().createStructureFactory().getTypeFromText("any");
+        this.returnType._text = (this.userDefinedTypeGuard!.parameterName || "this") + " is " + this.userDefinedTypeGuard!.type.text;
         return this;
     }
 

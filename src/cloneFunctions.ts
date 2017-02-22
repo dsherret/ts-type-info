@@ -17,7 +17,7 @@ export function cloneTypeDefinition(definition: TypeDefinition) {
 export function fillTypeDefinition(from: TypeDefinition, to: TypeDefinition) {
     fillBaseTypeDefinition(from, to);
 
-    to.callSignatures = []
+    to.callSignatures = [];
     from.callSignatures.forEach(val => {
         to.callSignatures.push(val);
     });
@@ -40,27 +40,27 @@ export function fillBaseTypeDefinition(from: BaseTypeDefinition, to: BaseTypeDef
     else {
         to.arrayElementType = cloneTypeDefinition(from.arrayElementType);
     }
-    to.intersectionTypes = []
+    to.intersectionTypes = [];
     from.intersectionTypes.forEach(val => {
         to.intersectionTypes.push(cloneTypeDefinition(val));
     });
-    to.unionTypes = []
+    to.unionTypes = [];
     from.unionTypes.forEach(val => {
         to.unionTypes.push(cloneTypeDefinition(val));
     });
-    to.definitions = []
+    to.definitions = [];
     from.definitions.forEach(val => {
         to.definitions.push(val);
     });
-    to.properties = []
+    to.properties = [];
     from.properties.forEach(val => {
         to.properties.push(val);
     });
-    to.typeArguments = []
+    to.typeArguments = [];
     from.typeArguments.forEach(val => {
         to.typeArguments.push(cloneTypeDefinition(val));
     });
-    to.text = from.text;
+    to._text = from._text;
 }
 
 export function cloneBaseExpressionDefinition(definition: BaseExpressionDefinition) {
@@ -73,7 +73,7 @@ export function cloneBaseExpressionDefinition(definition: BaseExpressionDefiniti
 export function fillBaseExpressionDefinition(from: BaseExpressionDefinition, to: BaseExpressionDefinition) {
     fillBaseDefinition(from, to);
 
-    to.text = from.text;
+    to._text = from._text;
 }
 
 export function cloneBaseDefinition(definition: BaseDefinition) {

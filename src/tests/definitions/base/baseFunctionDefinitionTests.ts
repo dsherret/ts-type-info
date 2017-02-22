@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import {expect} from "chai";
 import {FunctionDefinition} from "./../../../definitions";
-import {runCallSignatureDefinitionTests} from "./../../testHelpers";
+import {runCallSignatureDefinitionTests, runTypeDefinitionTests} from "./../../testHelpers";
 
 describe("BaseFunctionDefinition", () => {
     describe("#addCallSignature()", () => {
@@ -49,6 +49,9 @@ describe("BaseFunctionDefinition", () => {
             });
             expect(f.userDefinedTypeGuard!.parameterName).to.equal("paramname");
             expect(f.userDefinedTypeGuard!.type.text).to.equal("BaseDefinition");
+            runTypeDefinitionTests(f.returnType, {
+                text: "paramname is BaseDefinition"
+            });
         });
 
         it("should create a user defined type guard without a parameter name that has the this type", () => {
@@ -58,6 +61,9 @@ describe("BaseFunctionDefinition", () => {
             });
             expect(f.userDefinedTypeGuard!.parameterName).to.equal("this");
             expect(f.userDefinedTypeGuard!.type.text).to.equal("BaseDefinition");
+            runTypeDefinitionTests(f.returnType, {
+                text: "this is BaseDefinition"
+            });
         });
     });
 });

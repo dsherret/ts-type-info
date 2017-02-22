@@ -20,7 +20,7 @@ export abstract class BaseDefinition {
         Object.defineProperty(this, nameof<BaseDefinition>(d => d.__uniqueID), {
             configurable: false,
             enumerable: false,
-            writable: false,
+            writable: true,
             value: ++BaseDefinition._uniqueID
         });
     }
