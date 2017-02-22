@@ -123,8 +123,10 @@ abstract class MyClass {
 
 ### Full Examples
 
+* [TsStateTestGenerator](https://github.com/dsherret/ts-state-test-generator) - Code generates functions for testing the state of objects. I used this in this ts-type-info and was able to discover a bunch of unreported bugs. I also no longer have to maintain a large portion of the project because the code is automatically generated for me. I highly recommend this.
+* [TsCloneableGenerator](https://github.com/dsherret/ts-cloneable-generator) - Code generates functions for cloning and filling objects.
+* [TsObjectCreate](https://github.com/dsherret/ts-object-create) - Code generates functions for creating objects with their types.
 * [Server Bridge](https://github.com/dsherret/server-bridge) - Automatically generates client side code to communicate with the server from the server side code.
-* [TsObjectCreate](https://github.com/dsherret/ts-object-create) - Code generation that writes functions for creating objects with their types.
 
 ## Include tsNodes
 
