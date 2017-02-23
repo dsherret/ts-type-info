@@ -23,6 +23,23 @@ export class TypeDefinition extends BaseTypeDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.callSignatures, searchFunction);
     }
 
+    addUnionType(text: string) {
+        const structureFactory = new MainFactory().createStructureFactory();
+        const newDefinition = structureFactory.getTypeFromText(text);
+
+        if (this.unionTypes.length > 0) {
+            this.unionTypes.push(newDefinition);
+            this._text += ` | ${newDefinition.text}`;
+        }
+        else {
+            const cloneDefinition = this.clone();
+            const emptyDefinition = new TypeDefinition();
+            fillTypeDefinition(emptyDefinition, this);
+            this.unionTypes.push(cloneDefinition, newDefinition);
+            this._text = `${cloneDefinition.text} | ${newDefinition.text}`;
+        }
+    }
+
     clone() {
         return cloneTypeDefinition(this);
     }
