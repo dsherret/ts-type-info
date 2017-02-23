@@ -93,10 +93,10 @@ class MyClass2 {
                 parameterName: "def",
                 type: "MyClass & MyClass2"
             }
-        }, {
+            }, {
             name: "myGeneratorFunction",
             isGenerator: true,
-            returnType: { text: "IterableIterator<string>" }
+            returnType: { text: `IterableIterator<"test">` }
         }],
         classes: [{
             name: "MyClass"

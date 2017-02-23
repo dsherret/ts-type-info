@@ -1,6 +1,6 @@
 {
   "name": "ts-type-info",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "Reflection and code generation in TypeScript.",
   "main": "dist/main.js",
   "typings": "ts-type-info.d.ts",
@@ -29,7 +29,7 @@
   "dependencies": {
     "code-block-writer": "^4.0.0",
     "tmp": "0.0.28",
-    "typescript": "2.0.3"
+    "typescript": "^2.1.4"
   },
   "devDependencies": {
     "coveralls": "^2.11.6",

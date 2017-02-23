@@ -28,7 +28,7 @@ export class TsType extends TsSourceFileChild {
         try {
             text = this.typeToStringWriter.getString(this);
         } catch (ex) {
-            Logger.log(ex);
+            Logger.warn(ex);
         }
 
         return text || this.getTypeCheckerTypeText();
@@ -116,12 +116,8 @@ export class TsType extends TsSourceFileChild {
         return (this.type.flags & ts.TypeFlags.Enum) !== 0;
     }
 
-    isThisType() {
-        return (this.type.flags & ts.TypeFlags.ThisType) !== 0;
-    }
-
     isTupleType() {
-        return (this.type.flags & ts.TypeFlags.Tuple) !== 0;
+        return (this.getObjectFlags() & ts.ObjectFlags.Tuple) !== 0;
     }
 
     isIntersectionType() {
@@ -147,23 +143,27 @@ export class TsType extends TsSourceFileChild {
     }
 
     isAnonymousType() {
-        return (this.type.flags & ts.TypeFlags.Anonymous) !== 0;
+        return (this.getObjectFlags() & ts.ObjectFlags.Anonymous) !== 0;
     }
 
     isReferenceType() {
-        return (this.type.flags & ts.TypeFlags.Reference) !== 0;
+        return (this.getObjectFlags() & ts.ObjectFlags.Reference) !== 0;
     }
 
     isClassType() {
-        return (this.type.flags & ts.TypeFlags.Class) !== 0;
+        return (this.getObjectFlags() & ts.ObjectFlags.Class) !== 0;
     }
 
     isInterfaceType() {
-        return (this.type.flags & ts.TypeFlags.Interface) !== 0;
+        return (this.getObjectFlags() & ts.ObjectFlags.Interface) !== 0;
     }
 
     isMainTypeAliasType() {
         return this.node != null && this.node.kind === ts.SyntaxKind.TypeAliasDeclaration && this.typeChecker.getTypeAtLocation(this.node) === this.type;
+    }
+
+    private getObjectFlags() {
+        return (this.type as ts.ObjectType).objectFlags || 0;
     }
 
     private getArrayTypeArgument() {

@@ -1,6 +1,7 @@
 import * as assert from "assert";
 import {ParameteredTestStructures, ParameterTestStructures, BaseClassMethodParameterTestStructure} from "./../../testStructures";
 import {ParameteredDefinitions, ParameterDefinitions} from "./../../../../definitions";
+import {ensureNotNull} from "./../../ensureNotNull";
 
 export function runParameteredDefinitionTests(
     runParameterDefinitionTests: (definition: ParameterDefinitions, structure: ParameterTestStructures) => void,
@@ -17,7 +18,9 @@ export function runParameteredDefinitionTests(
         // todo: why do I need to do this madness?
         let parameters = structure.parameters as any as BaseClassMethodParameterTestStructure[];
         parameters.forEach((param, i) => {
-            runParameterDefinitionTests(definition.parameters[i], param);
+            ensureNotNull(definition.parameters[i], () => {
+                runParameterDefinitionTests(definition.parameters[i], param);
+            });
         });
     });
 }

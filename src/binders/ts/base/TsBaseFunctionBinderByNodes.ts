@@ -13,25 +13,34 @@ import {TsDocumentationedBinder} from "./TsDocumentationedBinder";
 
 export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
     private readonly node: TsNode;
+    private readonly factory: TsFactory;
 
     constructor(
-        private readonly factory: TsFactory,
-        readonly nodes: TsNode[],
+        factory: TsFactory,
+        nodes: TsNode[],
         paramDefinition: BaseParameterDefinitionConstructor<ParameterType>,
         paramBinder: TsParameterBinderByNodeConstructor<ParameterType>
     ) {
+        // use the first node for ambient declarations (where there is no implementation signature)
+        let node: TsNode;
+        if (nodes.length > 1 && nodes[0].isAmbient())
+            node = nodes[0];
+        else
+            node = nodes[nodes.length - 1];
+
         super(
             new TsBaseDefinitionBinder(),
-            new TsNamedBinderByNode(nodes[nodes.length - 1]),
-            new TsTypeParameteredBinderByNode(factory, nodes[nodes.length - 1]),
-            new TsParameteredBinderByNode(factory, nodes[nodes.length - 1], paramDefinition, paramBinder),
-            new TsReturnTypedBinderByNode(factory, nodes[nodes.length - 1]),
-            new TsNodedBinder(factory, nodes[nodes.length - 1]),
+            new TsNamedBinderByNode(node),
+            new TsTypeParameteredBinderByNode(factory, node),
+            new TsParameteredBinderByNode(factory, node, paramDefinition, paramBinder),
+            new TsReturnTypedBinderByNode(factory, node),
+            new TsNodedBinder(factory, node),
             new TsOverloadSignaturedBinder(factory, nodes),
-            new TsDocumentationedBinder(nodes[nodes.length - 1])
+            new TsDocumentationedBinder(node)
         );
 
-        this.node = nodes[nodes.length - 1];
+        this.factory = factory;
+        this.node = node;
     }
 
     protected getIsGenerator() {

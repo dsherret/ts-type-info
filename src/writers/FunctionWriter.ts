@@ -27,7 +27,11 @@ export class FunctionWriter extends BaseDefinitionWriter<FunctionDefinition> {
     }
 
     private writeImplementation(def: FunctionDefinition, flags: WriteFlags) {
-        const showImplementation = def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0;
+        // todo: look at this more
+        if (def.overloadSignatures.length > 0 && def.isAmbient)
+            return;
+
+        const showImplementation = (def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0);
 
         if (showImplementation) {
             this.writeStartOfFunctionHeader(def, flags);

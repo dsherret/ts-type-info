@@ -42,6 +42,8 @@ class MyOtherClass<T> {
                         }],
                         allDefinitions: [{
                             name: "MyOtherClass"
+                        }, {
+                            name: "MyClass"
                         }]
                     }],
                     definitions: [],

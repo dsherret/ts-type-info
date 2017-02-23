@@ -14,8 +14,12 @@ export abstract class BaseTypeDefinition extends BaseExpressionDefinition {
     text: string;
 
     getAllDefinitions(): ModuleMemberDefinitions[] {
-        const arraysOfDefinitions = [...this.unionTypes.map(t => t.getAllDefinitions()), ...this.intersectionTypes.map(t => t.getAllDefinitions())];
-        const definitions = [...arraysOfDefinitions.reduce((a, b) => a.concat(b), []), ...this.definitions];
+        const arraysOfDefinitions = [
+            ...this.unionTypes.map(t => t.getAllDefinitions()),
+            ...this.intersectionTypes.map(t => t.getAllDefinitions()),
+            ...this.typeArguments.map(t => t.getAllDefinitions()),
+            ... this.properties.map(p => p.type.getAllDefinitions())];
+        const definitions = [...this.definitions, ...arraysOfDefinitions.reduce((a, b) => a.concat(b), [])];
 
         if (this.arrayElementType != null) {
             definitions.push(...this.arrayElementType.definitions);

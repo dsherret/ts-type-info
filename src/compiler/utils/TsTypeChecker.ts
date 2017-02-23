@@ -90,7 +90,14 @@ export class TsTypeChecker {
     }
 
     getExportsOfModule(symbol: ts.Symbol) {
-        return this.typeChecker.getExportsOfModule(symbol);
+        // todo: look at this more
+        try {
+            return this.typeChecker.getExportsOfModule(symbol);
+        } catch (err) {
+            Logger.log("Silently ignored getExportsOfModule exception.");
+            Logger.log(err);
+            return [] as ts.Symbol[];
+        }
     }
 
     /* istanbul ignore next */

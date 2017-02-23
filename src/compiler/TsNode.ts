@@ -82,15 +82,15 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getClassConstructorParameterScope() {
-        const nodeFlags = this.node.flags;
+        const modifierFlags = this.getModifierFlags();
 
-        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+        if ((modifierFlags & ts.ModifierFlags.Private) !== 0) {
             return ClassConstructorParameterScope.Private;
         }
-        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Protected) !== 0) {
             return ClassConstructorParameterScope.Protected;
         }
-        else if ((nodeFlags & ts.NodeFlags.Public) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Public) !== 0) {
             return ClassConstructorParameterScope.Public;
         }
         else {
@@ -194,7 +194,7 @@ export class TsNode extends TsSourceFileChild {
 
     getReExportNamedExportNodes() {
         const exportDeclaration = this.node as ts.ExportDeclaration;
-        const exportClause = exportDeclaration.exportClause || {} as ts.NamedImports;
+        const exportClause = (exportDeclaration.exportClause || {}) as ts.NamedImports;
         return (exportClause.elements || []).map(e => this.createNode(e));
     }
 
@@ -234,12 +234,12 @@ export class TsNode extends TsSourceFileChild {
     }
 
     getScope() {
-        const nodeFlags = this.node.flags;
+        const modifierFlags = this.getModifierFlags();
 
-        if ((nodeFlags & ts.NodeFlags.Private) !== 0) {
+        if ((modifierFlags & ts.ModifierFlags.Private) !== 0) {
             return Scope.Private;
         }
-        else if ((nodeFlags & ts.NodeFlags.Protected) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Protected) !== 0) {
             return Scope.Protected;
         }
         else {
@@ -328,7 +328,7 @@ export class TsNode extends TsSourceFileChild {
                 }
             }
         } catch (ex) {
-            Logger.log(ex);
+            Logger.warn(ex);
         }
 
         return "";
@@ -389,12 +389,10 @@ export class TsNode extends TsSourceFileChild {
     }
 
     isAmbient() {
-        if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias()) {
+        if (this.hasDeclareKeyword() || this.isInterface() || this.isTypeAlias())
             return true;
-        }
-        else {
+        else
             return this.isAnyParentAmbient();
-        }
     }
 
     isClass() {
@@ -595,6 +593,10 @@ export class TsNode extends TsSourceFileChild {
         return propertyName != null ? propertyName.text : null;
     }
 
+    private getModifierFlags() {
+        return ts.getCombinedModifierFlags(this.node);
+    }
+
     private getTypeAtLocationByNode(node: ts.Node): TsType | null {
         const type = this.typeChecker.getTypeAtLocation(node);
         return type == null ? null : this.createType(type, node);
@@ -660,14 +662,14 @@ export class TsNode extends TsSourceFileChild {
             if (this.isNotDisallowedNode(node)) {
                 if (node.kind === ts.SyntaxKind.VariableStatement) {
                     const declarationList = (node as ts.VariableStatement).declarationList;
-                    node = declarationList.declarations[0];
 
-                    if (declarationList.declarations.length > 1) {
-                        Logger.warn(`Unknown situation where declaration list was greater than 1 for ${node.getText(this.sourceFile)}`);
+                    for (const declaredNode of declarationList.declarations) {
+                        callback(this.createNode(declaredNode));
                     }
                 }
-
-                callback(this.createNode(node));
+                else {
+                    callback(this.createNode(node));
+                }
             }
         });
     }
@@ -686,16 +688,19 @@ export class TsNode extends TsSourceFileChild {
 
     private isAnyParentAmbient() {
         let declaration = this.node.parent;
+        let pastDeclaration = declaration;
 
         while (declaration != null) {
-            if (declaration.flags & ts.NodeFlags.Ambient) {
+            const modifierFlags = ts.getCombinedModifierFlags(declaration);
+            if (modifierFlags & ts.ModifierFlags.Ambient)
                 return true;
-            }
 
+            pastDeclaration = declaration;
             declaration = declaration.parent;
         }
 
-        return false;
+        const sourceFile = pastDeclaration as ts.SourceFile;
+        return sourceFile != null && (sourceFile.isDeclarationFile || false);
     }
 
     private getArgumentsFromExpression(expression: ts.LeftHandSideExpression) {

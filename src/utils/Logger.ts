@@ -48,6 +48,7 @@
     }
 
     private static logWithFunction(message: string, func: (msg: string) => void) {
+        // todo: if an error is passed in here, log the trace property
         if (this.isEnabled)
             func(`[ts-type-info]: ${message}`);
     }
