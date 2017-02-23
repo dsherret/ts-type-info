@@ -38,9 +38,8 @@ export class TsModuledBinder extends ModuledBinder {
                         childNode.isExportAssignment() ||
                         childNode.isImport();
 
-                    if (!isKnownTypeToIgnore) {
+                    if (!isKnownTypeToIgnore)
                         Logger.warn(`Node is not handled for: ${childNode.getName()}`);
-                    }
                 }
                 else {
                     members.push(def);

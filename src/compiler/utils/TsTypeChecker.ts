@@ -26,34 +26,27 @@ export class TsTypeChecker {
     }
 
     getDeclarationFromSymbol(symbol: ts.Symbol) {
-        if (symbol.valueDeclaration != null) {
+        if (symbol.valueDeclaration != null)
             return symbol.valueDeclaration;
-        }
-        else {
-            const declarations = symbol.getDeclarations();
 
-            /* istanbul ignore next */
-            if (declarations == null) {
-                throw new Error(`Declaration should not be null for symbol: ${symbol.name}`);
-            }
-            else if (declarations.length > 1) {
-                Logger.warn(`Not implemented. Symbol has more than one declaration: ${symbol.name}`);
-            }
-            else if (declarations.length === 0) {
-                throw new Error(`Declaration length should not be 0 for symbol: ${symbol.name}`);
-            }
+        const declarations = symbol.getDeclarations();
 
-            return declarations[0];
-        }
+        /* istanbul ignore next */
+        if (declarations == null)
+            throw new Error(`Declaration should not be null for symbol: ${symbol.name}`);
+        else if (declarations.length > 1)
+            Logger.warn(`Not implemented. Symbol has more than one declaration: ${symbol.name}`);
+        else if (declarations.length === 0)
+            throw new Error(`Declaration length should not be 0 for symbol: ${symbol.name}`);
+
+        return declarations[0];
     }
 
     getAliasedSymbol(symbol: ts.Symbol): ts.Symbol | null {
-        if (this.symbolHasFlag(symbol, ts.SymbolFlags.Alias)) {
+        if (this.symbolHasFlag(symbol, ts.SymbolFlags.Alias))
             return this.typeChecker.getAliasedSymbol(symbol);
-        }
-        else {
+        else
             return null;
-        }
     }
 
     getLocalSymbolFromNode(node: ts.Node) {
@@ -61,20 +54,18 @@ export class TsTypeChecker {
     }
 
     getLocalSymbolsFromNode(node: ts.Node) {
-        const locals = (node as any).locals as { [name: string]: ts.Symbol };
+        const locals = (node as any).locals as ts.Map<ts.Symbol> | undefined;
 
         /* istanbul ignore if */
-        if (locals == null) {
+        if (locals == null)
             return [] as ts.Symbol[];
-        }
-        else {
-            return Object.keys(locals).map(key => {
-                const symbol = locals[key];
-                const exportSymbol = (symbol as any).exportSymbol as ts.Symbol;
 
-                return exportSymbol || symbol;
-            });
-        }
+        const exportSymbols: ts.Symbol[] = [];
+        locals.forEach(value => {
+            const exportSymbol = (value as any).exportSymbol as ts.Symbol;
+            exportSymbols.push(exportSymbol || value);
+        });
+        return exportSymbols;
     }
 
     getReturnTypeOfNode(node: ts.Node) {
@@ -116,17 +107,16 @@ export class TsTypeChecker {
 
     isSymbolDefaultExportOfFile(symbol: ts.Symbol, file: ts.SourceFile) {
         const fileSymbol = this.getSymbolAtLocation(file);
-        let isDefaultExportOfFile = false;
 
-        if (fileSymbol != null) {
-            const defaultExport = fileSymbol.exports!.get("default");
+        if (fileSymbol == null)
+            return false;
 
-            if (defaultExport != null) {
-                isDefaultExportOfFile = defaultExport === symbol || this.getAliasedSymbol(defaultExport) === symbol;
-            }
-        }
+        const defaultExport = fileSymbol.exports!.get("default");
 
-        return isDefaultExportOfFile;
+        if (defaultExport == null)
+            return false;
+
+        return defaultExport === symbol || this.getAliasedSymbol(defaultExport) === symbol;
     }
 
     typeToString(type: ts.Type, node: ts.Node | null, formatFlags: ts.TypeFormatFlags) {

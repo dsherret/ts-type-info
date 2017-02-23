@@ -27,9 +27,8 @@ export class TsNode extends TsSourceFileChild {
     constructor(opts: TsNodeOptions, private readonly originalSymbol?: TsSymbol | null) {
         super(opts);
 
-        if (opts.node == null) {
+        if (opts.node == null)
             throw new Error(`Passed in ${nameof(opts)}.${nameof(opts.node)} cannot be null.`);
-        }
 
         this.node = opts.node;
     }
@@ -38,15 +37,15 @@ export class TsNode extends TsSourceFileChild {
         let name: string | undefined;
         const symbol = this.tsSymbol;
 
-        if (symbol != null) {
-            name = symbol.getName();
+        if (symbol == null)
+            return "";
 
-            if (name === "default") {
-                const localSymbol = this.getLocalSymbol();
-                if (localSymbol != null) {
-                    name = localSymbol.getName();
-                }
-            }
+        name = symbol.getName();
+
+        if (name === "default") {
+            const localSymbol = this.getLocalSymbol();
+            if (localSymbol != null)
+                name = localSymbol.getName();
         }
 
         return name || "";
@@ -73,29 +72,23 @@ export class TsNode extends TsSourceFileChild {
     }
 
     forEachChild(callback: (node: TsNode) => void) {
-        if (this.isNamespace()) {
+        if (this.isNamespace())
             this.forEachLocalSymbol(callback);
-        }
-        else {
+        else
             this.forEachChildNode(callback);
-        }
     }
 
     getClassConstructorParameterScope() {
         const modifierFlags = this.getModifierFlags();
 
-        if ((modifierFlags & ts.ModifierFlags.Private) !== 0) {
+        if ((modifierFlags & ts.ModifierFlags.Private) !== 0)
             return ClassConstructorParameterScope.Private;
-        }
-        else if ((modifierFlags & ts.ModifierFlags.Protected) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Protected) !== 0)
             return ClassConstructorParameterScope.Protected;
-        }
-        else if ((modifierFlags & ts.ModifierFlags.Public) !== 0) {
+        else if ((modifierFlags & ts.ModifierFlags.Public) !== 0)
             return ClassConstructorParameterScope.Public;
-        }
-        else {
+        else
             return ClassConstructorParameterScope.None;
-        }
     }
 
     getConstantValue() {
@@ -130,12 +123,10 @@ export class TsNode extends TsSourceFileChild {
         const importDeclaration = this.node as ts.ImportDeclaration;
         const clause = importDeclaration.importClause;
 
-        if (clause != null && clause.name != null) {
+        if (clause != null && clause.name != null)
             return this.createNode(clause.name);
-        }
-        else {
+        else
             return null;
-        }
     }
 
     getExpression() {
@@ -156,12 +147,10 @@ export class TsNode extends TsSourceFileChild {
     getModuleSpecifierText() {
         const importDeclaration = this.node as ts.ImportDeclaration;
 
-        if (importDeclaration.moduleSpecifier != null) {
+        if (importDeclaration.moduleSpecifier != null)
             return (importDeclaration.moduleSpecifier.getText() || "").replace(/["']/g, "");
-        }
-        else {
+        else
             return null;
-        }
     }
 
     getFileNameOfModuleSpecifier() {
@@ -659,17 +648,18 @@ export class TsNode extends TsSourceFileChild {
 
     private forEachChildNode(callback: (node: TsNode) => void) {
         ts.forEachChild(this.node, node => {
-            if (this.isNotDisallowedNode(node)) {
-                if (node.kind === ts.SyntaxKind.VariableStatement) {
-                    const declarationList = (node as ts.VariableStatement).declarationList;
+            if (!this.isNotDisallowedNode(node))
+                return;
 
-                    for (const declaredNode of declarationList.declarations) {
-                        callback(this.createNode(declaredNode));
-                    }
+            if (node.kind === ts.SyntaxKind.VariableStatement) {
+                const declarationList = (node as ts.VariableStatement).declarationList;
+
+                for (const declaredNode of declarationList.declarations) {
+                    callback(this.createNode(declaredNode));
                 }
-                else {
-                    callback(this.createNode(node));
-                }
+            }
+            else {
+                callback(this.createNode(node));
             }
         });
     }

@@ -31,7 +31,7 @@ namespace MyNamespace {
 export namespace MyExportedNamespace {
 }`;
 
-    const def = getInfoFromString(code);
+    const def = getInfoFromString(code, { showDebugMessages: true });
 
     runFileDefinitionTests(def, {
         namespaces: [{

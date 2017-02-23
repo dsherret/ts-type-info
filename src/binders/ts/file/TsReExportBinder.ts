@@ -1,5 +1,6 @@
-﻿import {TsFactory} from "./../../../factories";
-import {TsNode, TsSymbol, NameKeyUtils} from "./../../../compiler";
+﻿import {StarImportPartDefinition} from "./../../../definitions";
+import {TsFactory} from "./../../../factories";
+import {TsNode, NameKeyUtils} from "./../../../compiler";
 import {ReExportBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsNodedBinder} from "./../base";
 
@@ -30,7 +31,11 @@ export class TsReExportBinder extends ReExportBinder {
 
     getStarExports() {
         const moduleSymbol = this.node.getModuleSpecifierSymbol();
-        const starExportSymbols = moduleSymbol == null ? ({} as { [nameKey: string]: TsSymbol; }) : moduleSymbol.getExportSymbolsByNameKeys();
+
+        if (moduleSymbol == null)
+            return [] as StarImportPartDefinition[];
+
+        const starExportSymbols = moduleSymbol.getExportSymbolsByNameKeys();
 
         return Object.keys(starExportSymbols).filter(nameKey => NameKeyUtils.getNameFromNameKey(nameKey) !== "default").map(nameKey => {
             return this.factory.getStarImportPart(NameKeyUtils.getNameFromNameKey(nameKey), starExportSymbols[nameKey]);

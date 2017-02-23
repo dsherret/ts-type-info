@@ -32,17 +32,26 @@ export class TsSymbol extends TsSourceFileChild {
     }
 
     getExportSymbols() {
-        return Object.keys(this.symbol.exports).map(memberName => {
-            const memberSymbol = this.symbol.exports!.get(memberName);
-            return this.createSymbol(memberSymbol);
+        const symbols: TsSymbol[] = [];
+
+        if (this.symbol.exports == null)
+            return symbols;
+
+        this.symbol.exports.forEach(symbol => {
+            symbols.push(this.createSymbol(symbol));
         });
+
+        return symbols;
     }
 
     getExportSymbolsByNameKeys() {
         const exportSymbols: { [nameKey: string]: TsSymbol; } = {};
 
-        Object.keys(this.symbol.exports).forEach(memberName => {
-            const symbol = this.createSymbol(this.symbol.exports!.get(memberName));
+        if (this.symbol.exports == null)
+            return exportSymbols;
+
+        this.symbol.exports.forEach((value, memberName) => {
+            const symbol = this.createSymbol(value);
             const isStarExport = memberName === "__export";
 
             if (isStarExport) {
@@ -69,9 +78,8 @@ export class TsSymbol extends TsSourceFileChild {
         this.typeChecker.getExportsOfModule(this.symbol).map(symbol => this.createSymbol(symbol)).forEach(symbol => {
             const name = symbol.getName();
 
-            if (symbol.isAlias()) {
+            if (symbol.isAlias())
                 symbol = symbol.getAliasSymbol()!;
-            }
 
             symbolsByName[name] = symbol;
         });
@@ -82,12 +90,10 @@ export class TsSymbol extends TsSourceFileChild {
     getOnlyNode(): TsNode {
         const nodes = this.getNodes();
 
-        if (nodes.length === 0) {
+        if (nodes.length === 0)
             throw new Error(`Symbol "${this.getName()}" was expected to have 1 node, but it had none.`);
-        }
-        else if (nodes.length > 1) {
+        else if (nodes.length > 1)
             Logger.log(`Symbol "${this.getName()}" was expected to have 1 node, but it had ${nodes.length}.`);
-        }
 
         return nodes[0];
     }
@@ -112,12 +118,10 @@ export class TsSymbol extends TsSourceFileChild {
     isExported() {
         const parentSymbol = this.getParentOfSymbol(this.symbol);
 
-        if (parentSymbol == null) {
+        if (parentSymbol == null)
             return this.isDefaultExport();
-        }
-        else {
+        else
             return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports.get(this.symbol.name) != null;
-        }
     }
 
     isExportStar() {

@@ -19,13 +19,10 @@ export class TsFileBinder extends FileBinder {
 
     getDefaultExportExpression() {
         const symbol = this.sourceFile.getDefaultExportSymbol();
-
-        if (symbol != null) {
-            return this.factory.getExpressionFromExportSymbol(symbol);
-        }
-        else {
+        if (symbol == null)
             return null;
-        }
+
+        return this.factory.getExpressionFromExportSymbol(symbol);
     }
 
     getImports() {
