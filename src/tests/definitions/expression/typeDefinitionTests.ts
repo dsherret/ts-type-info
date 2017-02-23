@@ -43,6 +43,54 @@ describe("TypeDefinition", () => {
         });
     });
 
+    describe("#addIntersectionType", () => {
+        describe("no existing intersection type", () => {
+            const def = createType("string");
+            def.addIntersectionType("number");
+            runTypeDefinitionTests(def, {
+                text: "string & number",
+                intersectionTypes: [{
+                    text: "string"
+                }, {
+                    text: "number"
+                }]
+            });
+        });
+
+        describe("existing intersection type", () => {
+            const def = createType("string & Date");
+            def.addIntersectionType("number");
+            runTypeDefinitionTests(def, {
+                text: "string & Date & number",
+                intersectionTypes: [{
+                    text: "string"
+                }, {
+                    text: "Date"
+                }, {
+                    text: "number"
+                }]
+            });
+        });
+
+        describe("existing union type", () => {
+            const def = createType("string | Date");
+            def.addIntersectionType("number");
+            runTypeDefinitionTests(def, {
+                text: "(string | Date) & number",
+                intersectionTypes: [{
+                    text: "string | Date",
+                    unionTypes: [{
+                        text: "string"
+                    }, {
+                        text: "Date"
+                    }]
+                }, {
+                    text: "number"
+                }]
+            });
+        });
+    });
+
     describe("#text", () => {
         const def = new TypeDefinition();
         def.text = "MyClass | MyOtherClass";
