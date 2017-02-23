@@ -33,7 +33,7 @@ export class TsSymbol extends TsSourceFileChild {
 
     getExportSymbols() {
         return Object.keys(this.symbol.exports).map(memberName => {
-            const memberSymbol = this.symbol.exports![memberName];
+            const memberSymbol = this.symbol.exports!.get(memberName);
             return this.createSymbol(memberSymbol);
         });
     }
@@ -42,7 +42,7 @@ export class TsSymbol extends TsSourceFileChild {
         const exportSymbols: { [nameKey: string]: TsSymbol; } = {};
 
         Object.keys(this.symbol.exports).forEach(memberName => {
-            const symbol = this.createSymbol(this.symbol.exports![memberName]);
+            const symbol = this.createSymbol(this.symbol.exports!.get(memberName));
             const isStarExport = memberName === "__export";
 
             if (isStarExport) {
@@ -56,7 +56,7 @@ export class TsSymbol extends TsSourceFileChild {
                 });
             }
             else {
-                exportSymbols[NameKeyUtils.getNameKeyFromName(memberName)] = this.createSymbol(this.symbol.exports![memberName]);
+                exportSymbols[NameKeyUtils.getNameKeyFromName(memberName)] = this.createSymbol(this.symbol.exports!.get(memberName));
             }
         });
 
@@ -116,7 +116,7 @@ export class TsSymbol extends TsSourceFileChild {
             return this.isDefaultExport();
         }
         else {
-            return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports[this.symbol.name] != null;
+            return parentSymbol != null && parentSymbol.exports != null && parentSymbol.exports.get(this.symbol.name) != null;
         }
     }
 

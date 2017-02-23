@@ -18,7 +18,7 @@ export class TsSourceFile extends TsBase {
 
     getDefaultExportSymbol(): TsSymbol | null {
         if (this.fileHasExports()) {
-            const defaultExportSymbol = this.symbol!.exports!["default"];
+            const defaultExportSymbol = this.symbol!.exports!.get("default");
 
             if (defaultExportSymbol != null) {
                 return this.createSymbol(defaultExportSymbol);

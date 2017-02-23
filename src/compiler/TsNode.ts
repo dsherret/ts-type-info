@@ -318,7 +318,7 @@ export class TsNode extends TsSourceFileChild {
 
         try {
             const fullText = node.getFullText();
-            const ranges = ts.getLeadingCommentRanges(fullText, 0);
+            const ranges = ts.getLeadingCommentRanges(fullText, 0) || [];
 
             for (const range of ranges) {
                 if (range.kind === ts.SyntaxKind.MultiLineCommentTrivia) {
