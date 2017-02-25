@@ -47,7 +47,8 @@ describe("multiple file definition tests", () => {
         functions: [{
             name: "MyReferenceFunction",
             isAmbient: true,
-            hasDeclareKeyword: true
+            hasDeclareKeyword: true,
+            overloadSignatures: [{}]
         }],
         typeAliases: [{
             name: "MyReferenceType",

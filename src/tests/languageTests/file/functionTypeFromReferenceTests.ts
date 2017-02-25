@@ -29,7 +29,11 @@ describe("function type from reference tests", () => {
             parameters: [{
                 name: "param",
                 type: {
-                    text: "number"
+                    text: "number | string",
+                    unionTypes: [
+                        { text: "number" },
+                        { text: "string" }
+                    ]
                 }
             }],
             overloadSignatures: [{

@@ -676,6 +676,7 @@ export class TsNode extends TsSourceFileChild {
         return node.kind !== ts.SyntaxKind.EndOfFileToken;
     }
 
+    @Memoize
     private isAnyParentAmbient() {
         let declaration = this.node.parent;
         let pastDeclaration = declaration;

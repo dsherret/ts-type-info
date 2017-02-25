@@ -44,7 +44,11 @@ declare module MyAmbientModule {
                     type: { text: "string" }
                 }]
             }],
-            parameters: []
+            parameters: [{
+                name: "str",
+                isOptional: true,
+                type: { text: "string" }
+            }]
         }],
         variables: [{
             name: "MyAmbientVariable",

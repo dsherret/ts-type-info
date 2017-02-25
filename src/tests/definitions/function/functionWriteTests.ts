@@ -77,8 +77,7 @@ export function myMultipleSignatures<T>(str?: string): string {
             it("should contain the function written out", () => {
                 const expected =
 `declare function myDeclareMultipleSignatures(): string;
-declare function myDeclareMultipleSignatures(str?: string): string;
-`;
+declare function myDeclareMultipleSignatures(str?: string): string;`;
                 assert.equal(file.functions[3].write(), expected);
             });
         });

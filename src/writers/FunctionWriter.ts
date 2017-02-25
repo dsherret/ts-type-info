@@ -34,7 +34,8 @@ export class FunctionWriter {
 
     write(def: FunctionDefinition | MethodDefinitions, flags: WriteFlags) {
         this.baseDefinitionWriter.writeWrap(def, () => {
-            const shouldWriteImplementation = def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0;
+            const shouldWriteImplementation = !(def as FunctionDefinition).isAmbient &&
+                (def.overloadSignatures.length === 0 || (flags & WriteFlags.HideFunctionImplementations) === 0);
 
             (def.overloadSignatures || []).forEach((s, i) => {
                 this.documentationedWriter.write(s);
@@ -46,10 +47,6 @@ export class FunctionWriter {
                 if (!isLast || shouldWriteImplementation)
                     this.writer.newLine();
             });
-
-            // todo: look at this more
-            if ((def as FunctionDefinition).isAmbient && def.overloadSignatures.length > 0)
-                return;
 
             if (shouldWriteImplementation) {
                 this.documentationedWriter.write(def);

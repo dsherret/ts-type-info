@@ -15,9 +15,8 @@ export class TsSymbol extends TsSourceFileChild {
     constructor(opts: TsSymbolOptions) {
         super(opts);
 
-        if (opts.symbol == null) {
+        if (opts.symbol == null)
             throw new Error("Passed in ts.Symbol cannot be null.");
-        }
 
         this.symbol = opts.symbol;
     }
