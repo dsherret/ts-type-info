@@ -6,7 +6,7 @@
 */
 
 import * as assert from "assert";
-import {BaseDefinition, FunctionBodyWriteableDefinition, NamedDefinition, OptionallyNamedDefinition, OrderableDefinition, OptionalDefinition, AbstractableDefinition, AmbientableDefinition, AsyncableDefinition, DocumentationedDefinition, BaseExpressionDefinition, CallSignatureParameterDefinition, CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition, ReadonlyableDefinition, TypedDefinition, BasePropertyDefinition, TypePropertyDefinition, TypeParameteredDefinition, ExportableDefinition, TypeAliasDefinition, DecoratorDefinition, ObjectPropertyDefinition, TypeFunctionParameterDefinition, TypeNodeDefinition, TypeDefinition, UserDefinedTypeGuardDefinition, BaseTypeDefinition, ExpressionDefinition, ThisTypedDefinition, DefaultExpressionedDefinition, DecoratableDefinition, BaseObjectPropertyDefinition, BaseParameterDefinition, ParameteredDefinition, ReturnTypedDefinition, OverloadSignaturedDefinition, BaseFunctionDefinition, EnumMemberDefinition, EnumDefinition, ScopedDefinition, BaseClassMethodParameterDefinition, BaseClassMethodDefinition, BaseClassPropertyDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceDefinition, ClassConstructorParameterDefinition, ClassConstructorDefinition, ClassMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodParameterDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition, ClassDefinition, FunctionParameterDefinition, FunctionDefinition, VariableDefinition, NamespaceDefinition, ModuledDefinition, StarImportPartDefinition, NamedImportPartDefinition, ReExportDefinition, DefaultImportPartDefinition, ImportDefinition, FileDefinition, GlobalDefinition, VariableDeclarationType, Scope, ClassConstructorParameterScope, ExportableDefinitions, ClassPropertyKind, NamespaceDeclarationType, ModuleMemberDefinitions} from "./../../definitions";
+import {BaseDefinition, FunctionBodyWriteableDefinition, NamedDefinition, OptionallyNamedDefinition, OrderableDefinition, OptionalDefinition, AbstractableDefinition, AmbientableDefinition, AsyncableDefinition, DocumentationedDefinition, BaseExpressionDefinition, CallSignatureParameterDefinition, CallSignatureDefinition, IndexSignatureDefinition, TypeParameterDefinition, ReadonlyableDefinition, TypedDefinition, BasePropertyDefinition, TypePropertyDefinition, TypeParameteredDefinition, ExportableDefinition, TypeAliasDefinition, DecoratorDefinition, ObjectPropertyDefinition, TypeFunctionParameterDefinition, TypeNodeDefinition, TypeDefinition, UserDefinedTypeGuardDefinition, BaseTypeDefinition, ExpressionDefinition, ThisTypedDefinition, DefaultExpressionedDefinition, DecoratableDefinition, BaseObjectPropertyDefinition, BaseParameterDefinition, ParameteredDefinition, ReturnTypedDefinition, OverloadSignaturedDefinition, UserDefinedTypeGuardedDefinition, BaseFunctionDefinition, EnumMemberDefinition, EnumDefinition, ScopedDefinition, BaseClassMethodParameterDefinition, BaseClassMethodDefinition, BaseClassPropertyDefinition, InterfaceMethodParameterDefinition, InterfaceMethodDefinition, InterfacePropertyDefinition, InterfaceDefinition, ClassConstructorParameterDefinition, ClassConstructorDefinition, ClassMethodParameterDefinition, ClassMethodDefinition, ClassPropertyDefinition, ClassStaticMethodParameterDefinition, ClassStaticMethodDefinition, ClassStaticPropertyDefinition, ClassDefinition, FunctionParameterDefinition, FunctionDefinition, VariableDefinition, NamespaceDefinition, ModuledDefinition, StarImportPartDefinition, NamedImportPartDefinition, ReExportDefinition, DefaultImportPartDefinition, ImportDefinition, FileDefinition, GlobalDefinition, VariableDeclarationType, Scope, ClassConstructorParameterScope, ExportableDefinitions, ClassPropertyKind, NamespaceDeclarationType, ModuleMemberDefinitions} from "./../../definitions";
 import {FunctionParameterStructure, ClassStaticMethodParameterStructure, ClassMethodParameterStructure, InterfaceMethodParameterStructure, BaseParameterStructure, BaseClassMethodParameterStructure, ObjectPropertyStructure, BaseStructure, OptionallyNamedStructure, OptionalStructure, TypedStructure, DefaultExpressionedStructure, DecoratableStructure, BaseObjectPropertyStructure, DecoratorStructure, BasePropertyStructure, NamedStructure, ReadonlyableStructure} from "./../../structures";
 
 export interface Assertions {
@@ -180,6 +180,7 @@ export class TestRunnerFactory {
     private readonly ParameteredDefinitionTestRunnerArgsCache = new TestRunnerArgsCache<ParameteredDefinitionTestRunner<any, any, any, any>>();
     private ReturnTypedDefinitionTestRunner: ReturnTypedDefinitionTestRunner;
     private OverloadSignaturedDefinitionTestRunner: OverloadSignaturedDefinitionTestRunner;
+    private UserDefinedTypeGuardedDefinitionTestRunner: UserDefinedTypeGuardedDefinitionTestRunner;
     private readonly BaseFunctionDefinitionTestRunnerArgsCache = new TestRunnerArgsCache<BaseFunctionDefinitionTestRunner<any, any, any, any>>();
     private EnumMemberDefinitionTestRunner: EnumMemberDefinitionTestRunner;
     private EnumDefinitionTestRunner: EnumDefinitionTestRunner;
@@ -736,6 +737,19 @@ export class TestRunnerFactory {
         return vOverloadSignaturedDefinitionTestRunner;
     }
 
+    getUserDefinedTypeGuardedDefinitionTestRunner() {
+        if (this.UserDefinedTypeGuardedDefinitionTestRunner != null) {
+            return this.UserDefinedTypeGuardedDefinitionTestRunner;
+        }
+
+        const vUserDefinedTypeGuardedDefinitionTestRunner = new UserDefinedTypeGuardedDefinitionTestRunner(this.assertions);
+        this.UserDefinedTypeGuardedDefinitionTestRunner = vUserDefinedTypeGuardedDefinitionTestRunner;
+
+        vUserDefinedTypeGuardedDefinitionTestRunner.initialize(this.getUserDefinedTypeGuardDefinitionTestRunner());
+
+        return vUserDefinedTypeGuardedDefinitionTestRunner;
+    }
+
     getBaseFunctionDefinitionTestRunner<ParameterType extends BaseParameterDefinition, ParameterStructureType, ParameterTypeExpected extends BaseParameterDefinitionTestStructure, ParameterStructureTypeExpected>(ParameterTypeTestRunner: TestRunner<ParameterType, ParameterTypeExpected>, ParameterStructureTypeTestRunner: TestRunner<ParameterStructureType, ParameterStructureTypeExpected>) {
         const args = [ParameterTypeTestRunner, ParameterStructureTypeTestRunner];
         const index = this.BaseFunctionDefinitionTestRunnerArgsCache.getIndex(args);
@@ -747,7 +761,7 @@ export class TestRunnerFactory {
         const vBaseFunctionDefinitionTestRunner = new BaseFunctionDefinitionTestRunner(this.assertions);
         this.BaseFunctionDefinitionTestRunnerArgsCache.addItem(vBaseFunctionDefinitionTestRunner, args);
 
-        vBaseFunctionDefinitionTestRunner.initialize(ParameterTypeTestRunner, ParameterStructureTypeTestRunner, this.getBaseDefinitionTestRunner(), this.getUserDefinedTypeGuardDefinitionTestRunner(), this.getTypeDefinitionTestRunner(), this.getTypeParameterDefinitionTestRunner(), this.getCallSignatureDefinitionTestRunner());
+        vBaseFunctionDefinitionTestRunner.initialize(ParameterTypeTestRunner, ParameterStructureTypeTestRunner, this.getBaseDefinitionTestRunner(), this.getTypeDefinitionTestRunner(), this.getTypeParameterDefinitionTestRunner(), this.getCallSignatureDefinitionTestRunner(), this.getUserDefinedTypeGuardDefinitionTestRunner());
 
         return vBaseFunctionDefinitionTestRunner;
     }
@@ -1584,6 +1598,11 @@ export class StateTestRunner {
 
     runOverloadSignaturedDefinitionTest(actual: OverloadSignaturedDefinition, expected: OverloadSignaturedDefinitionTestStructure) {
         const testRunner = this.factory.getOverloadSignaturedDefinitionTestRunner();
+        testRunner.runTest(actual, expected);
+    }
+
+    runUserDefinedTypeGuardedDefinitionTest(actual: UserDefinedTypeGuardedDefinition, expected: UserDefinedTypeGuardedDefinitionTestStructure) {
+        const testRunner = this.factory.getUserDefinedTypeGuardedDefinitionTestRunner();
         testRunner.runTest(actual, expected);
     }
 
@@ -2911,6 +2930,7 @@ export class TypeNodeDefinitionTestRunner implements TestRunner<TypeNodeDefiniti
 export interface TypeDefinitionTestStructure extends BaseTypeDefinitionTestStructure {
     callSignatures?: CallSignatureDefinitionTestStructure[];
     node?: (null | TypeNodeDefinitionTestStructure);
+    text: string;
 }
 
 export class TypeDefinitionTestRunner implements TestRunner<TypeDefinition, TypeDefinitionTestStructure> {
@@ -2969,6 +2989,13 @@ export class TypeDefinitionTestRunner implements TestRunner<TypeDefinition, Type
                     });
                 });
             }
+            this.assertions.describe("text", () => {
+                let actualValue = actual.text;
+                let expectedValue = expected.text;
+                this.assertions.it("should have the same value", () => {
+                    this.assertions.strictEqual(actualValue, expectedValue);
+                });
+            });
         });
     }
 }
@@ -3604,54 +3631,23 @@ export class OverloadSignaturedDefinitionTestRunner implements TestRunner<Overlo
     }
 }
 
-export interface BaseFunctionDefinitionTestStructure<ParameterType extends BaseParameterDefinitionTestStructure, ParameterStructureType> extends BaseDefinitionTestStructure {
-    isGenerator?: boolean;
+export interface UserDefinedTypeGuardedDefinitionTestStructure {
     userDefinedTypeGuard?: (null | UserDefinedTypeGuardDefinitionTestStructure);
-    name: string;
-    parameters?: ParameterType[];
-    thisType?: (null | TypeDefinitionTestStructure);
-    returnType?: TypeDefinitionTestStructure;
-    typeParameters?: TypeParameterDefinitionTestStructure[];
-    overloadSignatures?: CallSignatureDefinitionTestStructure[];
-    documentationComment?: string;
 }
 
-export class BaseFunctionDefinitionTestRunner<ParameterType extends BaseParameterDefinition, ParameterStructureType, ParameterTypeExpected extends BaseParameterDefinitionTestStructure, ParameterStructureTypeExpected> implements TestRunner<BaseFunctionDefinition<ParameterType, ParameterStructureType>, BaseFunctionDefinitionTestStructure<ParameterTypeExpected, ParameterStructureTypeExpected>> {
-    private ParameterTypeTestRunner: TestRunner<ParameterType, ParameterTypeExpected>;
-    private ParameterStructureTypeTestRunner: TestRunner<ParameterStructureType, ParameterStructureTypeExpected>;
-    private BaseDefinitionTestRunner: TestRunner<BaseDefinition, BaseDefinitionTestStructure>;
+export class UserDefinedTypeGuardedDefinitionTestRunner implements TestRunner<UserDefinedTypeGuardedDefinition, UserDefinedTypeGuardedDefinitionTestStructure> {
     private UserDefinedTypeGuardDefinitionTestRunner: TestRunner<UserDefinedTypeGuardDefinition, UserDefinedTypeGuardDefinitionTestStructure>;
-    private TypeDefinitionTestRunner: TestRunner<TypeDefinition, TypeDefinitionTestStructure>;
-    private TypeParameterDefinitionTestRunner: TestRunner<TypeParameterDefinition, TypeParameterDefinitionTestStructure>;
-    private CallSignatureDefinitionTestRunner: TestRunner<CallSignatureDefinition, CallSignatureDefinitionTestStructure>;
 
     constructor(private readonly assertions: WrapperAssertions) {
     }
 
-    initialize(ParameterTypeTestRunner: TestRunner<ParameterType, ParameterTypeExpected>, ParameterStructureTypeTestRunner: TestRunner<ParameterStructureType, ParameterStructureTypeExpected>, BaseDefinitionTestRunner: TestRunner<BaseDefinition, BaseDefinitionTestStructure>, UserDefinedTypeGuardDefinitionTestRunner: TestRunner<UserDefinedTypeGuardDefinition, UserDefinedTypeGuardDefinitionTestStructure>, TypeDefinitionTestRunner: TestRunner<TypeDefinition, TypeDefinitionTestStructure>, TypeParameterDefinitionTestRunner: TestRunner<TypeParameterDefinition, TypeParameterDefinitionTestStructure>, CallSignatureDefinitionTestRunner: TestRunner<CallSignatureDefinition, CallSignatureDefinitionTestStructure>) {
-        this.ParameterTypeTestRunner = ParameterTypeTestRunner;
-        this.ParameterStructureTypeTestRunner = ParameterStructureTypeTestRunner;
-        this.BaseDefinitionTestRunner = BaseDefinitionTestRunner;
+    initialize(UserDefinedTypeGuardDefinitionTestRunner: TestRunner<UserDefinedTypeGuardDefinition, UserDefinedTypeGuardDefinitionTestStructure>) {
         this.UserDefinedTypeGuardDefinitionTestRunner = UserDefinedTypeGuardDefinitionTestRunner;
-        this.TypeDefinitionTestRunner = TypeDefinitionTestRunner;
-        this.TypeParameterDefinitionTestRunner = TypeParameterDefinitionTestRunner;
-        this.CallSignatureDefinitionTestRunner = CallSignatureDefinitionTestRunner;
     }
 
-    runTest(actual: BaseFunctionDefinition<ParameterType, ParameterStructureType>, expected: BaseFunctionDefinitionTestStructure<ParameterTypeExpected, ParameterStructureTypeExpected>) {
-        this.assertions.describe("BaseFunctionDefinition", () => {
+    runTest(actual: UserDefinedTypeGuardedDefinition, expected: UserDefinedTypeGuardedDefinitionTestStructure) {
+        this.assertions.describe("UserDefinedTypeGuardedDefinition", () => {
             if (this.assertions.isNull(actual, expected)) return;
-            this.BaseDefinitionTestRunner.runTest(actual, expected);
-            this.assertions.describe("isGenerator", () => {
-                let actualValue = actual.isGenerator;
-                let expectedValue = expected.isGenerator;
-                if (typeof expectedValue === "undefined") {
-                    expectedValue = false;
-                }
-                this.assertions.it("should have the same value", () => {
-                    this.assertions.strictEqual(actualValue, expectedValue);
-                });
-            });
             this.assertions.describe("userDefinedTypeGuard", () => {
                 let actualValue = actual.userDefinedTypeGuard;
                 let expectedValue = expected.userDefinedTypeGuard;
@@ -3670,6 +3666,58 @@ export class BaseFunctionDefinitionTestRunner<ParameterType extends BaseParamete
                             this.UserDefinedTypeGuardDefinitionTestRunner.runTest(actualValue as any as UserDefinedTypeGuardDefinition, expectedValue as any as UserDefinedTypeGuardDefinitionTestStructure);
                         })(actualValue as UserDefinedTypeGuardDefinition, expectedValue as UserDefinedTypeGuardDefinitionTestStructure);
                     });
+                });
+            });
+        });
+    }
+}
+
+export interface BaseFunctionDefinitionTestStructure<ParameterType extends BaseParameterDefinitionTestStructure, ParameterStructureType> extends BaseDefinitionTestStructure {
+    isGenerator?: boolean;
+    name: string;
+    parameters?: ParameterType[];
+    thisType?: (null | TypeDefinitionTestStructure);
+    returnType?: TypeDefinitionTestStructure;
+    typeParameters?: TypeParameterDefinitionTestStructure[];
+    overloadSignatures?: CallSignatureDefinitionTestStructure[];
+    documentationComment?: string;
+    userDefinedTypeGuard?: (null | UserDefinedTypeGuardDefinitionTestStructure);
+}
+
+export class BaseFunctionDefinitionTestRunner<ParameterType extends BaseParameterDefinition, ParameterStructureType, ParameterTypeExpected extends BaseParameterDefinitionTestStructure, ParameterStructureTypeExpected> implements TestRunner<BaseFunctionDefinition<ParameterType, ParameterStructureType>, BaseFunctionDefinitionTestStructure<ParameterTypeExpected, ParameterStructureTypeExpected>> {
+    private ParameterTypeTestRunner: TestRunner<ParameterType, ParameterTypeExpected>;
+    private ParameterStructureTypeTestRunner: TestRunner<ParameterStructureType, ParameterStructureTypeExpected>;
+    private BaseDefinitionTestRunner: TestRunner<BaseDefinition, BaseDefinitionTestStructure>;
+    private TypeDefinitionTestRunner: TestRunner<TypeDefinition, TypeDefinitionTestStructure>;
+    private TypeParameterDefinitionTestRunner: TestRunner<TypeParameterDefinition, TypeParameterDefinitionTestStructure>;
+    private CallSignatureDefinitionTestRunner: TestRunner<CallSignatureDefinition, CallSignatureDefinitionTestStructure>;
+    private UserDefinedTypeGuardDefinitionTestRunner: TestRunner<UserDefinedTypeGuardDefinition, UserDefinedTypeGuardDefinitionTestStructure>;
+
+    constructor(private readonly assertions: WrapperAssertions) {
+    }
+
+    initialize(ParameterTypeTestRunner: TestRunner<ParameterType, ParameterTypeExpected>, ParameterStructureTypeTestRunner: TestRunner<ParameterStructureType, ParameterStructureTypeExpected>, BaseDefinitionTestRunner: TestRunner<BaseDefinition, BaseDefinitionTestStructure>, TypeDefinitionTestRunner: TestRunner<TypeDefinition, TypeDefinitionTestStructure>, TypeParameterDefinitionTestRunner: TestRunner<TypeParameterDefinition, TypeParameterDefinitionTestStructure>, CallSignatureDefinitionTestRunner: TestRunner<CallSignatureDefinition, CallSignatureDefinitionTestStructure>, UserDefinedTypeGuardDefinitionTestRunner: TestRunner<UserDefinedTypeGuardDefinition, UserDefinedTypeGuardDefinitionTestStructure>) {
+        this.ParameterTypeTestRunner = ParameterTypeTestRunner;
+        this.ParameterStructureTypeTestRunner = ParameterStructureTypeTestRunner;
+        this.BaseDefinitionTestRunner = BaseDefinitionTestRunner;
+        this.TypeDefinitionTestRunner = TypeDefinitionTestRunner;
+        this.TypeParameterDefinitionTestRunner = TypeParameterDefinitionTestRunner;
+        this.CallSignatureDefinitionTestRunner = CallSignatureDefinitionTestRunner;
+        this.UserDefinedTypeGuardDefinitionTestRunner = UserDefinedTypeGuardDefinitionTestRunner;
+    }
+
+    runTest(actual: BaseFunctionDefinition<ParameterType, ParameterStructureType>, expected: BaseFunctionDefinitionTestStructure<ParameterTypeExpected, ParameterStructureTypeExpected>) {
+        this.assertions.describe("BaseFunctionDefinition", () => {
+            if (this.assertions.isNull(actual, expected)) return;
+            this.BaseDefinitionTestRunner.runTest(actual, expected);
+            this.assertions.describe("isGenerator", () => {
+                let actualValue = actual.isGenerator;
+                let expectedValue = expected.isGenerator;
+                if (typeof expectedValue === "undefined") {
+                    expectedValue = false;
+                }
+                this.assertions.it("should have the same value", () => {
+                    this.assertions.strictEqual(actualValue, expectedValue);
                 });
             });
             this.assertions.describe("name", () => {
@@ -3766,6 +3814,26 @@ export class BaseFunctionDefinitionTestRunner<ParameterType extends BaseParamete
                 }
                 this.assertions.it("should have the same value", () => {
                     this.assertions.strictEqual(actualValue, expectedValue);
+                });
+            });
+            this.assertions.describe("userDefinedTypeGuard", () => {
+                let actualValue = actual.userDefinedTypeGuard;
+                let expectedValue = expected.userDefinedTypeGuard;
+                if (typeof expectedValue === "undefined") {
+                    expectedValue = null;
+                }
+                this.assertions.it("should equal one of the union types", () => {
+                    this.assertions.assertAny(() => {
+                        ((actualValue, expectedValue) => {
+                            this.assertions.it("should have the same value", () => {
+                                this.assertions.strictEqual(actualValue, expectedValue);
+                            });
+                        })(actualValue as null, expectedValue as null);
+                    }, () => {
+                        ((actualValue, expectedValue) => {
+                            this.UserDefinedTypeGuardDefinitionTestRunner.runTest(actualValue as any as UserDefinedTypeGuardDefinition, expectedValue as any as UserDefinedTypeGuardDefinitionTestStructure);
+                        })(actualValue as UserDefinedTypeGuardDefinition, expectedValue as UserDefinedTypeGuardDefinitionTestStructure);
+                    });
                 });
             });
         });
@@ -7409,6 +7477,10 @@ export function runReturnTypedDefinitionTests(actual: ReturnTypedDefinition, exp
 
 export function runOverloadSignaturedDefinitionTests(actual: OverloadSignaturedDefinition, expected: OverloadSignaturedDefinitionTestStructure) {
     new TestRunnerFactory().getOverloadSignaturedDefinitionTestRunner().runTest(actual, expected);
+}
+
+export function runUserDefinedTypeGuardedDefinitionTests(actual: UserDefinedTypeGuardedDefinition, expected: UserDefinedTypeGuardedDefinitionTestStructure) {
+    new TestRunnerFactory().getUserDefinedTypeGuardedDefinitionTestRunner().runTest(actual, expected);
 }
 
 export function runEnumMemberDefinitionTests(actual: EnumMemberDefinition, expected: EnumMemberDefinitionTestStructure) {

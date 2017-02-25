@@ -1,6 +1,5 @@
 import * as typeConstants from "./../../typeConstants";
 import {CallSignatureStructure, TypeParameterStructure, UserDefinedTypeGuardStructure} from "./../../structures";
-import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
 import {TypeDefinition} from "./../expression";
 import {TypeParameterDefinition, CallSignatureDefinition, UserDefinedTypeGuardDefinition} from "./../general";
@@ -14,20 +13,13 @@ import {ThisTypedDefinition} from "./ThisTypedDefinition";
 import {NodedDefinition} from "./NodedDefinition";
 import {OverloadSignaturedDefinition} from "./OverloadSignaturedDefinition";
 import {DocumentationedDefinition} from "./DocumentationedDefinition";
+import {UserDefinedTypeGuardedDefinition} from "./UserDefinedTypeGuardedDefinition";
 
 export abstract class BaseFunctionDefinition<ParameterType extends BaseParameterDefinition, ParameterStructureType>
         extends BaseDefinition
         implements NamedDefinition, TypeParameteredDefinition, ParameteredDefinition<ParameterType, ParameterStructureType>, ReturnTypedDefinition,
-            ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition {
+            ThisTypedDefinition, NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition, UserDefinedTypeGuardedDefinition {
     isGenerator: boolean;
-    userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
-
-    setUserDefinedTypeGuard(structure: UserDefinedTypeGuardStructure) {
-        this.userDefinedTypeGuard = new MainFactory().createStructureFactory().getUserDefinedTypeGuard(structure);
-        this.returnType = new MainFactory().createStructureFactory().getTypeFromText("any");
-        this.returnType._text = (this.userDefinedTypeGuard!.parameterName || "this") + " is " + this.userDefinedTypeGuard!.type.text;
-        return this;
-    }
 
     // NamedDefinition
     name: string;
@@ -53,7 +45,10 @@ export abstract class BaseFunctionDefinition<ParameterType extends BaseParameter
     getOverloadSignature: (searchFunction: (method: CallSignatureDefinition) => boolean) => (CallSignatureDefinition | null);
     // DocumentationedDefintiion
     documentationComment: string;
+    // UserDefinedTypeGuardedDefinition
+    userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
+    setUserDefinedTypeGuard: (structure: UserDefinedTypeGuardStructure) => this;
 }
 
 applyMixins(BaseFunctionDefinition, BaseDefinition, [NamedDefinition, TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, ThisTypedDefinition,
-    NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition]);
+    NodedDefinition, OverloadSignaturedDefinition, DocumentationedDefinition, UserDefinedTypeGuardedDefinition]);

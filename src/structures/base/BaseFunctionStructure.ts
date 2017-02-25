@@ -6,8 +6,10 @@ import {ReturnTypedStructure} from "./ReturnTypedStructure";
 import {BaseStructure} from "./BaseStructure";
 import {OverloadSignaturedStructure} from "./OverloadSignaturedStructure";
 import {DocumentationedStructure} from "./DocumentationedStructure";
+import {UserDefinedTypeGuardedStructure} from "./UserDefinedTypeGuardedStructure";
 
 export interface BaseFunctionStructure<T extends BaseParameterStructure>
-        extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure, OverloadSignaturedStructure, DocumentationedStructure {
+        extends BaseStructure, NamedStructure, TypeParameteredStructure, ParameteredStructure<T>, ReturnTypedStructure, OverloadSignaturedStructure, DocumentationedStructure,
+            UserDefinedTypeGuardedStructure {
     isGenerator?: boolean;
 }

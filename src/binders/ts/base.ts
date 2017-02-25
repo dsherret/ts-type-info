@@ -35,3 +35,4 @@ export * from "./base/TsTypeParameteredBinderByNode";
 export * from "./base/TsTypeParameteredBinderBySignature";
 export * from "./base/TsTypeParameteredBinderByTypeNode";
 export * from "./base/TsOverloadSignaturedBinder";
+export * from "./base/TsUserDefinedTypeGuardedBinder";

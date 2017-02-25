@@ -1,4 +1,4 @@
-﻿import {BaseParameterDefinition, BaseParameterDefinitionConstructor, UserDefinedTypeGuardDefinition} from "./../../../definitions";
+﻿import {BaseParameterDefinition, BaseParameterDefinitionConstructor} from "./../../../definitions";
 import {TsFactory} from "./../../../factories";
 import {TsNode} from "./../../../compiler";
 import {BaseFunctionBinder} from "./../../base";
@@ -10,6 +10,7 @@ import {TsReturnTypedBinderByNode} from "./TsReturnTypedBinderByNode";
 import {TsNodedBinder} from "./TsNodedBinder";
 import {TsOverloadSignaturedBinder} from "./TsOverloadSignaturedBinder";
 import {TsDocumentationedBinder} from "./TsDocumentationedBinder";
+import {TsUserDefinedTypeGuardedBinder} from "./TsUserDefinedTypeGuardedBinder";
 
 export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefinition> extends BaseFunctionBinder<ParameterType> {
     private readonly node: TsNode;
@@ -36,7 +37,8 @@ export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefi
             new TsReturnTypedBinderByNode(factory, node),
             new TsNodedBinder(factory, node),
             new TsOverloadSignaturedBinder(factory, nodes),
-            new TsDocumentationedBinder(node)
+            new TsDocumentationedBinder(node),
+            new TsUserDefinedTypeGuardedBinder(factory, node)
         );
 
         this.factory = factory;
@@ -45,18 +47,5 @@ export class TsBaseFunctionBinderByNodes<ParameterType extends BaseParameterDefi
 
     protected getIsGenerator() {
         return this.node.isGeneratorFunction();
-    }
-
-    protected getUserDefinedTypeGuard() {
-        let userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null = null;
-
-        for (let node of this.node.getChildren()) {
-            if (node.isUserDefinedTypeGuard()) {
-                userDefinedTypeGuard = this.factory.getUserDefinedTypeGuardFromNode(node);
-                break;
-            }
-        }
-
-        return userDefinedTypeGuard;
     }
 }

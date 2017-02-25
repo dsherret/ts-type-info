@@ -7,6 +7,7 @@ import {ParameteredBinder} from "./ParameteredBinder";
 import {ReturnTypedBinder} from "./ReturnTypedBinder";
 import {OverloadSignaturedBinder} from "./OverloadSignaturedBinder";
 import {TypeParameteredBinder} from "./TypeParameteredBinder";
+import {UserDefinedTypeGuardedBinder} from "./UserDefinedTypeGuardedBinder";
 
 export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseParameterDefinition> {
     constructor(
@@ -17,11 +18,11 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         private readonly returnTypedBinder: ReturnTypedBinder,
         private readonly nodedBinder: NodedBinder,
         private readonly overloadSignaturedBinder: OverloadSignaturedBinder,
-        private readonly documentationedBinder: DocumentationedBinder
+        private readonly documentationedBinder: DocumentationedBinder,
+        private readonly userDefinedTypeGuardedBinder: UserDefinedTypeGuardedBinder
     ) {
     }
 
-    protected abstract getUserDefinedTypeGuard(): definitions.UserDefinedTypeGuardDefinition | null;
     protected abstract getIsGenerator(): boolean;
 
     bind(def: definitions.BaseFunctionDefinition<ParameterType, any>) {
@@ -33,6 +34,7 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         this.nodedBinder.bind(def);
         this.overloadSignaturedBinder.bind(def);
         this.documentationedBinder.bind(def);
+        this.userDefinedTypeGuardedBinder.bind(def);
 
         if (def.parameters.length > 0 && def.parameters[0].name === "this") {
             const thisParam = def.parameters.splice(0, 1)[0];
@@ -40,10 +42,5 @@ export abstract class BaseFunctionBinder<ParameterType extends definitions.BaseP
         }
 
         def.isGenerator = this.getIsGenerator();
-        def.userDefinedTypeGuard = this.getUserDefinedTypeGuard();
-
-        if (def.userDefinedTypeGuard != null) {
-            def.returnType._text = (def.userDefinedTypeGuard.parameterName || "this") + " is " + def.userDefinedTypeGuard.type.text;
-        }
     }
 }

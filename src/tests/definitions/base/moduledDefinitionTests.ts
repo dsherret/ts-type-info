@@ -119,7 +119,15 @@ describe("ModuledDefinitionTests", () => {
             documentationComment: "text"
         });
         n.addFunction({
-            name: "function2"
+            name: "function2",
+            parameters: [{ name: "param1" }],
+            userDefinedTypeGuard: {
+                parameterName: "param1",
+                type: "string"
+            }
+        });
+        n.addFunction({
+            name: "function3"
         });
 
         it("the returned definition should be in the array", () => {
@@ -149,7 +157,17 @@ describe("ModuledDefinitionTests", () => {
         });
         testHelpers.runFunctionDefinitionTests(n.functions[1], {
             name: "function2",
+            parameters: [{ name: "param1" }],
+            userDefinedTypeGuard: {
+                parameterName: "param1",
+                type: { text: "string" }
+            },
+            returnType: { text: "param1 is string" },
             order: 1
+        });
+        testHelpers.runFunctionDefinitionTests(n.functions[2], {
+            name: "function3",
+            order: 2
         });
     });
 

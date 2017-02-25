@@ -21,3 +21,4 @@ export * from "./base/ReturnTypedBinder";
 export * from "./base/TypedBinder";
 export * from "./base/TypeParameteredBinder";
 export * from "./base/OverloadSignaturedBinder";
+export * from "./base/UserDefinedTypeGuardedBinder";

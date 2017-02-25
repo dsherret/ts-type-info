@@ -24,3 +24,4 @@ export * from "./base/ReturnTypedDefinition";
 export * from "./base/ModuledDefinition";
 export * from "./base/NodedDefinition";
 export * from "./base/OverloadSignaturedDefinition";
+export * from "./base/UserDefinedTypeGuardedDefinition";

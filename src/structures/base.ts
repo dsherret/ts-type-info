@@ -21,3 +21,4 @@ export * from "./base/ParameteredStructure";
 export * from "./base/ReadonlyableStructure";
 export * from "./base/ReturnTypedStructure";
 export * from "./base/OverloadSignaturedStructure";
+export * from "./base/UserDefinedTypeGuardedStructure";
