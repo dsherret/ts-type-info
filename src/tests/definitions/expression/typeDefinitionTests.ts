@@ -27,6 +27,19 @@ describe("TypeDefinition", () => {
             });
         });
 
+        describe("pass in definition", () => {
+            const def = createType("number");
+            const def2 = createType("string");
+            def.addUnionType(def2);
+            runTypeDefinitionTests(def, {
+                text: "number | string",
+                unionTypes: [
+                    { text: "number" },
+                    { text: "string" }
+                ]
+            });
+        });
+
         describe("existing union type", () => {
             const def = createType("string | Date");
             def.addUnionType("number");
@@ -41,6 +54,15 @@ describe("TypeDefinition", () => {
                 }]
             });
         });
+
+        describe("union type equals type", () => {
+            const def = createType("number");
+            def.addUnionType("number");
+            runTypeDefinitionTests(def, {
+                text: "number",
+                unionTypes: []
+            });
+        });
     });
 
     describe("#addIntersectionType", () => {
@@ -49,11 +71,23 @@ describe("TypeDefinition", () => {
             def.addIntersectionType("number");
             runTypeDefinitionTests(def, {
                 text: "string & number",
-                intersectionTypes: [{
-                    text: "string"
-                }, {
-                    text: "number"
-                }]
+                intersectionTypes: [
+                    { text: "string" },
+                    { text: "number" }
+                ]
+            });
+        });
+
+        describe("pass in definition", () => {
+            const def = createType("number");
+            const def2 = createType("string");
+            def.addIntersectionType(def2);
+            runTypeDefinitionTests(def, {
+                text: "number & string",
+                intersectionTypes: [
+                    { text: "number" },
+                    { text: "string" }
+                ]
             });
         });
 
@@ -72,7 +106,7 @@ describe("TypeDefinition", () => {
             });
         });
 
-        describe("existing union type", () => {
+        describe("existing intersection type", () => {
             const def = createType("string | Date");
             def.addIntersectionType("number");
             runTypeDefinitionTests(def, {
@@ -87,6 +121,15 @@ describe("TypeDefinition", () => {
                 }, {
                     text: "number"
                 }]
+            });
+        });
+
+        describe("intersection type equals type", () => {
+            const def = createType("number");
+            def.addIntersectionType("number");
+            runTypeDefinitionTests(def, {
+                text: "number",
+                intersectionTypes: []
             });
         });
     });

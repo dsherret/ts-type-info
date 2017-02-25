@@ -23,9 +23,14 @@ export class TypeDefinition extends BaseTypeDefinition {
         return DefinitionUtils.getDefinitionFromListByFunc(this.callSignatures, searchFunction);
     }
 
-    addUnionType(text: string) {
+    addUnionType(definition: TypeDefinition): this;
+    addUnionType(text: string): this;
+    addUnionType(textOrDefinition: string | TypeDefinition): this {
         const structureFactory = new MainFactory().createStructureFactory();
-        const newDefinition = structureFactory.getTypeFromText(text);
+        const newDefinition = typeof textOrDefinition === "string" ? structureFactory.getTypeFromText(textOrDefinition) : textOrDefinition;
+
+        if (newDefinition.text === this.text)
+            return this;
 
         if (this.unionTypes.length > 0) {
             this.unionTypes.push(newDefinition);
@@ -38,11 +43,18 @@ export class TypeDefinition extends BaseTypeDefinition {
             this.unionTypes.push(cloneDefinition, newDefinition);
             this._text = `${cloneDefinition.text} | ${newDefinition.text}`;
         }
+
+        return this;
     }
 
-    addIntersectionType(text: string) {
+    addIntersectionType(definition: TypeDefinition): this;
+    addIntersectionType(text: string): this;
+    addIntersectionType(textOrDefinition: string | TypeDefinition): this {
         const structureFactory = new MainFactory().createStructureFactory();
-        const newDefinition = structureFactory.getTypeFromText(text);
+        const newDefinition = typeof textOrDefinition === "string" ? structureFactory.getTypeFromText(textOrDefinition) : textOrDefinition;
+
+        if (newDefinition.text === this.text)
+            return this;
 
         if (this.intersectionTypes.length > 0) {
             this.intersectionTypes.push(newDefinition);
@@ -57,6 +69,8 @@ export class TypeDefinition extends BaseTypeDefinition {
 
             this._text = `${this._getTextForIntersectionTypeFromText(cloneDefinition)} & ${this._getTextForIntersectionTypeFromText(newDefinition)}`;
         }
+
+        return this;
     }
 
     clone() {
