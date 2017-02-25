@@ -1,5 +1,4 @@
 ﻿import {getInfoFromString} from "./../../../main";
-import {Scope} from "./../../../definitions";
 import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("class ambient tests", () => {
