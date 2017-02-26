@@ -1,3 +1,4 @@
+import * as assert from "assert";
 import {createCallSignature} from "./../../../createFunctions";
 import {CallSignatureDefinition} from "./../../../definitions";
 import {runCallSignatureDefinitionTests, runCallSignatureParameterDefinitionTests} from "./../../testHelpers";
