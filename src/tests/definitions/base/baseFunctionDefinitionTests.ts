@@ -13,6 +13,13 @@ describe("BaseFunctionDefinition", () => {
             parameters: [{ name: "myParam" }]
         });
         f.addOverloadSignature({
+            parameters: [{ name: "myParam" }],
+            userDefinedTypeGuard: {
+                parameterName: "myParam",
+                type: "string"
+            }
+        });
+        f.addOverloadSignature({
             returnType: "number"
         });
 
@@ -28,6 +35,16 @@ describe("BaseFunctionDefinition", () => {
         });
 
         runCallSignatureDefinitionTests(f.overloadSignatures[1], {
+            parameters: [{ name: "myParam" }],
+            userDefinedTypeGuard: {
+                parameterName: "myParam",
+                type: { text: "string" }
+            },
+            returnType: { text: "myParam is string" },
+            minArgumentCount: 1
+        });
+
+        runCallSignatureDefinitionTests(f.overloadSignatures[2], {
             returnType: { text: "number" }
         });
     });

@@ -3,7 +3,7 @@ import {CallSignatureParameterDefinition} from "./../../../definitions";
 import {CallSignatureStructure} from "./../../../structures";
 import {CallSignatureBinder} from "./../../base";
 import {StructureBaseDefinitionBinder, StructureTypeParameteredBinder, StructureParameteredBinder, StructureReturnTypedBinder, StructureNodedBinder,
-    StructureDocumentationedBinder} from "./../base";
+    StructureDocumentationedBinder, StructureUserDefinedTypeGuardedBinder} from "./../base";
 import {StructureCallSignatureParameterBinder} from "./StructureCallSignatureParameterBinder";
 
 export class StructureCallSignatureBinder extends CallSignatureBinder {
@@ -14,7 +14,8 @@ export class StructureCallSignatureBinder extends CallSignatureBinder {
             new StructureParameteredBinder(factory, structure, CallSignatureParameterDefinition, StructureCallSignatureParameterBinder),
             new StructureReturnTypedBinder(factory, structure),
             new StructureNodedBinder(),
-            new StructureDocumentationedBinder(structure)
+            new StructureDocumentationedBinder(structure),
+            new StructureUserDefinedTypeGuardedBinder(factory, structure)
         );
     }
 }

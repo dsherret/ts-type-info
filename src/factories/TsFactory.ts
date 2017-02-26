@@ -150,7 +150,11 @@ export class TsFactory {
     }
 
     getUserDefinedTypeGuardFromNode(node: TsNode) {
-        return bindToDefinition(new binders.TsUserDefinedTypeGuardBinder(this, node), new definitions.UserDefinedTypeGuardDefinition());
+        return bindToDefinition(new binders.TsUserDefinedTypeGuardBinderByNode(this, node), new definitions.UserDefinedTypeGuardDefinition());
+    }
+
+    getUserDefinedTypeGuardFromSignature(signature: TsSignature) {
+        return bindToDefinition(new binders.TsUserDefinedTypeGuardBinderBySignature(this, signature), new definitions.UserDefinedTypeGuardDefinition());
     }
 
     getAllExportableDefinitionsBySymbol(symbol: TsSymbol) {
@@ -159,12 +163,10 @@ export class TsFactory {
         const exportableDefinitions: definitions.ExportableDefinitions[] = [];
 
         function handleDefinition(definition: (definitions.ExportableDefinitions | definitions.ReExportDefinition)) {
-            if (definition instanceof definitions.ReExportDefinition) {
+            if (definition instanceof definitions.ReExportDefinition)
                 handleReExport(definition);
-            }
-            else {
+            else
                 exportableDefinitions.push(definition);
-            }
         }
 
         function handleReExport(reExportDefinition: definitions.ReExportDefinition) {
@@ -227,18 +229,15 @@ export class TsFactory {
         const obj: { definitions: definitions.ExportableDefinitions[]; expression: definitions.ExpressionDefinition | null; } = { definitions: [], expression: null };
 
         if (symbol != null) {
-            if (symbol.isAlias()) {
+            if (symbol.isAlias())
                 symbol = symbol.getAliasSymbol()!;
-            }
 
             const expression = this.getExpressionFromExportSymbol(symbol);
 
-            if (expression != null) {
+            if (expression != null)
                 obj.expression = expression;
-            }
-            else {
+            else
                 obj.definitions.push(...this.getAllDefinitionsBySymbol(symbol) as definitions.ExportableDefinitions[]);
-            }
         }
 
         return obj;
@@ -250,9 +249,8 @@ export class TsFactory {
         if (nodes.length === 1) {
             const tsExpression = nodes[0].getExpression();
 
-            if (tsExpression != null) {
+            if (tsExpression != null)
                 return this.getExpression(tsExpression);
-            }
         }
 
         return null;
@@ -266,9 +264,8 @@ export class TsFactory {
             symbols.forEach(s => {
                 const hasChildTypes = definition.unionTypes.length > 0 || definition.intersectionTypes.length > 0 || definition.isArrayType();
 
-                if (!hasChildTypes) {
+                if (!hasChildTypes)
                     definition.definitions.push(...this.getAllDefinitionsBySymbol(s) as definitions.ModuleMemberDefinitions[]);
-                }
             });
         });
     }
@@ -283,27 +280,20 @@ export class TsFactory {
         let definition: definitions.NodeDefinitions | null = null;
 
         // todo: all these if statements are very similar. Need to reduce the redundancy
-        if (node.isClass()) {
+        if (node.isClass())
             definition = bindToDefinition(new binders.TsClassBinder(this, node), new definitions.ClassDefinition());
-        }
-        else if (node.isInterface()) {
+        else if (node.isInterface())
             definition = bindToDefinition(new binders.TsInterfaceBinder(this, node), new definitions.InterfaceDefinition());
-        }
-        else if (node.isEnum()) {
+        else if (node.isEnum())
             definition = bindToDefinition(new binders.TsEnumBinder(this, node), new definitions.EnumDefinition());
-        }
-        else if (node.isVariable()) {
+        else if (node.isVariable())
             definition = bindToDefinition(new binders.TsVariableBinder(this, node), new definitions.VariableDefinition());
-        }
-        else if (node.isTypeAlias()) {
+        else if (node.isTypeAlias())
             definition = bindToDefinition(new binders.TsTypeAliasBinder(this, node), new definitions.TypeAliasDefinition());
-        }
-        else if (node.isNamespace()) {
+        else if (node.isNamespace())
             definition = bindToDefinition(new binders.TsNamespaceBinder(this, node), new definitions.NamespaceDefinition());
-        }
-        else if (node.isFunction()) {
+        else if (node.isFunction())
             Logger.error(`Don't use ${nameof(TsFactory)}.${nameof<TsFactory>(f => f.createDefinition)} to get a function.`);
-        }
         else if (node.isExportDeclaration()) {
             const binder = new binders.TsReExportBinder(this, node);
             definition = new definitions.ReExportDefinition();
@@ -335,9 +325,8 @@ export class TsFactory {
             Logger.warn(`Unknown node kind: ${node.nodeKindToString()}`);
         }
 
-        if (definition != null) {
+        if (definition != null)
             this.definitionByNode.add(node, definition);
-        }
 
         return definition;
     }

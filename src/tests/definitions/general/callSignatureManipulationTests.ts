@@ -1,6 +1,6 @@
-﻿import * as assert from "assert";
+import {createCallSignature} from "./../../../createFunctions";
 import {CallSignatureDefinition} from "./../../../definitions";
-import {runCallSignatureParameterDefinitionTests} from "./../../testHelpers";
+import {runCallSignatureDefinitionTests, runCallSignatureParameterDefinitionTests} from "./../../testHelpers";
 
 describe("CallSignatureDefinition", () => {
     describe("#addParameter()", () => {
@@ -30,6 +30,25 @@ describe("CallSignatureDefinition", () => {
 
         runCallSignatureParameterDefinitionTests(c.parameters[1], {
             name: "mySecondParameter"
+        });
+    });
+
+    describe("#setUserDefinedTypeGuard()", () => {
+        const c = createCallSignature({
+            parameters: [{ name: "myParam" }]
+        });
+        c.setUserDefinedTypeGuard({
+            parameterName: "myParam",
+            type: "string"
+        });
+        runCallSignatureDefinitionTests(c, {
+            parameters: [{ name: "myParam" }],
+            userDefinedTypeGuard: {
+                parameterName: "myParam",
+                type: { text: "string" }
+            },
+            returnType: { text: "myParam is string" },
+            minArgumentCount: 1
         });
     });
 });

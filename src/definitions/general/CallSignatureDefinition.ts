@@ -1,11 +1,13 @@
 import * as typeConstants from "./../../typeConstants";
-import {TypeParameterStructure, CallSignatureParameterStructure} from "./../../structures";
+import {TypeParameterStructure, CallSignatureParameterStructure, UserDefinedTypeGuardStructure} from "./../../structures";
 import {MainFactory} from "./../../factories";
 import {applyMixins} from "./../../utils";
-import {TypeParameteredDefinition, BaseDefinition, ReturnTypedDefinition, ParameteredDefinition, NodedDefinition, DocumentationedDefinition} from "./../base";
+import {TypeParameteredDefinition, BaseDefinition, ReturnTypedDefinition, ParameteredDefinition, NodedDefinition, DocumentationedDefinition,
+    UserDefinedTypeGuardedDefinition} from "./../base";
 import {TypeParameterDefinition} from "./../general";
 import {TypeDefinition} from "./../expression";
 import {CallSignatureParameterDefinition} from "./CallSignatureParameterDefinition";
+import {UserDefinedTypeGuardDefinition} from "./UserDefinedTypeGuardDefinition";
 
 export class CallSignatureDefinition
         extends BaseDefinition
@@ -35,6 +37,10 @@ export class CallSignatureDefinition
     tsNode?: typeConstants.TypeScriptNode;
     // DocumentationedDefinition
     documentationComment: string;
+    // UserDefinedTypeGuardedDefinition
+    userDefinedTypeGuard: UserDefinedTypeGuardDefinition | null;
+    setUserDefinedTypeGuard: (structure: UserDefinedTypeGuardStructure) => this;
 }
 
-applyMixins(CallSignatureDefinition, BaseDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, NodedDefinition, DocumentationedDefinition]);
+applyMixins(CallSignatureDefinition, BaseDefinition, [TypeParameteredDefinition, ParameteredDefinition, ReturnTypedDefinition, NodedDefinition, DocumentationedDefinition,
+    UserDefinedTypeGuardedDefinition]);

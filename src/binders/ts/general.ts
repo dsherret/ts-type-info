@@ -8,4 +8,5 @@ export * from "./general/TsTypeAliasBinder";
 export * from "./general/TsTypeParameterBinder";
 export * from "./general/TsTypePropertyBinderByNode";
 export * from "./general/TsTypePropertyBinderBySymbol";
-export * from "./general/TsUserDefinedTypeGuardBinder";
+export * from "./general/TsUserDefinedTypeGuardBinderByNode";
+export * from "./general/TsUserDefinedTypeGuardBinderBySignature";

@@ -3,7 +3,7 @@ import {TsFactory} from "./../../../factories";
 import {UserDefinedTypeGuardBinder} from "./../../base";
 import {TsBaseDefinitionBinder, TsNodedBinder} from "./../base";
 
-export class TsUserDefinedTypeGuardBinder extends UserDefinedTypeGuardBinder {
+export class TsUserDefinedTypeGuardBinderByNode extends UserDefinedTypeGuardBinder {
     constructor(private readonly factory: TsFactory, private readonly node: TsNode) {
         super(
             new TsBaseDefinitionBinder(),
