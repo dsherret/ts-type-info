@@ -2,6 +2,7 @@ export * from "./utils/decorators";
 export * from "./utils/applyMixins";
 export * from "./utils/ArrayUtils";
 export * from "./utils/DefinitionUtils";
+export * from "./utils/FileCache";
 export * from "./utils/FileUtils";
 export * from "./utils/KeyValueCache";
 export * from "./utils/StringUtils";

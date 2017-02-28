@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import * as ts from "typescript";
 import {CompilerOptionsResolver} from "./compiler/utils/CompilerOptionsResolver";
 import {TsMain} from "./compiler/TsMain";
@@ -6,7 +5,7 @@ import {ArgumentTypeError} from "./errors";
 import {FileDefinition, GlobalDefinition} from "./definitions";
 import {MainFactory} from "./factories";
 import {Options} from "./options";
-import {StringUtils, Logger} from "./utils";
+import {StringUtils, Logger, FileCache} from "./utils";
 
 export * from "./options";
 export * from "./WriteOptions";
@@ -53,7 +52,7 @@ export function getInfoFromString(code: string, options?: Options): FileDefiniti
     const defaultLibFileName = ts.getDefaultLibFileName(compilerOptions);
 
     const tempFileSourceFile = ts.createSourceFile(tempFileName, code, compilerOptions.target!);
-    const libSourceFile = ts.createSourceFile(defaultLibFileName, fs.readFileSync(defaultLibFilePath, "utf-8"), compilerOptions.target!);
+    const libSourceFile = ts.createSourceFile(defaultLibFileName, FileCache.instance.getFileText(defaultLibFilePath), compilerOptions.target!);
 
     options = options || {};
     options.compilerHost = {
