@@ -28,14 +28,12 @@
   },
   "dependencies": {
     "code-block-writer": "^4.1.0",
-    "tmp": "0.0.28",
     "typescript": "2.2.1"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.5",
-    "@types/tmp": "0.0.32",
     "chai": "^3.5.0",
     "coveralls": "^2.11.6",
     "del": "^2.0.2",

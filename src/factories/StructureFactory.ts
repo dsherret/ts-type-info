@@ -137,11 +137,13 @@ export class StructureFactory {
     getTypeFromDefinitionAndTypeArguments(definition: definitions.NamedDefinition, typeArguments: string[]) {
         let text = definition.name || "any";
 
-        if (typeArguments.length > 0) {
+        if (typeArguments.length > 0)
             text += `<${typeArguments.join(", ")}>`;
-        }
 
-        return this.getTypeFromText(text);
+        const type = this.getTypeFromText(text);
+        // todo: use issue #232 to ensure only ModuleMemberDefinitions are added here
+        type.definitions.push(definition as any as definitions.ModuleMemberDefinitions);
+        return type;
     }
 
     getTypeFromText(text: string | undefined) {

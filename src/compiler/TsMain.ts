@@ -12,12 +12,16 @@ export class TsMain {
     private readonly tsCache = new TsCache();
     private readonly program: ts.Program;
     private readonly typeChecker: ts.TypeChecker;
+    private readonly compilerHost: ts.CompilerHost;
 
-    constructor(compilerOptionsResolver: CompilerOptionsResolver, fileNames: string[], options: Options) {
-        this.verifyFilesExist(fileNames);
-
+    constructor(compilerOptionsResolver: CompilerOptionsResolver, filePaths: string[], options: Options) {
         const compilerOptions = compilerOptionsResolver.getCompilerOptions(options);
-        this.program = ts.createProgram(fileNames, compilerOptions, options.compilerHost);
+        this.compilerHost = options.compilerHost || ts.createCompilerHost(compilerOptions);
+
+        // verify if the file names exist after creating the compiler host
+        this.verifyFilesExist(filePaths);
+
+        this.program = ts.createProgram(filePaths, compilerOptions, options.compilerHost);
         this.typeChecker = this.program.getTypeChecker();
     }
 
@@ -46,9 +50,7 @@ export class TsMain {
     }
 
     private verifyFileExists(filePath: string) {
-        // unfortunately the ts compiler doesn't do things asynchronously so for now we won't either
-        if (!FileUtils.fileExistsSync(filePath)) {
+        if (!this.compilerHost.fileExists(filePath))
             throw new FileNotFoundError(FileUtils.getAbsolutePath(filePath));
-        }
     }
 }

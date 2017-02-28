@@ -34,6 +34,10 @@ describe("Main", () => {
             assert.throws(() => tsTypeInfo.getInfoFromString([] as any));
         });
 
+        it("should throw an error when providing a compiler host", () => {
+            assert.throws(() => tsTypeInfo.getInfoFromString("", { compilerHost: {} as any }));
+        });
+
         it("should allow changing the compiler options", () => {
             const result = tsTypeInfo.getInfoFromString("class MyClass {}\n\n", { });
             assert.equal(result.classes[0].name, "MyClass");

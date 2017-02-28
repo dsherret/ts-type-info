@@ -3218,6 +3218,13 @@ export class BaseTypeDefinitionTestRunner implements TestRunner<BaseTypeDefiniti
                 this.assertions.describe("#definitions", () => {
                     let actualDefinitions = actual.definitions;
                     let expectedDefinitions = expected.definitions!;
+
+                    this.assertions.it("should have the same length", () => {
+                        this.assertions.strictEqual(actualDefinitions.length, expectedDefinitions.length);
+                    });
+                    if (actualDefinitions.length !== expectedDefinitions.length)
+                        return;
+
                     for (let i = 0; i < actualDefinitions.length; i++) {
                         this.assertions.it("should have the same value", () => {
                             this.assertions.strictEqual(actualDefinitions[i].name, expectedDefinitions[i].name);

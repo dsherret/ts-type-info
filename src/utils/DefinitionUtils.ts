@@ -9,15 +9,12 @@ export class DefinitionUtils {
         const structureFactory = new MainFactory().createStructureFactory();
         let def: TypeDefinition;
 
-        if (typeof textOrDefinition === "string") {
+        if (typeof textOrDefinition === "string")
             def = structureFactory.getTypeFromText(textOrDefinition);
-        }
-        else if (textOrDefinition == null) {
+        else if (textOrDefinition == null)
             def = structureFactory.getTypeFromText("any");
-        }
-        else {
+        else
             def = structureFactory.getTypeFromDefinitionAndTypeArguments(textOrDefinition, typeArguments)!;
-        }
 
         return def;
     }

@@ -161,8 +161,12 @@ generator.addCustomTestTransform(
     writer => {
         writer.write("if (expected.definitions != null)").block(() => {
             writer.write(`this.assertions.describe("#definitions", () => `).inlineBlock(() => {
-                writer.writeLine("let actualDefinitions = actual.definitions;")
-                writer.writeLine("let expectedDefinitions = expected.definitions!;")
+                writer.writeLine("let actualDefinitions = actual.definitions;");
+                writer.writeLine("let expectedDefinitions = expected.definitions!;");
+                writer.write(`this.assertions.it("should have the same length", () => `).inlineBlock(() => {
+                    writer.writeLine(`this.assertions.strictEqual(actualDefinitions.length, expectedDefinitions.length);`);
+                }).write(");").newLine());
+                writer.write(`if (actualDefinitions.length !== expectedDefinitions.length) return;`);
                 writer.write("for (let i = 0; i < actualDefinitions.length; i++)").block(() => {
                     writer.write(`this.assertions.it("should have the same value", () => `).inlineBlock(() => {
                         writer.writeLine("this.assertions.strictEqual(actualDefinitions[i].name, expectedDefinitions[i].name);")
