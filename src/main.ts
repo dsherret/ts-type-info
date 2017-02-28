@@ -53,7 +53,6 @@ export function getInfoFromString(code: string, options?: Options): FileDefiniti
     const defaultLibFileName = ts.getDefaultLibFileName(compilerOptions);
 
     const tempFileSourceFile = ts.createSourceFile(tempFileName, code, compilerOptions.target!);
-    // todo: get lib source file from the document registry (this works for now)
     const libSourceFile = ts.createSourceFile(defaultLibFileName, fs.readFileSync(defaultLibFilePath, "utf-8"), compilerOptions.target!);
 
     options = options || {};
