@@ -40,6 +40,11 @@ export function getCallSignatureWriter(writer: CodeBlockWriter, defs: definition
             expect(passedInDef).to.equal(defs.shift());
             writer.write(`{call-signature:${flags}}`);
         }
+
+        writeAsType(passedInDef: definitions.CallSignatureDefinition, flags: WriteFlags) {
+            expect(passedInDef).to.equal(defs.shift());
+            writer.write(`{call-signature-as-type:${flags}}`);
+        }
     }
 
     return new Writer() as writers.CallSignatureWriter;
@@ -409,6 +414,26 @@ export function getTypeParametersWriter(writer: CodeBlockWriter, defs: definitio
     }
 
     return new Writer() as writers.TypeParametersWriter;
+}
+
+export function getUserDefinedTypeGuardWriter(writer: CodeBlockWriter, defs: (definitions.UserDefinedTypeGuardDefinition | null)[]) {
+    defs = [...defs];
+    class Writer {
+        writeWithColon(passedInDef: definitions.UserDefinedTypeGuardDefinition) {
+            writer.write(": ");
+            this.write(passedInDef);
+        }
+
+        write(passedInDef: definitions.UserDefinedTypeGuardDefinition) {
+            writer.write("{");
+            writer.write("userDefinedTypeGuard");
+            writer.write(`:${passedInDef.parameterName}`);
+            writer.write(`:${passedInDef.type.text}`);
+            writer.write("}");
+        }
+    }
+
+    return new Writer() as writers.UserDefinedTypeGuardWriter;
 }
 
 export function getVariableDeclarationWriter(writer: CodeBlockWriter, type: definitions.VariableDeclarationType) {

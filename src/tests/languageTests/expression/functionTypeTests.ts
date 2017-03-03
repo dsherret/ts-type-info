@@ -5,6 +5,7 @@ describe("function type tests", () => {
     const code = `
 let func: <T extends string>(str: T, num?: number) => void;
 let func2: string | (() => void);
+let func3: string & (() => void);
 let userDefinedTypeGuardFunc: (str: any) => str is string;
 `;
 
@@ -51,6 +52,16 @@ let userDefinedTypeGuardFunc: (str: any) => str is string;
             type: {
                 text: "string | (() => void)",
                 unionTypes: [{
+                    text: "string"
+                }, {
+                    text: "() => void"
+                }]
+            }
+        }, {
+            name: "func3",
+            type: {
+                text: "string & (() => void)",
+                intersectionTypes: [{
                     text: "string"
                 }, {
                     text: "() => void"

@@ -15,6 +15,15 @@ describe("BaseTypeDefinition", () => {
         });
     });
 
+    describe("#getIntersectionType()", () => {
+        const def = getNewDef();
+        def.intersectionTypes.push({ text: "" } as any, { text: "test" } as any);
+
+        it("should get the correct type", () => {
+            assert.equal(def.getIntersectionType(c => c.text === "test"), def.intersectionTypes[1]);
+        });
+    });
+
     describe("#getUnionType()", () => {
         const def = getNewDef();
         def.unionTypes.push({ text: "" } as any, { text: "test" } as any);

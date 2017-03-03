@@ -38,3 +38,4 @@ export * from "./writers/ClassWriter";
 export * from "./writers/FileWriter";
 export * from "./writers/ModuledWriter";
 export * from "./writers/NamespaceWriter";
+export * from "./writers/UserDefinedTypeGuardWriter";

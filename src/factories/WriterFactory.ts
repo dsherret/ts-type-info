@@ -23,7 +23,13 @@ export class WriterFactory {
 
     @Memoize
     getCallSignatureWriter() {
-        return new writers.CallSignatureWriter(this.writer, this.getBaseDefinitionWriter(), this.getTypeParametersWriter(), this.getTypeWriter(), this.getParametersWriter());
+        return new writers.CallSignatureWriter(
+            this.writer,
+            this.getBaseDefinitionWriter(),
+            this.getTypeParametersWriter(),
+            this.getTypeWriter(),
+            this.getParametersWriter(),
+            this.getUserDefinedTypeGuardWriter());
     }
 
     @Memoize
@@ -297,6 +303,11 @@ export class WriterFactory {
             this.getAmbientableWriter(),
             this.getTypeWithDefaultExpressionWriter(),
             this.getVariableDeclarationWriter());
+    }
+
+    @Memoize
+    getUserDefinedTypeGuardWriter() {
+        return new writers.UserDefinedTypeGuardWriter(this.writer);
     }
 
     @Memoize
