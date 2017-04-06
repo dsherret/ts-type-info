@@ -2,7 +2,7 @@
 import {ModuleMemberDefinitions} from "./../definitions";
 import {MainFactory} from "./../factories";
 import {FileStructure} from "./../structures";
-import {DefinitionUtils, FileUtils} from "./../utils";
+import {DefinitionUtils, FileUtils, renameDefinitionAs} from "./../utils";
 import {FileDefinition} from "./file";
 
 export class GlobalDefinition {
@@ -67,5 +67,13 @@ export class GlobalDefinition {
         }
 
         return null;
+    }
+
+    renameDefinitionAs(definition: ModuleMemberDefinitions, newName: string) {
+        renameDefinitionAs({
+            globalDef: this,
+            definition,
+            newName
+        });
     }
 }

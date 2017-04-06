@@ -26,10 +26,7 @@ const info = getInfoFromFiles([fileName]);
 const file = info.getFile(fileName);
 
 file.interfaces.forEach(interfaceDef => {
-    // old way pre-7.0
-    // info.renameDefinitionAs(interfaceDef, interfaceDef.name + "Strict");
-    // new way starting in 7.1:
-    interfaceDef.name = interfaceDef.name + "Strict";
+    info.renameDefinitionAs(interfaceDef, interfaceDef.name + "Strict");
 
     interfaceDef.properties.forEach(property => {
         property.isOptional = false;

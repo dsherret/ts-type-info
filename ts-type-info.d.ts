@@ -743,6 +743,7 @@ export class GlobalDefinition {
     getFile(fileNameOrSearchFunction: string | ((file: FileDefinition) => boolean)): null | FileDefinition;
     getFileOfDefinition(def: ExportableDefinitions): null | FileDefinition;
     getFileAndNamespacesToDefinition(def: ExportableDefinitions): null | { file: FileDefinition; namespaces: NamespaceDefinition[]; };
+    renameDefinitionAs(definition: ExportableDefinitions, newName: string): void;
 }
 
 export type DecoratedDefinitions = ClassMethodParameterDefinition | ClassConstructorParameterDefinition | ClassMethodDefinition | ClassStaticMethodDefinition | ClassDefinition | ClassPropertyDefinition | ClassStaticPropertyDefinition;
