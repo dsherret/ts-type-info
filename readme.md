@@ -8,13 +8,18 @@ Simple TypeScript AST and code generator.
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
-* [Version 6.2 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
+* [Version 7.0 information](https://github.com/dsherret/ts-type-info/wiki/What%27s-New)
 
 ```
 npm install ts-type-info --save-dev
 ```
 
-> Notice: Version 7.0 being worked on in the [dev branch](https://github.com/dsherret/ts-type-info/tree/dev) will be the final major release of ts-type-info. Based on everything I've learned by writing this library, I'm starting work on [ts-simple-ast](https://github.com/dsherret/ts-simple-ast). It wraps the typescript compiler rather than creating separate standalone objects. So far there's not much work done on it, but it will be much more powerful than this library once it gets up to speed.
+### Notice - Library Deprecation!
+
+Version 7.0 is the last final major release of ts-type-info.
+
+A major shift in how this library works prompted the creation of a more powerful library, [ts-simple-ast](https://github.com/dsherret/ts-simple-ast).
+ts-simple-ast wraps the typescript compiler rather than creating separate standalone objects. It's still a work in progress, but it is slowly getting up to speed.
 
 ## AST
 
