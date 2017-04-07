@@ -14,6 +14,8 @@ Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/
 npm install ts-type-info --save-dev
 ```
 
+> Notice: Version 7.0 being worked on in the [dev branch](https://github.com/dsherret/ts-type-info/tree/dev) will be the final major release of ts-type-info. Based on everything I've learned by writing this library, I'm starting work on [ts-simple-ast](https://github.com/dsherret/ts-simple-ast). It wraps the typescript compiler rather than creating separate standalone objects. So far there's not much work done on it, but it will be much more powerful than this library once it gets up to speed.
+
 ## AST
 
 ```typescript
