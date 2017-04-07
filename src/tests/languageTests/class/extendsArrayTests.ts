@@ -22,7 +22,7 @@ class MyArrayExt extends Array<string> {
             extendsTypes: [{
                 text: "string[]",
                 isArrayType: true,
-                // arrayElementType: { text: "string" }, // todo: fix
+                arrayElementType: { text: "string" },
                 node: {
                     text: "Array<string>",
                     isArrayType: true,
