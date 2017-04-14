@@ -25,38 +25,6 @@ describe("TypedDefinition", () => {
             runTypedDefinitionTests(v, { type: { text: "string" } });
         });
 
-        describe("with text, union type", () => {
-            const v = new VariableDefinition();
-            v.setType("string | number");
-
-            runTypedDefinitionTests(v, {
-                type: {
-                    text: "string | number",
-                    unionTypes: [{
-                        text: "string"
-                    }, {
-                        text: "number"
-                    }]
-                }
-            });
-        });
-
-        describe("with text, intersection type", () => {
-            const v = new VariableDefinition();
-            v.setType("string & number");
-
-            runTypedDefinitionTests(v, {
-                type: {
-                    text: "string & number",
-                    intersectionTypes: [{
-                        text: "string"
-                    }, {
-                        text: "number"
-                    }]
-                }
-            });
-        });
-
         describe("with definition", () => {
             const v = new VariableDefinition();
             const c = createClass({ name: "MyClass" });
@@ -70,13 +38,7 @@ describe("TypedDefinition", () => {
             const c = createClass({ name: "MyClass" });
             v.setType(c, ["string"]);
 
-            runTypedDefinitionTests(v, {
-                type: {
-                    text: "MyClass<string>",
-                    definitions: [c],
-                    typeArguments: [{ text: "string" }]
-                }
-            });
+            runTypedDefinitionTests(v, { type: { text: "MyClass<string>" } });
         });
 
         describe("with definition and multiple type arguments", () => {
@@ -84,16 +46,7 @@ describe("TypedDefinition", () => {
             const c = createClass({ name: "MyClass" });
             v.setType(c, ["string", "number"]);
 
-            runTypedDefinitionTests(v, {
-                type: {
-                    text: "MyClass<string, number>",
-                    definitions: [c],
-                    typeArguments: [
-                        { text: "string"},
-                        { text: "number"}
-                    ]
-                }
-            });
+            runTypedDefinitionTests(v, { type: { text: "MyClass<string, number>" } });
         });
     });
 });

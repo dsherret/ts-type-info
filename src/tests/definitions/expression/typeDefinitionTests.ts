@@ -41,7 +41,8 @@ describe("TypeDefinition", () => {
         });
 
         describe("existing union type", () => {
-            const def = createType("string | Date");
+            const def = createType("string");
+            def.addUnionType("Date");
             def.addUnionType("number");
             runTypeDefinitionTests(def, {
                 text: "string | Date | number",
@@ -92,7 +93,8 @@ describe("TypeDefinition", () => {
         });
 
         describe("existing intersection type", () => {
-            const def = createType("string & Date");
+            const def = createType("string");
+            def.addIntersectionType("Date");
             def.addIntersectionType("number");
             runTypeDefinitionTests(def, {
                 text: "string & Date & number",
@@ -106,8 +108,9 @@ describe("TypeDefinition", () => {
             });
         });
 
-        describe("existing intersection type", () => {
-            const def = createType("string | Date");
+        describe("existing union type", () => {
+            const def = createType("string");
+            def.addUnionType("Date");
             def.addIntersectionType("number");
             runTypeDefinitionTests(def, {
                 text: "(string | Date) & number",
@@ -138,12 +141,7 @@ describe("TypeDefinition", () => {
         const def = new TypeDefinition();
         def.text = "MyClass | MyOtherClass";
         runTypeDefinitionTests(def, {
-            text: "MyClass | MyOtherClass",
-            unionTypes: [{
-                text: "MyClass"
-            }, {
-                text: "MyOtherClass"
-            }]
+            text: "MyClass | MyOtherClass"
         });
     });
 });

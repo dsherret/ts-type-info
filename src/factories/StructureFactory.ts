@@ -1,7 +1,6 @@
 ﻿import * as binders from "./../binders";
 import * as definitions from "./../definitions";
 import * as structures from "./../structures";
-import {getInfoFromString} from "./../main";
 
 function bindToDefinition<DefType extends definitions.BaseDefinition>(binder: { bind(def: DefType): void; }, def: DefType) {
     binder.bind(def);
@@ -147,17 +146,8 @@ export class StructureFactory {
     }
 
     getTypeFromText(text: string | undefined) {
-        if (text == null || text.trim().length === 0)
-            text = "any";
-
-        // use the binder on simple types
-        if (/^[a-z0-9]+$/i.test(text!))
-            return bindToDefinition(new binders.StructureTypeBinder(this, text), new definitions.TypeDefinition());
-
-        // use the typescript compiler to get the type for complex types
-        const code = `export let tsTypeInfoVar: ${text};`; // need to export to prevent globals from affecting the type
-        const info = getInfoFromString(code, { compilerOptions: { strictNullChecks: true }, includeTsNodes: true, getTypesFromTypeNodes: true });
-        return info.getVariable("tsTypeInfoVar")!.type;
+        text = text || "any";
+        return bindToDefinition<definitions.TypeDefinition>(new binders.StructureTypeBinder(this, text), new definitions.TypeDefinition());
     }
 
     getTypeParameter(structure: structures.TypeParameterStructure) {

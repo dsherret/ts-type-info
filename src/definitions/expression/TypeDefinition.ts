@@ -62,12 +62,14 @@ export class TypeDefinition extends BaseTypeDefinition {
             this._text += ` & ${this._getTextForIntersectionTypeFromText(newDefinition)}`;
         }
         else {
+            const hasUnionTypes = this.unionTypes.length > 0;
             const cloneDefinition = this.clone();
             const emptyDefinition = new TypeDefinition();
             fillTypeDefinition(emptyDefinition, this);
             this.intersectionTypes.push(cloneDefinition, newDefinition);
 
-            this._text = `${this._getTextForIntersectionTypeFromText(cloneDefinition)} & ${this._getTextForIntersectionTypeFromText(newDefinition)}`;
+            this._text = `${this._getTextForIntersectionTypeFromText(cloneDefinition, hasUnionTypes)} & ${this._getTextForIntersectionTypeFromText(newDefinition)}`;
+
         }
 
         return this;
@@ -78,8 +80,8 @@ export class TypeDefinition extends BaseTypeDefinition {
     }
 
     // ReSharper disable once InconsistentNaming
-    private _getTextForIntersectionTypeFromText(def: TypeDefinition) {
-        if (def.unionTypes.length > 0)
+    private _getTextForIntersectionTypeFromText(def: TypeDefinition, forceParens = false) {
+        if (forceParens || def.unionTypes.length > 0)
             return `(${def.text})`;
 
         return `${def.text}`;
