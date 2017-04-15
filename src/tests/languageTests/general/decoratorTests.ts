@@ -3,10 +3,10 @@ import {runFileDefinitionTests} from "./../../testHelpers";
 
 describe("decorator tests", () => {
     const code = `
-function MyClassDecorator(target: Function) {
-}
-
+@namespaceTest.decorator
+@namespaceTest.decorator()
 @MyClassDecorator
+@MyClassDecorator()
 class MyClass1 {
 }
 `;
@@ -14,19 +14,18 @@ class MyClass1 {
     const def = getInfoFromString(code);
 
     runFileDefinitionTests(def, {
-        functions: [{
-            name: "MyClassDecorator",
-            parameters: [{
-                name: "target",
-                type: {
-                    text: "Function"
-                }
-            }]
-        }],
         classes: [{
             name: "MyClass1",
             decorators: [{
+                name: "namespaceTest.decorator"
+            }, {
+                name: "namespaceTest.decorator",
+                isDecoratorFactory: true
+            }, {
                 name: "MyClassDecorator"
+            }, {
+                name: "MyClassDecorator",
+                isDecoratorFactory: true
             }]
         }]
     });

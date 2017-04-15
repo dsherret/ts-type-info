@@ -97,7 +97,11 @@ export class TsNode extends TsSourceFileChild {
 
     getDecoratorName() {
         const decorator = this.node as ts.Decorator;
-        return this.getNameFromExpression(decorator.expression);
+        const expression = decorator.expression;
+        if (TypeGuards.isCallExpression(expression))
+            return expression.expression.getText();
+        else
+            return expression.getText();
     }
 
     getDecoratorArguments() {
