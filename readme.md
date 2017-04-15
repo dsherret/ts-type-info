@@ -16,9 +16,9 @@ npm install ts-type-info --save-dev
 
 ### Notice - Library Deprecation!
 
-Version 7.0 is the last final major release of ts-type-info.
+Version 7.0 is the last final major release of ts-type-info that I will work on (feel free to still submit pull requests or bug reports).
 
-A major shift in how this library works prompted the creation of a more powerful library, [ts-simple-ast](https://github.com/dsherret/ts-simple-ast).
+There's certain issues with this library and to address them I had to do a complete redesign. I'm working on a more powerful library that supports more use cases: [ts-simple-ast](https://github.com/dsherret/ts-simple-ast).
 ts-simple-ast wraps the typescript compiler rather than creating separate standalone objects. It's still a work in progress, but it is slowly getting up to speed.
 
 ## AST
@@ -56,8 +56,6 @@ const myMethod = result.files[0].classes[0].methods[0];
 
 console.log(myMethod.name); // myMethod
 ```
-
-If you notice a language feature missing please open [an issue](https://github.com/dsherret/ts-type-info/issues).
 
 ## Code Generation
 
