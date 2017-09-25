@@ -16,10 +16,13 @@ npm install ts-type-info --save-dev
 
 # NOTICE - LIBRARY IS DEPRECATED
 
-Version 7.0 is the last final major release of ts-type-info I will work on.
+This library has been superseded by ts-simple-ast:
 
-There's certain issues with this library and to address them I had to do a complete redesign. There's a much more powerful library I'm working that supports more use cases: [ts-simple-ast](https://github.com/dsherret/ts-simple-ast).
-ts-simple-ast wraps the typescript compiler rather than creating separate standalone objects.
+https://github.com/dsherret/ts-simple-ast
+
+Version 7.0 is the last final major release of ts-type-info. 
+
+There's certain issues with this library and to address them I had to do a complete redesign. ts-simple-ast wraps the typescript compiler rather than creating separate standalone objects. It's much more powerful and supports a lot more use cases.
 
 ## AST
 
