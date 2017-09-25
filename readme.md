@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/ts-type-info.svg)](https://badge.fury.io/js/ts-type-info) [![Build Status](https://travis-ci.org/dsherret/ts-type-info.svg?branch=master)](https://travis-ci.org/dsherret/ts-type-info?branch=master)
 [![Coverage Status](https://coveralls.io/repos/dsherret/ts-type-info/badge.svg?branch=master&service=github)](https://coveralls.io/github/dsherret/ts-type-info?branch=master)
 
-Simple TypeScript AST and code generator.
+TypeScript AST and code generator.
 
 Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API) to get information about TypeScript code in an easy to use format.
 
@@ -14,18 +14,18 @@ Uses the [TypeScript Compiler API](https://github.com/Microsoft/TypeScript/wiki/
 npm install ts-type-info --save-dev
 ```
 
-### Notice - Library Deprecation!
+# NOTICE - LIBRARY IS DEPRECATED
 
-Version 7.0 is the last final major release of ts-type-info that I will work on (feel free to still submit pull requests or bug reports).
+Version 7.0 is the last final major release of ts-type-info I will work on.
 
-There's certain issues with this library and to address them I had to do a complete redesign. I'm working on a more powerful library that supports more use cases: [ts-simple-ast](https://github.com/dsherret/ts-simple-ast).
-ts-simple-ast wraps the typescript compiler rather than creating separate standalone objects. It's still a work in progress, but it is slowly getting up to speed.
+There's certain issues with this library and to address them I had to do a complete redesign. There's a much more powerful library I'm working that supports more use cases: [ts-simple-ast](https://github.com/dsherret/ts-simple-ast).
+ts-simple-ast wraps the typescript compiler rather than creating separate standalone objects.
 
 ## AST
 
 ```typescript
 // V:\TestFile.ts
-﻿
+
 export class MyClass {
     myStringProperty: string;
     readonly myNumberProperty = 253;
