@@ -16,7 +16,7 @@ npm install ts-type-info --save-dev
 
 # NOTICE - LIBRARY IS DEPRECATED
 
-This library has been superseded by ts-simple-ast:
+This library has been deprecated by ts-simple-ast:
 
 https://github.com/dsherret/ts-simple-ast
 
